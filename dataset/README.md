@@ -36,6 +36,10 @@ line.
 Everything specific to one game. The `kind` discriminator decides which fields an acquisition
 method carries, so there are no mostly-null columns.
 
+`nationalDexThrough` is the highest National Dex number this game's National Dex covers, or
+absent for a game without one. The dex builder needs the number rather than a yes or no:
+"has a National Dex" does not say where it stops.
+
 ```json
 {
   "game": {
@@ -45,7 +49,7 @@ method carries, so there are no mostly-null columns.
     "generation": 4,
     "region": "Sinnoh",
     "release": "cartridge",
-    "hasNationalDex": true,
+    "nationalDexThrough": 493,
     "dexSource": "nationalDex"
   },
   "dexEntries": [

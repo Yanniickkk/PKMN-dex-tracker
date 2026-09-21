@@ -22,15 +22,10 @@ public readonly record struct DexCollectionId(string Value) : IStringId<DexColle
 /// <param name="Name">What the player calls it.</param>
 /// <param name="MainGame">The game the dex is built from and transferred into.</param>
 /// <param name="LinkedGames">Games the player owns that can feed the main game.</param>
-/// <param name="FormsIncluded">Whether regional and functional forms get their own entries.</param>
-/// <param name="GenderDifferencesIncluded">
-/// Whether visible male/female differences get their own entries. Only meaningful when
-/// <paramref name="FormsIncluded"/> is true.
-/// </param>
+/// <param name="Forms">Which kinds of form get an entry of their own.</param>
 public sealed record DexCollection(
     DexCollectionId Id,
     string Name,
     GameId MainGame,
     IReadOnlyList<GameId> LinkedGames,
-    bool FormsIncluded,
-    bool GenderDifferencesIncluded);
+    FormSelection Forms);

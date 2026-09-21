@@ -35,7 +35,7 @@ public sealed class UserDataStoreTests : IDisposable
     private static UserDataDocument DocumentWith(params string[] species) =>
         new(
             UserDataDocument.CurrentSchemaVersion,
-            [new DexCollection(Collection, "Platinum living dex", Platinum, [Emerald], FormsIncluded: false, GenderDifferencesIncluded: false)],
+            [new DexCollection(Collection, "Platinum living dex", Platinum, [Emerald], FormSelection.Default)],
             [.. species.Select(name => CaptureRecord.CaughtIn(Collection, DexTarget.ForSpecies(new SpeciesId(name)), Platinum, Platinum))]);
 
     private static IEnumerable<string> SpeciesIn(UserDataDocument document) =>
@@ -67,6 +67,24 @@ public sealed class UserDataStoreTests : IDisposable
         Assert.Equal(["chimchar"], SpeciesIn(snapshot.Document));
         Assert.Equal(Platinum, snapshot.Document.Records[0].HoldingGame);
         Assert.Equal(CaptureStatus.InMainGame, snapshot.Document.Records[0].Status);
+    }
+
+    [Fact]
+    public async Task The_form_selection_is_stored_as_one_switch_per_kind()
+    {
+        var store = new UserDataStore(_dataFile);
+        await store.SaveAsync(DocumentWith("chimchar"), FileRevision.None);
+
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(_dataFile));
+        var forms = document.RootElement.GetProperty("collections")[0].GetProperty("forms");
+
+        Assert.True(forms.GetProperty("regional").GetBoolean());
+        Assert.True(forms.GetProperty("functional").GetBoolean());
+        Assert.False(forms.GetProperty("cosmetic").GetBoolean());
+        Assert.False(forms.GetProperty("genderDifferences").GetBoolean());
+
+        // "Any" is derived from the four, so storing it would be a second place to disagree.
+        Assert.False(forms.TryGetProperty("any", out _));
     }
 
     [Fact]

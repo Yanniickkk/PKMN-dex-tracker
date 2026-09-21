@@ -57,7 +57,10 @@ and 20 round-trip tests in `app/LivingDex.Core.Tests/Reference/`.
 - [x] `Game` - id, title, version, generation, region, release (`cartridge` /
       `virtual-console`), `hasNationalDex`, dex source rules - 2026-09-21
   - Dex source rules became a `DexSource` enum (`nationalDex` / `gameDex`) next to
-    `hasNationalDex`, plus an optional `pairPartner` so Red knows about Blue.
+    `nationalDexThrough`, plus an optional `pairPartner` so Red knows about Blue.
+  - `hasNationalDex` started as a bool and became `nationalDexThrough` (a number) in 0.5, once
+    the dex builder needed to know where the National Dex stops rather than whether there is
+    one. `HasNationalDex` is now derived from it.
 - [x] `TransferEdge` - from, to, mechanism, direction, species filter rule - 2026-09-21
   - The filter is a small type hierarchy rather than flags: `all`, `nationalDexRange`
     (Time Capsule 1-251, Pal Park 1-386) and `presentInTargetDex`, which is the rule that
@@ -111,6 +114,9 @@ Model and storage in `app/LivingDex.Core/UserData/`, the WPF picker in
   - Named `DexCollection` in code. A domain type called exactly `Collection` reads badly next
     to `System.Collections`, and the analyser refuses any name ending in that word without an
     explicit exception, which `.editorconfig` now grants with a reason.
+  - The two form booleans became a `FormSelection` in 0.5, at the user's request: one switch per
+    `FormKind` (regional, functional, cosmetic, gender differences) rather than one blanket
+    switch plus gender.
 - [x] `CaptureRecord` - collection id, dex entry id, status, holding game, catch date,
       note - 2026-09-21
   - Keyed by `DexTarget`, not by a dex entry id. A dex entry id belongs to one game's
@@ -198,7 +204,44 @@ a real route. Cost: the map is rebuilt per call, which took 500 short lookups fr
 
 ### 0.5 Dex builder
 
-_Nothing yet._
+`app/LivingDex.Core/Dex/`, with `ReferenceData` in `app/LivingDex.Core/Dataset/` and 15 tests
+in `app/LivingDex.Core.Tests/Dex/`.
+
+- [x] Given a main game, produce the entry list (national dex vs that game's own dex) - 2026-09-21
+  - This is what forced a schema change: see the note below.
+  - Both sources are reduced to one species-to-number map before forms are considered, which
+    keeps them on the same footing and stops a form appearing twice when the game numbers it and
+    the form table lists it.
+- [x] Apply the form settings: expand or collapse form entries - 2026-09-21
+  - Shipped first as the specified single `formsIncluded` switch, then changed at the user's
+    request to one switch per kind: regional, functional, cosmetic, gender differences. The
+    kinds are worth very different amounts of work, and one blanket switch meant a Generation 8
+    or 9 collection pulled in every Vivillon pattern along with the Alolan forms.
+  - Only forms that exist in the main game, whatever the switches say. Alolan Vulpix shows up
+    for a Sword collection and not for a Platinum one; Rotom's appliance forms the other way
+    round.
+  - There is no separate "include forms at all" field: it would be a second place to say what
+    the four switches already say, and the two could disagree. `FormSelection.Any` is derived
+    for a master checkbox to bind to, with `All`, `None` and `Default` to set it. `Default` is
+    regional and functional on, cosmetic and gender off - the forms that are a different Pokemon
+    to catch rather than the same one in a different colour.
+- [x] Toggling either setting preserves existing capture records - 2026-09-21
+  - The builder only reads reference data; it never touches records. Turning forms off removes
+    the line from the grid and leaves the record, note and catch date alone, and turning it back
+    on lines the record up with its entry again.
+  - This is the payoff for keying `CaptureRecord` by `DexTarget` in 0.3 rather than by a dex
+    entry id. A record also survives the main game changing, because Pikachu is the same entry
+    whether it is numbered 25 or 194.
+- [x] Ordering: dex number, base form first, then its forms - 2026-09-21
+  - Forms under a species are ordered by form id so the list is stable between runs, and the
+    outer sort is stable so that order survives it.
+
+Schema change this section forced: `Game.hasNationalDex` was a bool, which says whether a game
+has a National Dex but not where it ends - and the builder needs the number. It is now
+`nationalDexThrough` (a number, absent for games without one), with `HasNationalDex` derived
+from it. Same reasoning as `DexTarget.IsForm` and `CaptureRecord.Status`: do not store something
+a file could then contradict. The 0.2 entry above records this too, `dataset/README.md` shows
+the new field, and there is no migration cost because no dataset exists yet.
 
 ### 0.6 Pipeline skeleton
 

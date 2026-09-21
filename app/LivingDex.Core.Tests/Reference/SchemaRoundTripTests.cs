@@ -91,7 +91,7 @@ public class SchemaRoundTripTests
             8,
             "Galar",
             GameRelease.Cartridge,
-            HasNationalDex: false,
+            NationalDexThrough: null,
             DexSource.GameDex,
             new GameId("shield"));
 
@@ -112,7 +112,7 @@ public class SchemaRoundTripTests
             3,
             "Hoenn",
             GameRelease.Cartridge,
-            HasNationalDex: true,
+            NationalDexThrough: 386,
             DexSource.NationalDex,
             PairPartner: null);
 
@@ -305,7 +305,7 @@ public class SchemaRoundTripTests
                 4,
                 "Sinnoh",
                 GameRelease.Cartridge,
-                HasNationalDex: true,
+                NationalDexThrough: 493,
                 DexSource.NationalDex,
                 PairPartner: null),
             [new DexEntry(new GameId("platinum"), DexTarget.ForSpecies(new SpeciesId("chimchar")), 4)],

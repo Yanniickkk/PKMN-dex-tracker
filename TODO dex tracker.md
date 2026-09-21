@@ -27,13 +27,6 @@ Phase 2 feeds it one game at a time.
     folder with nothing beside it. Still open: a Windows install without the WebView2
     Runtime, and a Windows 10 box.
 
-### 0.5 Dex builder
-- [ ] Given a main game, produce the entry list (national dex vs that game's own dex)
-- [ ] Apply the `formsIncluded` setting: expand or collapse form entries
-- [ ] Apply the `genderDifferencesIncluded` setting on top of forms
-- [ ] Toggling either setting preserves existing capture records
-- [ ] Ordering: dex number, base form first, then its forms
-
 ### 0.6 Pipeline skeleton
 - [ ] PokéAPI client with on-disk cache
 - [ ] Scraper base with on-disk cache and polite rate limiting
