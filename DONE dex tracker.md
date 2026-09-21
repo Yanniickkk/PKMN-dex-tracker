@@ -157,7 +157,44 @@ What protects the file, and what each part actually covers:
 
 ### 0.4 Transfer graph engine
 
-_Nothing yet._
+`app/LivingDex.Core/Transfers/`, with 13 tests in `app/LivingDex.Core.Tests/Transfers/`.
+
+- [x] Load the graph from data, never hardcode edges - 2026-09-21
+  - The engine knows nothing about Pal Park, the Time Capsule or HOME by name. An empty edge
+    list gives an empty graph; there is a test for that.
+  - A `bothWays` edge becomes two directed edges at construction, so the search only ever deals
+    with one-way hops.
+- [x] `reachableFrom(game)` - which games can send into a given main game - 2026-09-21
+  - Species filters are deliberately not applied: this answers "could this game ever feed that
+    one", which is what the linked-game picker needs. Whether one species survives the trip is
+    `routesBetween`.
+- [x] `routesBetween(from, to, species)` - ordered chains, species filter applied per hop - 2026-09-21
+  - Takes a `DexTarget`, so a form can be asked about, with a `SpeciesId` overload.
+  - Filters are checked at every hop, not only the first. A Generation 4 species travelling from
+    Ruby to Black is stopped at the Pal Park hop in the middle, and the test names that hop.
+- [x] Shortest route first, alternatives available - 2026-09-21
+  - Iterative deepening, so the cap on how many routes to return can never drop a shorter route
+    in favour of a longer one already collected. `Shortest` and `Alternatives` are separate
+    properties, ready for the collapsible list in Phase 1.
+- [x] Return a reason when no route exists, for display in the UI - 2026-09-21
+  - `NoRouteReason` distinguishes same game, unknown game, not connected at all, connected but
+    not for this species, and a route longer than the search allows. The first two are user
+    error, the third is permanent, the fourth is about this one Pokemon - the UI wants to say
+    different things about each.
+  - The explanation names the hop that refused and why, for example that Pal Park only carries
+    National Dex 1 to 386. It is written with game ids; the UI has the names and can reword.
+- [x] Unit tests: Platinum accepts Gen 3-4 only; Gen 2 cannot reach Gen 3; HOME rejects species
+      missing from a Gen 8/9 dex - 2026-09-21
+  - All three, plus one-way edges not being usable in reverse, both-ways edges working in both
+    directions, and hop chains being continuous.
+
+Performance was measured rather than assumed. On a graph the size and shape of the real one
+(35 games, 186 edges, every game in a generation trading with every other), enumerating simple
+paths across those near-complete cliques took 446 ms for a red-to-scarlet lookup. A reverse-BFS
+distance map now prunes any branch that cannot reach the destination inside the remaining hop
+budget; that lookup is 5 ms. The map ignores filters, so it never over-estimates and never prunes
+a real route. Cost: the map is rebuilt per call, which took 500 short lookups from 22 ms to
+36 ms. Worth caching per destination if that ever matters.
 
 ### 0.5 Dex builder
 

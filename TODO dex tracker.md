@@ -27,15 +27,6 @@ Phase 2 feeds it one game at a time.
     folder with nothing beside it. Still open: a Windows install without the WebView2
     Runtime, and a Windows 10 box.
 
-### 0.4 Transfer graph engine
-- [ ] Load the graph from data, never hardcode edges
-- [ ] `reachableFrom(game)` — which games can send into a given main game
-- [ ] `routesBetween(from, to, species)` — ordered chains, species filter applied per hop
-- [ ] Shortest route first, alternatives available
-- [ ] Return a reason when no route exists, for display in the UI
-- [ ] Unit tests: Platinum accepts Gen 3–4 only; Gen 2 cannot reach Gen 3;
-      HOME rejects species missing from a Gen 8/9 dex
-
 ### 0.5 Dex builder
 - [ ] Given a main game, produce the entry list (national dex vs that game's own dex)
 - [ ] Apply the `formsIncluded` setting: expand or collapse form entries
