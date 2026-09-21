@@ -1,0 +1,69 @@
+@* How a Pokemon is obtained, as the games' own picture of it: the three rods are three rods,
+   Surf and Rock Smash are their HM discs, a fossil is a fossil.
+
+   Decorative on purpose: every icon sits beside text that already names the method, so it is
+   hidden from screen readers rather than read out twice. What it adds is recognition at a glance
+   when a popup lists a dozen ways to get one Pokemon.
+
+   In-game trading has no item and so no sprite, and a picture that means something else would be
+   worse than none: that one is drawn here instead. *@
+@using LivingDex.Core.Dataset
+@using LivingDex.Core.Reference
+@inject LoadedDataset Dataset
+
+<span class="method-icon" aria-hidden="true">
+    @if (Dataset.MethodIconPath(Key(Method)) is { } icon)
+    {
+        <img src="@icon" alt="" />
+    }
+    else if (Method is TradeAcquisition)
+    {
+        @* Two arrows passing each other. *@
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 8h14l-4-4" />
+            <path d="M20 16H6l4 4" />
+        </svg>
+    }
+</span>
+
+@code {
+    /// <summary>The method to picture.</summary>
+    [Parameter]
+    [EditorRequired]
+    public AcquisitionMethod Method { get; set; } = default!;
+
+    /// <summary>
+    /// The name the pipeline files an icon under. Kept in step with <c>METHOD_ICONS</c> in
+    /// <c>icons.py</c>: an unknown key simply has no icon, so a mismatch shows as nothing rather
+    /// than as a broken image.
+    /// </summary>
+    private static string Key(AcquisitionMethod method) => method switch
+    {
+        WildAcquisition wild => wild.Method switch
+        {
+            EncounterMethod.Walk => "walk",
+            EncounterMethod.Surf => "surf",
+            EncounterMethod.OldRod => "old-rod",
+            EncounterMethod.GoodRod => "good-rod",
+            EncounterMethod.SuperRod => "super-rod",
+            EncounterMethod.RockSmash => "rock-smash",
+            EncounterMethod.Headbutt => "headbutt",
+            EncounterMethod.HoneyTree => "honey-tree",
+            EncounterMethod.Swarm => "swarm",
+            _ => "other",
+        },
+
+        GiftAcquisition gift => gift.GiftKind switch
+        {
+            GiftKind.Starter => "starter",
+            GiftKind.Fossil => "fossil",
+            GiftKind.Egg => "egg",
+            GiftKind.StaticEncounter => "static",
+            _ => "npc-gift",
+        },
+
+        EvolutionAcquisition => "evolution",
+        _ => "trade",
+    };
+}

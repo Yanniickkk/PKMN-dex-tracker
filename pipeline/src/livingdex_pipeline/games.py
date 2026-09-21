@@ -12,14 +12,30 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
 from .models import GameData, TransferEdge
+from .pokeapi import PokeApiClient
 
 
 @dataclass(frozen=True)
 class BuildContext:
-    """What a game builder is handed."""
+    """What a game builder is handed.
+
+    The API client is here because step 2 of a game is a dex list and that is PokeAPI's to
+    answer. Sources a game scrapes for its encounters bring their own client, because they are
+    the ones that have to keep to another site's pace.
+    """
 
     game_id: str
     refresh: bool
+    api: PokeApiClient | None = None
+
+    def require_api(self) -> PokeApiClient:
+        """The API client, or a clear failure rather than an AttributeError three frames down."""
+        if self.api is None:
+            raise RuntimeError(
+                f"building {self.game_id} needs the PokeAPI client, and the build did not pass one"
+            )
+
+        return self.api
 
 
 GameBuilder = Callable[[BuildContext], GameData]
@@ -68,8 +84,49 @@ class GameRegistry:
 
     @property
     def edges(self) -> list[TransferEdge]:
-        """Every registered edge, in a fixed order so the file is diffable."""
-        return [edge for game_id in sorted(self._edges) for edge in self._edges[game_id]]
+        """The edges both of whose ends are registered, deduplicated and in a fixed order.
+
+        A game declares the whole truth about itself, including routes to games that are not in
+        the dataset yet: Emerald trades with Ruby whether or not Ruby has been written. Those
+        edges are held back until the other end exists, so the dataset never contains a route
+        the app cannot explain, and adding Ruby later lights the route up without anyone going
+        back to edit Emerald.
+
+        Both ends may declare the same edge. They collapse into one, so neither game has to know
+        whether the other got there first.
+        """
+        known = set(self._builders)
+        seen: dict[tuple, TransferEdge] = {}
+
+        for game_id in sorted(self._edges):
+            for edge in self._edges[game_id]:
+                if edge.from_ not in known or edge.to not in known:
+                    continue
+
+                seen.setdefault(self._edge_key(edge), edge)
+
+        return sorted(seen.values(), key=lambda one: (one.from_, one.to, one.mechanism.value))
+
+    @property
+    def held_back_edges(self) -> list[tuple[str, TransferEdge]]:
+        """Declared edges waiting for their other end, with the game that declared them.
+
+        Reported rather than dropped in silence: a typo in a game id looks exactly like a game
+        that has not been written yet, and only one of those is worth a build saying nothing
+        about.
+        """
+        known = set(self._builders)
+
+        return [
+            (game_id, edge)
+            for game_id in sorted(self._edges)
+            for edge in self._edges[game_id]
+            if edge.from_ not in known or edge.to not in known
+        ]
+
+    @staticmethod
+    def _edge_key(edge: TransferEdge) -> tuple:
+        return (edge.from_, edge.to, edge.mechanism.value, edge.direction.value)
 
     def build(self, context: BuildContext) -> GameData:
         builder = self._builders.get(context.game_id)

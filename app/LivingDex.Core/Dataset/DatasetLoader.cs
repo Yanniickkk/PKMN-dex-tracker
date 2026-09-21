@@ -12,10 +12,16 @@ namespace LivingDex.Core.Dataset;
 /// because covers keep whatever kind their source holds - some PNG, some JPEG - and the app
 /// serves what it was handed rather than insisting on one.
 /// </param>
+/// <param name="MethodIcons">
+/// The ways of obtaining a Pokemon an icon was shipped for, by the key the pipeline names them
+/// with. Asked before rendering one, so a build that skipped them leaves the app drawing its own
+/// rather than showing a broken image.
+/// </param>
 public sealed record LoadedDataset(
     DatasetStamp Stamp,
     ReferenceData Reference,
-    IReadOnlyDictionary<GameId, string> BoxArt)
+    IReadOnlyDictionary<GameId, string> BoxArt,
+    IReadOnlySet<string> MethodIcons)
 {
     /// <summary>Whether an image was shipped for this game.</summary>
     public bool HasBoxArt(GameId game) => BoxArt.ContainsKey(game);
@@ -27,6 +33,13 @@ public sealed record LoadedDataset(
     public string? BoxArtPath(GameId game) =>
         BoxArt.TryGetValue(game, out var file) ? $"{DatasetLayout.BoxArtDirectory}/{file}" : null;
 
+    /// <summary>
+    /// What to ask the web view for, for example <c>icons/good-rod.png</c>, or null when no icon
+    /// was shipped for that way of obtaining something.
+    /// </summary>
+    public string? MethodIconPath(string key) =>
+        MethodIcons.Contains(key) ? $"{DatasetLayout.IconsDirectory}/{key}.png" : null;
+
     /// <summary>True when no dataset was found at all.</summary>
     public bool IsEmpty => Reference.Games.Count == 0;
 
@@ -34,7 +47,8 @@ public sealed record LoadedDataset(
     public static LoadedDataset None { get; } = new(
         new DatasetStamp("0.0.0", DateOnly.MinValue),
         new ReferenceData([], [], [], []),
-        new Dictionary<GameId, string>());
+        new Dictionary<GameId, string>(),
+        new HashSet<string>(StringComparer.Ordinal));
 }
 
 /// <summary>Thrown when a dataset is present but unreadable, which is a build problem.</summary>
@@ -117,7 +131,13 @@ public static class DatasetLoader
                 file => new GameId(System.IO.Path.GetFileNameWithoutExtension(file)),
                 file => file);
 
-        return new LoadedDataset(index.Stamp, reference, boxArt);
+        var iconPrefix = $"{Prefix}{DatasetLayout.IconsDirectory}/";
+        var icons = names
+            .Where(name => name.StartsWith(iconPrefix, StringComparison.Ordinal))
+            .Select(name => System.IO.Path.GetFileNameWithoutExtension(name[iconPrefix.Length..]))
+            .ToHashSet(StringComparer.Ordinal);
+
+        return new LoadedDataset(index.Stamp, reference, boxArt, icons);
     }
 
     private static T? Read<T>(Assembly assembly, HashSet<string> names, string path)

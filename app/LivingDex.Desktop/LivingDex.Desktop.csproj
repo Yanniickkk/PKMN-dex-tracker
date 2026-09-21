@@ -88,6 +88,7 @@
       <_DatasetGame Include="$(MSBuildThisFileDirectory)..\..\dataset\games\*.json" />
       <_DatasetSprite Include="$(MSBuildThisFileDirectory)..\..\dataset\sprites\*.png" />
       <_DatasetBoxArt Include="$(MSBuildThisFileDirectory)..\..\dataset\boxart\*.*" />
+      <_DatasetIcon Include="$(MSBuildThisFileDirectory)..\..\dataset\icons\*.png" />
 
       <EmbeddedResource Include="@(_DatasetTable)">
         <LogicalName>dataset/%(_DatasetTable.Filename)%(_DatasetTable.Extension)</LogicalName>
@@ -100,6 +101,9 @@
       </EmbeddedResource>
       <EmbeddedResource Include="@(_DatasetBoxArt)">
         <LogicalName>dataset/boxart/%(_DatasetBoxArt.Filename)%(_DatasetBoxArt.Extension)</LogicalName>
+      </EmbeddedResource>
+      <EmbeddedResource Include="@(_DatasetIcon)">
+        <LogicalName>dataset/icons/%(_DatasetIcon.Filename)%(_DatasetIcon.Extension)</LogicalName>
       </EmbeddedResource>
     </ItemGroup>
   </Target>

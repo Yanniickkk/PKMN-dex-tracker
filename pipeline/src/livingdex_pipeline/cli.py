@@ -60,6 +60,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="skip the sprite download; the grid will have holes but the build is quick",
     )
     build.add_argument(
+        "--no-icons",
+        action="store_true",
+        help="skip the method icons; the detail popup draws its own instead",
+    )
+    build.add_argument(
         "--no-box-art",
         action="store_true",
         help="skip the box art download; the game picker draws plain covers instead",
@@ -87,6 +92,7 @@ def main(argv: list[str] | None = None) -> int:
         refresh=args.refresh,
         sprites=not args.no_sprites,
         box_art=not args.no_box_art,
+        icons=not args.no_icons,
     )
 
     try:

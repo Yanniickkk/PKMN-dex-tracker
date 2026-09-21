@@ -505,13 +505,33 @@ code {
 
 .method-head {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
+  align-items: center;
+  gap: 8px;
+}
+
+.method-icon {
+  display: flex;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+
+.method-icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  /* The item sprites are pixel art, like the battle sprites in the grid. */
+  image-rendering: pixelated;
 }
 
 .method-title {
   font-weight: 600;
+  /* Takes the middle, so the game stays hard against the right edge. */
+  flex: 1;
+  min-width: 0;
 }
 
 .method-game {

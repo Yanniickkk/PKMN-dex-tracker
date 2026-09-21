@@ -760,6 +760,23 @@ Worth a validator rule if edges are ever written by hand.
     down to, and the minimum size stays what it was, so nothing about resizing changes - only
     where it starts.
 
+- [x] Every way of getting a Pokemon shows the games' own icon for it - 2026-09-21
+  - Drawn glyphs were tried first and failed at the size they are shown: a tuft of grass came out
+    as a letter Y, two footprints as punctuation. A 17-pixel box has room for one shape, not a
+    scene, and the games already have a picture for nearly all of this.
+  - The icons are item sprites from the same source as the battle sprites, so they sit in the
+    popup as if they belong there: the three rods are three different rods, Surf and Rock Smash
+    are their HM discs, a fossil is a fossil, an egg is an egg, a swarm is the Poke Radar.
+  - Walking has no item of its own, so the ball you throw stands for a plain wild encounter. In-
+    game trading has none either - Link Cable and Linking Cord have no sprite in the set - and
+    that one stays drawn rather than borrowing a picture that means something else.
+  - The mapping is data in the pipeline, one item name per method key, so a game that wants a
+    different picture changes one line. The app asks the dataset whether an icon was shipped
+    before drawing it, the same as it does for box art, so a build run with `--no-icons` shows
+    nothing rather than a broken image.
+  - 3 tests on the mapping and on a fetch that fails: a missing icon is skipped, not a stopped
+    build.
+
 ---
 
 ## Phase 2 — Games

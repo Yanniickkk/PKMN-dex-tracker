@@ -37,6 +37,7 @@ TRANSFERS_FILE = "transfers.json"
 GAMES_DIRECTORY = "games"
 SPRITES_DIRECTORY = "sprites"
 BOXART_DIRECTORY = "boxart"
+ICONS_DIRECTORY = "icons"
 
 
 def _write_json(path: Path, payload: object) -> None:
@@ -104,6 +105,15 @@ class DatasetWriter:
 
     def box_art_path(self, name: str) -> Path:
         return self.root / BOXART_DIRECTORY / name
+
+    def icon_path(self, name: str) -> Path:
+        return self.root / ICONS_DIRECTORY / name
+
+    def write_icon(self, name: str, body: bytes) -> Path:
+        path = self.icon_path(name)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(body)
+        return path
 
     def write_box_art(self, name: str, body: bytes) -> Path:
         path = self.box_art_path(name)

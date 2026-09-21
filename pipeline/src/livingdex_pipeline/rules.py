@@ -33,7 +33,13 @@ def _obtainable_in(dataset: Dataset, game_id: str) -> set[tuple[str, str | None]
 
 
 class EveryEntryHasAMethod:
-    """A dex entry nothing can produce is either a hole in the data or a stated fact."""
+    """A dex entry nothing can produce is either a hole in the data or a stated fact.
+
+    A game nothing at all can be obtained in is reported once rather than once per entry: that
+    is a game whose encounters have not been gathered yet, and two hundred identical errors say
+    the same thing as one while burying everything else in the report. The build fails either
+    way, because the game is not finished either way.
+    """
 
     name = "every-entry-has-a-method"
 
@@ -41,20 +47,36 @@ class EveryEntryHasAMethod:
         obtainable = _obtainable_anywhere(dataset)
 
         for game in dataset.games:
-            for entry in game.dex_entries:
-                if entry.unobtainable_reason is not None:
-                    continue
+            needed = [entry for entry in game.dex_entries if entry.unobtainable_reason is None]
+            missing = [entry for entry in needed if _target_key(entry.target) not in obtainable]
 
-                if _target_key(entry.target) not in obtainable:
-                    yield Finding(
-                        rule=self.name,
-                        severity=Severity.ERROR,
-                        game=game.game.id,
-                        message=(
-                            f"{entry.target} is in the dex at #{entry.number} but no game in the "
-                            "dataset can produce it, and it is not marked unobtainable"
-                        ),
-                    )
+            if not missing:
+                continue
+
+            # Nothing in this game's dex can be explained, and the game brought no methods of
+            # its own: it has not been worked on yet rather than having gaps.
+            if len(missing) == len(needed) and not game.acquisition_methods:
+                yield Finding(
+                    rule=self.name,
+                    severity=Severity.ERROR,
+                    game=game.game.id,
+                    message=(
+                        f"none of its {len(needed)} dex entries has a way to be obtained; this "
+                        "game's encounters have not been gathered yet"
+                    ),
+                )
+                continue
+
+            for entry in missing:
+                yield Finding(
+                    rule=self.name,
+                    severity=Severity.ERROR,
+                    game=game.game.id,
+                    message=(
+                        f"{entry.target} is in the dex at #{entry.number} but no game in the "
+                        "dataset can produce it, and it is not marked unobtainable"
+                    ),
+                )
 
 
 class NoEvolutionDeadEnds:

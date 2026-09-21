@@ -95,10 +95,42 @@ def messages(report, rule: str) -> list[str]:
 
 
 def test_an_entry_nothing_can_produce_is_an_error() -> None:
-    report = validate(dataset(games=[game("platinum", entries=[entry("platinum", "chimchar", 4)])]))
+    # One gap in a game that has other methods: the entry is named, because that is what a gap
+    # needs to be findable.
+    data = dataset(
+        games=[
+            game(
+                "platinum",
+                entries=[entry("platinum", "chimchar", 4), entry("platinum", "starly", 16)],
+                methods=[gift("platinum", "starly")],
+            )
+        ]
+    )
+
+    report = validate(data)
 
     assert not report.ok
     assert "chimchar" in messages(report, "every-entry-has-a-method")[0]
+
+
+def test_a_game_nothing_can_be_obtained_in_is_reported_once() -> None:
+    # A dex list written before its encounters - which is how Phase 2 goes - should read as one
+    # unfinished game rather than as two hundred separate faults.
+    data = dataset(
+        games=[
+            game(
+                "platinum",
+                entries=[entry("platinum", "chimchar", 4), entry("platinum", "starly", 16)],
+            )
+        ]
+    )
+
+    report = validate(data)
+    found = messages(report, "every-entry-has-a-method")
+
+    assert not report.ok
+    assert len(found) == 1
+    assert "none of its 2 dex entries" in found[0]
 
 
 def test_an_entry_with_a_method_here_is_fine() -> None:

@@ -42,6 +42,39 @@ class PokeApiClient:
             evolution_chain=self._evolution_chain_id(raw),
         )
 
+    def pokedex(self, name: str, *, refresh: bool = False) -> list[tuple[int, str]]:
+        """One regional dex as (number in that dex, species name), in its own order.
+
+        PokeAPI keeps the regional dexes as their games list them, which is exactly what a game
+        file needs: Hoenn starts at Treecko, not at Bulbasaur.
+        """
+        raw = self.resource(f"pokedex/{name}", refresh=refresh)
+
+        return sorted(
+            (entry["entry_number"], entry["pokemon_species"]["name"])
+            for entry in raw.get("pokemon_entries", [])
+        )
+
+    def default_pokemon(self, species: str, *, refresh: bool = False) -> str:
+        """The name of a species' default form.
+
+        Encounters hang off a Pokemon, not a species, and for anything with forms the two are
+        spelled differently: the species is ``deoxys``, the Pokemon is ``deoxys-normal``, and
+        asking for the species by name is a 404.
+        """
+        raw = self.resource(f"pokemon-species/{species}", refresh=refresh)
+        default = next((one for one in raw.get("varieties", []) if one.get("is_default")), None)
+
+        return default["pokemon"]["name"] if default else species
+
+    def encounters(self, pokemon: str, *, refresh: bool = False) -> list[Any]:
+        """Where one Pokemon is met in the wild, per version, as PokeAPI records it.
+
+        This is the games' own encounter table, which is why it is asked for here rather than
+        scraped: area, method, level range and slot chance, already structured.
+        """
+        return self.resource(f"pokemon/{pokemon}/encounters", refresh=refresh)
+
     def sprite_url(self, species_id: int) -> str:
         """The front-facing sprite for a species, by National Dex number."""
         return (

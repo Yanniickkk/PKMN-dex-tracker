@@ -16,6 +16,7 @@ from .boxart import ARCHIVES_MIN_INTERVAL, BoxArtError, fetch_box_art
 from .emit import DatasetWriter, read_dataset, stamp_for
 from .games import BuildContext, GameRegistry, UnknownGameError
 from .http import PoliteClient, RobotsDisallowed
+from .icons import fetch_icons
 from .merge import MergeResult
 from .models import EvolutionRule, Form, Species, TransferEdge
 from .pokeapi import PokeApiClient
@@ -46,6 +47,8 @@ class BuildResult:
     written: list[Path] = field(default_factory=list)
     validation: ValidationReport | None = None
     merge: MergeResult | None = None
+    #: Edges a game declared whose other end is not in the dataset yet, as (declared by, edge).
+    held_back_edges: list[tuple[str, TransferEdge]] = field(default_factory=list)
 
     @property
     def ok(self) -> bool:
@@ -53,6 +56,16 @@ class BuildResult:
 
     def summary(self) -> str:
         lines = [f"wrote {len(self.written)} file(s) to {self.dataset_root}"]
+
+        if self.held_back_edges:
+            # Named rather than counted: a game id that will never exist because it is misspelt
+            # reads exactly like one that has not been written yet, and the names are what tell
+            # the two apart.
+            waiting = ", ".join(f"{edge.from_} -> {edge.to}" for _, edge in self.held_back_edges)
+            lines.append(
+                f"{len(self.held_back_edges)} edge(s) waiting for a game that is not in the "
+                f"dataset yet: {waiting}"
+            )
 
         if self.merge is not None and self.merge.conflicts:
             lines.append(f"{len(self.merge.conflicts)} source conflict(s); see {CONFLICT_LOG}")
@@ -75,6 +88,7 @@ class Build:
     refresh: bool = False
     sprites: bool = True
     box_art: bool = True
+    icons: bool = True
     registry: GameRegistry = field(default_factory=default_registry)
 
     def run(self, game_id: str | None = None) -> BuildResult:
@@ -87,8 +101,27 @@ class Build:
         writer = DatasetWriter(self.dataset_root)
         result = BuildResult(dataset_root=self.dataset_root)
 
+        # One client for the whole run rather than one per step: it rate limits per host and
+        # keys its cache by full URL, and the game builders need it as much as the shared
+        # tables do.
+        client = PoliteClient(self.cache_root / "http", min_interval_seconds=POKEAPI_MIN_INTERVAL)
+        api = PokeApiClient(client)
+
+        try:
+            return self._run(game_id, writer, result, client, api)
+        finally:
+            client.close()
+
+    def _run(
+        self,
+        game_id: str | None,
+        writer: DatasetWriter,
+        result: BuildResult,
+        client: PoliteClient,
+        api: PokeApiClient,
+    ) -> BuildResult:
         if game_id is None:
-            result.written.extend(self._build_shared(writer))
+            result.written.extend(self._build_shared(writer, client, api))
         elif not (self.dataset_root / "species.json").exists():
             raise BuildError(
                 f"cannot build {game_id} on its own: the shared tables are missing. "
@@ -102,7 +135,9 @@ class Build:
 
         for wanted_id in wanted:
             try:
-                data = self.registry.build(BuildContext(game_id=wanted_id, refresh=self.refresh))
+                data = self.registry.build(
+                    BuildContext(game_id=wanted_id, refresh=self.refresh, api=api)
+                )
             except UnknownGameError as error:
                 raise BuildError(str(error)) from error
 
@@ -116,24 +151,23 @@ class Build:
         stamp = stamp_for(self.version, self.built_on)
         result.written.append(writer.write_index(stamp, built_games))
 
+        result.held_back_edges = self.registry.held_back_edges
         result.validation = self._validate()
         result.validation.write(self.dataset_root / VALIDATION_REPORT)
         result.written.append(self.dataset_root / VALIDATION_REPORT)
 
         return result
 
-    def _build_shared(self, writer: DatasetWriter) -> list[Path]:
+    def _build_shared(
+        self,
+        writer: DatasetWriter,
+        client: PoliteClient,
+        api: PokeApiClient,
+    ) -> list[Path]:
         """The tables every game shares: species, forms, evolution rules, the transfer graph."""
-        # One client for both the API and the sprite host: it rate limits per host and keys the
-        # cache by full URL, so they do not interfere.
-        with PoliteClient(
-            self.cache_root / "http",
-            min_interval_seconds=POKEAPI_MIN_INTERVAL,
-        ) as client:
-            api = PokeApiClient(client)
-            species = self._fetch_species(api)
-
-            sprite_paths = self._fetch_sprites(api, client, species, writer) if self.sprites else []
+        species = self._fetch_species(api)
+        sprite_paths = self._fetch_sprites(api, client, species, writer) if self.sprites else []
+        icon_paths = self._fetch_icons(client, writer) if self.icons else []
 
         # Forms and evolution rules are still Phase 2 work; the files are written empty so the
         # dataset is always a complete set rather than a partial one. The transfer graph is
@@ -142,7 +176,16 @@ class Build:
         rules: list[EvolutionRule] = []
         edges: list[TransferEdge] = self.registry.edges
 
+        for game_id, held in self.registry.held_back_edges:
+            log.info(
+                "%s declares %s -> %s, which is not in the dataset yet; the edge is held back",
+                game_id,
+                held.from_,
+                held.to,
+            )
+
         return [
+            *icon_paths,
             *sprite_paths,
             writer.write_species(species),
             writer.write_forms(forms),
@@ -184,6 +227,13 @@ class Build:
             written.append(writer.write_sprite(f"{one.id}.png", body))
 
         return written
+
+    def _fetch_icons(self, client: PoliteClient, writer: DatasetWriter) -> list[Path]:
+        """One icon per way of getting a Pokemon. Shared by every game, so built with the tables."""
+        return [
+            writer.write_icon(icon.file_name, icon.body)
+            for icon in fetch_icons(client, refresh=self.refresh)
+        ]
 
     def _fetch_box_art(self, game_ids: list[str], writer: DatasetWriter) -> list[Path]:
         """One cover per game, so the picker can show a game by its box rather than its name."""
