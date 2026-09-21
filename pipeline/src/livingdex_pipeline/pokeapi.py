@@ -1,0 +1,78 @@
+"""A thin PokeAPI client.
+
+PokeAPI is the spine of the dataset: it supplies species, National Dex numbers, types,
+evolution chains and sprites, and its ids are what everything scraped elsewhere gets matched
+onto. It is deliberately not asked for encounter data — that is what the scrapers are for,
+because per-game encounter detail is where PokeAPI is thinnest.
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+from .http import PoliteClient
+from .models import PokemonType, Species
+
+BASE_URL = "https://pokeapi.co/api/v2"
+
+
+class PokeApiClient:
+    def __init__(self, client: PoliteClient, base_url: str = BASE_URL) -> None:
+        self._client = client
+        self._base_url = base_url.rstrip("/")
+
+    def resource(self, path: str, *, refresh: bool = False) -> Any:
+        return self._client.get_json(f"{self._base_url}/{path.lstrip('/')}", refresh=refresh)
+
+    def species_list(self, *, limit: int = 2000, refresh: bool = False) -> list[dict[str, Any]]:
+        """Every species, name and url, in National Dex order."""
+        page = self.resource(f"pokemon-species?limit={limit}", refresh=refresh)
+        return list(page.get("results", []))
+
+    def species(self, name: str, *, refresh: bool = False) -> Species:
+        """One species, as the dataset models it."""
+        raw = self.resource(f"pokemon-species/{name}", refresh=refresh)
+        default_variety = self._default_variety(raw, refresh=refresh)
+
+        return Species(
+            id=raw["name"],
+            national_dex_number=raw["id"],
+            name=self._display_name(raw),
+            types=[PokemonType(entry["type"]["name"]) for entry in default_variety["types"]],
+            evolution_chain=self._evolution_chain_id(raw),
+        )
+
+    def sprite_url(self, species_id: int) -> str:
+        """The front-facing sprite for a species, by National Dex number."""
+        return (
+            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
+            f"{species_id}.png"
+        )
+
+    def _default_variety(self, raw: dict[str, Any], *, refresh: bool) -> dict[str, Any]:
+        """Types live on the Pokemon, not the species, so the default variety is fetched."""
+        varieties = raw.get("varieties", [])
+        default = next((one for one in varieties if one.get("is_default")), None)
+        if default is None:
+            return {"types": []}
+
+        return self._client.get_json(default["pokemon"]["url"], refresh=refresh)
+
+    @staticmethod
+    def _display_name(raw: dict[str, Any]) -> str:
+        for entry in raw.get("names", []):
+            if entry.get("language", {}).get("name") == "en":
+                return entry["name"]
+
+        # Fall back to the slug rather than failing: a missing English name is a gap in the
+        # source, not a reason to abandon a build.
+        return str(raw["name"]).replace("-", " ").title()
+
+    @staticmethod
+    def _evolution_chain_id(raw: dict[str, Any]) -> str:
+        chain = raw.get("evolution_chain")
+        if not chain:
+            # A species with no chain is its own chain, which keeps the field non-null.
+            return str(raw["name"])
+
+        return chain["url"].rstrip("/").rsplit("/", 1)[-1]

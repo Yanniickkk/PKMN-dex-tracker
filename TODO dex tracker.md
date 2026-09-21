@@ -28,13 +28,12 @@ Phase 2 feeds it one game at a time.
     Runtime, and a Windows 10 box.
 
 ### 0.6 Pipeline skeleton
-- [ ] PokéAPI client with on-disk cache
-- [ ] Scraper base with on-disk cache and polite rate limiting
-- [ ] Normaliser: scraped records matched onto PokéAPI ids
-- [ ] Merge step with precedence rules and a conflict log
 - [ ] Validator with the checks listed in 0.7
-- [ ] Emit dataset + sprites, stamped with version and build date
-- [ ] `build --game <id>` so a single game can be rebuilt without touching the rest
+  - The harness is built and wired into every build: what a rule is, what it reports, and
+    a report written beside the dataset. No rules yet, and a build with none says "no rules
+    ran, so nothing was checked" rather than looking clean. The rules are 0.7 below.
+  - Note for 0.7: the first rule on that list needs dex entries to be markable as
+    deliberately unobtainable, and nothing in the schema says that yet.
 
 ### 0.7 Validation rules
 - [ ] Every dex entry has a method, or is explicitly flagged unobtainable

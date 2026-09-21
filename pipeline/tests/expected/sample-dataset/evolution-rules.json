@@ -1,0 +1,34 @@
+[
+  {
+    "id": "chimchar-to-monferno",
+    "from": {
+      "species": "chimchar"
+    },
+    "to": {
+      "species": "monferno"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 14
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-leafeon",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "leafeon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Eterna Forest"
+      }
+    ]
+  }
+]

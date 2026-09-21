@@ -1,0 +1,30 @@
+{
+  "game": {
+    "id": "sword",
+    "title": "Pokemon Sword",
+    "version": "Sword",
+    "generation": 8,
+    "region": "Galar",
+    "release": "cartridge",
+    "dexSource": "gameDex",
+    "pairPartner": "shield"
+  },
+  "dexEntries": [
+    {
+      "game": "sword",
+      "target": {
+        "species": "vulpix"
+      },
+      "number": 100
+    },
+    {
+      "game": "sword",
+      "target": {
+        "species": "vulpix",
+        "form": "vulpix-alola"
+      },
+      "number": 101
+    }
+  ],
+  "acquisitionMethods": []
+}

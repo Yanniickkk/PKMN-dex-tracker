@@ -1,0 +1,95 @@
+{
+  "game": {
+    "id": "platinum",
+    "title": "Pokemon Platinum Version",
+    "version": "Platinum",
+    "generation": 4,
+    "region": "Sinnoh",
+    "release": "cartridge",
+    "nationalDexThrough": 493,
+    "dexSource": "nationalDex"
+  },
+  "dexEntries": [
+    {
+      "game": "platinum",
+      "target": {
+        "species": "chimchar"
+      },
+      "number": 4
+    },
+    {
+      "game": "platinum",
+      "target": {
+        "species": "monferno"
+      },
+      "number": 5
+    }
+  ],
+  "acquisitionMethods": [
+    {
+      "kind": "gift",
+      "game": "platinum",
+      "target": {
+        "species": "chimchar"
+      },
+      "giftKind": "starter",
+      "location": "Route 201",
+      "npc": "Professor Rowan",
+      "level": 5,
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "platinum",
+      "target": {
+        "species": "starly"
+      },
+      "location": "Route 202",
+      "method": "walk",
+      "levels": {
+        "minimum": 3,
+        "maximum": 4
+      },
+      "ratePercent": 55.0,
+      "timeOfDay": "morning",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "platinum",
+      "target": {
+        "species": "monferno"
+      },
+      "rule": "chimchar-to-monferno",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "platinum",
+      "target": {
+        "species": "chatot"
+      },
+      "location": "Eterna City",
+      "wants": {
+        "species": "buizel"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
+    }
+  ]
+}

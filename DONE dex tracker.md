@@ -245,7 +245,51 @@ the new field, and there is no migration cost because no dataset exists yet.
 
 ### 0.6 Pipeline skeleton
 
-_Nothing yet._
+`pipeline/src/livingdex_pipeline/`, with 47 tests. The pipeline now runs end to end against the
+real PokeAPI.
+
+- [x] PokeAPI client with on-disk cache - 2026-09-21
+  - Species, National Dex numbers, types, evolution chains and sprites. Deliberately not asked
+    for encounter data: per-game encounter detail is where PokeAPI is thinnest, and that is what
+    the scrapers are for.
+  - Verified against the live API: a five-species build made 11 requests, and the same build
+    again made zero.
+- [x] Scraper base with on-disk cache and polite rate limiting - 2026-09-21
+  - Everything downloaded goes through one client, which caches with no expiry, rate limits per
+    host, and reads `robots.txt` before requesting a page - refusing rather than working around
+    a `Disallow`. The User-Agent names the project and links to the repository.
+  - A scraper produces loose records naming things the way its source names them. It does not
+    decide what is true and does not know about PokeAPI ids. Keeping that apart from the
+    normaliser and the merger is what makes a disagreement visible instead of silently settled
+    by whichever source ran last.
+- [x] Normaliser: scraped records matched onto PokeAPI ids - 2026-09-21
+  - Two bugs the tests caught: an apostrophe was becoming a separator, so Farfetch'd came out as
+    `farfetch-d` instead of `farfetchd`; and the gender symbols were being stripped by the ASCII
+    pass before they could be spelled out, collapsing Nidoran-female and Nidoran-male into one
+    name.
+  - A name nothing matches is reported, not guessed at. A form the dataset does not know falls
+    back to the base species rather than inventing an id.
+- [x] Merge step with precedence rules and a conflict log - 2026-09-21
+  - Sources are ranked once, in the scraper registry, and that ranking settles everything.
+    Registering a source is therefore also a statement about how far it is trusted.
+  - The losing value is written to `conflicts.json` rather than dropped: that is how a wrong
+    encounter rate gets found later, and how a real disagreement is told apart from a scraper
+    bug. A source that simply says nothing about a field is not disagreeing.
+- [x] Emit dataset + sprites, stamped with version and build date - 2026-09-21
+  - Two-space indent, LF, sorted where order carries no meaning, nulls left out entirely. The
+    dataset is committed, so a rebuild has to produce a readable diff.
+  - One battle sprite per species, so the app never touches the network.
+- [x] `build --game <id>` so a single game can be rebuilt without touching the rest - 2026-09-21
+  - Rewrites that game's file and the index, reads the shared tables rather than rebuilding
+    them, and refuses if the shared tables are not there yet. A game with no registered builder
+    is named, along with the ones that are registered, instead of writing an empty file that
+    looks finished.
+
+The cross-language contract is now tested. `pipeline/tests/expected/sample-dataset/` is a
+committed sample using every shape in the schema: the Python suite regenerates it and fails if
+it drifted, and a C# test reads the same files and fails if they no longer deserialise. The two
+halves share no code, so this file format is the only thing holding them together, and it is now
+the thing that breaks a build when it changes.
 
 ### 0.7 Validation rules
 

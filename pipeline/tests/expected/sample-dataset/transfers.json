@@ -1,0 +1,31 @@
+[
+  {
+    "from": "diamond",
+    "to": "platinum",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "emerald",
+    "to": "platinum",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
+    "from": "home",
+    "to": "sword",
+    "mechanism": "home",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "presentInTargetDex"
+    }
+  }
+]

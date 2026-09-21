@@ -1,0 +1,24 @@
+[
+  {
+    "id": "pikachu-female",
+    "species": "pikachu",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "platinum",
+      "sword"
+    ]
+  },
+  {
+    "id": "vulpix-alola",
+    "species": "vulpix",
+    "name": "Alolan",
+    "kind": "regional",
+    "games": [
+      "sword"
+    ],
+    "types": [
+      "ice"
+    ]
+  }
+]

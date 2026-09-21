@@ -10,3 +10,9 @@
 *.py      text eol=lf
 *.toml    text eol=lf
 *.sh      text eol=lf
+
+# The pipeline writes these with LF on purpose and its tests compare them byte for byte.
+# Without this, text=auto checks them out as CRLF on Windows and the contract test fails
+# on a fresh clone.
+dataset/** text eol=lf
+pipeline/tests/expected/** text eol=lf

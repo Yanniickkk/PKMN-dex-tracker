@@ -107,11 +107,49 @@ Then, from `pipeline/`:
 ../.venv/Scripts/ruff.exe check . && ../.venv/Scripts/ruff.exe format --check . && ../.venv/Scripts/python.exe -m pytest
 ```
 
-Build the dataset (not implemented yet — see Phase 0.6):
+Build the dataset. This writes `dataset/`, including sprites:
+
+```bash
+./.venv/Scripts/livingdex-pipeline.exe build
+```
+
+A quick smoke build, without waiting for a thousand species:
+
+```bash
+./.venv/Scripts/livingdex-pipeline.exe -v build --limit 20 --no-sprites
+```
+
+Rebuild one game, leaving every other game file alone:
 
 ```bash
 ./.venv/Scripts/livingdex-pipeline.exe build --game platinum
 ```
+
+Per-game builders are registered in `pipeline/src/livingdex_pipeline/games.py`; that registry
+is empty until Phase 2, so `--game` currently says which games it does know rather than writing
+an empty file.
+
+## Fetching politely
+
+Everything the pipeline downloads goes through one client, which:
+
+- caches every response on disk, with no expiry — dex numbers and encounter tables are
+  historical facts, so a rebuild costs nothing and `--refresh` is the way to re-ask;
+- rate limits per host, so a source doing us a favour by existing is not hammered;
+- reads `robots.txt` before requesting a page, and refuses rather than working around a
+  `Disallow`. A host with no `robots.txt` counts as allowing us, which is what the standard
+  says, and the rate limit still applies.
+
+The User-Agent names the project and links to this repository, so anyone watching their logs
+can tell who we are and where to complain.
+
+## How the two halves stay in step
+
+`app/` and `pipeline/` share no code — only the JSON. `pipeline/tests/expected/sample-dataset/`
+is a committed sample using every shape in the schema. The Python suite regenerates it and fails
+if it has drifted; a C# test reads the same files and fails if they no longer deserialise. A
+change to one side without the other therefore breaks a build rather than surfacing in the app
+months later.
 
 ## The player's data file
 

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "vulpix",
+    "nationalDexNumber": 37,
+    "name": "Vulpix",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "vulpix"
+  },
+  {
+    "id": "chimchar",
+    "nationalDexNumber": 390,
+    "name": "Chimchar",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "chimchar"
+  },
+  {
+    "id": "monferno",
+    "nationalDexNumber": 391,
+    "name": "Monferno",
+    "types": [
+      "fire",
+      "fighting"
+    ],
+    "evolutionChain": "chimchar"
+  }
+]
