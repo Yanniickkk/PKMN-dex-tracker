@@ -343,7 +343,422 @@ wire-format fixture.
 
 ## Phase 1 — First vertical slice
 
-_Nothing yet._
+- [x] Collection setup wizard: name, main game, linked games, the form selection - 2026-09-21
+  - Three steps, as asked: name and main game, linked games, forms. The rules live in
+    `CollectionDraft` in Core rather than in the Razor file, so what counts as a valid collection
+    is tested without a browser; 17 tests cover it.
+  - A name is required and has to be unused, ignoring case: two collections called "Living dex"
+    would be a coin toss every time the player picks one. Linking no games at all is a valid
+    answer, and linking the main game to itself is refused. Every form combination is allowed,
+    including none.
+  - Going back never validates. A step you have broken is exactly the step you need to retreat
+    from.
+  - Saving appends and retries once against whatever is on disk, because appending cannot lose
+    anyone else's work. A second failure says so rather than looping.
+  - Walked through in the running app end to end: the empty form refuses with both reasons
+    listed, the duplicate name is caught, and the collection lands in the data file with the
+    form switches the player set.
+
+- [x] Linked-game picker filtered by the transfer graph, disabled entries show the reason - 2026-09-21
+  - The graph needed a question it could not answer: "could this game ever feed that one",
+    with no species in mind. `RoutesBetween(from, to)` is that question. A game can be a
+    perfectly good feeder while refusing some of what lives in it - Emerald feeds Platinum even
+    though Turtwig cannot make the Pal Park hop - so the picker must not ask the species-aware
+    version.
+  - Games that cannot feed are listed and disabled rather than left out. A picker that quietly
+    omits them leaves the player wondering whether the app forgot their game or transferring is
+    simply impossible.
+  - The graph explains itself with game ids, which is right for a log and wrong for a screen, so
+    the page writes the sentence from the reason and the titles it has. Enabled entries say how
+    the feed would happen, for example "via Pal Park" - the same data, and it answers why
+    something *is* available.
+  - Changing the main game drops links that the change makes impossible. Verified in the app:
+    ticking Emerald under Platinum and then switching the main game to Emerald leaves nothing
+    ticked, rather than carrying a link into a collection that cannot work.
+
+- [x] Grid screen: virtualised, battle sprites, dex number, name - 2026-09-21
+  - The dataset is real now: a full pipeline run fetched all 1025 species and their sprites,
+    1.04 MB of PNG in total, and validation stayed clean. Platinum's dex builds straight out of
+    `nationalDexThrough`, so its 493 entries need no per-game dex file.
+  - Virtualising rows rather than tiles. `Virtualize` inserts spacer elements, and a CSS grid
+    would lay those out as if they were cells; a row is a grid of its own, so the spacers sit
+    between rows where they belong. The column count is fixed rather than measured, because
+    virtualising needs a row height it can trust and a count that changed with the window would
+    invalidate that on every resize.
+  - Sprites are served to the WebView by a second embedded-resource provider mapped at
+    `dataset/`, so `sprites/pikachu.png` finds the embedded file. They stay dataset output
+    rather than being copied into `wwwroot`.
+  - Checked in the running app: 493 tiles, scrolled to #493 Arceus with no drift, and the last
+    partial row renders correctly.
+  - `DatasetLoader` had no tests. It has seven now, running against the pipeline's own sample
+    dataset embedded into the test assembly the same way the real one is embedded into the app.
+
+Two risks found and closed while doing this:
+
+- `/collections/new` and `/collections/{id}` both match the same URL. Blazor prefers the literal
+  segment, so the wizard still wins - verified in the app rather than assumed, because the
+  failure would have been the grid quietly appearing instead of the wizard.
+- `.gitattributes` said `dataset/** text eol=lf`, which would have made git rewrite line endings
+  inside all 1025 PNGs and corrupt every one of them on checkout. They are marked binary now.
+
+Two things this item needed that the list does not mention:
+
+- The app had no way to read a dataset. `DatasetLoader` reads it out of the assembly, embedded
+  the same way the web assets are, for the same reason: the app is one file and half a delivery
+  should not be possible. The MSBuild for it needs qualified metadata - a bare `%(Filename)`
+  there batches over every `EmbeddedResource` already in the project and produces a cross
+  product.
+- There were no games to choose. Platinum and Emerald are now registered in the pipeline with
+  their entities and the Pal Park edge between them, which is Phase 2 step 1 for those two. That
+  exposed a real ordering bug: a full build wrote the transfer graph without building any games,
+  so every edge pointed at a game that was not in the dataset. The validator caught it. A build
+  with no `--game` now builds every registered game.
+
+- [x] Tile status colours for the three states, plus a non-colour badge or icon - 2026-09-21
+  - The states are not told apart by colour alone, because a good share of players cannot rely
+    on it and a grid of a thousand tiles is exactly where that bites. Not caught is the only
+    greyed-out sprite; the two caught states are the only ones with a badge, and those badges
+    are different shapes - a tick for done, an arrow for still to transfer. Turn the colour off
+    entirely and the grid still reads.
+  - No badge at all on a missing entry, deliberately. A hollow marker on nine hundred tiles is
+    noise, and the greyed sprite already says it.
+  - Every tile also carries the state in words, in its tooltip and in text only a screen reader
+    sees. The wording is `CaptureStatusNames` in Core, not in the page, because the detail popup
+    and the filters have to say the same thing. It names the game - "In Emerald, still to
+    transfer" - rather than the app's own word for the state.
+  - `CaptureIndex` turns the file's flat record list into a lookup per collection. The grid asks
+    a thousand times while it scrolls, and a list scan per tile would be a thousand scans of
+    every record in the file. It also settles two things the file can contain but the app never
+    writes: records belonging to another collection are skipped, and two records for one entry
+    leave the later one standing rather than throwing halfway through a render.
+  - An entry with no record at all is "not caught". A fresh collection has no records, and that
+    has to mean an empty dex rather than a missing one.
+  - Checked in the running app in both themes against a seeded file: twelve entries in the main
+    game, eight held in Emerald, the rest untouched. 10 tests.
+
+- [x] Progress counter, with a secondary "still to transfer" figure - 2026-09-21
+  - "12 of 493 in Platinum, 2%", with "8 still to transfer" set apart at the other end of the
+    line. The main figure counts only what is in the main game, because that is what finishing a
+    living dex means; the secondary figure is the work the player can do without catching
+    anything new.
+  - A bar under it in the same two colours as the tiles, green for home and amber for still to
+    transfer. It is decoration: every figure it shows is already in the sentence above it, so it
+    is hidden from screen readers rather than duplicated.
+  - Counted over the dex the collection shows, never over the records in the file. A file keeps
+    records the current dex has no line for - a form switched off since, or one caught before
+    the main game changed - and counting those would push the figure past the total.
+  - The percentage never rounds up to 100 while something is missing, and never down to 0 once
+    something is done. A dex of 1025 reporting "100%" with one Pokemon left is the most annoying
+    thing a tracker can do; 1024 of 1025 reads as 99%.
+  - A finished dex says "All 386 in Emerald" rather than "386 of 386, 100%".
+  - The bar width is written with the invariant culture. On this Dutch machine the default would
+    have produced "2,4%", which is not a length and would have silently done nothing.
+  - 8 tests, and both ends checked in the running app: a part-done Platinum dex in dark, and a
+    complete Emerald dex in light.
+
+- [x] Filters: name search, still to catch, not yet transferred, available in game - 2026-09-21
+  - The two status switches widen the result and everything else narrows it. An entry cannot be
+    both still to catch and not yet transferred, so reading those two as "and" would always
+    return nothing; ticking both means "everything not done". Ticking neither is not "show
+    nothing", it is "do not ask about status at all".
+  - "Available in Platinum" is the main game only. That is the question a player has while
+    playing: combined with "still to catch" it answers "what can I go and get right now". The
+    linked-game version of the same question is what the transfer route in the detail popup is
+    for. One line to change if the other reading turns out to be the wanted one.
+  - The switch is offered but disabled while the dataset has no encounter data for the game,
+    with a title saying so. Enabled, it would answer "nothing is available here", which is a lie
+    rather than an empty result. It lights up on its own once Phase 2 fills that game in.
+  - The dataset carried acquisition methods in its files but threw them away on load:
+    `ReferenceData` had nowhere to put them. It has `MethodsFor(game, target)` and
+    `HasAcquisitionData(game)` now, which the detail popup needs next anyway.
+  - The filter resets when you open another collection. Walking into a different dex with the
+    previous one's search still in the box reads as a bug.
+  - 14 tests on the filter rules and 3 on the new lookups. Checked in the app: "chu" finds four,
+    "not yet transferred" finds exactly the eight the counter promises, both switches give 481
+    of 493, and a search that matches nothing says so instead of showing an empty grid frame.
+
+An accent-folding bug worth naming, because it would have bitten anywhere else too:
+
+- The search folds accents so "flabebe" finds Flabébé. The obvious implementation - decompose to
+  FormD and drop the combining marks - compiles, runs, and does nothing at all here: this app
+  sets `InvariantGlobalization`, which keeps the single file small but makes `String.Normalize`
+  return its input unchanged. The accents are mapped by hand now, with a test that pins the two
+  tables to the same length so a later edit cannot silently shift every mapping. The search also
+  matches the species id, which is already punctuation-free, so "farfetchd" finds Farfetch'd.
+
+- [x] Detail popup: opens for caught and uncaught entries alike - 2026-09-21
+  - Nothing in it depends on status. The entry you have not found yet is exactly the one you
+    need to read about, so an uncaught entry opens the same popup as a caught one - and shows
+    its sprite in full colour, where the grid greys it.
+  - A real `<dialog>` opened with `showModal()`, not a div pretending to be one. That hands over
+    focus trapping, Escape, the backdrop, and returning focus to the tile that opened it. All
+    four verified in the app: Escape closes it, and Enter straight afterwards reopens the same
+    entry, which is only true if focus went back where it came from.
+  - The tile is a `<button>` now rather than an `<article>`. It opens something, so it says so to
+    the keyboard and to a screen reader instead of being a div with a click handler.
+  - Closing is handled on the dialog's own close event rather than in each thing that closes it.
+    Escape and the backdrop do not go through any of our code, so the selection would otherwise
+    outlive the popup that showed it.
+  - What it shows for now: sprite, number, name, typing, where it is, and the catch date and
+    note when there are any. The acquisition sections are the next items; while the dataset has
+    no encounter data for the game it says so in place of them, rather than looking empty for no
+    reason.
+  - Which types an entry has moved into `ReferenceData.TypesOf`, with 4 tests. A form's types
+    are stored only when they differ from the species, so null there means "the same as the
+    species" and not "none" - Alolan Vulpix is Ice, an odd-looking Vivillon is still Vivillon.
+
+- [x] Acquisition sections ordered gift → wild → evolution → trade - 2026-09-21
+  - The order runs from the surest way to the least sure: a starter you are handed cannot be
+    missed, a wild slot is a chance, an evolution needs something else first, and a trade needs
+    something to trade away. Reading top to bottom, the player meets the option that always
+    works first.
+  - The order lives in one place, the `AcquisitionKind` enum, and the grouping sorts by its
+    values. A second list of the same four names would be a second thing to keep in step.
+  - A kind nobody has a method for is left out rather than shown as an empty heading.
+  - The sections gather methods from the main game *and* the linked games, because "how do I get
+    this" is a question about the whole collection. Which of those comes first inside a section
+    is the next item; for now they keep the order the dataset gives.
+  - An empty list says which kind of empty it is. "The dataset has no encounter data for
+    Platinum yet" and "no recorded way to get this in your games" are different answers, and the
+    second one is a real fact about the Pokemon rather than a gap in ours.
+  - `ReferenceData` gained `NameOf(target)` and `FindEvolutionRule(id)`. `DexBuilder` now uses
+    `NameOf` too, so "Vulpix (Alolan)" is spelled in exactly one place instead of two.
+  - 6 tests on the grouping and the names. Seen in the app against a seeded dataset: five methods
+    handed in backwards came out as gift, wild, wild, evolution, trade, with the Emerald wild
+    slot listed under the same heading as the Platinum ones and named as Emerald. The seeded
+    files were restored afterwards; the real dataset still has no acquisition data.
+
+- [x] Main-game methods before linked-game methods within each section - 2026-09-21
+  - Inside a section the methods are sorted by game: the main game first, then the linked games
+    in the order the player linked them. Where the main game can supply something, that is the
+    answer; a linked game means catching it there and then moving it.
+  - The sort is stable, so two methods from one game keep the order the dataset gave them. The
+    games move, nothing else does.
+  - A method from a game the collection does not include sorts last rather than first. It should
+    not happen, but a dataset can hold one, and the failure has to be "an odd line at the bottom"
+    rather than "the main game pushed off the top".
+  - The page gathers per game and would already hand them over in that order, so this is belt
+    and braces - but the order is now decided in one place instead of falling out of how the
+    caller happens to loop.
+  - 5 tests. No fresh screenshot for this one: the machine was in use and the app window kept
+    being minimised, so rather than keep stealing focus I left it at the unit tests and the
+    screenshot from the previous item, which already shows a linked-game slot listed under the
+    same heading as the main game's.
+
+- [x] Per-method detail fields rendered per the spec table - 2026-09-21
+  - **Read this if the fields look wrong.** The specification is not in the repository, so there
+    was no table to render from. Rather than stop, the fields were taken from the schema itself,
+    which is the same information written twice over: every field an `AcquisitionMethod` carries
+    is shown, in a fixed order per kind, and anything the dataset does not know is left out
+    instead of printed empty. If the real table differs, it is one list per kind to change, in
+    `FieldsOf` in `CollectionGrid.razor`.
+  - Gift: where, from whom, level, what has to be true first.
+  - Wild: how it is started, the level range, the slot chance, and time of day, season or
+    weather when the slot is restricted to one.
+  - Evolution: the rule as one sentence, for example "Level up, with friendship 220 or higher,
+    during the day".
+  - Trade: where, with whom, what the game wants in return, and what has to be true first.
+  - Every method also shows where the claim came from and when the pipeline read it. That is
+    what the citation on each record is for: a disputed encounter rate can be traced without
+    rerunning anything.
+  - The evolution wording is `EvolutionNames` in Core, with 6 tests. Conditions read as
+    fragments that follow the trigger, and each condition type has its own wording rather than a
+    dump of the record - including the prose escape hatch, which is printed as written.
+  - Seen in the app against a seeded dataset covering all four kinds, then restored. The same
+    screenshot shows the previous item working: Emerald's Safari Zone slot sits under the two
+    Platinum slots in the wild section.
+
+- [x] Evolution drill-down: click through to the previous stage, back control, breadcrumb - 2026-09-21
+  - The evolution line in the popup is the way down: "From Pikachu" opens Pikachu in the same
+    popup, with its own sections, so the question "and how do I get *that*" is answered without
+    losing your place. Only evolutions lead anywhere; a wild slot or a gift is the end of the
+    line and stays plain text.
+  - The path is a `DexTrail` in Core with 8 tests, not a "currently showing" field. Back drops
+    one step, a breadcrumb click drops everything after it, and going back to an entry already
+    on the trail folds it rather than lengthening it - a chain that loops cannot grow the trail
+    without end.
+  - The breadcrumb only appears once you are drilled in. One entry needs no trail to explain
+    itself.
+  - A previous stage outside the collection's dex is shown anyway, built from the reference
+    tables by `DexLines.For`, with 3 tests. A baby Pokemon the main game does not list, or a
+    form the player switched off, is exactly where the chain is most worth reading, and refusing
+    to draw it would break it there.
+  - Walked in the app on seeded data: Raichu to Pikachu to Pichu, the breadcrumb growing to
+    "Raichu > Pikachu > Pichu", then the Raichu crumb jumping straight back to the top with the
+    breadcrumb disappearing again. The seeded files were restored afterwards.
+
+- [x] Transfer route shown for non-main-game methods, alternatives collapsible - 2026-09-21
+  - A method in a linked game now carries the rest of the answer: "Then to Platinum: Pal Park".
+    Catching it there is only half the job, and the popup should not make the player go and look
+    up the other half.
+  - Nothing is shown for a method in the main game. There is nothing to move.
+  - The shortest route is the line; everything else sits behind a "1 other way" disclosure. A
+    native `<details>`, so it needs no state of ours and works from the keyboard.
+  - When no route carries this particular Pokemon, the line says it cannot be moved and prints
+    the engine's own explanation, which names the hop that refused and why - Pal Park only
+    carrying National Dex 1 to 386, say. That branch is covered by the transfer engine's tests
+    rather than by a screenshot; with the real dataset it needs a species Emerald can hold and
+    Pal Park will not carry, which does not exist yet.
+  - Routes are cached per game and entry while the popup is open. Several slots in one game
+    would otherwise each pay for the same search.
+  - New test: two edges between the same pair of games are two routes, not one. The alternatives
+    list depends on it, and nothing had pinned it before.
+  - Seen in the app on seeded data: the Emerald slot showing the route while the Platinum slot
+    above it shows none, and the disclosure opening to reveal the second way. The seeded files
+    are restored.
+
+While seeding that, a foot-gun worth knowing: a hand-written transfer edge with no `filter`
+carries nothing at all rather than everything, and says nothing about it. The pipeline always
+writes one, so only hand edits can hit this - but the failure is silent, which is the worst kind.
+Worth a validator rule if edges are ever written by hand.
+
+- [x] Capture controls: three states, holding-game prompt, catch date, note - 2026-09-21
+  - The first screen that writes to the data file. Three pills for the three states, a "held in"
+    picker that appears only for "caught elsewhere", a catch date that appears only once
+    something is caught, and a note that is always there.
+  - The state and the holding game cannot contradict each other, because the state sets the
+    game: the main game when it is home, the first linked game when it is elsewhere and none was
+    recorded, nothing at all when it is not caught. Picking a game the other way round sets the
+    state to match.
+  - "Caught elsewhere" is offered disabled, with a reason, when the collection has no linked
+    games. There is nowhere else for it to be.
+  - The discrete choices save the moment they are made; the note is held while typing and written
+    on blur, on stepping to another entry, and when the popup closes - Escape and the backdrop
+    included, because those do not pass through any of our code. A save per keystroke would
+    rewrite the whole file thirty times for one sentence.
+  - Marking something caught stamps it with today's date, so the common case needs no typing.
+    An existing date is never overwritten by it, and going back to "not caught" keeps the date
+    rather than erasing it. Today is passed into the rule rather than read from the clock inside
+    it, so it is decided once per action and can be tested.
+  - A record that ends up saying nothing - not caught, no date, no note - is deleted rather than
+    stored. Clicking a tile and unclicking it leaves the file exactly as it was. A record that
+    still carries a note or a date is kept, so an accidental click cannot throw those away.
+  - Saving retries once against what is on disk, like adding a collection, and then rebuilds the
+    grid, the badges and the counter from what was written rather than patching them separately.
+  - `CaptureEditing` in Core holds those rules with 7 tests: one record per entry, duplicates
+    collapsing when written to, other collections untouched.
+  - Walked in the app against a sandbox data file: Chimchar to "caught elsewhere" (the tile grew
+    its arrow badge and the counter went from 8 to 9 still to transfer), then a catch date typed
+    as 04/03/2026 landing in the file as 2026-03-04, then a note saved by pressing Escape. Piplup
+    to "in Platinum" (counter 12 to 13, 2% to 3%) and back to "not caught", which removed the
+    record and left the file exactly as long as before.
+
+- [x] Quick toggle on the tile itself - 2026-09-21
+  - The badge in the tile's corner is the control. Click it and the entry moves to the main game;
+    click it again and it is not caught. From an entry sitting in a linked game it means "moved
+    it", which is the step that was left to do.
+  - Deliberately not a cycle through all three states. From the grid the useful move is always
+    "it is home now" and the way back; choosing which linked game holds something is a decision,
+    and decisions belong in the popup. The button's tooltip says which of the three it will do.
+  - Marking it this way dates it today, the same as in the popup, because it goes through the
+    same rule.
+  - The tile stopped being a button and became a box with two buttons in it: one stretched over
+    the whole tile that opens the detail, and the badge above it. A button inside a button is
+    not markup a browser will accept, and the grid needed both.
+  - A not-caught entry has no badge to show, but the control still has to be there to be
+    clicked. It is a ring at a quarter strength that comes up to full on hover or focus: findable
+    without speckling a grid of a thousand tiles. The three states still read without colour -
+    grey sprite, arrow, tick.
+  - Checked in the app: the toggle flipped Spearow to caught, the tile turned green, the counter
+    went from 12 to 13 and 2% to 3%, the file gained a record with today's date - and clicking
+    the tile itself still opened the detail rather than the toggle swallowing it.
+
+- [x] Sprite caching, no runtime network calls - 2026-09-21
+  - Already true by construction, so this item was mostly about proving it and keeping it true.
+    All 1025 sprites are embedded resources in the exe - counted in the built assembly, not
+    assumed - and served by the same provider that serves the web assets. The app has no
+    `HttpClient`, and nothing it renders points at a server.
+  - Two guards that read the repository rather than a library, because what they protect is a
+    property of what ships:
+    - every species in the dataset has a sprite file beside it;
+    - no `src`, `href`, `url()`, `fetch` or `import` in the app's HTML, CSS, JavaScript or Razor
+      names an http address. A URL in a comment is prose and is left alone.
+  - The second guard was checked by breaking it on purpose: a Google Fonts stylesheet added to
+    `index.html` failed the test, and was removed again. A guard that cannot fail is worth
+    nothing.
+  - The pipeline gained a matching rule, `every-species-has-a-sprite`, at warning level. The
+    build already logged a failed sprite fetch and carried on, which is right - a hole in the
+    grid is not worth throwing a build away for - but the hole now gets counted in
+    `validation.json` instead of scrolling past in a log. A build run with `--no-sprites` says
+    nothing rather than repeating itself 1025 times. 3 tests.
+  - Caching itself needs nothing: the WebView asks for `sprites/x.png`, the provider hands back
+    an embedded resource, and there is no round trip to make faster. The cost of a rebuilt
+    dataset is a rebuilt exe, which is the trade this project already made.
+
+- [x] End-to-end check: fresh collection -> catch Chimchar -> drill Infernape -> Monferno ->
+      Chimchar - 2026-09-21
+  - Walked from an empty data file with nothing skipped: "No collections yet", the wizard
+    (name, Platinum, Emerald offered "via Pal Park" and ticked, forms), the collection written to
+    the file and listed, the grid at "0 of 493, 0%".
+  - Chimchar found by search, caught with the toggle on its tile: the tile went green, the
+    counter went to "1 of 493, 1%", and the file gained one record - in the main game, dated
+    today - and nothing else.
+  - Infernape opened from the grid, then down the chain: "From Monferno" to Monferno, "From
+    Chimchar" to Chimchar, with the breadcrumb reading Infernape > Monferno > Chimchar and each
+    step showing its own evolution rule ("Level up, from level 36" and "from level 14").
+  - The last screen is the point of the whole slice: Chimchar shown as in Platinum, caught on
+    21/09/2026, with the starter it comes from - Route 201, Professor Rowan, level 5 - listed
+    underneath. Everything the player needs about one entry, reached from a tile in two clicks.
+  - The drill needed evolution rules and the starter gift, which the real dataset does not have
+    yet: those are Phase 2 steps 4 and 5 for Platinum. They were seeded for the walk and removed
+    again afterwards, so the check is honest about what exists today - the machine works, the
+    data is what Phase 2 is for.
+
+### Beyond the list
+
+- [x] Games are picked by clicking their box art, both the main game and the linked ones -
+      2026-09-21
+  - The dropdown and the checkbox list are gone. Both steps of the wizard now show a grid of
+    covers; the main game is a set of radios, the linked games a set of checkboxes, with the art
+    as the label. Real inputs, visually hidden, so the keyboard and a screen reader still get
+    radios and checkboxes and the card only has to draw what they say.
+  - A linked game that cannot feed the main game is still shown and still disabled, with its
+    reason under the cover, and the "via Pal Park" line that says why an available one is
+    available.
+  - A game with no image still gets a drawn cover - its version name on a colour chosen by
+    generation - which reads as a deliberate cover rather than as a broken image, and which is
+    what a game whose art could not be fetched falls back to.
+  - Two things this shook out. `LoadedDataset` had no way to answer "is there an image for this
+    game", which is why it now carries the set. And a hand-built `RenderFragment` for the cover
+    produced mis-nested markup - Blazor's sequence numbers are positions in the source, not a
+    counter to increment - so it is an ordinary component now.
+  - One CSS trap worth writing down: `.field label { display: block }` beat `.game-card` on
+    specificity, which quietly flattened the card layout. The card rule is two classes deep now.
+
+- [x] Box art is fetched by the pipeline rather than drawn - 2026-09-21
+  - The covers come from the Bulbagarden Archives, which is where Bulbapedia's own game pages
+    take theirs. Their `robots.txt` allows the file description page and the media itself while
+    disallowing the API, so the pipeline reads the page for the image's address and follows it.
+    Nothing touches `/w/`, and no URL is guessed at: the path carries a hash of the file name
+    that is the wiki's business, not ours.
+  - Each game names its own file in `gamedefs` - `Emerald EN boxart.jpg`, `Platinum EN
+    boxart.png` - because the names follow no pattern across the series, not even the extension.
+    Guessing one would break on the first game that spells it differently.
+  - The page offers a preview beside the original, and the preview is what gets downloaded: a
+    cover is drawn at 92 pixels in the app, and a 1500 pixel scan would put megabytes into the
+    exe for nothing. Platinum is 617 KB and Emerald 103 KB as shipped.
+  - `PoliteClient` now honours a site's declared `Crawl-delay` whenever it is the slower of the
+    two. The Archives ask for five seconds and get five seconds; our own interval is a floor,
+    never a licence to go faster than a site asked. 1 test.
+  - `--no-box-art` skips the download, matching `--no-sprites`, and a build that skipped it says
+    nothing rather than warning once per game. A game that has no cover after a real run is a
+    warning, `every-game-has-box-art`, beside the sprite rule.
+  - `.gitattributes` would have corrupted the JPEG: `dataset/** text eol=lf` was excepted only
+    for `*.png`, so `emerald.jpg` came back as `text: set` from `git check-attr`. JPEG is marked
+    binary now, verified the same way the sprites were.
+  - The app keeps a file name per game rather than a flag, because the two covers are not the
+    same kind of file. The picker asks the dataset what to load and serves whatever it is
+    handed.
+  - Both real covers seen in the running picker, whole rather than cropped: `object-fit:
+    contain`, because a Game Boy box is square and a DS box is not, and cropping the top off a
+    box is the one thing a box art picker must not do.
+  - These are copyrighted covers, shipped inside a personal tool the same way the 1025 sprites
+    already are. Worth knowing before this goes anywhere public.
+
+- [x] The window opens maximised - 2026-09-21
+  - `WindowState="Maximized"` on the main window. The 1280x800 size stays as what it restores
+    down to, and the minimum size stays what it was, so nothing about resizing changes - only
+    where it starts.
 
 ---
 

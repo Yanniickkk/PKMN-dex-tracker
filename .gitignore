@@ -73,3 +73,6 @@ pipeline/.cache/
 
 # Portable exe drop from `dotnet publish -o publish`.
 publish/
+
+# A report about the build rather than part of the dataset, and it changes every run.
+dataset/validation.json

@@ -1,6 +1,8 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
+using LivingDex.Core.Dataset;
+using LivingDex.Core.Transfers;
 using LivingDex.Core.UserData;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,14 +29,26 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        var locator = new DataFileLocator(DataFileLocator.DefaultSettingsPath, new WpfDataFileLocationPrompt());
+        var settings = new AppSettingsStore(AppSettingsStore.DefaultPath);
+        var locator = new DataFileLocator(settings, new WpfDataFileLocationPrompt());
 
         var services = new ServiceCollection();
         services.AddWpfBlazorWebView();
 #if DEBUG
         services.AddBlazorWebViewDeveloperTools();
 #endif
+        services.AddSingleton(settings);
         services.AddSingleton(locator);
+
+        // Read once at startup: it is embedded in this assembly and never changes while
+        // the app is running.
+        var dataset = DatasetLoader.Load(typeof(App).Assembly);
+        services.AddSingleton(dataset);
+
+        // The graph is data, so it is built here rather than anywhere it is used.
+        services.AddSingleton(new TransferGraph(
+            dataset.Reference.TransferEdges,
+            new ReferenceFilterContext(dataset.Reference.Species, dataset.Reference.DexEntries)));
 
         // Registered, not resolved: on a first run this puts a picker on screen, and that has
         // to wait until there is a window to own it. MainWindow sets it going.

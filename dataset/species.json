@@ -1,0 +1,9753 @@
+[
+  {
+    "id": "bulbasaur",
+    "nationalDexNumber": 1,
+    "name": "Bulbasaur",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "1"
+  },
+  {
+    "id": "ivysaur",
+    "nationalDexNumber": 2,
+    "name": "Ivysaur",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "1"
+  },
+  {
+    "id": "venusaur",
+    "nationalDexNumber": 3,
+    "name": "Venusaur",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "1"
+  },
+  {
+    "id": "charmander",
+    "nationalDexNumber": 4,
+    "name": "Charmander",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "2"
+  },
+  {
+    "id": "charmeleon",
+    "nationalDexNumber": 5,
+    "name": "Charmeleon",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "2"
+  },
+  {
+    "id": "charizard",
+    "nationalDexNumber": 6,
+    "name": "Charizard",
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "evolutionChain": "2"
+  },
+  {
+    "id": "squirtle",
+    "nationalDexNumber": 7,
+    "name": "Squirtle",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "3"
+  },
+  {
+    "id": "wartortle",
+    "nationalDexNumber": 8,
+    "name": "Wartortle",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "3"
+  },
+  {
+    "id": "blastoise",
+    "nationalDexNumber": 9,
+    "name": "Blastoise",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "3"
+  },
+  {
+    "id": "caterpie",
+    "nationalDexNumber": 10,
+    "name": "Caterpie",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "4"
+  },
+  {
+    "id": "metapod",
+    "nationalDexNumber": 11,
+    "name": "Metapod",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "4"
+  },
+  {
+    "id": "butterfree",
+    "nationalDexNumber": 12,
+    "name": "Butterfree",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "4"
+  },
+  {
+    "id": "weedle",
+    "nationalDexNumber": 13,
+    "name": "Weedle",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "evolutionChain": "5"
+  },
+  {
+    "id": "kakuna",
+    "nationalDexNumber": 14,
+    "name": "Kakuna",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "evolutionChain": "5"
+  },
+  {
+    "id": "beedrill",
+    "nationalDexNumber": 15,
+    "name": "Beedrill",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "evolutionChain": "5"
+  },
+  {
+    "id": "pidgey",
+    "nationalDexNumber": 16,
+    "name": "Pidgey",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "6"
+  },
+  {
+    "id": "pidgeotto",
+    "nationalDexNumber": 17,
+    "name": "Pidgeotto",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "6"
+  },
+  {
+    "id": "pidgeot",
+    "nationalDexNumber": 18,
+    "name": "Pidgeot",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "6"
+  },
+  {
+    "id": "rattata",
+    "nationalDexNumber": 19,
+    "name": "Rattata",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "7"
+  },
+  {
+    "id": "raticate",
+    "nationalDexNumber": 20,
+    "name": "Raticate",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "7"
+  },
+  {
+    "id": "spearow",
+    "nationalDexNumber": 21,
+    "name": "Spearow",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "8"
+  },
+  {
+    "id": "fearow",
+    "nationalDexNumber": 22,
+    "name": "Fearow",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "8"
+  },
+  {
+    "id": "ekans",
+    "nationalDexNumber": 23,
+    "name": "Ekans",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "9"
+  },
+  {
+    "id": "arbok",
+    "nationalDexNumber": 24,
+    "name": "Arbok",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "9"
+  },
+  {
+    "id": "pikachu",
+    "nationalDexNumber": 25,
+    "name": "Pikachu",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "10"
+  },
+  {
+    "id": "raichu",
+    "nationalDexNumber": 26,
+    "name": "Raichu",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "10"
+  },
+  {
+    "id": "sandshrew",
+    "nationalDexNumber": 27,
+    "name": "Sandshrew",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "11"
+  },
+  {
+    "id": "sandslash",
+    "nationalDexNumber": 28,
+    "name": "Sandslash",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "11"
+  },
+  {
+    "id": "nidoran-f",
+    "nationalDexNumber": 29,
+    "name": "Nidoran♀",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "12"
+  },
+  {
+    "id": "nidorina",
+    "nationalDexNumber": 30,
+    "name": "Nidorina",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "12"
+  },
+  {
+    "id": "nidoqueen",
+    "nationalDexNumber": 31,
+    "name": "Nidoqueen",
+    "types": [
+      "poison",
+      "ground"
+    ],
+    "evolutionChain": "12"
+  },
+  {
+    "id": "nidoran-m",
+    "nationalDexNumber": 32,
+    "name": "Nidoran♂",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "13"
+  },
+  {
+    "id": "nidorino",
+    "nationalDexNumber": 33,
+    "name": "Nidorino",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "13"
+  },
+  {
+    "id": "nidoking",
+    "nationalDexNumber": 34,
+    "name": "Nidoking",
+    "types": [
+      "poison",
+      "ground"
+    ],
+    "evolutionChain": "13"
+  },
+  {
+    "id": "clefairy",
+    "nationalDexNumber": 35,
+    "name": "Clefairy",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "14"
+  },
+  {
+    "id": "clefable",
+    "nationalDexNumber": 36,
+    "name": "Clefable",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "14"
+  },
+  {
+    "id": "vulpix",
+    "nationalDexNumber": 37,
+    "name": "Vulpix",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "15"
+  },
+  {
+    "id": "ninetales",
+    "nationalDexNumber": 38,
+    "name": "Ninetales",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "15"
+  },
+  {
+    "id": "jigglypuff",
+    "nationalDexNumber": 39,
+    "name": "Jigglypuff",
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "evolutionChain": "16"
+  },
+  {
+    "id": "wigglytuff",
+    "nationalDexNumber": 40,
+    "name": "Wigglytuff",
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "evolutionChain": "16"
+  },
+  {
+    "id": "zubat",
+    "nationalDexNumber": 41,
+    "name": "Zubat",
+    "types": [
+      "poison",
+      "flying"
+    ],
+    "evolutionChain": "17"
+  },
+  {
+    "id": "golbat",
+    "nationalDexNumber": 42,
+    "name": "Golbat",
+    "types": [
+      "poison",
+      "flying"
+    ],
+    "evolutionChain": "17"
+  },
+  {
+    "id": "oddish",
+    "nationalDexNumber": 43,
+    "name": "Oddish",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "18"
+  },
+  {
+    "id": "gloom",
+    "nationalDexNumber": 44,
+    "name": "Gloom",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "18"
+  },
+  {
+    "id": "vileplume",
+    "nationalDexNumber": 45,
+    "name": "Vileplume",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "18"
+  },
+  {
+    "id": "paras",
+    "nationalDexNumber": 46,
+    "name": "Paras",
+    "types": [
+      "bug",
+      "grass"
+    ],
+    "evolutionChain": "19"
+  },
+  {
+    "id": "parasect",
+    "nationalDexNumber": 47,
+    "name": "Parasect",
+    "types": [
+      "bug",
+      "grass"
+    ],
+    "evolutionChain": "19"
+  },
+  {
+    "id": "venonat",
+    "nationalDexNumber": 48,
+    "name": "Venonat",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "evolutionChain": "20"
+  },
+  {
+    "id": "venomoth",
+    "nationalDexNumber": 49,
+    "name": "Venomoth",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "evolutionChain": "20"
+  },
+  {
+    "id": "diglett",
+    "nationalDexNumber": 50,
+    "name": "Diglett",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "21"
+  },
+  {
+    "id": "dugtrio",
+    "nationalDexNumber": 51,
+    "name": "Dugtrio",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "21"
+  },
+  {
+    "id": "meowth",
+    "nationalDexNumber": 52,
+    "name": "Meowth",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "22"
+  },
+  {
+    "id": "persian",
+    "nationalDexNumber": 53,
+    "name": "Persian",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "22"
+  },
+  {
+    "id": "psyduck",
+    "nationalDexNumber": 54,
+    "name": "Psyduck",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "23"
+  },
+  {
+    "id": "golduck",
+    "nationalDexNumber": 55,
+    "name": "Golduck",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "23"
+  },
+  {
+    "id": "mankey",
+    "nationalDexNumber": 56,
+    "name": "Mankey",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "24"
+  },
+  {
+    "id": "primeape",
+    "nationalDexNumber": 57,
+    "name": "Primeape",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "24"
+  },
+  {
+    "id": "growlithe",
+    "nationalDexNumber": 58,
+    "name": "Growlithe",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "25"
+  },
+  {
+    "id": "arcanine",
+    "nationalDexNumber": 59,
+    "name": "Arcanine",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "25"
+  },
+  {
+    "id": "poliwag",
+    "nationalDexNumber": 60,
+    "name": "Poliwag",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "26"
+  },
+  {
+    "id": "poliwhirl",
+    "nationalDexNumber": 61,
+    "name": "Poliwhirl",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "26"
+  },
+  {
+    "id": "poliwrath",
+    "nationalDexNumber": 62,
+    "name": "Poliwrath",
+    "types": [
+      "water",
+      "fighting"
+    ],
+    "evolutionChain": "26"
+  },
+  {
+    "id": "abra",
+    "nationalDexNumber": 63,
+    "name": "Abra",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "27"
+  },
+  {
+    "id": "kadabra",
+    "nationalDexNumber": 64,
+    "name": "Kadabra",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "27"
+  },
+  {
+    "id": "alakazam",
+    "nationalDexNumber": 65,
+    "name": "Alakazam",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "27"
+  },
+  {
+    "id": "machop",
+    "nationalDexNumber": 66,
+    "name": "Machop",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "28"
+  },
+  {
+    "id": "machoke",
+    "nationalDexNumber": 67,
+    "name": "Machoke",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "28"
+  },
+  {
+    "id": "machamp",
+    "nationalDexNumber": 68,
+    "name": "Machamp",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "28"
+  },
+  {
+    "id": "bellsprout",
+    "nationalDexNumber": 69,
+    "name": "Bellsprout",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "29"
+  },
+  {
+    "id": "weepinbell",
+    "nationalDexNumber": 70,
+    "name": "Weepinbell",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "29"
+  },
+  {
+    "id": "victreebel",
+    "nationalDexNumber": 71,
+    "name": "Victreebel",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "29"
+  },
+  {
+    "id": "tentacool",
+    "nationalDexNumber": 72,
+    "name": "Tentacool",
+    "types": [
+      "water",
+      "poison"
+    ],
+    "evolutionChain": "30"
+  },
+  {
+    "id": "tentacruel",
+    "nationalDexNumber": 73,
+    "name": "Tentacruel",
+    "types": [
+      "water",
+      "poison"
+    ],
+    "evolutionChain": "30"
+  },
+  {
+    "id": "geodude",
+    "nationalDexNumber": 74,
+    "name": "Geodude",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "evolutionChain": "31"
+  },
+  {
+    "id": "graveler",
+    "nationalDexNumber": 75,
+    "name": "Graveler",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "evolutionChain": "31"
+  },
+  {
+    "id": "golem",
+    "nationalDexNumber": 76,
+    "name": "Golem",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "evolutionChain": "31"
+  },
+  {
+    "id": "ponyta",
+    "nationalDexNumber": 77,
+    "name": "Ponyta",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "32"
+  },
+  {
+    "id": "rapidash",
+    "nationalDexNumber": 78,
+    "name": "Rapidash",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "32"
+  },
+  {
+    "id": "slowpoke",
+    "nationalDexNumber": 79,
+    "name": "Slowpoke",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "evolutionChain": "33"
+  },
+  {
+    "id": "slowbro",
+    "nationalDexNumber": 80,
+    "name": "Slowbro",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "evolutionChain": "33"
+  },
+  {
+    "id": "magnemite",
+    "nationalDexNumber": 81,
+    "name": "Magnemite",
+    "types": [
+      "electric",
+      "steel"
+    ],
+    "evolutionChain": "34"
+  },
+  {
+    "id": "magneton",
+    "nationalDexNumber": 82,
+    "name": "Magneton",
+    "types": [
+      "electric",
+      "steel"
+    ],
+    "evolutionChain": "34"
+  },
+  {
+    "id": "farfetchd",
+    "nationalDexNumber": 83,
+    "name": "Farfetch’d",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "35"
+  },
+  {
+    "id": "doduo",
+    "nationalDexNumber": 84,
+    "name": "Doduo",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "36"
+  },
+  {
+    "id": "dodrio",
+    "nationalDexNumber": 85,
+    "name": "Dodrio",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "36"
+  },
+  {
+    "id": "seel",
+    "nationalDexNumber": 86,
+    "name": "Seel",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "37"
+  },
+  {
+    "id": "dewgong",
+    "nationalDexNumber": 87,
+    "name": "Dewgong",
+    "types": [
+      "water",
+      "ice"
+    ],
+    "evolutionChain": "37"
+  },
+  {
+    "id": "grimer",
+    "nationalDexNumber": 88,
+    "name": "Grimer",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "38"
+  },
+  {
+    "id": "muk",
+    "nationalDexNumber": 89,
+    "name": "Muk",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "38"
+  },
+  {
+    "id": "shellder",
+    "nationalDexNumber": 90,
+    "name": "Shellder",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "39"
+  },
+  {
+    "id": "cloyster",
+    "nationalDexNumber": 91,
+    "name": "Cloyster",
+    "types": [
+      "water",
+      "ice"
+    ],
+    "evolutionChain": "39"
+  },
+  {
+    "id": "gastly",
+    "nationalDexNumber": 92,
+    "name": "Gastly",
+    "types": [
+      "ghost",
+      "poison"
+    ],
+    "evolutionChain": "40"
+  },
+  {
+    "id": "haunter",
+    "nationalDexNumber": 93,
+    "name": "Haunter",
+    "types": [
+      "ghost",
+      "poison"
+    ],
+    "evolutionChain": "40"
+  },
+  {
+    "id": "gengar",
+    "nationalDexNumber": 94,
+    "name": "Gengar",
+    "types": [
+      "ghost",
+      "poison"
+    ],
+    "evolutionChain": "40"
+  },
+  {
+    "id": "onix",
+    "nationalDexNumber": 95,
+    "name": "Onix",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "evolutionChain": "41"
+  },
+  {
+    "id": "drowzee",
+    "nationalDexNumber": 96,
+    "name": "Drowzee",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "42"
+  },
+  {
+    "id": "hypno",
+    "nationalDexNumber": 97,
+    "name": "Hypno",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "42"
+  },
+  {
+    "id": "krabby",
+    "nationalDexNumber": 98,
+    "name": "Krabby",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "43"
+  },
+  {
+    "id": "kingler",
+    "nationalDexNumber": 99,
+    "name": "Kingler",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "43"
+  },
+  {
+    "id": "voltorb",
+    "nationalDexNumber": 100,
+    "name": "Voltorb",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "44"
+  },
+  {
+    "id": "electrode",
+    "nationalDexNumber": 101,
+    "name": "Electrode",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "44"
+  },
+  {
+    "id": "exeggcute",
+    "nationalDexNumber": 102,
+    "name": "Exeggcute",
+    "types": [
+      "grass",
+      "psychic"
+    ],
+    "evolutionChain": "45"
+  },
+  {
+    "id": "exeggutor",
+    "nationalDexNumber": 103,
+    "name": "Exeggutor",
+    "types": [
+      "grass",
+      "psychic"
+    ],
+    "evolutionChain": "45"
+  },
+  {
+    "id": "cubone",
+    "nationalDexNumber": 104,
+    "name": "Cubone",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "46"
+  },
+  {
+    "id": "marowak",
+    "nationalDexNumber": 105,
+    "name": "Marowak",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "46"
+  },
+  {
+    "id": "hitmonlee",
+    "nationalDexNumber": 106,
+    "name": "Hitmonlee",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "47"
+  },
+  {
+    "id": "hitmonchan",
+    "nationalDexNumber": 107,
+    "name": "Hitmonchan",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "47"
+  },
+  {
+    "id": "lickitung",
+    "nationalDexNumber": 108,
+    "name": "Lickitung",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "48"
+  },
+  {
+    "id": "koffing",
+    "nationalDexNumber": 109,
+    "name": "Koffing",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "49"
+  },
+  {
+    "id": "weezing",
+    "nationalDexNumber": 110,
+    "name": "Weezing",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "49"
+  },
+  {
+    "id": "rhyhorn",
+    "nationalDexNumber": 111,
+    "name": "Rhyhorn",
+    "types": [
+      "ground",
+      "rock"
+    ],
+    "evolutionChain": "50"
+  },
+  {
+    "id": "rhydon",
+    "nationalDexNumber": 112,
+    "name": "Rhydon",
+    "types": [
+      "ground",
+      "rock"
+    ],
+    "evolutionChain": "50"
+  },
+  {
+    "id": "chansey",
+    "nationalDexNumber": 113,
+    "name": "Chansey",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "51"
+  },
+  {
+    "id": "tangela",
+    "nationalDexNumber": 114,
+    "name": "Tangela",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "52"
+  },
+  {
+    "id": "kangaskhan",
+    "nationalDexNumber": 115,
+    "name": "Kangaskhan",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "53"
+  },
+  {
+    "id": "horsea",
+    "nationalDexNumber": 116,
+    "name": "Horsea",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "54"
+  },
+  {
+    "id": "seadra",
+    "nationalDexNumber": 117,
+    "name": "Seadra",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "54"
+  },
+  {
+    "id": "goldeen",
+    "nationalDexNumber": 118,
+    "name": "Goldeen",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "55"
+  },
+  {
+    "id": "seaking",
+    "nationalDexNumber": 119,
+    "name": "Seaking",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "55"
+  },
+  {
+    "id": "staryu",
+    "nationalDexNumber": 120,
+    "name": "Staryu",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "56"
+  },
+  {
+    "id": "starmie",
+    "nationalDexNumber": 121,
+    "name": "Starmie",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "evolutionChain": "56"
+  },
+  {
+    "id": "mr-mime",
+    "nationalDexNumber": 122,
+    "name": "Mr. Mime",
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "evolutionChain": "57"
+  },
+  {
+    "id": "scyther",
+    "nationalDexNumber": 123,
+    "name": "Scyther",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "58"
+  },
+  {
+    "id": "jynx",
+    "nationalDexNumber": 124,
+    "name": "Jynx",
+    "types": [
+      "ice",
+      "psychic"
+    ],
+    "evolutionChain": "59"
+  },
+  {
+    "id": "electabuzz",
+    "nationalDexNumber": 125,
+    "name": "Electabuzz",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "60"
+  },
+  {
+    "id": "magmar",
+    "nationalDexNumber": 126,
+    "name": "Magmar",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "61"
+  },
+  {
+    "id": "pinsir",
+    "nationalDexNumber": 127,
+    "name": "Pinsir",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "62"
+  },
+  {
+    "id": "tauros",
+    "nationalDexNumber": 128,
+    "name": "Tauros",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "63"
+  },
+  {
+    "id": "magikarp",
+    "nationalDexNumber": 129,
+    "name": "Magikarp",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "64"
+  },
+  {
+    "id": "gyarados",
+    "nationalDexNumber": 130,
+    "name": "Gyarados",
+    "types": [
+      "water",
+      "flying"
+    ],
+    "evolutionChain": "64"
+  },
+  {
+    "id": "lapras",
+    "nationalDexNumber": 131,
+    "name": "Lapras",
+    "types": [
+      "water",
+      "ice"
+    ],
+    "evolutionChain": "65"
+  },
+  {
+    "id": "ditto",
+    "nationalDexNumber": 132,
+    "name": "Ditto",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "66"
+  },
+  {
+    "id": "eevee",
+    "nationalDexNumber": 133,
+    "name": "Eevee",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "67"
+  },
+  {
+    "id": "vaporeon",
+    "nationalDexNumber": 134,
+    "name": "Vaporeon",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "67"
+  },
+  {
+    "id": "jolteon",
+    "nationalDexNumber": 135,
+    "name": "Jolteon",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "67"
+  },
+  {
+    "id": "flareon",
+    "nationalDexNumber": 136,
+    "name": "Flareon",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "67"
+  },
+  {
+    "id": "porygon",
+    "nationalDexNumber": 137,
+    "name": "Porygon",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "68"
+  },
+  {
+    "id": "omanyte",
+    "nationalDexNumber": 138,
+    "name": "Omanyte",
+    "types": [
+      "rock",
+      "water"
+    ],
+    "evolutionChain": "69"
+  },
+  {
+    "id": "omastar",
+    "nationalDexNumber": 139,
+    "name": "Omastar",
+    "types": [
+      "rock",
+      "water"
+    ],
+    "evolutionChain": "69"
+  },
+  {
+    "id": "kabuto",
+    "nationalDexNumber": 140,
+    "name": "Kabuto",
+    "types": [
+      "rock",
+      "water"
+    ],
+    "evolutionChain": "70"
+  },
+  {
+    "id": "kabutops",
+    "nationalDexNumber": 141,
+    "name": "Kabutops",
+    "types": [
+      "rock",
+      "water"
+    ],
+    "evolutionChain": "70"
+  },
+  {
+    "id": "aerodactyl",
+    "nationalDexNumber": 142,
+    "name": "Aerodactyl",
+    "types": [
+      "rock",
+      "flying"
+    ],
+    "evolutionChain": "71"
+  },
+  {
+    "id": "snorlax",
+    "nationalDexNumber": 143,
+    "name": "Snorlax",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "72"
+  },
+  {
+    "id": "articuno",
+    "nationalDexNumber": 144,
+    "name": "Articuno",
+    "types": [
+      "ice",
+      "flying"
+    ],
+    "evolutionChain": "73"
+  },
+  {
+    "id": "zapdos",
+    "nationalDexNumber": 145,
+    "name": "Zapdos",
+    "types": [
+      "electric",
+      "flying"
+    ],
+    "evolutionChain": "74"
+  },
+  {
+    "id": "moltres",
+    "nationalDexNumber": 146,
+    "name": "Moltres",
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "evolutionChain": "75"
+  },
+  {
+    "id": "dratini",
+    "nationalDexNumber": 147,
+    "name": "Dratini",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "76"
+  },
+  {
+    "id": "dragonair",
+    "nationalDexNumber": 148,
+    "name": "Dragonair",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "76"
+  },
+  {
+    "id": "dragonite",
+    "nationalDexNumber": 149,
+    "name": "Dragonite",
+    "types": [
+      "dragon",
+      "flying"
+    ],
+    "evolutionChain": "76"
+  },
+  {
+    "id": "mewtwo",
+    "nationalDexNumber": 150,
+    "name": "Mewtwo",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "77"
+  },
+  {
+    "id": "mew",
+    "nationalDexNumber": 151,
+    "name": "Mew",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "78"
+  },
+  {
+    "id": "chikorita",
+    "nationalDexNumber": 152,
+    "name": "Chikorita",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "79"
+  },
+  {
+    "id": "bayleef",
+    "nationalDexNumber": 153,
+    "name": "Bayleef",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "79"
+  },
+  {
+    "id": "meganium",
+    "nationalDexNumber": 154,
+    "name": "Meganium",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "79"
+  },
+  {
+    "id": "cyndaquil",
+    "nationalDexNumber": 155,
+    "name": "Cyndaquil",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "80"
+  },
+  {
+    "id": "quilava",
+    "nationalDexNumber": 156,
+    "name": "Quilava",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "80"
+  },
+  {
+    "id": "typhlosion",
+    "nationalDexNumber": 157,
+    "name": "Typhlosion",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "80"
+  },
+  {
+    "id": "totodile",
+    "nationalDexNumber": 158,
+    "name": "Totodile",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "81"
+  },
+  {
+    "id": "croconaw",
+    "nationalDexNumber": 159,
+    "name": "Croconaw",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "81"
+  },
+  {
+    "id": "feraligatr",
+    "nationalDexNumber": 160,
+    "name": "Feraligatr",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "81"
+  },
+  {
+    "id": "sentret",
+    "nationalDexNumber": 161,
+    "name": "Sentret",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "82"
+  },
+  {
+    "id": "furret",
+    "nationalDexNumber": 162,
+    "name": "Furret",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "82"
+  },
+  {
+    "id": "hoothoot",
+    "nationalDexNumber": 163,
+    "name": "Hoothoot",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "83"
+  },
+  {
+    "id": "noctowl",
+    "nationalDexNumber": 164,
+    "name": "Noctowl",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "83"
+  },
+  {
+    "id": "ledyba",
+    "nationalDexNumber": 165,
+    "name": "Ledyba",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "84"
+  },
+  {
+    "id": "ledian",
+    "nationalDexNumber": 166,
+    "name": "Ledian",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "84"
+  },
+  {
+    "id": "spinarak",
+    "nationalDexNumber": 167,
+    "name": "Spinarak",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "evolutionChain": "85"
+  },
+  {
+    "id": "ariados",
+    "nationalDexNumber": 168,
+    "name": "Ariados",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "evolutionChain": "85"
+  },
+  {
+    "id": "crobat",
+    "nationalDexNumber": 169,
+    "name": "Crobat",
+    "types": [
+      "poison",
+      "flying"
+    ],
+    "evolutionChain": "17"
+  },
+  {
+    "id": "chinchou",
+    "nationalDexNumber": 170,
+    "name": "Chinchou",
+    "types": [
+      "water",
+      "electric"
+    ],
+    "evolutionChain": "86"
+  },
+  {
+    "id": "lanturn",
+    "nationalDexNumber": 171,
+    "name": "Lanturn",
+    "types": [
+      "water",
+      "electric"
+    ],
+    "evolutionChain": "86"
+  },
+  {
+    "id": "pichu",
+    "nationalDexNumber": 172,
+    "name": "Pichu",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "10"
+  },
+  {
+    "id": "cleffa",
+    "nationalDexNumber": 173,
+    "name": "Cleffa",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "14"
+  },
+  {
+    "id": "igglybuff",
+    "nationalDexNumber": 174,
+    "name": "Igglybuff",
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "evolutionChain": "16"
+  },
+  {
+    "id": "togepi",
+    "nationalDexNumber": 175,
+    "name": "Togepi",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "87"
+  },
+  {
+    "id": "togetic",
+    "nationalDexNumber": 176,
+    "name": "Togetic",
+    "types": [
+      "fairy",
+      "flying"
+    ],
+    "evolutionChain": "87"
+  },
+  {
+    "id": "natu",
+    "nationalDexNumber": 177,
+    "name": "Natu",
+    "types": [
+      "psychic",
+      "flying"
+    ],
+    "evolutionChain": "88"
+  },
+  {
+    "id": "xatu",
+    "nationalDexNumber": 178,
+    "name": "Xatu",
+    "types": [
+      "psychic",
+      "flying"
+    ],
+    "evolutionChain": "88"
+  },
+  {
+    "id": "mareep",
+    "nationalDexNumber": 179,
+    "name": "Mareep",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "89"
+  },
+  {
+    "id": "flaaffy",
+    "nationalDexNumber": 180,
+    "name": "Flaaffy",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "89"
+  },
+  {
+    "id": "ampharos",
+    "nationalDexNumber": 181,
+    "name": "Ampharos",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "89"
+  },
+  {
+    "id": "bellossom",
+    "nationalDexNumber": 182,
+    "name": "Bellossom",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "18"
+  },
+  {
+    "id": "marill",
+    "nationalDexNumber": 183,
+    "name": "Marill",
+    "types": [
+      "water",
+      "fairy"
+    ],
+    "evolutionChain": "90"
+  },
+  {
+    "id": "azumarill",
+    "nationalDexNumber": 184,
+    "name": "Azumarill",
+    "types": [
+      "water",
+      "fairy"
+    ],
+    "evolutionChain": "90"
+  },
+  {
+    "id": "sudowoodo",
+    "nationalDexNumber": 185,
+    "name": "Sudowoodo",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "91"
+  },
+  {
+    "id": "politoed",
+    "nationalDexNumber": 186,
+    "name": "Politoed",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "26"
+  },
+  {
+    "id": "hoppip",
+    "nationalDexNumber": 187,
+    "name": "Hoppip",
+    "types": [
+      "grass",
+      "flying"
+    ],
+    "evolutionChain": "92"
+  },
+  {
+    "id": "skiploom",
+    "nationalDexNumber": 188,
+    "name": "Skiploom",
+    "types": [
+      "grass",
+      "flying"
+    ],
+    "evolutionChain": "92"
+  },
+  {
+    "id": "jumpluff",
+    "nationalDexNumber": 189,
+    "name": "Jumpluff",
+    "types": [
+      "grass",
+      "flying"
+    ],
+    "evolutionChain": "92"
+  },
+  {
+    "id": "aipom",
+    "nationalDexNumber": 190,
+    "name": "Aipom",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "93"
+  },
+  {
+    "id": "sunkern",
+    "nationalDexNumber": 191,
+    "name": "Sunkern",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "94"
+  },
+  {
+    "id": "sunflora",
+    "nationalDexNumber": 192,
+    "name": "Sunflora",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "94"
+  },
+  {
+    "id": "yanma",
+    "nationalDexNumber": 193,
+    "name": "Yanma",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "95"
+  },
+  {
+    "id": "wooper",
+    "nationalDexNumber": 194,
+    "name": "Wooper",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "evolutionChain": "96"
+  },
+  {
+    "id": "quagsire",
+    "nationalDexNumber": 195,
+    "name": "Quagsire",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "evolutionChain": "96"
+  },
+  {
+    "id": "espeon",
+    "nationalDexNumber": 196,
+    "name": "Espeon",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "67"
+  },
+  {
+    "id": "umbreon",
+    "nationalDexNumber": 197,
+    "name": "Umbreon",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "67"
+  },
+  {
+    "id": "murkrow",
+    "nationalDexNumber": 198,
+    "name": "Murkrow",
+    "types": [
+      "dark",
+      "flying"
+    ],
+    "evolutionChain": "97"
+  },
+  {
+    "id": "slowking",
+    "nationalDexNumber": 199,
+    "name": "Slowking",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "evolutionChain": "33"
+  },
+  {
+    "id": "misdreavus",
+    "nationalDexNumber": 200,
+    "name": "Misdreavus",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "98"
+  },
+  {
+    "id": "unown",
+    "nationalDexNumber": 201,
+    "name": "Unown",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "99"
+  },
+  {
+    "id": "wobbuffet",
+    "nationalDexNumber": 202,
+    "name": "Wobbuffet",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "100"
+  },
+  {
+    "id": "girafarig",
+    "nationalDexNumber": 203,
+    "name": "Girafarig",
+    "types": [
+      "normal",
+      "psychic"
+    ],
+    "evolutionChain": "101"
+  },
+  {
+    "id": "pineco",
+    "nationalDexNumber": 204,
+    "name": "Pineco",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "102"
+  },
+  {
+    "id": "forretress",
+    "nationalDexNumber": 205,
+    "name": "Forretress",
+    "types": [
+      "bug",
+      "steel"
+    ],
+    "evolutionChain": "102"
+  },
+  {
+    "id": "dunsparce",
+    "nationalDexNumber": 206,
+    "name": "Dunsparce",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "103"
+  },
+  {
+    "id": "gligar",
+    "nationalDexNumber": 207,
+    "name": "Gligar",
+    "types": [
+      "ground",
+      "flying"
+    ],
+    "evolutionChain": "104"
+  },
+  {
+    "id": "steelix",
+    "nationalDexNumber": 208,
+    "name": "Steelix",
+    "types": [
+      "steel",
+      "ground"
+    ],
+    "evolutionChain": "41"
+  },
+  {
+    "id": "snubbull",
+    "nationalDexNumber": 209,
+    "name": "Snubbull",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "105"
+  },
+  {
+    "id": "granbull",
+    "nationalDexNumber": 210,
+    "name": "Granbull",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "105"
+  },
+  {
+    "id": "qwilfish",
+    "nationalDexNumber": 211,
+    "name": "Qwilfish",
+    "types": [
+      "water",
+      "poison"
+    ],
+    "evolutionChain": "106"
+  },
+  {
+    "id": "scizor",
+    "nationalDexNumber": 212,
+    "name": "Scizor",
+    "types": [
+      "bug",
+      "steel"
+    ],
+    "evolutionChain": "58"
+  },
+  {
+    "id": "shuckle",
+    "nationalDexNumber": 213,
+    "name": "Shuckle",
+    "types": [
+      "bug",
+      "rock"
+    ],
+    "evolutionChain": "107"
+  },
+  {
+    "id": "heracross",
+    "nationalDexNumber": 214,
+    "name": "Heracross",
+    "types": [
+      "bug",
+      "fighting"
+    ],
+    "evolutionChain": "108"
+  },
+  {
+    "id": "sneasel",
+    "nationalDexNumber": 215,
+    "name": "Sneasel",
+    "types": [
+      "dark",
+      "ice"
+    ],
+    "evolutionChain": "109"
+  },
+  {
+    "id": "teddiursa",
+    "nationalDexNumber": 216,
+    "name": "Teddiursa",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "110"
+  },
+  {
+    "id": "ursaring",
+    "nationalDexNumber": 217,
+    "name": "Ursaring",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "110"
+  },
+  {
+    "id": "slugma",
+    "nationalDexNumber": 218,
+    "name": "Slugma",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "111"
+  },
+  {
+    "id": "magcargo",
+    "nationalDexNumber": 219,
+    "name": "Magcargo",
+    "types": [
+      "fire",
+      "rock"
+    ],
+    "evolutionChain": "111"
+  },
+  {
+    "id": "swinub",
+    "nationalDexNumber": 220,
+    "name": "Swinub",
+    "types": [
+      "ice",
+      "ground"
+    ],
+    "evolutionChain": "112"
+  },
+  {
+    "id": "piloswine",
+    "nationalDexNumber": 221,
+    "name": "Piloswine",
+    "types": [
+      "ice",
+      "ground"
+    ],
+    "evolutionChain": "112"
+  },
+  {
+    "id": "corsola",
+    "nationalDexNumber": 222,
+    "name": "Corsola",
+    "types": [
+      "water",
+      "rock"
+    ],
+    "evolutionChain": "113"
+  },
+  {
+    "id": "remoraid",
+    "nationalDexNumber": 223,
+    "name": "Remoraid",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "114"
+  },
+  {
+    "id": "octillery",
+    "nationalDexNumber": 224,
+    "name": "Octillery",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "114"
+  },
+  {
+    "id": "delibird",
+    "nationalDexNumber": 225,
+    "name": "Delibird",
+    "types": [
+      "ice",
+      "flying"
+    ],
+    "evolutionChain": "115"
+  },
+  {
+    "id": "mantine",
+    "nationalDexNumber": 226,
+    "name": "Mantine",
+    "types": [
+      "water",
+      "flying"
+    ],
+    "evolutionChain": "116"
+  },
+  {
+    "id": "skarmory",
+    "nationalDexNumber": 227,
+    "name": "Skarmory",
+    "types": [
+      "steel",
+      "flying"
+    ],
+    "evolutionChain": "117"
+  },
+  {
+    "id": "houndour",
+    "nationalDexNumber": 228,
+    "name": "Houndour",
+    "types": [
+      "dark",
+      "fire"
+    ],
+    "evolutionChain": "118"
+  },
+  {
+    "id": "houndoom",
+    "nationalDexNumber": 229,
+    "name": "Houndoom",
+    "types": [
+      "dark",
+      "fire"
+    ],
+    "evolutionChain": "118"
+  },
+  {
+    "id": "kingdra",
+    "nationalDexNumber": 230,
+    "name": "Kingdra",
+    "types": [
+      "water",
+      "dragon"
+    ],
+    "evolutionChain": "54"
+  },
+  {
+    "id": "phanpy",
+    "nationalDexNumber": 231,
+    "name": "Phanpy",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "119"
+  },
+  {
+    "id": "donphan",
+    "nationalDexNumber": 232,
+    "name": "Donphan",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "119"
+  },
+  {
+    "id": "porygon2",
+    "nationalDexNumber": 233,
+    "name": "Porygon2",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "68"
+  },
+  {
+    "id": "stantler",
+    "nationalDexNumber": 234,
+    "name": "Stantler",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "120"
+  },
+  {
+    "id": "smeargle",
+    "nationalDexNumber": 235,
+    "name": "Smeargle",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "121"
+  },
+  {
+    "id": "tyrogue",
+    "nationalDexNumber": 236,
+    "name": "Tyrogue",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "47"
+  },
+  {
+    "id": "hitmontop",
+    "nationalDexNumber": 237,
+    "name": "Hitmontop",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "47"
+  },
+  {
+    "id": "smoochum",
+    "nationalDexNumber": 238,
+    "name": "Smoochum",
+    "types": [
+      "ice",
+      "psychic"
+    ],
+    "evolutionChain": "59"
+  },
+  {
+    "id": "elekid",
+    "nationalDexNumber": 239,
+    "name": "Elekid",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "60"
+  },
+  {
+    "id": "magby",
+    "nationalDexNumber": 240,
+    "name": "Magby",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "61"
+  },
+  {
+    "id": "miltank",
+    "nationalDexNumber": 241,
+    "name": "Miltank",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "122"
+  },
+  {
+    "id": "blissey",
+    "nationalDexNumber": 242,
+    "name": "Blissey",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "51"
+  },
+  {
+    "id": "raikou",
+    "nationalDexNumber": 243,
+    "name": "Raikou",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "123"
+  },
+  {
+    "id": "entei",
+    "nationalDexNumber": 244,
+    "name": "Entei",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "124"
+  },
+  {
+    "id": "suicune",
+    "nationalDexNumber": 245,
+    "name": "Suicune",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "125"
+  },
+  {
+    "id": "larvitar",
+    "nationalDexNumber": 246,
+    "name": "Larvitar",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "evolutionChain": "126"
+  },
+  {
+    "id": "pupitar",
+    "nationalDexNumber": 247,
+    "name": "Pupitar",
+    "types": [
+      "rock",
+      "ground"
+    ],
+    "evolutionChain": "126"
+  },
+  {
+    "id": "tyranitar",
+    "nationalDexNumber": 248,
+    "name": "Tyranitar",
+    "types": [
+      "rock",
+      "dark"
+    ],
+    "evolutionChain": "126"
+  },
+  {
+    "id": "lugia",
+    "nationalDexNumber": 249,
+    "name": "Lugia",
+    "types": [
+      "psychic",
+      "flying"
+    ],
+    "evolutionChain": "127"
+  },
+  {
+    "id": "ho-oh",
+    "nationalDexNumber": 250,
+    "name": "Ho-Oh",
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "evolutionChain": "128"
+  },
+  {
+    "id": "celebi",
+    "nationalDexNumber": 251,
+    "name": "Celebi",
+    "types": [
+      "psychic",
+      "grass"
+    ],
+    "evolutionChain": "129"
+  },
+  {
+    "id": "treecko",
+    "nationalDexNumber": 252,
+    "name": "Treecko",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "130"
+  },
+  {
+    "id": "grovyle",
+    "nationalDexNumber": 253,
+    "name": "Grovyle",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "130"
+  },
+  {
+    "id": "sceptile",
+    "nationalDexNumber": 254,
+    "name": "Sceptile",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "130"
+  },
+  {
+    "id": "torchic",
+    "nationalDexNumber": 255,
+    "name": "Torchic",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "131"
+  },
+  {
+    "id": "combusken",
+    "nationalDexNumber": 256,
+    "name": "Combusken",
+    "types": [
+      "fire",
+      "fighting"
+    ],
+    "evolutionChain": "131"
+  },
+  {
+    "id": "blaziken",
+    "nationalDexNumber": 257,
+    "name": "Blaziken",
+    "types": [
+      "fire",
+      "fighting"
+    ],
+    "evolutionChain": "131"
+  },
+  {
+    "id": "mudkip",
+    "nationalDexNumber": 258,
+    "name": "Mudkip",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "132"
+  },
+  {
+    "id": "marshtomp",
+    "nationalDexNumber": 259,
+    "name": "Marshtomp",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "evolutionChain": "132"
+  },
+  {
+    "id": "swampert",
+    "nationalDexNumber": 260,
+    "name": "Swampert",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "evolutionChain": "132"
+  },
+  {
+    "id": "poochyena",
+    "nationalDexNumber": 261,
+    "name": "Poochyena",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "133"
+  },
+  {
+    "id": "mightyena",
+    "nationalDexNumber": 262,
+    "name": "Mightyena",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "133"
+  },
+  {
+    "id": "zigzagoon",
+    "nationalDexNumber": 263,
+    "name": "Zigzagoon",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "134"
+  },
+  {
+    "id": "linoone",
+    "nationalDexNumber": 264,
+    "name": "Linoone",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "134"
+  },
+  {
+    "id": "wurmple",
+    "nationalDexNumber": 265,
+    "name": "Wurmple",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "135"
+  },
+  {
+    "id": "silcoon",
+    "nationalDexNumber": 266,
+    "name": "Silcoon",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "135"
+  },
+  {
+    "id": "beautifly",
+    "nationalDexNumber": 267,
+    "name": "Beautifly",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "135"
+  },
+  {
+    "id": "cascoon",
+    "nationalDexNumber": 268,
+    "name": "Cascoon",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "135"
+  },
+  {
+    "id": "dustox",
+    "nationalDexNumber": 269,
+    "name": "Dustox",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "evolutionChain": "135"
+  },
+  {
+    "id": "lotad",
+    "nationalDexNumber": 270,
+    "name": "Lotad",
+    "types": [
+      "water",
+      "grass"
+    ],
+    "evolutionChain": "136"
+  },
+  {
+    "id": "lombre",
+    "nationalDexNumber": 271,
+    "name": "Lombre",
+    "types": [
+      "water",
+      "grass"
+    ],
+    "evolutionChain": "136"
+  },
+  {
+    "id": "ludicolo",
+    "nationalDexNumber": 272,
+    "name": "Ludicolo",
+    "types": [
+      "water",
+      "grass"
+    ],
+    "evolutionChain": "136"
+  },
+  {
+    "id": "seedot",
+    "nationalDexNumber": 273,
+    "name": "Seedot",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "137"
+  },
+  {
+    "id": "nuzleaf",
+    "nationalDexNumber": 274,
+    "name": "Nuzleaf",
+    "types": [
+      "grass",
+      "dark"
+    ],
+    "evolutionChain": "137"
+  },
+  {
+    "id": "shiftry",
+    "nationalDexNumber": 275,
+    "name": "Shiftry",
+    "types": [
+      "grass",
+      "dark"
+    ],
+    "evolutionChain": "137"
+  },
+  {
+    "id": "taillow",
+    "nationalDexNumber": 276,
+    "name": "Taillow",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "138"
+  },
+  {
+    "id": "swellow",
+    "nationalDexNumber": 277,
+    "name": "Swellow",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "138"
+  },
+  {
+    "id": "wingull",
+    "nationalDexNumber": 278,
+    "name": "Wingull",
+    "types": [
+      "water",
+      "flying"
+    ],
+    "evolutionChain": "139"
+  },
+  {
+    "id": "pelipper",
+    "nationalDexNumber": 279,
+    "name": "Pelipper",
+    "types": [
+      "water",
+      "flying"
+    ],
+    "evolutionChain": "139"
+  },
+  {
+    "id": "ralts",
+    "nationalDexNumber": 280,
+    "name": "Ralts",
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "evolutionChain": "140"
+  },
+  {
+    "id": "kirlia",
+    "nationalDexNumber": 281,
+    "name": "Kirlia",
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "evolutionChain": "140"
+  },
+  {
+    "id": "gardevoir",
+    "nationalDexNumber": 282,
+    "name": "Gardevoir",
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "evolutionChain": "140"
+  },
+  {
+    "id": "surskit",
+    "nationalDexNumber": 283,
+    "name": "Surskit",
+    "types": [
+      "bug",
+      "water"
+    ],
+    "evolutionChain": "141"
+  },
+  {
+    "id": "masquerain",
+    "nationalDexNumber": 284,
+    "name": "Masquerain",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "141"
+  },
+  {
+    "id": "shroomish",
+    "nationalDexNumber": 285,
+    "name": "Shroomish",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "142"
+  },
+  {
+    "id": "breloom",
+    "nationalDexNumber": 286,
+    "name": "Breloom",
+    "types": [
+      "grass",
+      "fighting"
+    ],
+    "evolutionChain": "142"
+  },
+  {
+    "id": "slakoth",
+    "nationalDexNumber": 287,
+    "name": "Slakoth",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "143"
+  },
+  {
+    "id": "vigoroth",
+    "nationalDexNumber": 288,
+    "name": "Vigoroth",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "143"
+  },
+  {
+    "id": "slaking",
+    "nationalDexNumber": 289,
+    "name": "Slaking",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "143"
+  },
+  {
+    "id": "nincada",
+    "nationalDexNumber": 290,
+    "name": "Nincada",
+    "types": [
+      "bug",
+      "ground"
+    ],
+    "evolutionChain": "144"
+  },
+  {
+    "id": "ninjask",
+    "nationalDexNumber": 291,
+    "name": "Ninjask",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "144"
+  },
+  {
+    "id": "shedinja",
+    "nationalDexNumber": 292,
+    "name": "Shedinja",
+    "types": [
+      "bug",
+      "ghost"
+    ],
+    "evolutionChain": "144"
+  },
+  {
+    "id": "whismur",
+    "nationalDexNumber": 293,
+    "name": "Whismur",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "145"
+  },
+  {
+    "id": "loudred",
+    "nationalDexNumber": 294,
+    "name": "Loudred",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "145"
+  },
+  {
+    "id": "exploud",
+    "nationalDexNumber": 295,
+    "name": "Exploud",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "145"
+  },
+  {
+    "id": "makuhita",
+    "nationalDexNumber": 296,
+    "name": "Makuhita",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "146"
+  },
+  {
+    "id": "hariyama",
+    "nationalDexNumber": 297,
+    "name": "Hariyama",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "146"
+  },
+  {
+    "id": "azurill",
+    "nationalDexNumber": 298,
+    "name": "Azurill",
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "evolutionChain": "90"
+  },
+  {
+    "id": "nosepass",
+    "nationalDexNumber": 299,
+    "name": "Nosepass",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "147"
+  },
+  {
+    "id": "skitty",
+    "nationalDexNumber": 300,
+    "name": "Skitty",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "148"
+  },
+  {
+    "id": "delcatty",
+    "nationalDexNumber": 301,
+    "name": "Delcatty",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "148"
+  },
+  {
+    "id": "sableye",
+    "nationalDexNumber": 302,
+    "name": "Sableye",
+    "types": [
+      "dark",
+      "ghost"
+    ],
+    "evolutionChain": "149"
+  },
+  {
+    "id": "mawile",
+    "nationalDexNumber": 303,
+    "name": "Mawile",
+    "types": [
+      "steel",
+      "fairy"
+    ],
+    "evolutionChain": "150"
+  },
+  {
+    "id": "aron",
+    "nationalDexNumber": 304,
+    "name": "Aron",
+    "types": [
+      "steel",
+      "rock"
+    ],
+    "evolutionChain": "151"
+  },
+  {
+    "id": "lairon",
+    "nationalDexNumber": 305,
+    "name": "Lairon",
+    "types": [
+      "steel",
+      "rock"
+    ],
+    "evolutionChain": "151"
+  },
+  {
+    "id": "aggron",
+    "nationalDexNumber": 306,
+    "name": "Aggron",
+    "types": [
+      "steel",
+      "rock"
+    ],
+    "evolutionChain": "151"
+  },
+  {
+    "id": "meditite",
+    "nationalDexNumber": 307,
+    "name": "Meditite",
+    "types": [
+      "fighting",
+      "psychic"
+    ],
+    "evolutionChain": "152"
+  },
+  {
+    "id": "medicham",
+    "nationalDexNumber": 308,
+    "name": "Medicham",
+    "types": [
+      "fighting",
+      "psychic"
+    ],
+    "evolutionChain": "152"
+  },
+  {
+    "id": "electrike",
+    "nationalDexNumber": 309,
+    "name": "Electrike",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "153"
+  },
+  {
+    "id": "manectric",
+    "nationalDexNumber": 310,
+    "name": "Manectric",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "153"
+  },
+  {
+    "id": "plusle",
+    "nationalDexNumber": 311,
+    "name": "Plusle",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "154"
+  },
+  {
+    "id": "minun",
+    "nationalDexNumber": 312,
+    "name": "Minun",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "155"
+  },
+  {
+    "id": "volbeat",
+    "nationalDexNumber": 313,
+    "name": "Volbeat",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "156"
+  },
+  {
+    "id": "illumise",
+    "nationalDexNumber": 314,
+    "name": "Illumise",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "157"
+  },
+  {
+    "id": "roselia",
+    "nationalDexNumber": 315,
+    "name": "Roselia",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "158"
+  },
+  {
+    "id": "gulpin",
+    "nationalDexNumber": 316,
+    "name": "Gulpin",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "159"
+  },
+  {
+    "id": "swalot",
+    "nationalDexNumber": 317,
+    "name": "Swalot",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "159"
+  },
+  {
+    "id": "carvanha",
+    "nationalDexNumber": 318,
+    "name": "Carvanha",
+    "types": [
+      "water",
+      "dark"
+    ],
+    "evolutionChain": "160"
+  },
+  {
+    "id": "sharpedo",
+    "nationalDexNumber": 319,
+    "name": "Sharpedo",
+    "types": [
+      "water",
+      "dark"
+    ],
+    "evolutionChain": "160"
+  },
+  {
+    "id": "wailmer",
+    "nationalDexNumber": 320,
+    "name": "Wailmer",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "161"
+  },
+  {
+    "id": "wailord",
+    "nationalDexNumber": 321,
+    "name": "Wailord",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "161"
+  },
+  {
+    "id": "numel",
+    "nationalDexNumber": 322,
+    "name": "Numel",
+    "types": [
+      "fire",
+      "ground"
+    ],
+    "evolutionChain": "162"
+  },
+  {
+    "id": "camerupt",
+    "nationalDexNumber": 323,
+    "name": "Camerupt",
+    "types": [
+      "fire",
+      "ground"
+    ],
+    "evolutionChain": "162"
+  },
+  {
+    "id": "torkoal",
+    "nationalDexNumber": 324,
+    "name": "Torkoal",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "163"
+  },
+  {
+    "id": "spoink",
+    "nationalDexNumber": 325,
+    "name": "Spoink",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "164"
+  },
+  {
+    "id": "grumpig",
+    "nationalDexNumber": 326,
+    "name": "Grumpig",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "164"
+  },
+  {
+    "id": "spinda",
+    "nationalDexNumber": 327,
+    "name": "Spinda",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "165"
+  },
+  {
+    "id": "trapinch",
+    "nationalDexNumber": 328,
+    "name": "Trapinch",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "166"
+  },
+  {
+    "id": "vibrava",
+    "nationalDexNumber": 329,
+    "name": "Vibrava",
+    "types": [
+      "ground",
+      "dragon"
+    ],
+    "evolutionChain": "166"
+  },
+  {
+    "id": "flygon",
+    "nationalDexNumber": 330,
+    "name": "Flygon",
+    "types": [
+      "ground",
+      "dragon"
+    ],
+    "evolutionChain": "166"
+  },
+  {
+    "id": "cacnea",
+    "nationalDexNumber": 331,
+    "name": "Cacnea",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "167"
+  },
+  {
+    "id": "cacturne",
+    "nationalDexNumber": 332,
+    "name": "Cacturne",
+    "types": [
+      "grass",
+      "dark"
+    ],
+    "evolutionChain": "167"
+  },
+  {
+    "id": "swablu",
+    "nationalDexNumber": 333,
+    "name": "Swablu",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "168"
+  },
+  {
+    "id": "altaria",
+    "nationalDexNumber": 334,
+    "name": "Altaria",
+    "types": [
+      "dragon",
+      "flying"
+    ],
+    "evolutionChain": "168"
+  },
+  {
+    "id": "zangoose",
+    "nationalDexNumber": 335,
+    "name": "Zangoose",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "169"
+  },
+  {
+    "id": "seviper",
+    "nationalDexNumber": 336,
+    "name": "Seviper",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "170"
+  },
+  {
+    "id": "lunatone",
+    "nationalDexNumber": 337,
+    "name": "Lunatone",
+    "types": [
+      "rock",
+      "psychic"
+    ],
+    "evolutionChain": "171"
+  },
+  {
+    "id": "solrock",
+    "nationalDexNumber": 338,
+    "name": "Solrock",
+    "types": [
+      "rock",
+      "psychic"
+    ],
+    "evolutionChain": "172"
+  },
+  {
+    "id": "barboach",
+    "nationalDexNumber": 339,
+    "name": "Barboach",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "evolutionChain": "173"
+  },
+  {
+    "id": "whiscash",
+    "nationalDexNumber": 340,
+    "name": "Whiscash",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "evolutionChain": "173"
+  },
+  {
+    "id": "corphish",
+    "nationalDexNumber": 341,
+    "name": "Corphish",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "174"
+  },
+  {
+    "id": "crawdaunt",
+    "nationalDexNumber": 342,
+    "name": "Crawdaunt",
+    "types": [
+      "water",
+      "dark"
+    ],
+    "evolutionChain": "174"
+  },
+  {
+    "id": "baltoy",
+    "nationalDexNumber": 343,
+    "name": "Baltoy",
+    "types": [
+      "ground",
+      "psychic"
+    ],
+    "evolutionChain": "175"
+  },
+  {
+    "id": "claydol",
+    "nationalDexNumber": 344,
+    "name": "Claydol",
+    "types": [
+      "ground",
+      "psychic"
+    ],
+    "evolutionChain": "175"
+  },
+  {
+    "id": "lileep",
+    "nationalDexNumber": 345,
+    "name": "Lileep",
+    "types": [
+      "rock",
+      "grass"
+    ],
+    "evolutionChain": "176"
+  },
+  {
+    "id": "cradily",
+    "nationalDexNumber": 346,
+    "name": "Cradily",
+    "types": [
+      "rock",
+      "grass"
+    ],
+    "evolutionChain": "176"
+  },
+  {
+    "id": "anorith",
+    "nationalDexNumber": 347,
+    "name": "Anorith",
+    "types": [
+      "rock",
+      "bug"
+    ],
+    "evolutionChain": "177"
+  },
+  {
+    "id": "armaldo",
+    "nationalDexNumber": 348,
+    "name": "Armaldo",
+    "types": [
+      "rock",
+      "bug"
+    ],
+    "evolutionChain": "177"
+  },
+  {
+    "id": "feebas",
+    "nationalDexNumber": 349,
+    "name": "Feebas",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "178"
+  },
+  {
+    "id": "milotic",
+    "nationalDexNumber": 350,
+    "name": "Milotic",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "178"
+  },
+  {
+    "id": "castform",
+    "nationalDexNumber": 351,
+    "name": "Castform",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "179"
+  },
+  {
+    "id": "kecleon",
+    "nationalDexNumber": 352,
+    "name": "Kecleon",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "180"
+  },
+  {
+    "id": "shuppet",
+    "nationalDexNumber": 353,
+    "name": "Shuppet",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "181"
+  },
+  {
+    "id": "banette",
+    "nationalDexNumber": 354,
+    "name": "Banette",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "181"
+  },
+  {
+    "id": "duskull",
+    "nationalDexNumber": 355,
+    "name": "Duskull",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "182"
+  },
+  {
+    "id": "dusclops",
+    "nationalDexNumber": 356,
+    "name": "Dusclops",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "182"
+  },
+  {
+    "id": "tropius",
+    "nationalDexNumber": 357,
+    "name": "Tropius",
+    "types": [
+      "grass",
+      "flying"
+    ],
+    "evolutionChain": "183"
+  },
+  {
+    "id": "chimecho",
+    "nationalDexNumber": 358,
+    "name": "Chimecho",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "184"
+  },
+  {
+    "id": "absol",
+    "nationalDexNumber": 359,
+    "name": "Absol",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "185"
+  },
+  {
+    "id": "wynaut",
+    "nationalDexNumber": 360,
+    "name": "Wynaut",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "100"
+  },
+  {
+    "id": "snorunt",
+    "nationalDexNumber": 361,
+    "name": "Snorunt",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "186"
+  },
+  {
+    "id": "glalie",
+    "nationalDexNumber": 362,
+    "name": "Glalie",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "186"
+  },
+  {
+    "id": "spheal",
+    "nationalDexNumber": 363,
+    "name": "Spheal",
+    "types": [
+      "ice",
+      "water"
+    ],
+    "evolutionChain": "187"
+  },
+  {
+    "id": "sealeo",
+    "nationalDexNumber": 364,
+    "name": "Sealeo",
+    "types": [
+      "ice",
+      "water"
+    ],
+    "evolutionChain": "187"
+  },
+  {
+    "id": "walrein",
+    "nationalDexNumber": 365,
+    "name": "Walrein",
+    "types": [
+      "ice",
+      "water"
+    ],
+    "evolutionChain": "187"
+  },
+  {
+    "id": "clamperl",
+    "nationalDexNumber": 366,
+    "name": "Clamperl",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "188"
+  },
+  {
+    "id": "huntail",
+    "nationalDexNumber": 367,
+    "name": "Huntail",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "188"
+  },
+  {
+    "id": "gorebyss",
+    "nationalDexNumber": 368,
+    "name": "Gorebyss",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "188"
+  },
+  {
+    "id": "relicanth",
+    "nationalDexNumber": 369,
+    "name": "Relicanth",
+    "types": [
+      "water",
+      "rock"
+    ],
+    "evolutionChain": "189"
+  },
+  {
+    "id": "luvdisc",
+    "nationalDexNumber": 370,
+    "name": "Luvdisc",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "190"
+  },
+  {
+    "id": "bagon",
+    "nationalDexNumber": 371,
+    "name": "Bagon",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "191"
+  },
+  {
+    "id": "shelgon",
+    "nationalDexNumber": 372,
+    "name": "Shelgon",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "191"
+  },
+  {
+    "id": "salamence",
+    "nationalDexNumber": 373,
+    "name": "Salamence",
+    "types": [
+      "dragon",
+      "flying"
+    ],
+    "evolutionChain": "191"
+  },
+  {
+    "id": "beldum",
+    "nationalDexNumber": 374,
+    "name": "Beldum",
+    "types": [
+      "steel",
+      "psychic"
+    ],
+    "evolutionChain": "192"
+  },
+  {
+    "id": "metang",
+    "nationalDexNumber": 375,
+    "name": "Metang",
+    "types": [
+      "steel",
+      "psychic"
+    ],
+    "evolutionChain": "192"
+  },
+  {
+    "id": "metagross",
+    "nationalDexNumber": 376,
+    "name": "Metagross",
+    "types": [
+      "steel",
+      "psychic"
+    ],
+    "evolutionChain": "192"
+  },
+  {
+    "id": "regirock",
+    "nationalDexNumber": 377,
+    "name": "Regirock",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "193"
+  },
+  {
+    "id": "regice",
+    "nationalDexNumber": 378,
+    "name": "Regice",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "194"
+  },
+  {
+    "id": "registeel",
+    "nationalDexNumber": 379,
+    "name": "Registeel",
+    "types": [
+      "steel"
+    ],
+    "evolutionChain": "195"
+  },
+  {
+    "id": "latias",
+    "nationalDexNumber": 380,
+    "name": "Latias",
+    "types": [
+      "dragon",
+      "psychic"
+    ],
+    "evolutionChain": "196"
+  },
+  {
+    "id": "latios",
+    "nationalDexNumber": 381,
+    "name": "Latios",
+    "types": [
+      "dragon",
+      "psychic"
+    ],
+    "evolutionChain": "197"
+  },
+  {
+    "id": "kyogre",
+    "nationalDexNumber": 382,
+    "name": "Kyogre",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "198"
+  },
+  {
+    "id": "groudon",
+    "nationalDexNumber": 383,
+    "name": "Groudon",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "199"
+  },
+  {
+    "id": "rayquaza",
+    "nationalDexNumber": 384,
+    "name": "Rayquaza",
+    "types": [
+      "dragon",
+      "flying"
+    ],
+    "evolutionChain": "200"
+  },
+  {
+    "id": "jirachi",
+    "nationalDexNumber": 385,
+    "name": "Jirachi",
+    "types": [
+      "steel",
+      "psychic"
+    ],
+    "evolutionChain": "201"
+  },
+  {
+    "id": "deoxys",
+    "nationalDexNumber": 386,
+    "name": "Deoxys",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "202"
+  },
+  {
+    "id": "turtwig",
+    "nationalDexNumber": 387,
+    "name": "Turtwig",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "203"
+  },
+  {
+    "id": "grotle",
+    "nationalDexNumber": 388,
+    "name": "Grotle",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "203"
+  },
+  {
+    "id": "torterra",
+    "nationalDexNumber": 389,
+    "name": "Torterra",
+    "types": [
+      "grass",
+      "ground"
+    ],
+    "evolutionChain": "203"
+  },
+  {
+    "id": "chimchar",
+    "nationalDexNumber": 390,
+    "name": "Chimchar",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "204"
+  },
+  {
+    "id": "monferno",
+    "nationalDexNumber": 391,
+    "name": "Monferno",
+    "types": [
+      "fire",
+      "fighting"
+    ],
+    "evolutionChain": "204"
+  },
+  {
+    "id": "infernape",
+    "nationalDexNumber": 392,
+    "name": "Infernape",
+    "types": [
+      "fire",
+      "fighting"
+    ],
+    "evolutionChain": "204"
+  },
+  {
+    "id": "piplup",
+    "nationalDexNumber": 393,
+    "name": "Piplup",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "205"
+  },
+  {
+    "id": "prinplup",
+    "nationalDexNumber": 394,
+    "name": "Prinplup",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "205"
+  },
+  {
+    "id": "empoleon",
+    "nationalDexNumber": 395,
+    "name": "Empoleon",
+    "types": [
+      "water",
+      "steel"
+    ],
+    "evolutionChain": "205"
+  },
+  {
+    "id": "starly",
+    "nationalDexNumber": 396,
+    "name": "Starly",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "206"
+  },
+  {
+    "id": "staravia",
+    "nationalDexNumber": 397,
+    "name": "Staravia",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "206"
+  },
+  {
+    "id": "staraptor",
+    "nationalDexNumber": 398,
+    "name": "Staraptor",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "206"
+  },
+  {
+    "id": "bidoof",
+    "nationalDexNumber": 399,
+    "name": "Bidoof",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "207"
+  },
+  {
+    "id": "bibarel",
+    "nationalDexNumber": 400,
+    "name": "Bibarel",
+    "types": [
+      "normal",
+      "water"
+    ],
+    "evolutionChain": "207"
+  },
+  {
+    "id": "kricketot",
+    "nationalDexNumber": 401,
+    "name": "Kricketot",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "208"
+  },
+  {
+    "id": "kricketune",
+    "nationalDexNumber": 402,
+    "name": "Kricketune",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "208"
+  },
+  {
+    "id": "shinx",
+    "nationalDexNumber": 403,
+    "name": "Shinx",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "209"
+  },
+  {
+    "id": "luxio",
+    "nationalDexNumber": 404,
+    "name": "Luxio",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "209"
+  },
+  {
+    "id": "luxray",
+    "nationalDexNumber": 405,
+    "name": "Luxray",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "209"
+  },
+  {
+    "id": "budew",
+    "nationalDexNumber": 406,
+    "name": "Budew",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "158"
+  },
+  {
+    "id": "roserade",
+    "nationalDexNumber": 407,
+    "name": "Roserade",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "158"
+  },
+  {
+    "id": "cranidos",
+    "nationalDexNumber": 408,
+    "name": "Cranidos",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "211"
+  },
+  {
+    "id": "rampardos",
+    "nationalDexNumber": 409,
+    "name": "Rampardos",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "211"
+  },
+  {
+    "id": "shieldon",
+    "nationalDexNumber": 410,
+    "name": "Shieldon",
+    "types": [
+      "rock",
+      "steel"
+    ],
+    "evolutionChain": "212"
+  },
+  {
+    "id": "bastiodon",
+    "nationalDexNumber": 411,
+    "name": "Bastiodon",
+    "types": [
+      "rock",
+      "steel"
+    ],
+    "evolutionChain": "212"
+  },
+  {
+    "id": "burmy",
+    "nationalDexNumber": 412,
+    "name": "Burmy",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "213"
+  },
+  {
+    "id": "wormadam",
+    "nationalDexNumber": 413,
+    "name": "Wormadam",
+    "types": [
+      "bug",
+      "grass"
+    ],
+    "evolutionChain": "213"
+  },
+  {
+    "id": "mothim",
+    "nationalDexNumber": 414,
+    "name": "Mothim",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "213"
+  },
+  {
+    "id": "combee",
+    "nationalDexNumber": 415,
+    "name": "Combee",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "214"
+  },
+  {
+    "id": "vespiquen",
+    "nationalDexNumber": 416,
+    "name": "Vespiquen",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "214"
+  },
+  {
+    "id": "pachirisu",
+    "nationalDexNumber": 417,
+    "name": "Pachirisu",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "215"
+  },
+  {
+    "id": "buizel",
+    "nationalDexNumber": 418,
+    "name": "Buizel",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "216"
+  },
+  {
+    "id": "floatzel",
+    "nationalDexNumber": 419,
+    "name": "Floatzel",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "216"
+  },
+  {
+    "id": "cherubi",
+    "nationalDexNumber": 420,
+    "name": "Cherubi",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "217"
+  },
+  {
+    "id": "cherrim",
+    "nationalDexNumber": 421,
+    "name": "Cherrim",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "217"
+  },
+  {
+    "id": "shellos",
+    "nationalDexNumber": 422,
+    "name": "Shellos",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "218"
+  },
+  {
+    "id": "gastrodon",
+    "nationalDexNumber": 423,
+    "name": "Gastrodon",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "evolutionChain": "218"
+  },
+  {
+    "id": "ambipom",
+    "nationalDexNumber": 424,
+    "name": "Ambipom",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "93"
+  },
+  {
+    "id": "drifloon",
+    "nationalDexNumber": 425,
+    "name": "Drifloon",
+    "types": [
+      "ghost",
+      "flying"
+    ],
+    "evolutionChain": "219"
+  },
+  {
+    "id": "drifblim",
+    "nationalDexNumber": 426,
+    "name": "Drifblim",
+    "types": [
+      "ghost",
+      "flying"
+    ],
+    "evolutionChain": "219"
+  },
+  {
+    "id": "buneary",
+    "nationalDexNumber": 427,
+    "name": "Buneary",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "220"
+  },
+  {
+    "id": "lopunny",
+    "nationalDexNumber": 428,
+    "name": "Lopunny",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "220"
+  },
+  {
+    "id": "mismagius",
+    "nationalDexNumber": 429,
+    "name": "Mismagius",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "98"
+  },
+  {
+    "id": "honchkrow",
+    "nationalDexNumber": 430,
+    "name": "Honchkrow",
+    "types": [
+      "dark",
+      "flying"
+    ],
+    "evolutionChain": "97"
+  },
+  {
+    "id": "glameow",
+    "nationalDexNumber": 431,
+    "name": "Glameow",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "221"
+  },
+  {
+    "id": "purugly",
+    "nationalDexNumber": 432,
+    "name": "Purugly",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "221"
+  },
+  {
+    "id": "chingling",
+    "nationalDexNumber": 433,
+    "name": "Chingling",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "184"
+  },
+  {
+    "id": "stunky",
+    "nationalDexNumber": 434,
+    "name": "Stunky",
+    "types": [
+      "poison",
+      "dark"
+    ],
+    "evolutionChain": "223"
+  },
+  {
+    "id": "skuntank",
+    "nationalDexNumber": 435,
+    "name": "Skuntank",
+    "types": [
+      "poison",
+      "dark"
+    ],
+    "evolutionChain": "223"
+  },
+  {
+    "id": "bronzor",
+    "nationalDexNumber": 436,
+    "name": "Bronzor",
+    "types": [
+      "steel",
+      "psychic"
+    ],
+    "evolutionChain": "224"
+  },
+  {
+    "id": "bronzong",
+    "nationalDexNumber": 437,
+    "name": "Bronzong",
+    "types": [
+      "steel",
+      "psychic"
+    ],
+    "evolutionChain": "224"
+  },
+  {
+    "id": "bonsly",
+    "nationalDexNumber": 438,
+    "name": "Bonsly",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "91"
+  },
+  {
+    "id": "mime-jr",
+    "nationalDexNumber": 439,
+    "name": "Mime Jr.",
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "evolutionChain": "57"
+  },
+  {
+    "id": "happiny",
+    "nationalDexNumber": 440,
+    "name": "Happiny",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "51"
+  },
+  {
+    "id": "chatot",
+    "nationalDexNumber": 441,
+    "name": "Chatot",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "228"
+  },
+  {
+    "id": "spiritomb",
+    "nationalDexNumber": 442,
+    "name": "Spiritomb",
+    "types": [
+      "ghost",
+      "dark"
+    ],
+    "evolutionChain": "229"
+  },
+  {
+    "id": "gible",
+    "nationalDexNumber": 443,
+    "name": "Gible",
+    "types": [
+      "dragon",
+      "ground"
+    ],
+    "evolutionChain": "230"
+  },
+  {
+    "id": "gabite",
+    "nationalDexNumber": 444,
+    "name": "Gabite",
+    "types": [
+      "dragon",
+      "ground"
+    ],
+    "evolutionChain": "230"
+  },
+  {
+    "id": "garchomp",
+    "nationalDexNumber": 445,
+    "name": "Garchomp",
+    "types": [
+      "dragon",
+      "ground"
+    ],
+    "evolutionChain": "230"
+  },
+  {
+    "id": "munchlax",
+    "nationalDexNumber": 446,
+    "name": "Munchlax",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "72"
+  },
+  {
+    "id": "riolu",
+    "nationalDexNumber": 447,
+    "name": "Riolu",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "232"
+  },
+  {
+    "id": "lucario",
+    "nationalDexNumber": 448,
+    "name": "Lucario",
+    "types": [
+      "fighting",
+      "steel"
+    ],
+    "evolutionChain": "232"
+  },
+  {
+    "id": "hippopotas",
+    "nationalDexNumber": 449,
+    "name": "Hippopotas",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "233"
+  },
+  {
+    "id": "hippowdon",
+    "nationalDexNumber": 450,
+    "name": "Hippowdon",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "233"
+  },
+  {
+    "id": "skorupi",
+    "nationalDexNumber": 451,
+    "name": "Skorupi",
+    "types": [
+      "poison",
+      "bug"
+    ],
+    "evolutionChain": "234"
+  },
+  {
+    "id": "drapion",
+    "nationalDexNumber": 452,
+    "name": "Drapion",
+    "types": [
+      "poison",
+      "dark"
+    ],
+    "evolutionChain": "234"
+  },
+  {
+    "id": "croagunk",
+    "nationalDexNumber": 453,
+    "name": "Croagunk",
+    "types": [
+      "poison",
+      "fighting"
+    ],
+    "evolutionChain": "235"
+  },
+  {
+    "id": "toxicroak",
+    "nationalDexNumber": 454,
+    "name": "Toxicroak",
+    "types": [
+      "poison",
+      "fighting"
+    ],
+    "evolutionChain": "235"
+  },
+  {
+    "id": "carnivine",
+    "nationalDexNumber": 455,
+    "name": "Carnivine",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "236"
+  },
+  {
+    "id": "finneon",
+    "nationalDexNumber": 456,
+    "name": "Finneon",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "237"
+  },
+  {
+    "id": "lumineon",
+    "nationalDexNumber": 457,
+    "name": "Lumineon",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "237"
+  },
+  {
+    "id": "mantyke",
+    "nationalDexNumber": 458,
+    "name": "Mantyke",
+    "types": [
+      "water",
+      "flying"
+    ],
+    "evolutionChain": "116"
+  },
+  {
+    "id": "snover",
+    "nationalDexNumber": 459,
+    "name": "Snover",
+    "types": [
+      "grass",
+      "ice"
+    ],
+    "evolutionChain": "239"
+  },
+  {
+    "id": "abomasnow",
+    "nationalDexNumber": 460,
+    "name": "Abomasnow",
+    "types": [
+      "grass",
+      "ice"
+    ],
+    "evolutionChain": "239"
+  },
+  {
+    "id": "weavile",
+    "nationalDexNumber": 461,
+    "name": "Weavile",
+    "types": [
+      "dark",
+      "ice"
+    ],
+    "evolutionChain": "109"
+  },
+  {
+    "id": "magnezone",
+    "nationalDexNumber": 462,
+    "name": "Magnezone",
+    "types": [
+      "electric",
+      "steel"
+    ],
+    "evolutionChain": "34"
+  },
+  {
+    "id": "lickilicky",
+    "nationalDexNumber": 463,
+    "name": "Lickilicky",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "48"
+  },
+  {
+    "id": "rhyperior",
+    "nationalDexNumber": 464,
+    "name": "Rhyperior",
+    "types": [
+      "ground",
+      "rock"
+    ],
+    "evolutionChain": "50"
+  },
+  {
+    "id": "tangrowth",
+    "nationalDexNumber": 465,
+    "name": "Tangrowth",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "52"
+  },
+  {
+    "id": "electivire",
+    "nationalDexNumber": 466,
+    "name": "Electivire",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "60"
+  },
+  {
+    "id": "magmortar",
+    "nationalDexNumber": 467,
+    "name": "Magmortar",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "61"
+  },
+  {
+    "id": "togekiss",
+    "nationalDexNumber": 468,
+    "name": "Togekiss",
+    "types": [
+      "fairy",
+      "flying"
+    ],
+    "evolutionChain": "87"
+  },
+  {
+    "id": "yanmega",
+    "nationalDexNumber": 469,
+    "name": "Yanmega",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "95"
+  },
+  {
+    "id": "leafeon",
+    "nationalDexNumber": 470,
+    "name": "Leafeon",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "67"
+  },
+  {
+    "id": "glaceon",
+    "nationalDexNumber": 471,
+    "name": "Glaceon",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "67"
+  },
+  {
+    "id": "gliscor",
+    "nationalDexNumber": 472,
+    "name": "Gliscor",
+    "types": [
+      "ground",
+      "flying"
+    ],
+    "evolutionChain": "104"
+  },
+  {
+    "id": "mamoswine",
+    "nationalDexNumber": 473,
+    "name": "Mamoswine",
+    "types": [
+      "ice",
+      "ground"
+    ],
+    "evolutionChain": "112"
+  },
+  {
+    "id": "porygon-z",
+    "nationalDexNumber": 474,
+    "name": "Porygon-Z",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "68"
+  },
+  {
+    "id": "gallade",
+    "nationalDexNumber": 475,
+    "name": "Gallade",
+    "types": [
+      "psychic",
+      "fighting"
+    ],
+    "evolutionChain": "140"
+  },
+  {
+    "id": "probopass",
+    "nationalDexNumber": 476,
+    "name": "Probopass",
+    "types": [
+      "rock",
+      "steel"
+    ],
+    "evolutionChain": "147"
+  },
+  {
+    "id": "dusknoir",
+    "nationalDexNumber": 477,
+    "name": "Dusknoir",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "182"
+  },
+  {
+    "id": "froslass",
+    "nationalDexNumber": 478,
+    "name": "Froslass",
+    "types": [
+      "ice",
+      "ghost"
+    ],
+    "evolutionChain": "186"
+  },
+  {
+    "id": "rotom",
+    "nationalDexNumber": 479,
+    "name": "Rotom",
+    "types": [
+      "electric",
+      "ghost"
+    ],
+    "evolutionChain": "240"
+  },
+  {
+    "id": "uxie",
+    "nationalDexNumber": 480,
+    "name": "Uxie",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "241"
+  },
+  {
+    "id": "mesprit",
+    "nationalDexNumber": 481,
+    "name": "Mesprit",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "242"
+  },
+  {
+    "id": "azelf",
+    "nationalDexNumber": 482,
+    "name": "Azelf",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "243"
+  },
+  {
+    "id": "dialga",
+    "nationalDexNumber": 483,
+    "name": "Dialga",
+    "types": [
+      "steel",
+      "dragon"
+    ],
+    "evolutionChain": "244"
+  },
+  {
+    "id": "palkia",
+    "nationalDexNumber": 484,
+    "name": "Palkia",
+    "types": [
+      "water",
+      "dragon"
+    ],
+    "evolutionChain": "245"
+  },
+  {
+    "id": "heatran",
+    "nationalDexNumber": 485,
+    "name": "Heatran",
+    "types": [
+      "fire",
+      "steel"
+    ],
+    "evolutionChain": "246"
+  },
+  {
+    "id": "regigigas",
+    "nationalDexNumber": 486,
+    "name": "Regigigas",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "247"
+  },
+  {
+    "id": "giratina",
+    "nationalDexNumber": 487,
+    "name": "Giratina",
+    "types": [
+      "ghost",
+      "dragon"
+    ],
+    "evolutionChain": "248"
+  },
+  {
+    "id": "cresselia",
+    "nationalDexNumber": 488,
+    "name": "Cresselia",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "249"
+  },
+  {
+    "id": "phione",
+    "nationalDexNumber": 489,
+    "name": "Phione",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "250"
+  },
+  {
+    "id": "manaphy",
+    "nationalDexNumber": 490,
+    "name": "Manaphy",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "250"
+  },
+  {
+    "id": "darkrai",
+    "nationalDexNumber": 491,
+    "name": "Darkrai",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "252"
+  },
+  {
+    "id": "shaymin",
+    "nationalDexNumber": 492,
+    "name": "Shaymin",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "253"
+  },
+  {
+    "id": "arceus",
+    "nationalDexNumber": 493,
+    "name": "Arceus",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "254"
+  },
+  {
+    "id": "victini",
+    "nationalDexNumber": 494,
+    "name": "Victini",
+    "types": [
+      "psychic",
+      "fire"
+    ],
+    "evolutionChain": "255"
+  },
+  {
+    "id": "snivy",
+    "nationalDexNumber": 495,
+    "name": "Snivy",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "256"
+  },
+  {
+    "id": "servine",
+    "nationalDexNumber": 496,
+    "name": "Servine",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "256"
+  },
+  {
+    "id": "serperior",
+    "nationalDexNumber": 497,
+    "name": "Serperior",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "256"
+  },
+  {
+    "id": "tepig",
+    "nationalDexNumber": 498,
+    "name": "Tepig",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "257"
+  },
+  {
+    "id": "pignite",
+    "nationalDexNumber": 499,
+    "name": "Pignite",
+    "types": [
+      "fire",
+      "fighting"
+    ],
+    "evolutionChain": "257"
+  },
+  {
+    "id": "emboar",
+    "nationalDexNumber": 500,
+    "name": "Emboar",
+    "types": [
+      "fire",
+      "fighting"
+    ],
+    "evolutionChain": "257"
+  },
+  {
+    "id": "oshawott",
+    "nationalDexNumber": 501,
+    "name": "Oshawott",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "258"
+  },
+  {
+    "id": "dewott",
+    "nationalDexNumber": 502,
+    "name": "Dewott",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "258"
+  },
+  {
+    "id": "samurott",
+    "nationalDexNumber": 503,
+    "name": "Samurott",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "258"
+  },
+  {
+    "id": "patrat",
+    "nationalDexNumber": 504,
+    "name": "Patrat",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "259"
+  },
+  {
+    "id": "watchog",
+    "nationalDexNumber": 505,
+    "name": "Watchog",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "259"
+  },
+  {
+    "id": "lillipup",
+    "nationalDexNumber": 506,
+    "name": "Lillipup",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "260"
+  },
+  {
+    "id": "herdier",
+    "nationalDexNumber": 507,
+    "name": "Herdier",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "260"
+  },
+  {
+    "id": "stoutland",
+    "nationalDexNumber": 508,
+    "name": "Stoutland",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "260"
+  },
+  {
+    "id": "purrloin",
+    "nationalDexNumber": 509,
+    "name": "Purrloin",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "261"
+  },
+  {
+    "id": "liepard",
+    "nationalDexNumber": 510,
+    "name": "Liepard",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "261"
+  },
+  {
+    "id": "pansage",
+    "nationalDexNumber": 511,
+    "name": "Pansage",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "262"
+  },
+  {
+    "id": "simisage",
+    "nationalDexNumber": 512,
+    "name": "Simisage",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "262"
+  },
+  {
+    "id": "pansear",
+    "nationalDexNumber": 513,
+    "name": "Pansear",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "263"
+  },
+  {
+    "id": "simisear",
+    "nationalDexNumber": 514,
+    "name": "Simisear",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "263"
+  },
+  {
+    "id": "panpour",
+    "nationalDexNumber": 515,
+    "name": "Panpour",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "264"
+  },
+  {
+    "id": "simipour",
+    "nationalDexNumber": 516,
+    "name": "Simipour",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "264"
+  },
+  {
+    "id": "munna",
+    "nationalDexNumber": 517,
+    "name": "Munna",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "265"
+  },
+  {
+    "id": "musharna",
+    "nationalDexNumber": 518,
+    "name": "Musharna",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "265"
+  },
+  {
+    "id": "pidove",
+    "nationalDexNumber": 519,
+    "name": "Pidove",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "266"
+  },
+  {
+    "id": "tranquill",
+    "nationalDexNumber": 520,
+    "name": "Tranquill",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "266"
+  },
+  {
+    "id": "unfezant",
+    "nationalDexNumber": 521,
+    "name": "Unfezant",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "266"
+  },
+  {
+    "id": "blitzle",
+    "nationalDexNumber": 522,
+    "name": "Blitzle",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "267"
+  },
+  {
+    "id": "zebstrika",
+    "nationalDexNumber": 523,
+    "name": "Zebstrika",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "267"
+  },
+  {
+    "id": "roggenrola",
+    "nationalDexNumber": 524,
+    "name": "Roggenrola",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "268"
+  },
+  {
+    "id": "boldore",
+    "nationalDexNumber": 525,
+    "name": "Boldore",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "268"
+  },
+  {
+    "id": "gigalith",
+    "nationalDexNumber": 526,
+    "name": "Gigalith",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "268"
+  },
+  {
+    "id": "woobat",
+    "nationalDexNumber": 527,
+    "name": "Woobat",
+    "types": [
+      "psychic",
+      "flying"
+    ],
+    "evolutionChain": "269"
+  },
+  {
+    "id": "swoobat",
+    "nationalDexNumber": 528,
+    "name": "Swoobat",
+    "types": [
+      "psychic",
+      "flying"
+    ],
+    "evolutionChain": "269"
+  },
+  {
+    "id": "drilbur",
+    "nationalDexNumber": 529,
+    "name": "Drilbur",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "270"
+  },
+  {
+    "id": "excadrill",
+    "nationalDexNumber": 530,
+    "name": "Excadrill",
+    "types": [
+      "ground",
+      "steel"
+    ],
+    "evolutionChain": "270"
+  },
+  {
+    "id": "audino",
+    "nationalDexNumber": 531,
+    "name": "Audino",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "271"
+  },
+  {
+    "id": "timburr",
+    "nationalDexNumber": 532,
+    "name": "Timburr",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "272"
+  },
+  {
+    "id": "gurdurr",
+    "nationalDexNumber": 533,
+    "name": "Gurdurr",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "272"
+  },
+  {
+    "id": "conkeldurr",
+    "nationalDexNumber": 534,
+    "name": "Conkeldurr",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "272"
+  },
+  {
+    "id": "tympole",
+    "nationalDexNumber": 535,
+    "name": "Tympole",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "273"
+  },
+  {
+    "id": "palpitoad",
+    "nationalDexNumber": 536,
+    "name": "Palpitoad",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "evolutionChain": "273"
+  },
+  {
+    "id": "seismitoad",
+    "nationalDexNumber": 537,
+    "name": "Seismitoad",
+    "types": [
+      "water",
+      "ground"
+    ],
+    "evolutionChain": "273"
+  },
+  {
+    "id": "throh",
+    "nationalDexNumber": 538,
+    "name": "Throh",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "274"
+  },
+  {
+    "id": "sawk",
+    "nationalDexNumber": 539,
+    "name": "Sawk",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "275"
+  },
+  {
+    "id": "sewaddle",
+    "nationalDexNumber": 540,
+    "name": "Sewaddle",
+    "types": [
+      "bug",
+      "grass"
+    ],
+    "evolutionChain": "276"
+  },
+  {
+    "id": "swadloon",
+    "nationalDexNumber": 541,
+    "name": "Swadloon",
+    "types": [
+      "bug",
+      "grass"
+    ],
+    "evolutionChain": "276"
+  },
+  {
+    "id": "leavanny",
+    "nationalDexNumber": 542,
+    "name": "Leavanny",
+    "types": [
+      "bug",
+      "grass"
+    ],
+    "evolutionChain": "276"
+  },
+  {
+    "id": "venipede",
+    "nationalDexNumber": 543,
+    "name": "Venipede",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "evolutionChain": "277"
+  },
+  {
+    "id": "whirlipede",
+    "nationalDexNumber": 544,
+    "name": "Whirlipede",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "evolutionChain": "277"
+  },
+  {
+    "id": "scolipede",
+    "nationalDexNumber": 545,
+    "name": "Scolipede",
+    "types": [
+      "bug",
+      "poison"
+    ],
+    "evolutionChain": "277"
+  },
+  {
+    "id": "cottonee",
+    "nationalDexNumber": 546,
+    "name": "Cottonee",
+    "types": [
+      "grass",
+      "fairy"
+    ],
+    "evolutionChain": "278"
+  },
+  {
+    "id": "whimsicott",
+    "nationalDexNumber": 547,
+    "name": "Whimsicott",
+    "types": [
+      "grass",
+      "fairy"
+    ],
+    "evolutionChain": "278"
+  },
+  {
+    "id": "petilil",
+    "nationalDexNumber": 548,
+    "name": "Petilil",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "279"
+  },
+  {
+    "id": "lilligant",
+    "nationalDexNumber": 549,
+    "name": "Lilligant",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "279"
+  },
+  {
+    "id": "basculin",
+    "nationalDexNumber": 550,
+    "name": "Basculin",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "280"
+  },
+  {
+    "id": "sandile",
+    "nationalDexNumber": 551,
+    "name": "Sandile",
+    "types": [
+      "ground",
+      "dark"
+    ],
+    "evolutionChain": "281"
+  },
+  {
+    "id": "krokorok",
+    "nationalDexNumber": 552,
+    "name": "Krokorok",
+    "types": [
+      "ground",
+      "dark"
+    ],
+    "evolutionChain": "281"
+  },
+  {
+    "id": "krookodile",
+    "nationalDexNumber": 553,
+    "name": "Krookodile",
+    "types": [
+      "ground",
+      "dark"
+    ],
+    "evolutionChain": "281"
+  },
+  {
+    "id": "darumaka",
+    "nationalDexNumber": 554,
+    "name": "Darumaka",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "282"
+  },
+  {
+    "id": "darmanitan",
+    "nationalDexNumber": 555,
+    "name": "Darmanitan",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "282"
+  },
+  {
+    "id": "maractus",
+    "nationalDexNumber": 556,
+    "name": "Maractus",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "283"
+  },
+  {
+    "id": "dwebble",
+    "nationalDexNumber": 557,
+    "name": "Dwebble",
+    "types": [
+      "bug",
+      "rock"
+    ],
+    "evolutionChain": "284"
+  },
+  {
+    "id": "crustle",
+    "nationalDexNumber": 558,
+    "name": "Crustle",
+    "types": [
+      "bug",
+      "rock"
+    ],
+    "evolutionChain": "284"
+  },
+  {
+    "id": "scraggy",
+    "nationalDexNumber": 559,
+    "name": "Scraggy",
+    "types": [
+      "dark",
+      "fighting"
+    ],
+    "evolutionChain": "285"
+  },
+  {
+    "id": "scrafty",
+    "nationalDexNumber": 560,
+    "name": "Scrafty",
+    "types": [
+      "dark",
+      "fighting"
+    ],
+    "evolutionChain": "285"
+  },
+  {
+    "id": "sigilyph",
+    "nationalDexNumber": 561,
+    "name": "Sigilyph",
+    "types": [
+      "psychic",
+      "flying"
+    ],
+    "evolutionChain": "286"
+  },
+  {
+    "id": "yamask",
+    "nationalDexNumber": 562,
+    "name": "Yamask",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "287"
+  },
+  {
+    "id": "cofagrigus",
+    "nationalDexNumber": 563,
+    "name": "Cofagrigus",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "287"
+  },
+  {
+    "id": "tirtouga",
+    "nationalDexNumber": 564,
+    "name": "Tirtouga",
+    "types": [
+      "water",
+      "rock"
+    ],
+    "evolutionChain": "288"
+  },
+  {
+    "id": "carracosta",
+    "nationalDexNumber": 565,
+    "name": "Carracosta",
+    "types": [
+      "water",
+      "rock"
+    ],
+    "evolutionChain": "288"
+  },
+  {
+    "id": "archen",
+    "nationalDexNumber": 566,
+    "name": "Archen",
+    "types": [
+      "rock",
+      "flying"
+    ],
+    "evolutionChain": "289"
+  },
+  {
+    "id": "archeops",
+    "nationalDexNumber": 567,
+    "name": "Archeops",
+    "types": [
+      "rock",
+      "flying"
+    ],
+    "evolutionChain": "289"
+  },
+  {
+    "id": "trubbish",
+    "nationalDexNumber": 568,
+    "name": "Trubbish",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "290"
+  },
+  {
+    "id": "garbodor",
+    "nationalDexNumber": 569,
+    "name": "Garbodor",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "290"
+  },
+  {
+    "id": "zorua",
+    "nationalDexNumber": 570,
+    "name": "Zorua",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "291"
+  },
+  {
+    "id": "zoroark",
+    "nationalDexNumber": 571,
+    "name": "Zoroark",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "291"
+  },
+  {
+    "id": "minccino",
+    "nationalDexNumber": 572,
+    "name": "Minccino",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "292"
+  },
+  {
+    "id": "cinccino",
+    "nationalDexNumber": 573,
+    "name": "Cinccino",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "292"
+  },
+  {
+    "id": "gothita",
+    "nationalDexNumber": 574,
+    "name": "Gothita",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "293"
+  },
+  {
+    "id": "gothorita",
+    "nationalDexNumber": 575,
+    "name": "Gothorita",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "293"
+  },
+  {
+    "id": "gothitelle",
+    "nationalDexNumber": 576,
+    "name": "Gothitelle",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "293"
+  },
+  {
+    "id": "solosis",
+    "nationalDexNumber": 577,
+    "name": "Solosis",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "294"
+  },
+  {
+    "id": "duosion",
+    "nationalDexNumber": 578,
+    "name": "Duosion",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "294"
+  },
+  {
+    "id": "reuniclus",
+    "nationalDexNumber": 579,
+    "name": "Reuniclus",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "294"
+  },
+  {
+    "id": "ducklett",
+    "nationalDexNumber": 580,
+    "name": "Ducklett",
+    "types": [
+      "water",
+      "flying"
+    ],
+    "evolutionChain": "295"
+  },
+  {
+    "id": "swanna",
+    "nationalDexNumber": 581,
+    "name": "Swanna",
+    "types": [
+      "water",
+      "flying"
+    ],
+    "evolutionChain": "295"
+  },
+  {
+    "id": "vanillite",
+    "nationalDexNumber": 582,
+    "name": "Vanillite",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "296"
+  },
+  {
+    "id": "vanillish",
+    "nationalDexNumber": 583,
+    "name": "Vanillish",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "296"
+  },
+  {
+    "id": "vanilluxe",
+    "nationalDexNumber": 584,
+    "name": "Vanilluxe",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "296"
+  },
+  {
+    "id": "deerling",
+    "nationalDexNumber": 585,
+    "name": "Deerling",
+    "types": [
+      "normal",
+      "grass"
+    ],
+    "evolutionChain": "297"
+  },
+  {
+    "id": "sawsbuck",
+    "nationalDexNumber": 586,
+    "name": "Sawsbuck",
+    "types": [
+      "normal",
+      "grass"
+    ],
+    "evolutionChain": "297"
+  },
+  {
+    "id": "emolga",
+    "nationalDexNumber": 587,
+    "name": "Emolga",
+    "types": [
+      "electric",
+      "flying"
+    ],
+    "evolutionChain": "298"
+  },
+  {
+    "id": "karrablast",
+    "nationalDexNumber": 588,
+    "name": "Karrablast",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "299"
+  },
+  {
+    "id": "escavalier",
+    "nationalDexNumber": 589,
+    "name": "Escavalier",
+    "types": [
+      "bug",
+      "steel"
+    ],
+    "evolutionChain": "299"
+  },
+  {
+    "id": "foongus",
+    "nationalDexNumber": 590,
+    "name": "Foongus",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "300"
+  },
+  {
+    "id": "amoonguss",
+    "nationalDexNumber": 591,
+    "name": "Amoonguss",
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "evolutionChain": "300"
+  },
+  {
+    "id": "frillish",
+    "nationalDexNumber": 592,
+    "name": "Frillish",
+    "types": [
+      "water",
+      "ghost"
+    ],
+    "evolutionChain": "301"
+  },
+  {
+    "id": "jellicent",
+    "nationalDexNumber": 593,
+    "name": "Jellicent",
+    "types": [
+      "water",
+      "ghost"
+    ],
+    "evolutionChain": "301"
+  },
+  {
+    "id": "alomomola",
+    "nationalDexNumber": 594,
+    "name": "Alomomola",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "302"
+  },
+  {
+    "id": "joltik",
+    "nationalDexNumber": 595,
+    "name": "Joltik",
+    "types": [
+      "bug",
+      "electric"
+    ],
+    "evolutionChain": "303"
+  },
+  {
+    "id": "galvantula",
+    "nationalDexNumber": 596,
+    "name": "Galvantula",
+    "types": [
+      "bug",
+      "electric"
+    ],
+    "evolutionChain": "303"
+  },
+  {
+    "id": "ferroseed",
+    "nationalDexNumber": 597,
+    "name": "Ferroseed",
+    "types": [
+      "grass",
+      "steel"
+    ],
+    "evolutionChain": "304"
+  },
+  {
+    "id": "ferrothorn",
+    "nationalDexNumber": 598,
+    "name": "Ferrothorn",
+    "types": [
+      "grass",
+      "steel"
+    ],
+    "evolutionChain": "304"
+  },
+  {
+    "id": "klink",
+    "nationalDexNumber": 599,
+    "name": "Klink",
+    "types": [
+      "steel"
+    ],
+    "evolutionChain": "305"
+  },
+  {
+    "id": "klang",
+    "nationalDexNumber": 600,
+    "name": "Klang",
+    "types": [
+      "steel"
+    ],
+    "evolutionChain": "305"
+  },
+  {
+    "id": "klinklang",
+    "nationalDexNumber": 601,
+    "name": "Klinklang",
+    "types": [
+      "steel"
+    ],
+    "evolutionChain": "305"
+  },
+  {
+    "id": "tynamo",
+    "nationalDexNumber": 602,
+    "name": "Tynamo",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "306"
+  },
+  {
+    "id": "eelektrik",
+    "nationalDexNumber": 603,
+    "name": "Eelektrik",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "306"
+  },
+  {
+    "id": "eelektross",
+    "nationalDexNumber": 604,
+    "name": "Eelektross",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "306"
+  },
+  {
+    "id": "elgyem",
+    "nationalDexNumber": 605,
+    "name": "Elgyem",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "307"
+  },
+  {
+    "id": "beheeyem",
+    "nationalDexNumber": 606,
+    "name": "Beheeyem",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "307"
+  },
+  {
+    "id": "litwick",
+    "nationalDexNumber": 607,
+    "name": "Litwick",
+    "types": [
+      "ghost",
+      "fire"
+    ],
+    "evolutionChain": "308"
+  },
+  {
+    "id": "lampent",
+    "nationalDexNumber": 608,
+    "name": "Lampent",
+    "types": [
+      "ghost",
+      "fire"
+    ],
+    "evolutionChain": "308"
+  },
+  {
+    "id": "chandelure",
+    "nationalDexNumber": 609,
+    "name": "Chandelure",
+    "types": [
+      "ghost",
+      "fire"
+    ],
+    "evolutionChain": "308"
+  },
+  {
+    "id": "axew",
+    "nationalDexNumber": 610,
+    "name": "Axew",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "309"
+  },
+  {
+    "id": "fraxure",
+    "nationalDexNumber": 611,
+    "name": "Fraxure",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "309"
+  },
+  {
+    "id": "haxorus",
+    "nationalDexNumber": 612,
+    "name": "Haxorus",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "309"
+  },
+  {
+    "id": "cubchoo",
+    "nationalDexNumber": 613,
+    "name": "Cubchoo",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "310"
+  },
+  {
+    "id": "beartic",
+    "nationalDexNumber": 614,
+    "name": "Beartic",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "310"
+  },
+  {
+    "id": "cryogonal",
+    "nationalDexNumber": 615,
+    "name": "Cryogonal",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "311"
+  },
+  {
+    "id": "shelmet",
+    "nationalDexNumber": 616,
+    "name": "Shelmet",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "312"
+  },
+  {
+    "id": "accelgor",
+    "nationalDexNumber": 617,
+    "name": "Accelgor",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "312"
+  },
+  {
+    "id": "stunfisk",
+    "nationalDexNumber": 618,
+    "name": "Stunfisk",
+    "types": [
+      "ground",
+      "electric"
+    ],
+    "evolutionChain": "313"
+  },
+  {
+    "id": "mienfoo",
+    "nationalDexNumber": 619,
+    "name": "Mienfoo",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "314"
+  },
+  {
+    "id": "mienshao",
+    "nationalDexNumber": 620,
+    "name": "Mienshao",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "314"
+  },
+  {
+    "id": "druddigon",
+    "nationalDexNumber": 621,
+    "name": "Druddigon",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "315"
+  },
+  {
+    "id": "golett",
+    "nationalDexNumber": 622,
+    "name": "Golett",
+    "types": [
+      "ground",
+      "ghost"
+    ],
+    "evolutionChain": "316"
+  },
+  {
+    "id": "golurk",
+    "nationalDexNumber": 623,
+    "name": "Golurk",
+    "types": [
+      "ground",
+      "ghost"
+    ],
+    "evolutionChain": "316"
+  },
+  {
+    "id": "pawniard",
+    "nationalDexNumber": 624,
+    "name": "Pawniard",
+    "types": [
+      "dark",
+      "steel"
+    ],
+    "evolutionChain": "317"
+  },
+  {
+    "id": "bisharp",
+    "nationalDexNumber": 625,
+    "name": "Bisharp",
+    "types": [
+      "dark",
+      "steel"
+    ],
+    "evolutionChain": "317"
+  },
+  {
+    "id": "bouffalant",
+    "nationalDexNumber": 626,
+    "name": "Bouffalant",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "318"
+  },
+  {
+    "id": "rufflet",
+    "nationalDexNumber": 627,
+    "name": "Rufflet",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "319"
+  },
+  {
+    "id": "braviary",
+    "nationalDexNumber": 628,
+    "name": "Braviary",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "319"
+  },
+  {
+    "id": "vullaby",
+    "nationalDexNumber": 629,
+    "name": "Vullaby",
+    "types": [
+      "dark",
+      "flying"
+    ],
+    "evolutionChain": "320"
+  },
+  {
+    "id": "mandibuzz",
+    "nationalDexNumber": 630,
+    "name": "Mandibuzz",
+    "types": [
+      "dark",
+      "flying"
+    ],
+    "evolutionChain": "320"
+  },
+  {
+    "id": "heatmor",
+    "nationalDexNumber": 631,
+    "name": "Heatmor",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "321"
+  },
+  {
+    "id": "durant",
+    "nationalDexNumber": 632,
+    "name": "Durant",
+    "types": [
+      "bug",
+      "steel"
+    ],
+    "evolutionChain": "322"
+  },
+  {
+    "id": "deino",
+    "nationalDexNumber": 633,
+    "name": "Deino",
+    "types": [
+      "dark",
+      "dragon"
+    ],
+    "evolutionChain": "323"
+  },
+  {
+    "id": "zweilous",
+    "nationalDexNumber": 634,
+    "name": "Zweilous",
+    "types": [
+      "dark",
+      "dragon"
+    ],
+    "evolutionChain": "323"
+  },
+  {
+    "id": "hydreigon",
+    "nationalDexNumber": 635,
+    "name": "Hydreigon",
+    "types": [
+      "dark",
+      "dragon"
+    ],
+    "evolutionChain": "323"
+  },
+  {
+    "id": "larvesta",
+    "nationalDexNumber": 636,
+    "name": "Larvesta",
+    "types": [
+      "bug",
+      "fire"
+    ],
+    "evolutionChain": "324"
+  },
+  {
+    "id": "volcarona",
+    "nationalDexNumber": 637,
+    "name": "Volcarona",
+    "types": [
+      "bug",
+      "fire"
+    ],
+    "evolutionChain": "324"
+  },
+  {
+    "id": "cobalion",
+    "nationalDexNumber": 638,
+    "name": "Cobalion",
+    "types": [
+      "steel",
+      "fighting"
+    ],
+    "evolutionChain": "325"
+  },
+  {
+    "id": "terrakion",
+    "nationalDexNumber": 639,
+    "name": "Terrakion",
+    "types": [
+      "rock",
+      "fighting"
+    ],
+    "evolutionChain": "326"
+  },
+  {
+    "id": "virizion",
+    "nationalDexNumber": 640,
+    "name": "Virizion",
+    "types": [
+      "grass",
+      "fighting"
+    ],
+    "evolutionChain": "327"
+  },
+  {
+    "id": "tornadus",
+    "nationalDexNumber": 641,
+    "name": "Tornadus",
+    "types": [
+      "flying"
+    ],
+    "evolutionChain": "328"
+  },
+  {
+    "id": "thundurus",
+    "nationalDexNumber": 642,
+    "name": "Thundurus",
+    "types": [
+      "electric",
+      "flying"
+    ],
+    "evolutionChain": "329"
+  },
+  {
+    "id": "reshiram",
+    "nationalDexNumber": 643,
+    "name": "Reshiram",
+    "types": [
+      "dragon",
+      "fire"
+    ],
+    "evolutionChain": "330"
+  },
+  {
+    "id": "zekrom",
+    "nationalDexNumber": 644,
+    "name": "Zekrom",
+    "types": [
+      "dragon",
+      "electric"
+    ],
+    "evolutionChain": "331"
+  },
+  {
+    "id": "landorus",
+    "nationalDexNumber": 645,
+    "name": "Landorus",
+    "types": [
+      "ground",
+      "flying"
+    ],
+    "evolutionChain": "332"
+  },
+  {
+    "id": "kyurem",
+    "nationalDexNumber": 646,
+    "name": "Kyurem",
+    "types": [
+      "dragon",
+      "ice"
+    ],
+    "evolutionChain": "333"
+  },
+  {
+    "id": "keldeo",
+    "nationalDexNumber": 647,
+    "name": "Keldeo",
+    "types": [
+      "water",
+      "fighting"
+    ],
+    "evolutionChain": "334"
+  },
+  {
+    "id": "meloetta",
+    "nationalDexNumber": 648,
+    "name": "Meloetta",
+    "types": [
+      "normal",
+      "psychic"
+    ],
+    "evolutionChain": "335"
+  },
+  {
+    "id": "genesect",
+    "nationalDexNumber": 649,
+    "name": "Genesect",
+    "types": [
+      "bug",
+      "steel"
+    ],
+    "evolutionChain": "336"
+  },
+  {
+    "id": "chespin",
+    "nationalDexNumber": 650,
+    "name": "Chespin",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "337"
+  },
+  {
+    "id": "quilladin",
+    "nationalDexNumber": 651,
+    "name": "Quilladin",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "337"
+  },
+  {
+    "id": "chesnaught",
+    "nationalDexNumber": 652,
+    "name": "Chesnaught",
+    "types": [
+      "grass",
+      "fighting"
+    ],
+    "evolutionChain": "337"
+  },
+  {
+    "id": "fennekin",
+    "nationalDexNumber": 653,
+    "name": "Fennekin",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "338"
+  },
+  {
+    "id": "braixen",
+    "nationalDexNumber": 654,
+    "name": "Braixen",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "338"
+  },
+  {
+    "id": "delphox",
+    "nationalDexNumber": 655,
+    "name": "Delphox",
+    "types": [
+      "fire",
+      "psychic"
+    ],
+    "evolutionChain": "338"
+  },
+  {
+    "id": "froakie",
+    "nationalDexNumber": 656,
+    "name": "Froakie",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "339"
+  },
+  {
+    "id": "frogadier",
+    "nationalDexNumber": 657,
+    "name": "Frogadier",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "339"
+  },
+  {
+    "id": "greninja",
+    "nationalDexNumber": 658,
+    "name": "Greninja",
+    "types": [
+      "water",
+      "dark"
+    ],
+    "evolutionChain": "339"
+  },
+  {
+    "id": "bunnelby",
+    "nationalDexNumber": 659,
+    "name": "Bunnelby",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "340"
+  },
+  {
+    "id": "diggersby",
+    "nationalDexNumber": 660,
+    "name": "Diggersby",
+    "types": [
+      "normal",
+      "ground"
+    ],
+    "evolutionChain": "340"
+  },
+  {
+    "id": "fletchling",
+    "nationalDexNumber": 661,
+    "name": "Fletchling",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "341"
+  },
+  {
+    "id": "fletchinder",
+    "nationalDexNumber": 662,
+    "name": "Fletchinder",
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "evolutionChain": "341"
+  },
+  {
+    "id": "talonflame",
+    "nationalDexNumber": 663,
+    "name": "Talonflame",
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "evolutionChain": "341"
+  },
+  {
+    "id": "scatterbug",
+    "nationalDexNumber": 664,
+    "name": "Scatterbug",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "342"
+  },
+  {
+    "id": "spewpa",
+    "nationalDexNumber": 665,
+    "name": "Spewpa",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "342"
+  },
+  {
+    "id": "vivillon",
+    "nationalDexNumber": 666,
+    "name": "Vivillon",
+    "types": [
+      "bug",
+      "flying"
+    ],
+    "evolutionChain": "342"
+  },
+  {
+    "id": "litleo",
+    "nationalDexNumber": 667,
+    "name": "Litleo",
+    "types": [
+      "fire",
+      "normal"
+    ],
+    "evolutionChain": "343"
+  },
+  {
+    "id": "pyroar",
+    "nationalDexNumber": 668,
+    "name": "Pyroar",
+    "types": [
+      "fire",
+      "normal"
+    ],
+    "evolutionChain": "343"
+  },
+  {
+    "id": "flabebe",
+    "nationalDexNumber": 669,
+    "name": "Flabébé",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "344"
+  },
+  {
+    "id": "floette",
+    "nationalDexNumber": 670,
+    "name": "Floette",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "344"
+  },
+  {
+    "id": "florges",
+    "nationalDexNumber": 671,
+    "name": "Florges",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "344"
+  },
+  {
+    "id": "skiddo",
+    "nationalDexNumber": 672,
+    "name": "Skiddo",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "345"
+  },
+  {
+    "id": "gogoat",
+    "nationalDexNumber": 673,
+    "name": "Gogoat",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "345"
+  },
+  {
+    "id": "pancham",
+    "nationalDexNumber": 674,
+    "name": "Pancham",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "346"
+  },
+  {
+    "id": "pangoro",
+    "nationalDexNumber": 675,
+    "name": "Pangoro",
+    "types": [
+      "fighting",
+      "dark"
+    ],
+    "evolutionChain": "346"
+  },
+  {
+    "id": "furfrou",
+    "nationalDexNumber": 676,
+    "name": "Furfrou",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "347"
+  },
+  {
+    "id": "espurr",
+    "nationalDexNumber": 677,
+    "name": "Espurr",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "348"
+  },
+  {
+    "id": "meowstic",
+    "nationalDexNumber": 678,
+    "name": "Meowstic",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "348"
+  },
+  {
+    "id": "honedge",
+    "nationalDexNumber": 679,
+    "name": "Honedge",
+    "types": [
+      "steel",
+      "ghost"
+    ],
+    "evolutionChain": "349"
+  },
+  {
+    "id": "doublade",
+    "nationalDexNumber": 680,
+    "name": "Doublade",
+    "types": [
+      "steel",
+      "ghost"
+    ],
+    "evolutionChain": "349"
+  },
+  {
+    "id": "aegislash",
+    "nationalDexNumber": 681,
+    "name": "Aegislash",
+    "types": [
+      "steel",
+      "ghost"
+    ],
+    "evolutionChain": "349"
+  },
+  {
+    "id": "spritzee",
+    "nationalDexNumber": 682,
+    "name": "Spritzee",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "350"
+  },
+  {
+    "id": "aromatisse",
+    "nationalDexNumber": 683,
+    "name": "Aromatisse",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "350"
+  },
+  {
+    "id": "swirlix",
+    "nationalDexNumber": 684,
+    "name": "Swirlix",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "351"
+  },
+  {
+    "id": "slurpuff",
+    "nationalDexNumber": 685,
+    "name": "Slurpuff",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "351"
+  },
+  {
+    "id": "inkay",
+    "nationalDexNumber": 686,
+    "name": "Inkay",
+    "types": [
+      "dark",
+      "psychic"
+    ],
+    "evolutionChain": "352"
+  },
+  {
+    "id": "malamar",
+    "nationalDexNumber": 687,
+    "name": "Malamar",
+    "types": [
+      "dark",
+      "psychic"
+    ],
+    "evolutionChain": "352"
+  },
+  {
+    "id": "binacle",
+    "nationalDexNumber": 688,
+    "name": "Binacle",
+    "types": [
+      "rock",
+      "water"
+    ],
+    "evolutionChain": "353"
+  },
+  {
+    "id": "barbaracle",
+    "nationalDexNumber": 689,
+    "name": "Barbaracle",
+    "types": [
+      "rock",
+      "water"
+    ],
+    "evolutionChain": "353"
+  },
+  {
+    "id": "skrelp",
+    "nationalDexNumber": 690,
+    "name": "Skrelp",
+    "types": [
+      "poison",
+      "water"
+    ],
+    "evolutionChain": "354"
+  },
+  {
+    "id": "dragalge",
+    "nationalDexNumber": 691,
+    "name": "Dragalge",
+    "types": [
+      "poison",
+      "dragon"
+    ],
+    "evolutionChain": "354"
+  },
+  {
+    "id": "clauncher",
+    "nationalDexNumber": 692,
+    "name": "Clauncher",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "355"
+  },
+  {
+    "id": "clawitzer",
+    "nationalDexNumber": 693,
+    "name": "Clawitzer",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "355"
+  },
+  {
+    "id": "helioptile",
+    "nationalDexNumber": 694,
+    "name": "Helioptile",
+    "types": [
+      "electric",
+      "normal"
+    ],
+    "evolutionChain": "356"
+  },
+  {
+    "id": "heliolisk",
+    "nationalDexNumber": 695,
+    "name": "Heliolisk",
+    "types": [
+      "electric",
+      "normal"
+    ],
+    "evolutionChain": "356"
+  },
+  {
+    "id": "tyrunt",
+    "nationalDexNumber": 696,
+    "name": "Tyrunt",
+    "types": [
+      "rock",
+      "dragon"
+    ],
+    "evolutionChain": "357"
+  },
+  {
+    "id": "tyrantrum",
+    "nationalDexNumber": 697,
+    "name": "Tyrantrum",
+    "types": [
+      "rock",
+      "dragon"
+    ],
+    "evolutionChain": "357"
+  },
+  {
+    "id": "amaura",
+    "nationalDexNumber": 698,
+    "name": "Amaura",
+    "types": [
+      "rock",
+      "ice"
+    ],
+    "evolutionChain": "358"
+  },
+  {
+    "id": "aurorus",
+    "nationalDexNumber": 699,
+    "name": "Aurorus",
+    "types": [
+      "rock",
+      "ice"
+    ],
+    "evolutionChain": "358"
+  },
+  {
+    "id": "sylveon",
+    "nationalDexNumber": 700,
+    "name": "Sylveon",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "67"
+  },
+  {
+    "id": "hawlucha",
+    "nationalDexNumber": 701,
+    "name": "Hawlucha",
+    "types": [
+      "fighting",
+      "flying"
+    ],
+    "evolutionChain": "359"
+  },
+  {
+    "id": "dedenne",
+    "nationalDexNumber": 702,
+    "name": "Dedenne",
+    "types": [
+      "electric",
+      "fairy"
+    ],
+    "evolutionChain": "360"
+  },
+  {
+    "id": "carbink",
+    "nationalDexNumber": 703,
+    "name": "Carbink",
+    "types": [
+      "rock",
+      "fairy"
+    ],
+    "evolutionChain": "361"
+  },
+  {
+    "id": "goomy",
+    "nationalDexNumber": 704,
+    "name": "Goomy",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "362"
+  },
+  {
+    "id": "sliggoo",
+    "nationalDexNumber": 705,
+    "name": "Sliggoo",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "362"
+  },
+  {
+    "id": "goodra",
+    "nationalDexNumber": 706,
+    "name": "Goodra",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "362"
+  },
+  {
+    "id": "klefki",
+    "nationalDexNumber": 707,
+    "name": "Klefki",
+    "types": [
+      "steel",
+      "fairy"
+    ],
+    "evolutionChain": "363"
+  },
+  {
+    "id": "phantump",
+    "nationalDexNumber": 708,
+    "name": "Phantump",
+    "types": [
+      "ghost",
+      "grass"
+    ],
+    "evolutionChain": "364"
+  },
+  {
+    "id": "trevenant",
+    "nationalDexNumber": 709,
+    "name": "Trevenant",
+    "types": [
+      "ghost",
+      "grass"
+    ],
+    "evolutionChain": "364"
+  },
+  {
+    "id": "pumpkaboo",
+    "nationalDexNumber": 710,
+    "name": "Pumpkaboo",
+    "types": [
+      "ghost",
+      "grass"
+    ],
+    "evolutionChain": "365"
+  },
+  {
+    "id": "gourgeist",
+    "nationalDexNumber": 711,
+    "name": "Gourgeist",
+    "types": [
+      "ghost",
+      "grass"
+    ],
+    "evolutionChain": "365"
+  },
+  {
+    "id": "bergmite",
+    "nationalDexNumber": 712,
+    "name": "Bergmite",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "366"
+  },
+  {
+    "id": "avalugg",
+    "nationalDexNumber": 713,
+    "name": "Avalugg",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "366"
+  },
+  {
+    "id": "noibat",
+    "nationalDexNumber": 714,
+    "name": "Noibat",
+    "types": [
+      "flying",
+      "dragon"
+    ],
+    "evolutionChain": "367"
+  },
+  {
+    "id": "noivern",
+    "nationalDexNumber": 715,
+    "name": "Noivern",
+    "types": [
+      "flying",
+      "dragon"
+    ],
+    "evolutionChain": "367"
+  },
+  {
+    "id": "xerneas",
+    "nationalDexNumber": 716,
+    "name": "Xerneas",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "368"
+  },
+  {
+    "id": "yveltal",
+    "nationalDexNumber": 717,
+    "name": "Yveltal",
+    "types": [
+      "dark",
+      "flying"
+    ],
+    "evolutionChain": "369"
+  },
+  {
+    "id": "zygarde",
+    "nationalDexNumber": 718,
+    "name": "Zygarde",
+    "types": [
+      "dragon",
+      "ground"
+    ],
+    "evolutionChain": "370"
+  },
+  {
+    "id": "diancie",
+    "nationalDexNumber": 719,
+    "name": "Diancie",
+    "types": [
+      "rock",
+      "fairy"
+    ],
+    "evolutionChain": "371"
+  },
+  {
+    "id": "hoopa",
+    "nationalDexNumber": 720,
+    "name": "Hoopa",
+    "types": [
+      "psychic",
+      "ghost"
+    ],
+    "evolutionChain": "372"
+  },
+  {
+    "id": "volcanion",
+    "nationalDexNumber": 721,
+    "name": "Volcanion",
+    "types": [
+      "fire",
+      "water"
+    ],
+    "evolutionChain": "373"
+  },
+  {
+    "id": "rowlet",
+    "nationalDexNumber": 722,
+    "name": "Rowlet",
+    "types": [
+      "grass",
+      "flying"
+    ],
+    "evolutionChain": "374"
+  },
+  {
+    "id": "dartrix",
+    "nationalDexNumber": 723,
+    "name": "Dartrix",
+    "types": [
+      "grass",
+      "flying"
+    ],
+    "evolutionChain": "374"
+  },
+  {
+    "id": "decidueye",
+    "nationalDexNumber": 724,
+    "name": "Decidueye",
+    "types": [
+      "grass",
+      "ghost"
+    ],
+    "evolutionChain": "374"
+  },
+  {
+    "id": "litten",
+    "nationalDexNumber": 725,
+    "name": "Litten",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "375"
+  },
+  {
+    "id": "torracat",
+    "nationalDexNumber": 726,
+    "name": "Torracat",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "375"
+  },
+  {
+    "id": "incineroar",
+    "nationalDexNumber": 727,
+    "name": "Incineroar",
+    "types": [
+      "fire",
+      "dark"
+    ],
+    "evolutionChain": "375"
+  },
+  {
+    "id": "popplio",
+    "nationalDexNumber": 728,
+    "name": "Popplio",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "376"
+  },
+  {
+    "id": "brionne",
+    "nationalDexNumber": 729,
+    "name": "Brionne",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "376"
+  },
+  {
+    "id": "primarina",
+    "nationalDexNumber": 730,
+    "name": "Primarina",
+    "types": [
+      "water",
+      "fairy"
+    ],
+    "evolutionChain": "376"
+  },
+  {
+    "id": "pikipek",
+    "nationalDexNumber": 731,
+    "name": "Pikipek",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "377"
+  },
+  {
+    "id": "trumbeak",
+    "nationalDexNumber": 732,
+    "name": "Trumbeak",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "377"
+  },
+  {
+    "id": "toucannon",
+    "nationalDexNumber": 733,
+    "name": "Toucannon",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "377"
+  },
+  {
+    "id": "yungoos",
+    "nationalDexNumber": 734,
+    "name": "Yungoos",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "378"
+  },
+  {
+    "id": "gumshoos",
+    "nationalDexNumber": 735,
+    "name": "Gumshoos",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "378"
+  },
+  {
+    "id": "grubbin",
+    "nationalDexNumber": 736,
+    "name": "Grubbin",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "379"
+  },
+  {
+    "id": "charjabug",
+    "nationalDexNumber": 737,
+    "name": "Charjabug",
+    "types": [
+      "bug",
+      "electric"
+    ],
+    "evolutionChain": "379"
+  },
+  {
+    "id": "vikavolt",
+    "nationalDexNumber": 738,
+    "name": "Vikavolt",
+    "types": [
+      "bug",
+      "electric"
+    ],
+    "evolutionChain": "379"
+  },
+  {
+    "id": "crabrawler",
+    "nationalDexNumber": 739,
+    "name": "Crabrawler",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "380"
+  },
+  {
+    "id": "crabominable",
+    "nationalDexNumber": 740,
+    "name": "Crabominable",
+    "types": [
+      "fighting",
+      "ice"
+    ],
+    "evolutionChain": "380"
+  },
+  {
+    "id": "oricorio",
+    "nationalDexNumber": 741,
+    "name": "Oricorio",
+    "types": [
+      "fire",
+      "flying"
+    ],
+    "evolutionChain": "381"
+  },
+  {
+    "id": "cutiefly",
+    "nationalDexNumber": 742,
+    "name": "Cutiefly",
+    "types": [
+      "bug",
+      "fairy"
+    ],
+    "evolutionChain": "382"
+  },
+  {
+    "id": "ribombee",
+    "nationalDexNumber": 743,
+    "name": "Ribombee",
+    "types": [
+      "bug",
+      "fairy"
+    ],
+    "evolutionChain": "382"
+  },
+  {
+    "id": "rockruff",
+    "nationalDexNumber": 744,
+    "name": "Rockruff",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "383"
+  },
+  {
+    "id": "lycanroc",
+    "nationalDexNumber": 745,
+    "name": "Lycanroc",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "383"
+  },
+  {
+    "id": "wishiwashi",
+    "nationalDexNumber": 746,
+    "name": "Wishiwashi",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "384"
+  },
+  {
+    "id": "mareanie",
+    "nationalDexNumber": 747,
+    "name": "Mareanie",
+    "types": [
+      "poison",
+      "water"
+    ],
+    "evolutionChain": "385"
+  },
+  {
+    "id": "toxapex",
+    "nationalDexNumber": 748,
+    "name": "Toxapex",
+    "types": [
+      "poison",
+      "water"
+    ],
+    "evolutionChain": "385"
+  },
+  {
+    "id": "mudbray",
+    "nationalDexNumber": 749,
+    "name": "Mudbray",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "386"
+  },
+  {
+    "id": "mudsdale",
+    "nationalDexNumber": 750,
+    "name": "Mudsdale",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "386"
+  },
+  {
+    "id": "dewpider",
+    "nationalDexNumber": 751,
+    "name": "Dewpider",
+    "types": [
+      "water",
+      "bug"
+    ],
+    "evolutionChain": "387"
+  },
+  {
+    "id": "araquanid",
+    "nationalDexNumber": 752,
+    "name": "Araquanid",
+    "types": [
+      "water",
+      "bug"
+    ],
+    "evolutionChain": "387"
+  },
+  {
+    "id": "fomantis",
+    "nationalDexNumber": 753,
+    "name": "Fomantis",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "388"
+  },
+  {
+    "id": "lurantis",
+    "nationalDexNumber": 754,
+    "name": "Lurantis",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "388"
+  },
+  {
+    "id": "morelull",
+    "nationalDexNumber": 755,
+    "name": "Morelull",
+    "types": [
+      "grass",
+      "fairy"
+    ],
+    "evolutionChain": "389"
+  },
+  {
+    "id": "shiinotic",
+    "nationalDexNumber": 756,
+    "name": "Shiinotic",
+    "types": [
+      "grass",
+      "fairy"
+    ],
+    "evolutionChain": "389"
+  },
+  {
+    "id": "salandit",
+    "nationalDexNumber": 757,
+    "name": "Salandit",
+    "types": [
+      "poison",
+      "fire"
+    ],
+    "evolutionChain": "390"
+  },
+  {
+    "id": "salazzle",
+    "nationalDexNumber": 758,
+    "name": "Salazzle",
+    "types": [
+      "poison",
+      "fire"
+    ],
+    "evolutionChain": "390"
+  },
+  {
+    "id": "stufful",
+    "nationalDexNumber": 759,
+    "name": "Stufful",
+    "types": [
+      "normal",
+      "fighting"
+    ],
+    "evolutionChain": "391"
+  },
+  {
+    "id": "bewear",
+    "nationalDexNumber": 760,
+    "name": "Bewear",
+    "types": [
+      "normal",
+      "fighting"
+    ],
+    "evolutionChain": "391"
+  },
+  {
+    "id": "bounsweet",
+    "nationalDexNumber": 761,
+    "name": "Bounsweet",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "392"
+  },
+  {
+    "id": "steenee",
+    "nationalDexNumber": 762,
+    "name": "Steenee",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "392"
+  },
+  {
+    "id": "tsareena",
+    "nationalDexNumber": 763,
+    "name": "Tsareena",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "392"
+  },
+  {
+    "id": "comfey",
+    "nationalDexNumber": 764,
+    "name": "Comfey",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "393"
+  },
+  {
+    "id": "oranguru",
+    "nationalDexNumber": 765,
+    "name": "Oranguru",
+    "types": [
+      "normal",
+      "psychic"
+    ],
+    "evolutionChain": "394"
+  },
+  {
+    "id": "passimian",
+    "nationalDexNumber": 766,
+    "name": "Passimian",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "395"
+  },
+  {
+    "id": "wimpod",
+    "nationalDexNumber": 767,
+    "name": "Wimpod",
+    "types": [
+      "bug",
+      "water"
+    ],
+    "evolutionChain": "396"
+  },
+  {
+    "id": "golisopod",
+    "nationalDexNumber": 768,
+    "name": "Golisopod",
+    "types": [
+      "bug",
+      "water"
+    ],
+    "evolutionChain": "396"
+  },
+  {
+    "id": "sandygast",
+    "nationalDexNumber": 769,
+    "name": "Sandygast",
+    "types": [
+      "ghost",
+      "ground"
+    ],
+    "evolutionChain": "397"
+  },
+  {
+    "id": "palossand",
+    "nationalDexNumber": 770,
+    "name": "Palossand",
+    "types": [
+      "ghost",
+      "ground"
+    ],
+    "evolutionChain": "397"
+  },
+  {
+    "id": "pyukumuku",
+    "nationalDexNumber": 771,
+    "name": "Pyukumuku",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "398"
+  },
+  {
+    "id": "type-null",
+    "nationalDexNumber": 772,
+    "name": "Type: Null",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "399"
+  },
+  {
+    "id": "silvally",
+    "nationalDexNumber": 773,
+    "name": "Silvally",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "399"
+  },
+  {
+    "id": "minior",
+    "nationalDexNumber": 774,
+    "name": "Minior",
+    "types": [
+      "rock",
+      "flying"
+    ],
+    "evolutionChain": "400"
+  },
+  {
+    "id": "komala",
+    "nationalDexNumber": 775,
+    "name": "Komala",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "401"
+  },
+  {
+    "id": "turtonator",
+    "nationalDexNumber": 776,
+    "name": "Turtonator",
+    "types": [
+      "fire",
+      "dragon"
+    ],
+    "evolutionChain": "402"
+  },
+  {
+    "id": "togedemaru",
+    "nationalDexNumber": 777,
+    "name": "Togedemaru",
+    "types": [
+      "electric",
+      "steel"
+    ],
+    "evolutionChain": "403"
+  },
+  {
+    "id": "mimikyu",
+    "nationalDexNumber": 778,
+    "name": "Mimikyu",
+    "types": [
+      "ghost",
+      "fairy"
+    ],
+    "evolutionChain": "404"
+  },
+  {
+    "id": "bruxish",
+    "nationalDexNumber": 779,
+    "name": "Bruxish",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "evolutionChain": "405"
+  },
+  {
+    "id": "drampa",
+    "nationalDexNumber": 780,
+    "name": "Drampa",
+    "types": [
+      "normal",
+      "dragon"
+    ],
+    "evolutionChain": "406"
+  },
+  {
+    "id": "dhelmise",
+    "nationalDexNumber": 781,
+    "name": "Dhelmise",
+    "types": [
+      "ghost",
+      "grass"
+    ],
+    "evolutionChain": "407"
+  },
+  {
+    "id": "jangmo-o",
+    "nationalDexNumber": 782,
+    "name": "Jangmo-o",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "408"
+  },
+  {
+    "id": "hakamo-o",
+    "nationalDexNumber": 783,
+    "name": "Hakamo-o",
+    "types": [
+      "dragon",
+      "fighting"
+    ],
+    "evolutionChain": "408"
+  },
+  {
+    "id": "kommo-o",
+    "nationalDexNumber": 784,
+    "name": "Kommo-o",
+    "types": [
+      "dragon",
+      "fighting"
+    ],
+    "evolutionChain": "408"
+  },
+  {
+    "id": "tapu-koko",
+    "nationalDexNumber": 785,
+    "name": "Tapu Koko",
+    "types": [
+      "electric",
+      "fairy"
+    ],
+    "evolutionChain": "409"
+  },
+  {
+    "id": "tapu-lele",
+    "nationalDexNumber": 786,
+    "name": "Tapu Lele",
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "evolutionChain": "410"
+  },
+  {
+    "id": "tapu-bulu",
+    "nationalDexNumber": 787,
+    "name": "Tapu Bulu",
+    "types": [
+      "grass",
+      "fairy"
+    ],
+    "evolutionChain": "411"
+  },
+  {
+    "id": "tapu-fini",
+    "nationalDexNumber": 788,
+    "name": "Tapu Fini",
+    "types": [
+      "water",
+      "fairy"
+    ],
+    "evolutionChain": "412"
+  },
+  {
+    "id": "cosmog",
+    "nationalDexNumber": 789,
+    "name": "Cosmog",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "413"
+  },
+  {
+    "id": "cosmoem",
+    "nationalDexNumber": 790,
+    "name": "Cosmoem",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "413"
+  },
+  {
+    "id": "solgaleo",
+    "nationalDexNumber": 791,
+    "name": "Solgaleo",
+    "types": [
+      "psychic",
+      "steel"
+    ],
+    "evolutionChain": "413"
+  },
+  {
+    "id": "lunala",
+    "nationalDexNumber": 792,
+    "name": "Lunala",
+    "types": [
+      "psychic",
+      "ghost"
+    ],
+    "evolutionChain": "413"
+  },
+  {
+    "id": "nihilego",
+    "nationalDexNumber": 793,
+    "name": "Nihilego",
+    "types": [
+      "rock",
+      "poison"
+    ],
+    "evolutionChain": "414"
+  },
+  {
+    "id": "buzzwole",
+    "nationalDexNumber": 794,
+    "name": "Buzzwole",
+    "types": [
+      "bug",
+      "fighting"
+    ],
+    "evolutionChain": "415"
+  },
+  {
+    "id": "pheromosa",
+    "nationalDexNumber": 795,
+    "name": "Pheromosa",
+    "types": [
+      "bug",
+      "fighting"
+    ],
+    "evolutionChain": "416"
+  },
+  {
+    "id": "xurkitree",
+    "nationalDexNumber": 796,
+    "name": "Xurkitree",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "417"
+  },
+  {
+    "id": "celesteela",
+    "nationalDexNumber": 797,
+    "name": "Celesteela",
+    "types": [
+      "steel",
+      "flying"
+    ],
+    "evolutionChain": "418"
+  },
+  {
+    "id": "kartana",
+    "nationalDexNumber": 798,
+    "name": "Kartana",
+    "types": [
+      "grass",
+      "steel"
+    ],
+    "evolutionChain": "419"
+  },
+  {
+    "id": "guzzlord",
+    "nationalDexNumber": 799,
+    "name": "Guzzlord",
+    "types": [
+      "dark",
+      "dragon"
+    ],
+    "evolutionChain": "420"
+  },
+  {
+    "id": "necrozma",
+    "nationalDexNumber": 800,
+    "name": "Necrozma",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "421"
+  },
+  {
+    "id": "magearna",
+    "nationalDexNumber": 801,
+    "name": "Magearna",
+    "types": [
+      "steel",
+      "fairy"
+    ],
+    "evolutionChain": "422"
+  },
+  {
+    "id": "marshadow",
+    "nationalDexNumber": 802,
+    "name": "Marshadow",
+    "types": [
+      "fighting",
+      "ghost"
+    ],
+    "evolutionChain": "423"
+  },
+  {
+    "id": "poipole",
+    "nationalDexNumber": 803,
+    "name": "Poipole",
+    "types": [
+      "poison"
+    ],
+    "evolutionChain": "424"
+  },
+  {
+    "id": "naganadel",
+    "nationalDexNumber": 804,
+    "name": "Naganadel",
+    "types": [
+      "poison",
+      "dragon"
+    ],
+    "evolutionChain": "424"
+  },
+  {
+    "id": "stakataka",
+    "nationalDexNumber": 805,
+    "name": "Stakataka",
+    "types": [
+      "rock",
+      "steel"
+    ],
+    "evolutionChain": "425"
+  },
+  {
+    "id": "blacephalon",
+    "nationalDexNumber": 806,
+    "name": "Blacephalon",
+    "types": [
+      "fire",
+      "ghost"
+    ],
+    "evolutionChain": "426"
+  },
+  {
+    "id": "zeraora",
+    "nationalDexNumber": 807,
+    "name": "Zeraora",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "427"
+  },
+  {
+    "id": "meltan",
+    "nationalDexNumber": 808,
+    "name": "Meltan",
+    "types": [
+      "steel"
+    ],
+    "evolutionChain": "428"
+  },
+  {
+    "id": "melmetal",
+    "nationalDexNumber": 809,
+    "name": "Melmetal",
+    "types": [
+      "steel"
+    ],
+    "evolutionChain": "428"
+  },
+  {
+    "id": "grookey",
+    "nationalDexNumber": 810,
+    "name": "Grookey",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "430"
+  },
+  {
+    "id": "thwackey",
+    "nationalDexNumber": 811,
+    "name": "Thwackey",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "430"
+  },
+  {
+    "id": "rillaboom",
+    "nationalDexNumber": 812,
+    "name": "Rillaboom",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "430"
+  },
+  {
+    "id": "scorbunny",
+    "nationalDexNumber": 813,
+    "name": "Scorbunny",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "431"
+  },
+  {
+    "id": "raboot",
+    "nationalDexNumber": 814,
+    "name": "Raboot",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "431"
+  },
+  {
+    "id": "cinderace",
+    "nationalDexNumber": 815,
+    "name": "Cinderace",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "431"
+  },
+  {
+    "id": "sobble",
+    "nationalDexNumber": 816,
+    "name": "Sobble",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "432"
+  },
+  {
+    "id": "drizzile",
+    "nationalDexNumber": 817,
+    "name": "Drizzile",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "432"
+  },
+  {
+    "id": "inteleon",
+    "nationalDexNumber": 818,
+    "name": "Inteleon",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "432"
+  },
+  {
+    "id": "skwovet",
+    "nationalDexNumber": 819,
+    "name": "Skwovet",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "433"
+  },
+  {
+    "id": "greedent",
+    "nationalDexNumber": 820,
+    "name": "Greedent",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "433"
+  },
+  {
+    "id": "rookidee",
+    "nationalDexNumber": 821,
+    "name": "Rookidee",
+    "types": [
+      "flying"
+    ],
+    "evolutionChain": "434"
+  },
+  {
+    "id": "corvisquire",
+    "nationalDexNumber": 822,
+    "name": "Corvisquire",
+    "types": [
+      "flying"
+    ],
+    "evolutionChain": "434"
+  },
+  {
+    "id": "corviknight",
+    "nationalDexNumber": 823,
+    "name": "Corviknight",
+    "types": [
+      "flying",
+      "steel"
+    ],
+    "evolutionChain": "434"
+  },
+  {
+    "id": "blipbug",
+    "nationalDexNumber": 824,
+    "name": "Blipbug",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "435"
+  },
+  {
+    "id": "dottler",
+    "nationalDexNumber": 825,
+    "name": "Dottler",
+    "types": [
+      "bug",
+      "psychic"
+    ],
+    "evolutionChain": "435"
+  },
+  {
+    "id": "orbeetle",
+    "nationalDexNumber": 826,
+    "name": "Orbeetle",
+    "types": [
+      "bug",
+      "psychic"
+    ],
+    "evolutionChain": "435"
+  },
+  {
+    "id": "nickit",
+    "nationalDexNumber": 827,
+    "name": "Nickit",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "436"
+  },
+  {
+    "id": "thievul",
+    "nationalDexNumber": 828,
+    "name": "Thievul",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "436"
+  },
+  {
+    "id": "gossifleur",
+    "nationalDexNumber": 829,
+    "name": "Gossifleur",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "437"
+  },
+  {
+    "id": "eldegoss",
+    "nationalDexNumber": 830,
+    "name": "Eldegoss",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "437"
+  },
+  {
+    "id": "wooloo",
+    "nationalDexNumber": 831,
+    "name": "Wooloo",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "438"
+  },
+  {
+    "id": "dubwool",
+    "nationalDexNumber": 832,
+    "name": "Dubwool",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "438"
+  },
+  {
+    "id": "chewtle",
+    "nationalDexNumber": 833,
+    "name": "Chewtle",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "439"
+  },
+  {
+    "id": "drednaw",
+    "nationalDexNumber": 834,
+    "name": "Drednaw",
+    "types": [
+      "water",
+      "rock"
+    ],
+    "evolutionChain": "439"
+  },
+  {
+    "id": "yamper",
+    "nationalDexNumber": 835,
+    "name": "Yamper",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "440"
+  },
+  {
+    "id": "boltund",
+    "nationalDexNumber": 836,
+    "name": "Boltund",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "440"
+  },
+  {
+    "id": "rolycoly",
+    "nationalDexNumber": 837,
+    "name": "Rolycoly",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "441"
+  },
+  {
+    "id": "carkol",
+    "nationalDexNumber": 838,
+    "name": "Carkol",
+    "types": [
+      "rock",
+      "fire"
+    ],
+    "evolutionChain": "441"
+  },
+  {
+    "id": "coalossal",
+    "nationalDexNumber": 839,
+    "name": "Coalossal",
+    "types": [
+      "rock",
+      "fire"
+    ],
+    "evolutionChain": "441"
+  },
+  {
+    "id": "applin",
+    "nationalDexNumber": 840,
+    "name": "Applin",
+    "types": [
+      "grass",
+      "dragon"
+    ],
+    "evolutionChain": "442"
+  },
+  {
+    "id": "flapple",
+    "nationalDexNumber": 841,
+    "name": "Flapple",
+    "types": [
+      "grass",
+      "dragon"
+    ],
+    "evolutionChain": "442"
+  },
+  {
+    "id": "appletun",
+    "nationalDexNumber": 842,
+    "name": "Appletun",
+    "types": [
+      "grass",
+      "dragon"
+    ],
+    "evolutionChain": "442"
+  },
+  {
+    "id": "silicobra",
+    "nationalDexNumber": 843,
+    "name": "Silicobra",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "443"
+  },
+  {
+    "id": "sandaconda",
+    "nationalDexNumber": 844,
+    "name": "Sandaconda",
+    "types": [
+      "ground"
+    ],
+    "evolutionChain": "443"
+  },
+  {
+    "id": "cramorant",
+    "nationalDexNumber": 845,
+    "name": "Cramorant",
+    "types": [
+      "flying",
+      "water"
+    ],
+    "evolutionChain": "444"
+  },
+  {
+    "id": "arrokuda",
+    "nationalDexNumber": 846,
+    "name": "Arrokuda",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "445"
+  },
+  {
+    "id": "barraskewda",
+    "nationalDexNumber": 847,
+    "name": "Barraskewda",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "445"
+  },
+  {
+    "id": "toxel",
+    "nationalDexNumber": 848,
+    "name": "Toxel",
+    "types": [
+      "electric",
+      "poison"
+    ],
+    "evolutionChain": "446"
+  },
+  {
+    "id": "toxtricity",
+    "nationalDexNumber": 849,
+    "name": "Toxtricity",
+    "types": [
+      "electric",
+      "poison"
+    ],
+    "evolutionChain": "446"
+  },
+  {
+    "id": "sizzlipede",
+    "nationalDexNumber": 850,
+    "name": "Sizzlipede",
+    "types": [
+      "fire",
+      "bug"
+    ],
+    "evolutionChain": "447"
+  },
+  {
+    "id": "centiskorch",
+    "nationalDexNumber": 851,
+    "name": "Centiskorch",
+    "types": [
+      "fire",
+      "bug"
+    ],
+    "evolutionChain": "447"
+  },
+  {
+    "id": "clobbopus",
+    "nationalDexNumber": 852,
+    "name": "Clobbopus",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "448"
+  },
+  {
+    "id": "grapploct",
+    "nationalDexNumber": 853,
+    "name": "Grapploct",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "448"
+  },
+  {
+    "id": "sinistea",
+    "nationalDexNumber": 854,
+    "name": "Sinistea",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "449"
+  },
+  {
+    "id": "polteageist",
+    "nationalDexNumber": 855,
+    "name": "Polteageist",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "449"
+  },
+  {
+    "id": "hatenna",
+    "nationalDexNumber": 856,
+    "name": "Hatenna",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "450"
+  },
+  {
+    "id": "hattrem",
+    "nationalDexNumber": 857,
+    "name": "Hattrem",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "450"
+  },
+  {
+    "id": "hatterene",
+    "nationalDexNumber": 858,
+    "name": "Hatterene",
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "evolutionChain": "450"
+  },
+  {
+    "id": "impidimp",
+    "nationalDexNumber": 859,
+    "name": "Impidimp",
+    "types": [
+      "dark",
+      "fairy"
+    ],
+    "evolutionChain": "451"
+  },
+  {
+    "id": "morgrem",
+    "nationalDexNumber": 860,
+    "name": "Morgrem",
+    "types": [
+      "dark",
+      "fairy"
+    ],
+    "evolutionChain": "451"
+  },
+  {
+    "id": "grimmsnarl",
+    "nationalDexNumber": 861,
+    "name": "Grimmsnarl",
+    "types": [
+      "dark",
+      "fairy"
+    ],
+    "evolutionChain": "451"
+  },
+  {
+    "id": "obstagoon",
+    "nationalDexNumber": 862,
+    "name": "Obstagoon",
+    "types": [
+      "dark",
+      "normal"
+    ],
+    "evolutionChain": "134"
+  },
+  {
+    "id": "perrserker",
+    "nationalDexNumber": 863,
+    "name": "Perrserker",
+    "types": [
+      "steel"
+    ],
+    "evolutionChain": "22"
+  },
+  {
+    "id": "cursola",
+    "nationalDexNumber": 864,
+    "name": "Cursola",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "113"
+  },
+  {
+    "id": "sirfetchd",
+    "nationalDexNumber": 865,
+    "name": "Sirfetch’d",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "35"
+  },
+  {
+    "id": "mr-rime",
+    "nationalDexNumber": 866,
+    "name": "Mr. Rime",
+    "types": [
+      "ice",
+      "psychic"
+    ],
+    "evolutionChain": "57"
+  },
+  {
+    "id": "runerigus",
+    "nationalDexNumber": 867,
+    "name": "Runerigus",
+    "types": [
+      "ground",
+      "ghost"
+    ],
+    "evolutionChain": "287"
+  },
+  {
+    "id": "milcery",
+    "nationalDexNumber": 868,
+    "name": "Milcery",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "452"
+  },
+  {
+    "id": "alcremie",
+    "nationalDexNumber": 869,
+    "name": "Alcremie",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "452"
+  },
+  {
+    "id": "falinks",
+    "nationalDexNumber": 870,
+    "name": "Falinks",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "453"
+  },
+  {
+    "id": "pincurchin",
+    "nationalDexNumber": 871,
+    "name": "Pincurchin",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "454"
+  },
+  {
+    "id": "snom",
+    "nationalDexNumber": 872,
+    "name": "Snom",
+    "types": [
+      "ice",
+      "bug"
+    ],
+    "evolutionChain": "455"
+  },
+  {
+    "id": "frosmoth",
+    "nationalDexNumber": 873,
+    "name": "Frosmoth",
+    "types": [
+      "ice",
+      "bug"
+    ],
+    "evolutionChain": "455"
+  },
+  {
+    "id": "stonjourner",
+    "nationalDexNumber": 874,
+    "name": "Stonjourner",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "456"
+  },
+  {
+    "id": "eiscue",
+    "nationalDexNumber": 875,
+    "name": "Eiscue",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "457"
+  },
+  {
+    "id": "indeedee",
+    "nationalDexNumber": 876,
+    "name": "Indeedee",
+    "types": [
+      "psychic",
+      "normal"
+    ],
+    "evolutionChain": "458"
+  },
+  {
+    "id": "morpeko",
+    "nationalDexNumber": 877,
+    "name": "Morpeko",
+    "types": [
+      "electric",
+      "dark"
+    ],
+    "evolutionChain": "459"
+  },
+  {
+    "id": "cufant",
+    "nationalDexNumber": 878,
+    "name": "Cufant",
+    "types": [
+      "steel"
+    ],
+    "evolutionChain": "460"
+  },
+  {
+    "id": "copperajah",
+    "nationalDexNumber": 879,
+    "name": "Copperajah",
+    "types": [
+      "steel"
+    ],
+    "evolutionChain": "460"
+  },
+  {
+    "id": "dracozolt",
+    "nationalDexNumber": 880,
+    "name": "Dracozolt",
+    "types": [
+      "electric",
+      "dragon"
+    ],
+    "evolutionChain": "461"
+  },
+  {
+    "id": "arctozolt",
+    "nationalDexNumber": 881,
+    "name": "Arctozolt",
+    "types": [
+      "electric",
+      "ice"
+    ],
+    "evolutionChain": "462"
+  },
+  {
+    "id": "dracovish",
+    "nationalDexNumber": 882,
+    "name": "Dracovish",
+    "types": [
+      "water",
+      "dragon"
+    ],
+    "evolutionChain": "463"
+  },
+  {
+    "id": "arctovish",
+    "nationalDexNumber": 883,
+    "name": "Arctovish",
+    "types": [
+      "water",
+      "ice"
+    ],
+    "evolutionChain": "464"
+  },
+  {
+    "id": "duraludon",
+    "nationalDexNumber": 884,
+    "name": "Duraludon",
+    "types": [
+      "steel",
+      "dragon"
+    ],
+    "evolutionChain": "465"
+  },
+  {
+    "id": "dreepy",
+    "nationalDexNumber": 885,
+    "name": "Dreepy",
+    "types": [
+      "dragon",
+      "ghost"
+    ],
+    "evolutionChain": "466"
+  },
+  {
+    "id": "drakloak",
+    "nationalDexNumber": 886,
+    "name": "Drakloak",
+    "types": [
+      "dragon",
+      "ghost"
+    ],
+    "evolutionChain": "466"
+  },
+  {
+    "id": "dragapult",
+    "nationalDexNumber": 887,
+    "name": "Dragapult",
+    "types": [
+      "dragon",
+      "ghost"
+    ],
+    "evolutionChain": "466"
+  },
+  {
+    "id": "zacian",
+    "nationalDexNumber": 888,
+    "name": "Zacian",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "467"
+  },
+  {
+    "id": "zamazenta",
+    "nationalDexNumber": 889,
+    "name": "Zamazenta",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "468"
+  },
+  {
+    "id": "eternatus",
+    "nationalDexNumber": 890,
+    "name": "Eternatus",
+    "types": [
+      "poison",
+      "dragon"
+    ],
+    "evolutionChain": "469"
+  },
+  {
+    "id": "kubfu",
+    "nationalDexNumber": 891,
+    "name": "Kubfu",
+    "types": [
+      "fighting"
+    ],
+    "evolutionChain": "470"
+  },
+  {
+    "id": "urshifu",
+    "nationalDexNumber": 892,
+    "name": "Urshifu",
+    "types": [
+      "fighting",
+      "dark"
+    ],
+    "evolutionChain": "470"
+  },
+  {
+    "id": "zarude",
+    "nationalDexNumber": 893,
+    "name": "Zarude",
+    "types": [
+      "dark",
+      "grass"
+    ],
+    "evolutionChain": "471"
+  },
+  {
+    "id": "regieleki",
+    "nationalDexNumber": 894,
+    "name": "Regieleki",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "472"
+  },
+  {
+    "id": "regidrago",
+    "nationalDexNumber": 895,
+    "name": "Regidrago",
+    "types": [
+      "dragon"
+    ],
+    "evolutionChain": "473"
+  },
+  {
+    "id": "glastrier",
+    "nationalDexNumber": 896,
+    "name": "Glastrier",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "474"
+  },
+  {
+    "id": "spectrier",
+    "nationalDexNumber": 897,
+    "name": "Spectrier",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "475"
+  },
+  {
+    "id": "calyrex",
+    "nationalDexNumber": 898,
+    "name": "Calyrex",
+    "types": [
+      "psychic",
+      "grass"
+    ],
+    "evolutionChain": "476"
+  },
+  {
+    "id": "wyrdeer",
+    "nationalDexNumber": 899,
+    "name": "Wyrdeer",
+    "types": [
+      "normal",
+      "psychic"
+    ],
+    "evolutionChain": "120"
+  },
+  {
+    "id": "kleavor",
+    "nationalDexNumber": 900,
+    "name": "Kleavor",
+    "types": [
+      "bug",
+      "rock"
+    ],
+    "evolutionChain": "58"
+  },
+  {
+    "id": "ursaluna",
+    "nationalDexNumber": 901,
+    "name": "Ursaluna",
+    "types": [
+      "ground",
+      "normal"
+    ],
+    "evolutionChain": "110"
+  },
+  {
+    "id": "basculegion",
+    "nationalDexNumber": 902,
+    "name": "Basculegion",
+    "types": [
+      "water",
+      "ghost"
+    ],
+    "evolutionChain": "280"
+  },
+  {
+    "id": "sneasler",
+    "nationalDexNumber": 903,
+    "name": "Sneasler",
+    "types": [
+      "fighting",
+      "poison"
+    ],
+    "evolutionChain": "109"
+  },
+  {
+    "id": "overqwil",
+    "nationalDexNumber": 904,
+    "name": "Overqwil",
+    "types": [
+      "dark",
+      "poison"
+    ],
+    "evolutionChain": "106"
+  },
+  {
+    "id": "enamorus",
+    "nationalDexNumber": 905,
+    "name": "Enamorus",
+    "types": [
+      "fairy",
+      "flying"
+    ],
+    "evolutionChain": "477"
+  },
+  {
+    "id": "sprigatito",
+    "nationalDexNumber": 906,
+    "name": "Sprigatito",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "478"
+  },
+  {
+    "id": "floragato",
+    "nationalDexNumber": 907,
+    "name": "Floragato",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "478"
+  },
+  {
+    "id": "meowscarada",
+    "nationalDexNumber": 908,
+    "name": "Meowscarada",
+    "types": [
+      "grass",
+      "dark"
+    ],
+    "evolutionChain": "478"
+  },
+  {
+    "id": "fuecoco",
+    "nationalDexNumber": 909,
+    "name": "Fuecoco",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "479"
+  },
+  {
+    "id": "crocalor",
+    "nationalDexNumber": 910,
+    "name": "Crocalor",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "479"
+  },
+  {
+    "id": "skeledirge",
+    "nationalDexNumber": 911,
+    "name": "Skeledirge",
+    "types": [
+      "fire",
+      "ghost"
+    ],
+    "evolutionChain": "479"
+  },
+  {
+    "id": "quaxly",
+    "nationalDexNumber": 912,
+    "name": "Quaxly",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "480"
+  },
+  {
+    "id": "quaxwell",
+    "nationalDexNumber": 913,
+    "name": "Quaxwell",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "480"
+  },
+  {
+    "id": "quaquaval",
+    "nationalDexNumber": 914,
+    "name": "Quaquaval",
+    "types": [
+      "water",
+      "fighting"
+    ],
+    "evolutionChain": "480"
+  },
+  {
+    "id": "lechonk",
+    "nationalDexNumber": 915,
+    "name": "Lechonk",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "481"
+  },
+  {
+    "id": "oinkologne",
+    "nationalDexNumber": 916,
+    "name": "Oinkologne",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "481"
+  },
+  {
+    "id": "tarountula",
+    "nationalDexNumber": 917,
+    "name": "Tarountula",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "482"
+  },
+  {
+    "id": "spidops",
+    "nationalDexNumber": 918,
+    "name": "Spidops",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "482"
+  },
+  {
+    "id": "nymble",
+    "nationalDexNumber": 919,
+    "name": "Nymble",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "483"
+  },
+  {
+    "id": "lokix",
+    "nationalDexNumber": 920,
+    "name": "Lokix",
+    "types": [
+      "bug",
+      "dark"
+    ],
+    "evolutionChain": "483"
+  },
+  {
+    "id": "pawmi",
+    "nationalDexNumber": 921,
+    "name": "Pawmi",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "484"
+  },
+  {
+    "id": "pawmo",
+    "nationalDexNumber": 922,
+    "name": "Pawmo",
+    "types": [
+      "electric",
+      "fighting"
+    ],
+    "evolutionChain": "484"
+  },
+  {
+    "id": "pawmot",
+    "nationalDexNumber": 923,
+    "name": "Pawmot",
+    "types": [
+      "electric",
+      "fighting"
+    ],
+    "evolutionChain": "484"
+  },
+  {
+    "id": "tandemaus",
+    "nationalDexNumber": 924,
+    "name": "Tandemaus",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "485"
+  },
+  {
+    "id": "maushold",
+    "nationalDexNumber": 925,
+    "name": "Maushold",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "485"
+  },
+  {
+    "id": "fidough",
+    "nationalDexNumber": 926,
+    "name": "Fidough",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "486"
+  },
+  {
+    "id": "dachsbun",
+    "nationalDexNumber": 927,
+    "name": "Dachsbun",
+    "types": [
+      "fairy"
+    ],
+    "evolutionChain": "486"
+  },
+  {
+    "id": "smoliv",
+    "nationalDexNumber": 928,
+    "name": "Smoliv",
+    "types": [
+      "grass",
+      "normal"
+    ],
+    "evolutionChain": "487"
+  },
+  {
+    "id": "dolliv",
+    "nationalDexNumber": 929,
+    "name": "Dolliv",
+    "types": [
+      "grass",
+      "normal"
+    ],
+    "evolutionChain": "487"
+  },
+  {
+    "id": "arboliva",
+    "nationalDexNumber": 930,
+    "name": "Arboliva",
+    "types": [
+      "grass",
+      "normal"
+    ],
+    "evolutionChain": "487"
+  },
+  {
+    "id": "squawkabilly",
+    "nationalDexNumber": 931,
+    "name": "Squawkabilly",
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "evolutionChain": "488"
+  },
+  {
+    "id": "nacli",
+    "nationalDexNumber": 932,
+    "name": "Nacli",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "489"
+  },
+  {
+    "id": "naclstack",
+    "nationalDexNumber": 933,
+    "name": "Naclstack",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "489"
+  },
+  {
+    "id": "garganacl",
+    "nationalDexNumber": 934,
+    "name": "Garganacl",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "489"
+  },
+  {
+    "id": "charcadet",
+    "nationalDexNumber": 935,
+    "name": "Charcadet",
+    "types": [
+      "fire"
+    ],
+    "evolutionChain": "490"
+  },
+  {
+    "id": "armarouge",
+    "nationalDexNumber": 936,
+    "name": "Armarouge",
+    "types": [
+      "fire",
+      "psychic"
+    ],
+    "evolutionChain": "490"
+  },
+  {
+    "id": "ceruledge",
+    "nationalDexNumber": 937,
+    "name": "Ceruledge",
+    "types": [
+      "fire",
+      "ghost"
+    ],
+    "evolutionChain": "490"
+  },
+  {
+    "id": "tadbulb",
+    "nationalDexNumber": 938,
+    "name": "Tadbulb",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "491"
+  },
+  {
+    "id": "bellibolt",
+    "nationalDexNumber": 939,
+    "name": "Bellibolt",
+    "types": [
+      "electric"
+    ],
+    "evolutionChain": "491"
+  },
+  {
+    "id": "wattrel",
+    "nationalDexNumber": 940,
+    "name": "Wattrel",
+    "types": [
+      "electric",
+      "flying"
+    ],
+    "evolutionChain": "492"
+  },
+  {
+    "id": "kilowattrel",
+    "nationalDexNumber": 941,
+    "name": "Kilowattrel",
+    "types": [
+      "electric",
+      "flying"
+    ],
+    "evolutionChain": "492"
+  },
+  {
+    "id": "maschiff",
+    "nationalDexNumber": 942,
+    "name": "Maschiff",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "493"
+  },
+  {
+    "id": "mabosstiff",
+    "nationalDexNumber": 943,
+    "name": "Mabosstiff",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "493"
+  },
+  {
+    "id": "shroodle",
+    "nationalDexNumber": 944,
+    "name": "Shroodle",
+    "types": [
+      "poison",
+      "normal"
+    ],
+    "evolutionChain": "494"
+  },
+  {
+    "id": "grafaiai",
+    "nationalDexNumber": 945,
+    "name": "Grafaiai",
+    "types": [
+      "poison",
+      "normal"
+    ],
+    "evolutionChain": "494"
+  },
+  {
+    "id": "bramblin",
+    "nationalDexNumber": 946,
+    "name": "Bramblin",
+    "types": [
+      "grass",
+      "ghost"
+    ],
+    "evolutionChain": "495"
+  },
+  {
+    "id": "brambleghast",
+    "nationalDexNumber": 947,
+    "name": "Brambleghast",
+    "types": [
+      "grass",
+      "ghost"
+    ],
+    "evolutionChain": "495"
+  },
+  {
+    "id": "toedscool",
+    "nationalDexNumber": 948,
+    "name": "Toedscool",
+    "types": [
+      "ground",
+      "grass"
+    ],
+    "evolutionChain": "496"
+  },
+  {
+    "id": "toedscruel",
+    "nationalDexNumber": 949,
+    "name": "Toedscruel",
+    "types": [
+      "ground",
+      "grass"
+    ],
+    "evolutionChain": "496"
+  },
+  {
+    "id": "klawf",
+    "nationalDexNumber": 950,
+    "name": "Klawf",
+    "types": [
+      "rock"
+    ],
+    "evolutionChain": "497"
+  },
+  {
+    "id": "capsakid",
+    "nationalDexNumber": 951,
+    "name": "Capsakid",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "498"
+  },
+  {
+    "id": "scovillain",
+    "nationalDexNumber": 952,
+    "name": "Scovillain",
+    "types": [
+      "grass",
+      "fire"
+    ],
+    "evolutionChain": "498"
+  },
+  {
+    "id": "rellor",
+    "nationalDexNumber": 953,
+    "name": "Rellor",
+    "types": [
+      "bug"
+    ],
+    "evolutionChain": "499"
+  },
+  {
+    "id": "rabsca",
+    "nationalDexNumber": 954,
+    "name": "Rabsca",
+    "types": [
+      "bug",
+      "psychic"
+    ],
+    "evolutionChain": "499"
+  },
+  {
+    "id": "flittle",
+    "nationalDexNumber": 955,
+    "name": "Flittle",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "500"
+  },
+  {
+    "id": "espathra",
+    "nationalDexNumber": 956,
+    "name": "Espathra",
+    "types": [
+      "psychic"
+    ],
+    "evolutionChain": "500"
+  },
+  {
+    "id": "tinkatink",
+    "nationalDexNumber": 957,
+    "name": "Tinkatink",
+    "types": [
+      "fairy",
+      "steel"
+    ],
+    "evolutionChain": "501"
+  },
+  {
+    "id": "tinkatuff",
+    "nationalDexNumber": 958,
+    "name": "Tinkatuff",
+    "types": [
+      "fairy",
+      "steel"
+    ],
+    "evolutionChain": "501"
+  },
+  {
+    "id": "tinkaton",
+    "nationalDexNumber": 959,
+    "name": "Tinkaton",
+    "types": [
+      "fairy",
+      "steel"
+    ],
+    "evolutionChain": "501"
+  },
+  {
+    "id": "wiglett",
+    "nationalDexNumber": 960,
+    "name": "Wiglett",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "502"
+  },
+  {
+    "id": "wugtrio",
+    "nationalDexNumber": 961,
+    "name": "Wugtrio",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "502"
+  },
+  {
+    "id": "bombirdier",
+    "nationalDexNumber": 962,
+    "name": "Bombirdier",
+    "types": [
+      "flying",
+      "dark"
+    ],
+    "evolutionChain": "503"
+  },
+  {
+    "id": "finizen",
+    "nationalDexNumber": 963,
+    "name": "Finizen",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "504"
+  },
+  {
+    "id": "palafin",
+    "nationalDexNumber": 964,
+    "name": "Palafin",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "504"
+  },
+  {
+    "id": "varoom",
+    "nationalDexNumber": 965,
+    "name": "Varoom",
+    "types": [
+      "steel",
+      "poison"
+    ],
+    "evolutionChain": "505"
+  },
+  {
+    "id": "revavroom",
+    "nationalDexNumber": 966,
+    "name": "Revavroom",
+    "types": [
+      "steel",
+      "poison"
+    ],
+    "evolutionChain": "505"
+  },
+  {
+    "id": "cyclizar",
+    "nationalDexNumber": 967,
+    "name": "Cyclizar",
+    "types": [
+      "dragon",
+      "normal"
+    ],
+    "evolutionChain": "506"
+  },
+  {
+    "id": "orthworm",
+    "nationalDexNumber": 968,
+    "name": "Orthworm",
+    "types": [
+      "steel"
+    ],
+    "evolutionChain": "507"
+  },
+  {
+    "id": "glimmet",
+    "nationalDexNumber": 969,
+    "name": "Glimmet",
+    "types": [
+      "rock",
+      "poison"
+    ],
+    "evolutionChain": "508"
+  },
+  {
+    "id": "glimmora",
+    "nationalDexNumber": 970,
+    "name": "Glimmora",
+    "types": [
+      "rock",
+      "poison"
+    ],
+    "evolutionChain": "508"
+  },
+  {
+    "id": "greavard",
+    "nationalDexNumber": 971,
+    "name": "Greavard",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "509"
+  },
+  {
+    "id": "houndstone",
+    "nationalDexNumber": 972,
+    "name": "Houndstone",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "509"
+  },
+  {
+    "id": "flamigo",
+    "nationalDexNumber": 973,
+    "name": "Flamigo",
+    "types": [
+      "flying",
+      "fighting"
+    ],
+    "evolutionChain": "510"
+  },
+  {
+    "id": "cetoddle",
+    "nationalDexNumber": 974,
+    "name": "Cetoddle",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "511"
+  },
+  {
+    "id": "cetitan",
+    "nationalDexNumber": 975,
+    "name": "Cetitan",
+    "types": [
+      "ice"
+    ],
+    "evolutionChain": "511"
+  },
+  {
+    "id": "veluza",
+    "nationalDexNumber": 976,
+    "name": "Veluza",
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "evolutionChain": "512"
+  },
+  {
+    "id": "dondozo",
+    "nationalDexNumber": 977,
+    "name": "Dondozo",
+    "types": [
+      "water"
+    ],
+    "evolutionChain": "513"
+  },
+  {
+    "id": "tatsugiri",
+    "nationalDexNumber": 978,
+    "name": "Tatsugiri",
+    "types": [
+      "dragon",
+      "water"
+    ],
+    "evolutionChain": "514"
+  },
+  {
+    "id": "annihilape",
+    "nationalDexNumber": 979,
+    "name": "Annihilape",
+    "types": [
+      "fighting",
+      "ghost"
+    ],
+    "evolutionChain": "24"
+  },
+  {
+    "id": "clodsire",
+    "nationalDexNumber": 980,
+    "name": "Clodsire",
+    "types": [
+      "poison",
+      "ground"
+    ],
+    "evolutionChain": "96"
+  },
+  {
+    "id": "farigiraf",
+    "nationalDexNumber": 981,
+    "name": "Farigiraf",
+    "types": [
+      "normal",
+      "psychic"
+    ],
+    "evolutionChain": "101"
+  },
+  {
+    "id": "dudunsparce",
+    "nationalDexNumber": 982,
+    "name": "Dudunsparce",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "103"
+  },
+  {
+    "id": "kingambit",
+    "nationalDexNumber": 983,
+    "name": "Kingambit",
+    "types": [
+      "dark",
+      "steel"
+    ],
+    "evolutionChain": "317"
+  },
+  {
+    "id": "great-tusk",
+    "nationalDexNumber": 984,
+    "name": "Great Tusk",
+    "types": [
+      "ground",
+      "fighting"
+    ],
+    "evolutionChain": "515"
+  },
+  {
+    "id": "scream-tail",
+    "nationalDexNumber": 985,
+    "name": "Scream Tail",
+    "types": [
+      "fairy",
+      "psychic"
+    ],
+    "evolutionChain": "516"
+  },
+  {
+    "id": "brute-bonnet",
+    "nationalDexNumber": 986,
+    "name": "Brute Bonnet",
+    "types": [
+      "grass",
+      "dark"
+    ],
+    "evolutionChain": "517"
+  },
+  {
+    "id": "flutter-mane",
+    "nationalDexNumber": 987,
+    "name": "Flutter Mane",
+    "types": [
+      "ghost",
+      "fairy"
+    ],
+    "evolutionChain": "518"
+  },
+  {
+    "id": "slither-wing",
+    "nationalDexNumber": 988,
+    "name": "Slither Wing",
+    "types": [
+      "bug",
+      "fighting"
+    ],
+    "evolutionChain": "519"
+  },
+  {
+    "id": "sandy-shocks",
+    "nationalDexNumber": 989,
+    "name": "Sandy Shocks",
+    "types": [
+      "electric",
+      "ground"
+    ],
+    "evolutionChain": "520"
+  },
+  {
+    "id": "iron-treads",
+    "nationalDexNumber": 990,
+    "name": "Iron Treads",
+    "types": [
+      "ground",
+      "steel"
+    ],
+    "evolutionChain": "521"
+  },
+  {
+    "id": "iron-bundle",
+    "nationalDexNumber": 991,
+    "name": "Iron Bundle",
+    "types": [
+      "ice",
+      "water"
+    ],
+    "evolutionChain": "522"
+  },
+  {
+    "id": "iron-hands",
+    "nationalDexNumber": 992,
+    "name": "Iron Hands",
+    "types": [
+      "fighting",
+      "electric"
+    ],
+    "evolutionChain": "523"
+  },
+  {
+    "id": "iron-jugulis",
+    "nationalDexNumber": 993,
+    "name": "Iron Jugulis",
+    "types": [
+      "dark",
+      "flying"
+    ],
+    "evolutionChain": "524"
+  },
+  {
+    "id": "iron-moth",
+    "nationalDexNumber": 994,
+    "name": "Iron Moth",
+    "types": [
+      "fire",
+      "poison"
+    ],
+    "evolutionChain": "525"
+  },
+  {
+    "id": "iron-thorns",
+    "nationalDexNumber": 995,
+    "name": "Iron Thorns",
+    "types": [
+      "rock",
+      "electric"
+    ],
+    "evolutionChain": "526"
+  },
+  {
+    "id": "frigibax",
+    "nationalDexNumber": 996,
+    "name": "Frigibax",
+    "types": [
+      "dragon",
+      "ice"
+    ],
+    "evolutionChain": "527"
+  },
+  {
+    "id": "arctibax",
+    "nationalDexNumber": 997,
+    "name": "Arctibax",
+    "types": [
+      "dragon",
+      "ice"
+    ],
+    "evolutionChain": "527"
+  },
+  {
+    "id": "baxcalibur",
+    "nationalDexNumber": 998,
+    "name": "Baxcalibur",
+    "types": [
+      "dragon",
+      "ice"
+    ],
+    "evolutionChain": "527"
+  },
+  {
+    "id": "gimmighoul",
+    "nationalDexNumber": 999,
+    "name": "Gimmighoul",
+    "types": [
+      "ghost"
+    ],
+    "evolutionChain": "528"
+  },
+  {
+    "id": "gholdengo",
+    "nationalDexNumber": 1000,
+    "name": "Gholdengo",
+    "types": [
+      "steel",
+      "ghost"
+    ],
+    "evolutionChain": "528"
+  },
+  {
+    "id": "wo-chien",
+    "nationalDexNumber": 1001,
+    "name": "Wo-Chien",
+    "types": [
+      "dark",
+      "grass"
+    ],
+    "evolutionChain": "529"
+  },
+  {
+    "id": "chien-pao",
+    "nationalDexNumber": 1002,
+    "name": "Chien-Pao",
+    "types": [
+      "dark",
+      "ice"
+    ],
+    "evolutionChain": "530"
+  },
+  {
+    "id": "ting-lu",
+    "nationalDexNumber": 1003,
+    "name": "Ting-Lu",
+    "types": [
+      "dark",
+      "ground"
+    ],
+    "evolutionChain": "531"
+  },
+  {
+    "id": "chi-yu",
+    "nationalDexNumber": 1004,
+    "name": "Chi-Yu",
+    "types": [
+      "dark",
+      "fire"
+    ],
+    "evolutionChain": "532"
+  },
+  {
+    "id": "roaring-moon",
+    "nationalDexNumber": 1005,
+    "name": "Roaring Moon",
+    "types": [
+      "dragon",
+      "dark"
+    ],
+    "evolutionChain": "533"
+  },
+  {
+    "id": "iron-valiant",
+    "nationalDexNumber": 1006,
+    "name": "Iron Valiant",
+    "types": [
+      "fairy",
+      "fighting"
+    ],
+    "evolutionChain": "534"
+  },
+  {
+    "id": "koraidon",
+    "nationalDexNumber": 1007,
+    "name": "Koraidon",
+    "types": [
+      "fighting",
+      "dragon"
+    ],
+    "evolutionChain": "535"
+  },
+  {
+    "id": "miraidon",
+    "nationalDexNumber": 1008,
+    "name": "Miraidon",
+    "types": [
+      "electric",
+      "dragon"
+    ],
+    "evolutionChain": "536"
+  },
+  {
+    "id": "walking-wake",
+    "nationalDexNumber": 1009,
+    "name": "Walking Wake",
+    "types": [
+      "water",
+      "dragon"
+    ],
+    "evolutionChain": "537"
+  },
+  {
+    "id": "iron-leaves",
+    "nationalDexNumber": 1010,
+    "name": "Iron Leaves",
+    "types": [
+      "grass",
+      "psychic"
+    ],
+    "evolutionChain": "538"
+  },
+  {
+    "id": "dipplin",
+    "nationalDexNumber": 1011,
+    "name": "Dipplin",
+    "types": [
+      "grass",
+      "dragon"
+    ],
+    "evolutionChain": "442"
+  },
+  {
+    "id": "poltchageist",
+    "nationalDexNumber": 1012,
+    "name": "Poltchageist",
+    "types": [
+      "grass",
+      "ghost"
+    ],
+    "evolutionChain": "539"
+  },
+  {
+    "id": "sinistcha",
+    "nationalDexNumber": 1013,
+    "name": "Sinistcha",
+    "types": [
+      "grass",
+      "ghost"
+    ],
+    "evolutionChain": "539"
+  },
+  {
+    "id": "okidogi",
+    "nationalDexNumber": 1014,
+    "name": "Okidogi",
+    "types": [
+      "poison",
+      "fighting"
+    ],
+    "evolutionChain": "540"
+  },
+  {
+    "id": "munkidori",
+    "nationalDexNumber": 1015,
+    "name": "Munkidori",
+    "types": [
+      "poison",
+      "psychic"
+    ],
+    "evolutionChain": "541"
+  },
+  {
+    "id": "fezandipiti",
+    "nationalDexNumber": 1016,
+    "name": "Fezandipiti",
+    "types": [
+      "poison",
+      "fairy"
+    ],
+    "evolutionChain": "542"
+  },
+  {
+    "id": "ogerpon",
+    "nationalDexNumber": 1017,
+    "name": "Ogerpon",
+    "types": [
+      "grass"
+    ],
+    "evolutionChain": "543"
+  },
+  {
+    "id": "archaludon",
+    "nationalDexNumber": 1018,
+    "name": "Archaludon",
+    "types": [
+      "steel",
+      "dragon"
+    ],
+    "evolutionChain": "465"
+  },
+  {
+    "id": "hydrapple",
+    "nationalDexNumber": 1019,
+    "name": "Hydrapple",
+    "types": [
+      "grass",
+      "dragon"
+    ],
+    "evolutionChain": "442"
+  },
+  {
+    "id": "gouging-fire",
+    "nationalDexNumber": 1020,
+    "name": "Gouging Fire",
+    "types": [
+      "fire",
+      "dragon"
+    ],
+    "evolutionChain": "544"
+  },
+  {
+    "id": "raging-bolt",
+    "nationalDexNumber": 1021,
+    "name": "Raging Bolt",
+    "types": [
+      "electric",
+      "dragon"
+    ],
+    "evolutionChain": "545"
+  },
+  {
+    "id": "iron-boulder",
+    "nationalDexNumber": 1022,
+    "name": "Iron Boulder",
+    "types": [
+      "rock",
+      "psychic"
+    ],
+    "evolutionChain": "547"
+  },
+  {
+    "id": "iron-crown",
+    "nationalDexNumber": 1023,
+    "name": "Iron Crown",
+    "types": [
+      "steel",
+      "psychic"
+    ],
+    "evolutionChain": "546"
+  },
+  {
+    "id": "terapagos",
+    "nationalDexNumber": 1024,
+    "name": "Terapagos",
+    "types": [
+      "normal"
+    ],
+    "evolutionChain": "548"
+  },
+  {
+    "id": "pecharunt",
+    "nationalDexNumber": 1025,
+    "name": "Pecharunt",
+    "types": [
+      "poison",
+      "ghost"
+    ],
+    "evolutionChain": "549"
+  }
+]

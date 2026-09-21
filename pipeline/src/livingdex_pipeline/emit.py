@@ -36,6 +36,7 @@ EVOLUTION_RULES_FILE = "evolution-rules.json"
 TRANSFERS_FILE = "transfers.json"
 GAMES_DIRECTORY = "games"
 SPRITES_DIRECTORY = "sprites"
+BOXART_DIRECTORY = "boxart"
 
 
 def _write_json(path: Path, payload: object) -> None:
@@ -101,6 +102,15 @@ class DatasetWriter:
     def sprite_path(self, name: str) -> Path:
         return self.root / SPRITES_DIRECTORY / name
 
+    def box_art_path(self, name: str) -> Path:
+        return self.root / BOXART_DIRECTORY / name
+
+    def write_box_art(self, name: str, body: bytes) -> Path:
+        path = self.box_art_path(name)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(body)
+        return path
+
     def write_sprite(self, name: str, body: bytes) -> Path:
         path = self.sprite_path(name)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -139,6 +149,9 @@ def read_dataset(root: Path) -> Dataset:
         if path.exists()
     ]
 
+    sprites = frozenset(path.stem for path in (root / SPRITES_DIRECTORY).glob("*.png"))
+    box_art = frozenset(path.stem for path in (root / BOXART_DIRECTORY).glob("*.*"))
+
     return ReadDataset(
         index=index,
         species=[Species.model_validate(one) for one in load(SPECIES_FILE)],
@@ -146,4 +159,6 @@ def read_dataset(root: Path) -> Dataset:
         evolution_rules=[EvolutionRule.model_validate(one) for one in load(EVOLUTION_RULES_FILE)],
         transfers=[TransferEdge.model_validate(one) for one in load(TRANSFERS_FILE)],
         games=games,
+        sprites=sprites,
+        box_art=box_art,
     )

@@ -1,0 +1,27 @@
+@* One game as a cover plus its name, for picking a game by clicking its art. *@
+@using LivingDex.Core.Dataset
+@using LivingDex.Core.Reference
+@inject LoadedDataset Dataset
+
+<span class="cover gen-@Game.Generation">
+    @if (Dataset.BoxArtPath(Game.Id) is { } art)
+    {
+        <img class="cover-art" src="@art" alt="" />
+    }
+    else
+    {
+        @* No art shipped for this game. A drawn cover carrying the version name reads as a
+           choice; a broken image would read as a bug. *@
+        <span class="cover-drawn">@Game.Version</span>
+    }
+</span>
+
+<span class="game-name">@Game.Title</span>
+<span class="game-meta muted">Gen @Game.Generation · @Game.Region</span>
+
+@code {
+    /// <summary>The game to show.</summary>
+    [Parameter]
+    [EditorRequired]
+    public Game Game { get; set; } = default!;
+}

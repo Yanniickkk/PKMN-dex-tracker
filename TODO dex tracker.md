@@ -31,28 +31,11 @@ Phase 2 feeds it one game at a time.
 
 ## Phase 1 — First vertical slice
 
+_Done. The slice works end to end; what it is short of is game data, which is Phase 2._
+
 Build the whole app against two games before scaling the data out.
 Target: **Platinum** as main game, **Emerald** linked.
 
-- [ ] Collection setup wizard: name, main game, linked games, the form selection
-  - Not two toggles any more: 0.5 replaced them with one switch per form kind (regional,
-    functional, cosmetic, gender differences). `FormSelection.Any` is what a master
-    "include forms" checkbox binds to.
-- [ ] Linked-game picker filtered by the transfer graph, disabled entries show the reason
-- [ ] Grid screen: virtualised, battle sprites, dex number, name
-- [ ] Tile status colours for the three states, plus a non-colour badge or icon
-- [ ] Progress counter, with a secondary "still to transfer" figure
-- [ ] Filters: name search, still to catch, not yet transferred, available in game
-- [ ] Detail popup: opens for caught and uncaught entries alike
-- [ ] Acquisition sections ordered gift → wild → evolution → trade
-- [ ] Main-game methods before linked-game methods within each section
-- [ ] Per-method detail fields rendered per the spec table
-- [ ] Evolution drill-down: click through to the previous stage, back control, breadcrumb
-- [ ] Transfer route shown for non-main-game methods, alternatives collapsible
-- [ ] Capture controls: three states, holding-game prompt, catch date, note
-- [ ] Quick toggle on the tile itself
-- [ ] Sprite caching, no runtime network calls
-- [ ] End-to-end check: fresh collection → catch Chimchar → drill Infernape → Monferno → Chimchar
 
 ---
 

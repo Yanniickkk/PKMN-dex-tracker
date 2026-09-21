@@ -1,0 +1,354 @@
+@page "/collections/new"
+@using LivingDex.Core.Dataset
+@using LivingDex.Core.Reference
+@using LivingDex.Core.Transfers
+@using LivingDex.Core.UserData
+@inject LoadedDataset Dataset
+@inject TransferGraph Graph
+@inject UserDataStoreProvider StoreProvider
+@inject NavigationManager Navigation
+
+<PageTitle>New collection</PageTitle>
+
+<h1>New collection</h1>
+
+<ol class="steps">
+    @foreach (var step in Enum.GetValues<CollectionWizardStep>())
+    {
+        <li class="@StepClass(step)">
+            <span class="step-number">@((int)step + 1)</span>
+            <span>@Title(step)</span>
+        </li>
+    }
+</ol>
+
+@if (Dataset.IsEmpty)
+{
+    <div class="notice notice-error" role="alert">
+        <p>This build has no dataset, so there are no games to choose from.</p>
+        <p class="notice-detail">Run the pipeline and rebuild the app.</p>
+    </div>
+}
+else
+{
+    <section class="step-body">
+        @switch (_draft.Step)
+        {
+            case CollectionWizardStep.NameAndMainGame:
+                <div class="field">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" value="@_draft.Name"
+                           @oninput="@(e => _draft.Name = e.Value?.ToString() ?? string.Empty)"
+                           placeholder="Platinum living dex" />
+                    <p class="field-hint">What you will see in the collections list.</p>
+                </div>
+
+                <div class="field">
+                    <span class="field-label">Main game</span>
+                    <p class="field-hint">
+                        The game the dex is built from and everything is transferred into.
+                    </p>
+
+                    @* Radios rather than buttons: one of a set, which is what a radio is for,
+                       and the keyboard and screen reader behaviour comes free. The art is the
+                       label. *@
+                    <ul class="game-grid" role="none">
+                        @foreach (var game in Games)
+                        {
+                            <li>
+                                <label class="game-card">
+                                    <input type="radio" name="main-game" class="visually-hidden"
+                                           checked="@(_draft.MainGame == game.Id)"
+                                           @onchange="@(() => ChooseMainGame(game.Id))" />
+                                    <GameCover Game="game" />
+                                </label>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                break;
+
+            case CollectionWizardStep.LinkedGames:
+                <p class="field-hint">
+                    Other games you own that can send Pokémon to your main game. You can leave this
+                    empty and add nothing but what you catch yourself.
+                </p>
+
+                @if (Candidates.Count == 0)
+                {
+                    <p class="muted">There is no other game in this dataset.</p>
+                }
+                else
+                {
+                    <ul class="game-grid" role="none">
+                        @foreach (var candidate in Candidates)
+                        {
+                            <li>
+                                <label class="game-card @(candidate.CanFeed ? null : "unavailable")"
+                                       title="@candidate.Reason">
+                                    <input type="checkbox" class="visually-hidden"
+                                           checked="@_draft.IsLinked(candidate.Game.Id)"
+                                           disabled="@(!candidate.CanFeed)"
+                                           @onchange="@(e => _draft.SetLinked(candidate.Game.Id, (bool?)e.Value == true))" />
+                                    <GameCover Game="candidate.Game" />
+                                    <span class="reason">@candidate.Reason</span>
+                                </label>
+                            </li>
+                        }
+                    </ul>
+                }
+                break;
+
+            case CollectionWizardStep.Forms:
+                <p class="field-hint">
+                    Which forms get an entry of their own. Each kind is a different amount of work:
+                    chasing every regional form is a real goal, chasing every Vivillon pattern
+                    usually is not.
+                </p>
+
+                <ul class="check-list">
+                    <li>
+                        <label>
+                            <input type="checkbox" checked="@_draft.Forms.Regional"
+                                   @onchange="@(e => SetForm(regional: (bool?)e.Value == true))" />
+                            <span>Regional forms <span class="muted">Alolan, Galarian, Hisuian, Paldean</span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" checked="@_draft.Forms.Functional"
+                                   @onchange="@(e => SetForm(functional: (bool?)e.Value == true))" />
+                            <span>Functional forms <span class="muted">different stats, typing or ability</span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" checked="@_draft.Forms.Cosmetic"
+                                   @onchange="@(e => SetForm(cosmetic: (bool?)e.Value == true))" />
+                            <span>Cosmetic forms <span class="muted">appearance only; adds hundreds of entries</span></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" checked="@_draft.Forms.GenderDifferences"
+                                   @onchange="@(e => SetForm(gender: (bool?)e.Value == true))" />
+                            <span>Gender differences <span class="muted">visible male and female variants</span></span>
+                        </label>
+                    </li>
+                </ul>
+                break;
+        }
+    </section>
+
+    @if (_draft.Problems.Count > 0 && _showProblems)
+    {
+        <ul class="problems" role="alert">
+            @foreach (var problem in _draft.Problems)
+            {
+                <li>@problem</li>
+            }
+        </ul>
+    }
+
+    @if (_saveError is not null)
+    {
+        <div class="notice notice-error" role="alert">
+            <p>@_saveError</p>
+        </div>
+    }
+
+    <div class="actions">
+        <button class="button" @onclick="Cancel" disabled="@_saving">Cancel</button>
+        <span class="actions-spacer"></span>
+
+        @if (_draft.CanGoBack)
+        {
+            <button class="button" @onclick="Back" disabled="@_saving">Back</button>
+        }
+
+        @if (_draft.IsLastStep)
+        {
+            <button class="button button-primary" @onclick="Create" disabled="@_saving">
+                @(_saving ? "Creating…" : "Create collection")
+            </button>
+        }
+        else
+        {
+            <button class="button button-primary" @onclick="Next" disabled="@_saving">Next</button>
+        }
+    </div>
+}
+
+@code {
+    private CollectionDraft _draft = new();
+    private bool _showProblems;
+    private bool _saving;
+    private string? _saveError;
+
+    private IReadOnlyList<Game> Games =>
+        [.. Dataset.Reference.Games
+            .OrderBy(game => game.Generation)
+            .ThenBy(game => game.Title, StringComparer.Ordinal)];
+
+    /// <summary>One game offered as a feeder, and whether it can actually be one.</summary>
+    private sealed record Candidate(Game Game, bool CanFeed, string Reason);
+
+    // Every game but the main one, each with the transfer graph's answer attached. Games that
+    // cannot feed are still listed: a picker that quietly omits them leaves the player
+    // wondering whether the app forgot their game or transferring is simply impossible.
+    private IReadOnlyList<Candidate> Candidates
+    {
+        get
+        {
+            if (_draft.MainGame is not { } main)
+            {
+                return [];
+            }
+
+            return [.. Games.Where(game => game.Id != main).Select(game => Describe(game, main))];
+        }
+    }
+
+    private Candidate Describe(Game feeder, GameId main)
+    {
+        var result = Graph.RoutesBetween(feeder.Id, main);
+        var mainTitle = Games.FirstOrDefault(game => game.Id == main)?.Title ?? main.Value;
+
+        if (result.Shortest is { } route)
+        {
+            return new Candidate(feeder, true, $"via {TransferNames.Of(route)}");
+        }
+
+        // The graph explains itself with game ids, which is right for a log and wrong for a
+        // screen; the titles are here, so the sentence is written here.
+        var reason = result.Reason switch
+        {
+            NoRouteReason.NotConnected =>
+                $"nothing can be transferred from {feeder.Title} into {mainTitle}",
+            NoRouteReason.TooManyHops =>
+                $"only reaches {mainTitle} through more transfers than the app will plan",
+            NoRouteReason.UnknownGame =>
+                "not in the transfer graph",
+            _ => result.Explanation,
+        };
+
+        return new Candidate(feeder, false, reason);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var store = await StoreProvider.GetAsync();
+
+        try
+        {
+            var snapshot = await store.LoadAsync();
+            _draft = new CollectionDraft(snapshot.Document.Collections.Select(one => one.Name));
+        }
+        catch (UserDataCorruptException)
+        {
+            // A name clash is the only thing the existing collections are needed for, so an
+            // unreadable file should not stop someone making their first collection.
+            _draft = new CollectionDraft();
+        }
+    }
+
+    private static string Title(CollectionWizardStep step) => step switch
+    {
+        CollectionWizardStep.NameAndMainGame => "Name and game",
+        CollectionWizardStep.LinkedGames => "Linked games",
+        CollectionWizardStep.Forms => "Forms",
+        _ => step.ToString(),
+    };
+
+    private string StepClass(CollectionWizardStep step) =>
+        step == _draft.Step ? "step current" : step < _draft.Step ? "step done" : "step";
+
+    private void ChooseMainGame(GameId game)
+    {
+        _draft.MainGame = game;
+
+        // Changing the main game can turn a linked game into one that cannot feed it, or into
+        // the main game itself. Either would leave the draft contradicting the graph, so those
+        // links are dropped rather than carried into a collection that cannot work.
+        if (_draft.MainGame is { } main)
+        {
+            _draft.SetLinked(main, false);
+
+            foreach (var candidate in Candidates.Where(one => !one.CanFeed))
+            {
+                _draft.SetLinked(candidate.Game.Id, false);
+            }
+        }
+    }
+
+    private void SetForm(bool? regional = null, bool? functional = null, bool? cosmetic = null, bool? gender = null) =>
+        _draft.Forms = new FormSelection(
+            regional ?? _draft.Forms.Regional,
+            functional ?? _draft.Forms.Functional,
+            cosmetic ?? _draft.Forms.Cosmetic,
+            gender ?? _draft.Forms.GenderDifferences);
+
+    private void Next()
+    {
+        _showProblems = !_draft.GoNext();
+    }
+
+    private void Back()
+    {
+        _draft.GoBack();
+        _showProblems = false;
+    }
+
+    private void Cancel() => Navigation.NavigateTo("collections");
+
+    private async Task Create()
+    {
+        if (!_draft.CanCreate)
+        {
+            _showProblems = true;
+            return;
+        }
+
+        _saving = true;
+        _saveError = null;
+
+        try
+        {
+            await SaveAsync(_draft.Build());
+            Navigation.NavigateTo("collections");
+        }
+        catch (UserDataCorruptException exception)
+        {
+            _saveError = $"Your data file could not be read, so nothing was saved. {exception.Message}";
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private async Task SaveAsync(DexCollection collection)
+    {
+        var store = await StoreProvider.GetAsync();
+
+        // Adding a collection only ever appends, so a save refused because the file moved on can
+        // be retried against what is there now without losing anyone's work. Twice is enough:
+        // a third failure means something is writing continuously, and the player should know.
+        for (var attempt = 0; attempt < 2; attempt++)
+        {
+            var snapshot = await store.LoadAsync();
+            var document = snapshot.Document with
+            {
+                Collections = [.. snapshot.Document.Collections, collection],
+            };
+
+            var result = await store.SaveAsync(document, snapshot.Revision);
+            if (result.Status == SaveStatus.Saved)
+            {
+                return;
+            }
+        }
+
+        _saveError = "Something else changed your data file while this was being saved. Nothing was lost; try again.";
+    }
+}

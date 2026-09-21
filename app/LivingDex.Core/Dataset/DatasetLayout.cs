@@ -29,6 +29,9 @@ public static class DatasetLayout
     /// <summary>Directory holding battle sprites.</summary>
     public const string SpritesDirectory = "sprites";
 
+    /// <summary>Directory holding one box art image per game.</summary>
+    public const string BoxArtDirectory = "boxart";
+
     /// <summary>The file holding everything specific to one game.</summary>
     public static string GameFile(GameId game) => $"{GamesDirectory}/{game.Value}.json";
 }

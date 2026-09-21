@@ -63,6 +63,10 @@ class Dataset:
     evolution_rules: Sequence[EvolutionRule]
     transfers: Sequence[TransferEdge]
     games: Sequence[GameData]
+    #: Ids of the species a sprite file was written for. Empty when a build skipped sprites.
+    sprites: frozenset[str] = frozenset()
+    #: Ids of the games a cover was written for. Empty when a build skipped box art.
+    box_art: frozenset[str] = frozenset()
 
     def game(self, game_id: str) -> GameData | None:
         return next((one for one in self.games if one.game.id == game_id), None)

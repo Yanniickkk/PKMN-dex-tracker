@@ -83,6 +83,8 @@ def test_a_build_leaves_a_validation_report_behind(tmp_path: Path) -> None:
         "no-evolution-dead-ends",
         "forms-referenced-exist",
         "transfer-edges-connect-known-games",
+        "every-species-has-a-sprite",
+        "every-game-has-box-art",
     ]
     assert report["findings"] == []
     assert result.ok

@@ -1,0 +1,13 @@
+[
+  {
+    "from": "emerald",
+    "to": "platinum",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  }
+]

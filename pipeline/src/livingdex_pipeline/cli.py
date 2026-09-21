@@ -59,6 +59,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="skip the sprite download; the grid will have holes but the build is quick",
     )
+    build.add_argument(
+        "--no-box-art",
+        action="store_true",
+        help="skip the box art download; the game picker draws plain covers instead",
+    )
 
     return parser
 
@@ -81,6 +86,7 @@ def main(argv: list[str] | None = None) -> int:
         species_limit=args.limit,
         refresh=args.refresh,
         sprites=not args.no_sprites,
+        box_art=not args.no_box_art,
     )
 
     try:

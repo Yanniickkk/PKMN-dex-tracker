@@ -15,4 +15,10 @@
 # Without this, text=auto checks them out as CRLF on Windows and the contract test fails
 # on a fresh clone.
 dataset/** text eol=lf
+# ...except the images. An explicit text attribute would make git rewrite line endings inside
+# a PNG or a JPEG, which quietly corrupts every one of them. Sprites are PNG; box art is
+# whichever of the two the source holds.
+dataset/**/*.png  binary
+dataset/**/*.jpg  binary
+dataset/**/*.jpeg binary
 pipeline/tests/expected/** text eol=lf

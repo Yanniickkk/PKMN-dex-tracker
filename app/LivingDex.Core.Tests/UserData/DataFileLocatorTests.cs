@@ -94,6 +94,23 @@ public sealed class DataFileLocatorTests : IDisposable
     }
 
     [Fact]
+    public void Settings_saved_with_a_byte_order_mark_are_still_read()
+    {
+        // Notepad and PowerShell both write one. Losing the remembered path over an
+        // invisible three bytes would look like the app forgetting for no reason.
+        var chosen = Path.Combine(_directory, "chosen.json");
+        File.WriteAllText(
+            _settingsFile,
+            "{\"dataFilePath\": \"" + chosen.Replace("\\", "\\\\", StringComparison.Ordinal) + "\"}",
+            new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: true));
+
+        var prompt = new FakePrompt(answer: null);
+
+        Assert.Equal(chosen, new DataFileLocator(_settingsFile, prompt).Resolve());
+        Assert.Equal(0, prompt.TimesAsked);
+    }
+
+    [Fact]
     public void A_path_can_be_changed_later_without_going_through_the_picker()
     {
         var locator = new DataFileLocator(_settingsFile, new FakePrompt(answer: null));

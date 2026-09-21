@@ -75,4 +75,34 @@
     <Message Importance="High" Text="PublishExeOnly: removed @(_LooseStaticWebAsset->Count()) loose asset file(s) from $(PublishDir)" />
   </Target>
 
+  <!-- The dataset travels inside the exe, for the same reason the web assets do: the app is
+       one file, and half a delivery should not be possible. validation.json is a build report
+       about the dataset rather than part of it, so it stays out.
+       The files are collected into private items first and the metadata references are
+       qualified: a bare %(Filename) here batches over every EmbeddedResource already in the
+       project, which produces a cross product rather than one name per file. -->
+  <Target Name="EmbedDataset" BeforeTargets="AssignTargetPaths">
+    <ItemGroup>
+      <_DatasetTable Include="$(MSBuildThisFileDirectory)..\..\dataset\*.json"
+                     Exclude="$(MSBuildThisFileDirectory)..\..\dataset\validation.json" />
+      <_DatasetGame Include="$(MSBuildThisFileDirectory)..\..\dataset\games\*.json" />
+      <_DatasetSprite Include="$(MSBuildThisFileDirectory)..\..\dataset\sprites\*.png" />
+      <_DatasetBoxArt Include="$(MSBuildThisFileDirectory)..\..\dataset\boxart\*.*" />
+
+      <EmbeddedResource Include="@(_DatasetTable)">
+        <LogicalName>dataset/%(_DatasetTable.Filename)%(_DatasetTable.Extension)</LogicalName>
+      </EmbeddedResource>
+      <EmbeddedResource Include="@(_DatasetGame)">
+        <LogicalName>dataset/games/%(_DatasetGame.Filename)%(_DatasetGame.Extension)</LogicalName>
+      </EmbeddedResource>
+      <EmbeddedResource Include="@(_DatasetSprite)">
+        <LogicalName>dataset/sprites/%(_DatasetSprite.Filename)%(_DatasetSprite.Extension)</LogicalName>
+      </EmbeddedResource>
+      <EmbeddedResource Include="@(_DatasetBoxArt)">
+        <LogicalName>dataset/boxart/%(_DatasetBoxArt.Filename)%(_DatasetBoxArt.Extension)</LogicalName>
+      </EmbeddedResource>
+    </ItemGroup>
+  </Target>
+
+
 </Project>

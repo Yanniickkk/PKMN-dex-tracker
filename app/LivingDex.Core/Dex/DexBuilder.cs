@@ -70,8 +70,8 @@ public sealed class DexBuilder
 
         foreach (var (species, number) in numbers)
         {
-            var name = _reference.FindSpecies(species)?.Name ?? species.Value;
-            lines.Add(new DexLine(DexTarget.ForSpecies(species), number, name, FormKind: null));
+            var target = DexTarget.ForSpecies(species);
+            lines.Add(new DexLine(target, number, _reference.NameOf(target), FormKind: null));
 
             if (!collection.Forms.Any)
             {
@@ -84,11 +84,11 @@ public sealed class DexBuilder
                 .Where(form => collection.Forms.Includes(form.Kind))
                 .OrderBy(form => form.Id.Value, StringComparer.Ordinal);
 
-            lines.AddRange(forms.Select(form => new DexLine(
-                DexTarget.ForForm(species, form.Id),
-                number,
-                $"{name} ({form.Name})",
-                form.Kind)));
+            lines.AddRange(forms.Select(form =>
+            {
+                var formTarget = DexTarget.ForForm(species, form.Id);
+                return new DexLine(formTarget, number, _reference.NameOf(formTarget), form.Kind);
+            }));
         }
 
         // Number first, then the base species ahead of its own forms. The per-species form order

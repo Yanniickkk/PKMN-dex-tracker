@@ -169,6 +169,61 @@ class TransferEdgesConnectKnownGames:
                     )
 
 
+class EverySpeciesHasASprite:
+    """A species with no sprite file is a hole in the grid the moment the app runs offline.
+
+    A warning rather than an error, because the rest of the dataset is still worth shipping and
+    the build already logs the fetch that failed. It is here so the hole is counted and written
+    down rather than scrolling past in a log.
+    """
+
+    name = "every-species-has-a-sprite"
+
+    def check(self, dataset: Dataset) -> Iterator[Finding]:
+        # A build run with --no-sprites has none at all; that is a deliberate quick build and
+        # saying it 1025 times helps nobody.
+        if not dataset.sprites:
+            return
+
+        for species in dataset.species:
+            if species.id not in dataset.sprites:
+                yield Finding(
+                    rule=self.name,
+                    severity=Severity.WARNING,
+                    message=(
+                        f"{species.id} has no sprite, so its tile will be blank; the app ships "
+                        "its sprites and never fetches one at runtime"
+                    ),
+                )
+
+
+class EveryGameHasBoxArt:
+    """A game with no cover is a blank card in the picker.
+
+    A warning, like a missing sprite: the app draws a plain cover in its place and the rest of
+    the dataset is fine. It is reported so the gap is counted rather than noticed by a player.
+    """
+
+    name = "every-game-has-box-art"
+
+    def check(self, dataset: Dataset) -> Iterator[Finding]:
+        # A build run with --no-box-art has none at all, which is a deliberate quick build.
+        if not dataset.box_art:
+            return
+
+        for game in dataset.games:
+            if game.game.id not in dataset.box_art:
+                yield Finding(
+                    rule=self.name,
+                    severity=Severity.WARNING,
+                    game=game.game.id,
+                    message=(
+                        "no box art, so the game picker will draw a plain cover instead of "
+                        "showing the box"
+                    ),
+                )
+
+
 def coverage_for(dataset: Dataset) -> list[GameCoverage]:
     """How much of each game's dex the dataset can account for, and from where.
 
@@ -220,6 +275,8 @@ def all_rules() -> list:
         NoEvolutionDeadEnds(),
         FormsReferencedExist(),
         TransferEdgesConnectKnownGames(),
+        EverySpeciesHasASprite(),
+        EveryGameHasBoxArt(),
     ]
 
 

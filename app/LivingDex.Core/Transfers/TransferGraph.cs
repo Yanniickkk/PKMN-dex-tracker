@@ -112,6 +112,28 @@ public sealed class TransferGraph
         return found;
     }
 
+    /// <summary>
+    /// Every way anything could get from one game to another, shortest first, with no species
+    /// in mind.
+    /// </summary>
+    /// <remarks>
+    /// This is the question a linked-game picker asks: could this game ever feed that one?
+    /// Whether one particular Pokémon survives the trip is
+    /// <see cref="RoutesBetween(GameId, GameId, DexTarget)"/>, and a game can be a perfectly
+    /// good feeder while refusing some of what lives in it.
+    /// </remarks>
+    public TransferRouteResult RoutesBetween(GameId from, GameId to)
+    {
+        if (Refuse(from, to) is { } refusal)
+        {
+            return refusal;
+        }
+
+        var routes = FindRoutes(from, to, DexTarget.ForSpecies(new SpeciesId(string.Empty)), applyFilters: false);
+
+        return routes.Count > 0 ? TransferRouteResult.Found(routes) : NoPath(from, to);
+    }
+
     /// <inheritdoc cref="RoutesBetween(GameId, GameId, DexTarget)"/>
     public TransferRouteResult RoutesBetween(GameId from, GameId to, SpeciesId species) =>
         RoutesBetween(from, to, DexTarget.ForSpecies(species));
@@ -128,19 +150,9 @@ public sealed class TransferGraph
     /// </returns>
     public TransferRouteResult RoutesBetween(GameId from, GameId to, DexTarget target)
     {
-        if (!_games.Contains(from) || !_games.Contains(to))
+        if (Refuse(from, to) is { } refusal)
         {
-            var unknown = !_games.Contains(from) ? from : to;
-            return TransferRouteResult.NotFound(
-                NoRouteReason.UnknownGame,
-                $"{unknown} is not in the transfer graph.");
-        }
-
-        if (from == to)
-        {
-            return TransferRouteResult.NotFound(
-                NoRouteReason.SameGame,
-                $"{to} already holds it; there is nothing to transfer.");
+            return refusal;
         }
 
         var routes = FindRoutes(from, to, target, applyFilters: true);
@@ -159,14 +171,36 @@ public sealed class TransferGraph
                 ExplainBlockedRoute(ignoringFilters[0], target));
         }
 
-        return ReachableFrom(to).Contains(from)
+        return NoPath(from, to);
+    }
+
+    /// <summary>The refusals that do not depend on the graph at all.</summary>
+    private TransferRouteResult? Refuse(GameId from, GameId to)
+    {
+        if (!_games.Contains(from) || !_games.Contains(to))
+        {
+            var unknown = !_games.Contains(from) ? from : to;
+            return TransferRouteResult.NotFound(
+                NoRouteReason.UnknownGame,
+                $"{unknown} is not in the transfer graph.");
+        }
+
+        return from == to
+            ? TransferRouteResult.NotFound(
+                NoRouteReason.SameGame,
+                $"{to} already holds it; there is nothing to transfer.")
+            : null;
+    }
+
+    /// <summary>Not connected at all, or connected further away than the search looks.</summary>
+    private TransferRouteResult NoPath(GameId from, GameId to) =>
+        ReachableFrom(to).Contains(from)
             ? TransferRouteResult.NotFound(
                 NoRouteReason.TooManyHops,
                 $"Getting from {from} to {to} takes more than {_maxHops.ToString(CultureInfo.InvariantCulture)} transfers.")
             : TransferRouteResult.NotFound(
                 NoRouteReason.NotConnected,
                 $"Nothing can be moved from {from} to {to}.");
-    }
 
     private void Add(DirectedEdge edge)
     {

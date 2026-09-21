@@ -13,7 +13,14 @@ public sealed class LivingDexWebView : BlazorWebView
 {
     public override IFileProvider CreateFileProvider(string contentRootDir)
     {
-        var embedded = new EmbeddedStaticWebAssetFileProvider(typeof(LivingDexWebView).Assembly);
+        var assembly = typeof(LivingDexWebView).Assembly;
+        var web = new EmbeddedResourceFileProvider(assembly, "wwwroot/");
+
+        // Sprites are embedded under dataset/, so a request for sprites/chimchar.png finds
+        // dataset/sprites/chimchar.png. Kept as a second provider rather than copied into
+        // wwwroot: they are dataset output, and the pipeline owns them.
+        var data = new EmbeddedResourceFileProvider(assembly, "dataset/");
+        var embedded = new FallbackFileProvider(web, data);
 
         // During development wwwroot sits next to the build output; preferring it means an
         // edit to index.html or app.css shows up on restart without a rebuild.

@@ -72,7 +72,7 @@ def gift(game_id: str, species: str, form: str | None = None) -> GiftAcquisition
     )
 
 
-def dataset(games=(), forms=(), rules=(), transfers=(), species=()) -> Dataset:
+def dataset(games=(), forms=(), rules=(), transfers=(), species=(), sprites=()) -> Dataset:
     return Dataset(
         index=DatasetIndex(
             stamp=DatasetStamp(version="0", built_on=date(2026, 9, 21)),
@@ -83,6 +83,7 @@ def dataset(games=(), forms=(), rules=(), transfers=(), species=()) -> Dataset:
         evolution_rules=list(rules),
         transfers=list(transfers),
         games=list(games),
+        sprites=frozenset(sprites),
     )
 
 
@@ -400,3 +401,38 @@ def test_species_are_not_needed_to_judge_coverage() -> None:
     )
 
     assert coverage_for(data)[0].full == 1
+
+
+# --- every species has a sprite ---------------------------------------------------------------
+
+
+def _chimchar() -> Species:
+    return Species(
+        id="chimchar",
+        national_dex_number=390,
+        name="Chimchar",
+        types=[PokemonType.FIRE],
+        evolution_chain="chimchar",
+    )
+
+
+def test_a_species_without_a_sprite_is_reported() -> None:
+    data = dataset(species=[_chimchar()], sprites=["turtwig"])
+
+    found = messages(validate(data), "every-species-has-a-sprite")
+
+    assert len(found) == 1
+    assert "chimchar" in found[0]
+
+
+def test_a_species_with_a_sprite_is_not_reported() -> None:
+    data = dataset(species=[_chimchar()], sprites=["chimchar"])
+
+    assert messages(validate(data), "every-species-has-a-sprite") == []
+
+
+def test_a_build_that_skipped_sprites_is_not_reported_species_by_species() -> None:
+    # --no-sprites is a deliberate quick build. Saying it a thousand times helps nobody.
+    data = dataset(species=[_chimchar()], sprites=[])
+
+    assert messages(validate(data), "every-species-has-a-sprite") == []

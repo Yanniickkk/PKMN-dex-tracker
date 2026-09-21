@@ -1,62 +1,188 @@
 :root {
-    color-scheme: light dark;
-    --bg: #ffffff;
-    --fg: #1b1b1f;
-    --muted: #5c5c66;
-    --border: #d8d8de;
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1b1b1f;
+  --muted: #5c5c66;
+  --border: #d8d8de;
+  --sidebar-bg: #f4f4f7;
+  --hover: #e8e8ee;
+  --accent: #2f6fd0;
+  --accent-contrast: #ffffff;
+  --danger-bg: #ffe9e9;
+  --danger-fg: #7a1b1b;
+  --card-bg: #ffffff;
+  --state-done: #2e7d32;
+  --state-done-bg: #eef7ee;
+  --state-elsewhere: #a35b00;
+  --state-elsewhere-bg: #fdf3e4;
 }
 
+/* Dark is written twice on purpose. Plain CSS has no way to name a set of values and reuse
+   it under two selectors, and the alternative - one selector list - cannot mix a media
+   query with a plain rule. Keep the two blocks next to each other and change them together. */
 @media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #15151a;
-        --fg: #ececf1;
-        --muted: #9a9aa6;
-        --border: #34343d;
-    }
+  /* The system says dark, and the player has not overridden it. */
+  :root:not([data-theme="light"]) {
+    --bg: #15151a;
+    --fg: #ececf1;
+    --muted: #9a9aa6;
+    --border: #34343d;
+    --sidebar-bg: #1c1c22;
+    --hover: #2a2a33;
+    --accent: #6ea8ff;
+    --accent-contrast: #10131a;
+    --danger-bg: #3a1c1c;
+    --danger-fg: #ffc9c9;
+    --card-bg: #1c1c22;
+    --state-done: #6ddf7a;
+    --state-done-bg: #182619;
+    --state-elsewhere: #ffbe5c;
+    --state-elsewhere-bg: #272014;
+  }
 }
 
-html, body {
-    margin: 0;
-    height: 100%;
-    background: var(--bg);
-    color: var(--fg);
-    font-family: "Segoe UI", system-ui, sans-serif;
-    font-size: 14px;
+/* The player chose dark, whatever the system says. */
+:root[data-theme="dark"] {
+  --bg: #15151a;
+  --fg: #ececf1;
+  --muted: #9a9aa6;
+  --border: #34343d;
+  --sidebar-bg: #1c1c22;
+  --hover: #2a2a33;
+  --accent: #6ea8ff;
+  --accent-contrast: #10131a;
+  --danger-bg: #3a1c1c;
+  --danger-fg: #ffc9c9;
+  --card-bg: #1c1c22;
+  --state-done: #6ddf7a;
+  --state-done-bg: #182619;
+  --state-elsewhere: #ffbe5c;
+  --state-elsewhere-bg: #272014;
 }
 
-/* WebView2 shows a text caret on non-editable content without this. */
+html,
 body {
-    -webkit-user-select: none;
-    user-select: none;
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-a {
-    color: inherit;
+#app {
+  height: 100%;
 }
 
-#blazor-error-ui {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 0.6rem 1.25rem;
-    background: #ffd7d7;
-    color: #5a1111;
-    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+/* ---- shell ---- */
+
+.app-shell {
+  display: flex;
+  height: 100%;
+  min-height: 0;
 }
 
-#blazor-error-ui .dismiss {
-    cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
+.content {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 32px 40px 48px;
+  max-width: 1100px;
 }
 
-main {
-  padding: 24px;
-  max-width: 900px;
+/* ---- sidebar ---- */
+
+.sidebar {
+  flex: 0 0 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 12px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+
+  /* Chrome, not content: a stray text caret here reads as a bug. */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: flex;
+  color: var(--accent);
+}
+
+.brand-name {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  background: var(--hover);
+}
+
+.nav-link.active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.nav-icon {
+  display: flex;
+  opacity: 0.85;
+}
+
+/* ---- content ---- */
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 1.7rem;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+}
+
+section {
+  margin-top: 28px;
+}
+
+.lead {
+  margin: 0 0 4px;
+  max-width: 62ch;
+}
+
+.muted {
+  color: var(--muted);
 }
 
 dl {
@@ -64,6 +190,7 @@ dl {
   grid-template-columns: max-content 1fr;
   gap: 4px 16px;
   align-items: baseline;
+  margin: 0;
 }
 
 dt {
@@ -78,4 +205,989 @@ code {
   font-family: Consolas, "Cascadia Mono", monospace;
   font-size: 0.95em;
   word-break: break-all;
+}
+
+.card-list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  padding: 16px;
+}
+
+/*
+ * A card that is one big link. The heading still holds the only real <a>, stretched over the
+ * card by a pseudo-element, so the keyboard gets one stop and a screen reader hears the
+ * collection's name rather than the whole card read out as a link.
+ */
+.card-link {
+  position: relative;
+}
+
+.card-link:hover {
+  border-color: var(--accent);
+  background: var(--hover);
+}
+
+.card-link:has(> h2 > a:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.card-link > h2 > a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.card-link > h2 > a:focus-visible {
+  /* The card draws the ring, so the link inside it does not draw a second one. */
+  outline: none;
+}
+
+.card-link > h2 > a {
+  /* The card is what shows it can be clicked, so the name reads as a heading. Plain link
+     colours here would also be the browser's default blue, which is unreadable on dark. */
+  color: inherit;
+  text-decoration: none;
+}
+
+.empty {
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 16px;
+  max-width: 62ch;
+}
+
+.empty h2 {
+  margin-top: 0;
+}
+
+.notice {
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 16px;
+  max-width: 62ch;
+}
+
+.notice p {
+  margin: 0;
+}
+
+.notice-error {
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+}
+
+.notice-detail {
+  margin-top: 6px;
+  font-size: 0.95em;
+  opacity: 0.9;
+}
+
+/* ---- entry detail ---- */
+
+.detail {
+  width: min(560px, 90vw);
+  max-height: 85vh;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  color: var(--fg);
+  overflow: auto;
+}
+
+.detail::backdrop {
+  /* A literal rather than a variable: ::backdrop sits outside the page's inheritance. */
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.detail-card {
+  padding: 20px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9em;
+}
+
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: var(--muted);
+}
+
+.breadcrumb li + li::before {
+  content: "›";
+  margin-right: 6px;
+}
+
+/* A button that reads as a link: it changes what the popup shows, not where the app is. */
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--accent);
+  cursor: pointer;
+  text-align: left;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
+
+.link-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.detail-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.detail-sprite {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.detail-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.detail-title h2 {
+  margin: 2px 0 4px;
+  font-size: 1.35rem;
+}
+
+.detail-title p {
+  margin: 0;
+}
+
+.detail-number {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.detail-section {
+  margin-top: 20px;
+}
+
+.detail-section h3 {
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.detail-section p {
+  margin: 0;
+}
+
+.detail-section dl {
+  margin-top: 8px;
+}
+
+.states {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.state {
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.state:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.state:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.state.is-on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.state:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.field-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.field-inline > span {
+  color: var(--muted);
+  min-width: 70px;
+}
+
+.field-inline input,
+.field-inline select,
+.field-inline textarea {
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: inherit;
+  font: inherit;
+}
+
+.field-note {
+  align-items: flex-start;
+}
+
+.field-note textarea {
+  flex: 1;
+  resize: vertical;
+}
+
+.detail-section .notice {
+  margin-top: 10px;
+}
+
+.method-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.method {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.method-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.method-title {
+  font-weight: 600;
+}
+
+.method-game {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.method-fields {
+  /* Narrower than the page's dl: these are short labels beside short values. */
+  grid-template-columns: max-content 1fr;
+  gap: 2px 12px;
+  margin-top: 4px;
+}
+
+.method-fields dt {
+  font-size: 0.9em;
+}
+
+.method-transfer {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--border);
+  font-size: 0.95em;
+}
+
+.method-transfer p {
+  margin: 0;
+}
+
+.method-transfer details {
+  margin-top: 4px;
+}
+
+.method-transfer summary {
+  color: var(--accent);
+  cursor: pointer;
+  width: fit-content;
+}
+
+.method-transfer ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.method-blocked {
+  color: var(--state-elsewhere);
+}
+
+.method-source {
+  margin: 6px 0 0;
+  font-size: 0.85em;
+  color: var(--muted);
+}
+
+.detail-status {
+  font-weight: 600;
+}
+
+.detail-status.is-done {
+  color: var(--state-done);
+}
+
+.detail-status.is-elsewhere {
+  color: var(--state-elsewhere);
+}
+
+.detail-status.is-missing {
+  color: var(--muted);
+}
+
+/* ---- Blazor's own error strip ---- */
+
+#blazor-error-ui {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0.6rem 1.25rem;
+  background: #ffd7d7;
+  color: #5a1111;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#blazor-error-ui .dismiss {
+  cursor: pointer;
+  position: absolute;
+  right: 0.75rem;
+  top: 0.5rem;
+}
+
+/* ---- page header ---- */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.page-header h1 {
+  margin-bottom: 0;
+}
+
+/* ---- buttons ---- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--hover);
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.button-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.button-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+  background: var(--accent);
+}
+
+/* ---- wizard ---- */
+
+.steps {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  margin: 24px 0 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+}
+
+.step-number {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--hover);
+  font-size: 0.85em;
+}
+
+.step.current {
+  color: var(--fg);
+  border-color: var(--accent);
+}
+
+.step.current .step-number {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.step.done .step-number {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  opacity: 0.5;
+}
+
+.step-body {
+  margin-top: 24px;
+  max-width: 62ch;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.field input[type="text"],
+.field select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: inherit;
+  font: inherit;
+}
+
+.field input[type="text"]:focus,
+.field select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.field-hint {
+  margin: 6px 0 0;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+.check-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.check-list label {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.check-list input {
+  margin: 0;
+}
+
+.problems {
+  margin: 16px 0 0;
+  padding: 12px 16px 12px 32px;
+  border-radius: 8px;
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  max-width: 62ch;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  max-width: 62ch;
+}
+
+.actions-spacer {
+  flex: 1;
+}
+
+/* Text in the content area is meant to be selectable; the sidebar is not. */
+.content {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.check-list li.unavailable label {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.reason {
+  display: block;
+  color: var(--muted);
+  font-size: 0.95em;
+}
+
+/* ---- dex grid ---- */
+
+/* The grid does its own scrolling, so the page around it must not: two nested scrollbars
+   would fight, and Virtualize needs one container whose height it can trust. */
+.content:has(.dex-grid) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---- game picker ---- */
+
+.game-grid {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  max-width: 62ch;
+}
+
+/* Two classes deep on purpose: `.field label` above sets display:block and would otherwise win
+   on specificity, because the main game picker sits inside a field. */
+.game-grid .game-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  text-align: center;
+  cursor: pointer;
+
+  /* Chrome, not content: dragging a selection across covers instead of picking one is annoying. */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.game-grid .game-card:hover:not(.unavailable) {
+  border-color: var(--accent);
+}
+
+/* The input is hidden, so the card has to show what it would show. */
+.game-grid .game-card:has(input:checked) {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.game-grid .game-card:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.game-grid .game-card.unavailable {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.cover {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  /* Roughly a boxed game's proportions, so real art and a drawn cover sit the same. */
+  aspect-ratio: 3 / 4;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--hover);
+}
+
+.cover-art {
+  width: 100%;
+  height: 100%;
+  /* Contain, not cover: a Game Boy box is square and a DS box is not, and cropping the top off
+     a box to make it fit a card is the one thing a box art picker must not do. */
+  object-fit: contain;
+}
+
+.cover-drawn {
+  padding: 4px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--accent-contrast);
+}
+
+/* One colour per generation, so a drawn cover is still recognisable at a glance. */
+.gen-1 { background: linear-gradient(160deg, #d34c4c, #7a2020); }
+.gen-2 { background: linear-gradient(160deg, #d0a93c, #7a5d12); }
+.gen-3 { background: linear-gradient(160deg, #3caa6e, #145c3a); }
+.gen-4 { background: linear-gradient(160deg, #8f9aa8, #4a5561); }
+.gen-5 { background: linear-gradient(160deg, #4a4f57, #22262c); }
+.gen-6 { background: linear-gradient(160deg, #4f7fd0, #23406f); }
+.gen-7 { background: linear-gradient(160deg, #e08a3c, #8a4a12); }
+.gen-8 { background: linear-gradient(160deg, #7b5ed0, #3c2a72); }
+.gen-9 { background: linear-gradient(160deg, #c04f7a, #6d2340); }
+
+.game-name {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ---- filters ---- */
+
+.filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 14px;
+}
+
+.filter-search {
+  flex: 0 1 240px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: inherit;
+  font: inherit;
+}
+
+.filter-search:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  /* Chrome, not content: dragging a selection over a label instead of ticking it is annoying. */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.toggle.is-disabled {
+  color: var(--muted);
+  cursor: help;
+}
+
+.filter-clear {
+  padding: 3px 10px;
+}
+
+.filter-count {
+  margin: 8px 0 0;
+}
+
+/* ---- progress ---- */
+
+.progress {
+  margin-top: 10px;
+  max-width: 62ch;
+}
+
+.progress-figures {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 6px;
+}
+
+.progress-secondary {
+  /* Pushed to its own end of the line: it is a second figure, not part of the first. */
+  margin-left: auto;
+  color: var(--state-elsewhere);
+}
+
+.progress-track {
+  display: flex;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--hover);
+  overflow: hidden;
+}
+
+.progress-fill.is-done {
+  background: var(--state-done);
+}
+
+.progress-fill.is-elsewhere {
+  background: var(--state-elsewhere);
+}
+
+.dex-grid {
+  margin-top: 12px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  background: var(--card-bg);
+}
+
+.dex-row {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 8px;
+  /* Must match RowHeight in CollectionGrid.razor. */
+  height: 108px;
+  margin-bottom: 8px;
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  padding: 6px 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/*
+ * The three states. Colour is never the only difference: a missing entry is the only greyed
+ * sprite, and the two caught states are the only ones with a badge, each with its own glyph.
+ * With no colour at all the grid still reads as grey, arrow, tick.
+ */
+.tile.is-missing .tile-sprite {
+  filter: grayscale(1);
+  opacity: 0.4;
+}
+
+.tile.is-missing .tile-name,
+.tile.is-missing .tile-number {
+  color: var(--muted);
+}
+
+.tile.is-elsewhere {
+  border-color: var(--state-elsewhere);
+  background: var(--state-elsewhere-bg);
+}
+
+.tile.is-done {
+  border-color: var(--state-done);
+  background: var(--state-done-bg);
+}
+
+.tile:hover {
+  border-color: var(--accent);
+}
+
+/* The tile is a plain box; this button on top of it is what opens the detail. */
+.tile-open {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.tile:has(.tile-open:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.tile-badge {
+  position: absolute;
+  /* Above the tile's own button, or it could not be clicked. */
+  z-index: 1;
+  top: 4px;
+  right: 4px;
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  /* A button brings its own grey background; the state rules below supply the real one. */
+  background: none;
+  color: var(--accent-contrast);
+  cursor: pointer;
+}
+
+/*
+ * Not caught has no badge to show, but the control still has to be there to be clicked. A ring
+ * at a quarter strength: visible enough to find, quiet enough not to speckle a grid of a
+ * thousand tiles. Hovering or tabbing to it brings it out.
+ */
+.tile-badge.is-empty {
+  border: 2px solid var(--muted);
+  opacity: 0.25;
+}
+
+.tile-badge:hover,
+.tile-badge:focus-visible {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.tile-badge:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tile.is-elsewhere .tile-badge {
+  background: var(--state-elsewhere);
+}
+
+.tile.is-done .tile-badge {
+  background: var(--state-done);
+}
+
+.tile-sprite {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.tile-number {
+  color: var(--muted);
+  font-size: 0.8em;
+  font-variant-numeric: tabular-nums;
+}
+
+.tile-name {
+  font-size: 0.85em;
+  text-align: center;
+  line-height: 1.2;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*
+ * There for a screen reader, gone for everyone else. Not display:none, which would take it out
+ * of the accessibility tree as well as off the screen.
+ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- sidebar top row ---- */
+
+.sidebar-top {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-bottom: 6px;
+}
+
+.sidebar-top .brand {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: 8px;
+}
+
+.sidebar-top .brand-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+.icon-button:hover {
+  background: var(--hover);
+  border-color: var(--border);
+}
+
+.icon-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
 }

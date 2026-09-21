@@ -1,0 +1,880 @@
+@page "/collections/{CollectionId}"
+@using LivingDex.Core.Dataset
+@using LivingDex.Core.Dex
+@using LivingDex.Core.Reference
+@using LivingDex.Core.Transfers
+@using LivingDex.Core.UserData
+@inject LoadedDataset Dataset
+@inject UserDataStoreProvider StoreProvider
+@inject TransferGraph Transfers
+@inject IJSRuntime JS
+
+<PageTitle>@(_collection?.Name ?? "Collection")</PageTitle>
+
+@if (_error is not null)
+{
+    <h1>Collection</h1>
+    <div class="notice notice-error" role="alert">
+        <p>@_error</p>
+    </div>
+}
+else if (_collection is null)
+{
+    <h1>Collection</h1>
+    <p class="muted">Loading…</p>
+}
+else
+{
+    <div class="page-header">
+        <h1>@_collection.Name</h1>
+        <a class="button" href="collections">All collections</a>
+    </div>
+
+    <div class="progress">
+        <p class="progress-figures">
+            @if (_progress.IsComplete)
+            {
+                <strong>All @_progress.Total in @GameName(_collection.MainGame)</strong>
+            }
+            else
+            {
+                <strong>@_progress.InMainGame of @_progress.Total</strong>
+                <span>in @GameName(_collection.MainGame)</span>
+                <span class="muted">@_progress.PercentComplete%</span>
+            }
+
+            @if (_progress.CaughtElsewhere > 0)
+            {
+                @* The secondary figure: caught, but the living dex is not done until it is home. *@
+                <span class="progress-secondary">@_progress.CaughtElsewhere still to transfer</span>
+            }
+        </p>
+
+        @* Decoration. Every figure it shows is in the sentence above it. *@
+        <div class="progress-track" aria-hidden="true">
+            <span class="progress-fill is-done" style="width: @BarWidth(_progress.InMainGame)"></span>
+            <span class="progress-fill is-elsewhere" style="width: @BarWidth(_progress.CaughtElsewhere)"></span>
+        </div>
+    </div>
+
+    <div class="filters">
+        <input type="search" class="filter-search" placeholder="Search by name" aria-label="Search by name"
+               value="@_search" @oninput="OnSearchInput" />
+
+        <label class="toggle">
+            <input type="checkbox" checked="@_filter.StillToCatch"
+                   @onchange="@(e => Narrow(f => f with { StillToCatch = (bool)e.Value! }))" />
+            Still to catch
+        </label>
+
+        <label class="toggle">
+            <input type="checkbox" checked="@_filter.NotYetTransferred"
+                   @onchange="@(e => Narrow(f => f with { NotYetTransferred = (bool)e.Value! }))" />
+            Not yet transferred
+        </label>
+
+        <label class="toggle @(CanAskAvailability ? "" : "is-disabled")" title="@AvailabilityHint">
+            <input type="checkbox" disabled="@(!CanAskAvailability)" checked="@_filter.AvailableInMainGame"
+                   @onchange="@(e => Narrow(f => f with { AvailableInMainGame = (bool)e.Value! }))" />
+            Available in @GameName(_collection.MainGame)
+        </label>
+
+        @if (!_filter.IsEmpty)
+        {
+            <button type="button" class="button filter-clear" @onclick="ClearFilters">Clear</button>
+        }
+    </div>
+
+    @if (_lines.Count > 0 && !_filter.IsEmpty)
+    {
+        <p class="muted filter-count" role="status">
+            @if (_shown.Count == 0)
+            {
+                <span>Nothing matches these filters.</span>
+            }
+            else
+            {
+                <span>Showing @_shown.Count of @_lines.Count.</span>
+            }
+        </p>
+    }
+
+    @if (_lines.Count == 0)
+    {
+        <div class="empty">
+            <h2>Nothing to show</h2>
+            <p>
+                The dataset has no species for @_collection.MainGame yet, so there is no dex to
+                build. Run the pipeline and rebuild the app.
+            </p>
+        </div>
+    }
+    else if (_shown.Count > 0)
+    {
+        <div class="dex-grid">
+            @* Rows rather than tiles: Virtualize inserts spacer elements, which a CSS grid would
+               lay out as if they were cells. A row is one grid of its own. *@
+            <Virtualize Items="_rows" Context="row" ItemSize="RowHeight" OverscanCount="3">
+                <div class="dex-row">
+                    @foreach (var line in row)
+                    {
+                        var status = _captures.StatusOf(line.Target);
+                        var label = StatusLabel(line, status);
+
+                        <div class="tile @TileClass(status)" title="@line.Name - @label">
+                            <img class="tile-sprite" src="@SpriteFor(line)" alt="" loading="lazy" />
+                            <span class="tile-number">#@line.Number.ToString("000", CultureInfo.InvariantCulture)</span>
+                            <span class="tile-name">@line.Name</span>
+
+                            @* Stretched over the whole tile, so the tile opens the detail while
+                               the badge above it stays its own control. Two buttons, not one
+                               inside another, which is not markup a browser will accept. *@
+                            <button type="button" class="tile-open" @onclick="() => Open(line)">
+                                <span class="visually-hidden">@line.Name, @label</span>
+                            </button>
+
+                            <button type="button" class="tile-badge @(status == CaptureStatus.NotCaught ? "is-empty" : "")"
+                                    title="@ToggleHint(status)" @onclick="() => QuickToggle(line)">
+                                <span class="visually-hidden">@ToggleHint(status)</span>
+
+                                @if (status == CaptureStatus.InMainGame)
+                                {
+                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg>
+                                }
+                                else if (status == CaptureStatus.CaughtElsewhere)
+                                {
+                                    @* An arrow, because what is left to do is move it. *@
+                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M4 12h13M12 5l7 7-7 7" />
+                                    </svg>
+                                }
+                            </button>
+                        </div>
+                    }
+                </div>
+            </Virtualize>
+        </div>
+    }
+}
+
+@* Outside the grid on purpose: a modal belongs to the page, not to a row that scrolls. *@
+<dialog class="detail" @ref="_dialog" @onclose="OnDialogClosed" @onclick="Close">
+    @if (_trail is { } trail)
+    {
+        @* Clicks inside the card are not clicks on the backdrop. *@
+        var selected = trail.Current;
+
+        <div class="detail-card" @onclick:stopPropagation="true">
+            @if (_trail is { CanGoBack: true })
+            {
+                @* Only while drilled in. One entry needs no trail to explain itself. *@
+                <nav class="breadcrumb" aria-label="Evolution chain">
+                    <button type="button" class="link-button" @onclick="Back">Back</button>
+
+                    <ol>
+                        @for (var step = 0; step < _trail.Steps.Count; step++)
+                        {
+                            var index = step;
+                            var line = _trail.Steps[index];
+
+                            <li>
+                                @if (index == _trail.Steps.Count - 1)
+                                {
+                                    <span aria-current="page">@line.Name</span>
+                                }
+                                else
+                                {
+                                    <button type="button" class="link-button" @onclick="() => GoBackTo(index)">@line.Name</button>
+                                }
+                            </li>
+                        }
+                    </ol>
+                </nav>
+            }
+
+            <header class="detail-header">
+                <img class="detail-sprite" src="@SpriteFor(selected)" alt="" />
+
+                <div class="detail-title">
+                    <p class="detail-number">#@selected.Number.ToString("000", CultureInfo.InvariantCulture)</p>
+                    <h2>@selected.Name</h2>
+                    <p class="muted">@TypesOf(selected)</p>
+                </div>
+
+                <button type="button" class="icon-button" @onclick="Close" aria-label="Close" title="Close">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <path d="M6 6l12 12M18 6L6 18" />
+                    </svg>
+                </button>
+            </header>
+
+            @{
+                var status = _captures.StatusOf(selected.Target);
+                var held = _captures.RecordFor(selected.Target)?.HoldingGame;
+            }
+
+            <section class="detail-section">
+                <h3>Where it is</h3>
+
+                <div class="states" role="group" aria-label="Where it is">
+                    <button type="button" class="state @(status == CaptureStatus.NotCaught ? "is-on" : "")"
+                            @onclick="() => SetStatus(selected, CaptureStatus.NotCaught)">
+                        Not caught
+                    </button>
+
+                    <button type="button" class="state @(status == CaptureStatus.CaughtElsewhere ? "is-on" : "")"
+                            disabled="@(_collection!.LinkedGames.Count == 0)"
+                            title="@(_collection.LinkedGames.Count == 0 ? "This collection has no linked games." : null)"
+                            @onclick="() => SetStatus(selected, CaptureStatus.CaughtElsewhere)">
+                        Caught elsewhere
+                    </button>
+
+                    <button type="button" class="state @(status == CaptureStatus.InMainGame ? "is-on" : "")"
+                            @onclick="() => SetStatus(selected, CaptureStatus.InMainGame)">
+                        In @GameName(_collection.MainGame)
+                    </button>
+                </div>
+
+                @if (status == CaptureStatus.CaughtElsewhere)
+                {
+                    <label class="field-inline">
+                        <span>Held in</span>
+                        <select value="@(held?.Value)" @onchange="e => SetHoldingGame(selected, e)">
+                            @foreach (var game in _collection.LinkedGames)
+                            {
+                                <option value="@game.Value" selected="@(held == game)">@GameName(game)</option>
+                            }
+                        </select>
+                    </label>
+                }
+
+                @if (status != CaptureStatus.NotCaught)
+                {
+                    <label class="field-inline">
+                        <span>Caught on</span>
+                        <input type="date" value="@(_captures.RecordFor(selected.Target)?.CaughtOn?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))"
+                               @onchange="e => SetCaughtOn(selected, e)" />
+                    </label>
+                }
+
+                <label class="field-inline field-note">
+                    <span>Note</span>
+                    @* Kept in hand while typing and written on blur: a save per keystroke would
+                       rewrite the whole file thirty times for one sentence. *@
+                    <textarea rows="2" value="@_note" @oninput="e => _note = e.Value?.ToString() ?? string.Empty"
+                              @onblur="() => SaveNote(selected)"></textarea>
+                </label>
+
+                @if (_saveError is not null)
+                {
+                    <p class="notice notice-error" role="alert">@_saveError</p>
+                }
+            </section>
+
+            @{
+                var sections = SectionsFor(selected);
+            }
+
+            @if (sections.Count == 0)
+            {
+                <section class="detail-section">
+                    <h3>How to get it</h3>
+                    <p class="muted">@NothingToListMessage</p>
+                </section>
+            }
+            else
+            {
+                @foreach (var section in sections)
+                {
+                    <section class="detail-section">
+                        <h3>@AcquisitionNames.Of(section.Kind)</h3>
+                        <ul class="method-list">
+                            @foreach (var method in section.Methods)
+                            {
+                                <li class="method">
+                                    <div class="method-head">
+                                        @if (PreviousStageOf(method) is { } previous)
+                                        {
+                                            <button type="button" class="link-button method-title"
+                                                    title="Show @Dataset.Reference.NameOf(previous)"
+                                                    @onclick="() => DrillTo(previous)">
+                                                @Summary(method)
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <span class="method-title">@Summary(method)</span>
+                                        }
+
+                                        <span class="method-game">@GameName(method.Game)</span>
+                                    </div>
+
+                                    @{
+                                        var fields = FieldsOf(method);
+                                    }
+
+                                    @if (fields.Count > 0)
+                                    {
+                                        <dl class="method-fields">
+                                            @foreach (var (label, value) in fields)
+                                            {
+                                                <dt>@label</dt>
+                                                <dd>@value</dd>
+                                            }
+                                        </dl>
+                                    }
+
+                                    @if (method.Game != _collection!.MainGame)
+                                    {
+                                        @* Caught there, wanted here. The move is part of the answer. *@
+                                        var route = RouteFor(method.Game, selected.Target);
+
+                                        <div class="method-transfer">
+                                            @if (route.Shortest is { } shortest)
+                                            {
+                                                <p>
+                                                    <span class="muted">Then to @GameName(_collection!.MainGame):</span>
+                                                    @TransferNames.Of(shortest)
+                                                </p>
+
+                                                @if (route.Alternatives.Any())
+                                                {
+                                                    <details>
+                                                        <summary>@route.Alternatives.Count() other way@(route.Alternatives.Count() == 1 ? "" : "s")</summary>
+                                                        <ul>
+                                                            @foreach (var alternative in route.Alternatives)
+                                                            {
+                                                                <li>@TransferNames.Of(alternative)</li>
+                                                            }
+                                                        </ul>
+                                                    </details>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <p class="method-blocked">
+                                                    Cannot be moved to @GameName(_collection!.MainGame).
+                                                    <span class="muted">@route.Explanation</span>
+                                                </p>
+                                            }
+                                        </div>
+                                    }
+
+                                    @* Where the claim came from, so a wrong encounter rate can be
+                                       traced without rerunning the pipeline. *@
+                                    <p class="method-source">
+                                        @method.Source.Source, read @method.Source.RetrievedOn.ToString("d MMM yyyy", CultureInfo.InvariantCulture)
+                                    </p>
+                                </li>
+                            }
+                        </ul>
+                    </section>
+                }
+            }
+        </div>
+    }
+</dialog>
+
+@code {
+    /// <summary>
+    /// How many tiles sit on one row. Fixed rather than measured: virtualising needs a row height
+    /// it can trust, and a count that changes with the window would invalidate that on every
+    /// resize. The window has a minimum width, so ten tiles always fit.
+    /// </summary>
+    private const int Columns = 10;
+
+    /// <summary>Must match the height a <c>.dex-row</c> actually takes, or scrolling drifts.</summary>
+    private const float RowHeight = 116f;
+
+    [Parameter]
+    public string? CollectionId { get; set; }
+
+    private DexCollection? _collection;
+    private CaptureIndex _captures = CaptureIndex.Empty;
+    private DexProgress _progress = DexProgress.Empty;
+    private IReadOnlyList<DexLine> _lines = [];
+    private IReadOnlyList<DexLine> _shown = [];
+    private DexFilter _filter = DexFilter.None;
+    private string _search = string.Empty;
+    private DexTrail? _trail;
+    private readonly Dictionary<(GameId From, DexTarget Target), TransferRouteResult> _routes = [];
+    private string _note = string.Empty;
+    private string? _saveError;
+    private ElementReference _dialog;
+    // An array, not IReadOnlyList: Virtualize takes an ICollection.
+    private DexLine[][] _rows = [];
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _error = null;
+        _collection = null;
+        _captures = CaptureIndex.Empty;
+        _progress = DexProgress.Empty;
+
+        // The filter belongs to the dex on screen, not to the app. Walking into another
+        // collection with the previous one's search still typed in reads as a bug.
+        _filter = DexFilter.None;
+        _search = string.Empty;
+        _trail = null;
+        _routes.Clear();
+
+        var store = await StoreProvider.GetAsync();
+        IReadOnlyList<CaptureRecord> records;
+
+        try
+        {
+            var snapshot = await store.LoadAsync();
+            _collection = snapshot.Document.Collections
+                .FirstOrDefault(one => one.Id.Value == CollectionId);
+            records = snapshot.Document.Records;
+        }
+        catch (UserDataCorruptException exception)
+        {
+            _error = $"Your data file could not be read. {exception.Message}";
+            return;
+        }
+
+        if (_collection is null)
+        {
+            _error = "That collection is not in your data file. It may have been deleted.";
+            return;
+        }
+
+        // Indexed once per visit: the grid asks for a status a thousand times while it scrolls.
+        _captures = CaptureIndex.For(_collection.Id, records);
+
+        try
+        {
+            _lines = new DexBuilder(Dataset.Reference).Build(_collection);
+        }
+        catch (DexBuildException exception)
+        {
+            _error = exception.Message;
+            return;
+        }
+
+        _progress = DexProgress.Of(_lines, _captures);
+        ApplyFilter();
+    }
+
+    /// <summary>
+    /// Sprites are per species. A form shows its base species' sprite until the pipeline has
+    /// form sprites, which is Phase 2 step 6.
+    /// </summary>
+    private static string SpriteFor(DexLine line) => $"sprites/{line.Target.Species.Value}.png";
+
+    /// <summary>
+    /// Opens the detail for one entry, caught or not. An entry you have not found yet is
+    /// exactly the one you need to read about, so nothing here depends on its status.
+    /// </summary>
+    private async Task Open(DexLine line)
+    {
+        _trail = DexTrail.StartingAt(line);
+        _saveError = null;
+        _note = _captures.RecordFor(line.Target)?.Note ?? string.Empty;
+
+        // Rendered before it is opened, or the first frame of the dialog is empty.
+        StateHasChanged();
+        await JS.InvokeVoidAsync("livingdex.openDialog", _dialog);
+    }
+
+    /// <summary>
+    /// What an evolution comes from, when the popup can show it. Only evolutions lead anywhere;
+    /// a wild slot or a gift is the end of the line.
+    /// </summary>
+    private DexTarget? PreviousStageOf(AcquisitionMethod method) =>
+        method is EvolutionAcquisition evolution
+        && Dataset.Reference.FindEvolutionRule(evolution.Rule) is { } rule
+            ? rule.From
+            : null;
+
+    private async Task DrillTo(DexTarget target)
+    {
+        // The note belongs to the entry that was on screen, so it is written before moving on.
+        await FlushNote();
+        _trail?.GoTo(LineFor(target));
+        LoadNote();
+    }
+
+    private async Task Back()
+    {
+        await FlushNote();
+        _trail?.Back();
+        LoadNote();
+    }
+
+    private async Task GoBackTo(int step)
+    {
+        await FlushNote();
+        _trail?.TruncateTo(step);
+        LoadNote();
+    }
+
+    private void LoadNote() =>
+        _note = _trail is null ? string.Empty : _captures.RecordFor(_trail.Current.Target)?.Note ?? string.Empty;
+
+    /// <summary>
+    /// The dex line for an entry, made up when the dex has none. A previous stage can be outside
+    /// this collection - a baby Pokemon the main game's dex does not list, or a form the player
+    /// has switched off - and refusing to show it would break the chain exactly where it is most
+    /// worth reading.
+    /// </summary>
+    private DexLine LineFor(DexTarget target) =>
+        _lines.FirstOrDefault(line => line.Target == target)
+        ?? DexLines.For(Dataset.Reference, target);
+
+    private async Task Close() => await JS.InvokeVoidAsync("livingdex.closeDialog", _dialog);
+
+    /// <summary>
+    /// Runs however the dialog was closed, including Escape and the backdrop, so the selection
+    /// cannot survive the thing that showed it.
+    /// </summary>
+    private async Task OnDialogClosed()
+    {
+        // Runs for Escape and the backdrop too, so a note typed and not blurred is still saved.
+        await FlushNote();
+        _trail = null;
+    }
+
+    /// <summary>Writes the note if it differs from what is stored.</summary>
+    private async Task FlushNote()
+    {
+        if (_trail is not { } trail)
+        {
+            return;
+        }
+
+        var line = trail.Current;
+        var stored = _captures.RecordFor(line.Target)?.Note ?? string.Empty;
+        if (_note == stored)
+        {
+            return;
+        }
+
+        await SaveNote(line);
+    }
+
+    private async Task SaveNote(DexLine line)
+    {
+        var note = string.IsNullOrWhiteSpace(_note) ? null : _note.Trim();
+        await Write(Current(line) with { Note = note });
+    }
+
+    /// <summary>
+    /// Moves an entry between the three states. What that does to the holding game and the catch
+    /// date is <see cref="CaptureEditing.WithStatus"/>'s business; today's date comes from here
+    /// because only the app knows what day it is.
+    /// </summary>
+    private async Task SetStatus(DexLine line, CaptureStatus status)
+    {
+        var current = Current(line);
+        if (current.Status == status)
+        {
+            return;
+        }
+
+        await Write(current.WithStatus(
+            status,
+            _collection!.MainGame,
+            _collection.LinkedGames.Count > 0 ? _collection.LinkedGames[0] : null,
+            DateOnly.FromDateTime(DateTime.Now)));
+    }
+
+    private async Task SetHoldingGame(DexLine line, ChangeEventArgs e)
+    {
+        if (e.Value?.ToString() is not { Length: > 0 } chosen)
+        {
+            return;
+        }
+
+        var game = new GameId(chosen);
+        await Write(Current(line) with
+        {
+            Status = game == _collection!.MainGame ? CaptureStatus.InMainGame : CaptureStatus.CaughtElsewhere,
+            HoldingGame = game,
+        });
+    }
+
+    private async Task SetCaughtOn(DexLine line, ChangeEventArgs e)
+    {
+        var text = e.Value?.ToString();
+        DateOnly? caughtOn = DateOnly.TryParse(text, CultureInfo.InvariantCulture, out var parsed)
+            ? parsed
+            : null;
+
+        await Write(Current(line) with { CaughtOn = caughtOn });
+    }
+
+    /// <summary>What is stored for an entry, or an empty record to build on.</summary>
+    private CaptureRecord Current(DexLine line) =>
+        _captures.RecordFor(line.Target) ?? CaptureRecord.NotCaught(_collection!.Id, line.Target);
+
+    /// <summary>
+    /// Writes one record to the data file and brings the screen back in step with it.
+    /// </summary>
+    /// <remarks>
+    /// Retried once against whatever is on disk, the same as adding a collection: a record
+    /// replaces only its own entry, so a file that moved on in the meantime can be written to
+    /// again without losing what changed.
+    /// </remarks>
+    private async Task Write(CaptureRecord record)
+    {
+        _saveError = null;
+        var store = await StoreProvider.GetAsync();
+
+        for (var attempt = 0; attempt < 2; attempt++)
+        {
+            UserDataSnapshot snapshot;
+
+            try
+            {
+                snapshot = await store.LoadAsync();
+            }
+            catch (UserDataCorruptException exception)
+            {
+                _saveError = $"Your data file could not be read. {exception.Message}";
+                return;
+            }
+
+            var written = snapshot.Document.WithRecord(record);
+            var result = await store.SaveAsync(written, snapshot.Revision);
+            if (result.Status != SaveStatus.Saved)
+            {
+                continue;
+            }
+
+            // Everything the screen shows about records is rebuilt from what was written, rather
+            // than patched in two places and left to drift.
+            _captures = CaptureIndex.For(_collection!.Id, written.Records);
+            _progress = DexProgress.Of(_lines, _captures);
+            ApplyFilter();
+            LoadNote();
+            return;
+        }
+
+        _saveError = "Something else changed your data file while this was being saved. Nothing was lost; try again.";
+    }
+
+    /// <summary>The types shown under the name. Which types those are is a dataset question.</summary>
+    private string TypesOf(DexLine line)
+    {
+        var types = Dataset.Reference.TypesOf(line.Target);
+        return types.Count == 0 ? "Unknown typing" : string.Join(" / ", types);
+    }
+
+    /// <summary>
+    /// Every way to get one entry in the games this collection covers, grouped into the popup's
+    /// sections. The linked games are included: "how do I get this" is answered by the whole
+    /// collection, not by the main game alone. The same list orders the methods inside a
+    /// section, so the main game is always read first.
+    /// </summary>
+    private IReadOnlyList<AcquisitionSection> SectionsFor(DexLine line)
+    {
+        var games = GamesOfCollection();
+
+        return AcquisitionSections.Of(
+            games.SelectMany(game => Dataset.Reference.MethodsFor(game, line.Target)),
+            games);
+    }
+
+    /// <summary>The main game first, then the linked ones in the order the player linked them.</summary>
+    private IReadOnlyList<GameId> GamesOfCollection() =>
+        _collection is null ? [] : [_collection.MainGame, .. _collection.LinkedGames];
+
+    /// <summary>
+    /// Why a section list is empty. "We have no data" and "there is no way to get this" are
+    /// different answers and the player has to be able to tell them apart.
+    /// </summary>
+    private string NothingToListMessage => GamesOfCollection().Any(Dataset.Reference.HasAcquisitionData)
+        ? "No recorded way to get this in your games."
+        : $"The dataset has no encounter data for {GameName(_collection!.MainGame)} yet, so there is nothing to list here.";
+
+    /// <summary>The line that tells two methods in the same section apart at a glance.</summary>
+    private string Summary(AcquisitionMethod method) => method switch
+    {
+        GiftAcquisition gift => AcquisitionNames.Of(gift.GiftKind),
+
+        WildAcquisition wild =>
+            $"{wild.Location}{(wild.SubArea is null ? "" : $", {wild.SubArea}")}",
+
+        EvolutionAcquisition evolution => Dataset.Reference.FindEvolutionRule(evolution.Rule) is { } rule
+            ? $"From {Dataset.Reference.NameOf(rule.From)}"
+            : "From an earlier stage",
+
+        TradeAcquisition trade => $"Trade a {Dataset.Reference.NameOf(trade.Wants)}",
+
+        _ => "Another way",
+    };
+
+    /// <summary>
+    /// The fields shown under a method, in a fixed order per kind, with anything the dataset
+    /// does not know left out rather than printed empty.
+    /// </summary>
+    /// <remarks>
+    /// One field per thing the record carries. Which fields exist is the schema's business, so
+    /// a field added there shows up here by being added to one list.
+    /// </remarks>
+    private IReadOnlyList<(string Label, string Value)> FieldsOf(AcquisitionMethod method)
+    {
+        var fields = new List<(string Label, string? Value)>();
+
+        switch (method)
+        {
+            case GiftAcquisition gift:
+                fields.Add(("Where", gift.Location));
+                fields.Add(("From", gift.Npc));
+                fields.Add(("Level", gift.Level?.ToString(CultureInfo.InvariantCulture)));
+                fields.Add(("First", gift.Requirement));
+                break;
+
+            case WildAcquisition wild:
+                fields.Add(("How", AcquisitionNames.Of(wild.Method)));
+                fields.Add(("Levels", wild.Levels.ToString()));
+                fields.Add(("Chance", wild.RatePercent is { } rate
+                    ? string.Create(CultureInfo.InvariantCulture, $"{rate:0.#}%")
+                    : null));
+                fields.Add(("Time", wild.TimeOfDay));
+                fields.Add(("Season", wild.Season));
+                fields.Add(("Weather", wild.Weather));
+                break;
+
+            case EvolutionAcquisition evolution:
+                fields.Add(("How", Dataset.Reference.FindEvolutionRule(evolution.Rule) is { } rule
+                    ? EvolutionNames.Describe(rule, SpeciesName)
+                    : null));
+                break;
+
+            case TradeAcquisition trade:
+                fields.Add(("Where", trade.Location));
+                fields.Add(("With", trade.Npc));
+                fields.Add(("First", trade.Requirement));
+                break;
+
+            default:
+                break;
+        }
+
+        return
+        [
+            .. fields
+                .Where(field => !string.IsNullOrWhiteSpace(field.Value))
+                .Select(field => (field.Label, field.Value!)),
+        ];
+    }
+
+    private string SpeciesName(SpeciesId species) => Dataset.Reference.NameOf(DexTarget.ForSpecies(species));
+
+    /// <summary>
+    /// How to get one entry from the game it was caught in into the main game.
+    /// </summary>
+    /// <remarks>
+    /// Cached per game and entry for as long as the popup is open. The answer cannot change
+    /// while it is, and several slots in one game would otherwise each pay for the same search.
+    /// </remarks>
+    private TransferRouteResult RouteFor(GameId from, DexTarget target)
+    {
+        if (_routes.TryGetValue((from, target), out var known))
+        {
+            return known;
+        }
+
+        var found = Transfers.RoutesBetween(from, _collection!.MainGame, target);
+        _routes[(from, target)] = found;
+        return found;
+    }
+
+    /// <summary>
+    /// Whether the dataset knows anything at all about obtaining things in the main game. With
+    /// no data the filter would answer "nothing is available here", which is a lie rather than
+    /// an empty result, so the switch is offered disabled and says why.
+    /// </summary>
+    private bool CanAskAvailability =>
+        _collection is not null && Dataset.Reference.HasAcquisitionData(_collection.MainGame);
+
+    private string AvailabilityHint => CanAskAvailability
+        ? $"Entries {GameName(_collection!.MainGame)} has a known way to obtain"
+        : $"The dataset has no encounter data for {GameName(_collection!.MainGame)} yet.";
+
+    private void OnSearchInput(ChangeEventArgs e)
+    {
+        _search = e.Value?.ToString() ?? string.Empty;
+        Narrow(filter => filter with { Search = _search });
+    }
+
+    private void ClearFilters()
+    {
+        _search = string.Empty;
+        Narrow(_ => DexFilter.None);
+    }
+
+    private void Narrow(Func<DexFilter, DexFilter> change)
+    {
+        _filter = change(_filter);
+        ApplyFilter();
+    }
+
+    private void ApplyFilter()
+    {
+        _shown = _filter.Apply(_lines, _captures, IsAvailableInMainGame);
+        _rows = [.. _shown.Chunk(Columns)];
+    }
+
+    private bool IsAvailableInMainGame(DexTarget target) =>
+        _collection is not null
+        && Dataset.Reference.MethodsFor(_collection.MainGame, target).Count > 0;
+
+    /// <summary>
+    /// The one-click move from the grid: catch it, or having transferred it, or take it back.
+    /// </summary>
+    /// <remarks>
+    /// Deliberately not a cycle through the three states. From the grid the useful step is
+    /// always "it is in the main game now" - either because you caught it there or because you
+    /// moved it - and the way back. Choosing a linked game is a decision, and decisions belong
+    /// in the popup.
+    /// </remarks>
+    private async Task QuickToggle(DexLine line)
+    {
+        var status = _captures.StatusOf(line.Target);
+
+        await SetStatus(
+            line,
+            status == CaptureStatus.InMainGame ? CaptureStatus.NotCaught : CaptureStatus.InMainGame);
+    }
+
+    private string ToggleHint(CaptureStatus status) => status switch
+    {
+        CaptureStatus.InMainGame => "Mark as not caught",
+        CaptureStatus.CaughtElsewhere => $"Mark as moved to {GameName(_collection!.MainGame)}",
+        _ => $"Mark as caught in {GameName(_collection!.MainGame)}",
+    };
+
+    private static string TileClass(CaptureStatus status) => status switch
+    {
+        CaptureStatus.InMainGame => "is-done",
+        CaptureStatus.CaughtElsewhere => "is-elsewhere",
+        _ => "is-missing",
+    };
+
+    /// <summary>
+    /// What the state means in words, for the tooltip and for anything that cannot see colour
+    /// at all. The wording itself is in Core, so the detail popup and the filters say the same.
+    /// </summary>
+    private string StatusLabel(DexLine line, CaptureStatus status) => CaptureStatusNames.Of(
+        status,
+        GameName(_collection!.MainGame),
+        _captures.RecordFor(line.Target)?.HoldingGame is { } holding ? GameName(holding) : null);
+
+    /// <summary>The short version name, falling back to the id if the dataset has no such game.</summary>
+    private string GameName(GameId game) => Dataset.Reference.FindGame(game)?.Version ?? game.Value;
+
+    /// <summary>
+    /// One segment of the bar, as a CSS width. Invariant on purpose: a Dutch Windows would
+    /// otherwise write "2,4%", which is not a length and silently does nothing.
+    /// </summary>
+    private string BarWidth(int part) => _progress.Total == 0
+        ? "0"
+        : string.Create(CultureInfo.InvariantCulture, $"{part * 100.0 / _progress.Total:0.###}%");
+}

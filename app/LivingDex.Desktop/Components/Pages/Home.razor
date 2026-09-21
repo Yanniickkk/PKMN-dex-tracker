@@ -6,25 +6,29 @@
 
 <h1>Living Dex Tracker</h1>
 
-<p>
-    Phase 0 skeleton. Storage is wired up; there is no dataset and no dex screen yet.
+<p class="lead">
+    Phase 0 is done: the schema, the transfer graph, the dex builder, storage and the data
+    pipeline. There is no dataset and no dex grid yet.
 </p>
 
-<dl>
-    <dt>Data file</dt>
-    <dd><code>@_dataFile</code></dd>
+<section>
+    <h2>Where your data lives</h2>
+    <dl>
+        <dt>Data file</dt>
+        <dd><code>@_dataFile</code></dd>
 
-    <dt>Backups</dt>
-    <dd><code>@_backupDirectory</code></dd>
+        <dt>Backups</dt>
+        <dd><code>@_backupDirectory</code></dd>
 
-    <dt>State</dt>
-    <dd>@_state</dd>
-</dl>
+        <dt>State</dt>
+        <dd>@_state</dd>
+    </dl>
+</section>
 
 @code {
-    private string _dataFile = "waiting for the location...";
-    private string _backupDirectory = "";
-    private string _state = "waiting...";
+    private string _dataFile = "waiting for the location…";
+    private string _backupDirectory = string.Empty;
+    private string _state = "waiting…";
 
     protected override async Task OnInitializedAsync()
     {

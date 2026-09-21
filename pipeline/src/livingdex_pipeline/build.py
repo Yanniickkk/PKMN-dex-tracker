@@ -12,8 +12,9 @@ from pathlib import Path
 
 import httpx
 
+from .boxart import ARCHIVES_MIN_INTERVAL, BoxArtError, fetch_box_art
 from .emit import DatasetWriter, read_dataset, stamp_for
-from .games import REGISTRY, BuildContext, GameRegistry, UnknownGameError
+from .games import BuildContext, GameRegistry, UnknownGameError
 from .http import PoliteClient, RobotsDisallowed
 from .merge import MergeResult
 from .models import EvolutionRule, Form, Species, TransferEdge
@@ -28,6 +29,15 @@ POKEAPI_MIN_INTERVAL = 0.2
 
 CONFLICT_LOG = "conflicts.json"
 VALIDATION_REPORT = "validation.json"
+
+
+def default_registry() -> GameRegistry:
+    """Every game the pipeline knows how to build."""
+    from .gamedefs import register_all
+
+    registry = GameRegistry()
+    register_all(registry)
+    return registry
 
 
 @dataclass
@@ -64,7 +74,8 @@ class Build:
     species_limit: int | None = None
     refresh: bool = False
     sprites: bool = True
-    registry: GameRegistry = REGISTRY
+    box_art: bool = True
+    registry: GameRegistry = field(default_factory=default_registry)
 
     def run(self, game_id: str | None = None) -> BuildResult:
         """Build everything, or one game.
@@ -84,16 +95,23 @@ class Build:
                 "Run a full build first."
             )
 
-        built_games = writer.known_games()
+        # A full build builds every registered game. Writing the transfer graph without them
+        # would leave edges pointing at games that are not in the dataset, which the validator
+        # rightly refuses.
+        wanted = self.registry.game_ids if game_id is None else [game_id]
 
-        if game_id is not None:
+        for wanted_id in wanted:
             try:
-                data = self.registry.build(BuildContext(game_id=game_id, refresh=self.refresh))
+                data = self.registry.build(BuildContext(game_id=wanted_id, refresh=self.refresh))
             except UnknownGameError as error:
                 raise BuildError(str(error)) from error
 
             result.written.append(writer.write_game(data))
-            built_games = sorted({*built_games, game_id})
+
+        if self.box_art:
+            result.written.extend(self._fetch_box_art(wanted, writer))
+
+        built_games = writer.known_games()
 
         stamp = stamp_for(self.version, self.built_on)
         result.written.append(writer.write_index(stamp, built_games))
@@ -117,11 +135,12 @@ class Build:
 
             sprite_paths = self._fetch_sprites(api, client, species, writer) if self.sprites else []
 
-        # Forms, evolution rules and the transfer graph are Phase 2 work; the files are written
-        # empty so the dataset is always a complete set rather than a partial one.
+        # Forms and evolution rules are still Phase 2 work; the files are written empty so the
+        # dataset is always a complete set rather than a partial one. The transfer graph is
+        # whatever the registered games brought with them.
         forms: list[Form] = []
         rules: list[EvolutionRule] = []
-        edges: list[TransferEdge] = []
+        edges: list[TransferEdge] = self.registry.edges
 
         return [
             *sprite_paths,
@@ -163,6 +182,38 @@ class Build:
                 continue
 
             written.append(writer.write_sprite(f"{one.id}.png", body))
+
+        return written
+
+    def _fetch_box_art(self, game_ids: list[str], writer: DatasetWriter) -> list[Path]:
+        """One cover per game, so the picker can show a game by its box rather than its name."""
+        wanted = [
+            (game_id, title)
+            for game_id in game_ids
+            if (title := self.registry.box_art_of(game_id)) is not None
+        ]
+
+        if not wanted:
+            return []
+
+        written: list[Path] = []
+
+        # Its own client: the Archives ask for five seconds between requests in their
+        # robots.txt, and that is not a pace to hold the PokeAPI fetches to.
+        with PoliteClient(
+            self.cache_root / "http",
+            min_interval_seconds=ARCHIVES_MIN_INTERVAL,
+        ) as client:
+            for game_id, title in wanted:
+                try:
+                    art = fetch_box_art(client, game_id, title, refresh=self.refresh)
+                except (BoxArtError, httpx.HTTPError, OSError) as error:
+                    # A missing cover falls back to a drawn one in the app, which is a worse
+                    # picker but not a broken build.
+                    log.warning("no box art for %s: %s", game_id, error)
+                    continue
+
+                written.append(writer.write_box_art(art.file_name, art.body))
 
         return written
 

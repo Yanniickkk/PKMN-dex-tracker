@@ -143,12 +143,24 @@ class PoliteClient:
         now = time.monotonic()
 
         if last is not None:
-            remaining = self.min_interval_seconds - (now - last)
+            remaining = self._interval_for(host) - (now - last)
             if remaining > 0:
                 self._sleep(remaining)
                 now = time.monotonic()
 
         self._last_request_at[host] = now
+
+    def _interval_for(self, host: str) -> float:
+        """How long to wait between requests to one host.
+
+        A site that states a Crawl-delay is asking for it in writing, so it wins whenever it is
+        the slower of the two. Our own interval is a floor, never a licence to go faster than
+        the site asked.
+        """
+        parser = self._robots.get(host)
+        declared = parser.crawl_delay(self.user_agent) if parser is not None else None
+
+        return max(self.min_interval_seconds, float(declared or 0))
 
     def _allowed(self, url: str) -> bool:
         parts = urlsplit(url)

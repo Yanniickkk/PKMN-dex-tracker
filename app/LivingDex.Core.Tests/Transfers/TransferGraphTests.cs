@@ -78,6 +78,24 @@ public class TransferGraphTests
     }
 
     [Fact]
+    public void Two_ways_between_the_same_pair_of_games_are_two_routes()
+    {
+        // Parallel edges: one hop, two mechanisms. The popup offers the second as an
+        // alternative, so they must not collapse into one.
+        var graph = new TransferGraph(
+            [
+                new TransferEdge(Emerald, Platinum, TransferMechanism.PalPark, TransferDirection.OneWay, new AllSpeciesFilter()),
+                new TransferEdge(Emerald, Platinum, TransferMechanism.Trade, TransferDirection.OneWay, new AllSpeciesFilter()),
+            ],
+            new ReferenceFilterContext([], []));
+
+        var result = graph.RoutesBetween(Emerald, Platinum, DexTarget.ForSpecies(Pikachu));
+
+        Assert.Equal(2, result.Routes.Count);
+        Assert.Single(result.Alternatives);
+    }
+
+    [Fact]
     public void The_graph_is_whatever_the_data_says_and_nothing_more()
     {
         var empty = new TransferGraph([], new ReferenceFilterContext([], []));
@@ -232,6 +250,58 @@ public class TransferGraphTests
 
         Assert.False(backwards.Any);
         Assert.Equal(NoRouteReason.NotConnected, backwards.Reason);
+    }
+
+    [Fact]
+    public void A_game_can_feed_another_even_when_it_cannot_send_everything_it_holds()
+    {
+        var graph = BuildGraph();
+
+        // Turtwig cannot make the Pal Park hop, but Emerald is still a feeder for Platinum.
+        Assert.Equal(NoRouteReason.SpeciesNotCarried, graph.RoutesBetween(Emerald, Platinum, Turtwig).Reason);
+        Assert.True(graph.RoutesBetween(Emerald, Platinum).Any);
+    }
+
+    [Fact]
+    public void The_game_level_question_gives_the_same_refusals_as_the_species_one()
+    {
+        var graph = BuildGraph();
+
+        Assert.Equal(NoRouteReason.SameGame, graph.RoutesBetween(Platinum, Platinum).Reason);
+        Assert.Equal(NoRouteReason.UnknownGame, graph.RoutesBetween(new GameId("legends-z-a"), Platinum).Reason);
+        Assert.Equal(NoRouteReason.NotConnected, graph.RoutesBetween(Gold, Emerald).Reason);
+        Assert.Equal(NoRouteReason.NotConnected, graph.RoutesBetween(Platinum, Emerald).Reason);
+    }
+
+    [Fact]
+    public void The_game_level_question_still_reports_a_route_that_is_too_long()
+    {
+        var cut = BuildGraph(maxHops: 4).RoutesBetween(Ruby, Home);
+
+        Assert.False(cut.Any);
+        Assert.Equal(NoRouteReason.TooManyHops, cut.Reason);
+    }
+
+    [Fact]
+    public void The_game_level_question_names_how_the_feed_would_happen()
+    {
+        var result = BuildGraph().RoutesBetween(Emerald, Platinum);
+
+        Assert.Equal(TransferMechanism.PalPark, result.Shortest!.Hops[0].Mechanism);
+    }
+
+    [Fact]
+    public void A_route_reads_as_something_a_player_would_recognise()
+    {
+        var graph = BuildGraph();
+
+        Assert.Equal("Pal Park", TransferNames.Of(graph.RoutesBetween(Emerald, Platinum).Shortest!));
+
+        // Ruby -> Diamond -> Pearl -> Platinum is Pal Park and then two trades, and two trades
+        // in a row is still just trading.
+        var viaDiamond = graph.RoutesBetween(Ruby, Platinum).Shortest!;
+        Assert.Equal(3, viaDiamond.Length);
+        Assert.Equal("Pal Park, then trading", TransferNames.Of(viaDiamond));
     }
 
     [Fact]

@@ -1,0 +1,14 @@
+{
+  "game": {
+    "id": "platinum",
+    "title": "Pokémon Platinum Version",
+    "version": "Platinum",
+    "generation": 4,
+    "region": "Sinnoh",
+    "release": "cartridge",
+    "nationalDexThrough": 493,
+    "dexSource": "nationalDex"
+  },
+  "dexEntries": [],
+  "acquisitionMethods": []
+}

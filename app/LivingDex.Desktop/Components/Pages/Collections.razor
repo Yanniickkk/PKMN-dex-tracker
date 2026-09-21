@@ -1,0 +1,108 @@
+@page "/collections"
+@using LivingDex.Core.Reference
+@using LivingDex.Core.UserData
+@inject UserDataStoreProvider StoreProvider
+
+<PageTitle>Collections</PageTitle>
+
+<div class="page-header">
+    <h1>Collections</h1>
+    <a class="button button-primary" href="collections/new">New collection</a>
+</div>
+
+@if (_error is not null)
+{
+    <div class="notice notice-error" role="alert">
+        <p>Your data file could not be read.</p>
+        <p class="notice-detail">@_error</p>
+    </div>
+}
+else if (_collections is null)
+{
+    <p class="muted">Reading your data file…</p>
+}
+else if (_collections.Count == 0)
+{
+    <div class="empty">
+        <h2>No collections yet</h2>
+        <p>
+            A collection is one living dex you are filling: a main game, the games you own that
+            can feed it, and how finely it counts forms.
+        </p>
+        <p class="muted">
+            Use <strong>New collection</strong> above to set one up.
+        </p>
+    </div>
+}
+else
+{
+    <ul class="card-list">
+        @foreach (var collection in _collections)
+        {
+            <li class="card card-link">
+                <h2><a href="collections/@collection.Id.Value">@collection.Name</a></h2>
+                <dl>
+                    <dt>Main game</dt>
+                    <dd>@collection.MainGame</dd>
+
+                    <dt>Linked games</dt>
+                    <dd>@LinkedGamesOf(collection)</dd>
+
+                    <dt>Forms</dt>
+                    <dd>@FormsOf(collection)</dd>
+                </dl>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private IReadOnlyList<DexCollection>? _collections;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var store = await StoreProvider.GetAsync();
+
+        try
+        {
+            _collections = (await store.LoadAsync()).Document.Collections;
+        }
+        catch (UserDataCorruptException exception)
+        {
+            _error = exception.Message;
+        }
+    }
+
+    private static string LinkedGamesOf(DexCollection collection) =>
+        collection.LinkedGames.Count == 0
+            ? "none"
+            : string.Join(", ", collection.LinkedGames.Select(game => game.Value));
+
+    private static string FormsOf(DexCollection collection)
+    {
+        var kinds = new List<string>();
+
+        if (collection.Forms.Regional)
+        {
+            kinds.Add("regional");
+        }
+
+        if (collection.Forms.Functional)
+        {
+            kinds.Add("functional");
+        }
+
+        if (collection.Forms.Cosmetic)
+        {
+            kinds.Add("cosmetic");
+        }
+
+        if (collection.Forms.GenderDifferences)
+        {
+            kinds.Add("gender differences");
+        }
+
+        return kinds.Count == 0 ? "base species only" : string.Join(", ", kinds);
+    }
+}
