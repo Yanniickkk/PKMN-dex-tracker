@@ -279,6 +279,10 @@ real PokeAPI.
   - Two-space indent, LF, sorted where order carries no meaning, nulls left out entirely. The
     dataset is committed, so a rebuild has to produce a readable diff.
   - One battle sprite per species, so the app never touches the network.
+- [x] Validator with the checks listed in 0.7 - 2026-09-21
+  - The harness landed here, the rules in 0.7 below. Every build validates what it just wrote by
+    reading it back from disk rather than checking the objects still in memory, so a
+    serialisation bug fails the run that caused it.
 - [x] `build --game <id>` so a single game can be rebuilt without touching the rest - 2026-09-21
   - Rewrites that game's file and the index, reads the shared tables rather than rebuilding
     them, and refuses if the shared tables are not there yet. A game with no registered builder
@@ -293,7 +297,47 @@ the thing that breaks a build when it changes.
 
 ### 0.7 Validation rules
 
-_Nothing yet._
+`pipeline/src/livingdex_pipeline/rules.py`, with 17 tests in `pipeline/tests/test_rules.py`.
+Each rule is shown firing on the thing it exists to catch, and passing on the case it should
+allow.
+
+One decision underpins most of this section. Acquisition methods are recorded per game, but a
+living dex is filled by transferring as much as by catching: most of Platinum's National Dex has
+no Sinnoh encounter at all. So an entry counts as accounted for when *some* game in the dataset
+can produce it. Whether that is the game you are playing is the difference between `full` and
+`partial` in the coverage report, not the difference between valid and invalid. Read the rule
+the other way and it would flag several hundred legitimate entries per National Dex game.
+
+- [x] Every dex entry has a method, or is explicitly flagged unobtainable - 2026-09-21
+  - This needed the schema change 0.6 predicted: `DexEntry.unobtainableReason`. A reason rather
+    than a bool, so the validator can tell "we checked, and it cannot be caught" from "we have
+    nothing", and Phase 3 can say which. `IsUnobtainable` is derived from it, so a file cannot
+    claim the flag without saying why.
+- [x] Every evolution rule points at an entry that itself has a method - no dead ends - 2026-09-21
+  - Checked one link at a time, which covers a whole chain transitively: Infernape is fine
+    because Monferno is, and Monferno because Chimchar is a gift. A method pointing at a rule id
+    that does not exist is reported separately, because that is a different mistake.
+- [x] Every form referenced by a game's dex exists in the form table - 2026-09-21
+  - Also checks the form is filed under the species the dex puts it under.
+  - Added beyond the spec, as a warning rather than an error: a dex that numbers a form whose
+    form-table entry does not list that game. The dex builder silently drops such a form, so the
+    dex comes out short with nothing to show for it.
+- [x] Every transfer edge connects two known games - 2026-09-21
+  - "Known" means present in the dataset as a game file, which is why Bank and HOME need entities
+    of their own. Writing one exposed a gap: `GameRelease` had only `cartridge` and
+    `virtualConsole`, and HOME is neither. It now has `service`.
+- [x] Per-game coverage report: full / partial / missing counts - 2026-09-21
+  - The spec asks for the three counts without defining them. Given meanings here: `full` is
+    obtainable in this very game, `partial` is obtainable elsewhere and therefore a transfer
+    away, `missing` is nothing can produce it anywhere.
+  - A fourth count, `unobtainable`, sits beside them rather than being folded into one: an entry
+    someone has checked and stated a reason for is not the same as one nobody has looked at.
+
+The committed sample dataset now passes its own validator. It did not at first - the rules found
+five real problems in it, which is a fair advertisement for them, but a sample that fails its own
+checks is a bad thing to commit. It gained acquisition methods for what its dex lists and game
+files for the transfer endpoints it referenced, and is now a small but valid dataset as well as a
+wire-format fixture.
 
 ---
 

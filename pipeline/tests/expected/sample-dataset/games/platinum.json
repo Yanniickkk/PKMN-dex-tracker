@@ -23,6 +23,14 @@
         "species": "monferno"
       },
       "number": 5
+    },
+    {
+      "game": "platinum",
+      "target": {
+        "species": "darkrai"
+      },
+      "number": 6,
+      "unobtainableReason": "event distribution only"
     }
   ],
   "acquisitionMethods": [

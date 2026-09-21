@@ -27,4 +27,22 @@ public readonly record struct DexTarget(SpeciesId Species, FormId? Form)
 /// <param name="Game">The game whose dex this line belongs to.</param>
 /// <param name="Target">The species or form.</param>
 /// <param name="Number">The number in this game's dex, which is not the National Dex number.</param>
-public sealed record DexEntry(GameId Game, DexTarget Target, int Number);
+/// <param name="UnobtainableReason">
+/// Why this entry cannot be filled in this game, when that is a known fact rather than a gap in
+/// the data — an event-only distribution, say. A reason rather than a flag: the validator has to
+/// tell "we checked, and it cannot be caught" apart from "we have nothing", and the UI has to be
+/// able to say which.
+/// </param>
+public sealed record DexEntry(
+    GameId Game,
+    DexTarget Target,
+    int Number,
+    string? UnobtainableReason = null)
+{
+    /// <summary>
+    /// Whether this entry is known to be unfillable. Derived from
+    /// <see cref="UnobtainableReason"/>, so a file cannot claim it without saying why.
+    /// </summary>
+    [JsonIgnore]
+    public bool IsUnobtainable => UnobtainableReason is not null;
+}

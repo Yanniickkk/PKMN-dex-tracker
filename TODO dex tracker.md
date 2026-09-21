@@ -27,21 +27,6 @@ Phase 2 feeds it one game at a time.
     folder with nothing beside it. Still open: a Windows install without the WebView2
     Runtime, and a Windows 10 box.
 
-### 0.6 Pipeline skeleton
-- [ ] Validator with the checks listed in 0.7
-  - The harness is built and wired into every build: what a rule is, what it reports, and
-    a report written beside the dataset. No rules yet, and a build with none says "no rules
-    ran, so nothing was checked" rather than looking clean. The rules are 0.7 below.
-  - Note for 0.7: the first rule on that list needs dex entries to be markable as
-    deliberately unobtainable, and nothing in the schema says that yet.
-
-### 0.7 Validation rules
-- [ ] Every dex entry has a method, or is explicitly flagged unobtainable
-- [ ] Every evolution rule points at an entry that itself has a method — no dead ends
-- [ ] Every form referenced by a game's dex exists in the form table
-- [ ] Every transfer edge connects two known games
-- [ ] Per-game coverage report: full / partial / missing counts
-
 ---
 
 ## Phase 1 — First vertical slice
@@ -49,7 +34,10 @@ Phase 2 feeds it one game at a time.
 Build the whole app against two games before scaling the data out.
 Target: **Platinum** as main game, **Emerald** linked.
 
-- [ ] Collection setup wizard: name, main game, linked games, both toggles
+- [ ] Collection setup wizard: name, main game, linked games, the form selection
+  - Not two toggles any more: 0.5 replaced them with one switch per form kind (regional,
+    functional, cosmetic, gender differences). `FormSelection.Any` is what a master
+    "include forms" checkbox binds to.
 - [ ] Linked-game picker filtered by the transfer graph, disabled entries show the reason
 - [ ] Grid screen: virtualised, battle sprites, dex number, name
 - [ ] Tile status colours for the three states, plus a non-colour badge or icon

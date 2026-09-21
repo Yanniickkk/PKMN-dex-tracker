@@ -67,7 +67,7 @@ def test_a_single_game_build_keeps_the_index_whole(tmp_path: Path) -> None:
     build_for(tmp_path).run("platinum")
 
     index = json.loads((root / "index.json").read_text(encoding="utf-8"))
-    assert index["games"] == ["platinum", "sword"]
+    assert index["games"] == ["diamond", "emerald", "home", "platinum", "sword"]
     assert index["stamp"]["builtOn"] == "2026-09-21"
 
 
@@ -78,17 +78,55 @@ def test_a_build_leaves_a_validation_report_behind(tmp_path: Path) -> None:
     result = build_for(tmp_path).run("platinum")
 
     report = json.loads((root / "validation.json").read_text(encoding="utf-8"))
-    assert report["rulesRun"] == []
+    assert report["rulesRun"] == [
+        "every-entry-has-a-method",
+        "no-evolution-dead-ends",
+        "forms-referenced-exist",
+        "transfer-edges-connect-known-games",
+    ]
+    assert report["findings"] == []
     assert result.ok
 
 
-def test_a_build_with_no_rules_says_so_rather_than_claiming_to_be_clean(tmp_path: Path) -> None:
-    write_sample_dataset(tmp_path / "dataset")
+def test_the_committed_sample_passes_its_own_validator(tmp_path: Path) -> None:
+    root = tmp_path / "dataset"
+    write_sample_dataset(root)
 
-    result = build_for(tmp_path).run("platinum")
+    report = validate(read_dataset(root))
 
-    assert result.validation is not None
-    assert "no rules ran" in result.validation.summary()
+    assert report.ok, [one.describe() for one in report.findings]
+    assert "0 error(s)" in report.summary()
+
+
+def test_a_report_with_no_rules_says_so_rather_than_looking_clean() -> None:
+    dataset = Dataset(
+        index=DatasetIndex(stamp=DatasetStamp(version="0", built_on=date(2026, 9, 21)), games=[]),
+        species=[],
+        forms=[],
+        evolution_rules=[],
+        transfers=[],
+        games=[],
+    )
+
+    assert "no rules ran" in validate(dataset, []).summary()
+
+
+def test_the_coverage_report_is_written_beside_the_dataset(tmp_path: Path) -> None:
+    root = tmp_path / "dataset"
+    write_sample_dataset(root)
+
+    build_for(tmp_path).run("platinum")
+
+    report = json.loads((root / "validation.json").read_text(encoding="utf-8"))
+    platinum_coverage = next(one for one in report["coverage"] if one["game"] == "platinum")
+
+    assert platinum_coverage == {
+        "game": "platinum",
+        "full": 2,
+        "partial": 0,
+        "missing": 0,
+        "unobtainable": 1,
+    }
 
 
 def test_the_validator_reads_what_was_written_not_what_was_in_memory(tmp_path: Path) -> None:
@@ -110,7 +148,13 @@ def test_the_validator_reads_what_was_written_not_what_was_in_memory(tmp_path: P
     report = validate(read_dataset(root), [Spy()])
 
     assert report.ok
-    assert [one.game.id for one in seen[0].games] == ["platinum", "sword"]
+    assert [one.game.id for one in seen[0].games] == [
+        "diamond",
+        "emerald",
+        "home",
+        "platinum",
+        "sword",
+    ]
 
 
 def test_an_error_finding_fails_the_report_and_a_warning_does_not() -> None:

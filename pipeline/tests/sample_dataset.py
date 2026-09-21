@@ -15,6 +15,7 @@ from livingdex_pipeline.models import (
     DexEntry,
     DexSource,
     DexTarget,
+    EncounterMethod,
     EvolutionAcquisition,
     EvolutionRule,
     EvolutionTrigger,
@@ -158,6 +159,13 @@ def platinum() -> GameData:
         dex_entries=[
             DexEntry(game="platinum", target=DexTarget(species="chimchar"), number=4),
             DexEntry(game="platinum", target=DexTarget(species="monferno"), number=5),
+            # Known not to be catchable here, as opposed to simply undocumented.
+            DexEntry(
+                game="platinum",
+                target=DexTarget(species="darkrai"),
+                number=6,
+                unobtainable_reason="event distribution only",
+            ),
         ],
         acquisition_methods=[
             GiftAcquisition(
@@ -217,6 +225,73 @@ def sword() -> GameData:
                 number=101,
             ),
         ],
+        acquisition_methods=[
+            WildAcquisition(
+                game="sword",
+                target=DexTarget(species="vulpix"),
+                location="Route 2",
+                method=EncounterMethod.WALK,
+                levels=LevelRange(minimum=10, maximum=14),
+                weather="intense sun",
+                source=CITATION,
+            ),
+            WildAcquisition(
+                game="sword",
+                target=DexTarget(species="vulpix", form="vulpix-alola"),
+                location="Route 2",
+                method=EncounterMethod.WALK,
+                levels=LevelRange(minimum=10, maximum=14),
+                weather="snowstorm",
+                source=CITATION,
+            ),
+        ],
+    )
+
+
+def emerald() -> GameData:
+    """A source game for the Pal Park edge. Its own dex is not the point of the sample."""
+    return GameData(
+        game=Game(
+            id="emerald",
+            title="Pokemon Emerald Version",
+            version="Emerald",
+            generation=3,
+            region="Hoenn",
+            release=GameRelease.CARTRIDGE,
+            national_dex_through=386,
+            dex_source=DexSource.NATIONAL_DEX,
+        )
+    )
+
+
+def diamond() -> GameData:
+    return GameData(
+        game=Game(
+            id="diamond",
+            title="Pokemon Diamond Version",
+            version="Diamond",
+            generation=4,
+            region="Sinnoh",
+            release=GameRelease.CARTRIDGE,
+            national_dex_through=493,
+            dex_source=DexSource.NATIONAL_DEX,
+            pair_partner="pearl",
+        )
+    )
+
+
+def home() -> GameData:
+    """A transfer-only node: not a game, but the graph needs it to exist."""
+    return GameData(
+        game=Game(
+            id="home",
+            title="Pokemon HOME",
+            version="HOME",
+            generation=8,
+            region="none",
+            release=GameRelease.SERVICE,
+            dex_source=DexSource.GAME_DEX,
+        )
     )
 
 
@@ -226,7 +301,8 @@ def write_sample_dataset(root: Path) -> DatasetWriter:
     writer.write_forms(forms())
     writer.write_evolution_rules(evolution_rules())
     writer.write_transfers(transfers())
-    writer.write_game(platinum())
-    writer.write_game(sword())
-    writer.write_index(stamp_for(VERSION, BUILT_ON), ["platinum", "sword"])
+    for game in (platinum(), sword(), emerald(), diamond(), home()):
+        writer.write_game(game)
+
+    writer.write_index(stamp_for(VERSION, BUILT_ON), writer.known_games())
     return writer

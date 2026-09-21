@@ -7,7 +7,14 @@ namespace LivingDex.Core.Reference;
 public enum GameRelease
 {
     Cartridge,
+
     VirtualConsole,
+
+    /// <summary>
+    /// Pokémon Bank and HOME. They are not games and cannot be a main game, but they are
+    /// nodes in the transfer graph, so they need an entity like everything else.
+    /// </summary>
+    Service,
 }
 
 /// <summary>Which list of entries a collection uses when this game is the main game.</summary>

@@ -47,7 +47,15 @@ public class PipelineOutputContractTests
 
         Assert.Equal("0.1.0-sample", index.Stamp.Version);
         Assert.Equal(new DateOnly(2026, 9, 21), index.Stamp.BuiltOn);
-        Assert.Equal([new GameId("platinum"), new GameId("sword")], index.Games);
+        Assert.Equal(
+            [
+                new GameId("diamond"),
+                new GameId("emerald"),
+                new GameId("home"),
+                new GameId("platinum"),
+                new GameId("sword"),
+            ],
+            index.Games);
     }
 
     [Fact]
@@ -146,7 +154,33 @@ public class PipelineOutputContractTests
         Assert.False(sword.Game.HasNationalDex);
         Assert.Equal(DexSource.GameDex, sword.Game.DexSource);
         Assert.Equal(new GameId("shield"), sword.Game.PairPartner);
-        Assert.Empty(sword.AcquisitionMethods);
+        Assert.Equal(2, sword.AcquisitionMethods.Count);
+    }
+
+    [Fact]
+    public void An_entry_that_cannot_be_filled_says_why_rather_than_carrying_a_bare_flag()
+    {
+        var platinum = Read<GameData>("games", "platinum.json");
+
+        var catchable = platinum.DexEntries.Single(entry => entry.Target.Species == new SpeciesId("chimchar"));
+        var stated = platinum.DexEntries.Single(entry => entry.Target.Species == new SpeciesId("darkrai"));
+
+        Assert.False(catchable.IsUnobtainable);
+        Assert.Null(catchable.UnobtainableReason);
+
+        Assert.True(stated.IsUnobtainable);
+        Assert.Equal("event distribution only", stated.UnobtainableReason);
+    }
+
+    [Fact]
+    public void A_transfer_only_node_is_an_entity_like_any_other()
+    {
+        var home = Read<GameData>("games", "home.json");
+
+        // Not a cartridge and not Virtual Console: HOME is a service, and the graph needs it.
+        Assert.Equal(GameRelease.Service, home.Game.Release);
+        Assert.False(home.Game.HasNationalDex);
+        Assert.Empty(home.DexEntries);
     }
 
     [Fact]

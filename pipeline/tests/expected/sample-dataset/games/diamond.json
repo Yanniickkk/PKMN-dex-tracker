@@ -1,0 +1,15 @@
+{
+  "game": {
+    "id": "diamond",
+    "title": "Pokemon Diamond Version",
+    "version": "Diamond",
+    "generation": 4,
+    "region": "Sinnoh",
+    "release": "cartridge",
+    "nationalDexThrough": 493,
+    "dexSource": "nationalDex",
+    "pairPartner": "pearl"
+  },
+  "dexEntries": [],
+  "acquisitionMethods": []
+}

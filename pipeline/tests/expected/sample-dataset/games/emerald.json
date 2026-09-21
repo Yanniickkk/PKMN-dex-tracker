@@ -1,0 +1,14 @@
+{
+  "game": {
+    "id": "emerald",
+    "title": "Pokemon Emerald Version",
+    "version": "Emerald",
+    "generation": 3,
+    "region": "Hoenn",
+    "release": "cartridge",
+    "nationalDexThrough": 386,
+    "dexSource": "nationalDex"
+  },
+  "dexEntries": [],
+  "acquisitionMethods": []
+}

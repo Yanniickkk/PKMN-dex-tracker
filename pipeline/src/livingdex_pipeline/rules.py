@@ -1,0 +1,227 @@
+"""The checks a build has to pass.
+
+A note on what "has a method" means, because it decides most of this file. Acquisition methods
+are recorded per game, but a living dex is filled by transferring as much as by catching: most
+of Platinum's National Dex has no Sinnoh encounter at all. So an entry counts as accounted for
+when *some* game in the dataset can produce it. Whether that is the game you are playing is the
+difference between ``full`` and ``partial`` in the coverage report, not the difference between
+valid and invalid.
+"""
+
+from __future__ import annotations
+
+from collections.abc import Iterable, Iterator
+
+from .models import DexTarget
+from .validate import Dataset, Finding, GameCoverage, Severity
+
+
+def _target_key(target: DexTarget) -> tuple[str, str | None]:
+    return (target.species, target.form)
+
+
+def _obtainable_anywhere(dataset: Dataset) -> set[tuple[str, str | None]]:
+    """Every target some game in the dataset can produce."""
+    return {
+        _target_key(method.target) for game in dataset.games for method in game.acquisition_methods
+    }
+
+
+def _obtainable_in(dataset: Dataset, game_id: str) -> set[tuple[str, str | None]]:
+    game = dataset.game(game_id)
+    return {_target_key(method.target) for method in game.acquisition_methods} if game else set()
+
+
+class EveryEntryHasAMethod:
+    """A dex entry nothing can produce is either a hole in the data or a stated fact."""
+
+    name = "every-entry-has-a-method"
+
+    def check(self, dataset: Dataset) -> Iterator[Finding]:
+        obtainable = _obtainable_anywhere(dataset)
+
+        for game in dataset.games:
+            for entry in game.dex_entries:
+                if entry.unobtainable_reason is not None:
+                    continue
+
+                if _target_key(entry.target) not in obtainable:
+                    yield Finding(
+                        rule=self.name,
+                        severity=Severity.ERROR,
+                        game=game.game.id,
+                        message=(
+                            f"{entry.target} is in the dex at #{entry.number} but no game in the "
+                            "dataset can produce it, and it is not marked unobtainable"
+                        ),
+                    )
+
+
+class NoEvolutionDeadEnds:
+    """Evolving into something is only an answer if the thing you evolve is itself gettable."""
+
+    name = "no-evolution-dead-ends"
+
+    def check(self, dataset: Dataset) -> Iterator[Finding]:
+        rules_by_id = {rule.id: rule for rule in dataset.evolution_rules}
+        obtainable = _obtainable_anywhere(dataset)
+
+        for game in dataset.games:
+            for method in game.acquisition_methods:
+                if method.kind != "evolution":
+                    continue
+
+                rule = rules_by_id.get(method.rule)
+                if rule is None:
+                    yield Finding(
+                        rule=self.name,
+                        severity=Severity.ERROR,
+                        game=game.game.id,
+                        message=(
+                            f"{method.target} evolves by rule {method.rule}, which does not exist"
+                        ),
+                    )
+                    continue
+
+                if _target_key(rule.from_) not in obtainable:
+                    yield Finding(
+                        rule=self.name,
+                        severity=Severity.ERROR,
+                        game=game.game.id,
+                        message=(
+                            f"{method.target} is only obtainable by evolving {rule.from_}, "
+                            "which nothing can produce"
+                        ),
+                    )
+
+
+class FormsReferencedExist:
+    """A dex that numbers a form the form table has never heard of would build a broken grid."""
+
+    name = "forms-referenced-exist"
+
+    def check(self, dataset: Dataset) -> Iterator[Finding]:
+        forms_by_id = {form.id: form for form in dataset.forms}
+
+        for game in dataset.games:
+            for entry in game.dex_entries:
+                if entry.target.form is None:
+                    continue
+
+                form = forms_by_id.get(entry.target.form)
+                if form is None:
+                    yield Finding(
+                        rule=self.name,
+                        severity=Severity.ERROR,
+                        game=game.game.id,
+                        message=(
+                            f"the dex lists form {entry.target.form}, "
+                            "which is not in the form table"
+                        ),
+                    )
+                    continue
+
+                if form.species != entry.target.species:
+                    yield Finding(
+                        rule=self.name,
+                        severity=Severity.ERROR,
+                        game=game.game.id,
+                        message=(
+                            f"the dex lists {entry.target.form} under {entry.target.species}, "
+                            f"but the form table says it belongs to {form.species}"
+                        ),
+                    )
+                    continue
+
+                # Not in the spec's list, but the dex builder drops forms whose games do not
+                # include the game being built, so this disagreement silently shortens a dex.
+                if game.game.id not in form.games:
+                    yield Finding(
+                        rule=self.name,
+                        severity=Severity.WARNING,
+                        game=game.game.id,
+                        message=(
+                            f"the dex numbers {entry.target.form}, but the form table does not "
+                            "list this game among the ones it exists in, so the dex builder will "
+                            "leave it out"
+                        ),
+                    )
+
+
+class TransferEdgesConnectKnownGames:
+    """An edge to a game that is not in the dataset is a route the app can never explain."""
+
+    name = "transfer-edges-connect-known-games"
+
+    def check(self, dataset: Dataset) -> Iterator[Finding]:
+        known = {game.game.id for game in dataset.games}
+
+        for edge in dataset.transfers:
+            for end, role in ((edge.from_, "from"), (edge.to, "to")):
+                if end not in known:
+                    yield Finding(
+                        rule=self.name,
+                        severity=Severity.ERROR,
+                        message=(
+                            f"the {edge.mechanism.value} edge {edge.from_} -> {edge.to} names "
+                            f"{end} as its {role}, which is not a game in the dataset"
+                        ),
+                    )
+
+
+def coverage_for(dataset: Dataset) -> list[GameCoverage]:
+    """How much of each game's dex the dataset can account for, and from where.
+
+    The three words the spec asks for, given a meaning here because it does not define them:
+
+    * ``full`` — obtainable in this very game.
+    * ``partial`` — not here, but obtainable in another game, so it is a transfer away.
+    * ``missing`` — nothing can produce it anywhere. A hole.
+
+    ``unobtainable`` is counted separately rather than folded into one of the three: an entry
+    someone has checked and marked is not the same as one nobody has looked at.
+    """
+    obtainable_anywhere = _obtainable_anywhere(dataset)
+    coverage: list[GameCoverage] = []
+
+    for game in dataset.games:
+        here = _obtainable_in(dataset, game.game.id)
+        full = partial = missing = unobtainable = 0
+
+        for entry in game.dex_entries:
+            key = _target_key(entry.target)
+
+            if entry.unobtainable_reason is not None:
+                unobtainable += 1
+            elif key in here:
+                full += 1
+            elif key in obtainable_anywhere:
+                partial += 1
+            else:
+                missing += 1
+
+        coverage.append(
+            GameCoverage(
+                game=game.game.id,
+                full=full,
+                partial=partial,
+                missing=missing,
+                unobtainable=unobtainable,
+            )
+        )
+
+    return coverage
+
+
+def all_rules() -> list:
+    """Every check, in the order the spec lists them."""
+    return [
+        EveryEntryHasAMethod(),
+        NoEvolutionDeadEnds(),
+        FormsReferencedExist(),
+        TransferEdgesConnectKnownGames(),
+    ]
+
+
+def rule_names(rules: Iterable[object]) -> list[str]:
+    return [getattr(rule, "name", type(rule).__name__) for rule in rules]

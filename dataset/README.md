@@ -40,6 +40,11 @@ method carries, so there are no mostly-null columns.
 absent for a game without one. The dex builder needs the number rather than a yes or no:
 "has a National Dex" does not say where it stops.
 
+`unobtainableReason` says why an entry cannot be filled in this game, when that is a known
+fact rather than a gap in the data. A reason rather than a flag, so the validator can tell
+"we checked, and it cannot be caught" apart from "we have nothing", and the UI can say
+which.
+
 ```json
 {
   "game": {
@@ -53,7 +58,13 @@ absent for a game without one. The dex builder needs the number rather than a ye
     "dexSource": "nationalDex"
   },
   "dexEntries": [
-    { "game": "platinum", "target": { "species": "chimchar" }, "number": 4 }
+    { "game": "platinum", "target": { "species": "chimchar" }, "number": 4 },
+    {
+      "game": "platinum",
+      "target": { "species": "darkrai" },
+      "number": 491,
+      "unobtainableReason": "event distribution only"
+    }
   ],
   "acquisitionMethods": [
     {
@@ -136,3 +147,27 @@ engine. `filter` says which species an edge will carry.
 
 `presentInTargetDex` is the rule that makes HOME refuse a deposit into a Generation 8 or 9 game
 that has no entry for the species.
+
+## Validation
+
+Every build validates what it just wrote, reading it back from disk rather than checking the
+objects still in memory, and leaves `validation.json` beside the dataset. Four rules:
+
+- every dex entry has an acquisition method somewhere, or says why it has none;
+- no evolution is the only way to get something whose previous stage nothing can produce;
+- every form a dex numbers exists in the form table and belongs to the species it is filed
+  under;
+- every transfer edge connects two games that are actually in the dataset.
+
+The report also counts, per game:
+
+| | |
+| --- | --- |
+| `full` | obtainable in this very game |
+| `partial` | not here, but obtainable elsewhere, so a transfer away |
+| `missing` | nothing can produce it anywhere; a hole |
+| `unobtainable` | checked and stated, with a reason |
+
+Those meanings are a choice: the specification asks for the first three counts without saying
+what they mean. `unobtainable` is counted apart from the other three because an entry someone
+has checked is not the same as one nobody has looked at.

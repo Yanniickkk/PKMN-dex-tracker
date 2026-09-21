@@ -26,5 +26,45 @@
       "number": 101
     }
   ],
-  "acquisitionMethods": []
+  "acquisitionMethods": [
+    {
+      "kind": "wild",
+      "game": "sword",
+      "target": {
+        "species": "vulpix"
+      },
+      "location": "Route 2",
+      "method": "walk",
+      "levels": {
+        "minimum": 10,
+        "maximum": 14
+      },
+      "weather": "intense sun",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "sword",
+      "target": {
+        "species": "vulpix",
+        "form": "vulpix-alola"
+      },
+      "location": "Route 2",
+      "method": "walk",
+      "levels": {
+        "minimum": 10,
+        "maximum": 14
+      },
+      "weather": "snowstorm",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
+    }
+  ]
 }

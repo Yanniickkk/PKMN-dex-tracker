@@ -44,10 +44,13 @@ class GameCoverage:
     full: int = 0
     partial: int = 0
     missing: int = 0
+    #: Entries someone has checked and marked as not fillable here. Counted apart from
+    #: the other three: a stated fact is not the same as a hole nobody has looked at.
+    unobtainable: int = 0
 
     @property
     def total(self) -> int:
-        return self.full + self.partial + self.missing
+        return self.full + self.partial + self.missing + self.unobtainable
 
 
 @dataclass(frozen=True)
@@ -121,6 +124,7 @@ class ValidationReport:
                             "full": one.full,
                             "partial": one.partial,
                             "missing": one.missing,
+                            "unobtainable": one.unobtainable,
                         }
                         for one in self.coverage
                     ],
@@ -134,20 +138,21 @@ class ValidationReport:
 
 
 def default_rules() -> list[Rule]:
-    """The rules every build runs.
+    """The rules every build runs. Defined in :mod:`rules`; imported late to keep that module
+    free to import this one."""
+    from .rules import all_rules
 
-    Empty until Phase 0.7. Note for when it is written: the first rule on that list needs
-    dex entries to be markable as deliberately unobtainable, and nothing in the schema says
-    that yet.
-    """
-    return []
+    return all_rules()
 
 
 def validate(dataset: Dataset, rules: Sequence[Rule] | None = None) -> ValidationReport:
+    from .rules import coverage_for
+
     rules = default_rules() if rules is None else rules
     report = ValidationReport(rules_run=[rule.name for rule in rules])
 
     for rule in rules:
         report.findings.extend(rule.check(dataset))
 
+    report.coverage = coverage_for(dataset)
     return report

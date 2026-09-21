@@ -33,6 +33,8 @@ class Model(BaseModel):
 class GameRelease(StrEnum):
     CARTRIDGE = "cartridge"
     VIRTUAL_CONSOLE = "virtualConsole"
+    #: Bank and HOME: not games, but nodes in the transfer graph.
+    SERVICE = "service"
 
 
 class DexSource(StrEnum):
@@ -162,6 +164,10 @@ class DexEntry(Model):
     game: str
     target: DexTarget
     number: int
+    # Why this entry cannot be filled in this game, when that is a known fact rather than a
+    # gap in the data. A reason rather than a flag, so the validator can tell "we checked,
+    # and it cannot be caught" apart from "we have nothing".
+    unobtainable_reason: str | None = None
 
 
 # --- Species filters on transfer edges -------------------------------------------------------
