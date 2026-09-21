@@ -1,6 +1,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
+using LivingDex.Core.UserData;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LivingDex.Desktop;
@@ -22,16 +23,28 @@ public partial class App : Application
         AppDomain.CurrentDomain.UnhandledException += (_, e) =>
             WriteCrashLog(e.ExceptionObject as Exception);
         DispatcherUnhandledException += OnDispatcherUnhandledException;
+    }
+
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        var locator = new DataFileLocator(DataFileLocator.DefaultSettingsPath, new WpfDataFileLocationPrompt());
 
         var services = new ServiceCollection();
         services.AddWpfBlazorWebView();
 #if DEBUG
         services.AddBlazorWebViewDeveloperTools();
 #endif
+        services.AddSingleton(locator);
+
+        // Registered, not resolved: on a first run this puts a picker on screen, and that has
+        // to wait until there is a window to own it. MainWindow sets it going.
+        services.AddSingleton(new UserDataStoreProvider(locator));
 
         // BlazorWebView resolves its Services property out of the application
         // resource dictionary, so the provider has to live there under this key.
         Resources.Add("services", services.BuildServiceProvider());
+
+        base.OnStartup(e);
     }
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

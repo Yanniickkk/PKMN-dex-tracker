@@ -27,15 +27,6 @@ Phase 2 feeds it one game at a time.
     folder with nothing beside it. Still open: a Windows install without the WebView2
     Runtime, and a Windows 10 box.
 
-### 0.3 User data schema and storage
-- [ ] `Collection` — id, name, main game, linked games, `formsIncluded`, `genderDifferencesIncluded`
-- [ ] `CaptureRecord` — collection id, dex entry id, status, holding game, catch date, note
-- [ ] JSON read/write with atomic writes (temp file, then rename)
-- [ ] File location picker on first run, remembered
-- [ ] Rolling timestamped backups next to the data file
-- [ ] External-change detection: warn before overwriting, reload when the file is newer
-- [ ] Test: two "machines" writing the same file, no silent data loss
-
 ### 0.4 Transfer graph engine
 - [ ] Load the graph from data, never hardcode edges
 - [ ] `reachableFrom(game)` — which games can send into a given main game

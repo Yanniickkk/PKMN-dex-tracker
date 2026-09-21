@@ -103,7 +103,57 @@ Two things found while testing that the next phases need to know:
 
 ### 0.3 User data schema and storage
 
-_Nothing yet._
+Model and storage in `app/LivingDex.Core/UserData/`, the WPF picker in
+`app/LivingDex.Desktop/`, with 17 tests in `app/LivingDex.Core.Tests/UserData/`.
+
+- [x] `Collection` - id, name, main game, linked games, `formsIncluded`,
+      `genderDifferencesIncluded` - 2026-09-21
+  - Named `DexCollection` in code. A domain type called exactly `Collection` reads badly next
+    to `System.Collections`, and the analyser refuses any name ending in that word without an
+    explicit exception, which `.editorconfig` now grants with a reason.
+- [x] `CaptureRecord` - collection id, dex entry id, status, holding game, catch date,
+      note - 2026-09-21
+  - Keyed by `DexTarget`, not by a dex entry id. A dex entry id belongs to one game's
+    numbering, so it would break the moment the forms setting is flipped or the main game
+    changes - and 0.5 requires that toggling either setting preserves records.
+  - `CaughtIn` derives the status from whether the holding game is the main game, so the two
+    cannot contradict each other. `IsInconsistentFor` reports files where they already do.
+  - A record survives going back to `notCaught`, so an accidental click does not throw away a
+    note or a catch date.
+- [x] JSON read/write with atomic writes (temp file, then rename) - 2026-09-21
+  - Written through to the device before the swap, so the swap cannot promote a file whose
+    contents are still in a write cache.
+- [x] File location picker on first run, remembered - 2026-09-21
+  - Shown from the main window's `Loaded`, not from startup. An ownerless modal gets no
+    taskbar button and can sit behind another window, which on a first run is indistinguishable
+    from the app hanging. Confirmed by inspection: the dialog now reports the main window as its
+    owner, and the app has a taskbar button while it is up.
+  - Cancelling falls back to Documents and remembers that, so the app always has somewhere to
+    save and the question is asked exactly once.
+- [x] Rolling timestamped backups next to the data file - 2026-09-21
+  - `File.Replace` provides them in the same atomic operation that swaps the new file in: the
+    old file is moved aside rather than deleted. Kept in a `.backups` directory beside the data
+    file, pruned to the ten most recent.
+- [x] External-change detection: warn before overwriting, reload when the file is newer - 2026-09-21
+  - At the storage level: a save states the revision it believes is on disk, and is refused
+    rather than applied if the file moved on. The refusal hands back what is on disk, so the
+    caller can reload or merge without a second read. `ReadRevisionAsync` spots an outside edit
+    while the app sits idle.
+  - The visible warning and the reload prompt are Phase 1 work; there is no screen to show them
+    on yet.
+- [x] Test: two "machines" writing the same file, no silent data loss - 2026-09-21
+  - Two stores on one file: both read the same revision, A saves, B is refused rather than
+    erasing A's change, B merges what it was handed and saves. Plus a ten-way concurrent save
+    where exactly one wins and the file still parses.
+
+What protects the file, and what each part actually covers:
+
+- The temp-file swap covers a crash mid-write.
+- A lock file covers two processes on this machine, for the whole check-then-swap.
+- The revision check is the only thing that covers a second machine, because no file lock
+  survives a cloud sync client. It still has a window: a sync client can land a file between the
+  check and the swap. The swap is atomic, so the worst case is the other machine's write being
+  replaced, and that content is in the backup directory.
 
 ### 0.4 Transfer graph engine
 

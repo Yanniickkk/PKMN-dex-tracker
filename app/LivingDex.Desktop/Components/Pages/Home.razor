@@ -1,9 +1,50 @@
 @page "/"
+@using LivingDex.Core.UserData
+@inject UserDataStoreProvider StoreProvider
 
 <PageTitle>Living Dex Tracker</PageTitle>
 
 <h1>Living Dex Tracker</h1>
 
 <p>
-    Phase 0 skeleton. The shell runs; no dataset is loaded yet.
+    Phase 0 skeleton. Storage is wired up; there is no dataset and no dex screen yet.
 </p>
+
+<dl>
+    <dt>Data file</dt>
+    <dd><code>@_dataFile</code></dd>
+
+    <dt>Backups</dt>
+    <dd><code>@_backupDirectory</code></dd>
+
+    <dt>State</dt>
+    <dd>@_state</dd>
+</dl>
+
+@code {
+    private string _dataFile = "waiting for the location...";
+    private string _backupDirectory = "";
+    private string _state = "waiting...";
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Blocks until the first-run picker has been answered.
+        var store = await StoreProvider.GetAsync();
+
+        _dataFile = store.Path;
+        _backupDirectory = store.BackupDirectory;
+
+        try
+        {
+            var snapshot = await store.LoadAsync();
+
+            _state = snapshot.Revision.IsMissing
+                ? "no data file yet; it is written on the first save"
+                : $"{snapshot.Document.Collections.Count} collection(s), {snapshot.Document.Records.Count} record(s) at revision {snapshot.Revision}";
+        }
+        catch (UserDataCorruptException exception)
+        {
+            _state = $"the data file could not be read: {exception.Message}";
+        }
+    }
+}

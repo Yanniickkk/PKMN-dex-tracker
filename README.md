@@ -4,8 +4,8 @@ A Windows desktop app for tracking a living Pokédex across every mainline game,
 data pipeline that feeds it. Work is tracked in [`TODO dex tracker.md`](TODO%20dex%20tracker.md);
 finished items move to [`DONE dex tracker.md`](DONE%20dex%20tracker.md).
 
-Current state: **Phase 0 skeleton**. The app shell runs and both toolchains are wired up.
-There is no dataset and no dex UI yet.
+Current state: **Phase 0**. The app shell runs, the reference schema is defined, and the
+player's data file reads and writes safely. There is no dataset and no dex UI yet.
 
 ## Stack
 
@@ -112,6 +112,25 @@ Build the dataset (not implemented yet — see Phase 0.6):
 ```bash
 ./.venv/Scripts/livingdex-pipeline.exe build --game platinum
 ```
+
+## The player's data file
+
+Separate from `dataset/`: that is build output, this is the only thing that cannot be
+regenerated. It is a single JSON file the player chooses the location of on first run, so it can
+sit in a synced folder.
+
+Three things protect it, covering different failures:
+
+- Writes go to a temporary file and are swapped in, so a crash leaves either the old file or the
+  new one, never half of either. `File.Replace` makes the previous version a timestamped backup
+  in the same operation.
+- A lock file serialises two processes on the same machine.
+- A save states which revision it believes is on disk and is refused if the file moved on. This
+  is the only defence that works across machines, because no file lock survives a cloud sync
+  client. A refused save hands back what is on disk so the caller can merge.
+
+The revision is a content hash, not a timestamp: sync clients rewrite modification times freely
+and two machines can disagree about the clock.
 
 ## Notes for later
 
