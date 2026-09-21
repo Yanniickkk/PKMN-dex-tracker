@@ -27,19 +27,6 @@ Phase 2 feeds it one game at a time.
     folder with nothing beside it. Still open: a Windows install without the WebView2
     Runtime, and a Windows 10 box.
 
-### 0.2 Reference data schema
-- [ ] `Game` — id, title, version, generation, region, release (`cartridge` / `virtual-console`),
-      `hasNationalDex`, dex source rules
-- [ ] `TransferEdge` — from, to, mechanism, direction, species filter rule
-- [ ] `Species` — national dex number, name, types, evolution chain id
-- [ ] `Form` — species id, form name, form kind (`regional` / `functional` / `cosmetic` / `gender`),
-      games it exists in
-- [ ] `DexEntry` — game id, species or form id, that game's dex number
-- [ ] `AcquisitionMethod` — game id, target, kind (`gift` / `wild` / `evolution` / `trade`),
-      method-specific fields, source citation
-- [ ] `EvolutionRule` — from, to, trigger, conditions
-- [ ] Decide the on-disk shape: one file per game plus shared species tables
-
 ### 0.3 User data schema and storage
 - [ ] `Collection` — id, name, main game, linked games, `formsIncluded`, `genderDifferencesIncluded`
 - [ ] `CaptureRecord` — collection id, dex entry id, status, holding game, catch date, note

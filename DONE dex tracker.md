@@ -50,7 +50,56 @@ Entry shape:
 
 ### 0.2 Reference data schema
 
-_Nothing yet._
+All eight items landed together; the entities only make sense as one set. They live in
+`app/LivingDex.Core/Reference/`, with the on-disk shape in `app/LivingDex.Core/Dataset/`
+and 20 round-trip tests in `app/LivingDex.Core.Tests/Reference/`.
+
+- [x] `Game` - id, title, version, generation, region, release (`cartridge` /
+      `virtual-console`), `hasNationalDex`, dex source rules - 2026-09-21
+  - Dex source rules became a `DexSource` enum (`nationalDex` / `gameDex`) next to
+    `hasNationalDex`, plus an optional `pairPartner` so Red knows about Blue.
+- [x] `TransferEdge` - from, to, mechanism, direction, species filter rule - 2026-09-21
+  - The filter is a small type hierarchy rather than flags: `all`, `nationalDexRange`
+    (Time Capsule 1-251, Pal Park 1-386) and `presentInTargetDex`, which is the rule that
+    makes HOME refuse a deposit into a Gen 8/9 game with no entry for the species.
+- [x] `Species` - national dex number, name, types, evolution chain id - 2026-09-21
+- [x] `Form` - species id, form name, form kind (`regional` / `functional` / `cosmetic` /
+      `gender`), games it exists in - 2026-09-21
+  - Added an optional `types` override beyond the listed fields. Every regional form has a
+    different typing from its species, so without it the schema is wrong for exactly the
+    case this project exists for.
+- [x] `DexEntry` - game id, species or form id, that game's dex number - 2026-09-21
+  - "Species or form" is a `DexTarget` carrying both, so a form entry never needs a lookup
+    to find its species. The same type is reused as an acquisition method's target.
+- [x] `AcquisitionMethod` - game id, target, kind (`gift` / `wild` / `evolution` / `trade`),
+      method-specific fields, source citation - 2026-09-21
+  - Four separate types behind one JSON `kind` discriminator, rather than one record with
+    mostly-null columns. The spec table of per-method fields is not in this repo, so the
+    fields were inferred from the Phase 2 checklist (step 3 for wild, step 4 for gifts and
+    statics, step 5 for trades). Worth a review against the real table.
+  - Every method carries a `SourceCitation`, so a disputed encounter rate can be traced
+    without rerunning the pipeline.
+- [x] `EvolutionRule` - from, to, trigger, conditions - 2026-09-21
+  - Conditions are typed (`minimumLevel`, `heldItem`, `usedItem`, `friendship`, `timeOfDay`,
+    `location`, `knownMove`, `gender`, `tradePartner`), with an `other` escape hatch holding
+    prose so a game can be finished without first extending the schema.
+  - Rules are global; a game being able to use one is expressed by that game having an
+    `evolution` acquisition method pointing at it. That is also what makes the Phase 0.7
+    "no evolution dead ends" check possible.
+- [x] Decide the on-disk shape: one file per game plus shared species tables - 2026-09-21
+  - `index.json`, `species.json`, `forms.json`, `evolution-rules.json`, `transfers.json`,
+    and `games/<id>.json`. Documented with real serialiser output in `dataset/README.md`.
+  - Written indented, camelCase, LF: the dataset is committed, so a rebuild has to produce a
+    reviewable diff rather than one enormous line.
+  - Ids are distinct types in code (`GameId`, `SpeciesId`, ...) and plain strings on disk.
+
+Two things found while testing that the next phases need to know:
+
+- An `AcquisitionMethod.Kind` property cannot be serialised alongside a `kind` discriminator;
+  it is `[JsonIgnore]`d on the base *and* on each override, because System.Text.Json does not
+  inherit the attribute.
+- Records holding a collection compare that collection by reference, so `==` on `EvolutionRule`
+  or `GameData` is not value equality. Compare the parts.
 
 ### 0.3 User data schema and storage
 
