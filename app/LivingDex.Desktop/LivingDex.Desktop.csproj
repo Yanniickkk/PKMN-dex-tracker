@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!-- The Windows 10 TFM, not plain net10.0-windows: BlazorWebView renders through
+         WebView2CompositionControl, which needs the Windows SDK projections. -->
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>LivingDex.Desktop</RootNamespace>
+    <AssemblyName>LivingDex</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <!-- Portable exe: one file, no .NET runtime install needed on the target machine.
+       Trimming stays off: WPF, XAML and Blazor all resolve types by reflection. -->
+  <PropertyGroup>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <PublishTrimmed>false</PublishTrimmed>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <!-- Symbols inside the exe, so crash.log keeps line numbers without shipping a .pdb. -->
+    <DebugType>embedded</DebugType>
+    <!-- Keeps XML doc files of referenced assemblies out of the portable drop. -->
+    <AllowedReferenceRelatedFileExtensions>none</AllowedReferenceRelatedFileExtensions>
+    <PublishDocumentationFile>false</PublishDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LivingDex.Core\LivingDex.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="10.0.101" />
+  </ItemGroup>
+
+  <!-- Bake every static web asset into the assembly, so the published exe is one file
+       that works on its own. Without this the app starts, finds no host page, and shows
+       WebView2's "There is no content at /" instead of the UI.
+       RelativePath carries a fingerprint placeholder (index#[.{fingerprint}]?.html);
+       the served path is that placeholder removed. -->
+  <Target Name="EmbedStaticWebAssets"
+          DependsOnTargets="ResolveStaticWebAssetsInputs"
+          BeforeTargets="AssignTargetPaths">
+    <ItemGroup>
+      <EmbeddedResource Include="@(StaticWebAsset)">
+        <!-- StaticWebAsset items carry copy/publish metadata. Inheriting it would
+             queue each asset for the output folder a second time, which the SDK
+             rejects as a duplicate relative path. -->
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+        <RelativePath></RelativePath>
+        <LogicalName>wwwroot/$([System.Text.RegularExpressions.Regex]::Replace('%(StaticWebAsset.RelativePath)', '#\[\.\{fingerprint\}\]\?', ''))</LogicalName>
+      </EmbeddedResource>
+    </ItemGroup>
+  </Target>
+
+  <!-- The assets are inside the exe now, so keep the loose copies out of the publish
+       folder. A drop containing a wwwroot folder invites someone to send just the exe,
+       or just the folder, and both half-deliveries fail quietly.
+       Static web assets publish through their own pipeline rather than
+       ResolvedFileToPublish, so they are removed afterwards instead of filtered out. -->
+  <Target Name="PublishExeOnly" AfterTargets="Publish">
+    <ItemGroup>
+      <_LooseStaticWebAsset Include="$(PublishDir)wwwroot/**/*" />
+      <_LooseStaticWebAsset Include="$(PublishDir)*.staticwebassets.*.json" />
+    </ItemGroup>
+    <Delete Files="@(_LooseStaticWebAsset)" />
+    <RemoveDir Directories="$(PublishDir)wwwroot" />
+    <Message Importance="High" Text="PublishExeOnly: removed @(_LooseStaticWebAsset->Count()) loose asset file(s) from $(PublishDir)" />
+  </Target>
+
+</Project>

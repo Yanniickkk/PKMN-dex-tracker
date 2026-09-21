@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Living Dex Tracker</title>
+    <base href="/" />
+    <link rel="stylesheet" href="css/app.css" />
+</head>
+
+<body>
+    <div id="app">Loading…</div>
+
+    <div id="blazor-error-ui">
+        Something went wrong.
+        <a href="" class="reload">Reload</a>
+        <span class="dismiss">🗙</span>
+    </div>
+
+    <!-- No autostart="false": blazor.webview.js only boots itself when that
+         attribute is absent, and nothing else in a Blazor Hybrid host calls
+         Blazor.start(). With it, the page loads but the app never renders. -->
+    <script src="_framework/blazor.webview.js"></script>
+</body>
+
+</html>

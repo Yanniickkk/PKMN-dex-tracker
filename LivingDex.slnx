@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/app/">
+    <Project Path="app/LivingDex.Core.Tests/LivingDex.Core.Tests.csproj" />
+    <Project Path="app/LivingDex.Core/LivingDex.Core.csproj" />
+    <Project Path="app/LivingDex.Desktop/LivingDex.Desktop.csproj" />
+  </Folder>
+</Solution>

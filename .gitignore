@@ -55,3 +55,21 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# ---- Python pipeline ----
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Pipeline scrape/API caches: large, regenerable, and not part of the dataset.
+pipeline/.cache/
+
+# ---- App ----
+# WebView2 writes its profile next to the exe when run from a build output.
+*.WebView2/
+
+# Portable exe drop from `dotnet publish -o publish`.
+publish/
