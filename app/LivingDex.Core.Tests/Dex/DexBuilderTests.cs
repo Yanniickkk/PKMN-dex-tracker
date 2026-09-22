@@ -53,7 +53,8 @@ public class DexBuilderTests
             new(VivillonMeadow, Vivillon, "Meadow", FormKind.Cosmetic, [Sword]),
         ];
 
-        // Sword has its own dex, and numbers Alolan Vulpix as a line of its own.
+        // Sword has its own dex, and numbers Alolan Vulpix as a line of its own. Platinum has
+        // one too, and a National Dex on top: the two lists are what the switch chooses between.
         DexEntry[] dexEntries =
         [
             new(Sword, DexTarget.ForSpecies(Vulpix), 100),
@@ -61,6 +62,8 @@ public class DexBuilderTests
             new(Sword, DexTarget.ForSpecies(Pikachu), 194),
             new(Sword, DexTarget.ForSpecies(Vivillon), 300),
             new(Sword, DexTarget.ForSpecies(Zacian), 888),
+            new(Platinum, DexTarget.ForSpecies(Turtwig), 1),
+            new(Platinum, DexTarget.ForSpecies(Rotom), 152),
         ];
 
         return new ReferenceData(games, species, forms, dexEntries);
@@ -266,6 +269,52 @@ public class DexBuilderTests
         // as far as the record is concerned.
         Assert.Contains(builder.Build(Collection(Sword)), line => line.Target == record.Target);
         Assert.Contains(builder.Build(Collection(Platinum)), line => line.Target == record.Target);
+    }
+
+    [Fact]
+    public void A_game_with_both_lists_builds_whichever_is_asked_for()
+    {
+        var builder = new DexBuilder(Reference());
+
+        var national = builder.Build(Collection(Platinum), DexSource.NationalDex);
+        var regional = builder.Build(Collection(Platinum), DexSource.GameDex);
+
+        // Everything up to 493, numbered as the National Dex numbers it.
+        Assert.Contains(national, line => line.Target.Species == Bulbasaur && line.Number == 1);
+        Assert.Contains(national, line => line.Target.Species == Turtwig && line.Number == 387);
+
+        // The game's own list, numbered as the game numbers it: Turtwig first, not 387th.
+        Assert.Equal(2, regional.Count);
+        Assert.Equal([Turtwig, Rotom], regional.Select(line => line.Target.Species));
+        Assert.Equal([1, 152], regional.Select(line => line.Number));
+    }
+
+    [Fact]
+    public void Switching_between_the_two_lists_keeps_every_target_it_still_shows()
+    {
+        // The whole reason a switch is safe: records are keyed by target, and a target is the
+        // same target under either numbering. Turtwig is 387 in one list and 1 in the other.
+        var builder = new DexBuilder(Reference());
+        var turtwig = DexTarget.ForSpecies(Turtwig);
+
+        Assert.Contains(builder.Build(Collection(Platinum), DexSource.NationalDex), line => line.Target == turtwig);
+        Assert.Contains(builder.Build(Collection(Platinum), DexSource.GameDex), line => line.Target == turtwig);
+    }
+
+    [Fact]
+    public void Asking_for_nothing_in_particular_builds_the_list_the_game_names()
+    {
+        var builder = new DexBuilder(Reference());
+
+        // Platinum says National Dex, so that is what it builds without being told otherwise.
+        Assert.Equal(
+            builder.Build(Collection(Platinum), DexSource.NationalDex).Count,
+            builder.Build(Collection(Platinum)).Count);
+
+        // Sword has no National Dex, so both answers are its own list.
+        Assert.Equal(
+            builder.Build(Collection(Sword), DexSource.GameDex).Count,
+            builder.Build(Collection(Sword)).Count);
     }
 
     [Fact]

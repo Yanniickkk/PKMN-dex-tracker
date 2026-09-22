@@ -11,7 +11,7 @@ from __future__ import annotations
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
-from .models import GameData, TransferDirection, TransferEdge
+from .models import DexEntry, GameData, Species, TransferDirection, TransferEdge
 from .pokeapi import PokeApiClient
 
 
@@ -22,11 +22,17 @@ class BuildContext:
     The API client is here because step 2 of a game is a dex list and that is PokeAPI's to
     answer. Sources a game scrapes for its encounters bring their own client, because they are
     the ones that have to keep to another site's pace.
+
+    The species table is here because a game has to ask about more species than its own Pokedex
+    lists - see :meth:`living_dex`.
     """
 
     game_id: str
     refresh: bool
     api: PokeApiClient | None = None
+    #: Every species the dataset knows, in National Dex order. The shared tables are built
+    #: before any game is, so this is always filled in by the time a builder runs.
+    species: Sequence[Species] = ()
 
     def require_api(self) -> PokeApiClient:
         """The API client, or a clear failure rather than an AttributeError three frames down."""
@@ -36,6 +42,38 @@ class BuildContext:
             )
 
         return self.api
+
+    def living_dex(
+        self,
+        *,
+        through: int | None,
+        entries: Sequence[DexEntry] = (),
+    ) -> list[str]:
+        """Every species this game asks a player to fill, in National Dex order.
+
+        Not the game's own Pokedex, and that distinction is the whole reason this exists. A
+        living dex in Diamond is 493 entries; the Sinnoh dex is 151 of them. Asking only about
+        the regional list is what left Bebe's Eevee, the Rotom in the Old Chateau and a hundred
+        and sixty-seven others with nothing recorded against them - not marked unobtainable,
+        not marked missing, simply never asked about, in a game that hands them over.
+
+        ``through`` is how far the game's National Dex reaches. A game without one - none yet -
+        asks a player for its own dex and nothing else, so ``entries`` answers instead.
+        """
+        if through is None:
+            return [entry.target.species for entry in entries]
+
+        if not self.species:
+            raise RuntimeError(
+                f"building {self.game_id} needs the species table to know what its living dex "
+                "asks for, and the build did not pass one"
+            )
+
+        return [
+            one.id
+            for one in sorted(self.species, key=lambda one: one.national_dex_number)
+            if one.national_dex_number <= through
+        ]
 
 
 GameBuilder = Callable[[BuildContext], GameData]

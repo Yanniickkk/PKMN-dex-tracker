@@ -32,6 +32,8 @@ from livingdex_pipeline.models import (
     GameData,
     GameRelease,
     GiftKind,
+    PokemonType,
+    Species,
     TransferDirection,
     TransferEdge,
     TransferMechanism,
@@ -62,6 +64,7 @@ VERSION_GROUP_ORDER = {
     "emerald": 6,
     "firered-leafgreen": 7,
     "diamond-pearl": 8,
+    "platinum": 9,
 }
 
 
@@ -76,6 +79,10 @@ class FakeApi:
         self.asked_for: list[str] = []
         self._entries = entries if entries is not None else [(1, "treecko"), (2, "grovyle")]
         self._encounters = encounters or {}
+
+    def entries(self) -> list[tuple[int, str]]:
+        """The fake dex, without recording that anybody asked for it."""
+        return list(self._entries)
 
     def pokedex(self, name: str, *, refresh: bool = False) -> list[tuple[int, str]]:
         self.asked_for.append(name)
@@ -103,8 +110,34 @@ class FakeApi:
         return {"names": [{"language": {"name": "en"}, "name": "Route 101"}]}
 
 
-def context(game_id: str, api: FakeApi | None = None) -> BuildContext:
-    return BuildContext(game_id=game_id, refresh=False, api=api or FakeApi())
+def context(
+    game_id: str, api: FakeApi | None = None, reaches: list[str] | None = None
+) -> BuildContext:
+    """A builder's context, with a species table that covers the fake dex.
+
+    The species table is what tells a game which species its living dex asks for, and that is
+    a longer list than its own Pokedex. These tests mostly care about the Pokedex, so the
+    table is built from it - and ``reaches`` adds the ones a test wants the living dex to
+    reach past it, which is the whole point of the distinction.
+    """
+    api = api or FakeApi()
+    listed = [name for _, name in api.entries()] + (reaches or [])
+
+    return BuildContext(
+        game_id=game_id,
+        refresh=False,
+        api=api,
+        species=[
+            Species(
+                id=name,
+                national_dex_number=number,
+                name=name.title(),
+                types=[PokemonType.NORMAL],
+                evolution_chain=name,
+            )
+            for number, name in enumerate(dict.fromkeys(listed), start=1)
+        ],
+    )
 
 
 def stub(game_id: str) -> GameData:
@@ -505,6 +538,70 @@ def test_each_half_revives_its_own_fossil_and_not_the_other_halfs() -> None:
     assert revived == {"diamond": {"cranidos"}, "pearl": {"shieldon"}}
 
 
+def test_all_three_sinnoh_games_offer_the_same_four_trades() -> None:
+    # The one table Platinum did not change. It moved the starters, swapped where Porygon comes
+    # from and changed the terms on both cover legendaries, and then left these four standing in
+    # the same four houses - so the table is not named for the pair.
+    offered = {
+        module.GAME_ID: [
+            (one.target.species, one.wants.species, one.npc)
+            for one in module.build(context(module.GAME_ID)).acquisition_methods
+            if one.kind == "trade"
+        ]
+        for module in (diamond, pearl, platinum)
+    }
+
+    assert offered["diamond"] == offered["pearl"] == offered["platinum"]
+    assert len(offered["platinum"]) == 4
+
+
+def test_platinum_hatches_the_two_babies_its_longer_dex_asks_for() -> None:
+    # The pair hatches nothing: every baby in their 151 is somewhere in Sinnoh's grass. Platinum
+    # counts 59 more entries as Sinnoh's, and two of them are babies whose grown forms it has
+    # and whose own forms live nowhere in the region.
+    eggs = [
+        one
+        for one in platinum.build(context("platinum")).acquisition_methods
+        if one.kind == "breeding"
+    ]
+
+    assert [one.target.species for one in eggs] == ["elekid", "magby"]
+    assert all(one.location == sinnoh.DAY_CARE for one in eggs)
+    # Either stage does. Naming only the unevolved one would make Electivire look like a dead
+    # end to anyone who had already evolved theirs.
+    assert [parent.species for parent in eggs[0].parents] == ["electabuzz", "electivire"]
+
+    for module in (diamond, pearl):
+        methods = module.build(context(module.GAME_ID)).acquisition_methods
+        assert [one for one in methods if one.kind == "breeding"] == []
+
+
+def test_platinum_keeps_all_four_of_the_pairs_exclusives_out() -> None:
+    # Emerald took most of Ruby and Sapphire's exclusives in, so a third version being the
+    # generous one is the expectation this breaks. Two are Diamond's and two are Pearl's, and
+    # the reason has to name the half that actually has them.
+    api = FakeApi([(72, "misdreavus"), (74, "murkrow"), (76, "glameow"), (84, "stunky")])
+
+    reasons = {
+        entry.target.species: entry.unobtainable_reason
+        for entry in platinum.build(context("platinum", api)).dex_entries
+    }
+
+    assert reasons["murkrow"].startswith("Diamond only")
+    assert reasons["stunky"].startswith("Diamond only")
+    assert reasons["misdreavus"].startswith("Pearl only")
+    assert reasons["glameow"].startswith("Pearl only")
+
+    # Their evolutions are reachable once one comes over the link, so they are not on the list.
+    assert set(platinum.UNOBTAINABLE) == {
+        "manaphy",
+        "murkrow",
+        "stunky",
+        "misdreavus",
+        "glameow",
+    }
+
+
 def test_the_sinnoh_pair_share_their_four_in_game_trades() -> None:
     both = {
         module.GAME_ID: [
@@ -601,20 +698,37 @@ def test_step_seven_found_nothing_for_the_sinnoh_exclusives() -> None:
 def test_both_sinnoh_halves_say_the_same_thing_about_manaphy() -> None:
     # Neither cartridge produces one, and the nine distributions that did were for both.
     assert diamond.UNOBTAINABLE["manaphy"] == pearl.UNOBTAINABLE["manaphy"]
-    assert "Pokemon Ranger" in sinnoh.MANAPHY_REASON
+    assert "Pokemon Ranger" in diamond.UNOBTAINABLE["manaphy"]
     # The event is the second sentence of the reason, so it is joined with its first letter
     # lifted: "... to this one. Nine distributions ...".
-    assert sinnoh.MANAPHY_EVENT.lower() in sinnoh.MANAPHY_REASON.lower()
+    assert sinnoh.PAIR_MANAPHY_EVENT.lower() in diamond.UNOBTAINABLE["manaphy"].lower()
+
+
+def test_platinum_was_not_at_seven_of_the_nine_manaphy_giveaways() -> None:
+    # Seven of them had come and gone before Platinum was released, so sharing the pair's
+    # sentence told a Platinum player to have been at a Toys "R" Us in 2007 for a game that did
+    # not exist until 2008. Only the last two list it among their games.
+    pair = diamond.UNOBTAINABLE["manaphy"]
+    third = platinum.UNOBTAINABLE["manaphy"]
+
+    assert pair != third
+    assert "Pokemon Ranger" in third
+    assert "Toys" in pair
+    assert "Toys" not in third
+    assert "Summer Nintendo Zone" in third
 
 
 def test_the_sinnoh_pair_were_drawn_from_one_sheet_of_their_own() -> None:
     # One directory for the two of them, so the build fetches it once however many games name
-    # it. Platinum redrew them, so its sheet is its own and the pair's is named for the pair -
-    # a Sinnoh player sees different sprites depending on which of the three is in the slot.
+    # it. Platinum redrew them - not one of its 493 files matches the pair's byte for byte - so
+    # its sheet is its own and the pair's is named for the pair: a Sinnoh player sees different
+    # sprites depending on which of the three is in the slot.
     sets = {module.build(context(module.GAME_ID)).game.sprite_set for module in (diamond, pearl)}
+    third = platinum.build(context("platinum")).game.sprite_set
 
     assert sets == {"generation-iv/diamond-pearl"}
-    assert platinum.build(context("platinum")).game.sprite_set not in sets
+    assert third == "generation-iv/platinum"
+    assert third not in sets
 
 
 def test_the_sinnoh_exclusives_mirror_each_other_exactly() -> None:
@@ -622,6 +736,93 @@ def test_the_sinnoh_exclusives_mirror_each_other_exactly() -> None:
     # it. Manaphy is on both lists and belongs to neither half.
     assert len(diamond.UNOBTAINABLE) == len(pearl.UNOBTAINABLE)
     assert set(diamond.UNOBTAINABLE) & set(pearl.UNOBTAINABLE) == {"manaphy"}
+
+
+def test_platinum_shows_the_extended_sinnoh_dex_and_the_pair_does_not() -> None:
+    api = FakeApi([(1, "turtwig"), (152, "rotom"), (210, "giratina")])
+
+    data = platinum.build(context("platinum", api))
+
+    assert [(entry.number, entry.target.species) for entry in data.dex_entries] == [
+        (1, "turtwig"),
+        (152, "rotom"),
+        (210, "giratina"),
+    ]
+    assert all(entry.game == "platinum" for entry in data.dex_entries)
+
+    # The whole point of the two names. Emerald shows the Hoenn pair's dex; Platinum does not
+    # show Diamond and Pearl's, and a third version that borrowed the pair's would be 59 short.
+    assert set(api.asked_for) == {"extended-sinnoh"}
+    assert sinnoh.EXTENDED_DEX != sinnoh.PAIR_DEX
+
+
+def test_platinum_reads_its_own_version_of_the_encounter_table() -> None:
+    api = FakeApi(
+        [(1, "stunky")],
+        {
+            "stunky": [
+                sinnoh_slot("diamond", 20, ["swarm-no"]),
+                sinnoh_slot("platinum", 35, ["swarm-no"]),
+            ]
+        },
+    )
+
+    wild = [
+        one
+        for one in platinum.build(context("platinum", api)).acquisition_methods
+        if one.kind == "wild"
+    ]
+
+    assert [one.rate_percent for one in wild] == [35]
+    assert all(one.game == "platinum" for one in wild)
+
+
+def test_a_step_that_has_not_been_gathered_yet_brings_nothing_rather_than_bare_rows() -> None:
+    # A game arrives with its encounters and picks its tables up as the steps run. PokeAPI would
+    # hand over its gift rows the whole time, with "gift" for a starter and nobody's name on
+    # them, and taking those would be step 4 done badly rather than step 4 not done.
+    api = FakeApi(
+        [(1, "turtwig")],
+        {
+            "turtwig": [
+                {
+                    "location_area": {"name": "sinnoh-route-201-area"},
+                    "version_details": [
+                        {
+                            "version": {"name": "platinum"},
+                            "encounter_details": [
+                                {
+                                    "min_level": 5,
+                                    "max_level": 5,
+                                    "chance": 100,
+                                    "method": {"name": "gift"},
+                                    "condition_values": [],
+                                }
+                            ],
+                        }
+                    ],
+                }
+            ]
+        },
+    )
+    entries = platinum.dex_entries(context("platinum", api))
+
+    without = sinnoh.acquisition_methods(
+        context("platinum", api),
+        game_id="platinum",
+        version="platinum",
+        entries=entries,
+    )
+    with_table = sinnoh.acquisition_methods(
+        context("platinum", api),
+        game_id="platinum",
+        version="platinum",
+        entries=entries,
+        gifts=platinum.GIFTS,
+    )
+
+    assert [one for one in without if one.kind == "gift"] == []
+    assert [one.target.species for one in with_table if one.kind == "gift"] == ["turtwig"]
 
 
 def test_a_generation_4_cartridge_brings_its_trades_and_its_pal_park_together() -> None:

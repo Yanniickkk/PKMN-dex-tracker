@@ -211,7 +211,9 @@ def test_evolving_from_something_nothing_can_produce_is_a_dead_end() -> None:
         games=[
             game(
                 "platinum",
-                entries=[entry("platinum", "monferno", 5)],
+                # Chimchar is in the dex and nothing produces one, so the dataset should have
+                # had an answer about it and does not.
+                entries=[entry("platinum", "chimchar", 4), entry("platinum", "monferno", 5)],
                 methods=[
                     EvolutionAcquisition(
                         game="platinum",
@@ -329,13 +331,14 @@ def test_a_stated_reason_is_an_answer_rather_than_a_dead_end() -> None:
     assert validate(data).ok
 
 
-def test_a_previous_stage_the_dex_says_nothing_about_is_still_a_dead_end() -> None:
+def test_a_previous_stage_the_dex_asks_for_and_nothing_produces_is_a_dead_end() -> None:
     data = dataset(
         games=[
             game(
                 "emerald",
-                # Medicham is in the dex, Meditite is not mentioned at all: nobody looked.
-                entries=[entry("emerald", "medicham", 2)],
+                # Meditite is in the dex with nothing said about it, and nothing produces one:
+                # somebody has to have looked and did not.
+                entries=[entry("emerald", "meditite", 1), entry("emerald", "medicham", 2)],
                 methods=[
                     EvolutionAcquisition(
                         game="emerald",
@@ -362,6 +365,41 @@ def test_a_previous_stage_the_dex_says_nothing_about_is_still_a_dead_end() -> No
     assert "meditite" in messages(report, "no-evolution-dead-ends")[0]
 
 
+def test_a_previous_stage_no_dex_anywhere_asks_for_is_a_generation_nobody_has_built() -> None:
+    # A game records evolutions for every species its living dex reaches, so Ruby knows how to
+    # finish a Bayleef long before anything in the dataset can produce a Chikorita. Worth
+    # saying, not worth failing a build over, and said once rather than once per chain.
+    data = dataset(
+        games=[
+            game(
+                "emerald",
+                entries=[entry("emerald", "medicham", 2)],
+                methods=[
+                    EvolutionAcquisition(
+                        game="emerald",
+                        target=DexTarget(species="medicham"),
+                        rule="meditite-to-medicham",
+                        source=CITATION,
+                    )
+                ],
+            )
+        ],
+        rules=[
+            EvolutionRule(
+                id="meditite-to-medicham",
+                **{"from": DexTarget(species="meditite")},
+                to=DexTarget(species="medicham"),
+                trigger=EvolutionTrigger.LEVEL_UP,
+            )
+        ],
+    )
+
+    report = validate(data)
+
+    assert report.ok
+    assert "has not been built" in messages(report, "no-evolution-dead-ends")[0]
+
+
 # --- no breeding dead ends --------------------------------------------------------------------
 
 
@@ -370,7 +408,13 @@ def test_a_baby_whose_parents_cannot_be_had_is_an_error() -> None:
         games=[
             game(
                 "platinum",
-                entries=[entry("platinum", "pichu", 1)],
+                # Both parents are in the dex and nothing produces either: a hole, not a
+                # generation nobody has built.
+                entries=[
+                    entry("platinum", "pichu", 1),
+                    entry("platinum", "pikachu", 2),
+                    entry("platinum", "raichu", 3),
+                ],
                 methods=[
                     BreedingAcquisition(
                         game="platinum",
@@ -644,21 +688,30 @@ def test_an_edge_between_two_known_games_is_fine() -> None:
 # --- coverage ---------------------------------------------------------------------------------
 
 
+def national_dex(*entries: tuple[int, str]) -> list[Species]:
+    return [
+        Species(
+            id=name,
+            national_dex_number=number,
+            name=name.title(),
+            types=[PokemonType.FIRE],
+            evolution_chain=name,
+        )
+        for number, name in entries
+    ]
+
+
 def test_coverage_separates_caught_here_from_a_transfer_away_from_a_hole() -> None:
     data = dataset(
         games=[
             game(
                 "platinum",
-                entries=[
-                    entry("platinum", "chimchar", 4),
-                    entry("platinum", "bulbasaur", 1),
-                    entry("platinum", "mew", 151),
-                    entry("platinum", "darkrai", 491, reason="event distribution only"),
-                ],
+                entries=[entry("platinum", "darkrai", 491, reason="event distribution only")],
                 methods=[gift("platinum", "chimchar")],
             ),
             game("emerald", methods=[gift("emerald", "bulbasaur")]),
-        ]
+        ],
+        species=national_dex((1, "bulbasaur"), (151, "mew"), (390, "chimchar"), (491, "darkrai")),
     )
 
     platinum = next(one for one in coverage_for(data) if one.game == "platinum")
@@ -670,34 +723,54 @@ def test_coverage_separates_caught_here_from_a_transfer_away_from_a_hole() -> No
     assert platinum.total == 4
 
 
+def test_coverage_counts_what_the_player_fills_rather_than_the_games_own_dex() -> None:
+    # Bulbasaur is not in Platinum's Pokedex and Platinum hands one over anyway. Counting the
+    # Pokedex called that nothing; counting the living dex calls it what it is.
+    data = dataset(
+        games=[
+            game(
+                "platinum",
+                entries=[entry("platinum", "chimchar", 4)],
+                methods=[gift("platinum", "chimchar"), gift("platinum", "bulbasaur")],
+            )
+        ],
+        species=national_dex((1, "bulbasaur"), (390, "chimchar")),
+    )
+
+    assert coverage_for(data)[0].full == 2
+
+
 def test_coverage_is_reported_for_every_game() -> None:
     data = dataset(games=[game("platinum"), game("emerald")])
 
     assert [one.game for one in coverage_for(data)] == ["platinum", "emerald"]
 
 
-def test_species_are_not_needed_to_judge_coverage() -> None:
-    # Coverage is about acquisition data, not about whether the species table is filled in.
+def test_a_game_with_no_national_dex_is_judged_on_the_dex_it_has() -> None:
+    # None yet, but the rule has to answer for one: its grid is its own Pokedex and the species
+    # table has nothing to say about how far it reaches.
     data = dataset(
         games=[
-            game(
-                "platinum",
-                entries=[entry("platinum", "chimchar", 4)],
-                methods=[gift("platinum", "chimchar")],
+            GameData(
+                game=Game(
+                    id="colosseum",
+                    title="colosseum",
+                    version="colosseum",
+                    released=date(2000, 1, 1),
+                    generation=3,
+                    region="Orre",
+                    release=GameRelease.CARTRIDGE,
+                    national_dex_through=None,
+                    dex_source=DexSource.GAME_DEX,
+                ),
+                dex_entries=[entry("colosseum", "chimchar", 1)],
+                acquisition_methods=[gift("colosseum", "chimchar")],
             )
         ],
-        species=[
-            Species(
-                id="chimchar",
-                national_dex_number=390,
-                name="Chimchar",
-                types=[PokemonType.FIRE],
-                evolution_chain="chimchar",
-            )
-        ],
+        species=national_dex((1, "bulbasaur"), (390, "chimchar")),
     )
 
-    assert coverage_for(data)[0].full == 1
+    assert coverage_for(data)[0].total == 1
 
 
 # --- every species has a sprite ---------------------------------------------------------------

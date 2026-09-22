@@ -32,6 +32,63 @@ def _obtainable_in(dataset: Dataset, game_id: str) -> set[tuple[str, str | None]
     return {_target_key(method.target) for method in game.acquisition_methods} if game else set()
 
 
+def _living_dex(dataset: Dataset, game) -> list[str]:
+    """Every species this game asks a player to fill, in National Dex order.
+
+    The same list :meth:`~.games.BuildContext.living_dex` hands the builders, worked out here
+    from what was written rather than passed along: a rule reads the dataset and nothing else.
+    """
+    reach = game.game.national_dex_through
+    if reach is None:
+        return [entry.target.species for entry in game.dex_entries]
+
+    return [
+        one.id
+        for one in sorted(dataset.species, key=lambda one: one.national_dex_number)
+        if one.national_dex_number <= reach
+    ]
+
+
+def _reasons_in(game) -> set[str]:
+    """The species this game's own dex says cannot be filled here, by name."""
+    return {
+        entry.target.species for entry in game.dex_entries if entry.unobtainable_reason is not None
+    }
+
+
+def _listed_in_any_dex(dataset: Dataset) -> set[tuple[str, str | None]]:
+    """Every target some game's own Pokedex asks for.
+
+    The line between "this dataset has a hole" and "this dataset does not cover that yet". Ruby
+    can evolve a Chikorita into a Bayleef and nothing here produces a Chikorita - because Gold
+    and Silver are not built. No game's dex lists one either, and that is the difference between
+    a fault and a generation nobody has got to.
+    """
+    return {_target_key(entry.target) for game in dataset.games for entry in game.dex_entries}
+
+
+def _not_covered_yet(rule_name: str, game_id: str, kind: str, species: list[str]) -> Finding:
+    """One warning for every dead end that leads out of what the dataset covers.
+
+    Aggregated the way a game with no encounters is: seventeen findings that all say "Generation
+    2 is not built yet" say it once between them, and burying the real faults under them is how
+    a report stops being read.
+    """
+    named = ", ".join(sorted(species)[:5])
+    more = f" and {len(species) - 5} more" if len(species) > 5 else ""
+
+    return Finding(
+        rule=rule_name,
+        severity=Severity.WARNING,
+        game=game_id,
+        message=(
+            f"{len(species)} thing(s) here are only obtainable by {kind} something no game in "
+            f"the dataset lists yet, so the generation they come from has not been built: "
+            f"{named}{more}"
+        ),
+    )
+
+
 def _explained_in(game) -> set[tuple[str, str | None]]:
     """Every entry this game's dex says cannot be filled here, and why.
 
@@ -116,9 +173,11 @@ class NoEvolutionDeadEnds:
     def check(self, dataset: Dataset) -> Iterator[Finding]:
         rules_by_id = {rule.id: rule for rule in dataset.evolution_rules}
         obtainable = _obtainable_anywhere(dataset)
+        listed = _listed_in_any_dex(dataset)
 
         for game in dataset.games:
             explained = _explained_in(game)
+            outside: list[str] = []
 
             for method in game.acquisition_methods:
                 if method.kind != "evolution":
@@ -137,16 +196,28 @@ class NoEvolutionDeadEnds:
                     continue
 
                 previous = _target_key(rule.from_)
-                if previous not in obtainable and previous not in explained:
-                    yield Finding(
-                        rule=self.name,
-                        severity=Severity.ERROR,
-                        game=game.game.id,
-                        message=(
-                            f"{method.target} is only obtainable by evolving {rule.from_}, "
-                            "which nothing can produce and nothing explains"
-                        ),
-                    )
+                if previous in obtainable or previous in explained:
+                    continue
+
+                # A game asks about every species its living dex reaches, so it records
+                # evolutions whose earlier stage belongs to a generation that is not built yet.
+                # That is the dataset being unfinished rather than this game being wrong.
+                if previous not in listed:
+                    outside.append(str(rule.from_))
+                    continue
+
+                yield Finding(
+                    rule=self.name,
+                    severity=Severity.ERROR,
+                    game=game.game.id,
+                    message=(
+                        f"{method.target} is only obtainable by evolving {rule.from_}, "
+                        "which nothing can produce and nothing explains"
+                    ),
+                )
+
+            if outside:
+                yield _not_covered_yet(self.name, game.game.id, "evolving", outside)
 
 
 class NoBreedingDeadEnds:
@@ -161,9 +232,11 @@ class NoBreedingDeadEnds:
 
     def check(self, dataset: Dataset) -> Iterator[Finding]:
         obtainable = _obtainable_anywhere(dataset)
+        listed = _listed_in_any_dex(dataset)
 
         for game in dataset.games:
             explained = _explained_in(game)
+            outside: list[str] = []
 
             for method in game.acquisition_methods:
                 if method.kind != "breeding":
@@ -176,6 +249,13 @@ class NoBreedingDeadEnds:
                     continue
 
                 parents = " or ".join(str(parent) for parent in method.parents)
+
+                # The same distinction the evolution rule makes: no parent obtainable because
+                # nobody has built the generation they come from is not this game's fault.
+                if all(_target_key(parent) not in listed for parent in method.parents):
+                    outside.append(parents)
+                    continue
+
                 yield Finding(
                     rule=self.name,
                     severity=Severity.ERROR,
@@ -185,6 +265,9 @@ class NoBreedingDeadEnds:
                         "which nothing can produce and nothing explains"
                     ),
                 )
+
+            if outside:
+                yield _not_covered_yet(self.name, game.game.id, "breeding", outside)
 
 
 class UnobtainableEntriesReallyAre:
@@ -444,7 +527,8 @@ class EveryGameHasBoxArt:
 
 
 def coverage_for(dataset: Dataset) -> list[GameCoverage]:
-    """How much of each game's dex the dataset can account for, and from where.
+    """How much of what each game asks a player to fill the dataset can account for, and from
+    where.
 
     The three words the spec asks for, given a meaning here because it does not define them:
 
@@ -454,18 +538,24 @@ def coverage_for(dataset: Dataset) -> list[GameCoverage]:
 
     ``unobtainable`` is counted separately rather than folded into one of the three: an entry
     someone has checked and marked is not the same as one nobody has looked at.
+
+    Counted over the living dex rather than the game's own Pokedex, because that is what a
+    player is filling and what the grid shows. Diamond used to report 151 entries of which 146
+    were full, which was true and answered a question nobody asked: the screen has 493 tiles on
+    it. The numbers are larger and worse now, and they are about the right thing.
     """
     obtainable_anywhere = _obtainable_anywhere(dataset)
     coverage: list[GameCoverage] = []
 
     for game in dataset.games:
         here = _obtainable_in(dataset, game.game.id)
+        explained = _reasons_in(game)
         full = partial = missing = unobtainable = 0
 
-        for entry in game.dex_entries:
-            key = _target_key(entry.target)
+        for species in _living_dex(dataset, game):
+            key = (species, None)
 
-            if entry.unobtainable_reason is not None:
+            if species in explained:
                 unobtainable += 1
             elif key in here:
                 full += 1

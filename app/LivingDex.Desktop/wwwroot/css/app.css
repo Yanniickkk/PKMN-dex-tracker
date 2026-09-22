@@ -1041,6 +1041,28 @@ code {
 
 /* ---- progress ---- */
 
+/* Which of the game's two lists is on screen. Above the progress figures because it decides
+   what they count: the same collection is 0 of 493 or 0 of 151 depending on this. */
+.dex-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.dex-switch label {
+  color: var(--muted);
+}
+
+.dex-switch select {
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: inherit;
+  font: inherit;
+}
+
 .progress {
   margin-top: 10px;
   max-width: 62ch;

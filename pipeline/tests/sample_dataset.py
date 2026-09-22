@@ -76,6 +76,15 @@ def species() -> list[Species]:
             types=[PokemonType.FIRE],
             evolution_chain="vulpix",
         ),
+        # In Platinum's dex here and produced by nothing, so the coverage report has one entry
+        # of each kind to count: caught here, a transfer away, and checked and stated.
+        Species(
+            id="darkrai",
+            national_dex_number=491,
+            name="Darkrai",
+            types=[PokemonType.DARK],
+            evolution_chain="darkrai",
+        ),
     ]
 
 

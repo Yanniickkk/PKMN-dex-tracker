@@ -134,12 +134,22 @@ class Build:
         # rightly refuses.
         wanted = self.registry.game_ids if game_id is None else [game_id]
 
+        # Read back rather than kept from _build_shared: a single-game build never runs that
+        # step, and both paths need the same table. A game asks about every species its living
+        # dex reaches, which is most of this list rather than the handful its own Pokedex lists.
+        species = read_species(self.dataset_root)
+
         built: list[GameData] = []
 
         for wanted_id in wanted:
             try:
                 data = self.registry.build(
-                    BuildContext(game_id=wanted_id, refresh=self.refresh, api=api)
+                    BuildContext(
+                        game_id=wanted_id,
+                        refresh=self.refresh,
+                        api=api,
+                        species=species,
+                    )
                 )
             except UnknownGameError as error:
                 raise BuildError(str(error)) from error

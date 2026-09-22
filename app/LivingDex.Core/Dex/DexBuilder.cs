@@ -50,22 +50,38 @@ public sealed class DexBuilder
     }
 
     /// <summary>
-    /// The entry list for a collection: the National Dex or the main game's own dex, expanded or
-    /// collapsed according to the collection's form selection, ordered by number with each base species
-    /// followed by its forms.
+    /// The entry list for a collection, built from whichever list the main game says is its own.
     /// </summary>
     /// <exception cref="DexBuildException">
     /// The main game is not in the dataset, or it claims a National Dex without saying where
     /// that dex ends.
     /// </exception>
-    public IReadOnlyList<DexLine> Build(DexCollection collection)
+    public IReadOnlyList<DexLine> Build(DexCollection collection) => Build(collection, source: null);
+
+    /// <summary>
+    /// The entry list for a collection: the National Dex or the main game's own dex, expanded or
+    /// collapsed according to the collection's form selection, ordered by number with each base species
+    /// followed by its forms.
+    /// </summary>
+    /// <param name="collection">The collection to build for.</param>
+    /// <param name="source">
+    /// Which of the two lists to build, or null for whichever the game itself names. A game with
+    /// a National Dex has both: Diamond asks a player for 493 entries and shows a Sinnoh Pokedex
+    /// of 151 with its own numbering, and which of the two is on screen is the player's choice
+    /// rather than a fact about the game.
+    /// </param>
+    /// <exception cref="DexBuildException">
+    /// The main game is not in the dataset, or it claims a National Dex without saying where
+    /// that dex ends.
+    /// </exception>
+    public IReadOnlyList<DexLine> Build(DexCollection collection, DexSource? source)
     {
         ArgumentNullException.ThrowIfNull(collection);
 
         var game = _reference.FindGame(collection.MainGame)
             ?? throw new DexBuildException($"No game named {collection.MainGame} in the dataset.");
 
-        var numbers = BaseSpeciesNumbers(game);
+        var numbers = BaseSpeciesNumbers(game, source ?? game.DexSource);
         var lines = new List<DexLine>(numbers.Count);
 
         foreach (var (species, number) in numbers)
@@ -105,9 +121,9 @@ public sealed class DexBuilder
     /// expanding from the form table keeps the two sources on the same footing, and stops a form
     /// appearing twice when it is both numbered by the game and listed in the form table.
     /// </remarks>
-    private Dictionary<SpeciesId, int> BaseSpeciesNumbers(Game game)
+    private Dictionary<SpeciesId, int> BaseSpeciesNumbers(Game game, DexSource source)
     {
-        if (game.DexSource == DexSource.NationalDex)
+        if (source == DexSource.NationalDex)
         {
             var through = game.NationalDexThrough
                 ?? throw new DexBuildException(

@@ -26,5 +26,14 @@
       "fighting"
     ],
     "evolutionChain": "chimchar"
+  },
+  {
+    "id": "darkrai",
+    "nationalDexNumber": 491,
+    "name": "Darkrai",
+    "types": [
+      "dark"
+    ],
+    "evolutionChain": "darkrai"
   }
 ]

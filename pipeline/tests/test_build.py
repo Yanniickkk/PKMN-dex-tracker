@@ -125,10 +125,13 @@ def test_the_coverage_report_is_written_beside_the_dataset(tmp_path: Path) -> No
     report = json.loads((root / "validation.json").read_text(encoding="utf-8"))
     platinum_coverage = next(one for one in report["coverage"] if one["game"] == "platinum")
 
+    # Four species in the table, and Platinum's living dex reaches all four: Chimchar and
+    # Monferno it produces, Vulpix only Sword does, Darkrai nothing does and its dex says why.
+    # Counted over the living dex rather than Platinum's own three-entry Pokedex.
     assert platinum_coverage == {
         "game": "platinum",
         "full": 2,
-        "partial": 0,
+        "partial": 1,
         "missing": 0,
         "unobtainable": 1,
     }

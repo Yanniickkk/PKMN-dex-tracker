@@ -52,7 +52,7 @@ public class DatasetLoaderTests
     [Fact]
     public void The_shared_tables_come_along_too()
     {
-        Assert.Equal(3, Loaded.Reference.Species.Count);
+        Assert.Equal(4, Loaded.Reference.Species.Count);
         Assert.Equal(2, Loaded.Reference.Forms.Count);
         Assert.Equal(2, Loaded.Reference.EvolutionRules.Count);
         Assert.Equal(3, Loaded.Reference.TransferEdges.Count);

@@ -20,6 +20,9 @@ public sealed class ReferenceData
     private readonly Dictionary<(GameId Game, DexTarget Target), List<AcquisitionMethod>> _methodsByEntry;
     private readonly HashSet<GameId> _gamesWithMethods;
 
+    /// <summary>No dataset at all. What a screen holds before one is loaded.</summary>
+    public static ReferenceData Empty { get; } = new([], [], [], []);
+
     public ReferenceData(
         IEnumerable<Game> games,
         IEnumerable<Species> species,

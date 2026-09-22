@@ -113,7 +113,7 @@ def test_what_is_written_can_be_read_back(tmp_path: Path) -> None:
 
     dataset = read_dataset(tmp_path)
 
-    assert [one.id for one in dataset.species] == ["vulpix", "chimchar", "monferno"]
+    assert [one.id for one in dataset.species] == ["vulpix", "chimchar", "monferno", "darkrai"]
     assert [one.game.id for one in dataset.games] == [
         "diamond",
         "emerald",

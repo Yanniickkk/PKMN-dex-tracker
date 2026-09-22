@@ -18602,6 +18602,1485 @@
       }
     },
     {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "sentret"
+      },
+      "location": "Five Isle Meadow",
+      "method": "walk",
+      "levels": {
+        "minimum": 10,
+        "maximum": 15
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/sentret/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "sentret"
+      },
+      "location": "Water Path",
+      "method": "walk",
+      "levels": {
+        "minimum": 10,
+        "maximum": 15
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/sentret/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "sentret"
+      },
+      "location": "Canyon Entrance",
+      "method": "walk",
+      "levels": {
+        "minimum": 10,
+        "maximum": 15
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/sentret/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "ledyba"
+      },
+      "location": "Pattern Bush",
+      "method": "walk",
+      "levels": {
+        "minimum": 9,
+        "maximum": 14
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/ledyba/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "spinarak"
+      },
+      "location": "Pattern Bush",
+      "method": "walk",
+      "levels": {
+        "minimum": 9,
+        "maximum": 14
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/spinarak/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "natu"
+      },
+      "location": "Ruin Valley",
+      "method": "walk",
+      "levels": {
+        "minimum": 15,
+        "maximum": 20
+      },
+      "ratePercent": 25.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/natu/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "mareep"
+      },
+      "location": "Altering Cave",
+      "subArea": "B",
+      "method": "walk",
+      "levels": {
+        "minimum": 3,
+        "maximum": 13
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/mareep/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "marill"
+      },
+      "location": "Icefall Cave",
+      "subArea": "Entrance",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 15
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/marill/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "marill"
+      },
+      "location": "Ruin Valley",
+      "method": "walk",
+      "levels": {
+        "minimum": 15,
+        "maximum": 15
+      },
+      "ratePercent": 10.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/marill/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "marill"
+      },
+      "location": "Ruin Valley",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 25
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/marill/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "marill"
+      },
+      "location": "Four Island",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 25
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/marill/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "hoppip"
+      },
+      "location": "Resort Gorgeous",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 15
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/hoppip/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "hoppip"
+      },
+      "location": "Water Labyrinth",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 15
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/hoppip/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "hoppip"
+      },
+      "location": "Five Isle Meadow",
+      "method": "walk",
+      "levels": {
+        "minimum": 10,
+        "maximum": 15
+      },
+      "ratePercent": 15.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/hoppip/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "hoppip"
+      },
+      "location": "Five Isle Meadow",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 15
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/hoppip/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "hoppip"
+      },
+      "location": "Memorial Pillar",
+      "method": "walk",
+      "levels": {
+        "minimum": 6,
+        "maximum": 16
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/hoppip/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "hoppip"
+      },
+      "location": "Memorial Pillar",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 15
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/hoppip/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "hoppip"
+      },
+      "location": "Five Island",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 15
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/hoppip/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "aipom"
+      },
+      "location": "Altering Cave",
+      "subArea": "F",
+      "method": "walk",
+      "levels": {
+        "minimum": 18,
+        "maximum": 28
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/aipom/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "yanma"
+      },
+      "location": "Ruin Valley",
+      "method": "walk",
+      "levels": {
+        "minimum": 18,
+        "maximum": 18
+      },
+      "ratePercent": 10.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/yanma/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "misdreavus"
+      },
+      "location": "Lost Cave",
+      "subArea": "Room 1",
+      "method": "walk",
+      "levels": {
+        "minimum": 22,
+        "maximum": 22
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/misdreavus/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "misdreavus"
+      },
+      "location": "Lost Cave",
+      "subArea": "Room 2",
+      "method": "walk",
+      "levels": {
+        "minimum": 22,
+        "maximum": 22
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/misdreavus/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "misdreavus"
+      },
+      "location": "Lost Cave",
+      "subArea": "Room 3",
+      "method": "walk",
+      "levels": {
+        "minimum": 22,
+        "maximum": 22
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/misdreavus/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "misdreavus"
+      },
+      "location": "Lost Cave",
+      "subArea": "Room 4",
+      "method": "walk",
+      "levels": {
+        "minimum": 22,
+        "maximum": 22
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/misdreavus/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "misdreavus"
+      },
+      "location": "Lost Cave",
+      "subArea": "Room 5",
+      "method": "walk",
+      "levels": {
+        "minimum": 22,
+        "maximum": 22
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/misdreavus/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "misdreavus"
+      },
+      "location": "Lost Cave",
+      "subArea": "Room 6",
+      "method": "walk",
+      "levels": {
+        "minimum": 22,
+        "maximum": 22
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/misdreavus/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "misdreavus"
+      },
+      "location": "Lost Cave",
+      "subArea": "Room 7",
+      "method": "walk",
+      "levels": {
+        "minimum": 22,
+        "maximum": 22
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/misdreavus/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "misdreavus"
+      },
+      "location": "Lost Cave",
+      "subArea": "Room 8",
+      "method": "walk",
+      "levels": {
+        "minimum": 22,
+        "maximum": 22
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/misdreavus/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "misdreavus"
+      },
+      "location": "Lost Cave",
+      "subArea": "Room 9",
+      "method": "walk",
+      "levels": {
+        "minimum": 22,
+        "maximum": 22
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/misdreavus/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "misdreavus"
+      },
+      "location": "Lost Cave",
+      "subArea": "Room 10",
+      "method": "walk",
+      "levels": {
+        "minimum": 22,
+        "maximum": 22
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/misdreavus/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "misdreavus"
+      },
+      "location": "Lost Cave",
+      "subArea": "Item Rooms",
+      "method": "walk",
+      "levels": {
+        "minimum": 15,
+        "maximum": 22
+      },
+      "ratePercent": 20.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/misdreavus/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "unown"
+      },
+      "location": "Monean Chamber",
+      "method": "walk",
+      "levels": {
+        "minimum": 25,
+        "maximum": 25
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/unown/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "unown"
+      },
+      "location": "Liptoo Chamber",
+      "method": "walk",
+      "levels": {
+        "minimum": 25,
+        "maximum": 25
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/unown/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "unown"
+      },
+      "location": "Weepth Chamber",
+      "method": "walk",
+      "levels": {
+        "minimum": 25,
+        "maximum": 25
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/unown/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "unown"
+      },
+      "location": "Dilford Chamber",
+      "method": "walk",
+      "levels": {
+        "minimum": 25,
+        "maximum": 25
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/unown/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "unown"
+      },
+      "location": "Scufib Chamber",
+      "method": "walk",
+      "levels": {
+        "minimum": 25,
+        "maximum": 25
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/unown/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "unown"
+      },
+      "location": "Rixy Chamber",
+      "method": "walk",
+      "levels": {
+        "minimum": 25,
+        "maximum": 25
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/unown/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "unown"
+      },
+      "location": "Viapos Chamber",
+      "method": "walk",
+      "levels": {
+        "minimum": 25,
+        "maximum": 25
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/unown/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "wobbuffet"
+      },
+      "location": "Cerulean Cave",
+      "subArea": "1F",
+      "method": "walk",
+      "levels": {
+        "minimum": 55,
+        "maximum": 55
+      },
+      "ratePercent": 4.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/wobbuffet/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "wobbuffet"
+      },
+      "location": "Cerulean Cave",
+      "subArea": "2F",
+      "method": "walk",
+      "levels": {
+        "minimum": 58,
+        "maximum": 58
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/wobbuffet/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "wobbuffet"
+      },
+      "location": "Cerulean Cave",
+      "subArea": "B1F",
+      "method": "walk",
+      "levels": {
+        "minimum": 61,
+        "maximum": 61
+      },
+      "ratePercent": 1.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/wobbuffet/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "wobbuffet"
+      },
+      "location": "Ruin Valley",
+      "method": "walk",
+      "levels": {
+        "minimum": 25,
+        "maximum": 25
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/wobbuffet/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "pineco"
+      },
+      "location": "Altering Cave",
+      "subArea": "C",
+      "method": "walk",
+      "levels": {
+        "minimum": 19,
+        "maximum": 29
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/pineco/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "dunsparce"
+      },
+      "location": "Three Isle Port",
+      "method": "walk",
+      "levels": {
+        "minimum": 5,
+        "maximum": 35
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/dunsparce/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "shuckle"
+      },
+      "location": "Altering Cave",
+      "subArea": "G",
+      "method": "walk",
+      "levels": {
+        "minimum": 18,
+        "maximum": 28
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/shuckle/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "heracross"
+      },
+      "location": "Pattern Bush",
+      "method": "walk",
+      "levels": {
+        "minimum": 15,
+        "maximum": 30
+      },
+      "ratePercent": 20.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/heracross/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "sneasel"
+      },
+      "location": "Icefall Cave",
+      "subArea": "1F",
+      "method": "walk",
+      "levels": {
+        "minimum": 30,
+        "maximum": 30
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/sneasel/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "sneasel"
+      },
+      "location": "Icefall Cave",
+      "subArea": "B1F",
+      "method": "walk",
+      "levels": {
+        "minimum": 30,
+        "maximum": 30
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/sneasel/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "teddiursa"
+      },
+      "location": "Altering Cave",
+      "subArea": "E",
+      "method": "walk",
+      "levels": {
+        "minimum": 18,
+        "maximum": 28
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/teddiursa/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "slugma"
+      },
+      "location": "Mt. Ember",
+      "subArea": "B1F",
+      "method": "walk",
+      "levels": {
+        "minimum": 24,
+        "maximum": 30
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "slugma"
+      },
+      "location": "Mt. Ember",
+      "subArea": "B2F",
+      "method": "walk",
+      "levels": {
+        "minimum": 22,
+        "maximum": 32
+      },
+      "ratePercent": 60.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "slugma"
+      },
+      "location": "Mt. Ember",
+      "subArea": "B3F",
+      "method": "walk",
+      "levels": {
+        "minimum": 18,
+        "maximum": 36
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "slugma"
+      },
+      "location": "Mt. Ember",
+      "subArea": "B3F",
+      "method": "rockSmash",
+      "levels": {
+        "minimum": 15,
+        "maximum": 35
+      },
+      "ratePercent": 90.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "magcargo"
+      },
+      "location": "Mt. Ember",
+      "subArea": "B3F",
+      "method": "rockSmash",
+      "levels": {
+        "minimum": 25,
+        "maximum": 45
+      },
+      "ratePercent": 10.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/magcargo/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "swinub"
+      },
+      "location": "Icefall Cave",
+      "subArea": "1F",
+      "method": "walk",
+      "levels": {
+        "minimum": 23,
+        "maximum": 31
+      },
+      "ratePercent": 50.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/swinub/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "swinub"
+      },
+      "location": "Icefall Cave",
+      "subArea": "B1F",
+      "method": "walk",
+      "levels": {
+        "minimum": 23,
+        "maximum": 31
+      },
+      "ratePercent": 50.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/swinub/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "remoraid"
+      },
+      "location": "Resort Gorgeous",
+      "method": "superRod",
+      "levels": {
+        "minimum": 15,
+        "maximum": 25
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/remoraid/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "remoraid"
+      },
+      "location": "Water Labyrinth",
+      "method": "superRod",
+      "levels": {
+        "minimum": 15,
+        "maximum": 25
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/remoraid/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "remoraid"
+      },
+      "location": "Five Isle Meadow",
+      "method": "superRod",
+      "levels": {
+        "minimum": 15,
+        "maximum": 25
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/remoraid/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "remoraid"
+      },
+      "location": "Memorial Pillar",
+      "method": "superRod",
+      "levels": {
+        "minimum": 15,
+        "maximum": 25
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/remoraid/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "remoraid"
+      },
+      "location": "Outcast Island",
+      "method": "superRod",
+      "levels": {
+        "minimum": 15,
+        "maximum": 25
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/remoraid/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "remoraid"
+      },
+      "location": "Green Path",
+      "method": "superRod",
+      "levels": {
+        "minimum": 15,
+        "maximum": 25
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/remoraid/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "remoraid"
+      },
+      "location": "Water Path",
+      "method": "superRod",
+      "levels": {
+        "minimum": 15,
+        "maximum": 25
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/remoraid/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "remoraid"
+      },
+      "location": "Trainer Tower",
+      "method": "superRod",
+      "levels": {
+        "minimum": 15,
+        "maximum": 25
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/remoraid/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "remoraid"
+      },
+      "location": "Tanoby Ruins",
+      "method": "superRod",
+      "levels": {
+        "minimum": 15,
+        "maximum": 25
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/remoraid/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "mantine"
+      },
+      "location": "Trainer Tower",
+      "method": "surf",
+      "levels": {
+        "minimum": 35,
+        "maximum": 40
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/mantine/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "mantine"
+      },
+      "location": "Tanoby Ruins",
+      "method": "surf",
+      "levels": {
+        "minimum": 35,
+        "maximum": 40
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/mantine/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "houndour"
+      },
+      "location": "Altering Cave",
+      "subArea": "D",
+      "method": "walk",
+      "levels": {
+        "minimum": 12,
+        "maximum": 22
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/houndour/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "phanpy"
+      },
+      "location": "Canyon Entrance",
+      "method": "walk",
+      "levels": {
+        "minimum": 10,
+        "maximum": 15
+      },
+      "ratePercent": 15.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/phanpy/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "phanpy"
+      },
+      "location": "Sevault Canyon",
+      "method": "walk",
+      "levels": {
+        "minimum": 15,
+        "maximum": 15
+      },
+      "ratePercent": 20.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/phanpy/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "stantler"
+      },
+      "location": "Altering Cave",
+      "subArea": "H",
+      "method": "walk",
+      "levels": {
+        "minimum": 18,
+        "maximum": 28
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/stantler/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "smeargle"
+      },
+      "location": "Altering Cave",
+      "subArea": "I",
+      "method": "walk",
+      "levels": {
+        "minimum": 18,
+        "maximum": 28
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/smeargle/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "raikou"
+      },
+      "location": "Roaming Kanto",
+      "method": "other",
+      "levels": {
+        "minimum": 50,
+        "maximum": 50
+      },
+      "ratePercent": 25.0,
+      "requirement": "Only in a save that started with Squirtle and after the Elite Four are beaten a second time",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/raikou/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "entei"
+      },
+      "location": "Roaming Kanto",
+      "method": "other",
+      "levels": {
+        "minimum": 50,
+        "maximum": 50
+      },
+      "ratePercent": 25.0,
+      "requirement": "Only in a save that started with Bulbasaur and after the Elite Four are beaten a second time",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/entei/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "suicune"
+      },
+      "location": "Roaming Kanto",
+      "method": "other",
+      "levels": {
+        "minimum": 50,
+        "maximum": 50
+      },
+      "ratePercent": 25.0,
+      "requirement": "Only in a save that started with Charmander and after the Elite Four are beaten a second time",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/suicune/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "leafgreen",
+      "target": {
+        "species": "larvitar"
+      },
+      "location": "Sevault Canyon",
+      "method": "walk",
+      "levels": {
+        "minimum": 15,
+        "maximum": 20
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/larvitar/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
       "kind": "gift",
       "game": "leafgreen",
       "target": {
@@ -19008,6 +20487,67 @@
       }
     },
     {
+      "kind": "gift",
+      "game": "leafgreen",
+      "target": {
+        "species": "togepi"
+      },
+      "giftKind": "egg",
+      "location": "Water Labyrinth",
+      "level": 5,
+      "requirement": "With a Pokemon at the front of the party that likes you well enough",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/togepi/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "leafgreen",
+      "target": {
+        "species": "lugia"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Navel Rock",
+      "level": 70,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/lugia/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "leafgreen",
+      "target": {
+        "species": "ho-oh"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Navel Rock",
+      "level": 70,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/ho-oh/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "leafgreen",
+      "target": {
+        "species": "deoxys"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Birth Island",
+      "level": 30,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/deoxys-normal/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
@@ -19017,6 +20557,110 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/27",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "armaldo"
+      },
+      "rule": "anorith-to-armaldo",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/177",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "lairon"
+      },
+      "rule": "aron-to-lairon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/151",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "marill"
+      },
+      "rule": "azurill-to-marill",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/90",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "shelgon"
+      },
+      "rule": "bagon-to-shelgon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/191",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "claydol"
+      },
+      "rule": "baltoy-to-claydol",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/175",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "whiscash"
+      },
+      "rule": "barboach-to-whiscash",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/173",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "meganium"
+      },
+      "rule": "bayleef-to-meganium",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/79",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "metang"
+      },
+      "rule": "beldum-to-metang",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/192",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19043,6 +20687,45 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/1",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "cacturne"
+      },
+      "rule": "cacnea-to-cacturne",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/167",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "sharpedo"
+      },
+      "rule": "carvanha-to-sharpedo",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/160",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "dustox"
+      },
+      "rule": "cascoon-to-dustox",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/135",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19102,6 +20785,58 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "bayleef"
+      },
+      "rule": "chikorita-to-bayleef",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/79",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "lanturn"
+      },
+      "rule": "chinchou-to-lanturn",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/86",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "gorebyss"
+      },
+      "rule": "clamperl-to-gorebyss",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/188",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "huntail"
+      },
+      "rule": "clamperl-to-huntail",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/188",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "clefable"
       },
       "rule": "clefairy-to-clefable",
@@ -19115,12 +20850,77 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "clefairy"
+      },
+      "rule": "cleffa-to-clefairy",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/14",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "blaziken"
+      },
+      "rule": "combusken-to-blaziken",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/131",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "crawdaunt"
+      },
+      "rule": "corphish-to-crawdaunt",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/174",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "feraligatr"
+      },
+      "rule": "croconaw-to-feraligatr",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/81",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "marowak"
       },
       "rule": "cubone-to-marowak-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/46",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "quilava"
+      },
+      "rule": "cyndaquil-to-quilava-gold-silver",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/80",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19186,6 +20986,19 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/42",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "dusclops"
+      },
+      "rule": "duskull-to-dusclops",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/182",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19271,12 +21084,64 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "manectric"
+      },
+      "rule": "electrike-to-manectric",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/153",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "electabuzz"
+      },
+      "rule": "elekid-to-electabuzz",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/60",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "exeggutor"
       },
       "rule": "exeggcute-to-exeggutor-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/45",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "milotic"
+      },
+      "rule": "feebas-to-milotic-ruby-sapphire",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/178",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "ampharos"
+      },
+      "rule": "flaaffy-to-ampharos",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/89",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19388,12 +21253,38 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "sceptile"
+      },
+      "rule": "grovyle-to-sceptile",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/130",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "arcanine"
       },
       "rule": "growlithe-to-arcanine-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/25",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "swalot"
+      },
+      "rule": "gulpin-to-swalot",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/159",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19414,12 +21305,64 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "noctowl"
+      },
+      "rule": "hoothoot-to-noctowl",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/83",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "skiploom"
+      },
+      "rule": "hoppip-to-skiploom",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/92",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "seadra"
       },
       "rule": "horsea-to-seadra",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/54",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "houndoom"
+      },
+      "rule": "houndour-to-houndoom",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/118",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "jigglypuff"
+      },
+      "rule": "igglybuff-to-jigglypuff",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/16",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19492,6 +21435,19 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "gardevoir"
+      },
+      "rule": "kirlia-to-gardevoir",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/140",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "weezing"
       },
       "rule": "koffing-to-weezing-red-blue",
@@ -19511,6 +21467,97 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/43",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "aggron"
+      },
+      "rule": "lairon-to-aggron",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/151",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "pupitar"
+      },
+      "rule": "larvitar-to-pupitar",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/126",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "ledian"
+      },
+      "rule": "ledyba-to-ledian",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/84",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "cradily"
+      },
+      "rule": "lileep-to-cradily",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/176",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "ludicolo"
+      },
+      "rule": "lombre-to-ludicolo",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/136",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "lombre"
+      },
+      "rule": "lotad-to-lombre",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/136",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "exploud"
+      },
+      "rule": "loudred-to-exploud",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/145",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19544,6 +21591,19 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "magmar"
+      },
+      "rule": "magby-to-magmar",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/61",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "gyarados"
       },
       "rule": "magikarp-to-gyarados",
@@ -19570,12 +21630,77 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "hariyama"
+      },
+      "rule": "makuhita-to-hariyama",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/146",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "primeape"
       },
       "rule": "mankey-to-primeape",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/24",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "flaaffy"
+      },
+      "rule": "mareep-to-flaaffy",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/89",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "azumarill"
+      },
+      "rule": "marill-to-azumarill",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/90",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "swampert"
+      },
+      "rule": "marshtomp-to-swampert",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/132",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "medicham"
+      },
+      "rule": "meditite-to-medicham",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/152",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19596,12 +21721,51 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "metagross"
+      },
+      "rule": "metang-to-metagross",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/192",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "butterfree"
       },
       "rule": "metapod-to-butterfree",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/4",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "marshtomp"
+      },
+      "rule": "mudkip-to-marshtomp",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/132",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "xatu"
+      },
+      "rule": "natu-to-xatu",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/88",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19661,6 +21825,58 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "ninjask"
+      },
+      "rule": "nincada-to-ninjask",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/144",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "shedinja"
+      },
+      "rule": "nincada-to-shedinja",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/144",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "camerupt"
+      },
+      "rule": "numel-to-camerupt",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/162",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "shiftry"
+      },
+      "rule": "nuzleaf-to-shiftry",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/137",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "gloom"
       },
       "rule": "oddish-to-gloom",
@@ -19713,6 +21929,32 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "donphan"
+      },
+      "rule": "phanpy-to-donphan",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/119",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "pikachu"
+      },
+      "rule": "pichu-to-pikachu",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/10",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "pidgeot"
       },
       "rule": "pidgeotto-to-pidgeot",
@@ -19745,6 +21987,19 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/10",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "forretress"
+      },
+      "rule": "pineco-to-forretress",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/102",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19804,6 +22059,19 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "mightyena"
+      },
+      "rule": "poochyena-to-mightyena",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/133",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "porygon2"
       },
       "rule": "porygon-to-porygon2",
@@ -19830,12 +22098,64 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "tyranitar"
+      },
+      "rule": "pupitar-to-tyranitar",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/126",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "typhlosion"
+      },
+      "rule": "quilava-to-typhlosion-gold-silver",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/80",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "kirlia"
+      },
+      "rule": "ralts-to-kirlia",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/140",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "raticate"
       },
       "rule": "rattata-to-raticate-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/7",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "octillery"
+      },
+      "rule": "remoraid-to-octillery",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/114",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19895,6 +22215,32 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "walrein"
+      },
+      "rule": "sealeo-to-walrein",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/187",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "nuzleaf"
+      },
+      "rule": "seedot-to-nuzleaf",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/137",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "dewgong"
       },
       "rule": "seel-to-dewgong",
@@ -19908,12 +22254,116 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "furret"
+      },
+      "rule": "sentret-to-furret",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/82",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "salamence"
+      },
+      "rule": "shelgon-to-salamence",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/191",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "cloyster"
       },
       "rule": "shellder-to-cloyster",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/39",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "breloom"
+      },
+      "rule": "shroomish-to-breloom",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/142",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "banette"
+      },
+      "rule": "shuppet-to-banette",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/181",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "beautifly"
+      },
+      "rule": "silcoon-to-beautifly",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/135",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "jumpluff"
+      },
+      "rule": "skiploom-to-jumpluff",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/92",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "delcatty"
+      },
+      "rule": "skitty-to-delcatty",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/148",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "vigoroth"
+      },
+      "rule": "slakoth-to-vigoroth",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/143",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19947,12 +22397,103 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "magcargo"
+      },
+      "rule": "slugma-to-magcargo",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/111",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "jynx"
+      },
+      "rule": "smoochum-to-jynx",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/59",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "glalie"
+      },
+      "rule": "snorunt-to-glalie",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/186",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "granbull"
+      },
+      "rule": "snubbull-to-granbull",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/105",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "fearow"
       },
       "rule": "spearow-to-fearow",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/8",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "sealeo"
+      },
+      "rule": "spheal-to-sealeo",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/187",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "ariados"
+      },
+      "rule": "spinarak-to-ariados",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/85",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "grumpig"
+      },
+      "rule": "spoink-to-grumpig",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/164",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -19986,6 +22527,84 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "sunflora"
+      },
+      "rule": "sunkern-to-sunflora",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/94",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "masquerain"
+      },
+      "rule": "surskit-to-masquerain",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/141",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "altaria"
+      },
+      "rule": "swablu-to-altaria",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/168",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "piloswine"
+      },
+      "rule": "swinub-to-piloswine",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/112",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "swellow"
+      },
+      "rule": "taillow-to-swellow",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/138",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "ursaring"
+      },
+      "rule": "teddiursa-to-ursaring",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/110",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "tentacruel"
       },
       "rule": "tentacool-to-tentacruel",
@@ -19999,12 +22618,142 @@
       "kind": "evolution",
       "game": "leafgreen",
       "target": {
+        "species": "togetic"
+      },
+      "rule": "togepi-to-togetic",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/87",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "combusken"
+      },
+      "rule": "torchic-to-combusken",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/131",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "croconaw"
+      },
+      "rule": "totodile-to-croconaw",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/81",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "vibrava"
+      },
+      "rule": "trapinch-to-vibrava",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/166",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "grovyle"
+      },
+      "rule": "treecko-to-grovyle",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/130",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "hitmonchan"
+      },
+      "rule": "tyrogue-to-hitmonchan",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/47",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "hitmonlee"
+      },
+      "rule": "tyrogue-to-hitmonlee",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/47",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "hitmontop"
+      },
+      "rule": "tyrogue-to-hitmontop",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/47",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
         "species": "venomoth"
       },
       "rule": "venonat-to-venomoth",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/20",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "flygon"
+      },
+      "rule": "vibrava-to-flygon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/166",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "slaking"
+      },
+      "rule": "vigoroth-to-slaking",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/143",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -20031,6 +22780,19 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/15",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "wailord"
+      },
+      "rule": "wailmer-to-wailord",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/161",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -20070,6 +22832,97 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/29",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "loudred"
+      },
+      "rule": "whismur-to-loudred",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/145",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "pelipper"
+      },
+      "rule": "wingull-to-pelipper",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/139",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "quagsire"
+      },
+      "rule": "wooper-to-quagsire",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/96",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "cascoon"
+      },
+      "rule": "wurmple-to-cascoon-ruby-sapphire",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/135",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "silcoon"
+      },
+      "rule": "wurmple-to-silcoon-ruby-sapphire",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/135",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "wobbuffet"
+      },
+      "rule": "wynaut-to-wobbuffet",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/100",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "leafgreen",
+      "target": {
+        "species": "linoone"
+      },
+      "rule": "zigzagoon-to-linoone-ruby-sapphire",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/134",
         "retrievedOn": "2026-09-22"
       }
     },

@@ -53,6 +53,19 @@ public sealed class CaptureIndex
         _byTarget.TryGetValue(target, out var record) ? record.Status : CaptureStatus.NotCaught;
 
     /// <summary>
+    /// Whether this entry is sitting in one particular game right now.
+    /// </summary>
+    /// <remarks>
+    /// What makes an evolution reachable: once a Bulbasaur has been transferred into Platinum,
+    /// the Ivysaur it becomes is available there even though Platinum has no Bulbasaur of its
+    /// own. A record with no holding game has not been obtained at all.
+    /// </remarks>
+    public bool IsIn(GameId game, DexTarget target) =>
+        _byTarget.TryGetValue(target, out var record)
+        && record.Status != CaptureStatus.NotCaught
+        && record.HoldingGame == game;
+
+    /// <summary>
     /// The record for an entry, or null when there is none. For the note, the catch date and the
     /// holding game, which <see cref="StatusOf"/> deliberately does not carry.
     /// </summary>

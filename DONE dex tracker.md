@@ -808,6 +808,51 @@ Worth a validator rule if edges are ever written by hand.
 
 A game lands here only once all 8 steps are ticked and its validation run is green.
 
+### A correction that touched all eight — 2026-09-22
+
+Every game gathered its encounters for its **regional** dex and nothing else. The grid a player
+sees is the **living** dex - `DexBuilder` builds it from `NationalDexThrough` for every game
+that has a National Dex, which is all of them - so Diamond showed 493 tiles and could only ever
+carry a method on 151 of them.
+
+Noticed by Yannick, asking whether the pipeline only reads the regional dex. It did: one line,
+`species = [entry.target.species for entry in entries]`, repeated in all four region modules.
+Nothing in the TODO ever asked for that; step 3 is written as "**every** encounter slot".
+
+- `BuildContext.living_dex` answers "every species this game asks a player to fill", and the
+  build hands every builder the species table so it can. A game with no National Dex - none yet
+  - falls back to its own dex, which for it is the same list.
+- The coverage report counts the living dex too. It used to say Diamond was 146 of 151, which
+  was true and answered a question nobody asked.
+- `gift_encounters` logs the species it hands over that a game's gift table says nothing about.
+  Widening the net catches gifts nobody has written up, and the number is the size of that job.
+- `no-evolution-dead-ends` and `no-breeding-dead-ends` learned the difference between a hole and
+  a generation nobody has built. Ruby knows how to finish a Bayleef; before Emerald was rebuilt,
+  nothing in the dataset made a Chikorita, and seventeen errors said so one chain at a time. A
+  dead end that leads out of every dex in the dataset is now one aggregated warning.
+- Seven condition values surfaced that had never been asked about, and all seven are for
+  species no regional dex lists: the legendary beast FireRed and LeafGreen pick by your starter,
+  the birds Platinum sets loose after Professor Oak turns up in Eterna City, Cresselia after the
+  Canalave nightmares, Regigigas with the three Regis in the party, the Water Labyrinth Togepi.
+
+What it was worth, in species a game demonstrably produces:
+
+| game | before | after |
+| --- | --- | --- |
+| Diamond, Pearl | 146 | 440 |
+| Platinum | 205 | 450 |
+| Emerald | 197 | 309 |
+| Ruby, Sapphire | 197 | 281 |
+| FireRed, LeafGreen | 154 | 280 |
+
+Diamond hands over Bebe's Eevee, the Rotom in the Old Chateau, Heatran in its chamber under
+Stark Mountain and the Cresselia that roams after the nightmares are cured. It said nothing
+about any of them.
+
+All eight rebuilt, validation green: 0 errors and 0 warnings. Three species in the whole dataset
+are produced by nothing and explained by nothing - Celebi, Jirachi and Phione - and they are
+visible now where before they were not even asked about.
+
 ### Generation 1
 
 _Nothing yet._
@@ -1340,6 +1385,54 @@ _Nothing yet._
     revived fossil underneath it and "Then to Diamond: trading", and Manaphy shows its reason
     with no way to get one anywhere.
 
+- [x] **Platinum** (`platinum`, gen 4, standalone) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+  - Step 1 was already done twice over before this stretch started: its Pal Park edges were
+    widened while FireRed and LeafGreen were being added, and the file was moved onto
+    `sinnoh.cartridge` and `sinnoh.edges` during the pair's own step 1. 450 full and 5
+    unobtainable, validation green.
+  - **A third version is not a third version in every respect.** Emerald shows the same 202
+    entries the Hoenn pair does; Platinum widened Sinnoh's list from 151 to 210. The first 151
+    keep their numbers exactly - Manaphy is still #151, Rotom is #152, Giratina is last at #210 -
+    so `sinnoh.py` names both lists and each game says which is its own.
+  - **And it kept all four of the pair's version exclusives out.** Emerald took most of Ruby and
+    Sapphire's in, so this was the expectation to check rather than assume: Murkrow, Stunky,
+    Misdreavus and Glameow all read "Trade" on Bulbapedia. Two are Diamond's and two are
+    Pearl's, so the reason names the half that has them.
+  - It shares exactly one table with the pair: the four in-game trades, same NPCs, same houses.
+    `PAIR_TRADES` became `TRADES` for that reason. Everything else is its own - the starters
+    moved to Route 201, Porygon became a gift from a man in Veilstone, and both cover
+    legendaries wait at level 70 after the Hall of Fame for a player carrying the right Orb.
+  - **Both fossils are here and a save file still gets one.** The Underground gives the Skull
+    Fossil to a Trainer ID ending odd and the Armor Fossil to one ending even. The only
+    requirement in this dataset that turns on a number the player never chose.
+  - Giratina is deliberately absent from the gift table. It stands in two places on different
+    terms - the Distortion World, and Turnback Cave if it was not caught there - and that table
+    has one line per species, so any sentence would be wrong about one of the two. The
+    conditions on the rows say it properly, and the smoke test confirmed both read correctly.
+  - **The only Sinnoh game with anything to hatch,** and not because its grass is poorer: its dex
+    is 59 entries longer, and Elekid and Magby are among the 59. Electabuzz is on the Valley
+    Windworks and Magmar in Stark Mountain; what hatches from them is nowhere.
+  - Its sprites are `generation-iv/platinum`, and not one of the 493 files matches the pair's
+    byte for byte. It redrew every one.
+  - Step 7 found nothing for the four exclusives - Stunky and Glameow have never been
+    distributed in any game, Murkrow and Misdreavus only for Gold and Silver in 2002 and the
+    Generation 3 games in 2006 - and **caught a mistake of mine about Manaphy.** Its reason was
+    shared between all three Sinnoh games and named nine distributions. Seven of those nine had
+    come and gone before Platinum was released, so it was telling a Platinum player to have been
+    at a Toys "R" Us in 2007 for a game that did not exist until 2008. The pair keeps the nine;
+    Platinum names the two that reached it.
+  - Smoke test on the published exe: 0 of 493 with the Sinnoh sprites, the dex switch reading
+    "0 of 210" on its own list, Manaphy showing the two distributions that were its own, and
+    Giratina's two rows on their own terms.
+
 ### Generation 5
 
 _Nothing yet._
@@ -1372,4 +1465,44 @@ _Nothing yet._
 
 ## Phase 3 — Polish
 
-_Nothing yet._
+- [x] "Available in this game" counted evolutions it could never reach — 2026-09-22
+  - Noticed by Yannick: Platinum offered Ivysaur and Venusaur under "Available in Platinum" and
+    no Platinum player can get a Bulbasaur. The filter asked whether the dataset recorded *a*
+    method, and an evolution is not a way to get something when the thing it evolves from cannot
+    be had. The validator has said exactly that since Phase 0.7 - `no-evolution-dead-ends` - and
+    the filter beside the grid had never been told.
+  - Not caused by widening the gathering to the living dex, but made much worse by it: before
+    that, Platinum recorded no Bulbasaur chain at all, and it was Emerald offering a Medicham
+    with no Meditite. Afterwards it was 26 species in Platinum and 82 in FireRed.
+  - `Availability` in Core resolves it properly: a method counts when it is a catch, a gift or a
+    trade; an evolution counts when what it evolves from can be had here; an egg counts when one
+    parent can. Memoised, and guarded against a chain that loops, which only malformed data
+    could produce.
+  - And the other half of the rule, which is what makes it useful: what the player already owns
+    counts. Transfer a Bulbasaur into Platinum and Ivysaur becomes available, and Venusaur
+    behind it. Owning the Bulbasaur does not make Bulbasaur available - you cannot get one
+    there, you carried it in - and that asymmetry is deliberate.
+  - So the answer depends on the collection's records, not only on the dataset. The index is
+    rebuilt whenever the records change, and `CaptureIndex.IsIn` answers which game is holding
+    something.
+  - What it drops, per game: Platinum 26, Diamond 29, Emerald 70, FireRed 82. Ivysaur,
+    Charizard, Meganium, Mismagius, Purugly - every line whose base the game cannot produce.
+  - Checked in the running app, both ways round, and the collection file restored byte for byte
+    afterwards.
+
+- [x] Filter national dex or regional dex — 2026-09-22
+  - A switch rather than a filter, which is what made it worth doing: picking the regional dex
+    rebuilds the grid from the game's own Pokedex, with the game's own numbering and order.
+    Diamond is 493 tiles starting at Bulbasaur #001, or 151 starting at Turtwig #001, and the
+    progress figure follows - "0 of 493" or "0 of 151".
+  - `DexBuilder.Build` takes which of the two lists to build; null still means whichever the
+    game names for itself. The branch that numbers from a game's own dex was already there, for
+    games with no National Dex - this gave it a second caller.
+  - The main game's dex, not a linked game's. A collection is built around its main game and
+    Diamond with Pearl linked would otherwise offer the same 151 twice.
+  - Not saved to the data file. It is a way of looking at a collection rather than part of what
+    the collection is, the same as the filters beside it, and saving it would mean a user-data
+    schema change for a dropdown.
+  - Safe because capture records are keyed by target and never by number: Turtwig is 387 in one
+    list and 1 in the other, and it is the same tick either way. A test pins that.
+  - Only offered when the game really has both lists.

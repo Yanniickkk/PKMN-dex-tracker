@@ -14,6 +14,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from datetime import date
 
+from ..breeding import EggFrom, breeding_encounters
 from ..evolutions import evolution_encounters
 from ..games import BuildContext
 from ..gifts import GiftDetail, gift_encounters
@@ -28,15 +29,30 @@ GENERATION = ds.GENERATION
 
 REGION = "Sinnoh"
 
+#: Where an egg is left and collected, in all three.
+DAY_CARE = "Solaceon Town, Pokemon Day Care"
+
 #: The National Dex opens after the Elite Four here as well, and stops at Arceus.
 NATIONAL_DEX_THROUGH = ds.NATIONAL_DEX_THROUGH
 
 #: PokeAPI's name for the 151-entry Sinnoh dex, the one Diamond and Pearl show.
 #:
-#: Not "extended-sinnoh", which is the 210-entry dex Platinum shows: the third version added 59
-#: species to the regional list, so unlike the Hoenn three the Sinnoh three do *not* share one
+#: Not :data:`EXTENDED_DEX`, which is the 210-entry dex Platinum shows: the third version added
+#: 59 species to the regional list, so unlike the Hoenn three the Sinnoh three do *not* share one
 #: dex. Platinum names its own, which is why this constant says which pair it belongs to.
 PAIR_DEX = "original-sinnoh"
+
+#: PokeAPI's name for the 210-entry Sinnoh dex, the one Platinum shows.
+#:
+#: The pair's 151 with 59 appended, and the first 151 keep their numbers exactly - Turtwig is
+#: still #001 and Manaphy still #151, with Rotom at #152 and Giratina last at #210. So the two
+#: lists are not rivals: a player moving from Diamond to Platinum finds the dex they know with
+#: more at the end of it.
+#:
+#: What the 59 are is mostly what Diamond and Pearl held back until the National Dex opened -
+#: Eevee's whole family, Togepi's, Rotom, Scyther, Porygon - and Platinum simply counts them
+#: as Sinnoh's.
+EXTENDED_DEX = "extended-sinnoh"
 
 #: What PokeAPI calls the pair when it says which version group an evolution started in. The
 #: two halves are one group, the way Ruby and Sapphire are - and it is the group that brought
@@ -97,6 +113,39 @@ def pair_dex_entries(
     the way Deoxys does in Hoenn. Rotom's appliances are not a question here at all: those
     arrived with Platinum.
     """
+    return _dex_entries(context, game_id=game_id, dex=PAIR_DEX, unobtainable=unobtainable)
+
+
+def extended_dex_entries(
+    context: BuildContext,
+    *,
+    game_id: str,
+    unobtainable: Mapping[str, str] | None = None,
+) -> list[DexEntry]:
+    """The Sinnoh dex as Platinum numbers it: Turtwig #001 to Giratina #210.
+
+    The pair's list is the first 151 of this one, numbers and all, so a Diamond player coming
+    here recognises everything and finds 59 more at the end. Which is why the two have separate
+    names rather than one function with a flag: they are two lists a game shows, and the game
+    says which of them it is.
+
+    Platinum brings two form questions of its own on top of the pair's. Rotom's five appliances
+    are new here, and they change its second type each time - a living dex counts those. So is
+    Giratina's Origin Forme, which the Distortion World hands over and the Griseous Orb keeps.
+    Both wait for the shared forms table, which is still empty, exactly as Burmy's cloaks and
+    Shellos's colours do.
+    """
+    return _dex_entries(context, game_id=game_id, dex=EXTENDED_DEX, unobtainable=unobtainable)
+
+
+def _dex_entries(
+    context: BuildContext,
+    *,
+    game_id: str,
+    dex: str,
+    unobtainable: Mapping[str, str] | None,
+) -> list[DexEntry]:
+    """One of the region's two Pokedexes, as one game shows it."""
     reasons = unobtainable or {}
     api = context.require_api()
 
@@ -107,7 +156,7 @@ def pair_dex_entries(
             number=number,
             unobtainable_reason=reasons.get(species),
         )
-        for number, species in api.pokedex(PAIR_DEX, refresh=context.refresh)
+        for number, species in api.pokedex(dex, refresh=context.refresh)
     ]
 
 
@@ -217,37 +266,57 @@ def fossil_only_on(partner: str, fossil: str, event: str | None = None) -> str:
     )
 
 
-#: What step 7 found about Manaphy: nine distributions between 2006 and 2011 handed one out.
+#: What step 7 found about Manaphy for the pair: nine distributions between 2006 and 2011.
 #:
-#: The only entry of the ten this pair cannot produce that any event ever covered - and it was
+#: The only entry of the five they cannot produce that any event ever covered - and it was
 #: covered nine times over, on three continents. Named rather than counted for the two a reader
 #: is most likely to recognise; the rest were PalCity, the Nintendo World Store, E for All, JB
 #: Hi-Fi, Nintendo of Korea and the Summer Nintendo Zone.
-MANAPHY_EVENT = (
+PAIR_MANAPHY_EVENT = (
     "nine distributions between 2006 and 2011 handed one out as well, from the World Hobby Fair "
     'in Japan to the Toys "R" Us Manaphy in the United States'
+)
+
+#: And what it found for Platinum, which is not the same thing.
+#:
+#: Seven of those nine had come and gone before Platinum was released, so their Manaphy could
+#: never reach it. Only the last two list Pt among their games. Worth splitting rather than
+#: sharing the pair's sentence, which told a Platinum player to have been at a Toys "R" Us in
+#: 2007 for a game that did not exist until 2008.
+THIRD_MANAPHY_EVENT = (
+    "two later distributions reached this game as well: the Summer Nintendo Zone Manaphy over "
+    "Japanese Wi-Fi in 2010, and the Pokemon Love Manaphy in South Korea in 2011"
 )
 
 #: Why nothing in Sinnoh produces a Manaphy.
 #:
 #: Its egg is a reward in Pokemon Ranger, a different game on the same handheld, and it is sent
-#: across rather than found.
-MANAPHY_REASON = exclusives.with_event(
-    "Pokemon Ranger only: the egg is a reward in that game and is sent across to this one",
-    MANAPHY_EVENT,
+#: across rather than found. The events that also handed one out differ per game, so each brings
+#: its own.
+MANAPHY_REASON = (
+    "Pokemon Ranger only: the egg is a reward in that game and is sent across to this one"
 )
+
+
+def manaphy_reason(event: str | None) -> str:
+    """Why this cartridge has no Manaphy, and which distributions ever reached it."""
+    return exclusives.with_event(MANAPHY_REASON, event)
 
 
 #: The four NPCs who will swap something, and what each one wants.
 #:
 #: No API carries these. The names are the original trainers the games record on what they hand
-#: over, which is how a player can tell a traded Pokemon from a caught one. Both halves offer
-#: the same four: unlike the gifts, the pair does not disagree here.
+#: over, which is how a player can tell a traded Pokemon from a caught one.
+#:
+#: The one table all three cartridges share, which is why it is not named for the pair. Platinum
+#: moved the starters, swapped where Porygon comes from and changed the terms on both cover
+#: legendaries, and then left these four standing exactly where they were - same NPCs, same
+#: houses, same asking price. Bulbapedia files them under one heading for that reason.
 #:
 #: The Haunter is worth knowing about and there is no field that says it: it is handed over
 #: holding an Everstone, so the trade that would normally finish a Gengar does not. Gengar is
 #: still only in the Old Chateau, and only in dual-slot mode.
-PAIR_TRADES = (
+TRADES = (
     InGameTrade(gets="abra", wants="machop", location="Oreburgh City", npc="Hilary"),
     InGameTrade(
         gets="chatot",
@@ -265,33 +334,45 @@ def gifts(version: str) -> dict[str, GiftDetail]:
     return {**PAIR_GIFTS, **SPLIT_GIFTS[version]}
 
 
-def pair_acquisition_methods(
+def acquisition_methods(
     context: BuildContext,
     *,
     game_id: str,
     version: str,
     entries: Sequence[DexEntry],
+    gifts: Mapping[str, GiftDetail] | None = None,
+    excluded: Mapping[str, str] | None = None,
+    version_group: str | None = None,
+    trades: Sequence[InGameTrade] = (),
+    eggs: Mapping[str, EggFrom] | None = None,
 ) -> list[AcquisitionMethod]:
-    """Every way to get something in one of the pair.
+    """Every way to get something in one Sinnoh cartridge.
 
-    The halves differ by one word - which version PokeAPI is asked about - so one function
-    answers for both and each game brings its own version name. Two copies of this is how one
-    of them gets edited and the other does not.
+    The steps are the same for all three - what the grass, the water, the rods and the honey
+    trees hold, what is handed over or left standing in one spot, what an NPC will swap for,
+    what evolves into what - but the tables behind them belong to the game. The pair shares
+    every one of them; Platinum shares none, down to which version group its evolutions are
+    stamped with. So the machinery is written here once and each game brings what it knows.
 
-    Steps 3 to 5: what the grass, the water, the rods and the honey trees hold, what is handed
-    over or left standing in one spot, what an NPC will swap for, and what evolves into what
-    here.
+    A table left out is a step that has not been gathered yet, not a game with nothing to
+    declare. Platinum arrives with its encounters first, the way the pair did, and picks the
+    rest up as the steps that gather them run. Handing this an empty gift table instead would
+    print PokeAPI's bare rows and call it step 4.
 
     The wild and gift steps read the same encounter tables and walk into the same places, so
     they share one place lookup: Route 205 is named once however many times it comes up, the
     way it is in Hoenn and Kanto.
     """
     api = context.require_api()
-    species = [entry.target.species for entry in entries]
+    # Every species the living dex here asks for, which is not the game's own Pokedex. Those
+    # are two different lists, and asking only about the second is what left every entry
+    # outside the regional dex with nothing recorded against it - in games that produce plenty
+    # of them.
+    species = context.living_dex(through=NATIONAL_DEX_THROUGH, entries=entries)
     today = date.today()
     places = LocationNames(api, refresh=context.refresh)
 
-    return [
+    found: list[AcquisitionMethod] = [
         *wild_encounters(
             api,
             game_id=game_id,
@@ -300,38 +381,88 @@ def pair_acquisition_methods(
             retrieved_on=today,
             refresh=context.refresh,
             places=places,
-        ),
-        *gift_encounters(
-            api,
-            game_id=game_id,
-            version=version,
-            species=species,
-            retrieved_on=today,
-            details=gifts(version),
-            excluded=NOT_A_GIFT[version],
-            refresh=context.refresh,
-            places=places,
-        ),
-        *evolution_encounters(
-            api,
-            game_id=game_id,
-            version_group=PAIR_VERSION_GROUP,
-            species=species,
-            retrieved_on=today,
-            refresh=context.refresh,
-        ),
-        *trade_encounters(
-            game_id=game_id,
-            trades=PAIR_TRADES,
-            citation=bulbapedia("In-game_trade", retrieved_on=today),
-        ),
+        )
     ]
 
+    if gifts is not None:
+        found.extend(
+            gift_encounters(
+                api,
+                game_id=game_id,
+                version=version,
+                species=species,
+                retrieved_on=today,
+                details=gifts,
+                excluded=excluded,
+                refresh=context.refresh,
+                places=places,
+            )
+        )
 
-# The day care in Solaceon Town is not here, and its absence is a fact rather than a gap.
-# Generation 4 brought most of the baby Pokemon there are, and then put them in Sinnoh's own
-# grass: Cleffa and Chingling in Mt. Coronet, Pichu and Mime Jr. in the Trophy Garden, Azurill
-# in the Great Marsh, Budew in Eterna Forest, Mantyke on the water, Munchlax on the honey trees.
-# Happiny and Riolu are handed over as eggs. Every baby in these 151 entries has a source that
-# is not an egg the player has to make, which is why Ruby and Sapphire hatch three and these
-# two hatch none.
+    if version_group is not None:
+        found.extend(
+            evolution_encounters(
+                api,
+                game_id=game_id,
+                version_group=version_group,
+                species=species,
+                retrieved_on=today,
+                refresh=context.refresh,
+            )
+        )
+
+    if eggs:
+        found.extend(
+            breeding_encounters(
+                game_id=game_id,
+                day_care=DAY_CARE,
+                eggs=eggs,
+                citation=bulbapedia("Baby_Pok%C3%A9mon", retrieved_on=today),
+            )
+        )
+
+    found.extend(
+        trade_encounters(
+            game_id=game_id,
+            trades=trades,
+            citation=bulbapedia("In-game_trade", retrieved_on=today),
+        )
+    )
+
+    return found
+
+
+def pair_acquisition_methods(
+    context: BuildContext,
+    *,
+    game_id: str,
+    version: str,
+    entries: Sequence[DexEntry],
+) -> list[AcquisitionMethod]:
+    """Every way to get something in one of the pair, with the pair's tables filled in.
+
+    The halves differ by one word - which version PokeAPI is asked about - so one function
+    answers for both and each game brings its own version name. Two copies of this is how one
+    of them gets edited and the other does not.
+    """
+    return acquisition_methods(
+        context,
+        game_id=game_id,
+        version=version,
+        entries=entries,
+        gifts=gifts(version),
+        excluded=NOT_A_GIFT[version],
+        version_group=PAIR_VERSION_GROUP,
+        trades=TRADES,
+    )
+
+
+# The pair passes no eggs, and that absence is a fact rather than a gap. Generation 4 brought
+# most of the baby Pokemon there are, and then put them in Sinnoh's own grass: Cleffa and
+# Chingling in Mt. Coronet, Pichu and Mime Jr. in the Trophy Garden, Azurill in the Great Marsh,
+# Budew in Eterna Forest, Mantyke on the water, Munchlax on the honey trees. Happiny and Riolu
+# are handed over as eggs. Every baby in the pair's 151 entries has a source that is not an egg
+# the player has to make, which is why Ruby and Sapphire hatch three and these two hatch none.
+#
+# Platinum is the exception, and only because its dex is longer: it counts Elekid and Magby as
+# Sinnoh's, and neither one is anywhere in Sinnoh. Its table is in its own file.

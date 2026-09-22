@@ -102,6 +102,10 @@ def gift_encounters(
     """
     known = details or {}
     skip = excluded or {}
+    #: Species this game handed over that its own table says nothing about. Reported at the end
+    #: rather than per row: a game whose living dex reaches past its own Pokedex meets gifts
+    #: nobody has written up yet, and the number is the size of that job.
+    undescribed: set[str] = set()
     where = places or LocationNames(api, refresh=refresh)
     found: list[GiftAcquisition] = []
     seen: set[tuple] = set()
@@ -161,8 +165,19 @@ def gift_encounters(
                     if key in seen:
                         continue
 
+                    if name not in known:
+                        undescribed.add(name)
+
                     seen.add(key)
                     found.append(record)
+
+    if undescribed:
+        log.info(
+            "%s hands over %s species its gift table does not describe: %s",
+            game_id,
+            len(undescribed),
+            ", ".join(sorted(undescribed)),
+        )
 
     return found
 
@@ -194,7 +209,9 @@ def _record(
         # talking to 32 people in the Underground" where the conditions say two bare facts.
         # What the conditions say is the fallback, so that a game which has not been written
         # out yet loses nothing.
-        requirement=known.requirement or conditions.requirement(values, subject=species),
+        # ``skip`` is empty because a gift record has no column for any of it: not the time of
+        # day, not the season. Whatever the row says has to fit in this one sentence or be lost.
+        requirement=known.requirement or conditions.requirement(values, subject=species, skip=()),
         source=citation,
     )
 

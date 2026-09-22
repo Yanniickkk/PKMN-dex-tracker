@@ -91,6 +91,29 @@ REQUIREMENTS: dict[str, str] = {
     "story-progress-defeat-mars": "After Mars is beaten at the Valley Windworks",
     "story-progress-beat-team-galactic-iron-island": "After Team Galactic is beaten on Iron Island",
     "other-talked-to-32-people-underground": "After talking to 32 people in the Underground",
+    # The roaming legendaries of two generations, and the hoops each one waits behind. All of
+    # these turned up the day the games started asking about their whole living dex instead of
+    # their own Pokedex: every one of them is a National Dex entry that no regional list has.
+    "story-progress-beat-elite-four-round-two": "After the Elite Four are beaten a second time",
+    "story-progress-oak-eterna-city": "After meeting Professor Oak in Eterna City",
+    "story-progress-cure-eldritch-nightmares": (
+        "After the sailor's nightmares in Canalave City are cured"
+    ),
+    "other-regirock-regice-registeel-in-party": (
+        "With Regirock, Regice and Registeel in the party"
+    ),
+    "first-party-pokemon-high-friendship": (
+        "With a Pokemon at the front of the party that likes you well enough"
+    ),
+    # Only ever used where there is no column for them: a gift or a static has no time field,
+    # and the Rotom in the Old Chateau is only there after dark.
+    "time-morning": "In the morning",
+    "time-day": "During the day",
+    "time-night": "At night",
+    "other-talk-to-cynthias-grandmother": "After talking to Cynthia's grandmother in Celestic Town",
+    "other-giratina-not-caught-in-distortion-world": (
+        "Only if it was not caught in the Distortion World"
+    ),
     "weekday-sunday": "On a Sunday",
     "weekday-monday": "On a Monday",
     "weekday-tuesday": "On a Tuesday",
@@ -111,9 +134,24 @@ _ITEM = "item-"
 #: so this is only what a game that has not bothered would say.
 _COINS = "coins-"
 
+#: Which first partner the save was started with. FireRed and LeafGreen decide which of the
+#: three legendary beasts roams Kanto by this and nothing else, so a player who picked
+#: Bulbasaur will never meet the other two however long they walk.
+_STARTER = "starter-"
 
-def requirement(values: list[str], *, subject: str) -> str | None:
-    """Every condition on one row that is not the time or the season, as one sentence.
+
+def requirement(
+    values: list[str],
+    *,
+    subject: str,
+    skip: tuple[str, ...] = (TIME, SEASON),
+) -> str | None:
+    """Every condition on one row that has no field of its own, as one sentence.
+
+    ``skip`` is which prefixes the caller has somewhere better to put. A wild slot has columns
+    for the time and the season, so it takes them out; a gift has neither, and Rotom sits in
+    front of its television in the Old Chateau only at night. Dropping that because some other
+    record type has a column for it is how a condition disappears.
 
     Each phrase is written to stand on its own, so the ones after the first are lowered into
     the sentence they are joined onto: "... and After the National Dex opens" reads like two
@@ -122,7 +160,7 @@ def requirement(values: list[str], *, subject: str) -> str | None:
     phrases = [
         phrase(value, subject=subject)
         for value in values
-        if value not in ORDINARY and not value.startswith((TIME, SEASON))
+        if value not in ORDINARY and not (skip and value.startswith(skip))
     ]
 
     if not phrases:
@@ -147,6 +185,9 @@ def phrase(value: str, *, subject: str) -> str:
 
     if value.startswith(_COINS):
         return f"Game Corner prize, {value.removeprefix(_COINS)} coins"
+
+    if value.startswith(_STARTER):
+        return f"Only in a save that started with {pretty(value.removeprefix(_STARTER))}"
 
     # A real restriction with no wording yet: carried through as its slug rather than dropped,
     # and said out loud, because a condition nobody has read is a sentence nobody has checked.

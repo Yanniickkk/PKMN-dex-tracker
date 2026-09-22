@@ -106,21 +106,13 @@ _Done: Ruby, Sapphire, Emerald, FireRed and LeafGreen. All five are in `DONE dex
 
 ### Generation 4
 
-_Done: Diamond and Pearl. Both are in `DONE dex tracker.md`._
+_Done: Diamond, Pearl and Platinum. All three are in `DONE dex tracker.md`. What is left of
+Generation 4 is Johto: HeartGold and SoulSilver, whose six held-back edges are already declared._
 
 _What the Sinnoh games share is in `sinnoh.py`; what every Generation 4 cartridge shares - the
 wireless trading between all five, the National Dex to 493, Pal Park out of the slot underneath -
-is in `ds.py`. Platinum reads from both already. Its dex is `extended-sinnoh`, 210 entries and
-not the pair's 151, and its sprites are its own sheet: it redrew them._
+is in `ds.py`, which HeartGold and SoulSilver will read from too._
 
-- [ ] **Platinum** (`platinum`, gen 4, standalone) — *partly done in Phase 1*
-  - Its Pal Park edges were widened while FireRed and LeafGreen were being added: the file had
-    listed Emerald alone since Phase 1, when Emerald was the only Generation 3 game in the
-    dataset, so Ruby and Sapphire reached Generation 4 only by trading into Emerald first. Pal
-    Park takes any Game Pak, so all five cartridges declare the route now.
-  - [x] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
 - [ ] **HeartGold** (`heartgold`, gen 4, pair partner: SoulSilver)
   - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
@@ -262,6 +254,4 @@ Separate entities from the cartridges, because only these reach Bank.
 - [ ] Keyboard navigation through the grid and popup
 - [ ] Empty and error states: no dataset, corrupt data file, cloud file locked
 - [ ] Export a collection to CSV
-- [ ] Filter national dex or regional dex
-- [ ] Filter on game should include all games
 - [ ] Collections list can be filtered on main game, name

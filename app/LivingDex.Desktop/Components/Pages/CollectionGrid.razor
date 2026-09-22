@@ -30,6 +30,20 @@ else
         <a class="button" href="collections">All collections</a>
     </div>
 
+    @* Two lists, one game. Diamond asks a player for 493 entries and shows a Sinnoh Pokedex of
+       151 with its own numbering; which of the two is on screen is the player's choice. Only
+       offered when the game really has both. *@
+    @if (BothDexesExist())
+    {
+        <div class="dex-switch">
+            <label for="dex-view">Showing</label>
+            <select id="dex-view" value="@_view" @onchange="OnViewChanged">
+                <option value="@DexSource.NationalDex">National dex</option>
+                <option value="@DexSource.GameDex">@RegionalDexName()</option>
+            </select>
+        </div>
+    }
+
     <div class="progress">
         <p class="progress-figures">
             @if (_progress.IsComplete)
@@ -445,6 +459,13 @@ else
     private IReadOnlyList<DexLine> _shown = [];
     private DexFilter _filter = DexFilter.None;
     private string _search = string.Empty;
+    //: Which of the game's two lists is on screen. Not saved to the data file: it is a way of
+    //: looking at a collection rather than part of what the collection is, the same as the
+    //: filters beside it.
+    private DexSource _view = DexSource.NationalDex;
+    //: Answers "can this be got here", and remembers its answers. Rebuilt whenever the records
+    //: change: transferring a Bulbasaur in is what makes Ivysaur available.
+    private Availability _availability = new(ReferenceData.Empty, CaptureIndex.Empty);
     private DexTrail? _trail;
     private readonly Dictionary<(GameId From, DexTarget Target), TransferRouteResult> _routes = [];
     private string _note = string.Empty;
@@ -492,19 +513,70 @@ else
 
         // Indexed once per visit: the grid asks for a status a thousand times while it scrolls.
         _captures = CaptureIndex.For(_collection.Id, records);
+        _availability = new Availability(Dataset.Reference, _captures);
 
+        // Whichever list the game itself names, which for every game so far is the National Dex.
+        _view = Dataset.Reference.FindGame(_collection.MainGame)?.DexSource ?? DexSource.NationalDex;
+
+        if (!Rebuild())
+        {
+            return;
+        }
+
+        ApplyFilter();
+    }
+
+    /// <summary>
+    /// Builds the dex for the view on screen and recounts the progress. False when it could not
+    /// be built, with the reason already in <c>_error</c>.
+    /// </summary>
+    /// <remarks>
+    /// The captures are keyed by target rather than by number, so switching between the two
+    /// lists keeps every tick. Only what is shown, and what the numbers beside it mean, change.
+    /// </remarks>
+    private bool Rebuild()
+    {
         try
         {
-            _lines = new DexBuilder(Dataset.Reference).Build(_collection);
+            _lines = new DexBuilder(Dataset.Reference).Build(_collection!, _view);
         }
         catch (DexBuildException exception)
         {
             _error = exception.Message;
-            return;
+            return false;
         }
 
         _progress = DexProgress.Of(_lines, _captures);
-        ApplyFilter();
+        return true;
+    }
+
+    /// <summary>True when the main game has both a National Dex and a Pokedex of its own.</summary>
+    private bool BothDexesExist() =>
+        _collection is not null
+        && Dataset.Reference.FindGame(_collection.MainGame) is { HasNationalDex: true }
+        && Dataset.Reference.DexOf(_collection.MainGame).Count > 0;
+
+    /// <summary>What to call the main game's own dex, for example <c>Sinnoh dex</c>.</summary>
+    private string RegionalDexName() =>
+        _collection is not null
+        && Dataset.Reference.FindGame(_collection.MainGame) is { } game
+        && !string.IsNullOrWhiteSpace(game.Region)
+            ? $"{game.Region} dex"
+            : "This game's dex";
+
+    private void OnViewChanged(ChangeEventArgs args)
+    {
+        if (!Enum.TryParse<DexSource>(args.Value?.ToString(), out var view) || view == _view)
+        {
+            return;
+        }
+
+        _view = view;
+
+        if (Rebuild())
+        {
+            ApplyFilter();
+        }
     }
 
     /// <summary>
@@ -713,6 +785,9 @@ else
             // Everything the screen shows about records is rebuilt from what was written, rather
             // than patched in two places and left to drift.
             _captures = CaptureIndex.For(_collection!.Id, written.Records);
+            // A transfer can make an evolution reachable that was not a moment ago, so the
+            // answers this remembers are no longer good.
+            _availability = new Availability(Dataset.Reference, _captures);
             _progress = DexProgress.Of(_lines, _captures);
             ApplyFilter();
             LoadNote();
@@ -934,8 +1009,16 @@ else
         _rows = [.. _shown.Chunk(Columns)];
     }
 
-    private bool IsAvailableIn(GameId game, DexTarget target) =>
-        Dataset.Reference.MethodsFor(game, target).Count > 0;
+    /// <summary>
+    /// Whether a game has a way to produce an entry that the player could actually follow.
+    /// </summary>
+    /// <remarks>
+    /// Goes through <see cref="Availability"/> rather than asking whether any method exists,
+    /// because an evolution is not a way to get something when the thing it evolves from cannot
+    /// be had. Platinum evolves Ivysaur and cannot produce a Bulbasaur, and the filter used to
+    /// offer the Ivysaur anyway.
+    /// </remarks>
+    private bool IsAvailableIn(GameId game, DexTarget target) => _availability.In(game, target);
 
     /// <summary>
     /// The one-click move from the grid: catch it, or having transferred it, or take it back.

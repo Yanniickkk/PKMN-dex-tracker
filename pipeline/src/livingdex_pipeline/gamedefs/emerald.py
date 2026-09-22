@@ -226,7 +226,11 @@ def acquisition_methods(context: BuildContext, entries: list[DexEntry]) -> list[
     they share one place lookup: Route 119 is named once however many times it comes up.
     """
     api = context.require_api()
-    species = [entry.target.species for entry in entries]
+    # Every species the living dex here asks for, which is not the game's own Pokedex. Those
+    # are two different lists, and asking only about the second is what left every entry
+    # outside the regional dex with nothing recorded against it - in games that produce plenty
+    # of them.
+    species = context.living_dex(through=hoenn.NATIONAL_DEX_THROUGH, entries=entries)
     today = date.today()
     places = LocationNames(api, refresh=context.refresh)
 

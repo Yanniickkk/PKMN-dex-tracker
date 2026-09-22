@@ -64,7 +64,7 @@ SHIELDON_EVENT: str | None = None
 #: A reason rather than a gap: the validator can tell "we checked and it cannot be caught" from
 #: "we have not gathered this yet", and only the second is a fault.
 UNOBTAINABLE: dict[str, str] = {
-    "manaphy": sinnoh.MANAPHY_REASON,
+    "manaphy": sinnoh.manaphy_reason(sinnoh.PAIR_MANAPHY_EVENT),
     "shieldon": sinnoh.fossil_only_on("Pearl", "Armor Fossil", SHIELDON_EVENT),
     **{species: sinnoh.only_on("Pearl", event) for species, event in ONLY_ON_PEARL.items()},
 }
