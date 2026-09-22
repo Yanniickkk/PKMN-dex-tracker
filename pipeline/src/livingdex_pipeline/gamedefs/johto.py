@@ -12,11 +12,11 @@ So the split is drawn twice over:
   here, and a table that belongs to one pair rather than to the region says so in its name.
 * What is true of the hardware and the generation - which cartridges trade with which, how far
   the National Dex reaches, whether there is a Pal Park at all - lives with the generation:
-  :mod:`ds` for HeartGold and SoulSilver, and its own module for Gold and Silver when they
-  arrive.
+  :mod:`ds` for HeartGold and SoulSilver, :mod:`gbc` for Gold, Silver and Crystal.
 
-Nothing here should have to be edited to add Gold and Silver. Something that does have to be
-edited is a fact about the DS pair that has been written down as a fact about Johto.
+The factories are named for the hardware for that reason. Nothing here should have to be edited
+to add Crystal; something that does have to be edited is a fact about one pair that has been
+written down as a fact about Johto.
 """
 
 from __future__ import annotations
@@ -32,8 +32,8 @@ from ..models import AcquisitionMethod, DexEntry, DexTarget, Game, GiftKind, Tra
 from ..places import LocationNames
 from ..sources import bulbapedia
 from ..trades import InGameTrade, trade_encounters
-from ..wild import wild_encounters
-from . import ds, exclusives
+from ..wild import RecordedSlot, recorded_encounters, wild_encounters
+from . import ds, exclusives, gbc
 
 #: The region itself. Kanto is playable in every game set here, but it is a second half of the
 #: map rather than a second region for these entities: a HeartGold cartridge is a Johto game.
@@ -43,10 +43,14 @@ REGION = "Johto"
 #: put the day care on Route 34 and HeartGold did not move it.
 DAY_CARE = "Route 34, Pokemon Day Care"
 
-#: PokeAPI's name for the 251-entry Johto dex, the one Gold, Silver and Crystal show.
+#: PokeAPI's name for the 251-entry Johto dex, the order Gold, Silver and Crystal list in.
 #:
-#: Not used yet - those three are not written - and named here anyway, beside the other one. A
-#: single constant called "the Johto dex" is how the next reader learns there is only one.
+#: Named here and deliberately not used, which is the opposite of what step 2 expected. These
+#: games do open their Pokedex in this order - the Johto first partners first - but they print
+#: the old numbers beside it, so a Gold player reads Chikorita as #152. The entries those games
+#: carry are numbered nationally for that reason; :mod:`gbc` has the whole of it.
+#:
+#: Kept because it is a true fact about the region and because the next reader will look for it.
 ORIGINAL_DEX = "original-johto"
 
 #: PokeAPI's name for the 256-entry Johto dex, the one HeartGold and SoulSilver show.
@@ -71,6 +75,17 @@ STARTER_STEVEN = "Pick one of the three, once a Kanto first partner has been tak
 
 #: Who revives a fossil in these games, wherever it was dug up.
 MUSEUM = "A scientist in the Pewter Museum"
+
+
+#: One battle per tile on the booby-trapped floor of the Rocket hideout, each met once and
+#: impossible to run from.
+ROCKET_TRAP_FLOOR = "On the trap floor of the hideout, met once and impossible to run from"
+
+#: The wing this half is handed in the middle of its own story.
+RADIO_TOWER_WING = "{wing}, from the Radio Tower Director once Team Rocket is beaten"
+
+#: And the one it has to wait for, which is in Kanto and therefore after the Elite Four.
+PEWTER_WING = "{wing}, from an old man in Pewter City, which is a Kanto errand and comes later"
 
 
 #: What only the game knows about each thing HeartGold and SoulSilver hand over or leave
@@ -147,6 +162,276 @@ DS_PAIR_GIFTS: dict[str, GiftDetails] = {
             "both caught in this tower - so one of the two has to come from the other version"
         ),
     ),
+}
+
+
+#: What only the game knows about each thing Gold and Silver hand over or leave standing in one
+#: spot.
+#:
+#: Named for the pair, as its DS counterpart above is. Crystal moves one of these and adds
+#: several of its own, and it will bring its own table beside this one.
+#:
+#: The Goldenrod Game Corner needs no rows here and neither does Celadon's: PokeAPI carries what
+#: each window charges as a condition on the encounter, so "Game Corner prize, 2100 coins" is
+#: already written. Ekans at 700 coins is Gold's window and Sandshrew at 700 is Silver's, which
+#: is the pair switch reaching a place no grass ever does.
+GBC_PAIR_GIFTS: dict[str, GiftDetails] = {
+    # Johto's own three, from the lab next door to the house you start in. The same sentence the
+    # remake uses, because the remake changed nothing about it.
+    "chikorita": GiftDetail(kind=GiftKind.STARTER, npc="Professor Elm", requirement=STARTER_ELM),
+    "cyndaquil": GiftDetail(kind=GiftKind.STARTER, npc="Professor Elm", requirement=STARTER_ELM),
+    "totodile": GiftDetail(kind=GiftKind.STARTER, npc="Professor Elm", requirement=STARTER_ELM),
+    # And no second or third set: Oak hands nothing over in these games and Steven is two
+    # generations away. A player of Gold gets one first partner, where a player of HeartGold
+    # gets three.
+    "togepi": GiftDetail(
+        kind=GiftKind.EGG,
+        npc="Professor Elm's assistant",
+        requirement=(
+            "Hatched from the Egg he brings to Violet City, once Mr. Pokemon's errand is done"
+        ),
+    ),
+    "eevee": (
+        # Two places, and the table says which is which. This is what `where` is for.
+        GiftDetail(
+            where="Goldenrod City, Bills House",
+            npc="Bill",
+            requirement="Meet him in the Ecruteak City Pokemon Center first",
+        ),
+        # The other is Celadon's window, whose price the encounter already carries.
+        GiftDetail(),
+    ),
+    # Kenya, handed over with Mail attached for a man by the pond on Route 31. What happens to it
+    # after the delivery is not something this dataset has to settle: Spearow is in the grass and
+    # in the headbutt trees on half of Johto's routes, so no dex entry hangs on the answer.
+    "spearow": GiftDetail(
+        npc="A guard in the gate north of Goldenrod City",
+        requirement="Kenya, handed over holding Mail for a man on Route 31",
+    ),
+    "shuckle": GiftDetail(
+        npc="Mania, in Cianwood City",
+        requirement=(
+            "Lent for safekeeping; he asks for it back on another day and lets it stay at 150 "
+            "friendship, or if you refuse him"
+        ),
+    ),
+    "tyrogue": GiftDetail(npc="The Karate King", requirement="Beat him in Mt. Mortar"),
+    "sudowoodo": GiftDetail(requirement="SquirtBottle, on the tree blocking Route 36"),
+    "gyarados": GiftDetail(
+        requirement="The red one in the Lake of Rage, at the end of the Rocket story"
+    ),
+    "snorlax": GiftDetail(
+        requirement=(
+            "The Expn Card's Poke Flute channel on the Pokegear, to wake the one asleep outside "
+            "Vermilion City"
+        )
+    ),
+    # The hideout under Mahogany Town, and the two kinds of fixed encounter in it. Three Electrode
+    # are wired to the generator on B2F; the trap floor above holds the rest, one battle per tile.
+    "electrode": GiftDetail(requirement="One of the three wired to the generator in the hideout"),
+    "geodude": GiftDetail(requirement=ROCKET_TRAP_FLOOR),
+    "voltorb": GiftDetail(requirement=ROCKET_TRAP_FLOOR),
+    "koffing": GiftDetail(requirement=ROCKET_TRAP_FLOOR),
+}
+
+#: Which wing each half is handed during its own story, and which it waits for.
+#:
+#: The neatest version switch in these two games, and it is not a species at all. Gold's Director
+#: hands over the Rainbow Wing once Team Rocket is beaten and Silver's hands over the Silver Wing,
+#: so Gold meets Ho-Oh at level 40 in the middle of its story and Silver meets Lugia there. The
+#: other wing is an old man's in Pewter City, which is Kanto, which is after the Elite Four - and
+#: the level the other bird waits at is 70.
+GBC_PAIR_WINGS: dict[str, dict[str, str]] = {
+    "gold": {
+        "ho-oh": RADIO_TOWER_WING.format(wing="Rainbow Wing"),
+        "lugia": PEWTER_WING.format(wing="Silver Wing"),
+    },
+    "silver": {
+        "lugia": RADIO_TOWER_WING.format(wing="Silver Wing"),
+        "ho-oh": PEWTER_WING.format(wing="Rainbow Wing"),
+    },
+}
+
+
+def gbc_gifts(version: str) -> dict[str, GiftDetails]:
+    """The gift table as one half of the pair sees it, with the right wing in the right place."""
+    wings = {
+        species: GiftDetail(requirement=requirement)
+        for species, requirement in GBC_PAIR_WINGS[version].items()
+    }
+
+    return {**GBC_PAIR_GIFTS, **wings}
+
+
+#: Why no Generation 2 game hands over a Kanto first partner.
+#:
+#: Professor Oak is in these games and gives nothing away: his three are the remake's idea. So
+#: the only Bulbasaur in a Gold save came out of a Game Boy, through the Time Capsule.
+GBC_KANTO_STARTERS = (
+    "Nobody hands one over in Generation 2: Oak's lab is a visit rather than a choice. The Time "
+    "Capsule is the way in, from Red, Blue or Yellow"
+)
+
+#: And why no fossil is revived in them.
+#:
+#: The Pewter Museum revives fossils in HeartGold and in no game before it. In Generation 2 the
+#: Old Amber and the two fossils are not items a player ever holds, so an Omanyte here was an
+#: Omanyte somewhere else first.
+GBC_NO_FOSSILS = (
+    "No fossil is revived in Generation 2: the scientist in the Pewter Museum starts doing that "
+    "in the remake. The Time Capsule is the way in, from Red, Blue or Yellow"
+)
+
+#: And why Kanto's four legendaries are not in Kanto here.
+#:
+#: Half the map of these games is Kanto and none of the four is standing in it: the Seafoam
+#: Islands, the Power Plant, Mt. Silver and the Cerulean Cave hold nothing. Their own pages say
+#: "Time Capsule, Event" for the whole of Generation 2, which is the rare case of a source
+#: saying out loud that a game has nothing.
+GBC_KANTO_LEGENDS = (
+    "Not standing anywhere in these games, Kanto included. The Time Capsule is the way in, from "
+    "Red, Blue or Yellow"
+)
+
+#: Why nothing in Gold or Silver produces a Mew.
+#:
+#: The same reasoning as Red's, one generation on: what was handed out went onto cartridges, and
+#: a 3DS download is not one of those. What these two have that the cartridges did not is the
+#: other end of the Time Capsule - and Red, Blue and Yellow did get two Virtual Console Mews.
+GBC_MEW_REASON = (
+    "Distribution event only, and none of them reached these releases: the Mews of 1996 to 2000 "
+    "went onto cartridges. The Time Capsule is the way in, from a Red, Blue or Yellow that was "
+    "given one of the two 2016 Virtual Console Mews"
+)
+
+#: And why nothing in them produces a Celebi, which is the entry this generation is named for.
+#:
+#: Ten distributions between 2000 and 2003, every one of them onto a cartridge. What makes this
+#: worth writing down rather than repeating is the exception one game later: Crystal's Virtual
+#: Console release turns the GS Ball event on in every language, where the original had it in
+#: Japan alone. So a Celebi caught in Ilex Forest in Crystal can be traded to these two, and
+#: until Crystal is in the dataset nothing in it produces a Celebi at all.
+GBC_CELEBI_REASON = (
+    "Distribution event only, and none of them reached these releases: the Celebis handed out "
+    "between 2000 and 2003 went onto cartridges. Crystal is the exception in this generation - "
+    "its Virtual Console release turns on the GS Ball event that was Japan's alone - so one "
+    "caught in Ilex Forest there can be traded across"
+)
+
+#: Dex entries no Generation 2 game fills, whichever half of the pair a player owns.
+#:
+#: Eleven of the seventeen each half cannot produce, and the other six are the version
+#: exclusives, which each game names for itself.
+GBC_PAIR_UNOBTAINABLE: dict[str, str] = {
+    "bulbasaur": GBC_KANTO_STARTERS,
+    "charmander": GBC_KANTO_STARTERS,
+    "squirtle": GBC_KANTO_STARTERS,
+    "omanyte": GBC_NO_FOSSILS,
+    "kabuto": GBC_NO_FOSSILS,
+    "articuno": GBC_KANTO_LEGENDS,
+    "zapdos": GBC_KANTO_LEGENDS,
+    "moltres": GBC_KANTO_LEGENDS,
+    "mewtwo": GBC_KANTO_LEGENDS,
+    "mew": GBC_MEW_REASON,
+    "celebi": GBC_CELEBI_REASON,
+}
+
+
+#: What the Bug-Catching Contest holds, which is the one thing in these games PokeAPI has
+#: nothing at all for.
+#:
+#: Every other slot in this dataset comes from PokeAPI's own encounter tables. This one is read
+#: off Bulbapedia and written down, because the alternative is a dataset that says a Scyther
+#: cannot be caught in Gold - and it can, in the National Park, on a Tuesday.
+#:
+#: Four of the ten are only ever caught here. Scyther and Pinsir are in no grass in either game;
+#: Weedle is Silver's in the wild and Gold's only at the contest, and Caterpie is the other way
+#: round. Their evolutions follow from them, which is why Kakuna and Metapod are in the list but
+#: not the point of it.
+#:
+#: The same table for all three releases: Bulbapedia lists the contest identically for Crystal,
+#: so it will read this too.
+CONTEST = (
+    "In the Bug-Catching Contest, held in the National Park on Tuesdays, Thursdays and Saturdays"
+)
+
+GBC_CONTEST: tuple[RecordedSlot, ...] = tuple(
+    RecordedSlot(
+        species=species,
+        location="National Park",
+        lowest=lowest,
+        highest=highest,
+        rate_percent=rate,
+        requirement=CONTEST,
+    )
+    for species, lowest, highest, rate in (
+        ("caterpie", 7, 18, 20.0),
+        ("metapod", 9, 18, 10.0),
+        ("butterfree", 12, 15, 5.0),
+        ("weedle", 7, 18, 20.0),
+        ("kakuna", 9, 18, 10.0),
+        ("beedrill", 12, 15, 5.0),
+        ("paras", 10, 17, 10.0),
+        ("venonat", 10, 16, 10.0),
+        ("scyther", 13, 14, 5.0),
+        ("pinsir", 13, 14, 5.0),
+    )
+)
+
+
+#: What PokeAPI calls Gold and Silver when it says which version group an evolution started in.
+#:
+#: One group for the two of them, as the remake has one for its two. Crystal is its own, which
+#: is worth knowing before its step 5: nothing it evolves differently, but a game that asked for
+#: this group would be asking about another game.
+GBC_PAIR_VERSION_GROUP = "gold-silver"
+
+#: The seven trades Gold and Silver share, and what each one wants.
+#:
+#: Generation 2 is the first in the dataset to record who you traded with: a Pokemon that comes
+#: over one of these carries an original trainer, where a Generation 1 trade carries the word
+#: TRAINER and nothing else. The games store those names in capitals - as they store every name,
+#: including the species - so they are written here the way the rest of this dataset writes text.
+#:
+#: The nicknames are ROCKY, MUSCLE, VOLTY, DON, AEROY, RUNNY and MAGGIE, in the order below.
+#: There is no field for them, so they are kept here rather than lost.
+#:
+#: Crystal adds an eighth - a Xatu called PAUL for a Haunter, in the same house in Pewter City
+#: that trades the Rapidash - and changes none of these. The remake is the one that rearranged
+#: them: HeartGold hands over a Dodrio where these hand over a Rhydon, and renames every trainer.
+GBC_PAIR_TRADES = (
+    InGameTrade(gets="onix", wants="bellsprout", location="Violet City", npc="Kyle"),
+    InGameTrade(
+        gets="machop",
+        wants="drowzee",
+        location="Goldenrod City, Department Store",
+        npc="Mike",
+    ),
+    InGameTrade(gets="voltorb", wants="krabby", location="Olivine City", npc="Tim"),
+    InGameTrade(gets="rhydon", wants="dragonair", location="Blackthorn City", npc="Emy"),
+    InGameTrade(gets="aerodactyl", wants="chansey", location="Route 14", npc="Kim"),
+    InGameTrade(gets="rapidash", wants="gloom", location="Pewter City", npc="Chris"),
+    InGameTrade(gets="magneton", wants="dugtrio", location="Power Plant", npc="Forest"),
+)
+
+#: Which babies the day care on Route 34 is the only way to, and what has to be left there.
+#:
+#: The first eggs in the dataset that are not a remake's. Generation 2 invented breeding and
+#: invented the babies that need it, and these six are in no grass in either game: a Pichu is
+#: #172 in a dex that also holds the Pikachu it hatches from.
+#:
+#: Shorter than the remake's list by half, and every difference is a later generation reaching
+#: back. HeartGold hatches Wynaut, Happiny, Mantyke, Mime Jr., Munchlax and Bonsly, each behind
+#: an incense that does not exist here; and its Elekid may hatch from an Electivire, which these
+#: games have never heard of. Tyrogue and Togepi are left out of both tables for the same
+#: reason: the Karate King hands one over and Elm's assistant brings the other.
+GBC_PAIR_EGGS: dict[str, EggFrom] = {
+    "pichu": EggFrom(parents=("pikachu", "raichu")),
+    "cleffa": EggFrom(parents=("clefairy", "clefable")),
+    "igglybuff": EggFrom(parents=("jigglypuff", "wigglytuff")),
+    "smoochum": EggFrom(parents=("jynx",)),
+    "elekid": EggFrom(parents=("electabuzz",)),
+    "magby": EggFrom(parents=("magmar",)),
 }
 
 
@@ -351,10 +636,137 @@ def ds_edges(game_id: str) -> list[TransferEdge]:
     """Every route one of the DS pair brings: its own generation's trades, and Pal Park.
 
     Also named for the hardware. Gold and Silver's routes are nothing like these - a Time
-    Capsule back to Generation 1, and the Virtual Console releases that reach Pokemon Bank are
-    separate entities again - and none of that is a fact about Johto.
+    Capsule back to Generation 1 and Poke Transporter forward into Bank - and none of that is a
+    fact about Johto.
     """
     return ds.edges(game_id)
+
+
+def gbc_release(
+    *,
+    game_id: str,
+    title: str,
+    version: str,
+    released: date,
+    pair_partner: str | None = None,
+    sprite_set: str | None = None,
+) -> Game:
+    """One Johto game on the Game Boy Color: a Generation 2 release that happens to be set here.
+
+    The other half of the split the DS factory above describes, and the two of them are why
+    this module is about the place. Almost nothing either generation fills in is true of the
+    other: one is a cartridge with a Pal Park and a National Dex of 493, the other is a 3DS
+    download with 251 entries and nowhere else to go but Bank. The region is the one argument
+    both pass.
+
+    ``pair_partner`` is optional here and required of the DS factory, which is the difference
+    between the two sets: Gold and Silver have Crystal beside them, and HeartGold and SoulSilver
+    never had a third version.
+    """
+    return gbc.release(
+        game_id=game_id,
+        title=title,
+        version=version,
+        region=REGION,
+        released=released,
+        sprite_set=sprite_set,
+        pair_partner=pair_partner,
+    )
+
+
+def gbc_edges(game_id: str) -> list[TransferEdge]:
+    """Every route a Generation 2 release brings: its own trades, and Bank.
+
+    The Time Capsule is not among them, and that is :mod:`gbc`'s doing rather than an omission
+    here: Generation 1 declares it, because the limit on it is a fact about that side.
+    """
+    return gbc.edges(game_id)
+
+
+def gbc_acquisition_methods(
+    context: BuildContext,
+    *,
+    game_id: str,
+    version: str,
+    entries: Sequence[DexEntry],
+    gifts: Mapping[str, GiftDetails] | None = None,
+    version_group: str | None = None,
+    trades: Sequence[InGameTrade] = (),
+    eggs: Mapping[str, EggFrom] | None = None,
+) -> list[AcquisitionMethod]:
+    """Every way to get something in one Generation 2 release, whichever of the three it is.
+
+    ``through`` is None rather than 251, and that is the generation rather than the game: a
+    release with no National Dex asks for its own dex, which for these is the same 251 either
+    way. It is written as None so that the entity stays the thing that decides.
+
+    The tables are arguments rather than constants because the three releases do not agree about
+    them, as Generation 1's three did not. Gold and Silver share theirs; Crystal moves a starter
+    and adds the Battle Tower's own, and it will bring its own table when it arrives.
+
+    Eggs are a real argument here for the first time in these two generations. Generation 2 is
+    where breeding starts, and it is also where the babies that need it arrive - a Pichu is in
+    this dex and nothing in the grass holds one.
+
+    The renamed places are not an argument either: all three of these games call the Tin Tower
+    the Tin Tower, so :mod:`gbc` holds the table and every release set here reads it. The
+    Bug-Catching Contest is the same - one contest, three games - and it is the one part of
+    these games PokeAPI has nothing for.
+    """
+    return acquisition_methods(
+        context,
+        game_id=game_id,
+        version=version,
+        entries=entries,
+        through=None,
+        gifts=gifts,
+        version_group=version_group,
+        trades=trades,
+        eggs=eggs,
+        renamed=gbc.RENAMED_PLACES,
+        recorded=GBC_CONTEST,
+        recorded_from="Bug-Catching_Contest",
+    )
+
+
+def gbc_dex_entries(
+    context: BuildContext,
+    *,
+    game_id: str,
+    unobtainable: Mapping[str, str] | None = None,
+) -> list[DexEntry]:
+    """The 251 a Generation 2 game asks for, Bulbasaur #001 to Celebi #251.
+
+    The National Dex cut off at Celebi rather than Johto's own list, and the reason is in
+    :mod:`gbc`: these games list in the Johto order and number in the national one, and a dex
+    entry carries the number a player reads off the screen.
+
+    So this is the only dex in the dataset built by cutting the national list short. Every other
+    game either has a regional dex whose numbers it shows - Kanto's 151, Hoenn's 202, the
+    updated Johto's 256 - or a National Dex behind that regional one. These have a National Dex
+    and nothing in front of it.
+
+    Which of the 251 the game cannot produce is the ``unobtainable`` table each game brings,
+    and it arrives with step 7.
+    """
+    reasons = unobtainable or {}
+    api = context.require_api()
+
+    return [
+        DexEntry(
+            game=game_id,
+            target=DexTarget(species=species),
+            number=number,
+            unobtainable_reason=reasons.get(species),
+        )
+        for number, species in api.pokedex(gbc.DEX, refresh=context.refresh)
+        if number <= gbc.DEX_THROUGH
+    ]
+
+
+def gbc_only_on(partner: str, event: str | None = None) -> str:
+    """Why an entry in this dex is not in this Generation 2 release, when the other half has it."""
+    return gbc.only_on(partner, event)
 
 
 def updated_dex_entries(
@@ -413,6 +825,9 @@ def acquisition_methods(
     version_group: str | None = None,
     trades: Sequence[InGameTrade] = (),
     eggs: Mapping[str, EggFrom] | None = None,
+    renamed: Mapping[str, str] | None = None,
+    recorded: Sequence[RecordedSlot] = (),
+    recorded_from: str | None = None,
 ) -> list[AcquisitionMethod]:
     """Every way to get something in one Johto cartridge.
 
@@ -425,7 +840,9 @@ def acquisition_methods(
     handing this an empty gift table instead would print PokeAPI's bare rows and call it step 4.
 
     The wild and gift steps read the same encounter tables and walk into the same places, so
-    they share one place lookup: Route 34 is named once however many times it comes up.
+    they share one place lookup: Route 34 is named once however many times it comes up. That
+    lookup is also where ``renamed`` lands - what these games call a place PokeAPI names after a
+    later one - so both steps write the same name down.
 
     Johto hangs more on its conditions than any region before it. The Pokegear radio changes
     what is in the grass, the Safari Zone changes what is in an area depending on what has been
@@ -438,7 +855,7 @@ def acquisition_methods(
     # half of these games and none of it is in their 256 entries.
     species = context.living_dex(through=through, entries=entries)
     today = date.today()
-    places = LocationNames(api, refresh=context.refresh)
+    places = LocationNames(api, refresh=context.refresh, renamed=renamed or {})
 
     found: list[AcquisitionMethod] = [
         *wild_encounters(
@@ -485,6 +902,16 @@ def acquisition_methods(
                 day_care=DAY_CARE,
                 eggs=eggs,
                 citation=bulbapedia("Baby_Pok%C3%A9mon", retrieved_on=today),
+            )
+        )
+
+    if recorded and recorded_from:
+        found.extend(
+            recorded_encounters(
+                game_id=game_id,
+                slots=recorded,
+                species=species,
+                citation=bulbapedia(recorded_from, retrieved_on=today),
             )
         )
 

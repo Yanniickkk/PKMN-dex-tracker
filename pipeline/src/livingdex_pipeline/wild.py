@@ -9,10 +9,17 @@ slower, more fragile and no more true.
 What it does not answer is gifts, statics and in-game trades. Those are steps 4 and 5 - see
 :mod:`gifts` for the first of them - and the methods that stand for them are skipped here
 rather than quietly turned into wild slots.
+
+It is also not complete, which took until Generation 2 to find out. PokeAPI carries nothing at
+all for the Bug-Catching Contest, and a Scyther in Gold comes from nowhere else - so a game may
+also bring slots written down by hand, cited to whoever was read. That is a last resort and it
+is meant to stay one: a table here cannot be re-fetched, cannot be checked against the game, and
+goes stale without saying so.
 """
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date
 
@@ -261,3 +268,58 @@ def _where(record: WildAcquisition) -> tuple:
 def _identity(record: WildAcquisition) -> tuple:
     """Everything a player would use to tell two slots apart."""
     return (*_twin(record), record.requirement)
+
+
+@dataclass(frozen=True)
+class RecordedSlot:
+    """One wild slot a source other than PokeAPI knows about.
+
+    Everything a PokeAPI row would have carried, filled in by hand: where it is, how it is met,
+    what levels it comes at and how often. ``requirement`` is what makes the slot possible at
+    all - being in a contest, in this generation's one case - because the field is the same one
+    a swarm or a radio channel lands in.
+    """
+
+    species: str
+    location: str
+    lowest: int
+    highest: int
+    method: EncounterMethod = EncounterMethod.WALK
+    sub_area: str | None = None
+    rate_percent: float | None = None
+    requirement: str | None = None
+
+
+def recorded_encounters(
+    *,
+    game_id: str,
+    slots: Sequence[RecordedSlot],
+    species: Sequence[str],
+    citation: SourceCitation,
+) -> list[WildAcquisition]:
+    """Wild slots written down by hand, for a part of a game PokeAPI does not carry.
+
+    One record per slot, filtered to what this game's living dex asks for - a table that lists
+    ten species for a dex that wants eight should not add the other two.
+
+    The citation is the game file's to give, and it is not a PokeAPI url. That is the whole
+    difference between these records and every other wild slot: a reader can see where the
+    numbers came from and go and check them.
+    """
+    wanted = set(species)
+
+    return [
+        WildAcquisition(
+            game=game_id,
+            target=DexTarget(species=slot.species),
+            location=slot.location,
+            sub_area=slot.sub_area,
+            method=slot.method,
+            levels=LevelRange(minimum=slot.lowest, maximum=slot.highest),
+            rate_percent=slot.rate_percent,
+            requirement=slot.requirement,
+            source=citation,
+        )
+        for slot in slots
+        if slot.species in wanted
+    ]

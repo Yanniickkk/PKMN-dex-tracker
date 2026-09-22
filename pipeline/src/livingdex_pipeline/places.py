@@ -7,10 +7,17 @@ from there and whatever is left of the slug becomes the sub-area.
 
 Every step that reads encounters needs this, and they share one instance so a place that a
 dozen Pokemon live in is looked up once for all of them.
+
+One location has one name in PokeAPI, and it is the newest game's. That is right for most of
+the series and wrong wherever a place was renamed: Ho-Oh waits on top of the Bell Tower in
+HeartGold and on top of the Tin Tower in Gold, and a Gold player reading "Bell Tower" is being
+told the name of a game they are not playing. So a set of games can hand over what it calls the
+places it disagrees about, and everything else is left alone.
 """
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 
 from .pokeapi import PokeApiClient
@@ -18,10 +25,20 @@ from .pokeapi import PokeApiClient
 
 @dataclass
 class LocationNames:
-    """Area slug -> (location, sub-area), remembering what it has already been asked."""
+    """Area slug -> (location, sub-area), remembering what it has already been asked.
+
+    ``renamed`` is what these games call a place that PokeAPI names after a later one, keyed by
+    the name PokeAPI gives: ``{"Bell Tower": "Tin Tower"}``. It is a fact about a set of games
+    rather than about the place, so it arrives from the module that knows which games these are,
+    and a lookup that is not in it comes through untouched.
+
+    A renaming applies before anything is written down, so a gift table's ``where`` and a
+    validation message both read the name the player would.
+    """
 
     api: PokeApiClient
     refresh: bool = False
+    renamed: Mapping[str, str] = field(default_factory=dict)
     _cache: dict[str, tuple[str, str | None]] = field(default_factory=dict)
 
     def of(self, area_slug: str) -> tuple[str, str | None]:
@@ -33,7 +50,10 @@ class LocationNames:
         location = self.api.resource(f"location/{location_slug}", refresh=self.refresh)
 
         name = english(location.get("names", []), fallback=pretty(location_slug))
-        self._cache[area_slug] = (name, sub_area(area_slug, location_slug))
+        self._cache[area_slug] = (
+            self.renamed.get(name, name),
+            sub_area(area_slug, location_slug),
+        )
 
         return self._cache[area_slug]
 

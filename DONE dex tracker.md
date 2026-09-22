@@ -1115,7 +1115,191 @@ visible now where before they were not even asked about.
 
 ### Generation 2
 
-_Nothing yet._
+- [x] **Gold** (`gold`, gen 2, pair partner: Silver) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+- [x] **Silver** (`silver`, gen 2, pair partner: Gold) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+  - Built as a pair. 1695 and 1683 ways to get something, 234 of 251 full and 17 explained in
+    each, validation green on all 9 rules.
+  - Step 1 for both, built as a pair. `gbc.py` is new and is Generation 2 the way `gb.py` is
+    Generation 1: a dex of 251 with no National Dex behind it, three releases that trade with
+    each other, Poke Transporter out to Bank. `johto.py` needed only a `gbc_release` and a
+    `gbc_edges` beside its DS pair of factories - the region module was written for this and did
+    not have to be rearranged to take it.
+  - The Time Capsule is deliberately *not* in `gbc.py`. It goes both ways, so exactly one side
+    may declare it, and that side is Generation 1: the limit on it - the first 151 in both
+    directions - is a fact about the older games, which have nowhere to put a Chikorita. Same
+    reasoning that leaves Pal Park with the Generation 4 game that receives. A test pins it: a
+    Generation 2 release's edges are trades and Transporter, and nothing else.
+  - Six Time Capsules lit up the moment these two registered - each of Red, Blue and Yellow to
+    each of Gold and Silver - plus the link cable between the pair. The dataset is at 15 games
+    and 55 routes. Ten are still waiting: Crystal, which both generations reach in their own way,
+    and Bank.
+  - The dates are the Virtual Console ones again: 22 September 2017, one day worldwide. The
+    cartridge was Japan in 1999 and Europe not until April 2001, and neither is what this entity
+    is.
+  - Kanto is playable in all three of these and the entity still says Johto, exactly as HeartGold
+    does. A second half of the map is not a second region.
+  - Step 2 did not go where it looked like it would. Johto has a regional order - PokeAPI's
+    `original-johto`, 251 entries starting at Chikorita - and these games do list in it: the
+    Pokedex opens in New Pokedex Mode with the Johto first partners at the front. But Bulbapedia
+    is explicit that the New Pokedex numbers are shown **nowhere** in the games. What is printed
+    beside a Pokemon is the old number, so a Gold player reads Chikorita as #152 and Bulbasaur as
+    #001.
+  - So these are numbered nationally: the national list cut off at Celebi, Bulbasaur #001 through
+    Mew #151 straight into Chikorita #152. A dex entry carries one number and it should be the one
+    on the screen. The Johto order they happen to list in is not recorded at all - there is no
+    field for "listed like this, numbered like that", and inventing one would buy nothing a player
+    can see. `johto.ORIGINAL_DEX` stays in the file, named and unused, with the reason written
+    next to it.
+  - That makes these the only games in the dataset whose dex is built by cutting the national list
+    short. Every other game either shows a regional dex of its own - Kanto's 151, Hoenn's 202, the
+    updated Johto's 256 - or has a National Dex behind that regional one. These have a National
+    Dex and nothing in front of it.
+  - HeartGold is the other way round and the contrast is worth keeping: its regional numbers *are*
+    what its player sees, so it carries `updated-johto` and its renumbering. Same region, two
+    answers, and the entity is what decides.
+  - The step 2 build fails validation as every step 2 now does, and this time it names one entry
+    with no source anywhere in the dataset rather than none: Celebi. HeartGold and SoulSilver mark
+    it unobtainable, so nothing in fifteen games produces one. Gold's own step 7 will say the same
+    thing about it.
+  - Step 3: 1526 wild slots in Gold and 1514 in Silver, over 81 places each, filling 135 of the
+    251. The biggest step 3 in the dataset so far, and the reason is the map: Johto and Kanto are
+    both in these games, so 81 places is two regions' worth.
+  - These are the oldest games in the dataset that carry a time of day, and not one line had to be
+    written for it. 756 of Gold's slots name one - 260 morning, 250 day, 246 night - and the other
+    770 are the ones the clock does not touch. The condition vocabulary was filled in for
+    HeartGold, which reads the same `time-night` off the same field, and Generation 2 is where the
+    clock was introduced in the first place.
+  - Nothing else needed wording either, which was the open question going in. Seven slots read
+    "Only while it is swarming" and three read "After the beasts are disturbed in the Burned
+    Tower" - Raikou, Entei *and* Suicune, all three roaming Johto, which is Gold and Silver's
+    arrangement rather than Crystal's. Headbutt trees come through as a method (106 slots) and
+    Rock Smash as another (6), both already spelled.
+  - Step 4: 24 gifts and statics each, 1550 and 1538 ways to get something. The pair's table is
+    one table with two entries picked out per version, and those two are not species.
+  - **The version switch in these games is a wing.** Gold's Radio Tower Director hands over the
+    Rainbow Wing once Team Rocket is beaten and Silver's hands over the Silver Wing, so Gold meets
+    Ho-Oh at level 40 in the middle of its story and Silver meets Lugia there. The other wing
+    belongs to an old man in Pewter City - Kanto, so after the Elite Four - and the other bird
+    waits at level 70. The levels in PokeAPI's own rows say the same thing, which is how the
+    switch was noticed before it was read up.
+  - Checked on Bulbapedia, and two of them changed what I would have written: Mania lends the
+    Shuckle rather than giving it, asks for it back on another day, and lets it stay at 150
+    friendship or if you refuse him; and the Spearow from the gate north of Goldenrod is Kenya,
+    handed over holding Mail for a man on Route 31. What happens to Kenya after the delivery is
+    left unsaid on purpose - the sources disagree and no dex entry hangs on it, because Spearow is
+    in the grass and in the headbutt trees on half of Johto's routes.
+  - Eevee is the first gift in the dataset handed over in two places in one game: Bill's house in
+    Goldenrod and Celadon's window at 6666 coins. The `where` field was built for exactly this at
+    HeartGold's step 4, and one description names Bill while the other says nothing and lets the
+    price stand.
+  - Both Game Corners needed no rows at all. The coins arrive as conditions, so "Game Corner
+    prize, 700 coins" writes itself - and that window is where the pair switch reaches a place no
+    grass does: Ekans is Gold's prize and Sandshrew is Silver's, at the same price.
+  - **The Bell Tower is the Tin Tower here, and that is fixed rather than noted.** PokeAPI keeps
+    one name per location and it is the newest game's, so Ho-Oh's home came through under the
+    remake's name - a Gold player being told the name of a game they are not playing.
+    `LocationNames` now takes a `renamed` table, applied to the location before anything is
+    written down, so a gift table's `where` and a validation message both read what the player
+    reads. The sub-area is untouched: "Tin Tower, Roof".
+  - The table lives in `gbc.py` and holds one entry, after reading all 83 places these two games
+    use. It belongs with the generation and not with the region, which is the point: Johto did not
+    rename anything, the games disagree about it, and all three Generation 2 releases say Tin
+    Tower. So **Crystal gets this for nothing**, and anything found in its own 83 places goes in
+    beside it. A test pins the placement by asserting `johto` has no table of its own.
+  - Step 5: seven trades, 122 evolutions and six eggs each; 1695 and 1683 ways to get something.
+    Generation 2 is the first in the dataset whose trades record *who* you traded with - a
+    Generation 1 trade says TRAINER and nothing else - so the seven carry their trainers' names.
+    Crystal adds an eighth (a Xatu for a Haunter, in the same house in Pewter that trades the
+    Rapidash) and changes none of these.
+  - The remake rearranged them, which is why the two tables are not one: Blackthorn hands over a
+    Rhydon here and a Dodrio in HeartGold, for the same Dragonair.
+  - Six eggs, and they are the first in the dataset that are not a remake's: Pichu, Cleffa,
+    Igglybuff, Smoochum, Elekid and Magby, none of them in any grass. HeartGold's list is twice as
+    long and every extra is a later generation reaching back - five incense babies that do not
+    exist yet, and a Bonsly for a trade these games do not have. Its Elekid may also hatch from an
+    Electivire; here the only parent is the Electabuzz that existed at the time, and a test says
+    so.
+  - **PokeAPI has nothing at all for the Bug-Catching Contest, and that is not a detail.** Scyther
+    and Pinsir are in no grass in either game; Weedle is Silver's in the wild and Gold's only at
+    the contest, and Caterpie is the other way round. Without it the dataset says a Gold player
+    cannot catch a Scyther, and they can - in the National Park, on a Tuesday.
+  - So `wild.py` grew a second source: `RecordedSlot` and `recorded_encounters`, for slots written
+    down by hand and cited to whoever was read. Ten slots with their levels and rates, off
+    Bulbapedia, carrying a bulbapedia citation instead of a PokeAPI url - which is what makes them
+    tellable from every other slot in the dataset. It is meant to stay a last resort: a table like
+    that cannot be re-fetched, cannot be checked against the game, and goes stale without saying
+    so. Bulbapedia lists the contest identically for Crystal, so Crystal reads the same table.
+  - What that leaves uncovered is 17 entries per game, and every one of them looks right for step
+    7: the three Kanto first partners (Oak hands over nothing in these games), Omanyte and Kabuto
+    (no fossil is revived in Generation 2), the three legendary birds and Mewtwo - all four of
+    them Time Capsule cargo from Red, Blue and Yellow rather than anything in Kanto - Mew, Celebi,
+    and each half's four version exclusives.
+  - Worth recording because I had it wrong until Bulbapedia said otherwise: the legendary birds
+    are **not** in Gold and Silver. Kanto is half of these games and the Seafoam Islands, the
+    Power Plant and Mt. Silver hold none of them; the birds' own pages say "Time Capsule, Event"
+    for all of Generation 2. PokeAPI's silence about them is correct, and it was the contest that
+    was missing rather than the statics.
+  - Step 6: 502 sprites, 251 per game, and **these are the first pair in the dataset that does
+    not share a sheet**. Every pair before them was drawn once - Ruby and Sapphire, FireRed and
+    LeafGreen, HeartGold and SoulSilver, Red and Blue - but Gold and Silver drew all 251 twice
+    over, so a sheet here belongs to a game rather than to a pair. Crystal brings a third.
+  - `transparent` again, and checked again rather than assumed, which was worth doing: the default
+    Generation 2 sheet is 40x40 with no alpha chunk, and the transparent one is 56x56 with `tRNS`
+    - not the 96x96 that Generation 1's transparent set gives. The sets are not built to one rule
+    and every generation needs its own look.
+  - Step 7: seventeen entries per game, and **eleven of them are the same eleven in both** -
+    which no pair in this dataset has done before. A pair usually differs by six and agrees about
+    everything else; these two also agree about what neither can produce, and all but one of the
+    eleven is Kanto's. Half of their map is a region whose first partners nobody hands over, whose
+    fossils nobody revives, and whose four legendaries are standing nowhere at all.
+  - Each of those ten points at the same way in, and it is the route the Generation 1 side
+    declared: the Time Capsule. A Bulbasaur in a Gold save came out of a Game Boy.
+  - The eleventh is Celebi, and its exception is a game rather than an event. Ten distributions
+    between 2000 and 2003, every one onto a cartridge - but **Crystal's Virtual Console release
+    turns on the GS Ball event that was Japan's alone**, so one caught in Ilex Forest there can be
+    traded across. That is the second time this generation that modelling the 3DS release rather
+    than the cartridge changes an answer, and it is why the validator has stopped complaining:
+    once these two marked Celebi, no entry in the dataset is left without either a source or a
+    reason.
+  - The six exclusives per half are all None again, for the reason Red's are: the only Generation
+    2 distributions at all were the Celebis and the Mews, and those went onto cartridges.
+  - Every earlier step took something off this list, which is why it is worked out last: Ekans is
+    the Goldenrod Game Corner's in Gold and Sandshrew is Silver's, Weedle and Caterpie are both in
+    the Bug-Catching Contest, and Ariados, Ursaring and Persian evolve from something that comes
+    over the link.
+  - The version exclusives came out of the encounter tables as expected and mirror each other:
+    Gold has the Spinarak line, Growlithe, Mankey, Teddiursa, Gligar, Mantine, Sandshrew and the
+    Caterpie line; Silver has the Ledyba line, Vulpix, Meowth, Phanpy, Delibird, Skarmory, Ekans
+    and the Weedle line. Which of them are really unfillable is step 7's answer, after the trades.
+  - Smoke test on the published exe: a collection made through the wizard with Gold as main
+    game. Its linked-games step offers four in two groups and names the mechanism for each -
+    Blue, Red and Yellow "via the Time Capsule", Silver "via trading" - which is the transfer
+    graph read back out loud. Scyther's tile shows the National Park at levels 13-14, needing
+    "the Bug-Catching Contest, held on Tuesdays, Thursdays and Saturdays", cited to bulbapedia,
+    and directly underneath it Red's Safari Zone slots cited to pokeapi with "Then to Gold: the
+    Time Capsule" - the two sources side by side and tellable apart, which is what the citation
+    is for. Ho-Oh's tile shows the whole version switch in one card: Tin Tower Roof at level 40
+    in Gold for the Radio Tower Director's Rainbow Wing, and the same roof at level 70 in Silver
+    for the old man's in Pewter City. Marking it caught in Gold wrote the record with today's
+    date and moved the counter to "1 of 251".
+  - The user's own settings were copied out first and restored byte-for-byte afterwards, and
+    only the instance this test started was stopped.
 
 ### Generation 3
 

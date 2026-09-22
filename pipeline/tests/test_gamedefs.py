@@ -18,6 +18,8 @@ from livingdex_pipeline.gamedefs import (
     emerald,
     firered,
     gba,
+    gbc,
+    gold,
     heartgold,
     hoenn,
     johto,
@@ -28,6 +30,7 @@ from livingdex_pipeline.gamedefs import (
     red,
     ruby,
     sapphire,
+    silver,
     sinnoh,
     soulsilver,
     vc,
@@ -72,6 +75,7 @@ TREECKO_CHAIN = {
 VERSION_GROUP_ORDER = {
     "red-blue": 1,
     "yellow": 2,
+    "gold-silver": 3,
     "ruby-sapphire": 5,
     "emerald": 6,
     "firered-leafgreen": 7,
@@ -890,8 +894,8 @@ def test_johto_is_a_region_rather_than_a_generation() -> None:
     assert not hasattr(johto, "GENERATION")
     assert not hasattr(johto, "NATIONAL_DEX_THROUGH")
 
-    # What it does know is how to put the region on a cartridge, which is the one argument the
-    # Generation 2 factory beside it will pass as well.
+    # What it does know is how to put the region on a game, which is the one argument both
+    # factories pass - the DS one below and the Generation 2 one beside it.
     assert (
         johto.ds_cartridge(
             game_id="heartgold",
@@ -902,6 +906,342 @@ def test_johto_is_a_region_rather_than_a_generation() -> None:
         ).region
         == johto.REGION
     )
+
+
+def test_gold_and_silver_are_the_same_region_on_other_hardware() -> None:
+    # Two generations and ten years between them, one region. The entity says Johto for all
+    # four, and everything the two sets disagree about - the dex, the routes, the hardware -
+    # comes from their own generation's module rather than from this one.
+    for module, partner in ((gold, "silver"), (silver, "gold")):
+        game = module.build(context(module.GAME_ID)).game
+
+        assert game.region == johto.REGION == "Johto"
+        assert game.generation == 2
+        assert game.pair_partner == partner
+        assert game.release is GameRelease.VIRTUAL_CONSOLE
+        # No National Dex behind the 251, as in Generation 1: this list is the whole goal.
+        assert game.national_dex_through is None
+        # The cartridge is 1999 in Japan and 2001 in Europe; the 3DS release is one day
+        # everywhere, and it is the 3DS one this entity is.
+        assert game.released == date(2017, 9, 22)
+
+    assert heartgold.build(context("heartgold")).game.region == johto.REGION
+
+
+def test_generation_2_numbers_by_the_national_dex_rather_than_by_johtos_own() -> None:
+    # The surprise of step 2. Johto has a regional order and these games do list in it, but the
+    # numbers they print are the old ones: a Gold player reads Chikorita as #152, not #001. An
+    # entry carries one number and it is the one on the screen, so this dataset asks for the
+    # national list and cuts it at Celebi.
+    api = FakeApi([(1, "bulbasaur"), (152, "chikorita"), (251, "celebi"), (252, "treecko")])
+
+    for module in (gold, silver):
+        data = module.build(context(module.GAME_ID, api))
+
+        assert [(entry.number, entry.target.species) for entry in data.dex_entries] == [
+            (1, "bulbasaur"),
+            (152, "chikorita"),
+            (251, "celebi"),
+        ]
+
+    # Asked for the national list both times, and never for Johto's own.
+    assert api.asked_for == ["national", "national"]
+    assert johto.ORIGINAL_DEX == "original-johto"
+
+    # Which is not what the remake does: its regional numbers are what its player sees.
+    assert (
+        heartgold.build(context("heartgold", FakeApi([(1, "chikorita")]))).dex_entries[0].number
+        == 1
+    )
+
+
+def generation_2_slot(
+    area: str, versions: tuple[str, ...], *, time: str | None = None, method: str = "walk"
+) -> list:
+    """One encounter area as PokeAPI hands it over, in the Generation 2 versions given."""
+    return [
+        {
+            "location_area": {"name": area},
+            "version_details": [
+                {
+                    "version": {"name": version},
+                    "encounter_details": [
+                        {
+                            "min_level": 2,
+                            "max_level": 4,
+                            "chance": 30,
+                            "method": {"name": method},
+                            "condition_values": [{"name": f"time-{time}"}] if time else [],
+                        }
+                    ],
+                }
+                for version in versions
+            ],
+        }
+    ]
+
+
+def test_generation_2_carries_the_time_of_day_its_slots_are_read_at() -> None:
+    # The oldest games in the dataset to carry one, and nothing had to be written for it: the
+    # condition vocabulary was filled in for HeartGold, which reads the same `time-night` off
+    # the same field, and Generation 2 is where the clock was introduced in the first place.
+    api = FakeApi(
+        [(163, "hoothoot")],
+        {"hoothoot": generation_2_slot("johto-route-29-area", ("gold", "silver"), time="night")},
+    )
+
+    [slot] = [
+        one for one in gold.build(context("gold", api)).acquisition_methods if one.kind == "wild"
+    ]
+
+    assert slot.time_of_day == "night"
+    assert slot.kind == "wild"
+
+
+def test_each_johto_half_reads_its_own_version_of_the_encounter_table() -> None:
+    # Gold has the Spinarak line and Silver the Ledyba one, which is the same switch every pair
+    # in this dataset has. A game that never meets one says so by having nothing to say.
+    api = FakeApi(
+        [(165, "ledyba")],
+        {"ledyba": generation_2_slot("johto-route-30-area", ("silver",))},
+    )
+
+    def wild_of(module) -> list:
+        return [
+            one
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "wild"
+        ]
+
+    assert len(wild_of(silver)) == 1
+    assert wild_of(gold) == []
+
+
+def test_the_bug_catching_contest_is_written_down_because_pokeapi_has_none_of_it() -> None:
+    # The one part of these games PokeAPI carries nothing for, and it is not a detail: Scyther
+    # and Pinsir are in no grass in either game, so a dataset without the contest says they
+    # cannot be caught in Gold at all. Read off Bulbapedia and cited to it, which is what makes
+    # these records tellable from every other slot in the dataset.
+    api = FakeApi([(123, "scyther")])
+
+    [slot] = [
+        one for one in gold.build(context("gold", api)).acquisition_methods if one.kind == "wild"
+    ]
+
+    assert slot.location == "National Park"
+    assert slot.levels.minimum == 13
+    assert "Bug-Catching Contest" in slot.requirement
+    assert slot.source.source == "bulbapedia"
+
+    # Ten species, and the four that need it: Scyther and Pinsir in both games, Weedle in Gold
+    # and Caterpie in Silver, each of which the other version has in its grass.
+    assert len(johto.GBC_CONTEST) == 10
+    assert {one.species for one in johto.GBC_CONTEST} >= {
+        "scyther",
+        "pinsir",
+        "weedle",
+        "caterpie",
+    }
+
+
+def test_generation_2_trades_seven_things_and_records_who_it_traded_with() -> None:
+    # The first games in the dataset whose trades carry an original trainer: a Generation 1
+    # trade says TRAINER and nothing else. Crystal adds an eighth of these and changes none;
+    # the remake rearranged them, which is why the two tables are not one.
+    assert len(johto.GBC_PAIR_TRADES) == 7
+    assert all(one.npc for one in johto.GBC_PAIR_TRADES)
+
+    pair = {(one.gets, one.wants) for one in johto.GBC_PAIR_TRADES}
+    remake = {(one.gets, one.wants) for one in johto.DS_PAIR_TRADES}
+
+    # Blackthorn hands over a Rhydon here and a Dodrio there, for the same Dragonair.
+    assert ("rhydon", "dragonair") in pair
+    assert ("dodrio", "dragonair") in remake
+    # And Xatu is Crystal's trade, so it is in neither of these.
+    assert "xatu" not in {one.gets for one in johto.GBC_PAIR_TRADES}
+
+
+def test_generation_2_hatches_the_babies_it_invented_and_no_others() -> None:
+    # Breeding starts here, and so do the babies that need it: six, none of them in any grass.
+    # The remake's list is twice as long and every extra is a later generation reaching back -
+    # five incense babies that do not exist yet, and Bonsly for a trade these games do not have.
+    assert set(johto.GBC_PAIR_EGGS) == {
+        "pichu",
+        "cleffa",
+        "igglybuff",
+        "smoochum",
+        "elekid",
+        "magby",
+    }
+    assert all(one.requirement is None for one in johto.GBC_PAIR_EGGS.values())
+
+    # And no parent these games have never heard of. HeartGold may hatch an Elekid from an
+    # Electivire; here the only parent is the Electabuzz that existed at the time.
+    parents = {name for one in johto.GBC_PAIR_EGGS.values() for name in one.parents}
+
+    assert "electivire" not in parents
+    assert "magmortar" not in parents
+    assert johto.GBC_PAIR_EGGS["elekid"].parents == ("electabuzz",)
+
+
+def test_gold_and_silver_are_the_first_pair_that_does_not_share_a_sheet() -> None:
+    # Every pair before these two was drawn once: Ruby and Sapphire share a set, so do FireRed
+    # and LeafGreen, HeartGold and SoulSilver, Red and Blue. Gold and Silver drew all 251 twice
+    # over, so a sheet here belongs to a game rather than to a pair - and Crystal brings a third.
+    gold_set = gold.build(context("gold")).game.sprite_set
+    silver_set = silver.build(context("silver")).game.sprite_set
+
+    assert gold_set == "generation-ii/gold/transparent"
+    assert silver_set == "generation-ii/silver/transparent"
+    assert gold_set != silver_set
+    # Which is not how their own region's remake did it.
+    assert (
+        heartgold.build(context("heartgold")).game.sprite_set
+        == soulsilver.build(context("soulsilver")).game.sprite_set
+    )
+
+    # Transparent again, for the reason Generation 1 gives: the default sheets carry no alpha
+    # channel at all, so every sprite would arrive in a white box on a dark grid.
+    assert gold_set.endswith("/transparent")
+    assert silver_set.endswith("/transparent")
+
+
+def test_gold_and_silver_share_eleven_of_the_seventeen_they_cannot_produce() -> None:
+    # A pair usually differs by six and agrees about everything else. These two also agree about
+    # eleven they both lack, and all but one of the eleven is Kanto's: half of their map is a
+    # region whose first partners nobody hands over, whose fossils nobody revives, and whose
+    # four legendaries are standing nowhere at all.
+    assert len(gold.UNOBTAINABLE) == len(silver.UNOBTAINABLE) == 17
+    assert set(gold.UNOBTAINABLE) & set(silver.UNOBTAINABLE) == set(johto.GBC_PAIR_UNOBTAINABLE)
+    assert len(johto.GBC_PAIR_UNOBTAINABLE) == 11
+
+    assert gold.UNOBTAINABLE["bulbasaur"] == johto.GBC_KANTO_STARTERS
+    assert "Pewter Museum" in gold.UNOBTAINABLE["omanyte"]
+    assert silver.UNOBTAINABLE["articuno"] == johto.GBC_KANTO_LEGENDS
+    assert silver.UNOBTAINABLE["mewtwo"] == johto.GBC_KANTO_LEGENDS
+
+    # Ten of the eleven point at the same way in, which is the route the Generation 1 side
+    # declared: the Time Capsule.
+    from_generation_1 = [
+        reason for species, reason in johto.GBC_PAIR_UNOBTAINABLE.items() if species != "celebi"
+    ]
+
+    assert all("Time Capsule" in reason for reason in from_generation_1)
+
+
+def test_celebi_waits_for_crystal_rather_than_for_an_event() -> None:
+    # Ten distributions between 2000 and 2003 and every one of them onto a cartridge, so these
+    # releases get none of them - the same argument Red's Mew gets, one generation on. What is
+    # different is that the exception is a game rather than an event: Crystal's Virtual Console
+    # release turns on the GS Ball event that was Japan's alone, so the way in is a trade.
+    assert gold.UNOBTAINABLE["celebi"] == silver.UNOBTAINABLE["celebi"] == johto.GBC_CELEBI_REASON
+    assert "GS Ball" in johto.GBC_CELEBI_REASON
+    assert "Crystal" in johto.GBC_CELEBI_REASON
+    # And Mew's reason is Red's reasoning read from the other end of the Time Capsule.
+    assert "2016" in johto.GBC_MEW_REASON
+    assert "Time Capsule" in johto.GBC_MEW_REASON
+
+
+def test_no_generation_2_exclusive_was_ever_handed_out_for_these_releases() -> None:
+    # Twelve species, twelve *In events* tables, and not one Virtual Console distribution among
+    # them. The only Generation 2 events at all were the Celebis and the Mews, and those went
+    # onto cartridges.
+    assert set(gold.ONLY_ON_SILVER) == {
+        "vulpix",
+        "meowth",
+        "ledyba",
+        "delibird",
+        "skarmory",
+        "phanpy",
+    }
+    assert set(silver.ONLY_ON_GOLD) == {
+        "growlithe",
+        "mankey",
+        "spinarak",
+        "gligar",
+        "teddiursa",
+        "mantine",
+    }
+    assert all(event is None for event in gold.ONLY_ON_SILVER.values())
+    assert all(event is None for event in silver.ONLY_ON_GOLD.values())
+
+    # And every earlier step took something off this list, which is why it is worked out last.
+    # Ekans is the Goldenrod Game Corner's in Gold and Sandshrew is Silver's; Weedle and
+    # Caterpie are both in the Bug-Catching Contest; Ariados evolves from a Spinarak that comes
+    # over the link.
+    assert "ekans" not in gold.UNOBTAINABLE
+    assert "sandshrew" not in silver.UNOBTAINABLE
+    assert "weedle" not in gold.UNOBTAINABLE
+    assert "caterpie" not in silver.UNOBTAINABLE
+    assert "ariados" not in silver.UNOBTAINABLE
+
+
+def test_generation_2_calls_the_tower_what_its_own_players_call_it() -> None:
+    # PokeAPI names a location after the newest game that has it, so Ho-Oh's home comes through
+    # as the Bell Tower - which is HeartGold's name for it and not Gold's. The table lives with
+    # the generation rather than with the region, because all three of these games say Tin Tower
+    # and both Generation 4 ones say Bell Tower.
+    assert gbc.RENAMED_PLACES == {"Bell Tower": "Tin Tower"}
+
+    # It does not belong to the region: Johto keeps the same name in both generations and it is
+    # the games that disagree about it. Crystal gets this for nothing when it arrives, because
+    # everything set here reads its own generation's table.
+    assert not hasattr(johto, "RENAMED_PLACES")
+
+
+def test_the_pair_switch_in_gold_and_silver_is_a_wing_rather_than_a_species() -> None:
+    # The neatest version difference in these two games, and it is not a Pokemon at all. Each
+    # half's Radio Tower Director hands over one wing in the middle of the story, so Gold meets
+    # Ho-Oh at level 40 while Silver meets Lugia there; the other bird waits behind an old man
+    # in Pewter City, which is Kanto, which is after the Elite Four.
+    gold_gifts = johto.gbc_gifts("gold")
+    silver_gifts = johto.gbc_gifts("silver")
+
+    assert "Radio Tower Director" in gold_gifts["ho-oh"].requirement
+    assert "Pewter City" in gold_gifts["lugia"].requirement
+    assert "Radio Tower Director" in silver_gifts["lugia"].requirement
+    assert "Pewter City" in silver_gifts["ho-oh"].requirement
+
+    # Everything else about the two tables is the same, which is what makes them a pair.
+    assert {
+        species: detail
+        for species, detail in gold_gifts.items()
+        if species not in ("ho-oh", "lugia")
+    } == {
+        species: detail
+        for species, detail in silver_gifts.items()
+        if species not in ("ho-oh", "lugia")
+    }
+
+
+def test_a_gift_handed_over_in_two_places_is_described_once_for_each() -> None:
+    # Eevee is Bill's in Goldenrod and also 6666 coins in Celadon, and the two records should
+    # not both say "Bill". The second description leaves `where` out and says nothing, so the
+    # window keeps the price the encounter already carries.
+    eevee = johto.GBC_PAIR_GIFTS["eevee"]
+
+    assert isinstance(eevee, tuple)
+    assert [one.where for one in eevee] == ["Goldenrod City, Bills House", None]
+    assert eevee[0].npc == "Bill"
+    assert eevee[1] == GiftDetail()
+
+
+def test_generation_2_does_not_declare_the_time_capsule_a_second_time() -> None:
+    # It goes both ways and it is one route, so only one side may declare it - and that side is
+    # Generation 1, because the limit on it is a fact about Generation 1: a Game Boy game has
+    # nowhere to put a Chikorita. Declaring it here as well would hand the registry the same
+    # route twice, the way Pal Park is left with the game that receives.
+    theirs = {edge.mechanism for edge in gold.edges()}
+
+    assert TransferMechanism.TIME_CAPSULE not in theirs
+    assert theirs == {TransferMechanism.TRADE, TransferMechanism.POKE_TRANSPORTER}
+    assert TransferMechanism.TIME_CAPSULE in {edge.mechanism for edge in red.edges()}
+
+    # And what it does trade with is the other two of its own generation, Crystal included.
+    assert {edge.to for edge in gold.edges() if edge.mechanism is TransferMechanism.TRADE} == {
+        "silver",
+        "crystal",
+    }
 
 
 def test_both_johto_halves_show_the_same_updated_johto_dex() -> None:
@@ -1313,6 +1653,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "diamond",
         "emerald",
         "firered",
+        "gold",
         "heartgold",
         "leafgreen",
         "pearl",
@@ -1320,32 +1661,40 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "red",
         "ruby",
         "sapphire",
+        "silver",
         "soulsilver",
         "yellow",
     ]
 
     routes = [(edge.from_, edge.to) for edge in registry.edges]
 
-    # Three link cables between the three Generation 1 releases, ten between the five
-    # Generation 3 cartridges, ten wireless trades between the five Generation 4 games, and
-    # twenty-five one-way Pal Park trips from each of the five into each of the five.
-    assert len(routes) == 3 + 10 + 10 + 25
+    # Three link cables between the three Generation 1 releases and one between the two
+    # Generation 2 ones that exist; six Time Capsules, each of the three older releases to each
+    # of the two newer; ten between the five Generation 3 cartridges, ten wireless trades
+    # between the five Generation 4 games, and twenty-five one-way Pal Park trips from each of
+    # the five into each of the five.
+    assert len(routes) == 3 + 1 + 6 + 10 + 10 + 25
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
+    assert ("gold", "silver") in routes
     assert ("diamond", "pearl") in routes
     assert ("ruby", "diamond") in routes
 
-    # What is waiting is everything Generation 1 reaches that is not built: the three
-    # Generation 2 releases each of them opens a Time Capsule with, and Bank.
+    # The Time Capsule is declared once, by the Generation 1 side, and it reaches forward.
+    assert ("red", "gold") in routes
+    assert ("gold", "red") not in routes
+
+    # What is waiting is everything that reaches a game which is not built: Crystal, which both
+    # generations trade with in their own way, and Bank, which all five reach.
     waiting = {(edge.to, edge.mechanism) for _, edge in registry.held_back_edges}
 
     assert waiting == {
-        ("gold", TransferMechanism.TIME_CAPSULE),
-        ("silver", TransferMechanism.TIME_CAPSULE),
         ("crystal", TransferMechanism.TIME_CAPSULE),
+        ("crystal", TransferMechanism.TRADE),
         ("bank", TransferMechanism.POKE_TRANSPORTER),
     }
+    assert len(registry.held_back_edges) == 3 + 2 + 5
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:

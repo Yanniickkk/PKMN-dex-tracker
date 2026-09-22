@@ -8,8 +8,9 @@ from __future__ import annotations
 
 from datetime import date
 
-from livingdex_pipeline.models import EncounterMethod
-from livingdex_pipeline.wild import wild_encounters
+from livingdex_pipeline.models import EncounterMethod, SourceCitation
+from livingdex_pipeline.places import LocationNames
+from livingdex_pipeline.wild import RecordedSlot, recorded_encounters, wild_encounters
 
 TODAY = date(2026, 9, 21)
 
@@ -451,3 +452,59 @@ def test_every_record_says_where_it_came_from() -> None:
     assert found[0].source.source == "pokeapi"
     assert found[0].source.retrieved_on == TODAY
     assert str(found[0].source.url).endswith("/pokemon/poochyena/encounters")
+
+
+def test_a_game_can_call_a_place_what_its_own_players_call_it() -> None:
+    # PokeAPI keeps one name per location and it is the newest game's, which is right nearly
+    # everywhere and wrong where a place was renamed. Ho-Oh waits on the Bell Tower in HeartGold
+    # and on the Tin Tower in Gold, and a Gold player should read the name their game prints.
+    api = FakeApi(
+        {"ho-oh": [area("bell-tower-roof", "gold", [slot("walk", 40, 40, 100)])]},
+        {"bell-tower-roof": ("bell-tower", "Bell Tower")},
+    )
+    places = LocationNames(api, renamed={"Bell Tower": "Tin Tower"})
+
+    found = wild_encounters(
+        api,
+        game_id="gold",
+        version="gold",
+        species=["ho-oh"],
+        retrieved_on=TODAY,
+        places=places,
+    )
+
+    assert found[0].location == "Tin Tower"
+    # Only the location is renamed; what the area adds to it is untouched.
+    assert found[0].sub_area == "Roof"
+    assert places.of("bell-tower-roof") == ("Tin Tower", "Roof")
+
+
+def test_a_place_nobody_renamed_comes_through_as_it_is() -> None:
+    api = FakeApi(
+        {"poochyena": [area("hoenn-route-101-area", "emerald", [slot("walk", 2, 2, 20)])]},
+        ROUTE_101,
+    )
+    places = LocationNames(api, renamed={"Bell Tower": "Tin Tower"})
+
+    assert places.of("hoenn-route-101-area") == ("Route 101", None)
+
+
+def test_a_hand_written_slot_is_kept_only_if_the_dex_asks_for_it() -> None:
+    # A table written by hand can list more than one game wants - the Bug-Catching Contest holds
+    # ten species and a dex may ask for eight of them - and the extras are not records.
+    slots = (
+        RecordedSlot(species="scyther", location="National Park", lowest=13, highest=14),
+        RecordedSlot(species="pinsir", location="National Park", lowest=13, highest=14),
+    )
+    citation = SourceCitation(
+        source="bulbapedia",
+        url="https://bulbapedia.bulbagarden.net/wiki/Bug-Catching_Contest",
+        retrieved_on=TODAY,
+    )
+
+    found = recorded_encounters(game_id="gold", slots=slots, species=["scyther"], citation=citation)
+
+    assert [one.target.species for one in found] == ["scyther"]
+    assert found[0].levels.minimum == 13
+    # And it says where it came from, which is the whole point of writing it down by hand.
+    assert found[0].source.source == "bulbapedia"

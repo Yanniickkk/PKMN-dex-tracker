@@ -13,6 +13,7 @@ from . import (
     diamond,
     emerald,
     firered,
+    gold,
     heartgold,
     leafgreen,
     pearl,
@@ -20,17 +21,20 @@ from . import (
     red,
     ruby,
     sapphire,
+    silver,
     soulsilver,
     yellow,
 )
 
-# In the order they came out: the pair that started it and its own third version, then the
-# Hoenn pair, the Kanto pair, the third version that followed them, the Sinnoh pair and its
-# third version, and the Johto pair that closes Generation 4.
+# In the order they came out: the pair that started it and its own third version, the Johto
+# pair that followed them, then the Hoenn pair, the Kanto pair, the third version after them,
+# the Sinnoh pair and its third version, and the Johto pair that closes Generation 4.
 MODULES = [
     red,
     blue,
     yellow,
+    gold,
+    silver,
     ruby,
     sapphire,
     firered,
