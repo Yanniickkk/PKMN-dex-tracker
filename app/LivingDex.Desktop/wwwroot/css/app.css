@@ -64,6 +64,10 @@ html,
 body {
   margin: 0;
   height: 100%;
+  /* The shell is exactly the window and the panes inside it scroll themselves, so the document
+     has nothing to scroll and must not offer to: a document scrollbar here showed up beside the
+     content's own and left two of them on screen at once. */
+  overflow: hidden;
   background: var(--bg);
   color: var(--fg);
   font-family: "Segoe UI", system-ui, sans-serif;
@@ -88,6 +92,7 @@ body {
   min-width: 0;
   overflow-y: auto;
   padding: 32px 40px 48px;
+  /* A reading width for a column of text. Pages that are not text say so for themselves. */
   max-width: 1100px;
 }
 
@@ -730,12 +735,12 @@ code {
   opacity: 0.5;
 }
 
-/* Wide enough for a row of covers. What inside it is prose keeps its own reading width: a
-   step is one column of text with one grid of game cards in it, and those two want different
-   measures. */
+/* What is prose in here keeps its own reading width - the name field and every hint are capped
+   at 62ch - so the step itself does not need one, and the grid of covers below takes whatever
+   window there is. The 940px this used to carry is what kept the picker off three quarters of a
+   maximised screen. */
 .step-body {
   margin-top: 24px;
-  max-width: 940px;
 }
 
 .field {
@@ -839,9 +844,25 @@ code {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  /* No `max-width: none` here, unlike the picker below, and it is worth saying why: this grid
+     is ten fixed columns chunked in C# for `Virtualize`, so a wider page does not hold more
+     tiles - it holds ten wider ones, with a 56px sprite adrift in each. Letting it take the
+     window needs the column count to follow the width first. */
 }
 
 /* ---- game picker ---- */
+
+/* The picker is a grid of covers rather than a column of text, so it takes the window: capping
+   it left a third of a wide screen empty and put the content's scrollbar in the middle of it,
+   where it read as a second scrollbar beside the window's own. Reported by Yannick, maximised.
+   The grid is auto-fill, so the extra width becomes more covers per row rather than wider ones.
+*/
+.content:has(.step-body),
+.step-body,
+.step-body .generation,
+.step-body .game-grid {
+  max-width: none;
+}
 
 /* One box per generation, stacked and in order. The header is a button rather than a summary
    element so that the open state lives in the component and survives a re-render. */
