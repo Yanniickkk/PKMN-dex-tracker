@@ -3,18 +3,19 @@
 @using LivingDex.Core.Reference
 @inject LoadedDataset Dataset
 
-<span class="cover gen-@Game.Generation">
-    @if (Dataset.BoxArtPath(Game.Id) is { } art)
-    {
-        <img class="cover-art" src="@art" alt="" />
-    }
-    else
-    {
-        @* No art shipped for this game. A drawn cover carrying the version name reads as a
-           choice; a broken image would read as a bug. *@
-        <span class="cover-drawn">@Game.Version</span>
-    }
-</span>
+@* The art is the cover; there is no frame around it. A frame has to pick one shape, and box
+   art does not have one - a Game Boy Advance box is square and a DS box is wider - so every
+   cover that was not that shape sat in a bar of background colour. *@
+@if (Dataset.BoxArtPath(Game.Id) is { } art)
+{
+    <img class="cover-art" src="@art" alt="" />
+}
+else
+{
+    @* No art shipped for this game. A drawn cover carrying the version name reads as a
+       choice; a broken image would read as a bug. *@
+    <span class="cover-drawn gen-@Game.Generation">@Game.Version</span>
+}
 
 <span class="game-name">@Game.Title</span>
 <span class="game-meta muted">Gen @Game.Generation · @Game.Region</span>

@@ -33,15 +33,9 @@ public static class TransferNames
     {
         ArgumentNullException.ThrowIfNull(route);
 
-        var steps = new List<string>();
-
-        foreach (var name in route.Hops.Select(hop => Of(hop.Mechanism)))
-        {
-            if (steps.Count == 0 || steps[^1] != name)
-            {
-                steps.Add(name);
-            }
-        }
+        // The collapsing lives on the route, because what a player has to do is also what makes
+        // two routes the same answer, and those two must not drift apart.
+        var steps = route.Shape.Select(Of).ToList();
 
         return steps.Count switch
         {

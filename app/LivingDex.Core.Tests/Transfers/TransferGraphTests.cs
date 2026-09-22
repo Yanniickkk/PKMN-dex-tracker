@@ -78,6 +78,46 @@ public class TransferGraphTests
     }
 
     [Fact]
+    public void A_detour_that_asks_for_the_same_thing_is_not_another_way()
+    {
+        // Four cartridges that all trade with each other: Ruby to FireRed is one link cable, and
+        // the other four routes are that same cable with a pointless stop on the way. The real
+        // dataset has five of these, which is sixteen routes between the halves of a pair - and
+        // a popup that offered fifteen of them as "other ways".
+        var graph = new TransferGraph(
+            [
+                Trade(Ruby, Sapphire),
+                Trade(Ruby, Emerald),
+                Trade(Ruby, FireRed),
+                Trade(Sapphire, Emerald),
+                Trade(Sapphire, FireRed),
+                Trade(Emerald, FireRed),
+            ],
+            new ReferenceFilterContext([], []));
+
+        var result = graph.RoutesBetween(Ruby, FireRed, DexTarget.ForSpecies(Pikachu));
+
+        // The graph still knows them all; what changes is what the popup is told to offer.
+        Assert.Equal(5, result.Routes.Count);
+        Assert.Empty(result.Alternatives);
+        Assert.Equal(1, result.Shortest?.Length);
+    }
+
+    [Fact]
+    public void A_route_that_asks_for_something_else_is_another_way()
+    {
+        // Pal Park straight in, or trade to the cartridge that has one first. Those are two
+        // different things to do, so both are offered.
+        var result = BuildGraph().RoutesBetween(Ruby, Platinum, DexTarget.ForSpecies(Treecko));
+
+        var ways = result.Alternatives.Prepend(result.Shortest!).Select(TransferNames.Of).ToList();
+
+        Assert.Equal(ways, ways.Distinct());
+        Assert.Contains("Pal Park", string.Join(" | ", ways), StringComparison.Ordinal);
+        Assert.Contains("trading", string.Join(" | ", ways), StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void Two_ways_between_the_same_pair_of_games_are_two_routes()
     {
         // Parallel edges: one hop, two mechanisms. The popup offers the second as an

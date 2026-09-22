@@ -24,6 +24,32 @@ public sealed record TransferRoute(IReadOnlyList<TransferHop> Hops)
     /// <summary>How many moves the player has to make.</summary>
     public int Length => Hops.Count;
 
+    /// <summary>
+    /// What the route asks the player to actually do, with runs of the same mechanism collapsed.
+    /// </summary>
+    /// <remarks>
+    /// Three trades in a row is one kind of work, not three: the cartridge you pass through on
+    /// the way does not change what you are doing. This is what makes two routes the same
+    /// answer, so it decides both what the popup prints and which routes it bothers offering.
+    /// </remarks>
+    public IReadOnlyList<TransferMechanism> Shape
+    {
+        get
+        {
+            var steps = new List<TransferMechanism>();
+
+            foreach (var mechanism in Hops.Select(hop => hop.Mechanism))
+            {
+                if (steps.Count == 0 || steps[^1] != mechanism)
+                {
+                    steps.Add(mechanism);
+                }
+            }
+
+            return steps;
+        }
+    }
+
     public override string ToString() =>
         string.Join(" -> ", Hops.Select(hop => hop.From.Value).Append(To.Value));
 }
@@ -72,8 +98,29 @@ public sealed record TransferRouteResult(
     /// <summary>The fewest-hops route, or null when there is none.</summary>
     public TransferRoute? Shortest => Routes.Count > 0 ? Routes[0] : null;
 
-    /// <summary>Everything except <see cref="Shortest"/>, for a collapsible "other ways" list.</summary>
-    public IEnumerable<TransferRoute> Alternatives => Routes.Skip(1);
+    /// <summary>
+    /// One route per genuinely different way of making the move, shortest of each, excluding
+    /// <see cref="Shortest"/>. What a collapsible "other ways" list should hold.
+    /// </summary>
+    /// <remarks>
+    /// Not every route: routes that read the same are the same advice. Five Generation 3
+    /// cartridges all trade with each other, which makes sixteen routes from LeafGreen into
+    /// FireRed - one link cable, and fifteen detours through Ruby, Sapphire and Emerald that
+    /// ask for exactly the same thing. Offering those as "fifteen other ways" is noise, and it
+    /// grows with every game added.
+    ///
+    /// What makes a route different is its <see cref="TransferRoute.Shape"/>. Pal Park straight
+    /// into Platinum and trading first are two ways; trading three times and trading once are
+    /// one. <see cref="Routes"/> still holds all of them, for anything that wants the graph
+    /// rather than the advice.
+    /// </remarks>
+    public IEnumerable<TransferRoute> Alternatives =>
+        Routes
+            .GroupBy(route => string.Join(">", route.Shape))
+            // Routes come shortest first and grouping keeps first-seen order, so each group
+            // opens with the shortest of its kind and the first group is the shortest overall's.
+            .Select(group => group.First())
+            .Skip(1);
 
     internal static TransferRouteResult Found(IReadOnlyList<TransferRoute> routes) =>
         new(routes, NoRouteReason.None, string.Empty);

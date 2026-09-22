@@ -730,9 +730,12 @@ code {
   opacity: 0.5;
 }
 
+/* Wide enough for a row of covers. What inside it is prose keeps its own reading width: a
+   step is one column of text with one grid of game cards in it, and those two want different
+   measures. */
 .step-body {
   margin-top: 24px;
-  max-width: 62ch;
+  max-width: 940px;
 }
 
 .field {
@@ -748,6 +751,7 @@ code {
 .field input[type="text"],
 .field select {
   width: 100%;
+  max-width: 62ch;
   box-sizing: border-box;
   padding: 7px 10px;
   border: 1px solid var(--border);
@@ -775,6 +779,7 @@ code {
   padding: 0;
   display: grid;
   gap: 8px;
+  max-width: 62ch;
 }
 
 .check-list label {
@@ -838,14 +843,71 @@ code {
 
 /* ---- game picker ---- */
 
+/* One box per generation, stacked and in order. The header is a button rather than a summary
+   element so that the open state lives in the component and survives a re-render. */
+/* Wider than the prose around it, and measured in pixels rather than characters: 62ch is a
+   line length, which is the right cap for a paragraph and the wrong one for a grid of covers -
+   it left room for exactly two games per row however much window there was. */
+.generation {
+  margin-top: 12px;
+  max-width: 940px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.generation-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  background: var(--card-bg);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.generation-head:hover {
+  color: var(--accent);
+}
+
+.generation-head:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Fixed width, so the names line up whichever way the boxes are folded. */
+.generation-caret {
+  width: 1em;
+  flex: none;
+}
+
+.generation-name {
+  font-weight: 600;
+}
+
+/* The box already indents and bounds the grid, so inside one it drops its own margin and width. */
+.generation .game-grid {
+  margin: 0;
+  padding: 0 14px 14px;
+  max-width: none;
+}
+
 .game-grid {
   list-style: none;
   margin: 12px 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px;
-  max-width: 62ch;
+  /* As many as fit. 190px is what a full title needs on one line - "Pokémon LeafGreen Version"
+     is the longest so far - so the row count follows the window instead of being decided here. */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  /* Enough that neighbouring cards read as two cards. At 12px their borders sat close enough to
+     look like one line between them, which made a row of covers read as one strip. */
+  gap: 18px;
+  max-width: 940px;
 }
 
 /* Two classes deep on purpose: `.field label` above sets display:block and would otherwise win
@@ -856,6 +918,11 @@ code {
   align-items: center;
   gap: 4px;
   height: 100%;
+  /* With the default content-box, this card's height:100% would be 100% of its cell *plus* its
+     own padding and border - 22px of overflow that ate the grid's row gap and made a column of
+     cards look like one stack of touching boxes. The columns were unaffected, which is why the
+     two directions disagreed. */
+  box-sizing: border-box;
   padding: 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -868,7 +935,7 @@ code {
   user-select: none;
 }
 
-.game-grid .game-card:hover:not(.unavailable) {
+.game-grid .game-card:hover {
   border-color: var(--accent);
 }
 
@@ -883,32 +950,27 @@ code {
   outline-offset: 2px;
 }
 
-.game-grid .game-card.unavailable {
-  opacity: 0.55;
-  cursor: not-allowed;
+/* Every cover is the same height and as wide as its own art. Fixing both would mean picking a
+   shape for all of them, and there is no shape that fits: the art is square or wider, so a
+   taller frame left a bar of background above and below each one. Height is the measurement
+   worth fixing, because it is what keeps the names under the art on one line across a row. */
+.cover-art {
+  display: block;
+  height: 92px;
+  width: auto;
+  border-radius: 6px;
 }
 
-.cover {
+/* The drawn fallback has nothing to be shaped by, so it keeps a frame - the same height as a
+   real cover, at roughly a boxed game's proportions. */
+.cover-drawn {
   display: grid;
   place-items: center;
-  width: 92px;
-  /* Roughly a boxed game's proportions, so real art and a drawn cover sit the same. */
-  aspect-ratio: 3 / 4;
+  height: 92px;
+  width: 70px;
+  padding: 4px;
   border-radius: 6px;
   overflow: hidden;
-  background: var(--hover);
-}
-
-.cover-art {
-  width: 100%;
-  height: 100%;
-  /* Contain, not cover: a Game Boy box is square and a DS box is not, and cropping the top off
-     a box to make it fit a card is the one thing a box art picker must not do. */
-  object-fit: contain;
-}
-
-.cover-drawn {
-  padding: 4px;
   font-weight: 600;
   line-height: 1.15;
   color: var(--accent-contrast);

@@ -73,11 +73,21 @@ else
             Not yet transferred
         </label>
 
-        <label class="toggle @(CanAskAvailability ? "" : "is-disabled")" title="@AvailabilityHint">
-            <input type="checkbox" disabled="@(!CanAskAvailability)" checked="@_filter.AvailableInMainGame"
-                   @onchange="@(e => Narrow(f => f with { AvailableInMainGame = (bool)e.Value! }))" />
-            Available in @GameName(_collection.MainGame)
-        </label>
+        @* One per game the collection covers, main game first. With no linked games this is the
+           single switch it has always been; with some, it is how a player asks what Sapphire can
+           still give them. Ticking several widens, the way the two status switches do. *@
+        @foreach (var game in GamesOfCollection())
+        {
+            var which = game;
+
+            <label class="toggle @(CanAskAvailability(which) ? "" : "is-disabled")"
+                   title="@AvailabilityHint(which)">
+                <input type="checkbox" disabled="@(!CanAskAvailability(which))"
+                       checked="@_filter.AvailableIn.Contains(which)"
+                       @onchange="@(e => ToggleAvailability(which, (bool)e.Value!))" />
+                Available in @GameName(which)
+            </label>
+        }
 
         @if (!_filter.IsEmpty)
         {
@@ -873,12 +883,31 @@ else
     /// no data the filter would answer "nothing is available here", which is a lie rather than
     /// an empty result, so the switch is offered disabled and says why.
     /// </summary>
-    private bool CanAskAvailability =>
-        _collection is not null && Dataset.Reference.HasAcquisitionData(_collection.MainGame);
+    private bool CanAskAvailability(GameId game) => Dataset.Reference.HasAcquisitionData(game);
 
-    private string AvailabilityHint => CanAskAvailability
-        ? $"Entries {GameName(_collection!.MainGame)} has a known way to obtain"
-        : $"The dataset has no encounter data for {GameName(_collection!.MainGame)} yet.";
+    private string AvailabilityHint(GameId game) => CanAskAvailability(game)
+        ? $"Entries {GameName(game)} has a known way to obtain"
+        : $"The dataset has no encounter data for {GameName(game)} yet.";
+
+    /// <summary>
+    /// Ticks or unticks one game. The order follows the collection rather than the clicks, so
+    /// the list reads the same however the player got there.
+    /// </summary>
+    private void ToggleAvailability(GameId game, bool wanted)
+    {
+        var chosen = new HashSet<GameId>(_filter.AvailableIn);
+
+        if (wanted)
+        {
+            chosen.Add(game);
+        }
+        else
+        {
+            chosen.Remove(game);
+        }
+
+        Narrow(f => f with { AvailableIn = [.. GamesOfCollection().Where(chosen.Contains)] });
+    }
 
     private void OnSearchInput(ChangeEventArgs e)
     {
@@ -900,13 +929,12 @@ else
 
     private void ApplyFilter()
     {
-        _shown = _filter.Apply(_lines, _captures, IsAvailableInMainGame);
+        _shown = _filter.Apply(_lines, _captures, IsAvailableIn);
         _rows = [.. _shown.Chunk(Columns)];
     }
 
-    private bool IsAvailableInMainGame(DexTarget target) =>
-        _collection is not null
-        && Dataset.Reference.MethodsFor(_collection.MainGame, target).Count > 0;
+    private bool IsAvailableIn(GameId game, DexTarget target) =>
+        Dataset.Reference.MethodsFor(game, target).Count > 0;
 
     /// <summary>
     /// The one-click move from the grid: catch it, or having transferred it, or take it back.

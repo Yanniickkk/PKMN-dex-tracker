@@ -706,6 +706,31 @@ Worth a validator rule if edges are ever written by hand.
 
 ### Beyond the list
 
+- [x] The game picker reads like a shelf: release order, no letterboxing, as many per row as
+      fit - 2026-09-22
+  - **A game now says when it came out**, and the picker sorts by it inside a generation: Ruby
+    and Sapphire, then FireRed and LeafGreen, then Emerald. Alphabetical had Emerald first,
+    which is not an order anyone thinks in. The date is the original Japanese release, because
+    the order games came out in is one order and every region saw it shifted - Emerald reached
+    Japan months before FireRed reached America. Mandatory in the pipeline, optional in the C#
+    schema, which is the same shape `spriteSet` has: a dataset written before the field existed
+    is still readable, and a dataset written now always carries it.
+  - Title breaks a tie, which keeps the two halves of a pair - same day - together and in the
+    same order every time.
+  - **The covers had bars above and below them.** They sat in a fixed 3:4 frame, and no box art
+    is 3:4: the Game Boy Advance boxes are square and Platinum's is wider than tall. The frame
+    is gone for a game that has art - the image is the cover - and the height is what is fixed,
+    so the names below still line up across a row. The drawn fallback keeps a frame, because it
+    has no shape of its own to take.
+  - **Two per row was a reading width applied to a grid.** `.step-body` capped the whole step at
+    62ch, which is the right measure for a paragraph and the wrong one for a shelf of covers.
+    The step is 940px now and what is prose inside it - the hints, the name field, the forms
+    list - carries its own 62ch.
+  - **The gap between cards only worked sideways.** A card stretches to its cell with
+    `height: 100%`, and without `box-sizing: border-box` that meant 100% *plus* its own padding
+    and border: 22px of overflow that ate the row gap while leaving the column gap alone. Found
+    by measuring the screenshot rather than by eye, after the two directions disagreed.
+
 - [x] Games are picked by clicking their box art, both the main game and the linked ones -
       2026-09-21
   - The dropdown and the checkbox list are gone. Both steps of the wizard now show a grid of
@@ -1139,6 +1164,97 @@ _Nothing yet._
   - `The_app_embeds_every_sprite_directory_rather_than_only_the_top_one` guards it. It asserts
     the build rule rather than the exe, because the test project does not reference the app - and
     it was proved by flattening the glob again and watching it fail.
+- [x] **FireRed** (`firered`, gen 3, pair partner: LeafGreen) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+- [x] **LeafGreen** (`leafgreen`, gen 3, pair partner: FireRed) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+  - Built as a pair, the way Ruby and Sapphire were, and the shared half is `gamedefs/kanto.py`.
+  - **A third module came out of it.** `hoenn.py` was holding facts that are not about Hoenn at
+    all: the link cable between the five Generation 3 cartridges, the generation itself, the
+    National Dex stopping at 386. Kanto would have had to copy them, which is the exact failure
+    a shared module exists to prevent, so they moved to `gba.py` and both regions read from it.
+    `hoenn.py` is the region now; `gba.py` is the hardware.
+  - **Platinum's Pal Park edges were wrong and this is what exposed it.** It named Emerald alone,
+    correct in Phase 1 when Emerald was the only Generation 3 game in the dataset, never widened
+    when Ruby and Sapphire arrived. So those two reached Generation 4 only the long way round -
+    the picker said "via trading, then Pal Park" and that was the truth about the data, not about
+    the games. Pal Park takes any Game Pak in the slot; all five cartridges declare the route now.
+    4 edges became 15, and nothing is held back any more.
+  - The dex is PokeAPI's `kanto`, the same 151 Red and Blue show, in the same order - the
+    resource lists `firered-leafgreen` among its version groups, which is the check that it is
+    the right list. The National Dex the games also get after the Elite Four is the entity's
+    reach, not the game's own Pokedex.
+  - **A validation rule had to be loosened, and the Kanto dex is what broke it.**
+    `every-entry-has-a-method` collapses an unfinished game into one finding instead of hundreds,
+    but it asked that *nothing* in the game's dex be explainable anywhere. That held for Emerald,
+    the first game to meet it, because nothing else produced a Hoenn species. A third of the 151
+    are caught in Hoenn too, so the pair fell past the guard and reported 103 separate faults each
+    for the one fact that their encounters were not gathered yet. The test is now "this game
+    brings no methods of its own", which is the question that was meant all along.
+  - Step 3: 902 wild slots for FireRed, 903 for LeafGreen. Ekans and Growlithe on FireRed,
+    Sandshrew and Vulpix on LeafGreen, Oddish against Bellsprout - the exclusives split exactly as
+    they should, which is the best evidence the version filter is not merging the two tables.
+  - Mankey and Meowth are in *both* halves here, although they were exclusives in Red and Blue.
+    Checked on Bulbapedia rather than assumed: FireRed and LeafGreen share one row for them.
+  - Step 4: 25 gift and static records each. The Game Corner is the one table the halves really
+    disagree about - not only which Pokemon stands in the window (Scyther on FireRed, Pinsir on
+    LeafGreen) but what the same one costs: Abra is 180 coins against 120, Porygon 9999 against
+    6500. So the prizes are keyed by version and folded into the shared table.
+  - The fossil left at Mt. Moon is gone for good, unlike Emerald's. Bulbapedia lists Mt. Moon as
+    the only source of either, and it is a choice between them. The Old Amber is nobody's rival:
+    its own item, out of the Pewter Museum of Science.
+  - Mewtwo waits on the Sevii Islands, not on the Elite Four: Cerulean Cave opens when the
+    Network Machine in the Pokemon Network Center works.
+  - Step 5: 83 evolutions and 9 in-game trades each. Three of the trades differ by version, and
+    one of them in a way worth writing down: the man on Route 18 hands over the same Lickitung in
+    both games but wants a Golduck on FireRed and a Slowbro on LeafGreen. It is not in any plain
+    text on the page - it had to be read off the background colour of the FR and LG columns - and
+    it is coherent with the rest: FireRed has no Slowpoke and LeafGreen no Psyduck, so each half
+    asks for something you can actually raise there.
+  - The Four Island day care is deliberately absent. It exists, but a Kanto dex is 151 entries and
+    every baby Pokemon is Generation 2 or later, so nothing these games hatch is anything this dex
+    asks for. Ruby and Sapphire hatch three because their dex has three to hatch.
+  - **The exclusives were derived after step 5 rather than at step 4, on purpose.** Ruby's list was
+    worked out from encounter tables before evolutions existed and wrongly held Banette; Sapphire's
+    held Dusclops. Both are caught nowhere and evolve from something the cartridge has, and reading
+    only the grass cannot tell the difference. Waiting until trades and evolutions were in gave
+    seven a side, mirrored exactly, first time.
+  - Step 6: 386 sprites in `generation-iii/firered-leafgreen`, one sheet for the two of them.
+    Checked three ways after what happened with Emerald: the files on disk, 386 resource names per
+    set inside `LivingDex.dll`, and the same tile cut out of a FireRed grid and an Emerald grid in
+    the running app and enlarged side by side. Different Charizards.
+  - Step 7: thirteen of the fourteen exclusives had a distribution. The Pokemon Trade and Battle
+    Day, one day in American shops in September 2004, covers nine of them; the Gather More
+    Pokemon! Third Campaign covers most of the rest. Note the *Third*, not the Fifth the Hoenn
+    cartridges name - different months, different species. Mew has three that reached these
+    cartridges: the Hadou Mew, the Mystery Mew and the Aura Mew.
+  - **Pinsir is the exception**, and it is a fact rather than a gap: nothing ever distributed one
+    for these games. Its reason ends at "trade one in", and a test pins that it has no event
+    sentence.
+  - Bulbapedia's *Game locations* "Event" marker is not reliable for this. Slowpoke's row says
+    only "Trade", while its *In events* table lists a 2004 FRLG distribution. All sixteen reasons
+    were taken from *In events*.
+  - Coverage: 143 full, 0 partial, 0 missing, 8 unobtainable for each - 151 either way.
+  - Smoke test: a FireRed collection with LeafGreen linked, in the published exe. The filter row
+    offers both games; Vulpix shows "Not in FireRed" with the LeafGreen sentence and the 2004
+    event underneath, and its LeafGreen routes with "Then to FireRed: trading"; Farfetch'd shows
+    the Vermilion City trade with Elyssa on both cartridges. The user's own data file was copied
+    out first and restored byte for byte afterwards.
+
 
 ### Generation 4
 

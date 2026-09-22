@@ -52,19 +52,36 @@ else
                     @* Radios rather than buttons: one of a set, which is what a radio is for,
                        and the keyboard and screen reader behaviour comes free. The art is the
                        label. *@
-                    <ul class="game-grid" role="none">
-                        @foreach (var game in Games)
-                        {
-                            <li>
-                                <label class="game-card">
-                                    <input type="radio" name="main-game" class="visually-hidden"
-                                           checked="@(_draft.MainGame == game.Id)"
-                                           @onchange="@(() => ChooseMainGame(game.Id))" />
-                                    <GameCover Game="game" />
-                                </label>
-                            </li>
-                        }
-                    </ul>
+                    @foreach (var generation in Games.GroupBy(game => game.Generation).OrderBy(group => group.Key))
+                    {
+                        var number = generation.Key;
+
+                        <section class="generation">
+                            <button type="button" class="generation-head" aria-expanded="@IsOpen(number)"
+                                    @onclick="@(() => ToggleGeneration(number))">
+                                <span class="generation-caret" aria-hidden="true">@(IsOpen(number) ? "▾" : "▸")</span>
+                                <span class="generation-name">Generation @number</span>
+                                <span class="muted">@Counted(generation.Count())</span>
+                            </button>
+
+                            @if (IsOpen(number))
+                            {
+                                <ul class="game-grid" role="none">
+                                    @foreach (var game in generation)
+                                    {
+                                        <li>
+                                            <label class="game-card">
+                                                <input type="radio" name="main-game" class="visually-hidden"
+                                                       checked="@(_draft.MainGame == game.Id)"
+                                                       @onchange="@(() => ChooseMainGame(game.Id))" />
+                                                <GameCover Game="game" />
+                                            </label>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </section>
+                    }
                 </div>
                 break;
 
@@ -76,26 +93,44 @@ else
 
                 @if (Candidates.Count == 0)
                 {
-                    <p class="muted">There is no other game in this dataset.</p>
+                    <p class="muted">Nothing in this dataset can send Pokémon to @MainGameTitle.</p>
                 }
                 else
                 {
-                    <ul class="game-grid" role="none">
-                        @foreach (var candidate in Candidates)
-                        {
-                            <li>
-                                <label class="game-card @(candidate.CanFeed ? null : "unavailable")"
-                                       title="@candidate.Reason">
-                                    <input type="checkbox" class="visually-hidden"
-                                           checked="@_draft.IsLinked(candidate.Game.Id)"
-                                           disabled="@(!candidate.CanFeed)"
-                                           @onchange="@(e => _draft.SetLinked(candidate.Game.Id, (bool?)e.Value == true))" />
-                                    <GameCover Game="candidate.Game" />
-                                    <span class="reason">@candidate.Reason</span>
-                                </label>
-                            </li>
-                        }
-                    </ul>
+                    @* The same boxes as the main game step. The wrapper is written twice rather
+                       than made a component: what is inside differs in type and in markup, and a
+                       generic one would be more machinery than the lines it saves. *@
+                    @foreach (var generation in Candidates.GroupBy(one => one.Game.Generation).OrderBy(group => group.Key))
+                    {
+                        var number = generation.Key;
+
+                        <section class="generation">
+                            <button type="button" class="generation-head" aria-expanded="@IsOpen(number)"
+                                    @onclick="@(() => ToggleGeneration(number))">
+                                <span class="generation-caret" aria-hidden="true">@(IsOpen(number) ? "▾" : "▸")</span>
+                                <span class="generation-name">Generation @number</span>
+                                <span class="muted">@Counted(generation.Count())</span>
+                            </button>
+
+                            @if (IsOpen(number))
+                            {
+                                <ul class="game-grid" role="none">
+                                    @foreach (var candidate in generation)
+                                    {
+                                        <li>
+                                            <label class="game-card" title="@candidate.Route">
+                                                <input type="checkbox" class="visually-hidden"
+                                                       checked="@_draft.IsLinked(candidate.Game.Id)"
+                                                       @onchange="@(e => _draft.SetLinked(candidate.Game.Id, (bool?)e.Value == true))" />
+                                                <GameCover Game="candidate.Game" />
+                                                <span class="reason">@candidate.Route</span>
+                                            </label>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </section>
+                    }
                 }
                 break;
 
@@ -185,17 +220,56 @@ else
     private bool _saving;
     private string? _saveError;
 
+    /// <summary>
+    /// Which generations the player has folded away, by number. Empty means every box is open,
+    /// which is what a first visit sees.
+    /// </summary>
+    /// <remarks>
+    /// Kept here rather than left to a details element, whose open state lives in the DOM and
+    /// not in the render tree: Blazor would not know a box had been folded, and the next render
+    /// could quietly unfold it again.
+    /// </remarks>
+    private readonly HashSet<int> _folded = [];
+
+    private bool IsOpen(int generation) => !_folded.Contains(generation);
+
+    private void ToggleGeneration(int generation)
+    {
+        if (!_folded.Remove(generation))
+        {
+            _folded.Add(generation);
+        }
+    }
+
+    private static string Counted(int games) => games == 1 ? "1 game" : $"{games} games";
+
+    /// <summary>
+    /// Every game, in the order a player thinks of them: by generation, and inside a generation
+    /// by the day it came out.
+    /// </summary>
+    /// <remarks>
+    /// Release order, not alphabetical: Ruby and Sapphire came first, FireRed and LeafGreen a
+    /// year later, Emerald after that, and a player who grew up with them expects to read them
+    /// that way. Title breaks a tie, which is what keeps the two halves of a pair - released on
+    /// the same day - next to each other and always in the same order.
+    /// </remarks>
     private IReadOnlyList<Game> Games =>
         [.. Dataset.Reference.Games
             .OrderBy(game => game.Generation)
+            .ThenBy(game => game.Released ?? DateOnly.MaxValue)
             .ThenBy(game => game.Title, StringComparer.Ordinal)];
 
-    /// <summary>One game offered as a feeder, and whether it can actually be one.</summary>
-    private sealed record Candidate(Game Game, bool CanFeed, string Reason);
+    /// <summary>One game that can feed the main game, and how what it sends gets there.</summary>
+    private sealed record Candidate(Game Game, string Route);
 
-    // Every game but the main one, each with the transfer graph's answer attached. Games that
-    // cannot feed are still listed: a picker that quietly omits them leaves the player
-    // wondering whether the app forgot their game or transferring is simply impossible.
+    /// <summary>
+    /// Every game the transfer graph can route into the main game, main game excluded.
+    /// </summary>
+    /// <remarks>
+    /// Only those: a game with no route is not a choice the player can make, and a picker full of
+    /// covers that refuse to be ticked is a list of dead ends to read through. What is left is
+    /// short, and every card in it does something.
+    /// </remarks>
     private IReadOnlyList<Candidate> Candidates
     {
         get
@@ -205,35 +279,28 @@ else
                 return [];
             }
 
-            return [.. Games.Where(game => game.Id != main).Select(game => Describe(game, main))];
+            return
+            [
+                .. Games
+                    .Where(game => game.Id != main)
+                    .Select(game => (Game: game, Route: RouteInto(game, main)))
+                    .Where(one => one.Route is not null)
+                    .Select(one => new Candidate(one.Game, one.Route!)),
+            ];
         }
     }
 
-    private Candidate Describe(Game feeder, GameId main)
+    /// <summary>How a game reaches the main game, or null when it cannot.</summary>
+    private string? RouteInto(Game feeder, GameId main)
     {
         var result = Graph.RoutesBetween(feeder.Id, main);
-        var mainTitle = Games.FirstOrDefault(game => game.Id == main)?.Title ?? main.Value;
-
-        if (result.Shortest is { } route)
-        {
-            return new Candidate(feeder, true, $"via {TransferNames.Of(route)}");
-        }
-
-        // The graph explains itself with game ids, which is right for a log and wrong for a
-        // screen; the titles are here, so the sentence is written here.
-        var reason = result.Reason switch
-        {
-            NoRouteReason.NotConnected =>
-                $"nothing can be transferred from {feeder.Title} into {mainTitle}",
-            NoRouteReason.TooManyHops =>
-                $"only reaches {mainTitle} through more transfers than the app will plan",
-            NoRouteReason.UnknownGame =>
-                "not in the transfer graph",
-            _ => result.Explanation,
-        };
-
-        return new Candidate(feeder, false, reason);
+        return result.Shortest is { } route ? $"via {TransferNames.Of(route)}" : null;
     }
+
+    private string MainGameTitle =>
+        _draft.MainGame is { } main
+            ? Games.FirstOrDefault(game => game.Id == main)?.Title ?? main.Value
+            : "the main game";
 
     protected override async Task OnInitializedAsync()
     {
@@ -269,14 +336,18 @@ else
 
         // Changing the main game can turn a linked game into one that cannot feed it, or into
         // the main game itself. Either would leave the draft contradicting the graph, so those
-        // links are dropped rather than carried into a collection that cannot work.
+        // links are dropped rather than carried into a collection that cannot work. Read against
+        // the new candidates rather than the old ones: anything no longer on that list is now a
+        // game the player cannot even see to untick.
         if (_draft.MainGame is { } main)
         {
             _draft.SetLinked(main, false);
 
-            foreach (var candidate in Candidates.Where(one => !one.CanFeed))
+            var offered = Candidates.Select(one => one.Game.Id).ToHashSet();
+
+            foreach (var linked in _draft.LinkedGames.Where(game => !offered.Contains(game)))
             {
-                _draft.SetLinked(candidate.Game.Id, false);
+                _draft.SetLinked(linked, false);
             }
         }
     }

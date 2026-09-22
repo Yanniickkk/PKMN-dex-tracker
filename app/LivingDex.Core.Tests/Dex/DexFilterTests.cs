@@ -26,9 +26,14 @@ public class DexFilterTests
             CaptureRecord.CaughtIn(Mine, Chimchar.Target, Emerald, Platinum),
         ]);
 
-    private static bool Everything(DexTarget target) => true;
+    private static bool Everything(GameId game, DexTarget target) => true;
 
-    private static bool Nothing(DexTarget target) => false;
+    private static bool Nothing(GameId game, DexTarget target) => false;
+
+    /// <summary>Platinum can get Piplup, Emerald can get Chimchar, and neither has the third.</summary>
+    private static bool OneEach(GameId game, DexTarget target) =>
+        (game == Platinum && target == Piplup.Target)
+        || (game == Emerald && target == Chimchar.Target);
 
     [Fact]
     public void An_empty_filter_returns_the_dex_untouched()
@@ -64,14 +69,42 @@ public class DexFilterTests
     }
 
     [Fact]
-    public void Available_in_the_main_game_narrows_rather_than_widens()
+    public void Availability_narrows_rather_than_widens()
     {
-        var onlyPiplup = new DexFilter { AvailableInMainGame = true };
+        var onlyPiplup = new DexFilter { AvailableIn = [Platinum] };
 
         Assert.Equal(
             [Piplup],
-            onlyPiplup.Apply(Dex, Captures, target => target == Piplup.Target));
+            onlyPiplup.Apply(Dex, Captures, (_, target) => target == Piplup.Target));
         Assert.Empty(onlyPiplup.Apply(Dex, Captures, Nothing));
+    }
+
+    [Fact]
+    public void One_game_asks_about_that_game_and_no_other()
+    {
+        // The collection covers both, and the question is about one of them at a time.
+        Assert.Equal([Piplup], new DexFilter { AvailableIn = [Platinum] }.Apply(Dex, Captures, OneEach));
+        Assert.Equal([Chimchar], new DexFilter { AvailableIn = [Emerald] }.Apply(Dex, Captures, OneEach));
+    }
+
+    [Fact]
+    public void Several_games_widen_each_other()
+    {
+        // "What can I get out of either of these" - an entry passes when any ticked game has it,
+        // the same way the two status switches widen rather than narrow.
+        var either = new DexFilter { AvailableIn = [Platinum, Emerald] };
+
+        Assert.Equal([Chimchar, Piplup], either.Apply(Dex, Captures, OneEach));
+    }
+
+    [Fact]
+    public void No_game_ticked_asks_nothing_about_availability()
+    {
+        // Not "show nothing": the question simply is not being asked.
+        var filter = new DexFilter { AvailableIn = [] };
+
+        Assert.True(filter.IsEmpty);
+        Assert.Same(Dex, filter.Apply(Dex, Captures, Nothing));
     }
 
     [Fact]

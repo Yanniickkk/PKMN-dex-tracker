@@ -25,15 +25,26 @@ public sealed record DexFilter
     /// <summary>Show entries obtained but not yet in the main game.</summary>
     public bool NotYetTransferred { get; init; }
 
-    /// <summary>Show only entries the main game has a known way to obtain.</summary>
-    public bool AvailableInMainGame { get; init; }
+    /// <summary>
+    /// Show only entries one of these games has a known way to obtain. Empty asks nothing.
+    /// </summary>
+    /// <remarks>
+    /// A list rather than a single game, and the games widen each other the way the two status
+    /// switches do: a collection is the main game plus everything that can feed it, and "what
+    /// can I get out of Ruby or Sapphire" is a question a player with both actually has. Ticking
+    /// one is the common case and is what this was before it could hold more than one.
+    ///
+    /// Beware comparing two filters with <c>==</c>: a record holding a collection compares that
+    /// collection by reference. Nothing here does, and nothing should start.
+    /// </remarks>
+    public IReadOnlyList<GameId> AvailableIn { get; init; } = [];
 
     /// <summary>True when nothing is ticked and nothing is typed.</summary>
     public bool IsEmpty =>
         string.IsNullOrWhiteSpace(Search)
         && !StillToCatch
         && !NotYetTransferred
-        && !AvailableInMainGame;
+        && AvailableIn.Count == 0;
 
     /// <summary>
     /// The lines that pass, in the order they came in.
@@ -41,13 +52,13 @@ public sealed record DexFilter
     /// <param name="lines">The whole dex.</param>
     /// <param name="captures">What the player has done about each entry.</param>
     /// <param name="isAvailable">
-    /// Whether the main game has a known way to obtain a target. Passed in rather than looked up
+    /// Whether one game has a known way to obtain a target. Passed in rather than looked up
     /// here, so the rules can be tested without a dataset.
     /// </param>
     public IReadOnlyList<DexLine> Apply(
         IReadOnlyList<DexLine> lines,
         CaptureIndex captures,
-        Func<DexTarget, bool> isAvailable)
+        Func<GameId, DexTarget, bool> isAvailable)
     {
         ArgumentNullException.ThrowIfNull(lines);
         ArgumentNullException.ThrowIfNull(captures);
@@ -63,7 +74,7 @@ public sealed record DexFilter
         return [.. lines.Where(line =>
             MatchesSearch(line, needle)
             && MatchesStatus(captures.StatusOf(line.Target))
-            && (!AvailableInMainGame || isAvailable(line.Target)))];
+            && MatchesAvailability(line, isAvailable))];
     }
 
     /// <summary>
@@ -107,6 +118,17 @@ public sealed record DexFilter
         // Also the species id, which is already folded and stripped of punctuation. It is what
         // makes "farfetchd" find Farfetch'd and "mrmime" find Mr. Mime.
         || line.Target.Species.Value.Contains(needle, StringComparison.Ordinal);
+
+    private bool MatchesAvailability(DexLine line, Func<GameId, DexTarget, bool> isAvailable)
+    {
+        // No game ticked is not "show nothing": it is "do not ask about availability at all".
+        if (AvailableIn.Count == 0)
+        {
+            return true;
+        }
+
+        return AvailableIn.Any(game => isAvailable(game, line.Target));
+    }
 
     private bool MatchesStatus(CaptureStatus status)
     {
