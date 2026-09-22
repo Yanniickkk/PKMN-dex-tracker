@@ -132,6 +132,14 @@ public sealed record WildAcquisition : AcquisitionMethod
 
     /// <summary>Restricted to this weather.</summary>
     public string? Weather { get; init; }
+
+    /// <summary>
+    /// What else has to be true for this slot to hold this species: a Game Boy Advance cartridge
+    /// in the slot underneath, the day the Great Marsh rotates it in, a honey tree of the right
+    /// group. Time of day, season and weather have fields of their own; this is everything else,
+    /// and a slot without it is one a player meets by playing.
+    /// </summary>
+    public string? Requirement { get; init; }
 }
 
 /// <summary>Obtained by evolving something else, which must itself be obtainable.</summary>

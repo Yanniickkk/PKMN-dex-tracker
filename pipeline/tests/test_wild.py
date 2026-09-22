@@ -197,6 +197,185 @@ def test_a_time_of_day_condition_is_carried_into_its_own_field() -> None:
     assert found[0].season is None
 
 
+def test_the_ordinary_state_of_the_world_is_not_a_condition() -> None:
+    # Generation 4 marks every row of a table with the state it is filled in, so the slots a
+    # player walks into on an ordinary afternoon say "no swarm", "no Poke Radar", "nothing in
+    # the Game Boy Advance slot". One Bidoof, one record, and the chances add up.
+    found = build(
+        {
+            "bidoof": [
+                area(
+                    "hoenn-route-101-area",
+                    "diamond",
+                    [
+                        slot("walk", 2, 2, 20, conditions=["swarm-no"]),
+                        slot("walk", 3, 3, 15),
+                        slot("walk", 3, 3, 11, conditions=["radar-off"]),
+                        slot("walk", 2, 2, 4, conditions=["slot2-none"]),
+                    ],
+                )
+            ]
+        },
+        ROUTE_101,
+        version="diamond",
+    )
+
+    assert len(found) == 1
+    assert found[0].rate_percent == 50
+    assert found[0].levels.minimum == 2
+    assert found[0].levels.maximum == 3
+    assert found[0].requirement is None
+
+
+def test_a_condition_a_player_has_to_arrange_is_written_out() -> None:
+    found = build(
+        {
+            "gengar": [
+                area(
+                    "hoenn-route-101-area",
+                    "diamond",
+                    [slot("walk", 15, 15, 4, conditions=["slot2-ruby"])],
+                )
+            ]
+        },
+        ROUTE_101,
+        version="diamond",
+    )
+
+    assert found[0].requirement == (
+        "Dual-slot mode, with a Pokemon Ruby cartridge in the Game Boy Advance slot"
+    )
+
+
+def test_two_conditions_on_one_row_become_one_sentence() -> None:
+    found = build(
+        {
+            "drapion": [
+                area(
+                    "hoenn-route-101-area",
+                    "diamond",
+                    [
+                        slot(
+                            "walk",
+                            26,
+                            26,
+                            5,
+                            conditions=[
+                                "great-marsh-daily-slot-1-of-32",
+                                "story-progress-national-dex",
+                            ],
+                        )
+                    ],
+                )
+            ]
+        },
+        ROUTE_101,
+        version="diamond",
+    )
+
+    # Each phrase is written to stand on its own, so the second is lowered into the first
+    # rather than left reading like two sentences that collided.
+    assert found[0].requirement == (
+        "Only on days the Great Marsh rotates it in (daily slot 1 of 32) "
+        "and after the National Dex opens"
+    )
+
+
+def test_the_fuller_of_two_rows_for_one_encounter_is_the_one_kept() -> None:
+    # PokeAPI writes a roamer down twice, once for grass and once for water, and in Generation 3
+    # only one of the two rows says Latias is not loose until the Elite Four are beaten. Same
+    # place, same level, same chance: one encounter, and the row that read the game wins.
+    found = build(
+        {
+            "latias": [
+                area(
+                    "hoenn-route-101-area",
+                    "emerald",
+                    [
+                        slot(
+                            "roaming-grass", 40, 40, 25, conditions=["story-progress-hall-of-fame"]
+                        ),
+                        slot("roaming-water", 40, 40, 25),
+                    ],
+                )
+            ]
+        },
+        ROUTE_101,
+    )
+
+    assert len(found) == 1
+    assert found[0].requirement == "After entering the Hall of Fame"
+
+
+def test_a_condition_on_something_the_place_already_gives_is_dropped() -> None:
+    # Stunky is in this grass whatever is in the Game Boy Advance slot. "And also with Ruby in
+    # the slot" is not a second way of getting one.
+    found = build(
+        {
+            "stunky": [
+                area(
+                    "hoenn-route-101-area",
+                    "diamond",
+                    [
+                        slot("walk", 14, 14, 20, conditions=["swarm-no"]),
+                        slot("walk", 15, 15, 4, conditions=["slot2-ruby"]),
+                        slot("walk", 15, 15, 4, conditions=["slot2-sapphire"]),
+                    ],
+                )
+            ]
+        },
+        ROUTE_101,
+        version="diamond",
+    )
+
+    assert len(found) == 1
+    assert found[0].requirement is None
+
+
+def test_a_condition_on_something_the_place_gives_no_other_way_stays() -> None:
+    # The other case, and the reason the rule is about the place rather than about the species:
+    # nothing here is unconditional, so every cartridge that opens the slot is worth naming.
+    found = build(
+        {
+            "gengar": [
+                area(
+                    "hoenn-route-101-area",
+                    "diamond",
+                    [
+                        slot("walk", 15, 15, 4, conditions=["slot2-ruby"]),
+                        slot("walk", 15, 15, 4, conditions=["slot2-sapphire"]),
+                    ],
+                )
+            ]
+        },
+        ROUTE_101,
+        version="diamond",
+    )
+
+    assert len(found) == 2
+    assert all(one.requirement for one in found)
+
+
+def test_a_condition_nobody_has_worded_yet_is_carried_and_complained_about(caplog) -> None:
+    found = build(
+        {
+            "shellder": [
+                area(
+                    "hoenn-route-101-area",
+                    "diamond",
+                    [slot("walk", 20, 20, 5, conditions=["johto-safari-blocks-water-min-4"])],
+                )
+            ]
+        },
+        ROUTE_101,
+        version="diamond",
+    )
+
+    # Carried through rather than dropped: a restriction nobody has read is still a restriction.
+    assert found[0].requirement == "Johto safari blocks water min 4"
+    assert "no wording yet" in caplog.text
+
+
 def test_the_same_place_is_looked_up_once_however_many_pokemon_live_there() -> None:
     api = FakeApi(
         {

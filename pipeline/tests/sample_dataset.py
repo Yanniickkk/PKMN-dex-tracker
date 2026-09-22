@@ -204,12 +204,15 @@ def platinum() -> GameData:
             ),
             # One of Pichu's two parents, so the sample exercises "any one parent is enough"
             # rather than tripping the breeding dead-end check on its own data.
+            # A slot with something a player has to arrange first, so the field is pinned on
+            # both sides of the wire: Generation 4 is full of them.
             WildAcquisition(
                 game="platinum",
                 target=DexTarget(species="pikachu"),
                 location="Trophy Garden",
                 method=EncounterMethod.WALK,
                 levels=LevelRange(minimum=16, maximum=18),
+                requirement="Only on days Mr. Backlot mentions it in the Trophy Garden",
                 source=CITATION,
             ),
             # Two parents and a requirement, so the list and the optional field are both pinned.

@@ -19,8 +19,9 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import date
 
+from . import conditions
 from .models import DexTarget, GiftAcquisition, GiftKind, SourceCitation
-from .places import LocationNames, pretty
+from .places import LocationNames
 from .pokeapi import BASE_URL, PokeApiClient
 
 log = logging.getLogger(__name__)
@@ -51,8 +52,12 @@ EVENT_METHODS = frozenset(
     }
 )
 
-#: Conditions that name an item you must be carrying or have chosen.
-_ITEM = "item-"
+#: Methods that are another game handing something over rather than this one.
+#:
+#: Manaphy hatches in Sinnoh from an egg a Pokemon Ranger cartridge sends across, which is a
+#: fact about two games and a wireless link, not about anything in the grass. Skipped with a
+#: word, the way a distribution event is, and answered where the unobtainable entries are.
+OTHER_GAME_METHODS = frozenset({"pokemon-ranger"})
 
 
 @dataclass(frozen=True)
@@ -79,6 +84,7 @@ def gift_encounters(
     species: list[str],
     retrieved_on: date,
     details: Mapping[str, GiftDetail] | None = None,
+    excluded: Mapping[str, str] | None = None,
     refresh: bool = False,
     places: LocationNames | None = None,
 ) -> list[GiftAcquisition]:
@@ -87,13 +93,24 @@ def gift_encounters(
     Unlike a wild slot there is nothing to add up: one of these is one Pokemon. Two rows that a
     player could not tell apart are still folded together, because PokeAPI does sometimes list
     the same encounter twice.
+
+    ``excluded`` names species PokeAPI files under this version that the version does not
+    actually hand over, and says why. It is not a way of tidying the output: PokeAPI lists both
+    Sinnoh fossils under both halves of the pair, and Bulbapedia is clear that the Skull Fossil
+    is Diamond's and the Armor Fossil is Pearl's. A source that is wrong about a version is a
+    disagreement to record, not a row to keep.
     """
     known = details or {}
+    skip = excluded or {}
     where = places or LocationNames(api, refresh=refresh)
     found: list[GiftAcquisition] = []
     seen: set[tuple] = set()
 
     for name in species:
+        if name in skip:
+            log.info("%s is not one of %s's gifts: %s", name, game_id, skip[name])
+            continue
+
         # Encounters hang off a Pokemon rather than a species, as they do for wild slots.
         pokemon = api.default_pokemon(name, refresh=refresh)
         url = f"{BASE_URL}/pokemon/{pokemon}/encounters"
@@ -112,6 +129,15 @@ def gift_encounters(
                     if method in EVENT_METHODS:
                         log.info(
                             "%s in %s comes from a distribution event (%s), not from the game",
+                            name,
+                            game_id,
+                            method,
+                        )
+                        continue
+
+                    if method in OTHER_GAME_METHODS:
+                        log.info(
+                            "%s in %s comes across from another game (%s), not from this one",
                             name,
                             game_id,
                             method,
@@ -152,7 +178,7 @@ def _record(
     citation: SourceCitation,
 ) -> GiftAcquisition:
     location, sub_area = place
-    conditions = [one["name"] for one in detail.get("condition_values", [])]
+    values = [one["name"] for one in detail.get("condition_values", [])]
 
     return GiftAcquisition(
         game=game_id,
@@ -164,16 +190,13 @@ def _record(
         npc=known.npc,
         # A gift comes at one level, so PokeAPI's range is a range of one.
         level=detail.get("min_level"),
-        requirement=known.requirement or _item(conditions),
+        # The game's own table wins: it can say "Odd Keystone in the Hallowed Tower, after
+        # talking to 32 people in the Underground" where the conditions say two bare facts.
+        # What the conditions say is the fallback, so that a game which has not been written
+        # out yet loses nothing.
+        requirement=known.requirement or conditions.requirement(values, subject=species),
         source=citation,
     )
-
-
-def _item(conditions: list[str]) -> str | None:
-    """The item an encounter's conditions name, as a player would write it."""
-    found = next((one for one in conditions if one.startswith(_ITEM)), None)
-
-    return pretty(found.removeprefix(_ITEM)) if found else None
 
 
 def _identity(record: GiftAcquisition) -> tuple:

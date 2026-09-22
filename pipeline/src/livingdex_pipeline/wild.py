@@ -2,9 +2,9 @@
 
 The module docstring in :mod:`pokeapi` says encounter detail is what scrapers are for. That was
 written before anyone looked: PokeAPI carries the games' own encounter tables - area, method,
-level range and slot chance, per version - and they are structured, consistent and citable.
-Scraping a wiki for the same numbers would be slower, more fragile and no more true. What
-PokeAPI does not carry is weather, and Generation 3 has no encounters that depend on it.
+level range, slot chance and the state of the world each slot is filled in, per version - and
+they are structured, consistent and citable. Scraping a wiki for the same numbers would be
+slower, more fragile and no more true.
 
 What it does not answer is gifts, statics and in-game trades. Those are steps 4 and 5 - see
 :mod:`gifts` for the first of them - and the methods that stand for them are skipped here
@@ -13,10 +13,10 @@ rather than quietly turned into wild slots.
 
 from __future__ import annotations
 
-import logging
 from dataclasses import dataclass
 from datetime import date
 
+from . import conditions
 from .models import (
     DexTarget,
     EncounterMethod,
@@ -26,8 +26,6 @@ from .models import (
 )
 from .places import LocationNames
 from .pokeapi import BASE_URL, PokeApiClient
-
-log = logging.getLogger(__name__)
 
 #: PokeAPI's encounter methods that are a wild slot, and what this project calls them.
 WILD_METHODS: dict[str, EncounterMethod] = {
@@ -56,19 +54,23 @@ WILD_METHODS: dict[str, EncounterMethod] = {
     "rough-terrain": EncounterMethod.WALK,
 }
 
-#: Prefixes of PokeAPI condition values this project has a field for.
-_TIME = "time-"
-_SEASON = "season-"
+
+@dataclass(frozen=True)
+class _State:
+    """The state of the world one row of an encounter table is filled in."""
+
+    time_of_day: str | None
+    season: str | None
+    requirement: str | None
 
 
 @dataclass
 class _Slot:
-    """Slots of one kind in one place, being added up."""
+    """Rows of one kind in one place, being added up."""
 
     lowest: int
     highest: int
     chance: int
-    conditions: tuple[str, ...]
 
 
 def wild_encounters(
@@ -83,9 +85,9 @@ def wild_encounters(
 ) -> list[WildAcquisition]:
     """Every wild slot in one game, for the species given, as one record per place and method.
 
-    PokeAPI lists a slot per level, so a Pokemon on one route appears several times over. They
-    are added back up here: one record per place, method and set of conditions, carrying the
-    whole level range and the chance of meeting it at all.
+    PokeAPI lists a row per level and per state of the world, so a Pokemon on one route appears
+    several times over. They are added back up here: one record per place, method and state,
+    carrying the whole level range and the chance of meeting it at all.
     """
     places = places or LocationNames(api, refresh=refresh)
     found: list[WildAcquisition] = []
@@ -105,13 +107,17 @@ def wild_encounters(
                 if version_details["version"]["name"] != version:
                     continue
 
-                for slot in _add_up(version_details.get("encounter_details", [])):
+                slots = _add_up(version_details.get("encounter_details", []), species=name)
+
+                for (method, state), slot in slots.items():
                     location, sub_area = places.of(area_slug)
                     record = _record(
                         game_id=game_id,
                         species=name,
                         location=location,
                         sub_area=sub_area,
+                        method=method,
+                        state=state,
                         slot=slot,
                         citation=citation,
                     )
@@ -127,12 +133,12 @@ def wild_encounters(
                     seen.add(key)
                     found.append(record)
 
-    return found
+    return _without_redundant_conditions(_without_unconditional_twins(found))
 
 
-def _add_up(details: list[dict]) -> list[_Slot]:
-    """One slot per method and set of conditions, with the levels and chances added together."""
-    grouped: dict[tuple[str, tuple[str, ...]], _Slot] = {}
+def _add_up(details: list[dict], *, species: str) -> dict[tuple[str, _State], _Slot]:
+    """One slot per method and state of the world, levels and chances added together."""
+    grouped: dict[tuple[str, _State], _Slot] = {}
 
     for detail in details:
         method = detail["method"]["name"]
@@ -140,8 +146,8 @@ def _add_up(details: list[dict]) -> list[_Slot]:
             # Gifts, statics and trades come with their own steps and their own records.
             continue
 
-        conditions = tuple(sorted(one["name"] for one in detail.get("condition_values", [])))
-        key = (method, conditions)
+        conditions = sorted(one["name"] for one in detail.get("condition_values", []))
+        key = (method, _state(conditions, species=species))
         low, high = detail["min_level"], detail["max_level"]
         chance = detail.get("chance") or 0
 
@@ -151,14 +157,18 @@ def _add_up(details: list[dict]) -> list[_Slot]:
             slot.highest = max(slot.highest, high)
             slot.chance += chance
         else:
-            grouped[key] = _Slot(lowest=low, highest=high, chance=chance, conditions=conditions)
+            grouped[key] = _Slot(lowest=low, highest=high, chance=chance)
 
-    return [_named(method, slot) for (method, _), slot in grouped.items()]
+    return grouped
 
 
-def _named(method: str, slot: _Slot) -> _Slot:
-    slot.conditions = (method, *slot.conditions)
-    return slot
+def _state(values: list[str], *, species: str) -> _State:
+    """What a row's conditions say about when it holds this species."""
+    return _State(
+        time_of_day=conditions.of(values, conditions.TIME),
+        season=conditions.of(values, conditions.SEASON),
+        requirement=conditions.requirement(values, subject=species),
+    )
 
 
 def _record(
@@ -167,19 +177,11 @@ def _record(
     species: str,
     location: str,
     sub_area: str | None,
+    method: str,
+    state: _State,
     slot: _Slot,
     citation: SourceCitation,
 ) -> WildAcquisition:
-    method, *conditions = slot.conditions
-    time_of_day = _condition(conditions, _TIME)
-    season = _condition(conditions, _SEASON)
-
-    for condition in conditions:
-        if not condition.startswith((_TIME, _SEASON)):
-            # Slot 2 cartridges, radar, story progress: real restrictions this project has no
-            # field for. Logged rather than dropped without a word.
-            log.info("%s in %s has an unmapped condition: %s", species, location, condition)
-
     return WildAcquisition(
         game=game_id,
         target=DexTarget(species=species),
@@ -191,28 +193,71 @@ def _record(
         # meeting this Pokemon at all. Clamped, because a source that says 120 is wrong rather
         # than certain.
         rate_percent=min(slot.chance, 100) or None,
-        time_of_day=time_of_day,
-        season=season,
+        time_of_day=state.time_of_day,
+        season=state.season,
+        requirement=state.requirement,
         source=citation,
     )
 
 
-def _condition(conditions: list[str], prefix: str) -> str | None:
-    found = next((one for one in conditions if one.startswith(prefix)), None)
-    return found[len(prefix) :] if found else None
+def _without_unconditional_twins(records: list[WildAcquisition]) -> list[WildAcquisition]:
+    """Drop a slot that another slot describes more fully.
+
+    PokeAPI writes a roamer down twice, once for grass and once for water, and Generation 3's
+    only three conditioned slots are exactly that: Latias roams Hoenn at level 40 a quarter of
+    the time on both rows, and only one of the two says she is not loose until the Elite Four
+    are beaten. Two rows alike in place, level and chance are one encounter written twice, and
+    the row that names the condition is the one that read the game properly.
+    """
+    fuller = {_twin(record) for record in records if record.requirement is not None}
+
+    return [
+        record
+        for record in records
+        if record.requirement is not None or _twin(record) not in fuller
+    ]
 
 
-def _identity(record: WildAcquisition) -> tuple:
-    """Everything a player would use to tell two slots apart."""
+def _without_redundant_conditions(records: list[WildAcquisition]) -> list[WildAcquisition]:
+    """Drop a conditional slot where the same place already holds the species without it.
+
+    Stunky stands in the grass on Route 206 whatever is in the Game Boy Advance slot, and five
+    more rows saying "and also with Ruby in the slot, and also with Sapphire" tell a player
+    nothing they can act on. Gengar is the other case: it is in Sinnoh's grass *only* in
+    dual-slot mode, nothing there is unconditional, and all five of its rows stay.
+    """
+    unconditional = {_where(record) for record in records if record.requirement is None}
+
+    return [
+        record
+        for record in records
+        if record.requirement is None or _where(record) not in unconditional
+    ]
+
+
+def _twin(record: WildAcquisition) -> tuple:
+    """Everything about a slot except what has to be true for it."""
     return (
-        record.target.species,
-        record.target.form,
-        record.location,
-        record.sub_area,
-        record.method,
+        *_where(record),
         record.levels.minimum,
         record.levels.maximum,
         record.rate_percent,
         record.time_of_day,
         record.season,
     )
+
+
+def _where(record: WildAcquisition) -> tuple:
+    """The place and the way in: what makes two slots the same opportunity."""
+    return (
+        record.target.species,
+        record.target.form,
+        record.location,
+        record.sub_area,
+        record.method,
+    )
+
+
+def _identity(record: WildAcquisition) -> tuple:
+    """Everything a player would use to tell two slots apart."""
+    return (*_twin(record), record.requirement)

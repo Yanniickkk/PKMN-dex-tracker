@@ -106,20 +106,19 @@ _Done: Ruby, Sapphire, Emerald, FireRed and LeafGreen. All five are in `DONE dex
 
 ### Generation 4
 
-- [ ] **Diamond** (`diamond`, gen 4, pair partner: Pearl)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
-- [ ] **Pearl** (`pearl`, gen 4, pair partner: Diamond)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
+_Done: Diamond and Pearl. Both are in `DONE dex tracker.md`._
+
+_What the Sinnoh games share is in `sinnoh.py`; what every Generation 4 cartridge shares - the
+wireless trading between all five, the National Dex to 493, Pal Park out of the slot underneath -
+is in `ds.py`. Platinum reads from both already. Its dex is `extended-sinnoh`, 210 entries and
+not the pair's 151, and its sprites are its own sheet: it redrew them._
+
 - [ ] **Platinum** (`platinum`, gen 4, standalone) — *partly done in Phase 1*
   - Its Pal Park edges were widened while FireRed and LeafGreen were being added: the file had
     listed Emerald alone since Phase 1, when Emerald was the only Generation 3 game in the
     dataset, so Ruby and Sapphire reached Generation 4 only by trading into Emerald first. Pal
     Park takes any Game Pak, so all five cartridges declare the route now.
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
+  - [x] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
   - [ ] 8 Validate + smoke test
 - [ ] **HeartGold** (`heartgold`, gen 4, pair partner: SoulSilver)

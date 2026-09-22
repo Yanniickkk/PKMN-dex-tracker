@@ -15025,6 +15025,7 @@
         "maximum": 40
       },
       "ratePercent": 25.0,
+      "requirement": "After entering the Hall of Fame and only if the red Pokemon was picked in the television broadcast",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/latias/encounters",
@@ -15044,6 +15045,7 @@
         "maximum": 40
       },
       "ratePercent": 25.0,
+      "requirement": "After entering the Hall of Fame and only if the blue Pokemon was picked in the television broadcast",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/latios/encounters",

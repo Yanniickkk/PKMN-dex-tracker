@@ -143,6 +143,7 @@ public class SchemaRoundTripTests
                 Method = EncounterMethod.Walk,
                 Levels = new LevelRange(3, 4),
                 RatePercent = 55,
+                Requirement = "After the National Dex opens",
             },
             new EvolutionAcquisition
             {
@@ -168,6 +169,26 @@ public class SchemaRoundTripTests
             Assert.Equal(method.GetType(), restored.GetType());
             Assert.Equal(method, restored);
         }
+    }
+
+    [Fact]
+    public void A_wild_slot_keeps_what_a_player_has_to_arrange_first()
+    {
+        // Generation 4 puts species in the grass only while a Game Boy Advance cartridge is in
+        // the slot underneath. A schema that dropped that would show the route and hide the
+        // hardware.
+        var json = Serialize<AcquisitionMethod>(new WildAcquisition
+        {
+            Game = new GameId("diamond"),
+            Target = DexTarget.ForSpecies(new SpeciesId("gengar")),
+            Source = Citation,
+            Location = "Route 206",
+            Method = EncounterMethod.Walk,
+            Levels = new LevelRange(15, 15),
+            Requirement = "Dual-slot mode, with a Pokemon Ruby cartridge in the Game Boy Advance slot",
+        });
+
+        Assert.Contains("Game Boy Advance slot", json.GetProperty("requirement").GetString(), StringComparison.Ordinal);
     }
 
     [Fact]

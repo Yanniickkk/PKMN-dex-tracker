@@ -14777,6 +14777,7 @@
         "maximum": 40
       },
       "ratePercent": 25.0,
+      "requirement": "After entering the Hall of Fame",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/latias/encounters",

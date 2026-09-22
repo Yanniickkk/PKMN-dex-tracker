@@ -24,6 +24,7 @@ from ..models import (
     TransferEdge,
     TransferMechanism,
 )
+from . import exclusives
 
 GENERATION = 3
 
@@ -96,18 +97,10 @@ def link_trade_edges(game_id: str) -> list[TransferEdge]:
 def only_on(partner: str, event: str | None = None) -> str:
     """Why an entry in this dex is not in this cartridge, when the other half has it.
 
-    A version exclusive is still an entry you have to fill, and the transfer graph is how -
-    which is the whole reason the two halves declare a route to each other.
-
-    ``event`` is what step 7 found. It does not change that the cartridge cannot produce one; it
-    answers the next question, which is where one could ever have come from.
-
-    Shared by both pairs: a Hoenn exclusive and a Kanto one are the same kind of fact, and the
-    sentence a player reads should not depend on which cartridge they happened to buy.
+    Shared by both Generation 3 pairs: a Hoenn exclusive and a Kanto one are the same kind of
+    fact. The sentence itself is shared with Generation 4 as well - see :mod:`exclusives`.
     """
-    reason = f"{partner} only in Generation 3; trade one in"
-
-    return f"{reason}. {event[0].upper()}{event[1:]}" if event else reason
+    return exclusives.only_on(partner, generation=GENERATION, event=event)
 
 
 def pal_park_edges(*, into: str) -> list[TransferEdge]:

@@ -7,6 +7,7 @@ three it is, who gives it, and what you had to do first come from the game's own
 
 from __future__ import annotations
 
+import logging
 from datetime import date
 
 from livingdex_pipeline.gifts import GiftDetail, gift_encounters
@@ -62,6 +63,7 @@ def build(
     locations: dict[str, tuple[str, str]],
     details: dict[str, GiftDetail] | None = None,
     version: str = "emerald",
+    excluded: dict[str, str] | None = None,
 ):
     return gift_encounters(
         FakeApi(encounters, locations),
@@ -70,6 +72,7 @@ def build(
         species=[name.removesuffix("-normal") for name in encounters],
         retrieved_on=TODAY,
         details=details,
+        excluded=excluded,
     )
 
 
@@ -199,6 +202,56 @@ def test_a_distribution_event_is_not_a_way_to_get_one(caplog) -> None:
     )
 
     assert found == []
+
+
+def test_a_gift_another_game_sends_over_is_not_this_game_handing_it_over(caplog) -> None:
+    # Manaphy hatches in Sinnoh from an egg a Pokemon Ranger cartridge sends across. That is a
+    # fact about two games and a wireless link, not about anything standing in the grass.
+    caplog.set_level(logging.INFO)
+    found = build(
+        {"manaphy": [area("hoenn-route-101-area", "emerald", [row("pokemon-ranger", 1)])]},
+        ROUTE_101,
+    )
+
+    assert found == []
+    assert "another game" in caplog.text
+
+
+def test_a_source_that_is_wrong_about_a_version_can_be_told_so(caplog) -> None:
+    # PokeAPI files both Sinnoh fossils under both halves of the pair. Only Diamond's
+    # Underground holds a Skull Fossil, so the row Pearl was given is not Pearl's.
+    caplog.set_level(logging.INFO)
+    found = build(
+        {
+            "cranidos": [
+                area("hoenn-route-101-area", "emerald", [row("gift", 20, ["item-skull-fossil"])])
+            ]
+        },
+        ROUTE_101,
+        excluded={"cranidos": "the Skull Fossil is only in the other half's Underground"},
+    )
+
+    assert found == []
+    assert "other half" in caplog.text
+
+
+def test_a_condition_that_is_not_an_item_is_still_carried() -> None:
+    # Two bare facts where a player wants one sentence - but dropping them is worse, and that
+    # is what used to happen to everything that was not an item.
+    found = build(
+        {
+            "drifloon": [
+                area(
+                    "hoenn-route-101-area",
+                    "emerald",
+                    [row("static", 22, ["weekday-friday", "story-progress-defeat-mars"])],
+                )
+            ]
+        },
+        ROUTE_101,
+    )
+
+    assert found[0].requirement == ("On a Friday and after Mars is beaten at the Valley Windworks")
 
 
 def test_wild_slots_are_left_to_their_own_step() -> None:

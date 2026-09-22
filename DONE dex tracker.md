@@ -1258,7 +1258,87 @@ _Nothing yet._
 
 ### Generation 4
 
-_Nothing yet._
+- [x] **Diamond** (`diamond`, gen 4, pair partner: Pearl) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+- [x] **Pearl** (`pearl`, gen 4, pair partner: Diamond) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+  - Built as a pair, the way both Generation 3 pairs were. The shared half is
+    `gamedefs/sinnoh.py`; what every Generation 4 cartridge shares - the wireless trading
+    between all five, the National Dex to 493, Pal Park out of the slot underneath - is
+    `gamedefs/ds.py`, which Platinum now reads from as well.
+  - 146 full and 5 unobtainable per game, validation green on all 9 rules.
+  - **The three Sinnoh games do not share a dex.** Ruby, Sapphire and Emerald all show the same
+    202 entries, so `hoenn.py` names one. Platinum widened the regional list from 151 to 210,
+    and PokeAPI keeps the two apart: `original-sinnoh` belongs to version group `diamond-pearl`,
+    `extended-sinnoh` to `platinum`. The constant is `PAIR_DEX` for that reason, and Platinum
+    will name its own.
+  - **Generation 4 conditions were being dropped, and some of them were the whole answer.**
+    Its encounter tables mark every row with the state of the world it is filled in. Generation 3
+    has three such rows in the entire dataset; Sinnoh has over a thousand, and Gengar is in the
+    Old Chateau *only* while a Generation 3 cartridge is in the Game Boy Advance slot. The old
+    wild step logged them and threw them away, which would have printed a route and hidden the
+    hardware. `WildAcquisition` gained a `requirement`, in the pipeline and in C#, and the detail
+    popup shows it as "Needs". 416 slots per game carry one.
+  - The phrasing lives in `conditions.py`, shared with the gift step, because both read the same
+    tables. That closed a second hole: gifts only ever read *item* conditions, so Drifloon said
+    nothing at all. It now reads "On a Friday, once Team Galactic is beaten at the Valley
+    Windworks" - one sentence out of two bare facts.
+  - Rows marking the ordinary state of the world - "no swarm", "no Poke Radar", "nothing in the
+    slot underneath" - are one slot, not four, and their chances add up. A conditional row is
+    dropped where the same place already holds the species unconditionally: Stunky stands on
+    Route 206 whatever is in the slot, and five rows naming cartridges help nobody.
+  - **That rule ate a true condition on its first outing.** PokeAPI writes a roamer down twice,
+    once for grass and once for water, and hangs the condition on only one of the two. Latias in
+    Emerald: both rows level 40 at 25%, and only one says she is not loose until the Elite Four
+    are beaten. Two rows alike in place, level and chance are one encounter written twice, and
+    the fuller one wins. Generation 3's only three conditioned slots are exactly this, so Ruby,
+    Sapphire and Emerald gained four true sentences they had never carried.
+  - **PokeAPI is wrong about the fossils.** It files both under both halves. Bulbapedia is clear
+    - Skull Fossil in Diamond's Underground, Armor Fossil in Pearl's, and the Cranidos page says
+    "Trade" for Pearl outright. `gift_encounters` gained an `excluded` table that names the
+    species *and the reason*, so the disagreement is recorded rather than quietly tidied away.
+  - **`only_on` said "Generation 3" in a string.** Diamond would have told a player to trade a
+    Shieldon in from a Generation 3 game. The sentence moved to `gamedefs/exclusives.py` with
+    the generation as a parameter, and both hardware modules wrap it.
+  - A fossil is an item, so it can cross the link held by a traded Pokemon and be revived here.
+    That is a second way over, and the fossil exclusives say so where the plain ones do not.
+  - **No breeding table, and that is a finding.** Ruby and Sapphire hatch three babies because
+    their dex has three with no other source. Generation 4 brought most of the baby Pokemon
+    there are and then put them in Sinnoh's own grass - Cleffa and Chingling in Mt. Coronet,
+    Pichu and Mime Jr. in the Trophy Garden, Azurill in the Great Marsh, Budew in Eterna Forest,
+    Mantyke on the water, Munchlax on the honey trees. Happiny and Riolu are handed over as
+    eggs. A test pins it, because "we forgot" and "there is nothing to forget" look the same.
+  - Mismagius is deliberately *not* on the unobtainable list. It is caught nowhere in Diamond
+    either, but it evolves from a Misdreavus that comes over the link. Marking it would be the
+    mistake that once put Banette on Ruby's list.
+  - Manaphy is nobody's exclusive: its egg is a reward in Pokemon Ranger and is sent across.
+  - **Step 7 came up empty, which is the opposite of Kanto.** One day in a shop in 2004 covered
+    most of the fourteen Kanto exclusives. Not one distribution was ever for Diamond or Pearl:
+    Glameow and Stunky have no events at all, and what Misdreavus, Murkrow, Cranidos and
+    Shieldon do have is for Gold and Silver, for the Generation 3 games, or for Black and White.
+    Dialga and Palkia have been handed out dozens of times, never for the games they come from.
+    Manaphy is the exception - nine distributions between 2006 and 2011, on three continents.
+  - Sprites are `generation-iv/diamond-pearl`, one sheet for the two of them, all 493 present at
+    80x80. Platinum redrew them, so the constant is named for the pair.
+  - Smoke test on the published exe against the collection with Diamond as main game and Pearl
+    linked: the grid fills with the Sinnoh sprites, Gengar's popup names the cartridge each of
+    its five Old Chateau rows needs, Shieldon shows "Pearl only in Generation 4", Pearl's
+    revived fossil underneath it and "Then to Diamond: trading", and Manaphy shows its reason
+    with no way to get one anywhere.
 
 ### Generation 5
 

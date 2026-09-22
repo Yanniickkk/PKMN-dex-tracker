@@ -10,15 +10,19 @@ import pytest
 
 from livingdex_pipeline.build import default_registry
 from livingdex_pipeline.gamedefs import (
+    diamond,
+    ds,
     emerald,
     firered,
     gba,
     hoenn,
     kanto,
     leafgreen,
+    pearl,
     platinum,
     ruby,
     sapphire,
+    sinnoh,
 )
 from livingdex_pipeline.games import BuildContext, GameRegistry
 from livingdex_pipeline.models import (
@@ -329,36 +333,338 @@ def test_pal_park_takes_a_game_pak_and_does_not_care_which_one() -> None:
     assert all(edge.filter.to == 386 for edge in receiving)
 
 
+def test_the_sinnoh_pair_are_two_games_that_name_each_other() -> None:
+    both = {
+        module.GAME_ID: module.build(context(module.GAME_ID)).game for module in (diamond, pearl)
+    }
+
+    assert sorted(both) == ["diamond", "pearl"]
+    assert both["diamond"].pair_partner == "pearl"
+    assert both["pearl"].pair_partner == "diamond"
+    assert both["diamond"].title != both["pearl"].title
+
+
+def test_the_sinnoh_games_are_generation_4_cartridges_reaching_arceus() -> None:
+    for module in (diamond, pearl, platinum):
+        game = module.build(context(module.GAME_ID)).game
+
+        assert game.generation == 4
+        assert game.region == "Sinnoh"
+        assert game.national_dex_through == 493
+        assert game.dex_source is DexSource.NATIONAL_DEX
+        assert game.released is not None
+
+    # The third version names nobody, which is what separates it from the pair.
+    assert platinum.build(context("platinum")).game.pair_partner is None
+
+
+def test_both_sinnoh_halves_show_the_same_original_sinnoh_dex() -> None:
+    api = FakeApi([(1, "turtwig"), (151, "manaphy")])
+
+    for module in (diamond, pearl):
+        data = module.build(context(module.GAME_ID, api))
+
+        assert [(entry.number, entry.target.species) for entry in data.dex_entries] == [
+            (1, "turtwig"),
+            (151, "manaphy"),
+        ]
+        assert all(entry.game == module.GAME_ID for entry in data.dex_entries)
+
+    # Not "extended-sinnoh", which is Platinum's 210. Unlike the Hoenn three, the Sinnoh three
+    # do not share one regional dex, so the pair's name says whose it is.
+    assert set(api.asked_for) == {"original-sinnoh"}
+
+
+def sinnoh_slot(version: str, chance: int, conditions: list[str]) -> dict:
+    return {
+        "location_area": {"name": "sinnoh-route-206-area"},
+        "version_details": [
+            {
+                "version": {"name": version},
+                "encounter_details": [
+                    {
+                        "min_level": 15,
+                        "max_level": 15,
+                        "chance": chance,
+                        "method": {"name": "walk"},
+                        "condition_values": [{"name": one} for one in conditions],
+                    }
+                ],
+            }
+        ],
+    }
+
+
+def test_each_sinnoh_half_reads_its_own_version_of_the_encounter_table() -> None:
+    # The version is the whole difference between the two files, so it had better be the thing
+    # that decides what comes out.
+    for module, rate in ((diamond, 20), (pearl, 45)):
+        api = FakeApi(
+            [(1, "stunky")],
+            {
+                "stunky": [
+                    sinnoh_slot("diamond", 20, ["swarm-no"]),
+                    sinnoh_slot("pearl", 45, ["swarm-no"]),
+                ]
+            },
+        )
+
+        wild = [
+            one
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "wild"
+        ]
+
+        assert [one.rate_percent for one in wild] == [rate]
+        assert all(one.game == module.GAME_ID for one in wild)
+
+
+def test_a_sinnoh_slot_that_needs_a_cartridge_underneath_says_so() -> None:
+    # Dual-slot mode is the first condition in this dataset that asks for hardware a player may
+    # not own. Gengar is in Sinnoh's grass only while a Generation 3 cartridge is in the slot,
+    # and a record that left that out would send someone looking for it with nothing in there.
+    api = FakeApi([(1, "gengar")], {"gengar": [sinnoh_slot("diamond", 4, ["slot2-ruby"])]})
+
+    wild = [
+        one
+        for one in diamond.build(context("diamond", api)).acquisition_methods
+        if one.kind == "wild"
+    ]
+
+    assert len(wild) == 1
+    assert "Game Boy Advance slot" in wild[0].requirement
+
+
+def sinnoh_gift(version: str, method: str, level: int, conditions: list[str]) -> dict:
+    return {
+        "location_area": {"name": "oreburgh-city-oreburgh-mining-museum"},
+        "version_details": [
+            {
+                "version": {"name": version},
+                "encounter_details": [
+                    {
+                        "min_level": level,
+                        "max_level": level,
+                        "chance": 100,
+                        "method": {"name": method},
+                        "condition_values": [{"name": one} for one in conditions],
+                    }
+                ],
+            }
+        ],
+    }
+
+
+def test_the_sinnoh_pair_hand_over_the_same_starters() -> None:
+    api = FakeApi(
+        [(1, "turtwig")],
+        {
+            "turtwig": [
+                sinnoh_gift("diamond", "gift", 5, []),
+                sinnoh_gift("pearl", "gift", 5, []),
+            ]
+        },
+    )
+
+    for module in (diamond, pearl):
+        gifts = [
+            one
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "gift"
+        ]
+
+        assert len(gifts) == 1
+        assert gifts[0].gift_kind is GiftKind.STARTER
+        assert gifts[0].npc == "Professor Rowan"
+
+
+def test_each_half_revives_its_own_fossil_and_not_the_other_halfs() -> None:
+    # PokeAPI files both fossils under both halves. Bulbapedia is clear that only Diamond's
+    # Underground holds a Skull Fossil and only Pearl's an Armor Fossil, so one of the two rows
+    # each half is handed is not that half's.
+    encounters = {
+        "cranidos": [
+            sinnoh_gift("diamond", "gift", 20, ["item-skull-fossil"]),
+            sinnoh_gift("pearl", "gift", 20, ["item-skull-fossil"]),
+        ],
+        "shieldon": [
+            sinnoh_gift("diamond", "gift", 20, ["item-armor-fossil"]),
+            sinnoh_gift("pearl", "gift", 20, ["item-armor-fossil"]),
+        ],
+    }
+
+    revived = {}
+    for module in (diamond, pearl):
+        api = FakeApi([(36, "cranidos"), (38, "shieldon")], encounters)
+        revived[module.GAME_ID] = {
+            one.target.species
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "gift"
+        }
+
+    assert revived == {"diamond": {"cranidos"}, "pearl": {"shieldon"}}
+
+
+def test_the_sinnoh_pair_share_their_four_in_game_trades() -> None:
+    both = {
+        module.GAME_ID: [
+            one
+            for one in module.build(context(module.GAME_ID)).acquisition_methods
+            if one.kind == "trade"
+        ]
+        for module in (diamond, pearl)
+    }
+
+    # Unlike the gifts, the halves do not disagree here: the same four traders stand in the
+    # same four places on both cartridges.
+    assert [(one.target.species, one.wants.species) for one in both["diamond"]] == [
+        (one.target.species, one.wants.species) for one in both["pearl"]
+    ]
+    assert {one.npc for one in both["diamond"]} == {"Hilary", "Norton", "Mindy", "Meister"}
+    assert all(one.game == module for module, trades in both.items() for one in trades)
+
+
+def test_the_sinnoh_pair_evolve_by_their_own_version_group() -> None:
+    api = FakeApi([(1, "treecko"), (2, "grovyle")])
+
+    for module in (diamond, pearl):
+        methods = module.build(context(module.GAME_ID, api)).acquisition_methods
+        evolutions = [one for one in methods if one.kind == "evolution"]
+
+        assert [one.target.species for one in evolutions] == ["grovyle"]
+
+    # Sinnoh's own evolutions - the Shiny Stone, the magnetic field, Gallade - are stamped with
+    # the pair's group, and asking for any other would lose all of them. The two halves are one
+    # group; Platinum is its own, the way Emerald is.
+    assert sinnoh.PAIR_VERSION_GROUP == "diamond-pearl"
+
+
+def test_the_sinnoh_pair_hatch_nothing_the_day_care_alone_produces() -> None:
+    # Ruby and Sapphire hatch three because their dex has three babies with no other source.
+    # Generation 4 brought most of the baby Pokemon there are and then put them in Sinnoh's own
+    # grass, so this pair has none - an absence worth a test, because "we forgot" and "there is
+    # nothing to forget" look the same in a file.
+    for module in (diamond, pearl):
+        methods = module.build(context(module.GAME_ID)).acquisition_methods
+
+        assert [one for one in methods if one.kind == "breeding"] == []
+
+
+def test_the_sinnoh_pair_mark_what_only_the_other_half_keeps() -> None:
+    api = FakeApi([(36, "cranidos"), (38, "shieldon"), (151, "manaphy"), (1, "turtwig")])
+
+    reasons = {
+        module.GAME_ID: {
+            entry.target.species: entry.unobtainable_reason
+            for entry in module.build(context(module.GAME_ID, api)).dex_entries
+        }
+        for module in (diamond, pearl)
+    }
+
+    # The generation is the one this pair is in. It used to be spelled out per module, which is
+    # how a Generation 4 game would have told a player to trade one in from Generation 3.
+    assert reasons["diamond"]["shieldon"].startswith("Pearl only in Generation 4")
+    assert reasons["pearl"]["cranidos"].startswith("Diamond only in Generation 4")
+
+    # A fossil travels held by a traded Pokemon, so the link offers two ways rather than one.
+    assert "holding the Armor Fossil" in reasons["diamond"]["shieldon"]
+    assert "holding the Skull Fossil" in reasons["pearl"]["cranidos"]
+
+    # Nothing in Sinnoh produces a Manaphy, on either half.
+    assert reasons["diamond"]["manaphy"] == reasons["pearl"]["manaphy"]
+    assert "Pokemon Ranger" in reasons["diamond"]["manaphy"]
+
+    # And what the pair does produce says nothing at all.
+    assert reasons["diamond"]["turtwig"] is None
+
+
+def test_step_seven_found_nothing_for_the_sinnoh_exclusives() -> None:
+    # The opposite of the Kanto pair, where one day in a shop in 2004 covered most of the
+    # fourteen. Not one distribution was ever for Diamond or Pearl, and a test says so because
+    # "we looked and there is nothing" and "nobody has looked yet" are the same empty dict.
+    for module in (diamond, pearl):
+        exclusives = [
+            value
+            for name, value in vars(module).items()
+            if name.startswith("ONLY_ON_") or name.endswith("_EVENT")
+        ]
+        events = [
+            event
+            for value in exclusives
+            for event in (value.values() if isinstance(value, dict) else [value])
+        ]
+
+        assert events
+        assert all(event is None for event in events)
+
+
+def test_both_sinnoh_halves_say_the_same_thing_about_manaphy() -> None:
+    # Neither cartridge produces one, and the nine distributions that did were for both.
+    assert diamond.UNOBTAINABLE["manaphy"] == pearl.UNOBTAINABLE["manaphy"]
+    assert "Pokemon Ranger" in sinnoh.MANAPHY_REASON
+    # The event is the second sentence of the reason, so it is joined with its first letter
+    # lifted: "... to this one. Nine distributions ...".
+    assert sinnoh.MANAPHY_EVENT.lower() in sinnoh.MANAPHY_REASON.lower()
+
+
+def test_the_sinnoh_pair_were_drawn_from_one_sheet_of_their_own() -> None:
+    # One directory for the two of them, so the build fetches it once however many games name
+    # it. Platinum redrew them, so its sheet is its own and the pair's is named for the pair -
+    # a Sinnoh player sees different sprites depending on which of the three is in the slot.
+    sets = {module.build(context(module.GAME_ID)).game.sprite_set for module in (diamond, pearl)}
+
+    assert sets == {"generation-iv/diamond-pearl"}
+    assert platinum.build(context("platinum")).game.sprite_set not in sets
+
+
+def test_the_sinnoh_exclusives_mirror_each_other_exactly() -> None:
+    # A pair that keeps four from one half and five from the other is a pair with a mistake in
+    # it. Manaphy is on both lists and belongs to neither half.
+    assert len(diamond.UNOBTAINABLE) == len(pearl.UNOBTAINABLE)
+    assert set(diamond.UNOBTAINABLE) & set(pearl.UNOBTAINABLE) == {"manaphy"}
+
+
+def test_a_generation_4_cartridge_brings_its_trades_and_its_pal_park_together() -> None:
+    # The two kinds of route come from one call, because Platinum once declared them in two
+    # places and only one of them grew when Ruby and Sapphire arrived.
+    for module in (diamond, pearl, platinum):
+        edges = module.edges()
+
+        trades = {edge.to for edge in edges if edge.mechanism is TransferMechanism.TRADE}
+        migrations = [edge for edge in edges if edge.mechanism is TransferMechanism.PAL_PARK]
+
+        assert trades == set(ds.CARTRIDGES) - {module.GAME_ID}
+        assert {edge.from_ for edge in migrations} == set(gba.CARTRIDGES)
+        assert all(edge.to == module.GAME_ID for edge in migrations)
+        assert all(edge.direction is TransferDirection.ONE_WAY for edge in migrations)
+
+
 def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> None:
     registry = default_registry()
 
     assert registry.game_ids == [
+        "diamond",
         "emerald",
         "firered",
         "leafgreen",
+        "pearl",
         "platinum",
         "ruby",
         "sapphire",
     ]
-    assert [(edge.from_, edge.to) for edge in registry.edges] == [
-        ("emerald", "firered"),
-        ("emerald", "leafgreen"),
-        ("emerald", "platinum"),
-        ("emerald", "ruby"),
-        ("emerald", "sapphire"),
-        ("firered", "leafgreen"),
-        ("firered", "platinum"),
-        ("firered", "ruby"),
-        ("firered", "sapphire"),
-        ("leafgreen", "platinum"),
-        ("leafgreen", "ruby"),
-        ("leafgreen", "sapphire"),
-        ("ruby", "platinum"),
-        ("ruby", "sapphire"),
-        ("sapphire", "platinum"),
-    ]
-    # Every end of every declared route now exists, so nothing is waiting.
-    assert registry.held_back_edges == []
+
+    routes = [(edge.from_, edge.to) for edge in registry.edges]
+
+    # Ten link cables between the five Generation 3 cartridges, three wireless trades between
+    # the three Sinnoh games, and fifteen one-way Pal Park trips from each of the five into each
+    # of the three.
+    assert len(routes) == 10 + 3 + 15
+    assert routes == sorted(routes)
+    assert ("diamond", "pearl") in routes
+    assert ("ruby", "diamond") in routes
+
+    # What is waiting is the Johto half of Generation 4, which is not written yet.
+    assert {edge.to for _, edge in registry.held_back_edges} == {"heartgold", "soulsilver"}
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:

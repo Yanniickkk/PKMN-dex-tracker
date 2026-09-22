@@ -4,9 +4,11 @@
     "builtOn": "2026-09-22"
   },
   "games": [
+    "diamond",
     "emerald",
     "firered",
     "leafgreen",
+    "pearl",
     "platinum",
     "ruby",
     "sapphire"

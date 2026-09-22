@@ -1,5 +1,34 @@
 [
   {
+    "from": "diamond",
+    "to": "pearl",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "diamond",
+    "to": "platinum",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "emerald",
+    "to": "diamond",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
     "from": "emerald",
     "to": "firered",
     "mechanism": "trade",
@@ -19,6 +48,17 @@
   },
   {
     "from": "emerald",
+    "to": "pearl",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
+    "from": "emerald",
     "to": "platinum",
     "mechanism": "palPark",
     "direction": "oneWay",
@@ -44,6 +84,17 @@
     "direction": "bothWays",
     "filter": {
       "filter": "all"
+    }
+  },
+  {
+    "from": "firered",
+    "to": "diamond",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
     }
   },
   {
@@ -57,6 +108,17 @@
   },
   {
     "from": "firered",
+    "to": "pearl",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
+    "from": "firered",
     "to": "platinum",
     "mechanism": "palPark",
     "direction": "oneWay",
@@ -86,6 +148,28 @@
   },
   {
     "from": "leafgreen",
+    "to": "diamond",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
+    "from": "leafgreen",
+    "to": "pearl",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
+    "from": "leafgreen",
     "to": "platinum",
     "mechanism": "palPark",
     "direction": "oneWay",
@@ -114,6 +198,37 @@
     }
   },
   {
+    "from": "pearl",
+    "to": "platinum",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "ruby",
+    "to": "diamond",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
+    "from": "ruby",
+    "to": "pearl",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
     "from": "ruby",
     "to": "platinum",
     "mechanism": "palPark",
@@ -131,6 +246,28 @@
     "direction": "bothWays",
     "filter": {
       "filter": "all"
+    }
+  },
+  {
+    "from": "sapphire",
+    "to": "diamond",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
+    "from": "sapphire",
+    "to": "pearl",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
     }
   },
   {

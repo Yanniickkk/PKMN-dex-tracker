@@ -147,7 +147,12 @@ public class PipelineOutputContractTests
         Assert.Equal(DexTarget.ForSpecies(new SpeciesId("buizel")), trade.Wants);
 
         // [4] is a second wild slot, there so that one of Pichu's parents can be got and the
-        // breeding dead-end check has nothing to say about the sample.
+        // breeding dead-end check has nothing to say about the sample. It is also the one that
+        // carries a requirement: Generation 4's grass is full of slots a player has to arrange.
+        var arranged = Assert.IsType<WildAcquisition>(platinum.AcquisitionMethods[4]);
+        Assert.Equal("Only on days Mr. Backlot mentions it in the Trophy Garden", arranged.Requirement);
+        Assert.Null(wild.Requirement);
+
         var breeding = Assert.IsType<BreedingAcquisition>(platinum.AcquisitionMethods[5]);
         Assert.Equal(
             [DexTarget.ForSpecies(new SpeciesId("pikachu")), DexTarget.ForSpecies(new SpeciesId("raichu"))],
