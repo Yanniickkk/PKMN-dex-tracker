@@ -8,10 +8,11 @@ in one place.
 from __future__ import annotations
 
 from ..games import GameRegistry
-from . import emerald, platinum, ruby, sapphire
+from . import emerald, firered, leafgreen, platinum, ruby, sapphire
 
-# In the order a person would list them: the pair, then the third version, then Sinnoh.
-MODULES = [ruby, sapphire, emerald, platinum]
+# In the order a person would list them: the Hoenn pair, then its third version, then the Kanto
+# pair, then Sinnoh.
+MODULES = [ruby, sapphire, emerald, firered, leafgreen, platinum]
 
 
 def register_all(registry: GameRegistry) -> None:

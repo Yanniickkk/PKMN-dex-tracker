@@ -168,6 +168,16 @@ public class PipelineOutputContractTests
     }
 
     [Fact]
+    public void A_game_says_when_it_came_out()
+    {
+        // The pipeline makes this one mandatory, so every game in a built dataset carries it.
+        // It is what orders a picker: release order inside a generation, not the alphabet.
+        var emerald = Read<GameData>("games", "emerald.json");
+
+        Assert.NotNull(emerald.Game.Released);
+    }
+
+    [Fact]
     public void A_game_without_a_national_dex_reads_back_as_not_having_one()
     {
         var sword = Read<GameData>("games", "sword.json");

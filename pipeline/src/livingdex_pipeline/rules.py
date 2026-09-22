@@ -49,10 +49,16 @@ def _explained_in(game) -> set[tuple[str, str | None]]:
 class EveryEntryHasAMethod:
     """A dex entry nothing can produce is either a hole in the data or a stated fact.
 
-    A game nothing at all can be obtained in is reported once rather than once per entry: that
+    A game that brought no methods of its own is reported once rather than once per entry: that
     is a game whose encounters have not been gathered yet, and two hundred identical errors say
     the same thing as one while burying everything else in the report. The build fails either
     way, because the game is not finished either way.
+
+    "No methods of its own" is the whole test. It used to also ask that not one entry was
+    explained anywhere, which held for Emerald - the first game this met - because nothing else
+    in the dataset produced a Hoenn species. The Kanto dex broke it: a third of those 151 are
+    caught in Hoenn too, so the pair fell past the guard and reported a hundred and change
+    separate faults for the one fact that their encounters were not gathered yet.
     """
 
     name = "every-entry-has-a-method"
@@ -67,16 +73,17 @@ class EveryEntryHasAMethod:
             if not missing:
                 continue
 
-            # Nothing in this game's dex can be explained, and the game brought no methods of
-            # its own: it has not been worked on yet rather than having gaps.
-            if len(missing) == len(needed) and not game.acquisition_methods:
+            # The game brought no methods of its own: it has not been worked on yet rather than
+            # having gaps. What other games happen to cover does not change that.
+            if not game.acquisition_methods:
                 yield Finding(
                     rule=self.name,
                     severity=Severity.ERROR,
                     game=game.game.id,
                     message=(
-                        f"none of its {len(needed)} dex entries has a way to be obtained; this "
-                        "game's encounters have not been gathered yet"
+                        "this game's encounters have not been gathered yet: it brings no way to "
+                        f"obtain anything at all, which leaves {len(missing)} of its "
+                        f"{len(needed)} dex entries with no source anywhere in the dataset"
                     ),
                 )
                 continue

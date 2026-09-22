@@ -9,7 +9,17 @@ from __future__ import annotations
 import pytest
 
 from livingdex_pipeline.build import default_registry
-from livingdex_pipeline.gamedefs import emerald, hoenn, platinum, ruby, sapphire
+from livingdex_pipeline.gamedefs import (
+    emerald,
+    firered,
+    gba,
+    hoenn,
+    kanto,
+    leafgreen,
+    platinum,
+    ruby,
+    sapphire,
+)
 from livingdex_pipeline.games import BuildContext, GameRegistry
 from livingdex_pipeline.models import (
     AllSpeciesFilter,
@@ -43,7 +53,12 @@ TREECKO_CHAIN = {
 }
 
 #: Where the version groups the tests use sit in the series, as PokeAPI orders them.
-VERSION_GROUP_ORDER = {"ruby-sapphire": 5, "emerald": 6, "diamond-pearl": 8}
+VERSION_GROUP_ORDER = {
+    "ruby-sapphire": 5,
+    "emerald": 6,
+    "firered-leafgreen": 7,
+    "diamond-pearl": 8,
+}
 
 
 class FakeApi:
@@ -295,26 +310,55 @@ def test_emerald_trades_both_ways_with_every_other_generation_3_cartridge() -> N
     assert all(isinstance(edge.filter, AllSpeciesFilter) for edge in edges)
 
 
-def test_emerald_does_not_claim_pal_park_itself() -> None:
+def test_no_cartridge_claims_pal_park_itself() -> None:
     # It is one way and its National Dex limit is a fact about the game that receives.
-    assert all(edge.mechanism is not TransferMechanism.PAL_PARK for edge in emerald.edges())
+    for module in (ruby, sapphire, emerald, firered, leafgreen):
+        assert all(edge.mechanism is not TransferMechanism.PAL_PARK for edge in module.edges())
 
+
+def test_pal_park_takes_a_game_pak_and_does_not_care_which_one() -> None:
+    # The machine asks for a Generation 3 cartridge in the slot, so all five routes exist or
+    # none do. Platinum listed Emerald alone until FireRed and LeafGreen were written, which
+    # sent Ruby and Sapphire into Generation 4 the long way round, by trading into Emerald.
     receiving = [edge for edge in platinum.edges() if edge.mechanism is TransferMechanism.PAL_PARK]
-    assert [(edge.from_, edge.to) for edge in receiving] == [("emerald", "platinum")]
+
+    assert {edge.from_ for edge in receiving} == set(gba.CARTRIDGES)
+    assert all(edge.to == "platinum" for edge in receiving)
+    assert all(edge.direction is TransferDirection.ONE_WAY for edge in receiving)
+    # Nothing above 386 existed to migrate.
+    assert all(edge.filter.to == 386 for edge in receiving)
 
 
 def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> None:
     registry = default_registry()
 
-    assert registry.game_ids == ["emerald", "platinum", "ruby", "sapphire"]
+    assert registry.game_ids == [
+        "emerald",
+        "firered",
+        "leafgreen",
+        "platinum",
+        "ruby",
+        "sapphire",
+    ]
     assert [(edge.from_, edge.to) for edge in registry.edges] == [
+        ("emerald", "firered"),
+        ("emerald", "leafgreen"),
         ("emerald", "platinum"),
         ("emerald", "ruby"),
         ("emerald", "sapphire"),
+        ("firered", "leafgreen"),
+        ("firered", "platinum"),
+        ("firered", "ruby"),
+        ("firered", "sapphire"),
+        ("leafgreen", "platinum"),
+        ("leafgreen", "ruby"),
+        ("leafgreen", "sapphire"),
+        ("ruby", "platinum"),
         ("ruby", "sapphire"),
+        ("sapphire", "platinum"),
     ]
-    # Every Hoenn cartridge names FireRed and LeafGreen, and neither is written yet.
-    assert {edge.to for _, edge in registry.held_back_edges} == {"firered", "leafgreen"}
+    # Every end of every declared route now exists, so nothing is waiting.
+    assert registry.held_back_edges == []
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:
@@ -368,7 +412,7 @@ def test_each_of_the_pair_trades_with_every_other_cartridge_but_itself() -> None
         partners = {edge.to for edge in module.edges()}
 
         assert module.GAME_ID not in partners
-        assert partners == set(hoenn.GBA_CARTRIDGES) - {module.GAME_ID}
+        assert partners == set(gba.CARTRIDGES) - {module.GAME_ID}
 
 
 def test_the_pair_show_the_same_hoenn_dex_as_emerald() -> None:
@@ -585,6 +629,280 @@ def test_the_pair_share_one_gift_table() -> None:
     assert ruby.hoenn.PAIR_GIFTS is sapphire.hoenn.PAIR_GIFTS
     assert "groudon" not in ruby.hoenn.PAIR_GIFTS
     assert ruby.hoenn.PAIR_GIFTS["treecko"].npc == "Professor Birch"
+
+
+# --- FireRed and LeafGreen --------------------------------------------------------------------
+
+
+def test_the_kanto_pair_are_two_games_that_name_each_other() -> None:
+    both = {
+        module.GAME_ID: module.build(context(module.GAME_ID)).game
+        for module in (firered, leafgreen)
+    }
+
+    assert sorted(both) == ["firered", "leafgreen"]
+    assert both["firered"].pair_partner == "leafgreen"
+    assert both["leafgreen"].pair_partner == "firered"
+    assert both["firered"].title != both["leafgreen"].title
+
+
+def test_the_kanto_pair_are_generation_3_cartridges_set_somewhere_else() -> None:
+    for module in (firered, leafgreen):
+        game = module.build(context(module.GAME_ID)).game
+
+        # Everything a Hoenn cartridge says about itself, except the region.
+        assert game.generation == 3
+        assert game.region == "Kanto"
+        assert game.national_dex_through == 386
+        assert game.dex_source is DexSource.NATIONAL_DEX
+        assert game.release is GameRelease.CARTRIDGE
+
+
+def test_each_of_the_kanto_pair_trades_with_every_other_cartridge_but_itself() -> None:
+    for module in (firered, leafgreen):
+        partners = {edge.to for edge in module.edges()}
+
+        assert module.GAME_ID not in partners
+        assert partners == set(gba.CARTRIDGES) - {module.GAME_ID}
+
+
+def test_both_halves_show_the_same_kanto_dex() -> None:
+    api = FakeApi([(1, "bulbasaur"), (151, "mew")])
+
+    for module in (firered, leafgreen):
+        data = module.build(context(module.GAME_ID, api))
+
+        # The same entries and the same numbering. Only the game id differs.
+        assert [(entry.number, entry.target.species) for entry in data.dex_entries] == [
+            (1, "bulbasaur"),
+            (151, "mew"),
+        ]
+        assert all(entry.game == module.GAME_ID for entry in data.dex_entries)
+
+    # The 151-entry Kanto dex, which PokeAPI files FireRed and LeafGreen under along with Red
+    # and Blue. Not the National Dex the games also have: that is what the entity's reach says.
+    assert set(api.asked_for) == {"kanto"}
+
+
+def test_the_kanto_pair_mark_what_only_the_other_half_keeps() -> None:
+    api = FakeApi([(23, "ekans"), (27, "sandshrew")])
+
+    reasons = {}
+    for module in (firered, leafgreen):
+        data = module.build(context(module.GAME_ID, api))
+        reasons[module.GAME_ID] = {
+            entry.target.species: entry.unobtainable_reason for entry in data.dex_entries
+        }
+
+    # Each half says the other half's name, and says a trade is the way round it.
+    assert reasons["firered"]["ekans"] is None
+    assert "LeafGreen only" in reasons["firered"]["sandshrew"]
+    assert "trade one in" in reasons["firered"]["sandshrew"]
+
+    assert reasons["leafgreen"]["sandshrew"] is None
+    assert "FireRed only" in reasons["leafgreen"]["ekans"]
+
+
+def test_the_kanto_exclusives_mirror_each_other_exactly() -> None:
+    # A version pair is symmetric: seven each, and no species on both lists. A name that drifted
+    # onto one side only would be a species nobody could get at all.
+    assert len(firered.ONLY_ON_LEAFGREEN) == len(leafgreen.ONLY_ON_FIRERED) == 7
+    assert set(firered.ONLY_ON_LEAFGREEN) & set(leafgreen.ONLY_ON_FIRERED) == set()
+
+
+def test_the_kanto_pair_were_drawn_from_one_sheet_of_their_own() -> None:
+    # One directory for the two of them, so the build fetches it once however many games name
+    # it - and not the Hoenn sheet, which is a different set of drawings of the same generation.
+    sets = {
+        module.build(context(module.GAME_ID)).game.sprite_set for module in (firered, leafgreen)
+    }
+
+    assert sets == {"generation-iii/firered-leafgreen"}
+    assert hoenn.PAIR_SPRITE_SET not in sets
+    assert emerald.SPRITE_SET not in sets
+
+
+def test_both_kanto_halves_say_the_same_thing_about_mew() -> None:
+    # Neither cartridge has one, and neither pretends the other does.
+    assert firered.UNOBTAINABLE["mew"] == leafgreen.UNOBTAINABLE["mew"] == kanto.MEW_REASON
+    assert "mew" not in firered.ONLY_ON_LEAFGREEN
+    assert "mew" not in leafgreen.ONLY_ON_FIRERED
+    # Step 7: which distributions reached these cartridges, not the Generation 1 ones that put a
+    # Mew on a Game Boy it can never leave.
+    assert "2005" in kanto.MEW_REASON
+    assert "1996" not in kanto.MEW_REASON
+
+
+def test_step_seven_names_the_events_behind_the_kanto_exclusives() -> None:
+    # An event does not make an entry obtainable. It answers the next question, which is where
+    # one could ever have come from - and for thirteen of the fourteen exclusives there is one.
+    covered = {
+        species
+        for table in (firered.ONLY_ON_LEAFGREEN, leafgreen.ONLY_ON_FIRERED)
+        for species, event in table.items()
+        if event is not None
+    }
+
+    assert len(covered) == 13
+    # The exception, and it is a fact rather than a gap: nothing ever distributed one of these.
+    assert firered.ONLY_ON_LEAFGREEN["pinsir"] is None
+    assert "trade one in" in firered.UNOBTAINABLE["pinsir"]
+    assert "handed one out" not in firered.UNOBTAINABLE["pinsir"]
+
+
+def kanto_exclusive(pokemon: str, firered_rate: int, leafgreen_rate: int) -> dict:
+    """One species on one route, at a different rate in each half of the pair."""
+    return {
+        pokemon: [
+            {
+                "location_area": {"name": "kanto-route-1-area"},
+                "version_details": [
+                    {
+                        "version": {"name": version},
+                        "encounter_details": [
+                            {
+                                "min_level": 3,
+                                "max_level": 4,
+                                "chance": rate,
+                                "method": {"name": "walk"},
+                                "condition_values": [],
+                            }
+                        ],
+                    }
+                    for version, rate in (
+                        ("firered", firered_rate),
+                        ("leafgreen", leafgreen_rate),
+                    )
+                ],
+            }
+        ]
+    }
+
+
+def test_each_kanto_half_reads_its_own_version_of_the_encounter_table() -> None:
+    # The version is the whole difference between the two files, so it had better be the thing
+    # that decides what comes out.
+    for module, rate in ((firered, 25), (leafgreen, 65)):
+        api = FakeApi(
+            [(16, "pidgey")],
+            kanto_exclusive("pidgey", firered_rate=25, leafgreen_rate=65),
+        )
+
+        wild = [
+            one
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "wild"
+        ]
+
+        assert [one.rate_percent for one in wild] == [rate]
+        assert all(one.game == module.GAME_ID for one in wild)
+
+
+def test_a_species_only_the_other_kanto_half_has_brings_no_slot() -> None:
+    # Ekans is on FireRed and Sandshrew on LeafGreen. A cartridge that never meets one says so
+    # by having nothing to say, not by inventing an empty slot.
+    api = FakeApi(
+        [(23, "ekans")],
+        {
+            "ekans": [
+                {
+                    "location_area": {"name": "kanto-route-4-area"},
+                    "version_details": [
+                        {
+                            "version": {"name": "firered"},
+                            "encounter_details": [
+                                {
+                                    "min_level": 6,
+                                    "max_level": 12,
+                                    "chance": 35,
+                                    "method": {"name": "walk"},
+                                    "condition_values": [],
+                                }
+                            ],
+                        }
+                    ],
+                }
+            ]
+        },
+    )
+
+    def wild_of(module):
+        return [
+            one
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "wild"
+        ]
+
+    assert len(wild_of(firered)) == 1
+    assert wild_of(leafgreen) == []
+
+
+def prize(pokemon: str, versions: tuple[str, ...]) -> dict:
+    """One species in the Game Corner's window, in the versions given."""
+    return {
+        pokemon: [
+            {
+                "location_area": {"name": "celadon-city-prize-corner"},
+                "version_details": [
+                    {
+                        "version": {"name": version},
+                        "encounter_details": [
+                            {
+                                "min_level": 9,
+                                "max_level": 9,
+                                "chance": 100,
+                                "method": {"name": "gift"},
+                                "condition_values": [],
+                            }
+                        ],
+                    }
+                    for version in versions
+                ],
+            }
+        ]
+    }
+
+
+def test_the_kanto_pair_name_who_hands_over_a_starter() -> None:
+    api = FakeApi([(1, "bulbasaur")], prize("bulbasaur", ("firered", "leafgreen")))
+
+    for module in (firered, leafgreen):
+        gifts = [
+            one
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "gift"
+        ]
+
+        assert len(gifts) == 1
+        # PokeAPI calls a starter, a fossil and a present from a stranger all "gift"; which of
+        # the three this is, and whose hand it comes out of, are the game's own facts.
+        assert gifts[0].gift_kind == GiftKind.STARTER
+        assert gifts[0].npc == "Professor Oak"
+
+
+def test_the_game_corner_charges_each_half_its_own_price() -> None:
+    # The same Abra, two cartridges, two prices. It is the one table the pair disagree about in
+    # more than which species stands in the window.
+    api = FakeApi([(63, "abra")], prize("abra", ("firered", "leafgreen")))
+
+    prices = {}
+    for module in (firered, leafgreen):
+        gifts = [
+            one
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "gift"
+        ]
+        prices[module.GAME_ID] = gifts[0].requirement
+
+    assert "180 coins" in prices["firered"]
+    assert "120 coins" in prices["leafgreen"]
+
+
+def test_a_prize_only_one_half_sells_is_priced_for_that_half_alone() -> None:
+    assert set(kanto.PRIZE_CORNER["scyther"]) == {"firered"}
+    assert set(kanto.PRIZE_CORNER["pinsir"]) == {"leafgreen"}
+    assert "scyther" not in kanto.gifts("leafgreen")
+    assert "pinsir" not in kanto.gifts("firered")
 
 
 # --- the registry itself ----------------------------------------------------------------------

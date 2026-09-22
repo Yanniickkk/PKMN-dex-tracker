@@ -12,6 +12,9 @@ is not a shared game.
 
 Emerald sits here too for the parts it shares - the same region, the same reach, the same
 cable - while keeping its own dex numbering and its own redrawn sprites in its own file.
+
+What the Kanto cartridges share with these three is not here but in :mod:`gba`: the cable, the
+generation, the National Dex limit. This file is the region.
 """
 
 from __future__ import annotations
@@ -25,28 +28,24 @@ from ..games import BuildContext
 from ..gifts import GiftDetail, gift_encounters
 from ..models import (
     AcquisitionMethod,
-    AllSpeciesFilter,
     DexEntry,
-    DexSource,
     DexTarget,
     Game,
-    GameRelease,
     GiftKind,
-    TransferDirection,
     TransferEdge,
-    TransferMechanism,
 )
 from ..places import LocationNames
 from ..sources import bulbapedia
 from ..trades import InGameTrade, trade_encounters
 from ..wild import wild_encounters
+from . import gba
 
-GENERATION = 3
+GENERATION = gba.GENERATION
 
 REGION = "Hoenn"
 
 #: The National Dex opens after the Elite Four in all three, and stops at Deoxys.
-NATIONAL_DEX_THROUGH = 386
+NATIONAL_DEX_THROUGH = gba.NATIONAL_DEX_THROUGH
 
 #: PokeAPI's name for the Generation 3 Hoenn dex, the 202-entry one all three share. Not
 #: "updated-hoenn", which is the 211-entry dex of Omega Ruby and Alpha Sapphire.
@@ -64,65 +63,36 @@ PAIR_SPRITE_SET = "generation-iii/ruby-sapphire"
 #: The Hoenn day care, which is on the same route in all three cartridges.
 DAY_CARE = "Route 117, Pokemon Day Care"
 
-#: Every Generation 3 cartridge that trades with every other over a link cable.
-#:
-#: Colosseum and XD trade with them as well, but they are not in the plan, so nothing here
-#: claims them. A game declares the whole set whether or not the others are built yet: the
-#: registry holds an edge back until both ends exist, and adding a cartridge later lights its
-#: routes up without anyone editing the games that were already written.
-GBA_CARTRIDGES = ("ruby", "sapphire", "emerald", "firered", "leafgreen")
-
 
 def cartridge(
     *,
     game_id: str,
     title: str,
     version: str,
+    released: date,
     sprite_set: str | None = None,
     pair_partner: str | None = None,
 ) -> Game:
-    """One Hoenn cartridge, with the facts all three of them share filled in.
-
-    ``pair_partner`` is the whole difference between Ruby and Sapphire on one hand and Emerald
-    on the other: the first two are halves of a pair and name each other, and the third is a
-    third version and names nobody.
-    """
-    return Game(
-        id=game_id,
+    """One Hoenn cartridge: a Generation 3 cartridge that happens to be set here."""
+    return gba.cartridge(
+        game_id=game_id,
         title=title,
         version=version,
-        generation=GENERATION,
         region=REGION,
-        release=GameRelease.CARTRIDGE,
-        # The number rather than a yes or no: the dex builder has to know where it stops.
-        national_dex_through=NATIONAL_DEX_THROUGH,
-        dex_source=DexSource.NATIONAL_DEX,
-        pair_partner=pair_partner,
+        released=released,
         sprite_set=sprite_set,
+        pair_partner=pair_partner,
     )
 
 
 def link_trade_edges(game_id: str) -> list[TransferEdge]:
     """What this cartridge can send and receive over a link cable.
 
-    Trading inside a generation goes both ways and carries anything the game can hold, so one
-    edge per partner says it all. Both ends may declare the same edge; they collapse into one,
-    so neither game has to know whether the other got there first.
-
-    Pal Park into Generation 4 is not here. It is one way, and it belongs to the game that
-    receives - that is where the National Dex limit it applies is a fact about the receiver.
+    The cable does not care about the region, so the answer is :mod:`gba`'s. Kept here as well
+    because a game file reads one module and should not have to know which of the two facts
+    about it is regional.
     """
-    return [
-        TransferEdge(
-            **{"from": game_id},
-            to=partner,
-            mechanism=TransferMechanism.TRADE,
-            direction=TransferDirection.BOTH_WAYS,
-            filter=AllSpeciesFilter(),
-        )
-        for partner in GBA_CARTRIDGES
-        if partner != game_id
-    ]
+    return gba.link_trade_edges(game_id)
 
 
 def dex_entries(
@@ -253,15 +223,10 @@ DEOXYS_REASON = (
 def only_on(partner: str, event: str | None = None) -> str:
     """Why an entry in this dex is not in this cartridge, when the other half has it.
 
-    A version exclusive is still an entry you have to fill, and the transfer graph is how -
-    which is the whole reason the two halves declare a route to each other.
-
-    ``event`` is what step 7 found. It does not change that the cartridge cannot produce one; it
-    answers the next question, which is where one could ever have come from.
+    The wording is :mod:`gba`'s: FireRed and LeafGreen split their exclusives exactly the way
+    Ruby and Sapphire do, and a player should read the same sentence either way.
     """
-    reason = f"{partner} only in Generation 3; trade one in"
-
-    return f"{reason}. {event[0].upper()}{event[1:]}" if event else reason
+    return gba.only_on(partner, event)
 
 
 #: Who hands a Pokemon over in Ruby and Sapphire, and what has to be true first.

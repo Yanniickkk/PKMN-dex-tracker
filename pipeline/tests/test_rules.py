@@ -41,6 +41,7 @@ def game(game_id: str, entries=(), methods=()) -> GameData:
             id=game_id,
             title=game_id,
             version=game_id,
+            released=date(2000, 1, 1),
             generation=4,
             region="Sinnoh",
             release=GameRelease.CARTRIDGE,
@@ -131,7 +132,36 @@ def test_a_game_nothing_can_be_obtained_in_is_reported_once() -> None:
 
     assert not report.ok
     assert len(found) == 1
-    assert "none of its 2 dex entries" in found[0]
+    assert "have not been gathered yet" in found[0]
+    assert "2 of its 2 dex entries" in found[0]
+
+
+def test_a_game_without_encounters_is_still_reported_once_when_another_game_covers_some() -> None:
+    # The Kanto dex is the case: a third of its 151 are caught in Hoenn as well, so a FireRed
+    # with no encounters yet is not a game where *nothing* can be explained. It is still one
+    # unfinished game, and it should read as one.
+    data = dataset(
+        games=[
+            game(
+                "emerald",
+                entries=[entry("emerald", "pikachu", 1)],
+                methods=[gift("emerald", "pikachu")],
+            ),
+            game(
+                "firered",
+                entries=[entry("firered", "pikachu", 25), entry("firered", "mew", 151)],
+            ),
+        ]
+    )
+
+    report = validate(data)
+    found = messages(report, "every-entry-has-a-method")
+
+    assert not report.ok
+    assert len(found) == 1
+    # One entry of the two has a source elsewhere; the sentence says so rather than claiming
+    # nothing does.
+    assert "1 of its 2 dex entries" in found[0]
 
 
 def test_an_entry_with_a_method_here_is_fine() -> None:

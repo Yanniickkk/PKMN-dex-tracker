@@ -210,6 +210,29 @@ public class SchemaRoundTripTests
     }
 
     [Fact]
+    public void A_release_date_survives_a_round_trip()
+    {
+        var game = new Game(
+            new GameId("emerald"),
+            "Pokemon Emerald Version",
+            "Emerald",
+            3,
+            "Hoenn",
+            GameRelease.Cartridge,
+            386,
+            DexSource.NationalDex,
+            null)
+        {
+            Released = new DateOnly(2004, 9, 16),
+        };
+
+        Assert.Equal(new DateOnly(2004, 9, 16), RoundTrip(game).Released);
+        // A plain day, the way the pipeline writes it: no time and no zone to shift it across a
+        // date boundary on the way through.
+        Assert.Contains("\"2004-09-16\"", Serialize(game).GetRawText(), StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void Breeding_keeps_its_parents_across_a_round_trip()
     {
         // Its own test rather than a fifth entry in the list above: a record holding a

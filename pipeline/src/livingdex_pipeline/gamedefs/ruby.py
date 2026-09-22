@@ -10,6 +10,8 @@ particular, which at this step is its name and which cartridge is its other half
 
 from __future__ import annotations
 
+from datetime import date
+
 from ..games import BuildContext, GameRegistry
 from ..models import AcquisitionMethod, DexEntry, GameData, TransferEdge
 from . import hoenn
@@ -63,6 +65,7 @@ def build(context: BuildContext) -> GameData:
             game_id=GAME_ID,
             title="Pokémon Ruby Version",
             version="Ruby",
+            released=date(2002, 11, 21),
             pair_partner=PAIR_PARTNER,
             sprite_set=hoenn.PAIR_SPRITE_SET,
         ),

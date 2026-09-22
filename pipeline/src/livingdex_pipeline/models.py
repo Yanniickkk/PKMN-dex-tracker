@@ -136,6 +136,12 @@ class Game(Model):
     generation: int
     region: str
     release: GameRelease
+    #: The day it first went on sale, in Japan. The original release rather than a local one,
+    #: because the order games came out in is one order and every region saw it shifted: Emerald
+    #: reached Japan before FireRed reached America.
+    #:
+    #: Required, unlike the fields below it: every game has one, and it is what orders a picker.
+    released: date
     # The number, not a yes-or-no: the dex builder needs to know where the National Dex stops.
     national_dex_through: int | None = None
     dex_source: DexSource

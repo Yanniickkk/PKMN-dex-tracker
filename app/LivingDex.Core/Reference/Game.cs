@@ -74,4 +74,18 @@ public sealed record Game(
     /// then is still a valid game without one.
     /// </remarks>
     public string? SpriteSet { get; init; }
+
+    /// <summary>
+    /// The day this game first went on sale, in Japan. Null only for a dataset written before
+    /// the field existed.
+    /// </summary>
+    /// <remarks>
+    /// The original release rather than a local one, because the order games came out in is one
+    /// order and every region saw it shifted: Emerald reached Japan months before FireRed
+    /// reached America. It is what puts a picker's games in the order a player thinks of them.
+    ///
+    /// Not a constructor parameter, for the same reason as <see cref="SpriteSet"/>: it arrived
+    /// after the games above it were written, and the pipeline is where it is made mandatory.
+    /// </remarks>
+    public DateOnly? Released { get; init; }
 }

@@ -190,6 +190,7 @@ def build(context: BuildContext) -> GameData:
             game_id=GAME_ID,
             title="Pokémon Emerald Version",
             version="Emerald",
+            released=date(2004, 9, 16),
             sprite_set=SPRITE_SET,
             # The third version of Ruby and Sapphire rather than half of a pair.
             pair_partner=None,

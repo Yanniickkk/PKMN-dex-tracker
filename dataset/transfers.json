@@ -1,6 +1,24 @@
 [
   {
     "from": "emerald",
+    "to": "firered",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "emerald",
+    "to": "leafgreen",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "emerald",
     "to": "platinum",
     "mechanism": "palPark",
     "direction": "oneWay",
@@ -29,12 +47,101 @@
     }
   },
   {
+    "from": "firered",
+    "to": "leafgreen",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "firered",
+    "to": "platinum",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
+    "from": "firered",
+    "to": "ruby",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "firered",
+    "to": "sapphire",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "leafgreen",
+    "to": "platinum",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
+    "from": "leafgreen",
+    "to": "ruby",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "leafgreen",
+    "to": "sapphire",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "ruby",
+    "to": "platinum",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
+    }
+  },
+  {
     "from": "ruby",
     "to": "sapphire",
     "mechanism": "trade",
     "direction": "bothWays",
     "filter": {
       "filter": "all"
+    }
+  },
+  {
+    "from": "sapphire",
+    "to": "platinum",
+    "mechanism": "palPark",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 386
     }
   }
 ]

@@ -45,6 +45,7 @@ def game(sprite_set: str | None = None, reach: int | None = 386, entries=()) -> 
             id="emerald",
             title="Pokemon Emerald Version",
             version="Emerald",
+            released=date(2000, 1, 1),
             generation=3,
             region="Hoenn",
             release=GameRelease.CARTRIDGE,

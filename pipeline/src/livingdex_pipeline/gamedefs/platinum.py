@@ -6,17 +6,17 @@ enough for the app to offer it as a main game and to work out what can feed it.
 
 from __future__ import annotations
 
+from datetime import date
+
 from ..games import BuildContext, GameRegistry
 from ..models import (
     DexSource,
     Game,
     GameData,
     GameRelease,
-    NationalDexRangeFilter,
-    TransferDirection,
     TransferEdge,
-    TransferMechanism,
 )
+from . import gba
 
 GAME_ID = "platinum"
 
@@ -27,6 +27,7 @@ def build(_: BuildContext) -> GameData:
             id=GAME_ID,
             title="Pokémon Platinum Version",
             version="Platinum",
+            released=date(2008, 9, 13),
             generation=4,
             region="Sinnoh",
             release=GameRelease.CARTRIDGE,
@@ -39,17 +40,13 @@ def build(_: BuildContext) -> GameData:
 
 
 def edges() -> list[TransferEdge]:
-    return [
-        # Pal Park moves Generation 3 cartridges into a Generation 4 DS game, one way only,
-        # and only carries what existed in Generation 3.
-        TransferEdge(
-            **{"from": "emerald"},
-            to=GAME_ID,
-            mechanism=TransferMechanism.PAL_PARK,
-            direction=TransferDirection.ONE_WAY,
-            filter=NationalDexRangeFilter(**{"from": 1}, to=386),
-        ),
-    ]
+    # Pal Park moves a Generation 3 cartridge into a Generation 4 DS game, one way only, and
+    # only carries what existed in Generation 3. Every cartridge, not only Emerald: the machine
+    # asks for a Game Pak in the slot and does not care which one. This listed Emerald alone
+    # from Phase 1, when Emerald was the only Generation 3 game there was, and Ruby and Sapphire
+    # arrived later without it being widened - so both of them reached Platinum the long way
+    # round, by trading into Emerald first.
+    return gba.pal_park_edges(into=GAME_ID)
 
 
 def register(registry: GameRegistry) -> None:

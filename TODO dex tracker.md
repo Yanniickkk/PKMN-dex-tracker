@@ -102,14 +102,7 @@ then Gen 1–2, then forward through Gen 5 onward.
 
 ### Generation 3
 
-- [ ] **FireRed** (`firered`, gen 3, pair partner: LeafGreen)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
-- [ ] **LeafGreen** (`leafgreen`, gen 3, pair partner: FireRed)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
+_Done: Ruby, Sapphire, Emerald, FireRed and LeafGreen. All five are in `DONE dex tracker.md`._
 
 ### Generation 4
 
@@ -122,6 +115,10 @@ then Gen 1–2, then forward through Gen 5 onward.
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
   - [ ] 8 Validate + smoke test
 - [ ] **Platinum** (`platinum`, gen 4, standalone) — *partly done in Phase 1*
+  - Its Pal Park edges were widened while FireRed and LeafGreen were being added: the file had
+    listed Emerald alone since Phase 1, when Emerald was the only Generation 3 game in the
+    dataset, so Ruby and Sapphire reached Generation 4 only by trading into Emerald first. Pal
+    Park takes any Game Pak, so all five cartridges declare the route now.
   - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
   - [ ] 8 Validate + smoke test
@@ -268,3 +265,4 @@ Separate entities from the cartridges, because only these reach Bank.
 - [ ] Export a collection to CSV
 - [ ] Filter national dex or regional dex
 - [ ] Filter on game should include all games
+- [ ] Collections list can be filtered on main game, name
