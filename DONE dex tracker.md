@@ -855,7 +855,263 @@ visible now where before they were not even asked about.
 
 ### Generation 1
 
-_Nothing yet._
+- [x] **Red** (`red`, gen 1, pair partner: Blue) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+- [x] **Blue** (`blue`, gen 1, pair partner: Red) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+  - **Virtual Console only, by decision.** Generations 1 and 2 are in this dataset as their 3DS
+    releases and not as the cartridges: a Game Boy cartridge trades with another Game Boy
+    cartridge and reaches nothing else, so what is caught on one can never join a living dex
+    kept anywhere later. These can, through Poke Transporter into Bank. So there is no `red-vc`
+    beside a `red` - there is one Red, it is the 3DS one, and the entity's release says so
+    rather than its id.
+  - 584 and 586 ways to get something, 144 of 151 full and 7 explained in each, validation green
+    on all 9 rules.
+  - Green is not in the dataset. Its Virtual Console release never left Japan, so listing it would
+    claim a game most players cannot buy.
+  - `vc.py` holds what every Virtual Console release shares - the release kind, and Poké
+    Transporter into Bank. `gb.py` holds Generation 1: a dex of 151 with no National Dex behind
+    it, the three releases that trade with each other, and the Time Capsule forward into
+    Generation 2.
+  - **The Time Capsule is the odd route.** Every other edge in this dataset either carries
+    everything a game can hold or goes one way; this one goes both ways and refuses half of what
+    the newer side can offer. Declared by the Generation 1 side, because the limit is a fact about
+    it - the same reasoning that leaves Pal Park with the Generation 4 game that receives.
+  - **The first games here with no National Dex.** `nationalDexThrough` is null and the dex source
+    is the game's own list, which `DexBuilder` has always had a branch for and nothing had ever
+    used. A living dex in Red is 151 entries.
+  - `kanto.py` is now about the place rather than about one generation, the way `johto.py` is.
+    Red and Blue are Kanto and so are FireRed and LeafGreen, and the two pairs share a dex - the
+    same 151 entries in the same order, which PokéAPI confirms by listing both version groups
+    under one name. That is the opposite of Johto, where the remake renumbered 150 entries.
+    A test pins that the region module carries no generation number and no National Dex cap.
+  - The dex is the 151-entry Kanto one, Bulbasaur #001 to Mew #151 - and `kanto.py` already had
+    the function, because FireRed and LeafGreen show the same list in the same order. One dex for
+    four games. The difference is what the list *is*: in FireRed it is the game's own Pokedex with
+    a National Dex behind it, and in Red it is the whole thing. The app draws 151 tiles and drops
+    the dex selector, which only appears for a game with two lists.
+  - **Red caught a hole in `every-entry-has-a-method`.** Every one of its 151 entries is caught in
+    some later game, so nothing was missing from the dataset and the rule said nothing - about a
+    game that brought no encounters at all. Step 8 reads "validation green" as proof a game is
+    finished, so a game with a dex and no way to fill any of it is now an error whatever else
+    covers its species, and the message says which of the two gaps it is: "0 of its 151 dex
+    entries have no source anywhere in the dataset, and the other 151 are only covered by other
+    games". Two rule tests had been leaning on the old behaviour without meaning to; both now
+    bring a method of their own.
+  - 477 wild slots in Red and 479 in Blue, 86 species over 43 places, and **not one condition**.
+    No time of day, no seasons, no swarms, no radio, no blocks: the whole apparatus
+    `conditions.py` grew for Generation 4 has nothing to say about Generation 1, and the records
+    are the barest in the dataset. Every condition PokeAPI does carry for these games is for a
+    gift or a trade - what the Game Corner charges, which fossil, what an NPC wants - so they all
+    belong to steps 4 and 5.
+  - The version split comes out right on its own: Ekans, Oddish, Mankey, Growlithe, Scyther and
+    Electabuzz in Red; Sandshrew, Bellsprout, Meowth, Vulpix, Pinsir and Magmar in Blue.
+  - **PokeAPI files most of Generation 1's water as `walk`.** There are three surf rows in the
+    whole of Red - Tentacool on the three sea routes - and Horsea, Staryu, Shellder, Psyduck,
+    Slowpoke, Seel and Dewgong come out of the grass instead. That is the source's shape rather
+    than the game's, and it costs nothing here: every water species still has a way in, and a
+    player reading "walking" in the Seafoam Islands will not be led anywhere wrong.
+  - `kanto.py`'s machinery is now generic over the two pairs, the way `johto.py`'s is: one
+    `acquisition_methods` taking how far the National Dex reaches, with
+    `gba_pair_acquisition_methods` and `gb_pair_acquisition_methods` filling it in. Red passes
+    None, which is the `living_dex` branch for a game with no National Dex - written long ago and
+    used for the first time here.
+  - 26 gifts and statics over 24 species, and **Kanto's gifts are the part the remake left
+    alone.** The same three in Oak's lab, the same scientist on Cinnabar reviving the same fossil,
+    the same choice of one Hitmon in the same dojo, the same man in the Celadon Mansion with the
+    same Eevee. So the table is the region's - `SHARED_GIFTS` - and each pair adds only what is
+    its own: the Hypno that frightened Lostelle is the remake's, and one door opens differently.
+    Cerulean Cave waits for the Elite Four in Red and for the Sevii Islands Network Machine in
+    FireRed.
+  - Red and Blue need no table for the Game Corner. PokeAPI carries what each window charges as a
+    condition on the encounter - 180 coins for an Abra in Red and 120 in Blue, 9999 for a Porygon
+    against 6500 - which it does not for the remake, so the remake keeps its hand-written prices
+    and these two keep none.
+  - 72 evolutions and 9 trades, and **no eggs at all** - not because nobody looked, but because
+    Generation 1's day care raises a Pokemon and nothing else. Breeding arrives with Generation 2,
+    and so do the babies that would need it.
+  - **Nobody is named in a Generation 1 trade.** Every other game in the dataset records the
+    trader as the original trainer of what they hand over, which is the name the table uses; these
+    games store a hardcoded string that reads "TRAINER" in whatever language the cartridge is. So
+    the `npc` field is empty for all nine, and that is the game rather than a gap. What they do
+    give is a nickname - the Farfetch'd is DUX, the Mr. Mime is MARCEL, the Jynx is LOLA - and
+    there is no field for it, so the nicknames are written into the table's comment rather than
+    lost.
+  - Four of the evolutions need a link cable: Kadabra, Machoke, Graveler and Haunter, which in
+    this generation means a second Game Boy and a second player. Their records say "Trade" the
+    same way every other generation's do; what has changed is how much that asks of you.
+  - Coverage after this step: 144 of 151 full. What is left is the other half's six exclusives and
+    Mew, which is step 7's.
+  - Step 7 ran before step 6, which the checklist warns against and which cost nothing: its input
+    is the list of entries nothing in the game produces, and a sprite sheet does not change that.
+  - 151 sprites, one sheet for the pair and the oldest in the dataset - 374 KB for the lot, next
+    to 10 MB for the four generations above it.
+  - **The set is `generation-i/red-blue/transparent`, and the last word is not a detail.**
+    Generation 1's default sheet is a 56x56 palette image with no alpha channel at all, so every
+    sprite arrived in a white box, which looked exactly like a white box on a dark grid. The
+    transparent set is the same drawings at 96x96 with the background cut out - what every other
+    generation's sheet already gives. Noticed by Yannick, on the published exe.
+  - The repository keeps a `gray` set as well, which is those same drawings in the Game Boy's own
+    four shades. This is the coloured version, for the reason the entity gives: what is in the
+    dataset is the 3DS release, and a 3DS shows these games in colour.
+  - **This is where modelling the Virtual Console release rather than the cartridge pays.** Mew's
+    reason is not the famous one. The Mews of the Nintendo tours, the shopping centres and the
+    Toys "R" Us queues went onto Game Boy cartridges between 1996 and 2000, and a 3DS download is
+    not one of those. Exactly two distributions were for these releases, both in 2016: the Game
+    Freak Mew in Japan in the spring, and the Mew at Nintendo UK's Pokemon Festival that November.
+    A cartridge entity would have carried a list of twenty events that never reached the thing a
+    player actually owns.
+  - Twelve species, twelve *In events* tables, and not one Virtual Console distribution among
+    them. What the exclusives have is for Gold and Silver, for the Generation 3 games, or later
+    still; Mankey has never been distributed at all. Only Mew ever got a Virtual Console event, so
+    the emptiness here is structural rather than a gap somebody should go back and fill.
+  - Sandslash is caught nowhere in Red either, and it is not on the list: it evolves from a
+    Sandshrew that comes over the link. The same distinction that once put Banette on Ruby's.
+  - **The first games in the dataset with nothing in the "a transfer away" column.** 144 full and
+    7 explained, and that is all 151: their dex is their whole living dex, so there is no third
+    place for an entry to sit.
+  - Ten edges are waiting: Yellow, the three Generation 2 releases each of them opens a Time
+    Capsule with, and Bank.
+  - Smoke test on the published exe: a collection made through the wizard with Red as main game.
+    Its linked-games step offers **one** game - Blue, via trading - because nothing else in the
+    dataset can send anything into a Generation 1 game, and the graph says so without anyone
+    coding a special case. Vulpix reads "Not in Red: Blue only in Generation 1; trade one in"
+    and then three of Blue's routes, each with "Then to Red: trading". Mew carries its two 2016
+    distributions and no ways at all. Marking Mewtwo caught in Red wrote the record with today's
+    date and moved the counter to "1 of 151". The user's own settings were copied out first and
+    restored afterwards.
+- [x] **Yellow** (`yellow`, gen 1, standalone) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+  - 554 ways to get something, 143 of 151 full and 8 explained, validation green on all 9 rules.
+  - Yellow is a third version rather than half of a pair, so it names no partner, and its dex is
+    the same 151 in the same order. What it does bring is a sprite sheet of its own
+    (`generation-i/yellow`), its own version exclusives, and Pikachu following the player around,
+    which is nothing this dataset has a field for.
+  - Step 2 confirmed that: Yellow rearranged a great deal of what is *in* these games - the
+    starter, what the rival takes, what half of Kanto's grass holds - and renumbered nothing. Five
+    games now share one `kanto.dex_entries`, and the test that used to say "both pairs" says
+    "every Kanto game".
+  - The build now ends step 2 with one validation error rather than none, and that is the rule
+    Red's step 8 added doing its job: Yellow has 151 entries and nothing at all that fills them,
+    which is exactly "this game's encounters have not been gathered yet". It says so in those
+    words, names the 151 as covered only by other games, and exits 3. Step 3 clears it. Every
+    game from here on will fail its own step 2 this way, which is better than a build that calls
+    a half-gathered game finished.
+  - Step 3: 448 wild slots across 43 places, filling 85 of the 151. Red has 477 across its own
+    grass, so the two are the same size and not the same list. No conditions anywhere - Generation
+    1 has no time of day, no seasons and no swarms, so a slot is a place, a method and a rate.
+  - Yellow's grass is genuinely a different game, which the diff against Red shows. Gone: the
+    whole Weedle line, the Ekans line, the Koffing line, Meowth, Vulpix, Hypno, Electabuzz - and
+    Pikachu, which has no wild slot anywhere at all, because the only Pikachu in this game is the
+    one that will not stay in its ball. Arrived: Sandshrew, both Oddish *and* Bellsprout on Routes
+    12 to 15, both Scyther *and* Pinsir in the Safari Zone, Farfetch'd on Routes 12 and 13,
+    Lickitung in Cerulean Cave, and Dragonair on the Safari Zone's Super Rod. Yellow hands over
+    what the pair kept from each other and takes back what the anime did not need.
+  - So `gb_pair_acquisition_methods` is now a thin wrapper around `gb_acquisition_methods`, which
+    is the one that fixes `through=None` for the generation and takes the tables as arguments.
+    Red and Blue pass the pair's; Yellow passes none yet and will pass its own. Handing Yellow the
+    pair's tables would have printed Red's Kanto and called it Yellow's, and a test now says so:
+    a gift row in its encounter table is read as nothing at all until step 4 gathers its gifts.
+  - Step 4: 27 gifts and statics, 475 ways to get something in all. Yellow's own table is four
+    entries long and they are the four the game exists for. Oak's lab holds one Pikachu instead of
+    a choice of three, and the three it replaced are scattered across Kanto in the hands of
+    strangers - so a player of Yellow ends up with all four and trades for none of them, where a
+    player of Red takes one and needs a second cartridge for the others.
+  - Checked on Bulbapedia rather than guessed, because each of the three is asked for differently:
+    the Bulbasaur is a girl's in a house in Cerulean City and she wants Pikachu's friendship at
+    147 or higher first; the Charmander is a boy's past Nugget Bridge on Route 24, handed to a
+    trainer he thinks will look after it better; the Squirtle is Officer Jenny's in Vermilion City
+    and takes the Thunder Badge from the gym in the same town.
+  - `GB_PAIR_GIFTS` is now `GB_GIFTS`. Mewtwo behind the Elite Four is a Generation 1 fact rather
+    than a pair one - Yellow's Cerulean Cave opens on the same door - and the rename is what keeps
+    Yellow from inheriting a table whose name says it is not its.
+  - Yellow's Game Corner still needs no table, though it charges differently and stocks different
+    species: Vulpix for 1000 coins, Wigglytuff for 2680, Abra for 230, Porygon for 9999, and both
+    Scyther *and* Pinsir for 6500 where Red and Blue split them one each. The coins arrive as a
+    condition on the encounter, so the wording is already written.
+  - That corrects step 3's reading of the diff: Vulpix has no wild slot in Yellow but is not
+    missing from it - it is in the Game Corner window. Which entries are genuinely out of reach is
+    step 7's answer and needs the trades first.
+  - Step 5: seven trades and 72 evolutions, 554 ways to get something in all. Not one of Yellow's
+    trades is a trade the pair has. Red and Blue offer nine, Yellow offers seven, and the only
+    species handed over in both is the Mr. Mime on Route 2 - which wants an Abra there and a
+    Clefairy here. Checked against Bulbapedia's in-game trade table rather than assumed from the
+    pair's. The nicknames are MILES, RICKY, GURIO, SPIKE, BUFFY, CEZANNE and STICKY; there is no
+    field for them, so they are written into the table's comment rather than lost.
+  - Yellow is its own version group in PokeAPI where Red and Blue share one, so it asks about
+    `yellow` and not `red-blue`. Nothing evolves differently, and asking the pair's group would
+    still have been asking about another game.
+  - Step 7: eight entries no amount of playing Yellow will fill - Weedle, Ekans, Meowth, Koffing,
+    Jynx, Electabuzz, Magmar and Mew. Not a version split: Yellow follows the anime, so what the
+    anime had no use for left the game and came back nowhere. Each reason names which of the other
+    two to trade from, and it is not always the same one: Ekans and Electabuzz are Red's, Meowth
+    and Magmar are Blue's, and Weedle, Koffing and Jynx are in both. Every event is None, for the
+    reason Red's table gives - only Mew was ever handed out for a Virtual Console release.
+  - The sharpest case in the generation, and it stays *off* the list: Raichu. No grass in Yellow
+    holds a Pikachu and the one Oak hands over refuses the Thunder Stone - but Bulbapedia is
+    explicit that a traded Pikachu is unaffected, so a Pikachu that comes over the link evolves
+    like any other. Reachable, not listed. The same reasoning keeps Kakuna, Beedrill, Arbok,
+    Persian and Weezing off it, which is the Sandslash rule from Red.
+  - Step 6: 151 sprites of Yellow's own, in `generation-i/yellow/transparent`. Not one of the 151
+    is byte-for-byte the pair's: the whole sheet was redrawn for the same hardware, which is why
+    this game gets a sprite set instead of pointing at Red and Blue's. The dataset is 4.013 files
+    now, 151 more than before.
+  - `transparent` again, and the check was the same as at Red's step 6: the default Yellow sheet
+    is a 40x40 palette PNG with no alpha chunk at all, so every sprite would have arrived in a
+    white box. The transparent set is 96x96 with a `tRNS` chunk. Worth re-checking per sheet
+    rather than assuming - the pair's default was 56x56 and Yellow's is 40x40, so the sets are not
+    built to one rule.
+  - Jynx is the one that needed looking up rather than reasoning about: no grass in Red or Blue
+    holds one either. What the pair has is an NPC in Cerulean City who swaps one for a Poliwhirl,
+    and Yellow's traders swap other things - so a trade disappearing is what makes an entry
+    unreachable, which no encounter table would have shown.
+  - Its title carries the subtitle the box does: "Pokémon Yellow Version: Special Pikachu
+    Edition". The picker wraps it over two lines and the row still reads, which is worth the
+    game's real name.
+  - The cartridge followed Red and Blue by two years; the Virtual Console release came out the
+    same day as theirs, and it is the 2016 date the entity carries.
+  - Step 1 cost almost nothing: the three modules were already there, and the only edit outside
+    its own file was making `pair_partner` optional in Kanto's Generation 1 factory. Kanto has a
+    third version again, which it had not had since FireRed and LeafGreen made the argument
+    required.
+  - Generation 1's triangle is closed: three link cables between the three releases. Twelve edges
+    are still waiting - each release opens a Time Capsule with each of the three Generation 2
+    ones, and each reaches Bank.
+  - Smoke test on the published exe: a collection made through the wizard with Yellow as main
+    game. Its linked-games step offers exactly two - Blue and Red, both "via trading" - because
+    nothing else in the dataset can send anything into a Generation 1 game. Pikachu reads
+    "Starter, Pallet Town, from Professor Oak, level 5, the only starter here", and underneath
+    it Blue's Viridian Forest and Power Plant with "Then to Yellow: trading", which is the game
+    saying it has no wild Pikachu of its own. Raichu carries the same borrowed wild slots and
+    then "From Pikachu, Yellow, using a Thunder Stone" with no transfer line at all - reachable
+    here, once a Pikachu comes over the link. Jynx reads "Not in Yellow: Red and Blue only in
+    Generation 1; trade one in" and then the same NPC in Cerulean City twice, once per game,
+    with no wild slot anywhere. Marking it caught elsewhere filled the tile in colour, moved the
+    counter to "1 still to transfer" and wrote the record holding in Blue with today's date.
+  - The user's own settings were copied out first and restored byte-for-byte afterwards; their
+    data file was not opened at any point. Closing the app afterwards stopped every LivingDex
+    process, not only the one this test started.
 
 ### Generation 2
 

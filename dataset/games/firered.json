@@ -20216,7 +20216,7 @@
       "location": "Route 4, Pokemon Center",
       "npc": "The Magikarp salesman",
       "level": 5,
-      "requirement": "Bought for 500 Pokedollars in the Route 4 Pokemon Center",
+      "requirement": "Bought for 500 Pokedollars",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
@@ -20233,7 +20233,7 @@
       "location": "Route 3, Pokemon Center",
       "npc": "The Magikarp salesman",
       "level": 5,
-      "requirement": "Bought for 500 Pokedollars in the Route 4 Pokemon Center",
+      "requirement": "Bought for 500 Pokedollars",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",

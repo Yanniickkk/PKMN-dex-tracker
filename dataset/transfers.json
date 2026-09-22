@@ -1,5 +1,23 @@
 [
   {
+    "from": "blue",
+    "to": "red",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "blue",
+    "to": "yellow",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
     "from": "diamond",
     "to": "heartgold",
     "mechanism": "trade",
@@ -329,6 +347,15 @@
   {
     "from": "platinum",
     "to": "soulsilver",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "red",
+    "to": "yellow",
     "mechanism": "trade",
     "direction": "bothWays",
     "filter": {

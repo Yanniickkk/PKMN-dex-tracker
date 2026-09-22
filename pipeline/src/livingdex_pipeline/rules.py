@@ -116,6 +116,12 @@ class EveryEntryHasAMethod:
     in the dataset produced a Hoenn species. The Kanto dex broke it: a third of those 151 are
     caught in Hoenn too, so the pair fell past the guard and reported a hundred and change
     separate faults for the one fact that their encounters were not gathered yet.
+
+    Red broke the other half of it. Every one of its 151 entries is caught in some later game,
+    so nothing was missing from the *dataset* and the rule had nothing to say - about a game
+    that brought no encounters at all. A game with a dex and no way to fill any of it is
+    unfinished whatever else covers its species, and step 8 reads "validation green" as proof
+    that it is finished, so the check comes before the one about what is missing.
     """
 
     name = "every-entry-has-a-method"
@@ -127,22 +133,24 @@ class EveryEntryHasAMethod:
             needed = [entry for entry in game.dex_entries if entry.unobtainable_reason is None]
             missing = [entry for entry in needed if _target_key(entry.target) not in obtainable]
 
-            if not missing:
-                continue
-
             # The game brought no methods of its own: it has not been worked on yet rather than
             # having gaps. What other games happen to cover does not change that.
-            if not game.acquisition_methods:
+            if game.dex_entries and not game.acquisition_methods:
+                elsewhere = len(needed) - len(missing)
                 yield Finding(
                     rule=self.name,
                     severity=Severity.ERROR,
                     game=game.game.id,
                     message=(
                         "this game's encounters have not been gathered yet: it brings no way to "
-                        f"obtain anything at all, which leaves {len(missing)} of its "
-                        f"{len(needed)} dex entries with no source anywhere in the dataset"
+                        f"obtain anything at all. {len(missing)} of its {len(needed)} dex "
+                        f"entries have no source anywhere in the dataset, and the other "
+                        f"{elsewhere} are only covered by other games"
                     ),
                 )
+                continue
+
+            if not missing:
                 continue
 
             for entry in missing:

@@ -180,9 +180,17 @@ def test_an_entry_with_a_method_here_is_fine() -> None:
 
 def test_an_entry_only_obtainable_in_another_game_is_still_accounted_for() -> None:
     # Most of a National Dex is like this: you transfer it in, you do not catch it here.
+    #
+    # Platinum hands over a Turtwig of its own as well, and that is not decoration: a game with
+    # a dex and no way to fill any of it is unfinished whatever else covers its species, and
+    # the rule says so separately.
     data = dataset(
         games=[
-            game("platinum", entries=[entry("platinum", "bulbasaur", 1)]),
+            game(
+                "platinum",
+                entries=[entry("platinum", "bulbasaur", 1), entry("platinum", "turtwig", 387)],
+                methods=[gift("platinum", "turtwig")],
+            ),
             game("emerald", methods=[gift("emerald", "bulbasaur")]),
         ]
     )
@@ -195,12 +203,37 @@ def test_an_entry_marked_unobtainable_is_accepted_without_a_method() -> None:
         games=[
             game(
                 "platinum",
-                entries=[entry("platinum", "darkrai", 491, reason="event distribution only")],
+                entries=[
+                    entry("platinum", "darkrai", 491, reason="event distribution only"),
+                    entry("platinum", "turtwig", 387),
+                ],
+                methods=[gift("platinum", "turtwig")],
             )
         ]
     )
 
     assert validate(data).ok
+
+
+def test_a_game_with_a_dex_and_nothing_to_fill_it_with_is_not_finished() -> None:
+    # Red found this. Every one of its 151 entries is caught in some later game, so nothing was
+    # missing from the dataset and the rule had nothing to say - about a game that brought no
+    # encounters at all. "Validation green" is what step 8 reads as proof a game is done.
+    data = dataset(
+        games=[
+            game("red", entries=[entry("red", "bulbasaur", 1)]),
+            game("emerald", methods=[gift("emerald", "bulbasaur")]),
+        ]
+    )
+
+    report = validate(data)
+
+    assert not report.ok
+    said = messages(report, "every-entry-has-a-method")[0]
+    assert "no way to obtain anything at all" in said
+    # And it says which of the two kinds of gap this is: nothing missing, everything borrowed.
+    assert "0 of its 1 dex entries have no source" in said
+    assert "other 1 are only covered by other games" in said
 
 
 # --- no evolution dead ends -------------------------------------------------------------------

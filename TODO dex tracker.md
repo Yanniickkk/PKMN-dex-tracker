@@ -72,20 +72,23 @@ then Gen 1–2, then forward through Gen 5 onward.
 
 ### Generation 1
 
-- [ ] **Red** (`red`, gen 1, pair partner: Blue)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
-- [ ] **Blue** (`blue`, gen 1, pair partner: Red)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
-- [ ] **Yellow** (`yellow`, gen 1, standalone)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
+_Done: all three. Red, Blue and Yellow are Kanto on the 3DS._
+
+**Virtual Console only.** Generations 1 and 2 are in this dataset as their 3DS Virtual Console
+releases and not as the cartridges. A Game Boy cartridge trades with another Game Boy cartridge
+and reaches nothing else, so what is caught on one can never join a living dex kept anywhere
+later; the Virtual Console releases can, through Poké Transporter into Bank, and that route is
+the whole reason they are here. The same decision governs Generation 2 below.
+
+_What Kanto shares is in `kanto.py`, what Generation 1 shares is in `gb.py`, and what every
+Virtual Console release shares is in `vc.py`. Twelve edges are waiting: each of the three opens
+a Time Capsule with each of Gold, Silver and Crystal, and each reaches Bank._
 
 ### Generation 2
+
+**Virtual Console only,** for the reason Generation 1 gives above. All six releases reach Bank
+through Poké Transporter, and each of the three here opens a Time Capsule with each of the three
+before it.
 
 - [ ] **Gold** (`gold`, gen 2, pair partner: Silver)
   - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
@@ -223,15 +226,14 @@ First games without a National Dex — step 2 uses the game's own dex, DLC inclu
 Not playable main games, but they must exist as nodes for routes to work.
 
 - [ ] **Pokémon Bank** (`bank`) — edges from Gen 5 and VC, both ways with Gen 6 and 7, one-way to HOME
+      — two edges are already waiting for this node, and there will be six once Generations 1
+      and 2 are built
 - [ ] **Pokémon HOME** (`home`) — one-way in from Bank and Let's Go, both ways with Gen 8 and 9,
       per-species dex filter on deposit
 
-### Virtual Console releases (optional, later)
-
-Separate entities from the cartridges, because only these reach Bank.
-
-- [ ] `red-vc`, `blue-vc`, `yellow-vc` — edges to Bank via Poké Transporter
-- [ ] `gold-vc`, `silver-vc`, `crystal-vc` — edges to Bank via Poké Transporter
+_The Virtual Console releases used to be a separate job at the end of this list. They are not:
+they **are** Generations 1 and 2 here, built in their place above, and the cartridges are not in
+the dataset at all._
 
 ---
 

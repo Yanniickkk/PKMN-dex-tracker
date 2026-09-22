@@ -54,8 +54,8 @@ ONLY_ON_FIRERED: dict[str, str | None] = {
 #: A reason rather than a gap: the validator can tell "we checked and it cannot be caught" from
 #: "we have not gathered this yet", and only the second is a fault.
 UNOBTAINABLE: dict[str, str] = {
-    "mew": kanto.MEW_REASON,
-    **{species: kanto.only_on("FireRed", event) for species, event in ONLY_ON_FIRERED.items()},
+    "mew": kanto.GBA_MEW_REASON,
+    **{species: kanto.gba_only_on("FireRed", event) for species, event in ONLY_ON_FIRERED.items()},
 }
 
 
@@ -63,13 +63,13 @@ def build(context: BuildContext) -> GameData:
     entries = dex_entries(context)
 
     return GameData(
-        game=kanto.cartridge(
+        game=kanto.gba_cartridge(
             game_id=GAME_ID,
             title="Pokémon LeafGreen Version",
             version="LeafGreen",
             released=date(2004, 1, 29),
             pair_partner=PAIR_PARTNER,
-            sprite_set=kanto.PAIR_SPRITE_SET,
+            sprite_set=kanto.GBA_PAIR_SPRITE_SET,
         ),
         dex_entries=entries,
         acquisition_methods=acquisition_methods(context, entries),
@@ -90,7 +90,7 @@ def acquisition_methods(
     entries: list[DexEntry],
 ) -> list[AcquisitionMethod]:
     """Every way to get something here. At this step: caught in the wild, or handed over."""
-    return kanto.pair_acquisition_methods(
+    return kanto.gba_pair_acquisition_methods(
         context,
         game_id=GAME_ID,
         version=POKEAPI_VERSION,
@@ -99,7 +99,7 @@ def acquisition_methods(
 
 
 def edges() -> list[TransferEdge]:
-    return kanto.link_trade_edges(GAME_ID)
+    return kanto.gba_edges(GAME_ID)
 
 
 def register(registry: GameRegistry) -> None:

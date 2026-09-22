@@ -12,6 +12,7 @@ import pytest
 
 from livingdex_pipeline.build import default_registry
 from livingdex_pipeline.gamedefs import (
+    blue,
     diamond,
     ds,
     emerald,
@@ -24,10 +25,13 @@ from livingdex_pipeline.gamedefs import (
     leafgreen,
     pearl,
     platinum,
+    red,
     ruby,
     sapphire,
     sinnoh,
     soulsilver,
+    vc,
+    yellow,
 )
 from livingdex_pipeline.games import BuildContext, GameRegistry
 from livingdex_pipeline.gifts import GiftDetail
@@ -66,6 +70,8 @@ TREECKO_CHAIN = {
 
 #: Where the version groups the tests use sit in the series, as PokeAPI orders them.
 VERSION_GROUP_ORDER = {
+    "red-blue": 1,
+    "yellow": 2,
     "ruby-sapphire": 5,
     "emerald": 6,
     "firered-leafgreen": 7,
@@ -1081,10 +1087,229 @@ def test_the_only_event_that_ever_covered_an_exclusive_was_a_place_to_walk() -> 
     assert all(event is None for event in soulsilver.ONLY_ON_HEARTGOLD.values())
 
 
+# --- Red and Blue -----------------------------------------------------------------------------
+
+
+def test_the_kanto_pair_are_the_virtual_console_releases_and_not_the_cartridges() -> None:
+    # A Game Boy cartridge trades with another Game Boy cartridge and reaches nothing else, so
+    # what is caught on one can never join a living dex kept anywhere later. These releases can,
+    # through Poke Transporter, and that route is the whole reason they are in the dataset. So
+    # there is one Red, it is the 3DS one, and the entity says so rather than the id.
+    for module in (red, blue):
+        game = module.build(context(module.GAME_ID)).game
+
+        assert game.release is GameRelease.VIRTUAL_CONSOLE
+        assert game.released == date(2016, 2, 27)
+        assert game.generation == 1
+        assert game.region == "Kanto"
+        assert "vc" not in module.GAME_ID
+
+
+def test_generation_1_has_no_national_dex_behind_its_own() -> None:
+    # The first games in this dataset with only one list. `national_dex_through` is what a
+    # living dex here aims at, and for these it is the game's own dex - which is why it is None
+    # and the dex source says so.
+    game = red.build(context("red")).game
+
+    assert game.national_dex_through is None
+    assert game.dex_source is DexSource.GAME_DEX
+
+
+def test_a_generation_1_release_brings_its_trades_its_time_capsule_and_bank() -> None:
+    edges = {(edge.to, edge.mechanism): edge for edge in red.edges()}
+
+    assert ("blue", TransferMechanism.TRADE) in edges
+    assert ("yellow", TransferMechanism.TRADE) in edges
+    # Both ways and limited to the first 151 in both directions. Forward that is no limit at
+    # all; coming back it is the whole story, because a Chikorita has no place in a game that
+    # has never heard of it.
+    capsule = edges[("gold", TransferMechanism.TIME_CAPSULE)]
+    assert capsule.direction is TransferDirection.BOTH_WAYS
+    assert capsule.filter.to == 151
+    # And the one route these releases exist for.
+    transporter = edges[(vc.BANK, TransferMechanism.POKE_TRANSPORTER)]
+    assert transporter.direction is TransferDirection.ONE_WAY
+
+
+def test_kanto_is_a_region_rather_than_a_generation() -> None:
+    # Red and Blue are Kanto and so are FireRed and LeafGreen, forty years of hardware apart.
+    # A generation number or a National Dex cap appearing here would be a fact about one pair
+    # written down as a fact about the place - the same mistake `johto` is pinned against.
+    assert kanto.REGION == "Kanto"
+    assert not hasattr(kanto, "GENERATION")
+    assert not hasattr(kanto, "NATIONAL_DEX_THROUGH")
+    # One dex for both pairs, which PokeAPI agrees with: the remake kept Red and Blue's order,
+    # unlike Johto's, where 150 entries were renumbered.
+    assert kanto.DEX == "kanto"
+
+
+def test_every_kanto_game_shows_the_same_151_entries_in_the_same_order() -> None:
+    # One dex for five games, which is the region's doing: Yellow rearranged half of what is in
+    # Red and Blue and renumbered nothing, and FireRed and LeafGreen show the same list again.
+    # Johto's remake renumbered 150 entries; Kanto's changed nothing, twice.
+    api = FakeApi([(1, "bulbasaur"), (151, "mew")])
+
+    for module in (red, blue, yellow, firered, leafgreen):
+        data = module.build(context(module.GAME_ID, api))
+
+        assert [(entry.number, entry.target.species) for entry in data.dex_entries] == [
+            (1, "bulbasaur"),
+            (151, "mew"),
+        ]
+        assert all(entry.game == module.GAME_ID for entry in data.dex_entries)
+
+    assert api.asked_for == ["kanto"] * 5
+
+
+def test_in_generation_1_the_kanto_dex_is_the_whole_living_dex() -> None:
+    # In FireRed it is the game's own Pokedex and the National Dex arrives later, 386 deep. In
+    # Red there is nothing behind it: 151 entries is the list and the goal at once.
+    assert red.build(context("red")).game.national_dex_through is None
+    assert yellow.build(context("yellow")).game.national_dex_through is None
+    assert firered.build(context("firered")).game.national_dex_through == 386
+
+
+def test_kantos_gifts_are_the_part_the_remake_left_alone() -> None:
+    # The same three in Oak's lab, the same scientist on Cinnabar reviving the same fossil, the
+    # same choice of one Hitmon in the same dojo. One table for four games, and each pair adds
+    # only what is its own.
+    assert kanto.SHARED_GIFTS.keys() <= kanto.GB_GIFTS.keys()
+    assert kanto.SHARED_GIFTS.keys() <= kanto.GBA_PAIR_GIFTS.keys()
+    assert kanto.GB_GIFTS["omanyte"] == kanto.GBA_PAIR_GIFTS["omanyte"]
+
+    # One door opens differently, and it is the one at the end.
+    assert "Elite Four" in (kanto.GB_GIFTS["mewtwo"].requirement or "")
+    assert "Network Machine" in (kanto.GBA_PAIR_GIFTS["mewtwo"].requirement or "")
+    # And the Hypno that frightened Lostelle is the remake's alone.
+    assert "hypno" not in kanto.GB_GIFTS
+
+
+def test_red_and_blue_need_no_table_for_what_the_game_corner_charges() -> None:
+    # The remake needed one - PokeAPI carries no prices for it - but for these two the coins are
+    # a condition on the encounter, and they differ in species as well as in price.
+    assert "scyther" not in kanto.GB_GIFTS
+    assert "pinsir" not in kanto.GB_GIFTS
+
+
+def test_yellow_is_a_third_version_rather_than_half_of_a_pair() -> None:
+    game = yellow.build(context("yellow")).game
+
+    assert game.pair_partner is None
+    assert game.release is GameRelease.VIRTUAL_CONSOLE
+    # The cartridge followed Red and Blue by two years; the 3DS release came out the same day.
+    assert game.released == red.build(context("red")).game.released
+    # And it trades with both of them, which is what closes Generation 1's triangle.
+    assert {edge.to for edge in yellow.edges() if edge.mechanism is TransferMechanism.TRADE} == {
+        "red",
+        "blue",
+    }
+
+
+def test_yellow_replaces_the_three_in_oaks_lab_rather_than_adding_to_them() -> None:
+    # In Red the lab holds three and you take one, so the other two need a second cartridge. In
+    # Yellow it holds a Pikachu, the three are scattered across Kanto in the hands of three
+    # strangers, and a player ends up with all four without trading for any of them.
+    assert kanto.GB_GIFTS["bulbasaur"].kind is GiftKind.STARTER
+    assert kanto.GB_GIFTS["bulbasaur"].npc == "Professor Oak"
+
+    assert yellow.GIFTS["pikachu"].kind is GiftKind.STARTER
+    assert yellow.GIFTS["pikachu"].npc == "Professor Oak"
+    # Not starters here, whatever they are everywhere else, and no two from the same person.
+    starters = ("bulbasaur", "charmander", "squirtle")
+    assert all(yellow.GIFTS[one].kind is None for one in starters)
+    assert len({yellow.GIFTS[one].npc for one in starters}) == 3
+
+    # And what it leaves alone, which is the rest of Kanto.
+    assert yellow.GIFTS["eevee"] == kanto.SHARED_GIFTS["eevee"]
+    assert yellow.GIFTS["mewtwo"] == kanto.GB_GIFTS["mewtwo"]
+
+
+def test_yellows_game_corner_needs_no_table_either() -> None:
+    # It charges differently from the pair's and stocks different species - Vulpix and
+    # Wigglytuff for coins, and both Scyther and Pinsir where Red and Blue split them - and
+    # none of that needs writing down: PokeAPI carries the coins as a condition.
+    assert "vulpix" not in yellow.GIFTS
+    assert "scyther" not in yellow.GIFTS
+    assert "pinsir" not in yellow.GIFTS
+
+
+def generation_1_slot(area: str, versions: tuple[str, ...], *, method: str = "walk") -> list:
+    """One encounter area as PokeAPI hands it over, in the Generation 1 versions given."""
+    return [
+        {
+            "location_area": {"name": area},
+            "version_details": [
+                {
+                    "version": {"name": version},
+                    "encounter_details": [
+                        {
+                            "min_level": 3,
+                            "max_level": 6,
+                            "chance": 25,
+                            "method": {"name": method},
+                            "condition_values": [],
+                        }
+                    ],
+                }
+                for version in versions
+            ],
+        }
+    ]
+
+
+def test_yellow_reads_its_own_encounter_table_rather_than_the_pairs() -> None:
+    # The Pikachu in Viridian Forest is Red and Blue's. In Yellow the only Pikachu is the one
+    # that will not stay in its ball, there is none in any grass anywhere, and the slots it does
+    # have are not the ones the pair has - which is why it reads its own version.
+    api = FakeApi(
+        [(25, "pikachu"), (69, "bellsprout")],
+        {
+            "pikachu": generation_1_slot("viridian-forest-area", ("red", "blue")),
+            "bellsprout": generation_1_slot("kanto-route-5-area", ("yellow",)),
+        },
+    )
+
+    def wild_of(module) -> list[str]:
+        return [
+            one.target.species
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "wild"
+        ]
+
+    assert wild_of(yellow) == ["bellsprout"]
+    assert wild_of(red) == ["pikachu"]
+
+
+def test_each_generation_1_release_describes_what_it_hands_over_in_its_own_words() -> None:
+    # One row in PokeAPI - bulbasaur, gift, Cerulean City - and two games that mean different
+    # things by it. In Red it is the starter out of Oak's lab. In Yellow it is a girl's
+    # Bulbasaur, handed over because the Pikachu walking behind you is well looked after, and
+    # reading it as Oak's would be reading Red's Kanto into Yellow.
+    api = FakeApi(
+        [(1, "bulbasaur")],
+        {"bulbasaur": generation_1_slot("cerulean-city-area", ("red", "yellow"), method="gift")},
+    )
+
+    def gift_of(module):
+        [one] = [
+            one
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "gift"
+        ]
+        return one
+
+    assert gift_of(red).gift_kind is GiftKind.STARTER
+    assert gift_of(red).npc == "Professor Oak"
+
+    assert gift_of(yellow).gift_kind is GiftKind.NPC_GIFT
+    assert gift_of(yellow).npc == "A girl in a house in Cerulean City"
+
+
 def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> None:
     registry = default_registry()
 
     assert registry.game_ids == [
+        "blue",
         "diamond",
         "emerald",
         "firered",
@@ -1092,23 +1317,35 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "leafgreen",
         "pearl",
         "platinum",
+        "red",
         "ruby",
         "sapphire",
         "soulsilver",
+        "yellow",
     ]
 
     routes = [(edge.from_, edge.to) for edge in registry.edges]
 
-    # Ten link cables between the five Generation 3 cartridges, ten wireless trades between the
-    # five Generation 4 games, and twenty-five one-way Pal Park trips from each of the five into
-    # each of the five.
-    assert len(routes) == 10 + 10 + 25
+    # Three link cables between the three Generation 1 releases, ten between the five
+    # Generation 3 cartridges, ten wireless trades between the five Generation 4 games, and
+    # twenty-five one-way Pal Park trips from each of the five into each of the five.
+    assert len(routes) == 3 + 10 + 10 + 25
     assert routes == sorted(routes)
+    assert ("blue", "red") in routes
+    assert ("red", "yellow") in routes
     assert ("diamond", "pearl") in routes
     assert ("ruby", "diamond") in routes
 
-    # Nothing is waiting any more: the six edges Sinnoh declared into Johto have both ends now.
-    assert registry.held_back_edges == []
+    # What is waiting is everything Generation 1 reaches that is not built: the three
+    # Generation 2 releases each of them opens a Time Capsule with, and Bank.
+    waiting = {(edge.to, edge.mechanism) for _, edge in registry.held_back_edges}
+
+    assert waiting == {
+        ("gold", TransferMechanism.TIME_CAPSULE),
+        ("silver", TransferMechanism.TIME_CAPSULE),
+        ("crystal", TransferMechanism.TIME_CAPSULE),
+        ("bank", TransferMechanism.POKE_TRANSPORTER),
+    }
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:
@@ -1474,13 +1711,129 @@ def test_the_kanto_pair_were_drawn_from_one_sheet_of_their_own() -> None:
 
 def test_both_kanto_halves_say_the_same_thing_about_mew() -> None:
     # Neither cartridge has one, and neither pretends the other does.
-    assert firered.UNOBTAINABLE["mew"] == leafgreen.UNOBTAINABLE["mew"] == kanto.MEW_REASON
+    assert firered.UNOBTAINABLE["mew"] == leafgreen.UNOBTAINABLE["mew"] == kanto.GBA_MEW_REASON
     assert "mew" not in firered.ONLY_ON_LEAFGREEN
     assert "mew" not in leafgreen.ONLY_ON_FIRERED
     # Step 7: which distributions reached these cartridges, not the Generation 1 ones that put a
     # Mew on a Game Boy it can never leave.
-    assert "2005" in kanto.MEW_REASON
-    assert "1996" not in kanto.MEW_REASON
+    assert "2005" in kanto.GBA_MEW_REASON
+    assert "1996" not in kanto.GBA_MEW_REASON
+
+
+def test_the_mews_that_reached_the_virtual_console_are_not_the_famous_ones() -> None:
+    # This is where modelling the 3DS release rather than the cartridge pays. The Mews of the
+    # Nintendo tours and the shopping centres went onto Game Boy cartridges; a download is not
+    # one of those. Two events were for these releases, and both are 2016.
+    assert red.UNOBTAINABLE["mew"] == blue.UNOBTAINABLE["mew"] == kanto.GB_MEW_REASON
+    assert "Virtual Console" in kanto.GB_MEW_REASON
+    assert "2016" in kanto.GB_MEW_REASON
+    # And the two pairs do not share a sentence: what reached one never reached the other.
+    assert kanto.GB_MEW_REASON != kanto.GBA_MEW_REASON
+
+
+def test_no_generation_1_exclusive_was_ever_handed_out_for_these_releases() -> None:
+    # Twelve species, twelve *In events* tables, and not one Virtual Console distribution among
+    # them: what they have is for Gold and Silver, for the Generation 3 games, or later. Only
+    # Mew ever got a Virtual Console event at all, which makes the emptiness structural rather
+    # than a gap somebody should go back and fill.
+    assert set(red.ONLY_ON_BLUE) == {
+        "sandshrew",
+        "vulpix",
+        "meowth",
+        "bellsprout",
+        "magmar",
+        "pinsir",
+    }
+    assert set(blue.ONLY_ON_RED) == {
+        "ekans",
+        "oddish",
+        "mankey",
+        "growlithe",
+        "scyther",
+        "electabuzz",
+    }
+    assert all(event is None for event in red.ONLY_ON_BLUE.values())
+    assert all(event is None for event in blue.ONLY_ON_RED.values())
+    # Sandslash is caught nowhere in Red either, and it is not on the list: it evolves from a
+    # Sandshrew that comes over the link.
+    assert "sandslash" not in red.UNOBTAINABLE
+    assert "arbok" not in blue.UNOBTAINABLE
+
+
+def test_yellow_was_drawn_again_rather_than_reusing_the_pairs_sheet() -> None:
+    # The same 151 Pokemon, drawn a second time for the same hardware, which is why this game
+    # gets a sprite set of its own instead of pointing at Red and Blue's.
+    sets = {module.build(context(module.GAME_ID)).game.sprite_set for module in (red, blue)}
+
+    assert sets == {kanto.GB_PAIR_SPRITE_SET}
+    assert yellow.SPRITE_SET not in sets
+
+    # And both Generation 1 sheets are the transparent variant, for the reason the pair's
+    # comment gives: the default sheets carry no alpha channel, so every sprite would arrive in
+    # a white box on a dark grid. Noticed by Yannick on the published exe, at Red's step 6.
+    assert yellow.SPRITE_SET.endswith("/transparent")
+    assert kanto.GB_PAIR_SPRITE_SET.endswith("/transparent")
+
+
+def test_yellow_swaps_seven_different_things_than_the_pair_swaps_nine() -> None:
+    # Five of the same places and not one of the same trades. What the pair only ever gets from
+    # an NPC goes with them: Jynx and Farfetch'd are Cerulean's and Vermilion's, both trades are
+    # gone, and Yellow answers the second with wild ones on Routes 12 and 13.
+    assert len(yellow.TRADES) == 7
+    assert len(kanto.GB_PAIR_TRADES) == 9
+
+    pair = {(one.gets, one.wants) for one in kanto.GB_PAIR_TRADES}
+    theirs = {(one.gets, one.wants) for one in yellow.TRADES}
+
+    assert pair & theirs == set()
+    # One species is handed over in both, and even that one costs something else: the Mr. Mime
+    # on Route 2 wants an Abra in the pair and a Clefairy here.
+    got_in_both = {one.gets for one in kanto.GB_PAIR_TRADES} & {one.gets for one in yellow.TRADES}
+    assert got_in_both == {"mr-mime"}
+    assert {"jynx", "farfetchd"} <= {one.gets for one in kanto.GB_PAIR_TRADES}
+    # Nobody is named in either table: Generation 1 writes "TRAINER" on everything it hands over.
+    assert all(one.npc is None for one in yellow.TRADES)
+
+
+def test_yellow_is_its_own_version_group_where_the_pair_shares_one() -> None:
+    # Nothing evolves differently here, and it is still not `red-blue`: PokeAPI files Yellow on
+    # its own, and a game that asked for the pair's group would be asking about another game.
+    assert yellow.VERSION_GROUP == "yellow"
+    assert kanto.GB_PAIR_VERSION_GROUP == "red-blue"
+
+
+def test_yellow_loses_what_the_anime_had_no_use_for() -> None:
+    # Not a version split: eight entries leave the game and come back nowhere. Team Rocket's own
+    # - Ekans, Meowth, Koffing - and the whole Weedle line with them, plus Electabuzz, Magmar
+    # and a Jynx that was never wild in the pair either, only ever an NPC's in Cerulean City.
+    assert set(yellow.UNOBTAINABLE) == {
+        "weedle",
+        "ekans",
+        "meowth",
+        "koffing",
+        "jynx",
+        "electabuzz",
+        "magmar",
+        "mew",
+    }
+    assert yellow.UNOBTAINABLE["mew"] == kanto.GB_MEW_REASON
+    # Each says which of the other two to trade from, and one half is not always the answer.
+    assert yellow.UNOBTAINABLE["ekans"] == kanto.gb_only_on("Red")
+    assert yellow.UNOBTAINABLE["meowth"] == kanto.gb_only_on("Blue")
+    assert yellow.UNOBTAINABLE["weedle"] == kanto.gb_only_on("Red and Blue")
+    # No Virtual Console distribution ever reached one of them, the way none reached the pair's.
+    assert all(event is None for _, event in yellow.ELSEWHERE_IN_GENERATION_1.values())
+
+
+def test_yellow_can_still_reach_a_raichu_it_cannot_make_itself() -> None:
+    # The sharpest case in the generation. No grass in Yellow holds a Pikachu, and the one Oak
+    # hands over refuses the Thunder Stone - but a Pikachu traded in is not that Pikachu and
+    # evolves like any other, so Raichu is reachable and does not belong on the list. The same
+    # reasoning keeps Kakuna, Arbok, Persian and Weezing off it.
+    assert "raichu" not in yellow.UNOBTAINABLE
+    assert "pikachu" not in yellow.UNOBTAINABLE
+    for evolved in ("kakuna", "beedrill", "arbok", "persian", "weezing"):
+        assert evolved not in yellow.UNOBTAINABLE
 
 
 def test_step_seven_names_the_events_behind_the_kanto_exclusives() -> None:
@@ -1649,10 +2002,10 @@ def test_the_game_corner_charges_each_half_its_own_price() -> None:
 
 
 def test_a_prize_only_one_half_sells_is_priced_for_that_half_alone() -> None:
-    assert set(kanto.PRIZE_CORNER["scyther"]) == {"firered"}
-    assert set(kanto.PRIZE_CORNER["pinsir"]) == {"leafgreen"}
-    assert "scyther" not in kanto.gifts("leafgreen")
-    assert "pinsir" not in kanto.gifts("firered")
+    assert set(kanto.GBA_PRIZE_CORNER["scyther"]) == {"firered"}
+    assert set(kanto.GBA_PRIZE_CORNER["pinsir"]) == {"leafgreen"}
+    assert "scyther" not in kanto.gba_gifts("leafgreen")
+    assert "pinsir" not in kanto.gba_gifts("firered")
 
 
 # --- the registry itself ----------------------------------------------------------------------
