@@ -17,11 +17,17 @@ namespace LivingDex.Core.Dataset;
 /// with. Asked before rendering one, so a build that skipped them leaves the app drawing its own
 /// rather than showing a broken image.
 /// </param>
+/// <param name="Sprites">
+/// Every battle sprite shipped, by its path under the sprites directory without the extension:
+/// <c>pikachu</c> for the shared set, <c>generation-iii/emerald/pikachu</c> for a game's own.
+/// Asked before pointing at one, because a set only covers the generation that drew it.
+/// </param>
 public sealed record LoadedDataset(
     DatasetStamp Stamp,
     ReferenceData Reference,
     IReadOnlyDictionary<GameId, string> BoxArt,
-    IReadOnlySet<string> MethodIcons)
+    IReadOnlySet<string> MethodIcons,
+    IReadOnlySet<string> Sprites)
 {
     /// <summary>Whether an image was shipped for this game.</summary>
     public bool HasBoxArt(GameId game) => BoxArt.ContainsKey(game);
@@ -40,6 +46,35 @@ public sealed record LoadedDataset(
     public string? MethodIconPath(string key) =>
         MethodIcons.Contains(key) ? $"{DatasetLayout.IconsDirectory}/{key}.png" : null;
 
+    /// <summary>
+    /// What to ask the web view for to draw one species, for example
+    /// <c>sprites/generation-iii/emerald/pikachu.png</c>.
+    /// </summary>
+    /// <param name="species">The species to draw.</param>
+    /// <param name="spriteSet">
+    /// The set the game being played uses, or null to go straight to the shared one.
+    /// </param>
+    /// <remarks>
+    /// A set that has no picture of this species falls back to the shared one rather than
+    /// leaving a hole: a generation only drew what existed at the time, and a Sinnoh Pokemon
+    /// transferred into a Hoenn collection still has to appear somewhere.
+    /// </remarks>
+    public string SpritePath(SpeciesId species, string? spriteSet)
+    {
+        var shared = $"{DatasetLayout.SpritesDirectory}/{species.Value}.png";
+
+        if (spriteSet is null)
+        {
+            return shared;
+        }
+
+        var own = $"{spriteSet}/{species.Value}";
+
+        return Sprites.Contains(own)
+            ? $"{DatasetLayout.SpritesDirectory}/{own}.png"
+            : shared;
+    }
+
     /// <summary>True when no dataset was found at all.</summary>
     public bool IsEmpty => Reference.Games.Count == 0;
 
@@ -48,6 +83,7 @@ public sealed record LoadedDataset(
         new DatasetStamp("0.0.0", DateOnly.MinValue),
         new ReferenceData([], [], [], []),
         new Dictionary<GameId, string>(),
+        new HashSet<string>(StringComparer.Ordinal),
         new HashSet<string>(StringComparer.Ordinal));
 }
 
@@ -137,7 +173,17 @@ public static class DatasetLoader
             .Select(name => System.IO.Path.GetFileNameWithoutExtension(name[iconPrefix.Length..]))
             .ToHashSet(StringComparer.Ordinal);
 
-        return new LoadedDataset(index.Stamp, reference, boxArt, icons);
+        // The whole path under sprites/, not just the file name: a set is a directory, and
+        // pikachu exists in several of them.
+        var spritePrefix = $"{Prefix}{DatasetLayout.SpritesDirectory}/";
+        var sprites = names
+            .Where(name => name.StartsWith(spritePrefix, StringComparison.Ordinal))
+            .Select(name => name[spritePrefix.Length..])
+            .Where(path => path.EndsWith(".png", StringComparison.Ordinal))
+            .Select(path => path[..^".png".Length])
+            .ToHashSet(StringComparer.Ordinal);
+
+        return new LoadedDataset(index.Stamp, reference, boxArt, icons, sprites);
     }
 
     private static T? Read<T>(Assembly assembly, HashSet<string> names, string path)

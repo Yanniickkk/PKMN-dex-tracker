@@ -140,6 +140,10 @@ class Game(Model):
     national_dex_through: int | None = None
     dex_source: DexSource
     pair_partner: str | None = None
+    #: Which battle sprites this game shows, as the directory they are written to - for example
+    #: ``generation-iii/emerald``. A game with none of its own leaves it out and falls back to
+    #: the shared set, which is the current artwork for every species.
+    sprite_set: str | None = None
 
 
 class Species(Model):
@@ -320,6 +324,19 @@ class EvolutionAcquisition(Model):
     source: SourceCitation
 
 
+class BreedingAcquisition(Model):
+    kind: Literal["breeding"] = "breeding"
+    game: str
+    target: DexTarget
+    #: Any one of these, left at the day care, can produce the target. A baby often has
+    #: several parents that work - a Pichu hatches from a Pikachu or a Raichu - and naming
+    #: only the first would make the other look like a way that does not exist.
+    parents: list[DexTarget]
+    location: str
+    requirement: str | None = None
+    source: SourceCitation
+
+
 class TradeAcquisition(Model):
     kind: Literal["trade"] = "trade"
     game: str
@@ -332,7 +349,11 @@ class TradeAcquisition(Model):
 
 
 AcquisitionMethod = Annotated[
-    GiftAcquisition | WildAcquisition | EvolutionAcquisition | TradeAcquisition,
+    GiftAcquisition
+    | WildAcquisition
+    | EvolutionAcquisition
+    | BreedingAcquisition
+    | TradeAcquisition,
     Field(discriminator="kind"),
 ]
 

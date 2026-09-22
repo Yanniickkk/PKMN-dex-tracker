@@ -23,6 +23,28 @@ from livingdex_pipeline.models import (
     TransferMechanism,
 )
 
+#: One chain, enough for the two species the fake dex holds. Grovyle's entry is stamped with
+#: the version group Ruby and Sapphire introduced it in, the same way PokeAPI stamps a real one.
+TREECKO_CHAIN = {
+    "species": {"name": "treecko"},
+    "evolves_to": [
+        {
+            "species": {"name": "grovyle"},
+            "evolution_details": [
+                {
+                    "trigger": {"name": "level-up"},
+                    "version_group": {"name": "ruby-sapphire"},
+                    "min_level": 16,
+                }
+            ],
+            "evolves_to": [],
+        }
+    ],
+}
+
+#: Where the version groups the tests use sit in the series, as PokeAPI orders them.
+VERSION_GROUP_ORDER = {"ruby-sapphire": 5, "emerald": 6, "diamond-pearl": 8}
+
 
 class FakeApi:
     """Stands in for PokeAPI. Records what was asked for, answers with a short dex."""
@@ -46,9 +68,18 @@ class FakeApi:
     def encounters(self, pokemon: str, *, refresh: bool = False) -> list:
         return self._encounters.get(pokemon, [])
 
+    def evolution_chain(self, species: str, *, refresh: bool = False) -> str:
+        return "treecko"
+
     def resource(self, path: str, *, refresh: bool = False) -> dict:
         if path.startswith("location-area/"):
             return {"location": {"name": "hoenn-route-101"}}
+
+        if path.startswith("evolution-chain/"):
+            return {"chain": TREECKO_CHAIN}
+
+        if path.startswith("version-group/"):
+            return {"order": VERSION_GROUP_ORDER[path.removeprefix("version-group/")]}
 
         return {"names": [{"language": {"name": "en"}, "name": "Route 101"}]}
 
@@ -129,6 +160,60 @@ def test_emerald_marks_what_no_amount_of_playing_it_will_produce() -> None:
     assert entries["deoxys"].unobtainable_reason is None
 
 
+def test_emerald_marks_the_hoenn_dex_entries_its_own_grass_never_holds() -> None:
+    api = FakeApi([(1, "roselia"), (2, "meditite"), (3, "surskit"), (4, "treecko")])
+
+    entries = {
+        entry.target.species: entry for entry in emerald.build(context("emerald", api)).dex_entries
+    }
+
+    # In Ruby and Sapphire's grass and not in Emerald's, which is the game rather than a hole in
+    # the data. The transfer graph is how the entry gets filled.
+    assert "Ruby and Sapphire only" in (entries["roselia"].unobtainable_reason or "")
+    assert "Ruby and Sapphire only" in (entries["meditite"].unobtainable_reason or "")
+    # Nearly obtainable, which is worth saying in full: the swarm is real, and it needs a second
+    # cartridge to turn up.
+    assert "mixing records" in (entries["surskit"].unobtainable_reason or "")
+    assert entries["treecko"].unobtainable_reason is None
+
+
+def test_emerald_records_its_four_in_game_trades() -> None:
+    methods = emerald.build(context("emerald")).acquisition_methods
+    trades = [method for method in methods if method.kind == "trade"]
+
+    assert [(trade.target.species, trade.wants.species) for trade in trades] == [
+        ("seedot", "ralts"),
+        ("plusle", "volbeat"),
+        ("horsea", "bagon"),
+        ("meowth", "skitty"),
+    ]
+    assert trades[0].location == "Rustboro City"
+    # The Battle Frontier is post-game, and the only one of the four that has to say so.
+    assert "Battle Frontier" in (trades[3].requirement or "")
+    assert all(trade.source.source == "bulbapedia" for trade in trades)
+
+
+def test_emerald_hatches_the_babies_nothing_else_in_it_produces() -> None:
+    methods = emerald.build(context("emerald")).acquisition_methods
+    eggs = {method.target.species: method for method in methods if method.kind == "breeding"}
+
+    assert sorted(eggs) == ["azurill", "igglybuff", "pichu"]
+    assert [parent.species for parent in eggs["azurill"].parents] == ["marill", "azumarill"]
+    assert eggs["pichu"].location == "Route 117, Pokemon Day Care"
+    # Generation 3 asks for no incense; that is a Generation 4 rule.
+    assert all(egg.requirement is None for egg in eggs.values())
+
+
+def test_emerald_evolves_what_its_own_generation_can() -> None:
+    api = FakeApi([(1, "treecko"), (2, "grovyle")])
+
+    methods = emerald.build(context("emerald", api)).acquisition_methods
+    evolutions = [method for method in methods if method.kind == "evolution"]
+
+    assert [one.target.species for one in evolutions] == ["grovyle"]
+    assert evolutions[0].rule == "treecko-to-grovyle"
+
+
 def test_emerald_names_who_hands_over_a_starter() -> None:
     api = FakeApi(
         [(1, "treecko")],
@@ -157,8 +242,9 @@ def test_emerald_names_who_hands_over_a_starter() -> None:
 
     methods = emerald.build(context("emerald", api)).acquisition_methods
 
-    assert len(methods) == 1
-    gift = methods[0]
+    # The trades and the day care are tables rather than fetches, so they turn up whatever the
+    # encounter data says. The gift is the one this test is about.
+    gift = next(method for method in methods if method.kind == "gift")
     # PokeAPI says "gift"; that it is one of three starters from Birch is Emerald's own business.
     assert gift.gift_kind is GiftKind.STARTER
     assert gift.npc == "Professor Birch"

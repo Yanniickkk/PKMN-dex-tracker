@@ -170,7 +170,7 @@ else
             @if (_trail is { CanGoBack: true })
             {
                 @* Only while drilled in. One entry needs no trail to explain itself. *@
-                <nav class="breadcrumb" aria-label="Evolution chain">
+                <nav class="breadcrumb" aria-label="What this came from">
                     <button type="button" class="link-button" @onclick="Back">Back</button>
 
                     <ol>
@@ -297,7 +297,31 @@ else
                                     <div class="method-head">
                                         <MethodIcon Method="method" />
 
-                                        @if (PreviousStageOf(method) is { } previous)
+                                        @if (method is BreedingAcquisition breeding)
+                                        {
+                                            @* A line of its own rather than one button: every parent
+                                               works, so every parent is somewhere to go. The words
+                                               sit in their own elements because Blazor drops
+                                               whitespace-only nodes between them. *@
+                                            <span class="method-title method-parents">
+                                                <span>Breed</span>
+
+                                                @for (var index = 0; index < breeding.Parents.Count; index++)
+                                                {
+                                                    var parent = breeding.Parents[index];
+
+                                                    @if (index > 0)
+                                                    {
+                                                        <span class="muted">or</span>
+                                                    }
+
+                                                    <button type="button" class="link-button"
+                                                            title="Show @Dataset.Reference.NameOf(parent)"
+                                                            @onclick="() => DrillTo(parent)">@Dataset.Reference.NameOf(parent)</button>
+                                                }
+                                            </span>
+                                        }
+                                        else if (PreviousStageOf(method) is { } previous)
                                         {
                                             <button type="button" class="link-button method-title"
                                                     title="Show @Dataset.Reference.NameOf(previous)"
@@ -464,9 +488,22 @@ else
 
     /// <summary>
     /// Sprites are per species. A form shows its base species' sprite until the pipeline has
-    /// form sprites, which is Phase 2 step 6.
+    /// form sprites.
     /// </summary>
-    private static string SpriteFor(DexLine line) => $"sprites/{line.Target.Species.Value}.png";
+    /// <remarks>
+    /// Drawn in the main game's own style: an Emerald collection shows the 64x64 battle sprites
+    /// an Emerald player saw, not today's artwork. The linked games do not get a say — the grid
+    /// is one dex and one look, and the main game is whose dex it is.
+    /// </remarks>
+    private string SpriteFor(DexLine line) =>
+        Dataset.SpritePath(line.Target.Species, MainGameSpriteSet);
+
+    /// <summary>
+    /// The sprite set of the game this collection is built around, or null before one is loaded
+    /// and for a game that has none of its own.
+    /// </summary>
+    private string? MainGameSpriteSet =>
+        _collection is null ? null : Dataset.Reference.FindGame(_collection.MainGame)?.SpriteSet;
 
     /// <summary>
     /// Opens the detail for one entry, caught or not. An entry you have not found yet is
@@ -484,9 +521,13 @@ else
     }
 
     /// <summary>
-    /// What an evolution comes from, when the popup can show it. Only evolutions lead anywhere;
-    /// a wild slot or a gift is the end of the line.
+    /// What an evolution comes from, when the popup can show it.
     /// </summary>
+    /// <remarks>
+    /// One target, because an evolution has one earlier stage. Breeding leads somewhere too, but
+    /// to any of several parents, so its links are built where they are drawn. A wild slot or a
+    /// gift is the end of the line.
+    /// </remarks>
     private DexTarget? PreviousStageOf(AcquisitionMethod method) =>
         method is EvolutionAcquisition evolution
         && Dataset.Reference.FindEvolutionRule(evolution.Rule) is { } rule
@@ -694,7 +735,13 @@ else
         ? "No recorded way to get this in your games."
         : $"The dataset has no encounter data for {GameName(_collection!.MainGame)} yet, so there is nothing to list here.";
 
-    /// <summary>The line that tells two methods in the same section apart at a glance.</summary>
+    /// <summary>
+    /// The line that tells two methods in the same section apart at a glance.
+    /// </summary>
+    /// <remarks>
+    /// Breeding is not here. Its line names several parents and each of them is a link, so it is
+    /// built in the markup instead of as one string that would have to be taken apart again.
+    /// </remarks>
     private string Summary(AcquisitionMethod method) => method switch
     {
         GiftAcquisition gift => AcquisitionNames.Of(gift.GiftKind),
@@ -749,6 +796,12 @@ else
                     : null));
                 break;
 
+            case BreedingAcquisition breeding:
+                // No parents here: the title already names them, and there they are links.
+                fields.Add(("Where", breeding.Location));
+                fields.Add(("First", breeding.Requirement));
+                break;
+
             case TradeAcquisition trade:
                 fields.Add(("Where", trade.Location));
                 fields.Add(("With", trade.Npc));
@@ -768,6 +821,7 @@ else
     }
 
     private string SpeciesName(SpeciesId species) => Dataset.Reference.NameOf(DexTarget.ForSpecies(species));
+
 
     /// <summary>
     /// How to get one entry from the game it was caught in into the main game.

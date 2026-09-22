@@ -12,10 +12,10 @@ public sealed record AcquisitionSection(AcquisitionKind Kind, IReadOnlyList<Acqu
 /// </summary>
 /// <remarks>
 /// The order is fixed rather than sorted by how many there are or where they come from: gift,
-/// wild, evolution, trade. It runs from the most definite way to the least — a starter you are
-/// handed cannot be missed, a wild slot is a chance, an evolution needs something else first,
-/// and a trade needs something to trade away. A player reading top to bottom meets the surest
-/// option first.
+/// wild, evolution, breeding, trade. It runs from the most definite way to the least — a starter
+/// you are handed cannot be missed, a wild slot is a chance, an evolution needs something else
+/// first, breeding needs that and a long walk on top, and a trade needs something you are willing
+/// to give away. A player reading top to bottom meets the surest option first.
 /// </remarks>
 public static class AcquisitionSections
 {
@@ -83,6 +83,7 @@ public static class AcquisitionNames
         AcquisitionKind.Gift => "Gifts and statics",
         AcquisitionKind.Wild => "In the wild",
         AcquisitionKind.Evolution => "By evolving",
+        AcquisitionKind.Breeding => "From the day care",
         AcquisitionKind.Trade => "In-game trades",
         _ => kind.ToString(),
     };

@@ -143,6 +143,26 @@ public class PipelineOutputContractTests
 
         var trade = Assert.IsType<TradeAcquisition>(platinum.AcquisitionMethods[3]);
         Assert.Equal(DexTarget.ForSpecies(new SpeciesId("buizel")), trade.Wants);
+
+        // [4] is a second wild slot, there so that one of Pichu's parents can be got and the
+        // breeding dead-end check has nothing to say about the sample.
+        var breeding = Assert.IsType<BreedingAcquisition>(platinum.AcquisitionMethods[5]);
+        Assert.Equal(
+            [DexTarget.ForSpecies(new SpeciesId("pikachu")), DexTarget.ForSpecies(new SpeciesId("raichu"))],
+            breeding.Parents);
+        Assert.Equal("Solaceon Town", breeding.Location);
+        Assert.StartsWith("A parent holding a Light Ball", breeding.Requirement, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void A_game_says_which_battle_sprites_it_shows()
+    {
+        var emerald = Read<GameData>("games", "emerald.json");
+        var platinum = Read<GameData>("games", "platinum.json");
+
+        Assert.Equal("generation-iii/emerald", emerald.Game.SpriteSet);
+        // Absent rather than empty: a game with none of its own falls back to the shared set.
+        Assert.Null(platinum.Game.SpriteSet);
     }
 
     [Fact]

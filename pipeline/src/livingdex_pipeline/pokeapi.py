@@ -67,6 +67,15 @@ class PokeApiClient:
 
         return default["pokemon"]["name"] if default else species
 
+    def evolution_chain(self, species: str, *, refresh: bool = False) -> str:
+        """The id of the chain a species belongs to.
+
+        Chains are shared by everything in them, so this is also how a list of species becomes
+        the much shorter list of chains worth fetching.
+        """
+        raw = self.resource(f"pokemon-species/{species}", refresh=refresh)
+        return self._evolution_chain_id(raw)
+
     def encounters(self, pokemon: str, *, refresh: bool = False) -> list[Any]:
         """Where one Pokemon is met in the wild, per version, as PokeAPI records it.
 
@@ -75,11 +84,18 @@ class PokeApiClient:
         """
         return self.resource(f"pokemon/{pokemon}/encounters", refresh=refresh)
 
-    def sprite_url(self, species_id: int) -> str:
-        """The front-facing sprite for a species, by National Dex number."""
+    def sprite_url(self, species_id: int, sprite_set: str | None = None) -> str:
+        """The front-facing sprite for a species, by National Dex number.
+
+        Without a set this is the current artwork, which is what the app falls back to. With
+        one it is that set's own sprite - ``generation-iii/emerald`` gives the 64x64 battle
+        sprite an Emerald player actually saw, which is the point of Phase 2 step 6.
+        """
+        where = f"versions/{sprite_set}/" if sprite_set else ""
+
         return (
             "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
-            f"{species_id}.png"
+            f"{where}{species_id}.png"
         )
 
     def _default_variety(self, raw: dict[str, Any], *, refresh: bool) -> dict[str, Any]:

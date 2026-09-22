@@ -63,4 +63,15 @@ public sealed record Game(
     /// </summary>
     [JsonIgnore]
     public bool HasNationalDex => NationalDexThrough is not null;
+
+    /// <summary>
+    /// Which battle sprites this game shows, as the directory they were shipped in — for example
+    /// <c>generation-iii/emerald</c>. Null for a game with none of its own, which falls back to
+    /// the shared set.
+    /// </summary>
+    /// <remarks>
+    /// Not a constructor parameter: it arrived in Phase 2 step 6, and every game built before
+    /// then is still a valid game without one.
+    /// </remarks>
+    public string? SpriteSet { get; init; }
 }

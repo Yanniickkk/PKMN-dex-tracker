@@ -21,7 +21,9 @@ dataset/
   games/
     platinum.json        one file per game: the game, its dex, its acquisition methods
     emerald.json
-  sprites/               battle sprites
+  sprites/               battle sprites, one per species: the shared set
+    generation-iii/
+      emerald/           the same species as Emerald drew them, where the app prefers them
 ```
 
 One file per game plus shared tables. Adding Emerald means adding `games/emerald.json` and
@@ -55,7 +57,8 @@ which.
     "region": "Sinnoh",
     "release": "cartridge",
     "nationalDexThrough": 493,
-    "dexSource": "nationalDex"
+    "dexSource": "nationalDex",
+    "spriteSet": "generation-iv/platinum"
   },
   "dexEntries": [
     { "game": "platinum", "target": { "species": "chimchar" }, "number": 4 },
@@ -97,13 +100,39 @@ which.
       "target": { "species": "monferno" },
       "rule": "chimchar-to-monferno",
       "source": { "source": "bulbapedia", "retrievedOn": "2026-09-21" }
+    },
+    {
+      "kind": "breeding",
+      "game": "platinum",
+      "target": { "species": "pichu" },
+      "parents": [{ "species": "pikachu" }, { "species": "raichu" }],
+      "location": "Solaceon Town",
+      "source": { "source": "bulbapedia", "retrievedOn": "2026-09-21" }
+    },
+    {
+      "kind": "trade",
+      "game": "platinum",
+      "target": { "species": "chatot" },
+      "location": "Eterna City",
+      "wants": { "species": "buizel" },
+      "source": { "source": "bulbapedia", "retrievedOn": "2026-09-21" }
     }
   ]
 }
 ```
 
+A `breeding` method lists every parent that produces the baby, because any one of them left at
+the day care is enough. The baby Pokemon of a generation have no other source: nothing meets a
+Pichu in the grass, and nothing evolves into one.
+
 A form entry names both, so nothing has to be looked up:
 `"target": { "species": "vulpix", "form": "vulpix-alola" }`.
+
+`spriteSet` is the directory under `sprites/` holding this game's own battle sprites, so an
+Emerald collection is drawn in the 64x64 sprites an Emerald player saw rather than in today's
+artwork. It is absent for a game that has none of its own. A set only reaches as far as its
+generation drew — Emerald's stops at 386 — and anything past that falls back to the shared set
+one directory up.
 
 ## Shared tables
 
@@ -122,6 +151,10 @@ what makes the Phase 0.7 check "no evolution dead ends" possible.
   }
 ]
 ```
+
+An id is `<from>-to-<to>`. When a later generation changed how something evolves, both ways are
+in the table and each id names the version group it started in — `feebas-to-milotic-ruby-sapphire`
+beside `feebas-to-milotic-black-white` — so a game can point at the one it can actually use.
 
 `transfers.json` holds the graph. Edges are data so that adding a game never means changing the
 engine. `filter` says which species an edge will carry.

@@ -185,10 +185,70 @@ public class SchemaRoundTripTests
     }
 
     [Fact]
-    public void Sections_are_ordered_gift_wild_evolution_trade()
+    public void A_sprite_set_survives_a_round_trip_and_an_absent_one_stays_absent()
+    {
+        var withSet = new Game(
+            new GameId("emerald"),
+            "Pokemon Emerald Version",
+            "Emerald",
+            3,
+            "Hoenn",
+            GameRelease.Cartridge,
+            386,
+            DexSource.NationalDex,
+            null)
+        {
+            SpriteSet = "generation-iii/emerald",
+        };
+
+        Assert.Equal("generation-iii/emerald", RoundTrip(withSet).SpriteSet);
+
+        var withoutSet = withSet with { SpriteSet = null };
+
+        Assert.Null(RoundTrip(withoutSet).SpriteSet);
+        Assert.DoesNotContain("spriteSet", Serialize(withoutSet).GetRawText(), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Breeding_keeps_its_parents_across_a_round_trip()
+    {
+        // Its own test rather than a fifth entry in the list above: a record holding a
+        // collection compares that collection by reference, so == would fail on a value that
+        // crossed the wire intact.
+        var method = new BreedingAcquisition
+        {
+            Game = new GameId("platinum"),
+            Target = DexTarget.ForSpecies(new SpeciesId("pichu")),
+            Source = Citation,
+            Parents =
+            [
+                DexTarget.ForSpecies(new SpeciesId("pikachu")),
+                DexTarget.ForSpecies(new SpeciesId("raichu")),
+            ],
+            Location = "Solaceon Town",
+            Requirement = "A parent holding a Light Ball",
+        };
+
+        var restored = Assert.IsType<BreedingAcquisition>(RoundTrip<AcquisitionMethod>(method));
+
+        Assert.Equal(method.Target, restored.Target);
+        Assert.Equal(method.Parents, restored.Parents);
+        Assert.Equal("Solaceon Town", restored.Location);
+        Assert.Equal("A parent holding a Light Ball", restored.Requirement);
+        Assert.Equal(AcquisitionKind.Breeding, restored.Kind);
+    }
+
+    [Fact]
+    public void Sections_are_ordered_gift_wild_evolution_breeding_trade()
     {
         Assert.Equal(
-            [AcquisitionKind.Gift, AcquisitionKind.Wild, AcquisitionKind.Evolution, AcquisitionKind.Trade],
+            [
+                AcquisitionKind.Gift,
+                AcquisitionKind.Wild,
+                AcquisitionKind.Evolution,
+                AcquisitionKind.Breeding,
+                AcquisitionKind.Trade,
+            ],
             Enum.GetValues<AcquisitionKind>().OrderBy(kind => (int)kind));
     }
 

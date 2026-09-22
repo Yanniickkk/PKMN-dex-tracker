@@ -12,6 +12,7 @@ from pathlib import Path
 from livingdex_pipeline.emit import DatasetWriter, stamp_for
 from livingdex_pipeline.models import (
     AllSpeciesFilter,
+    BreedingAcquisition,
     DexEntry,
     DexSource,
     DexTarget,
@@ -200,6 +201,25 @@ def platinum() -> GameData:
                 wants=DexTarget(species="buizel"),
                 source=CITATION,
             ),
+            # One of Pichu's two parents, so the sample exercises "any one parent is enough"
+            # rather than tripping the breeding dead-end check on its own data.
+            WildAcquisition(
+                game="platinum",
+                target=DexTarget(species="pikachu"),
+                location="Trophy Garden",
+                method=EncounterMethod.WALK,
+                levels=LevelRange(minimum=16, maximum=18),
+                source=CITATION,
+            ),
+            # Two parents and a requirement, so the list and the optional field are both pinned.
+            BreedingAcquisition(
+                game="platinum",
+                target=DexTarget(species="pichu"),
+                parents=[DexTarget(species="pikachu"), DexTarget(species="raichu")],
+                location="Solaceon Town",
+                requirement="A parent holding a Light Ball hatches a Pichu that knows Volt Tackle",
+                source=CITATION,
+            ),
         ],
     )
 
@@ -249,7 +269,11 @@ def sword() -> GameData:
 
 
 def emerald() -> GameData:
-    """A source game for the Pal Park edge. Its own dex is not the point of the sample."""
+    """A source game for the Pal Park edge. Its own dex is not the point of the sample.
+
+    It is the one game here with a sprite set, so the field is pinned on both sides of the wire.
+    Nothing builds it, so nothing tries to fetch the set.
+    """
     return GameData(
         game=Game(
             id="emerald",
@@ -260,6 +284,7 @@ def emerald() -> GameData:
             release=GameRelease.CARTRIDGE,
             national_dex_through=386,
             dex_source=DexSource.NATIONAL_DEX,
+            sprite_set="generation-iii/emerald",
         )
     )
 

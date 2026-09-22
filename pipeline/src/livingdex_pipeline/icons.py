@@ -25,8 +25,8 @@ SPRITES = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/item
 
 #: How a Pokemon was obtained, and the item whose sprite says it best.
 #:
-#: The keys are this project's own: the four acquisition kinds, the encounter methods within
-#: wild, and the kinds of gift. The app asks for them by name.
+#: The keys are this project's own: the acquisition kinds, the encounter methods within wild,
+#: and the kinds of gift. The app asks for them by name.
 METHOD_ICONS: dict[str, str] = {
     # Wild. Walking has no item of its own, so the ball you throw stands for a plain encounter.
     "walk": "poke-ball",
@@ -48,6 +48,10 @@ METHOD_ICONS: dict[str, str] = {
     "static": "ultra-ball",
     # Evolution. A Moon Stone is the oldest picture of one thing becoming another.
     "evolution": "moon-stone",
+    # Breeding. The same egg as the gift kind above, on purpose: what the day care hands over
+    # is an egg, and drawing it as something else to keep the two apart would be a worse
+    # picture for the sake of a distinction the section headings already make.
+    "breeding": "lucky-egg",
     # There is no trading item with a sprite: Link Cable and Linking Cord are not in the set.
     # The app draws that one itself rather than borrowing a picture that means something else.
 }

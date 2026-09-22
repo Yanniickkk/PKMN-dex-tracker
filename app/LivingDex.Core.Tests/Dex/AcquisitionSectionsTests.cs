@@ -45,6 +45,15 @@ public class AcquisitionSectionsTests
         Rule = new EvolutionRuleId("chimchar-monferno"),
     };
 
+    private static BreedingAcquisition Breeding() => new()
+    {
+        Game = Platinum,
+        Target = DexTarget.ForSpecies(new SpeciesId("pichu")),
+        Parents = [DexTarget.ForSpecies(new SpeciesId("pikachu"))],
+        Location = "Solaceon Town",
+        Source = Citation,
+    };
+
     private static TradeAcquisition Trade() => new()
     {
         Game = Platinum,
@@ -61,13 +70,19 @@ public class AcquisitionSectionsTests
     }
 
     [Fact]
-    public void The_four_sections_come_back_in_the_fixed_order()
+    public void The_sections_come_back_in_the_fixed_order()
     {
         // Handed in backwards on purpose: the order is the section's, not the caller's.
-        var sections = AcquisitionSections.Of([Trade(), Evolution(), Wild(), Gift()]);
+        var sections = AcquisitionSections.Of([Trade(), Breeding(), Evolution(), Wild(), Gift()]);
 
         Assert.Equal(
-            [AcquisitionKind.Gift, AcquisitionKind.Wild, AcquisitionKind.Evolution, AcquisitionKind.Trade],
+            [
+                AcquisitionKind.Gift,
+                AcquisitionKind.Wild,
+                AcquisitionKind.Evolution,
+                AcquisitionKind.Breeding,
+                AcquisitionKind.Trade,
+            ],
             sections.Select(section => section.Kind));
     }
 

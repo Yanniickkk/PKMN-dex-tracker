@@ -6,6 +6,7 @@ from datetime import date
 
 from livingdex_pipeline.models import (
     AllSpeciesFilter,
+    BreedingAcquisition,
     DatasetIndex,
     DatasetStamp,
     DexEntry,
@@ -258,6 +259,130 @@ def test_pointing_at_a_rule_that_does_not_exist_is_an_error() -> None:
     report = validate(data)
 
     assert "no-such-rule" in " ".join(messages(report, "no-evolution-dead-ends"))
+
+
+def test_a_stated_reason_is_an_answer_rather_than_a_dead_end() -> None:
+    data = dataset(
+        games=[
+            game(
+                "emerald",
+                entries=[
+                    # Checked, and it is not in this game. The transfer graph is how it arrives.
+                    entry(
+                        "emerald",
+                        "meditite",
+                        1,
+                        reason="Ruby and Sapphire only in Generation 3; trade one in",
+                    ),
+                    entry("emerald", "medicham", 2),
+                ],
+                methods=[
+                    EvolutionAcquisition(
+                        game="emerald",
+                        target=DexTarget(species="medicham"),
+                        rule="meditite-to-medicham",
+                        source=CITATION,
+                    )
+                ],
+            )
+        ],
+        rules=[
+            EvolutionRule(
+                id="meditite-to-medicham",
+                **{"from": DexTarget(species="meditite")},
+                to=DexTarget(species="medicham"),
+                trigger=EvolutionTrigger.LEVEL_UP,
+            )
+        ],
+    )
+
+    assert validate(data).ok
+
+
+def test_a_previous_stage_the_dex_says_nothing_about_is_still_a_dead_end() -> None:
+    data = dataset(
+        games=[
+            game(
+                "emerald",
+                # Medicham is in the dex, Meditite is not mentioned at all: nobody looked.
+                entries=[entry("emerald", "medicham", 2)],
+                methods=[
+                    EvolutionAcquisition(
+                        game="emerald",
+                        target=DexTarget(species="medicham"),
+                        rule="meditite-to-medicham",
+                        source=CITATION,
+                    )
+                ],
+            )
+        ],
+        rules=[
+            EvolutionRule(
+                id="meditite-to-medicham",
+                **{"from": DexTarget(species="meditite")},
+                to=DexTarget(species="medicham"),
+                trigger=EvolutionTrigger.LEVEL_UP,
+            )
+        ],
+    )
+
+    report = validate(data)
+
+    assert not report.ok
+    assert "meditite" in messages(report, "no-evolution-dead-ends")[0]
+
+
+# --- no breeding dead ends --------------------------------------------------------------------
+
+
+def test_a_baby_whose_parents_cannot_be_had_is_an_error() -> None:
+    data = dataset(
+        games=[
+            game(
+                "platinum",
+                entries=[entry("platinum", "pichu", 1)],
+                methods=[
+                    BreedingAcquisition(
+                        game="platinum",
+                        target=DexTarget(species="pichu"),
+                        parents=[DexTarget(species="pikachu"), DexTarget(species="raichu")],
+                        location="Solaceon Town",
+                        source=CITATION,
+                    )
+                ],
+            )
+        ]
+    )
+
+    report = validate(data)
+
+    assert not report.ok
+    assert "pikachu or raichu" in messages(report, "no-breeding-dead-ends")[0]
+
+
+def test_one_parent_being_obtainable_is_enough() -> None:
+    data = dataset(
+        games=[
+            game(
+                "platinum",
+                entries=[entry("platinum", "pichu", 1)],
+                methods=[
+                    # Raichu is not here, and does not have to be: one parent at the day care
+                    # lays the egg.
+                    gift("platinum", "pikachu"),
+                    BreedingAcquisition(
+                        game="platinum",
+                        target=DexTarget(species="pichu"),
+                        parents=[DexTarget(species="pikachu"), DexTarget(species="raichu")],
+                        location="Solaceon Town",
+                        source=CITATION,
+                    ),
+                ],
+            )
+        ]
+    )
+
+    assert validate(data).ok
 
 
 # --- forms referenced exist -------------------------------------------------------------------

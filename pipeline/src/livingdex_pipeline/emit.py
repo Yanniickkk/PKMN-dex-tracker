@@ -133,6 +133,20 @@ def stamp_for(version: str, built_on: date | None = None) -> DatasetStamp:
     return DatasetStamp(version=version, built_on=built_on or date.today())
 
 
+def read_species(root: Path) -> list[Species]:
+    """The species table as it stands on disk.
+
+    A single-game build does not rebuild the shared tables, and it still has to turn National
+    Dex numbers into file names to fetch that game's sprites. Reading the table back is how it
+    gets the mapping without re-fetching a thousand species.
+    """
+    path = root / SPECIES_FILE
+    if not path.exists():
+        return []
+
+    return [Species.model_validate(one) for one in json.loads(path.read_text(encoding="utf-8"))]
+
+
 def read_dataset(root: Path) -> Dataset:
     """Read back what was written.
 

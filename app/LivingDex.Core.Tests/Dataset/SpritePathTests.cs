@@ -1,0 +1,58 @@
+using LivingDex.Core.Dataset;
+using LivingDex.Core.Reference;
+
+namespace LivingDex.Core.Tests.Dataset;
+
+/// <summary>
+/// Which picture a collection draws: its game's own battle sprites where they exist, and the
+/// shared set where they do not.
+/// </summary>
+public sealed class SpritePathTests
+{
+    private static LoadedDataset Shipping(params string[] sprites) => new(
+        new DatasetStamp("0.1.0", new DateOnly(2026, 9, 22)),
+        new ReferenceData([], [], [], []),
+        new Dictionary<GameId, string>(),
+        new HashSet<string>(StringComparer.Ordinal),
+        sprites.ToHashSet(StringComparer.Ordinal));
+
+    private static SpeciesId Pikachu => new("pikachu");
+
+    [Fact]
+    public void A_game_with_no_set_of_its_own_draws_the_shared_sprite()
+    {
+        var dataset = Shipping("pikachu");
+
+        Assert.Equal("sprites/pikachu.png", dataset.SpritePath(Pikachu, null));
+    }
+
+    [Fact]
+    public void A_game_with_a_set_draws_that_generation_s_sprite()
+    {
+        var dataset = Shipping("pikachu", "generation-iii/emerald/pikachu");
+
+        Assert.Equal(
+            "sprites/generation-iii/emerald/pikachu.png",
+            dataset.SpritePath(Pikachu, "generation-iii/emerald"));
+    }
+
+    [Fact]
+    public void A_species_the_set_never_drew_falls_back_to_the_shared_sprite()
+    {
+        // Turtwig is Generation IV. An Emerald collection can still hold one, transferred in,
+        // and a blank tile would be a worse answer than today's artwork.
+        var dataset = Shipping("turtwig", "generation-iii/emerald/pikachu");
+
+        Assert.Equal(
+            "sprites/turtwig.png",
+            dataset.SpritePath(new SpeciesId("turtwig"), "generation-iii/emerald"));
+    }
+
+    [Fact]
+    public void A_build_that_shipped_no_sprites_still_names_a_path()
+    {
+        // Nothing to draw, but the caller gets the path it would have been: the missing file is
+        // what every-species-has-a-sprite already warns about, not something to handle twice.
+        Assert.Equal("sprites/pikachu.png", Shipping().SpritePath(Pikachu, "generation-iii/emerald"));
+    }
+}

@@ -32,6 +32,20 @@ def _obtainable_in(dataset: Dataset, game_id: str) -> set[tuple[str, str | None]
     return {_target_key(method.target) for method in game.acquisition_methods} if game else set()
 
 
+def _explained_in(game) -> set[tuple[str, str | None]]:
+    """Every entry this game's dex says cannot be filled here, and why.
+
+    Not the same as "no data". Someone looked at Meditite, found that Emerald does not have it,
+    and wrote down that it comes from a Ruby or Sapphire cartridge. That is an answer, and the
+    rules below treat it as one.
+    """
+    return {
+        _target_key(entry.target)
+        for entry in game.dex_entries
+        if entry.unobtainable_reason is not None
+    }
+
+
 class EveryEntryHasAMethod:
     """A dex entry nothing can produce is either a hole in the data or a stated fact.
 
@@ -80,7 +94,15 @@ class EveryEntryHasAMethod:
 
 
 class NoEvolutionDeadEnds:
-    """Evolving into something is only an answer if the thing you evolve is itself gettable."""
+    """Evolving into something is only an answer if the thing you evolve is itself gettable.
+
+    "Gettable" is the same word ``every-entry-has-a-method`` uses, and it means the same thing
+    here: obtainable in some game, *or* marked unobtainable with a reason. Emerald can evolve a
+    Meditite into a Medicham and cannot catch a Meditite, and its dex says so in as many words -
+    "Ruby and Sapphire only in Generation 3; trade one in". Calling that a dead end would report
+    a fact someone checked as though nobody had looked, which is the one distinction this file
+    exists to keep.
+    """
 
     name = "no-evolution-dead-ends"
 
@@ -89,6 +111,8 @@ class NoEvolutionDeadEnds:
         obtainable = _obtainable_anywhere(dataset)
 
         for game in dataset.games:
+            explained = _explained_in(game)
+
             for method in game.acquisition_methods:
                 if method.kind != "evolution":
                     continue
@@ -105,16 +129,55 @@ class NoEvolutionDeadEnds:
                     )
                     continue
 
-                if _target_key(rule.from_) not in obtainable:
+                previous = _target_key(rule.from_)
+                if previous not in obtainable and previous not in explained:
                     yield Finding(
                         rule=self.name,
                         severity=Severity.ERROR,
                         game=game.game.id,
                         message=(
                             f"{method.target} is only obtainable by evolving {rule.from_}, "
-                            "which nothing can produce"
+                            "which nothing can produce and nothing explains"
                         ),
                     )
+
+
+class NoBreedingDeadEnds:
+    """Breeding is only an answer if one of the parents can be had.
+
+    The same lie as an evolution dead end, in a different shape: "hatch a Pichu" means nothing
+    to someone with no way to get a Pikachu. Any one parent is enough, because any one of them
+    left at the day care produces the egg.
+    """
+
+    name = "no-breeding-dead-ends"
+
+    def check(self, dataset: Dataset) -> Iterator[Finding]:
+        obtainable = _obtainable_anywhere(dataset)
+
+        for game in dataset.games:
+            explained = _explained_in(game)
+
+            for method in game.acquisition_methods:
+                if method.kind != "breeding":
+                    continue
+
+                if any(
+                    _target_key(parent) in obtainable or _target_key(parent) in explained
+                    for parent in method.parents
+                ):
+                    continue
+
+                parents = " or ".join(str(parent) for parent in method.parents)
+                yield Finding(
+                    rule=self.name,
+                    severity=Severity.ERROR,
+                    game=game.game.id,
+                    message=(
+                        f"{method.target} is only obtainable by breeding {parents}, "
+                        "which nothing can produce and nothing explains"
+                    ),
+                )
 
 
 class FormsReferencedExist:
@@ -291,10 +354,15 @@ def coverage_for(dataset: Dataset) -> list[GameCoverage]:
 
 
 def all_rules() -> list:
-    """Every check, in the order the spec lists them."""
+    """Every check, in the order the spec lists them.
+
+    ``no-breeding-dead-ends`` is not in that list. It arrived with the breeding kind in Phase 2
+    and guards the same lie its evolution twin does, which is reason enough for it to run.
+    """
     return [
         EveryEntryHasAMethod(),
         NoEvolutionDeadEnds(),
+        NoBreedingDeadEnds(),
         FormsReferencedExist(),
         TransferEdgesConnectKnownGames(),
         EverySpeciesHasASprite(),

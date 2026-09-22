@@ -3,24 +3,30 @@ using System.Text.Json.Serialization;
 namespace LivingDex.Core.Reference;
 
 /// <summary>
-/// The four sections of the detail popup, in the order they are shown.
+/// The sections of the detail popup, in the order they are shown.
 /// </summary>
+/// <remarks>
+/// The numbers are display order and nothing else: they are never serialised, because the JSON
+/// discriminator already carries the kind. Inserting one in the middle is therefore free.
+/// </remarks>
 public enum AcquisitionKind
 {
     Gift = 0,
     Wild = 1,
     Evolution = 2,
-    Trade = 3,
+    Breeding = 3,
+    Trade = 4,
 }
 
 /// <summary>
-/// One way to get one target in one game. The four kinds carry different fields, so they are
+/// One way to get one target in one game. The kinds carry different fields, so they are
 /// separate types rather than one record with mostly-null columns.
 /// </summary>
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "kind")]
 [JsonDerivedType(typeof(GiftAcquisition), "gift")]
 [JsonDerivedType(typeof(WildAcquisition), "wild")]
 [JsonDerivedType(typeof(EvolutionAcquisition), "evolution")]
+[JsonDerivedType(typeof(BreedingAcquisition), "breeding")]
 [JsonDerivedType(typeof(TradeAcquisition), "trade")]
 public abstract record AcquisitionMethod
 {
@@ -136,6 +142,28 @@ public sealed record EvolutionAcquisition : AcquisitionMethod
 
     /// <summary>The rule that applies. Its To side is this method target.</summary>
     public required EvolutionRuleId Rule { get; init; }
+}
+
+/// <summary>
+/// Hatched from an egg the day care produces. The baby Pokemon of a generation have no other
+/// source: nothing meets a Pichu in the grass, and nothing evolves into one.
+/// </summary>
+public sealed record BreedingAcquisition : AcquisitionMethod
+{
+    [JsonIgnore]
+    public override AcquisitionKind Kind => AcquisitionKind.Breeding;
+
+    /// <summary>
+    /// Any one of these, left at the day care, produces the target. A Pichu hatches from a
+    /// Pikachu or from a Raichu, and naming only the first would hide a way that works.
+    /// </summary>
+    public required IReadOnlyList<DexTarget> Parents { get; init; }
+
+    /// <summary>Where the day care is, for example Route 117.</summary>
+    public required string Location { get; init; }
+
+    /// <summary>What else has to be true, for example an incense a parent has to hold.</summary>
+    public string? Requirement { get; init; }
 }
 
 /// <summary>An in-game trade with an NPC. Player-to-player trading is a transfer, not this.</summary>

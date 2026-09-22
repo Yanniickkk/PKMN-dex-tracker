@@ -1,1 +1,9182 @@
-[]
+[
+  {
+    "id": "abra-to-kadabra",
+    "from": {
+      "species": "abra"
+    },
+    "to": {
+      "species": "kadabra"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "aipom-to-ambipom",
+    "from": {
+      "species": "aipom"
+    },
+    "to": {
+      "species": "ambipom"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Double Hit"
+      }
+    ]
+  },
+  {
+    "id": "amaura-to-aurorus",
+    "from": {
+      "species": "amaura"
+    },
+    "to": {
+      "species": "aurorus"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 39
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      }
+    ]
+  },
+  {
+    "id": "anorith-to-armaldo",
+    "from": {
+      "species": "anorith"
+    },
+    "to": {
+      "species": "armaldo"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "applin-to-appletun",
+    "from": {
+      "species": "applin"
+    },
+    "to": {
+      "species": "appletun"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Sweet Apple"
+      }
+    ]
+  },
+  {
+    "id": "applin-to-dipplin",
+    "from": {
+      "species": "applin"
+    },
+    "to": {
+      "species": "dipplin"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Syrupy Apple"
+      }
+    ]
+  },
+  {
+    "id": "applin-to-flapple",
+    "from": {
+      "species": "applin"
+    },
+    "to": {
+      "species": "flapple"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Tart Apple"
+      }
+    ]
+  },
+  {
+    "id": "archen-to-archeops",
+    "from": {
+      "species": "archen"
+    },
+    "to": {
+      "species": "archeops"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      }
+    ]
+  },
+  {
+    "id": "arctibax-to-baxcalibur",
+    "from": {
+      "species": "arctibax"
+    },
+    "to": {
+      "species": "baxcalibur"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 54
+      }
+    ]
+  },
+  {
+    "id": "aron-to-lairon",
+    "from": {
+      "species": "aron"
+    },
+    "to": {
+      "species": "lairon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "arrokuda-to-barraskewda",
+    "from": {
+      "species": "arrokuda"
+    },
+    "to": {
+      "species": "barraskewda"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 26
+      }
+    ]
+  },
+  {
+    "id": "axew-to-fraxure",
+    "from": {
+      "species": "axew"
+    },
+    "to": {
+      "species": "fraxure"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": "azurill-to-marill",
+    "from": {
+      "species": "azurill"
+    },
+    "to": {
+      "species": "marill"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      }
+    ]
+  },
+  {
+    "id": "bagon-to-shelgon",
+    "from": {
+      "species": "bagon"
+    },
+    "to": {
+      "species": "shelgon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "baltoy-to-claydol",
+    "from": {
+      "species": "baltoy"
+    },
+    "to": {
+      "species": "claydol"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "barboach-to-whiscash",
+    "from": {
+      "species": "barboach"
+    },
+    "to": {
+      "species": "whiscash"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "basculin-to-basculegion-legends-arceus",
+    "from": {
+      "species": "basculin"
+    },
+    "to": {
+      "species": "basculegion"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after taking enough recoil damage"
+      },
+      {
+        "condition": "gender",
+        "gender": "male"
+      }
+    ]
+  },
+  {
+    "id": "basculin-to-basculegion-legends-arceus-2",
+    "from": {
+      "species": "basculin"
+    },
+    "to": {
+      "species": "basculegion"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after taking enough recoil damage"
+      },
+      {
+        "condition": "gender",
+        "gender": "female"
+      }
+    ]
+  },
+  {
+    "id": "bayleef-to-meganium",
+    "from": {
+      "species": "bayleef"
+    },
+    "to": {
+      "species": "meganium"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "beldum-to-metang",
+    "from": {
+      "species": "beldum"
+    },
+    "to": {
+      "species": "metang"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "bellsprout-to-weepinbell",
+    "from": {
+      "species": "bellsprout"
+    },
+    "to": {
+      "species": "weepinbell"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 21
+      }
+    ]
+  },
+  {
+    "id": "bergmite-to-avalugg-legends-arceus",
+    "from": {
+      "species": "bergmite"
+    },
+    "to": {
+      "species": "avalugg"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      },
+      {
+        "condition": "other",
+        "description": "in Hisui"
+      }
+    ]
+  },
+  {
+    "id": "bergmite-to-avalugg-x-y",
+    "from": {
+      "species": "bergmite"
+    },
+    "to": {
+      "species": "avalugg"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      }
+    ]
+  },
+  {
+    "id": "bidoof-to-bibarel",
+    "from": {
+      "species": "bidoof"
+    },
+    "to": {
+      "species": "bibarel"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "id": "binacle-to-barbaracle",
+    "from": {
+      "species": "binacle"
+    },
+    "to": {
+      "species": "barbaracle"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 39
+      }
+    ]
+  },
+  {
+    "id": "bisharp-to-kingambit",
+    "from": {
+      "species": "bisharp"
+    },
+    "to": {
+      "species": "kingambit"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "three defeated bisharp"
+      }
+    ]
+  },
+  {
+    "id": "blipbug-to-dottler",
+    "from": {
+      "species": "blipbug"
+    },
+    "to": {
+      "species": "dottler"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 10
+      }
+    ]
+  },
+  {
+    "id": "blitzle-to-zebstrika",
+    "from": {
+      "species": "blitzle"
+    },
+    "to": {
+      "species": "zebstrika"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 27
+      }
+    ]
+  },
+  {
+    "id": "boldore-to-gigalith",
+    "from": {
+      "species": "boldore"
+    },
+    "to": {
+      "species": "gigalith"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "bonsly-to-sudowoodo",
+    "from": {
+      "species": "bonsly"
+    },
+    "to": {
+      "species": "sudowoodo"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Mimic"
+      }
+    ]
+  },
+  {
+    "id": "bounsweet-to-steenee",
+    "from": {
+      "species": "bounsweet"
+    },
+    "to": {
+      "species": "steenee"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "braixen-to-delphox",
+    "from": {
+      "species": "braixen"
+    },
+    "to": {
+      "species": "delphox"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "bramblin-to-brambleghast",
+    "from": {
+      "species": "bramblin"
+    },
+    "to": {
+      "species": "brambleghast"
+    },
+    "trigger": "levelUp",
+    "conditions": []
+  },
+  {
+    "id": "brionne-to-primarina",
+    "from": {
+      "species": "brionne"
+    },
+    "to": {
+      "species": "primarina"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "bronzor-to-bronzong",
+    "from": {
+      "species": "bronzor"
+    },
+    "to": {
+      "species": "bronzong"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 33
+      }
+    ]
+  },
+  {
+    "id": "budew-to-roselia",
+    "from": {
+      "species": "budew"
+    },
+    "to": {
+      "species": "roselia"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "day"
+      }
+    ]
+  },
+  {
+    "id": "buizel-to-floatzel",
+    "from": {
+      "species": "buizel"
+    },
+    "to": {
+      "species": "floatzel"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 26
+      }
+    ]
+  },
+  {
+    "id": "bulbasaur-to-ivysaur",
+    "from": {
+      "species": "bulbasaur"
+    },
+    "to": {
+      "species": "ivysaur"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "buneary-to-lopunny",
+    "from": {
+      "species": "buneary"
+    },
+    "to": {
+      "species": "lopunny"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      }
+    ]
+  },
+  {
+    "id": "bunnelby-to-diggersby",
+    "from": {
+      "species": "bunnelby"
+    },
+    "to": {
+      "species": "diggersby"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "burmy-to-mothim",
+    "from": {
+      "species": "burmy"
+    },
+    "to": {
+      "species": "mothim"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      },
+      {
+        "condition": "gender",
+        "gender": "male"
+      }
+    ]
+  },
+  {
+    "id": "burmy-to-wormadam",
+    "from": {
+      "species": "burmy"
+    },
+    "to": {
+      "species": "wormadam"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      },
+      {
+        "condition": "gender",
+        "gender": "female"
+      }
+    ]
+  },
+  {
+    "id": "cacnea-to-cacturne",
+    "from": {
+      "species": "cacnea"
+    },
+    "to": {
+      "species": "cacturne"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "capsakid-to-scovillain",
+    "from": {
+      "species": "capsakid"
+    },
+    "to": {
+      "species": "scovillain"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Fire Stone"
+      }
+    ]
+  },
+  {
+    "id": "carkol-to-coalossal",
+    "from": {
+      "species": "carkol"
+    },
+    "to": {
+      "species": "coalossal"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "carvanha-to-sharpedo",
+    "from": {
+      "species": "carvanha"
+    },
+    "to": {
+      "species": "sharpedo"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "cascoon-to-dustox",
+    "from": {
+      "species": "cascoon"
+    },
+    "to": {
+      "species": "dustox"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 10
+      }
+    ]
+  },
+  {
+    "id": "caterpie-to-metapod",
+    "from": {
+      "species": "caterpie"
+    },
+    "to": {
+      "species": "metapod"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 7
+      }
+    ]
+  },
+  {
+    "id": "cetoddle-to-cetitan",
+    "from": {
+      "species": "cetoddle"
+    },
+    "to": {
+      "species": "cetitan"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Ice Stone"
+      }
+    ]
+  },
+  {
+    "id": "chansey-to-blissey",
+    "from": {
+      "species": "chansey"
+    },
+    "to": {
+      "species": "blissey"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      }
+    ]
+  },
+  {
+    "id": "charcadet-to-armarouge",
+    "from": {
+      "species": "charcadet"
+    },
+    "to": {
+      "species": "armarouge"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Auspicious Armor"
+      }
+    ]
+  },
+  {
+    "id": "charcadet-to-ceruledge",
+    "from": {
+      "species": "charcadet"
+    },
+    "to": {
+      "species": "ceruledge"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Malicious Armor"
+      }
+    ]
+  },
+  {
+    "id": "charjabug-to-vikavolt-sun-moon",
+    "from": {
+      "species": "charjabug"
+    },
+    "to": {
+      "species": "vikavolt"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Vast Poni Canyon"
+      }
+    ]
+  },
+  {
+    "id": "charjabug-to-vikavolt-sun-moon-2",
+    "from": {
+      "species": "charjabug"
+    },
+    "to": {
+      "species": "vikavolt"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Blush Mountain"
+      }
+    ]
+  },
+  {
+    "id": "charjabug-to-vikavolt-sword-shield",
+    "from": {
+      "species": "charjabug"
+    },
+    "to": {
+      "species": "vikavolt"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Thunder Stone"
+      }
+    ]
+  },
+  {
+    "id": "charmander-to-charmeleon",
+    "from": {
+      "species": "charmander"
+    },
+    "to": {
+      "species": "charmeleon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "charmeleon-to-charizard",
+    "from": {
+      "species": "charmeleon"
+    },
+    "to": {
+      "species": "charizard"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "cherubi-to-cherrim",
+    "from": {
+      "species": "cherubi"
+    },
+    "to": {
+      "species": "cherrim"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "chespin-to-quilladin",
+    "from": {
+      "species": "chespin"
+    },
+    "to": {
+      "species": "quilladin"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "chewtle-to-drednaw",
+    "from": {
+      "species": "chewtle"
+    },
+    "to": {
+      "species": "drednaw"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": "chikorita-to-bayleef",
+    "from": {
+      "species": "chikorita"
+    },
+    "to": {
+      "species": "bayleef"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "chimchar-to-monferno",
+    "from": {
+      "species": "chimchar"
+    },
+    "to": {
+      "species": "monferno"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 14
+      }
+    ]
+  },
+  {
+    "id": "chinchou-to-lanturn",
+    "from": {
+      "species": "chinchou"
+    },
+    "to": {
+      "species": "lanturn"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 27
+      }
+    ]
+  },
+  {
+    "id": "chingling-to-chimecho",
+    "from": {
+      "species": "chingling"
+    },
+    "to": {
+      "species": "chimecho"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 220
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      }
+    ]
+  },
+  {
+    "id": "clamperl-to-gorebyss",
+    "from": {
+      "species": "clamperl"
+    },
+    "to": {
+      "species": "gorebyss"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Deep Sea Scale"
+      }
+    ]
+  },
+  {
+    "id": "clamperl-to-huntail",
+    "from": {
+      "species": "clamperl"
+    },
+    "to": {
+      "species": "huntail"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Deep Sea Tooth"
+      }
+    ]
+  },
+  {
+    "id": "clauncher-to-clawitzer",
+    "from": {
+      "species": "clauncher"
+    },
+    "to": {
+      "species": "clawitzer"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      }
+    ]
+  },
+  {
+    "id": "clefairy-to-clefable",
+    "from": {
+      "species": "clefairy"
+    },
+    "to": {
+      "species": "clefable"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Moon Stone"
+      }
+    ]
+  },
+  {
+    "id": "cleffa-to-clefairy",
+    "from": {
+      "species": "cleffa"
+    },
+    "to": {
+      "species": "clefairy"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      }
+    ]
+  },
+  {
+    "id": "clobbopus-to-grapploct",
+    "from": {
+      "species": "clobbopus"
+    },
+    "to": {
+      "species": "grapploct"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Taunt"
+      }
+    ]
+  },
+  {
+    "id": "combee-to-vespiquen",
+    "from": {
+      "species": "combee"
+    },
+    "to": {
+      "species": "vespiquen"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 21
+      },
+      {
+        "condition": "gender",
+        "gender": "female"
+      }
+    ]
+  },
+  {
+    "id": "combusken-to-blaziken",
+    "from": {
+      "species": "combusken"
+    },
+    "to": {
+      "species": "blaziken"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "corphish-to-crawdaunt",
+    "from": {
+      "species": "corphish"
+    },
+    "to": {
+      "species": "crawdaunt"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "corsola-to-cursola",
+    "from": {
+      "species": "corsola"
+    },
+    "to": {
+      "species": "cursola"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": "corvisquire-to-corviknight",
+    "from": {
+      "species": "corvisquire"
+    },
+    "to": {
+      "species": "corviknight"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": "cosmoem-to-lunala",
+    "from": {
+      "species": "cosmoem"
+    },
+    "to": {
+      "species": "lunala"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 53
+      }
+    ]
+  },
+  {
+    "id": "cosmoem-to-solgaleo",
+    "from": {
+      "species": "cosmoem"
+    },
+    "to": {
+      "species": "solgaleo"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 53
+      }
+    ]
+  },
+  {
+    "id": "cosmog-to-cosmoem",
+    "from": {
+      "species": "cosmog"
+    },
+    "to": {
+      "species": "cosmoem"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 43
+      }
+    ]
+  },
+  {
+    "id": "cottonee-to-whimsicott",
+    "from": {
+      "species": "cottonee"
+    },
+    "to": {
+      "species": "whimsicott"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Sun Stone"
+      }
+    ]
+  },
+  {
+    "id": "crabrawler-to-crabominable-scarlet-violet",
+    "from": {
+      "species": "crabrawler"
+    },
+    "to": {
+      "species": "crabominable"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Ice Stone"
+      }
+    ]
+  },
+  {
+    "id": "crabrawler-to-crabominable-sun-moon",
+    "from": {
+      "species": "crabrawler"
+    },
+    "to": {
+      "species": "crabominable"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Mount Lanakila"
+      }
+    ]
+  },
+  {
+    "id": "cranidos-to-rampardos",
+    "from": {
+      "species": "cranidos"
+    },
+    "to": {
+      "species": "rampardos"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "croagunk-to-toxicroak",
+    "from": {
+      "species": "croagunk"
+    },
+    "to": {
+      "species": "toxicroak"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      }
+    ]
+  },
+  {
+    "id": "crocalor-to-skeledirge",
+    "from": {
+      "species": "crocalor"
+    },
+    "to": {
+      "species": "skeledirge"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "croconaw-to-feraligatr",
+    "from": {
+      "species": "croconaw"
+    },
+    "to": {
+      "species": "feraligatr"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "cubchoo-to-beartic",
+    "from": {
+      "species": "cubchoo"
+    },
+    "to": {
+      "species": "beartic"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      }
+    ]
+  },
+  {
+    "id": "cubone-to-marowak-red-blue",
+    "from": {
+      "species": "cubone"
+    },
+    "to": {
+      "species": "marowak"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": "cubone-to-marowak-sun-moon",
+    "from": {
+      "species": "cubone"
+    },
+    "to": {
+      "species": "marowak"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 28
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      },
+      {
+        "condition": "other",
+        "description": "in Alola"
+      }
+    ]
+  },
+  {
+    "id": "cufant-to-copperajah",
+    "from": {
+      "species": "cufant"
+    },
+    "to": {
+      "species": "copperajah"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "cutiefly-to-ribombee",
+    "from": {
+      "species": "cutiefly"
+    },
+    "to": {
+      "species": "ribombee"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "cyndaquil-to-quilava-gold-silver",
+    "from": {
+      "species": "cyndaquil"
+    },
+    "to": {
+      "species": "quilava"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 14
+      }
+    ]
+  },
+  {
+    "id": "cyndaquil-to-quilava-legends-arceus",
+    "from": {
+      "species": "cyndaquil"
+    },
+    "to": {
+      "species": "quilava"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 17
+      },
+      {
+        "condition": "other",
+        "description": "in Hisui"
+      }
+    ]
+  },
+  {
+    "id": "dartrix-to-decidueye-legends-arceus",
+    "from": {
+      "species": "dartrix"
+    },
+    "to": {
+      "species": "decidueye"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      },
+      {
+        "condition": "other",
+        "description": "in Hisui"
+      }
+    ]
+  },
+  {
+    "id": "dartrix-to-decidueye-sun-moon",
+    "from": {
+      "species": "dartrix"
+    },
+    "to": {
+      "species": "decidueye"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "darumaka-to-darmanitan-black-white",
+    "from": {
+      "species": "darumaka"
+    },
+    "to": {
+      "species": "darmanitan"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "darumaka-to-darmanitan-sword-shield",
+    "from": {
+      "species": "darumaka"
+    },
+    "to": {
+      "species": "darmanitan"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Ice Stone"
+      }
+    ]
+  },
+  {
+    "id": "deerling-to-sawsbuck",
+    "from": {
+      "species": "deerling"
+    },
+    "to": {
+      "species": "sawsbuck"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "deino-to-zweilous",
+    "from": {
+      "species": "deino"
+    },
+    "to": {
+      "species": "zweilous"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 50
+      }
+    ]
+  },
+  {
+    "id": "dewott-to-samurott-black-white",
+    "from": {
+      "species": "dewott"
+    },
+    "to": {
+      "species": "samurott"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "dewott-to-samurott-legends-arceus",
+    "from": {
+      "species": "dewott"
+    },
+    "to": {
+      "species": "samurott"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      },
+      {
+        "condition": "other",
+        "description": "in Hisui"
+      }
+    ]
+  },
+  {
+    "id": "dewpider-to-araquanid",
+    "from": {
+      "species": "dewpider"
+    },
+    "to": {
+      "species": "araquanid"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": "diglett-to-dugtrio-red-blue",
+    "from": {
+      "species": "diglett"
+    },
+    "to": {
+      "species": "dugtrio"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 26
+      }
+    ]
+  },
+  {
+    "id": "diglett-to-dugtrio-sun-moon",
+    "from": {
+      "species": "diglett"
+    },
+    "to": {
+      "species": "dugtrio"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 26
+      }
+    ]
+  },
+  {
+    "id": "dipplin-to-hydrapple",
+    "from": {
+      "species": "dipplin"
+    },
+    "to": {
+      "species": "hydrapple"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Dragon Cheer"
+      }
+    ]
+  },
+  {
+    "id": "doduo-to-dodrio",
+    "from": {
+      "species": "doduo"
+    },
+    "to": {
+      "species": "dodrio"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 31
+      }
+    ]
+  },
+  {
+    "id": "dolliv-to-arboliva",
+    "from": {
+      "species": "dolliv"
+    },
+    "to": {
+      "species": "arboliva"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "dottler-to-orbeetle",
+    "from": {
+      "species": "dottler"
+    },
+    "to": {
+      "species": "orbeetle"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "doublade-to-aegislash",
+    "from": {
+      "species": "doublade"
+    },
+    "to": {
+      "species": "aegislash"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Dusk Stone"
+      }
+    ]
+  },
+  {
+    "id": "dragonair-to-dragonite",
+    "from": {
+      "species": "dragonair"
+    },
+    "to": {
+      "species": "dragonite"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 55
+      }
+    ]
+  },
+  {
+    "id": "drakloak-to-dragapult",
+    "from": {
+      "species": "drakloak"
+    },
+    "to": {
+      "species": "dragapult"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 60
+      }
+    ]
+  },
+  {
+    "id": "dratini-to-dragonair",
+    "from": {
+      "species": "dratini"
+    },
+    "to": {
+      "species": "dragonair"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "dreepy-to-drakloak",
+    "from": {
+      "species": "dreepy"
+    },
+    "to": {
+      "species": "drakloak"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 50
+      }
+    ]
+  },
+  {
+    "id": "drifloon-to-drifblim",
+    "from": {
+      "species": "drifloon"
+    },
+    "to": {
+      "species": "drifblim"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": "drilbur-to-excadrill",
+    "from": {
+      "species": "drilbur"
+    },
+    "to": {
+      "species": "excadrill"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 31
+      }
+    ]
+  },
+  {
+    "id": "drizzile-to-inteleon",
+    "from": {
+      "species": "drizzile"
+    },
+    "to": {
+      "species": "inteleon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "drowzee-to-hypno",
+    "from": {
+      "species": "drowzee"
+    },
+    "to": {
+      "species": "hypno"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 26
+      }
+    ]
+  },
+  {
+    "id": "ducklett-to-swanna",
+    "from": {
+      "species": "ducklett"
+    },
+    "to": {
+      "species": "swanna"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "dunsparce-to-dudunsparce-scarlet-violet",
+    "from": {
+      "species": "dunsparce"
+    },
+    "to": {
+      "species": "dudunsparce"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Hyper Drill"
+      },
+      {
+        "condition": "other",
+        "description": "a 99% chance"
+      }
+    ]
+  },
+  {
+    "id": "dunsparce-to-dudunsparce-scarlet-violet-2",
+    "from": {
+      "species": "dunsparce"
+    },
+    "to": {
+      "species": "dudunsparce"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Hyper Drill"
+      },
+      {
+        "condition": "other",
+        "description": "a 1% chance"
+      }
+    ]
+  },
+  {
+    "id": "duosion-to-reuniclus",
+    "from": {
+      "species": "duosion"
+    },
+    "to": {
+      "species": "reuniclus"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 41
+      }
+    ]
+  },
+  {
+    "id": "duraludon-to-archaludon",
+    "from": {
+      "species": "duraludon"
+    },
+    "to": {
+      "species": "archaludon"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Metal Alloy"
+      }
+    ]
+  },
+  {
+    "id": "dusclops-to-dusknoir",
+    "from": {
+      "species": "dusclops"
+    },
+    "to": {
+      "species": "dusknoir"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Reaper Cloth"
+      }
+    ]
+  },
+  {
+    "id": "duskull-to-dusclops",
+    "from": {
+      "species": "duskull"
+    },
+    "to": {
+      "species": "dusclops"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      }
+    ]
+  },
+  {
+    "id": "dwebble-to-crustle",
+    "from": {
+      "species": "dwebble"
+    },
+    "to": {
+      "species": "crustle"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "eelektrik-to-eelektross",
+    "from": {
+      "species": "eelektrik"
+    },
+    "to": {
+      "species": "eelektross"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Thunder Stone"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-espeon",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "espeon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "day"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-flareon",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "flareon"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Fire Stone"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-glaceon-black-white",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "glaceon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Twist Mountain"
+      },
+      {
+        "condition": "other",
+        "description": "beside the mossy or icy rock"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-glaceon-diamond-pearl",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "glaceon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Route 217"
+      },
+      {
+        "condition": "other",
+        "description": "beside the mossy or icy rock"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-glaceon-omega-ruby-alpha-sapphire",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "glaceon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Shoal Cave"
+      },
+      {
+        "condition": "other",
+        "description": "beside the mossy or icy rock"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-glaceon-sun-moon",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "glaceon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Mount Lanakila"
+      },
+      {
+        "condition": "other",
+        "description": "beside the mossy or icy rock"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-glaceon-sword-shield",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "glaceon"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Ice Stone"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-glaceon-x-y",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "glaceon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Frost Cavern"
+      },
+      {
+        "condition": "other",
+        "description": "beside the mossy or icy rock"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-jolteon",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "jolteon"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Thunder Stone"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-leafeon-black-white",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "leafeon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Pinwheel Forest"
+      },
+      {
+        "condition": "other",
+        "description": "beside the mossy or icy rock"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-leafeon-diamond-pearl",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "leafeon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Eterna Forest"
+      },
+      {
+        "condition": "other",
+        "description": "beside the mossy or icy rock"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-leafeon-omega-ruby-alpha-sapphire",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "leafeon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Petalburg Woods"
+      },
+      {
+        "condition": "other",
+        "description": "beside the mossy or icy rock"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-leafeon-sun-moon",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "leafeon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Lush Jungle"
+      },
+      {
+        "condition": "other",
+        "description": "beside the mossy or icy rock"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-leafeon-sword-shield",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "leafeon"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Leaf Stone"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-leafeon-x-y",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "leafeon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Route 20"
+      },
+      {
+        "condition": "other",
+        "description": "beside the mossy or icy rock"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-sylveon-sword-shield",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "sylveon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      },
+      {
+        "condition": "other",
+        "description": "knowing a Fairy move"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-sylveon-x-y",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "sylveon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "with affection 2 or higher"
+      },
+      {
+        "condition": "other",
+        "description": "knowing a Fairy move"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-umbreon",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "umbreon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      }
+    ]
+  },
+  {
+    "id": "eevee-to-vaporeon",
+    "from": {
+      "species": "eevee"
+    },
+    "to": {
+      "species": "vaporeon"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Water Stone"
+      }
+    ]
+  },
+  {
+    "id": "ekans-to-arbok",
+    "from": {
+      "species": "ekans"
+    },
+    "to": {
+      "species": "arbok"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": "electabuzz-to-electivire",
+    "from": {
+      "species": "electabuzz"
+    },
+    "to": {
+      "species": "electivire"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Electirizer"
+      }
+    ]
+  },
+  {
+    "id": "electrike-to-manectric",
+    "from": {
+      "species": "electrike"
+    },
+    "to": {
+      "species": "manectric"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 26
+      }
+    ]
+  },
+  {
+    "id": "elekid-to-electabuzz",
+    "from": {
+      "species": "elekid"
+    },
+    "to": {
+      "species": "electabuzz"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "elgyem-to-beheeyem",
+    "from": {
+      "species": "elgyem"
+    },
+    "to": {
+      "species": "beheeyem"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 42
+      }
+    ]
+  },
+  {
+    "id": "espurr-to-meowstic-x-y",
+    "from": {
+      "species": "espurr"
+    },
+    "to": {
+      "species": "meowstic"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      },
+      {
+        "condition": "gender",
+        "gender": "male"
+      }
+    ]
+  },
+  {
+    "id": "espurr-to-meowstic-x-y-2",
+    "from": {
+      "species": "espurr"
+    },
+    "to": {
+      "species": "meowstic"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      },
+      {
+        "condition": "gender",
+        "gender": "female"
+      }
+    ]
+  },
+  {
+    "id": "exeggcute-to-exeggutor-red-blue",
+    "from": {
+      "species": "exeggcute"
+    },
+    "to": {
+      "species": "exeggutor"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Leaf Stone"
+      }
+    ]
+  },
+  {
+    "id": "exeggcute-to-exeggutor-sun-moon",
+    "from": {
+      "species": "exeggcute"
+    },
+    "to": {
+      "species": "exeggutor"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Leaf Stone"
+      },
+      {
+        "condition": "other",
+        "description": "in Alola"
+      }
+    ]
+  },
+  {
+    "id": "farfetchd-to-sirfetchd",
+    "from": {
+      "species": "farfetchd"
+    },
+    "to": {
+      "species": "sirfetchd"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after three critical hits in one battle"
+      }
+    ]
+  },
+  {
+    "id": "feebas-to-milotic-black-white",
+    "from": {
+      "species": "feebas"
+    },
+    "to": {
+      "species": "milotic"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Prism Scale"
+      }
+    ]
+  },
+  {
+    "id": "feebas-to-milotic-omega-ruby-alpha-sapphire",
+    "from": {
+      "species": "feebas"
+    },
+    "to": {
+      "species": "milotic"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "with Beauty 170 or higher"
+      }
+    ]
+  },
+  {
+    "id": "feebas-to-milotic-ruby-sapphire",
+    "from": {
+      "species": "feebas"
+    },
+    "to": {
+      "species": "milotic"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "with Beauty 170 or higher"
+      }
+    ]
+  },
+  {
+    "id": "fennekin-to-braixen",
+    "from": {
+      "species": "fennekin"
+    },
+    "to": {
+      "species": "braixen"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "ferroseed-to-ferrothorn",
+    "from": {
+      "species": "ferroseed"
+    },
+    "to": {
+      "species": "ferrothorn"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "fidough-to-dachsbun",
+    "from": {
+      "species": "fidough"
+    },
+    "to": {
+      "species": "dachsbun"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 26
+      }
+    ]
+  },
+  {
+    "id": "finizen-to-palafin",
+    "from": {
+      "species": "finizen"
+    },
+    "to": {
+      "species": "palafin"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      },
+      {
+        "condition": "other",
+        "description": "with another player"
+      }
+    ]
+  },
+  {
+    "id": "finneon-to-lumineon",
+    "from": {
+      "species": "finneon"
+    },
+    "to": {
+      "species": "lumineon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 31
+      }
+    ]
+  },
+  {
+    "id": "flaaffy-to-ampharos",
+    "from": {
+      "species": "flaaffy"
+    },
+    "to": {
+      "species": "ampharos"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "flabebe-to-floette",
+    "from": {
+      "species": "flabebe"
+    },
+    "to": {
+      "species": "floette"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 19
+      }
+    ]
+  },
+  {
+    "id": "fletchinder-to-talonflame",
+    "from": {
+      "species": "fletchinder"
+    },
+    "to": {
+      "species": "talonflame"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "fletchling-to-fletchinder",
+    "from": {
+      "species": "fletchling"
+    },
+    "to": {
+      "species": "fletchinder"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 17
+      }
+    ]
+  },
+  {
+    "id": "flittle-to-espathra",
+    "from": {
+      "species": "flittle"
+    },
+    "to": {
+      "species": "espathra"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "floette-to-florges",
+    "from": {
+      "species": "floette"
+    },
+    "to": {
+      "species": "florges"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Shiny Stone"
+      }
+    ]
+  },
+  {
+    "id": "floragato-to-meowscarada",
+    "from": {
+      "species": "floragato"
+    },
+    "to": {
+      "species": "meowscarada"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "fomantis-to-lurantis",
+    "from": {
+      "species": "fomantis"
+    },
+    "to": {
+      "species": "lurantis"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "day"
+      }
+    ]
+  },
+  {
+    "id": "foongus-to-amoonguss",
+    "from": {
+      "species": "foongus"
+    },
+    "to": {
+      "species": "amoonguss"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 39
+      }
+    ]
+  },
+  {
+    "id": "fraxure-to-haxorus",
+    "from": {
+      "species": "fraxure"
+    },
+    "to": {
+      "species": "haxorus"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 48
+      }
+    ]
+  },
+  {
+    "id": "frigibax-to-arctibax",
+    "from": {
+      "species": "frigibax"
+    },
+    "to": {
+      "species": "arctibax"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "frillish-to-jellicent",
+    "from": {
+      "species": "frillish"
+    },
+    "to": {
+      "species": "jellicent"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "froakie-to-frogadier",
+    "from": {
+      "species": "froakie"
+    },
+    "to": {
+      "species": "frogadier"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "frogadier-to-greninja",
+    "from": {
+      "species": "frogadier"
+    },
+    "to": {
+      "species": "greninja"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "fuecoco-to-crocalor",
+    "from": {
+      "species": "fuecoco"
+    },
+    "to": {
+      "species": "crocalor"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "gabite-to-garchomp",
+    "from": {
+      "species": "gabite"
+    },
+    "to": {
+      "species": "garchomp"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 48
+      }
+    ]
+  },
+  {
+    "id": "gastly-to-haunter",
+    "from": {
+      "species": "gastly"
+    },
+    "to": {
+      "species": "haunter"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "geodude-to-graveler-red-blue",
+    "from": {
+      "species": "geodude"
+    },
+    "to": {
+      "species": "graveler"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "geodude-to-graveler-sun-moon",
+    "from": {
+      "species": "geodude"
+    },
+    "to": {
+      "species": "graveler"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "gible-to-gabite",
+    "from": {
+      "species": "gible"
+    },
+    "to": {
+      "species": "gabite"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 24
+      }
+    ]
+  },
+  {
+    "id": "gimmighoul-to-gholdengo",
+    "from": {
+      "species": "gimmighoul"
+    },
+    "to": {
+      "species": "gholdengo"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "gimmighoul coins"
+      }
+    ]
+  },
+  {
+    "id": "girafarig-to-farigiraf",
+    "from": {
+      "species": "girafarig"
+    },
+    "to": {
+      "species": "farigiraf"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Twin Beam"
+      }
+    ]
+  },
+  {
+    "id": "glameow-to-purugly",
+    "from": {
+      "species": "glameow"
+    },
+    "to": {
+      "species": "purugly"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": "gligar-to-gliscor",
+    "from": {
+      "species": "gligar"
+    },
+    "to": {
+      "species": "gliscor"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Razor Fang"
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      }
+    ]
+  },
+  {
+    "id": "glimmet-to-glimmora",
+    "from": {
+      "species": "glimmet"
+    },
+    "to": {
+      "species": "glimmora"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "gloom-to-bellossom",
+    "from": {
+      "species": "gloom"
+    },
+    "to": {
+      "species": "bellossom"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Sun Stone"
+      }
+    ]
+  },
+  {
+    "id": "gloom-to-vileplume",
+    "from": {
+      "species": "gloom"
+    },
+    "to": {
+      "species": "vileplume"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Leaf Stone"
+      }
+    ]
+  },
+  {
+    "id": "golbat-to-crobat",
+    "from": {
+      "species": "golbat"
+    },
+    "to": {
+      "species": "crobat"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      }
+    ]
+  },
+  {
+    "id": "goldeen-to-seaking",
+    "from": {
+      "species": "goldeen"
+    },
+    "to": {
+      "species": "seaking"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 33
+      }
+    ]
+  },
+  {
+    "id": "golett-to-golurk",
+    "from": {
+      "species": "golett"
+    },
+    "to": {
+      "species": "golurk"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 43
+      }
+    ]
+  },
+  {
+    "id": "goomy-to-sliggoo-legends-arceus",
+    "from": {
+      "species": "goomy"
+    },
+    "to": {
+      "species": "sliggoo"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      },
+      {
+        "condition": "other",
+        "description": "in Hisui"
+      }
+    ]
+  },
+  {
+    "id": "goomy-to-sliggoo-x-y",
+    "from": {
+      "species": "goomy"
+    },
+    "to": {
+      "species": "sliggoo"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "gossifleur-to-eldegoss",
+    "from": {
+      "species": "gossifleur"
+    },
+    "to": {
+      "species": "eldegoss"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "gothita-to-gothorita",
+    "from": {
+      "species": "gothita"
+    },
+    "to": {
+      "species": "gothorita"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "gothorita-to-gothitelle",
+    "from": {
+      "species": "gothorita"
+    },
+    "to": {
+      "species": "gothitelle"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 41
+      }
+    ]
+  },
+  {
+    "id": "graveler-to-golem-red-blue",
+    "from": {
+      "species": "graveler"
+    },
+    "to": {
+      "species": "golem"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "graveler-to-golem-sun-moon",
+    "from": {
+      "species": "graveler"
+    },
+    "to": {
+      "species": "golem"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "greavard-to-houndstone",
+    "from": {
+      "species": "greavard"
+    },
+    "to": {
+      "species": "houndstone"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      }
+    ]
+  },
+  {
+    "id": "grimer-to-muk-red-blue",
+    "from": {
+      "species": "grimer"
+    },
+    "to": {
+      "species": "muk"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": "grimer-to-muk-sun-moon",
+    "from": {
+      "species": "grimer"
+    },
+    "to": {
+      "species": "muk"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": "grookey-to-thwackey",
+    "from": {
+      "species": "grookey"
+    },
+    "to": {
+      "species": "thwackey"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "grotle-to-torterra",
+    "from": {
+      "species": "grotle"
+    },
+    "to": {
+      "species": "torterra"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "grovyle-to-sceptile",
+    "from": {
+      "species": "grovyle"
+    },
+    "to": {
+      "species": "sceptile"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "growlithe-to-arcanine-legends-arceus",
+    "from": {
+      "species": "growlithe"
+    },
+    "to": {
+      "species": "arcanine"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Fire Stone"
+      }
+    ]
+  },
+  {
+    "id": "growlithe-to-arcanine-red-blue",
+    "from": {
+      "species": "growlithe"
+    },
+    "to": {
+      "species": "arcanine"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Fire Stone"
+      }
+    ]
+  },
+  {
+    "id": "grubbin-to-charjabug",
+    "from": {
+      "species": "grubbin"
+    },
+    "to": {
+      "species": "charjabug"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "gulpin-to-swalot",
+    "from": {
+      "species": "gulpin"
+    },
+    "to": {
+      "species": "swalot"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 26
+      }
+    ]
+  },
+  {
+    "id": "gurdurr-to-conkeldurr",
+    "from": {
+      "species": "gurdurr"
+    },
+    "to": {
+      "species": "conkeldurr"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "hakamo-o-to-kommo-o",
+    "from": {
+      "species": "hakamo-o"
+    },
+    "to": {
+      "species": "kommo-o"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 45
+      }
+    ]
+  },
+  {
+    "id": "happiny-to-chansey",
+    "from": {
+      "species": "happiny"
+    },
+    "to": {
+      "species": "chansey"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Oval Stone"
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "day"
+      }
+    ]
+  },
+  {
+    "id": "hatenna-to-hattrem",
+    "from": {
+      "species": "hatenna"
+    },
+    "to": {
+      "species": "hattrem"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "hattrem-to-hatterene",
+    "from": {
+      "species": "hattrem"
+    },
+    "to": {
+      "species": "hatterene"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 42
+      }
+    ]
+  },
+  {
+    "id": "haunter-to-gengar",
+    "from": {
+      "species": "haunter"
+    },
+    "to": {
+      "species": "gengar"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "helioptile-to-heliolisk",
+    "from": {
+      "species": "helioptile"
+    },
+    "to": {
+      "species": "heliolisk"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Sun Stone"
+      }
+    ]
+  },
+  {
+    "id": "herdier-to-stoutland",
+    "from": {
+      "species": "herdier"
+    },
+    "to": {
+      "species": "stoutland"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "hippopotas-to-hippowdon",
+    "from": {
+      "species": "hippopotas"
+    },
+    "to": {
+      "species": "hippowdon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "honedge-to-doublade",
+    "from": {
+      "species": "honedge"
+    },
+    "to": {
+      "species": "doublade"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "hoothoot-to-noctowl",
+    "from": {
+      "species": "hoothoot"
+    },
+    "to": {
+      "species": "noctowl"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "hoppip-to-skiploom",
+    "from": {
+      "species": "hoppip"
+    },
+    "to": {
+      "species": "skiploom"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "horsea-to-seadra",
+    "from": {
+      "species": "horsea"
+    },
+    "to": {
+      "species": "seadra"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "houndour-to-houndoom",
+    "from": {
+      "species": "houndour"
+    },
+    "to": {
+      "species": "houndoom"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 24
+      }
+    ]
+  },
+  {
+    "id": "igglybuff-to-jigglypuff",
+    "from": {
+      "species": "igglybuff"
+    },
+    "to": {
+      "species": "jigglypuff"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      }
+    ]
+  },
+  {
+    "id": "impidimp-to-morgrem",
+    "from": {
+      "species": "impidimp"
+    },
+    "to": {
+      "species": "morgrem"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "inkay-to-malamar",
+    "from": {
+      "species": "inkay"
+    },
+    "to": {
+      "species": "malamar"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      },
+      {
+        "condition": "other",
+        "description": "with the console turned upside down"
+      }
+    ]
+  },
+  {
+    "id": "ivysaur-to-venusaur",
+    "from": {
+      "species": "ivysaur"
+    },
+    "to": {
+      "species": "venusaur"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "jangmo-o-to-hakamo-o",
+    "from": {
+      "species": "jangmo-o"
+    },
+    "to": {
+      "species": "hakamo-o"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "jigglypuff-to-wigglytuff",
+    "from": {
+      "species": "jigglypuff"
+    },
+    "to": {
+      "species": "wigglytuff"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Moon Stone"
+      }
+    ]
+  },
+  {
+    "id": "joltik-to-galvantula",
+    "from": {
+      "species": "joltik"
+    },
+    "to": {
+      "species": "galvantula"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "kabuto-to-kabutops",
+    "from": {
+      "species": "kabuto"
+    },
+    "to": {
+      "species": "kabutops"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "kadabra-to-alakazam",
+    "from": {
+      "species": "kadabra"
+    },
+    "to": {
+      "species": "alakazam"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "kakuna-to-beedrill",
+    "from": {
+      "species": "kakuna"
+    },
+    "to": {
+      "species": "beedrill"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 10
+      }
+    ]
+  },
+  {
+    "id": "karrablast-to-escavalier",
+    "from": {
+      "species": "karrablast"
+    },
+    "to": {
+      "species": "escavalier"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "tradePartner",
+        "species": "shelmet"
+      }
+    ]
+  },
+  {
+    "id": "kirlia-to-gallade",
+    "from": {
+      "species": "kirlia"
+    },
+    "to": {
+      "species": "gallade"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Dawn Stone"
+      },
+      {
+        "condition": "gender",
+        "gender": "male"
+      }
+    ]
+  },
+  {
+    "id": "kirlia-to-gardevoir",
+    "from": {
+      "species": "kirlia"
+    },
+    "to": {
+      "species": "gardevoir"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "klang-to-klinklang",
+    "from": {
+      "species": "klang"
+    },
+    "to": {
+      "species": "klinklang"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 49
+      }
+    ]
+  },
+  {
+    "id": "klink-to-klang",
+    "from": {
+      "species": "klink"
+    },
+    "to": {
+      "species": "klang"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": "koffing-to-weezing-red-blue",
+    "from": {
+      "species": "koffing"
+    },
+    "to": {
+      "species": "weezing"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "koffing-to-weezing-sword-shield",
+    "from": {
+      "species": "koffing"
+    },
+    "to": {
+      "species": "weezing"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      },
+      {
+        "condition": "other",
+        "description": "in Galar"
+      }
+    ]
+  },
+  {
+    "id": "krabby-to-kingler",
+    "from": {
+      "species": "krabby"
+    },
+    "to": {
+      "species": "kingler"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": "kricketot-to-kricketune",
+    "from": {
+      "species": "kricketot"
+    },
+    "to": {
+      "species": "kricketune"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 10
+      }
+    ]
+  },
+  {
+    "id": "krokorok-to-krookodile",
+    "from": {
+      "species": "krokorok"
+    },
+    "to": {
+      "species": "krookodile"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "kubfu-to-urshifu-scarlet-violet",
+    "from": {
+      "species": "kubfu"
+    },
+    "to": {
+      "species": "urshifu"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Scroll of Darkness"
+      }
+    ]
+  },
+  {
+    "id": "kubfu-to-urshifu-scarlet-violet-2",
+    "from": {
+      "species": "kubfu"
+    },
+    "to": {
+      "species": "urshifu"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Scroll of Waters"
+      }
+    ]
+  },
+  {
+    "id": "kubfu-to-urshifu-the-isle-of-armor",
+    "from": {
+      "species": "kubfu"
+    },
+    "to": {
+      "species": "urshifu"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after training in the Tower of Darkness"
+      }
+    ]
+  },
+  {
+    "id": "kubfu-to-urshifu-the-isle-of-armor-2",
+    "from": {
+      "species": "kubfu"
+    },
+    "to": {
+      "species": "urshifu"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after training in the Tower of Waters"
+      }
+    ]
+  },
+  {
+    "id": "lairon-to-aggron",
+    "from": {
+      "species": "lairon"
+    },
+    "to": {
+      "species": "aggron"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 42
+      }
+    ]
+  },
+  {
+    "id": "lampent-to-chandelure",
+    "from": {
+      "species": "lampent"
+    },
+    "to": {
+      "species": "chandelure"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Dusk Stone"
+      }
+    ]
+  },
+  {
+    "id": "larvesta-to-volcarona",
+    "from": {
+      "species": "larvesta"
+    },
+    "to": {
+      "species": "volcarona"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 59
+      }
+    ]
+  },
+  {
+    "id": "larvitar-to-pupitar",
+    "from": {
+      "species": "larvitar"
+    },
+    "to": {
+      "species": "pupitar"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "lechonk-to-oinkologne-scarlet-violet",
+    "from": {
+      "species": "lechonk"
+    },
+    "to": {
+      "species": "oinkologne"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      },
+      {
+        "condition": "gender",
+        "gender": "male"
+      }
+    ]
+  },
+  {
+    "id": "lechonk-to-oinkologne-scarlet-violet-2",
+    "from": {
+      "species": "lechonk"
+    },
+    "to": {
+      "species": "oinkologne"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      },
+      {
+        "condition": "gender",
+        "gender": "female"
+      }
+    ]
+  },
+  {
+    "id": "ledyba-to-ledian",
+    "from": {
+      "species": "ledyba"
+    },
+    "to": {
+      "species": "ledian"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "lickitung-to-lickilicky",
+    "from": {
+      "species": "lickitung"
+    },
+    "to": {
+      "species": "lickilicky"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Rollout"
+      }
+    ]
+  },
+  {
+    "id": "lileep-to-cradily",
+    "from": {
+      "species": "lileep"
+    },
+    "to": {
+      "species": "cradily"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "lillipup-to-herdier",
+    "from": {
+      "species": "lillipup"
+    },
+    "to": {
+      "species": "herdier"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "linoone-to-obstagoon",
+    "from": {
+      "species": "linoone"
+    },
+    "to": {
+      "species": "obstagoon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      }
+    ]
+  },
+  {
+    "id": "litleo-to-pyroar",
+    "from": {
+      "species": "litleo"
+    },
+    "to": {
+      "species": "pyroar"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "litten-to-torracat",
+    "from": {
+      "species": "litten"
+    },
+    "to": {
+      "species": "torracat"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 17
+      }
+    ]
+  },
+  {
+    "id": "litwick-to-lampent",
+    "from": {
+      "species": "litwick"
+    },
+    "to": {
+      "species": "lampent"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 41
+      }
+    ]
+  },
+  {
+    "id": "lombre-to-ludicolo",
+    "from": {
+      "species": "lombre"
+    },
+    "to": {
+      "species": "ludicolo"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Water Stone"
+      }
+    ]
+  },
+  {
+    "id": "lotad-to-lombre",
+    "from": {
+      "species": "lotad"
+    },
+    "to": {
+      "species": "lombre"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 14
+      }
+    ]
+  },
+  {
+    "id": "loudred-to-exploud",
+    "from": {
+      "species": "loudred"
+    },
+    "to": {
+      "species": "exploud"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "luxio-to-luxray",
+    "from": {
+      "species": "luxio"
+    },
+    "to": {
+      "species": "luxray"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "machoke-to-machamp",
+    "from": {
+      "species": "machoke"
+    },
+    "to": {
+      "species": "machamp"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "machop-to-machoke",
+    "from": {
+      "species": "machop"
+    },
+    "to": {
+      "species": "machoke"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": "magby-to-magmar",
+    "from": {
+      "species": "magby"
+    },
+    "to": {
+      "species": "magmar"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "magikarp-to-gyarados",
+    "from": {
+      "species": "magikarp"
+    },
+    "to": {
+      "species": "gyarados"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "magmar-to-magmortar",
+    "from": {
+      "species": "magmar"
+    },
+    "to": {
+      "species": "magmortar"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Magmarizer"
+      }
+    ]
+  },
+  {
+    "id": "magnemite-to-magneton",
+    "from": {
+      "species": "magnemite"
+    },
+    "to": {
+      "species": "magneton"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "magneton-to-magnezone-black-white",
+    "from": {
+      "species": "magneton"
+    },
+    "to": {
+      "species": "magnezone"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Chargestone Cave"
+      }
+    ]
+  },
+  {
+    "id": "magneton-to-magnezone-diamond-pearl",
+    "from": {
+      "species": "magneton"
+    },
+    "to": {
+      "species": "magnezone"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Mt. Coronet"
+      }
+    ]
+  },
+  {
+    "id": "magneton-to-magnezone-omega-ruby-alpha-sapphire",
+    "from": {
+      "species": "magneton"
+    },
+    "to": {
+      "species": "magnezone"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "New Mauville"
+      }
+    ]
+  },
+  {
+    "id": "magneton-to-magnezone-sun-moon",
+    "from": {
+      "species": "magneton"
+    },
+    "to": {
+      "species": "magnezone"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Blush Mountain"
+      }
+    ]
+  },
+  {
+    "id": "magneton-to-magnezone-sun-moon-2",
+    "from": {
+      "species": "magneton"
+    },
+    "to": {
+      "species": "magnezone"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Vast Poni Canyon"
+      }
+    ]
+  },
+  {
+    "id": "magneton-to-magnezone-sword-shield",
+    "from": {
+      "species": "magneton"
+    },
+    "to": {
+      "species": "magnezone"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Thunder Stone"
+      }
+    ]
+  },
+  {
+    "id": "magneton-to-magnezone-x-y",
+    "from": {
+      "species": "magneton"
+    },
+    "to": {
+      "species": "magnezone"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Route 13"
+      }
+    ]
+  },
+  {
+    "id": "makuhita-to-hariyama",
+    "from": {
+      "species": "makuhita"
+    },
+    "to": {
+      "species": "hariyama"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 24
+      }
+    ]
+  },
+  {
+    "id": "mankey-to-primeape",
+    "from": {
+      "species": "mankey"
+    },
+    "to": {
+      "species": "primeape"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": "mantyke-to-mantine",
+    "from": {
+      "species": "mantyke"
+    },
+    "to": {
+      "species": "mantine"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "with Remoraid in the party"
+      }
+    ]
+  },
+  {
+    "id": "mareanie-to-toxapex",
+    "from": {
+      "species": "mareanie"
+    },
+    "to": {
+      "species": "toxapex"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": "mareep-to-flaaffy",
+    "from": {
+      "species": "mareep"
+    },
+    "to": {
+      "species": "flaaffy"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "id": "marill-to-azumarill",
+    "from": {
+      "species": "marill"
+    },
+    "to": {
+      "species": "azumarill"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "marshtomp-to-swampert",
+    "from": {
+      "species": "marshtomp"
+    },
+    "to": {
+      "species": "swampert"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "maschiff-to-mabosstiff",
+    "from": {
+      "species": "maschiff"
+    },
+    "to": {
+      "species": "mabosstiff"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "meditite-to-medicham",
+    "from": {
+      "species": "meditite"
+    },
+    "to": {
+      "species": "medicham"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      }
+    ]
+  },
+  {
+    "id": "meltan-to-melmetal",
+    "from": {
+      "species": "meltan"
+    },
+    "to": {
+      "species": "melmetal"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "meltan candies"
+      }
+    ]
+  },
+  {
+    "id": "meowth-to-perrserker",
+    "from": {
+      "species": "meowth"
+    },
+    "to": {
+      "species": "perrserker"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": "meowth-to-persian-red-blue",
+    "from": {
+      "species": "meowth"
+    },
+    "to": {
+      "species": "persian"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": "meowth-to-persian-sun-moon",
+    "from": {
+      "species": "meowth"
+    },
+    "to": {
+      "species": "persian"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      }
+    ]
+  },
+  {
+    "id": "metang-to-metagross",
+    "from": {
+      "species": "metang"
+    },
+    "to": {
+      "species": "metagross"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 45
+      }
+    ]
+  },
+  {
+    "id": "metapod-to-butterfree",
+    "from": {
+      "species": "metapod"
+    },
+    "to": {
+      "species": "butterfree"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 10
+      }
+    ]
+  },
+  {
+    "id": "mienfoo-to-mienshao",
+    "from": {
+      "species": "mienfoo"
+    },
+    "to": {
+      "species": "mienshao"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 50
+      }
+    ]
+  },
+  {
+    "id": "milcery-to-alcremie",
+    "from": {
+      "species": "milcery"
+    },
+    "to": {
+      "species": "alcremie"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "by spinning around holding the sweet"
+      }
+    ]
+  },
+  {
+    "id": "mime-jr-to-mr-mime-diamond-pearl",
+    "from": {
+      "species": "mime-jr"
+    },
+    "to": {
+      "species": "mr-mime"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Mimic"
+      }
+    ]
+  },
+  {
+    "id": "mime-jr-to-mr-mime-sword-shield",
+    "from": {
+      "species": "mime-jr"
+    },
+    "to": {
+      "species": "mr-mime"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Mimic"
+      },
+      {
+        "condition": "other",
+        "description": "in Galar"
+      }
+    ]
+  },
+  {
+    "id": "minccino-to-cinccino",
+    "from": {
+      "species": "minccino"
+    },
+    "to": {
+      "species": "cinccino"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Shiny Stone"
+      }
+    ]
+  },
+  {
+    "id": "misdreavus-to-mismagius",
+    "from": {
+      "species": "misdreavus"
+    },
+    "to": {
+      "species": "mismagius"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Dusk Stone"
+      }
+    ]
+  },
+  {
+    "id": "monferno-to-infernape",
+    "from": {
+      "species": "monferno"
+    },
+    "to": {
+      "species": "infernape"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "morelull-to-shiinotic",
+    "from": {
+      "species": "morelull"
+    },
+    "to": {
+      "species": "shiinotic"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 24
+      }
+    ]
+  },
+  {
+    "id": "morgrem-to-grimmsnarl",
+    "from": {
+      "species": "morgrem"
+    },
+    "to": {
+      "species": "grimmsnarl"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 42
+      }
+    ]
+  },
+  {
+    "id": "mr-mime-to-mr-rime",
+    "from": {
+      "species": "mr-mime"
+    },
+    "to": {
+      "species": "mr-rime"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 42
+      }
+    ]
+  },
+  {
+    "id": "mudbray-to-mudsdale",
+    "from": {
+      "species": "mudbray"
+    },
+    "to": {
+      "species": "mudsdale"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "mudkip-to-marshtomp",
+    "from": {
+      "species": "mudkip"
+    },
+    "to": {
+      "species": "marshtomp"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "munchlax-to-snorlax",
+    "from": {
+      "species": "munchlax"
+    },
+    "to": {
+      "species": "snorlax"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      }
+    ]
+  },
+  {
+    "id": "munna-to-musharna",
+    "from": {
+      "species": "munna"
+    },
+    "to": {
+      "species": "musharna"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Moon Stone"
+      }
+    ]
+  },
+  {
+    "id": "murkrow-to-honchkrow",
+    "from": {
+      "species": "murkrow"
+    },
+    "to": {
+      "species": "honchkrow"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Dusk Stone"
+      }
+    ]
+  },
+  {
+    "id": "nacli-to-naclstack",
+    "from": {
+      "species": "nacli"
+    },
+    "to": {
+      "species": "naclstack"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 24
+      }
+    ]
+  },
+  {
+    "id": "naclstack-to-garganacl",
+    "from": {
+      "species": "naclstack"
+    },
+    "to": {
+      "species": "garganacl"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": "natu-to-xatu",
+    "from": {
+      "species": "natu"
+    },
+    "to": {
+      "species": "xatu"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "nickit-to-thievul",
+    "from": {
+      "species": "nickit"
+    },
+    "to": {
+      "species": "thievul"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "nidoran-f-to-nidorina",
+    "from": {
+      "species": "nidoran-f"
+    },
+    "to": {
+      "species": "nidorina"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "nidoran-m-to-nidorino",
+    "from": {
+      "species": "nidoran-m"
+    },
+    "to": {
+      "species": "nidorino"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "nidorina-to-nidoqueen",
+    "from": {
+      "species": "nidorina"
+    },
+    "to": {
+      "species": "nidoqueen"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Moon Stone"
+      }
+    ]
+  },
+  {
+    "id": "nidorino-to-nidoking",
+    "from": {
+      "species": "nidorino"
+    },
+    "to": {
+      "species": "nidoking"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Moon Stone"
+      }
+    ]
+  },
+  {
+    "id": "nincada-to-ninjask",
+    "from": {
+      "species": "nincada"
+    },
+    "to": {
+      "species": "ninjask"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "nincada-to-shedinja",
+    "from": {
+      "species": "nincada"
+    },
+    "to": {
+      "species": "shedinja"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "with a free slot in the party and a spare Poke Ball"
+      }
+    ]
+  },
+  {
+    "id": "noibat-to-noivern",
+    "from": {
+      "species": "noibat"
+    },
+    "to": {
+      "species": "noivern"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 48
+      }
+    ]
+  },
+  {
+    "id": "nosepass-to-probopass-black-white",
+    "from": {
+      "species": "nosepass"
+    },
+    "to": {
+      "species": "probopass"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Chargestone Cave"
+      }
+    ]
+  },
+  {
+    "id": "nosepass-to-probopass-diamond-pearl",
+    "from": {
+      "species": "nosepass"
+    },
+    "to": {
+      "species": "probopass"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Mt. Coronet"
+      }
+    ]
+  },
+  {
+    "id": "nosepass-to-probopass-omega-ruby-alpha-sapphire",
+    "from": {
+      "species": "nosepass"
+    },
+    "to": {
+      "species": "probopass"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "New Mauville"
+      }
+    ]
+  },
+  {
+    "id": "nosepass-to-probopass-scarlet-violet",
+    "from": {
+      "species": "nosepass"
+    },
+    "to": {
+      "species": "probopass"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Thunder Stone"
+      }
+    ]
+  },
+  {
+    "id": "nosepass-to-probopass-sun-moon",
+    "from": {
+      "species": "nosepass"
+    },
+    "to": {
+      "species": "probopass"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Blush Mountain"
+      }
+    ]
+  },
+  {
+    "id": "nosepass-to-probopass-sun-moon-2",
+    "from": {
+      "species": "nosepass"
+    },
+    "to": {
+      "species": "probopass"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Vast Poni Canyon"
+      }
+    ]
+  },
+  {
+    "id": "nosepass-to-probopass-x-y",
+    "from": {
+      "species": "nosepass"
+    },
+    "to": {
+      "species": "probopass"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "location",
+        "location": "Route 13"
+      }
+    ]
+  },
+  {
+    "id": "numel-to-camerupt",
+    "from": {
+      "species": "numel"
+    },
+    "to": {
+      "species": "camerupt"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 33
+      }
+    ]
+  },
+  {
+    "id": "nuzleaf-to-shiftry",
+    "from": {
+      "species": "nuzleaf"
+    },
+    "to": {
+      "species": "shiftry"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Leaf Stone"
+      }
+    ]
+  },
+  {
+    "id": "nymble-to-lokix",
+    "from": {
+      "species": "nymble"
+    },
+    "to": {
+      "species": "lokix"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 24
+      }
+    ]
+  },
+  {
+    "id": "oddish-to-gloom",
+    "from": {
+      "species": "oddish"
+    },
+    "to": {
+      "species": "gloom"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 21
+      }
+    ]
+  },
+  {
+    "id": "omanyte-to-omastar",
+    "from": {
+      "species": "omanyte"
+    },
+    "to": {
+      "species": "omastar"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "onix-to-steelix",
+    "from": {
+      "species": "onix"
+    },
+    "to": {
+      "species": "steelix"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Metal Coat"
+      }
+    ]
+  },
+  {
+    "id": "oshawott-to-dewott",
+    "from": {
+      "species": "oshawott"
+    },
+    "to": {
+      "species": "dewott"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 17
+      }
+    ]
+  },
+  {
+    "id": "palpitoad-to-seismitoad",
+    "from": {
+      "species": "palpitoad"
+    },
+    "to": {
+      "species": "seismitoad"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "pancham-to-pangoro",
+    "from": {
+      "species": "pancham"
+    },
+    "to": {
+      "species": "pangoro"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      },
+      {
+        "condition": "other",
+        "description": "with a Dark type in the party"
+      }
+    ]
+  },
+  {
+    "id": "panpour-to-simipour",
+    "from": {
+      "species": "panpour"
+    },
+    "to": {
+      "species": "simipour"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Water Stone"
+      }
+    ]
+  },
+  {
+    "id": "pansage-to-simisage",
+    "from": {
+      "species": "pansage"
+    },
+    "to": {
+      "species": "simisage"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Leaf Stone"
+      }
+    ]
+  },
+  {
+    "id": "pansear-to-simisear",
+    "from": {
+      "species": "pansear"
+    },
+    "to": {
+      "species": "simisear"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Fire Stone"
+      }
+    ]
+  },
+  {
+    "id": "paras-to-parasect",
+    "from": {
+      "species": "paras"
+    },
+    "to": {
+      "species": "parasect"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 24
+      }
+    ]
+  },
+  {
+    "id": "patrat-to-watchog",
+    "from": {
+      "species": "patrat"
+    },
+    "to": {
+      "species": "watchog"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "pawmi-to-pawmo",
+    "from": {
+      "species": "pawmi"
+    },
+    "to": {
+      "species": "pawmo"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "pawmo-to-pawmot",
+    "from": {
+      "species": "pawmo"
+    },
+    "to": {
+      "species": "pawmot"
+    },
+    "trigger": "levelUp",
+    "conditions": []
+  },
+  {
+    "id": "pawniard-to-bisharp",
+    "from": {
+      "species": "pawniard"
+    },
+    "to": {
+      "species": "bisharp"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 52
+      }
+    ]
+  },
+  {
+    "id": "petilil-to-lilligant-black-white",
+    "from": {
+      "species": "petilil"
+    },
+    "to": {
+      "species": "lilligant"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Sun Stone"
+      }
+    ]
+  },
+  {
+    "id": "petilil-to-lilligant-legends-arceus",
+    "from": {
+      "species": "petilil"
+    },
+    "to": {
+      "species": "lilligant"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Sun Stone"
+      },
+      {
+        "condition": "other",
+        "description": "in Hisui"
+      }
+    ]
+  },
+  {
+    "id": "phanpy-to-donphan",
+    "from": {
+      "species": "phanpy"
+    },
+    "to": {
+      "species": "donphan"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "phantump-to-trevenant",
+    "from": {
+      "species": "phantump"
+    },
+    "to": {
+      "species": "trevenant"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "pichu-to-pikachu",
+    "from": {
+      "species": "pichu"
+    },
+    "to": {
+      "species": "pikachu"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 220
+      }
+    ]
+  },
+  {
+    "id": "pidgeotto-to-pidgeot",
+    "from": {
+      "species": "pidgeotto"
+    },
+    "to": {
+      "species": "pidgeot"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "pidgey-to-pidgeotto",
+    "from": {
+      "species": "pidgey"
+    },
+    "to": {
+      "species": "pidgeotto"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "pidove-to-tranquill",
+    "from": {
+      "species": "pidove"
+    },
+    "to": {
+      "species": "tranquill"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 21
+      }
+    ]
+  },
+  {
+    "id": "pignite-to-emboar",
+    "from": {
+      "species": "pignite"
+    },
+    "to": {
+      "species": "emboar"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "pikachu-to-raichu-red-blue",
+    "from": {
+      "species": "pikachu"
+    },
+    "to": {
+      "species": "raichu"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Thunder Stone"
+      }
+    ]
+  },
+  {
+    "id": "pikachu-to-raichu-sun-moon",
+    "from": {
+      "species": "pikachu"
+    },
+    "to": {
+      "species": "raichu"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Thunder Stone"
+      },
+      {
+        "condition": "other",
+        "description": "in Alola"
+      }
+    ]
+  },
+  {
+    "id": "pikipek-to-trumbeak",
+    "from": {
+      "species": "pikipek"
+    },
+    "to": {
+      "species": "trumbeak"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 14
+      }
+    ]
+  },
+  {
+    "id": "piloswine-to-mamoswine",
+    "from": {
+      "species": "piloswine"
+    },
+    "to": {
+      "species": "mamoswine"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Ancient Power"
+      }
+    ]
+  },
+  {
+    "id": "pineco-to-forretress",
+    "from": {
+      "species": "pineco"
+    },
+    "to": {
+      "species": "forretress"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 31
+      }
+    ]
+  },
+  {
+    "id": "piplup-to-prinplup",
+    "from": {
+      "species": "piplup"
+    },
+    "to": {
+      "species": "prinplup"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "poipole-to-naganadel",
+    "from": {
+      "species": "poipole"
+    },
+    "to": {
+      "species": "naganadel"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Dragon Pulse"
+      }
+    ]
+  },
+  {
+    "id": "poliwag-to-poliwhirl",
+    "from": {
+      "species": "poliwag"
+    },
+    "to": {
+      "species": "poliwhirl"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "poliwhirl-to-politoed",
+    "from": {
+      "species": "poliwhirl"
+    },
+    "to": {
+      "species": "politoed"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "King’s Rock"
+      }
+    ]
+  },
+  {
+    "id": "poliwhirl-to-poliwrath",
+    "from": {
+      "species": "poliwhirl"
+    },
+    "to": {
+      "species": "poliwrath"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Water Stone"
+      }
+    ]
+  },
+  {
+    "id": "poltchageist-to-sinistcha-the-teal-mask",
+    "from": {
+      "species": "poltchageist"
+    },
+    "to": {
+      "species": "sinistcha"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Unremarkable Teacup"
+      }
+    ]
+  },
+  {
+    "id": "poltchageist-to-sinistcha-the-teal-mask-2",
+    "from": {
+      "species": "poltchageist"
+    },
+    "to": {
+      "species": "sinistcha"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Masterpiece Teacup"
+      }
+    ]
+  },
+  {
+    "id": "ponyta-to-rapidash-red-blue",
+    "from": {
+      "species": "ponyta"
+    },
+    "to": {
+      "species": "rapidash"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "ponyta-to-rapidash-sword-shield",
+    "from": {
+      "species": "ponyta"
+    },
+    "to": {
+      "species": "rapidash"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "poochyena-to-mightyena",
+    "from": {
+      "species": "poochyena"
+    },
+    "to": {
+      "species": "mightyena"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "popplio-to-brionne",
+    "from": {
+      "species": "popplio"
+    },
+    "to": {
+      "species": "brionne"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 17
+      }
+    ]
+  },
+  {
+    "id": "porygon-to-porygon2",
+    "from": {
+      "species": "porygon"
+    },
+    "to": {
+      "species": "porygon2"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Upgrade"
+      }
+    ]
+  },
+  {
+    "id": "porygon2-to-porygon-z",
+    "from": {
+      "species": "porygon2"
+    },
+    "to": {
+      "species": "porygon-z"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Dubious Disc"
+      }
+    ]
+  },
+  {
+    "id": "primeape-to-annihilape",
+    "from": {
+      "species": "primeape"
+    },
+    "to": {
+      "species": "annihilape"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "use move"
+      }
+    ]
+  },
+  {
+    "id": "prinplup-to-empoleon",
+    "from": {
+      "species": "prinplup"
+    },
+    "to": {
+      "species": "empoleon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "psyduck-to-golduck",
+    "from": {
+      "species": "psyduck"
+    },
+    "to": {
+      "species": "golduck"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 33
+      }
+    ]
+  },
+  {
+    "id": "pumpkaboo-to-gourgeist",
+    "from": {
+      "species": "pumpkaboo"
+    },
+    "to": {
+      "species": "gourgeist"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "pupitar-to-tyranitar",
+    "from": {
+      "species": "pupitar"
+    },
+    "to": {
+      "species": "tyranitar"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 55
+      }
+    ]
+  },
+  {
+    "id": "purrloin-to-liepard",
+    "from": {
+      "species": "purrloin"
+    },
+    "to": {
+      "species": "liepard"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "quaxly-to-quaxwell",
+    "from": {
+      "species": "quaxly"
+    },
+    "to": {
+      "species": "quaxwell"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "quaxwell-to-quaquaval",
+    "from": {
+      "species": "quaxwell"
+    },
+    "to": {
+      "species": "quaquaval"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "quilava-to-typhlosion-gold-silver",
+    "from": {
+      "species": "quilava"
+    },
+    "to": {
+      "species": "typhlosion"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "quilava-to-typhlosion-legends-arceus",
+    "from": {
+      "species": "quilava"
+    },
+    "to": {
+      "species": "typhlosion"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      },
+      {
+        "condition": "other",
+        "description": "in Hisui"
+      }
+    ]
+  },
+  {
+    "id": "quilladin-to-chesnaught",
+    "from": {
+      "species": "quilladin"
+    },
+    "to": {
+      "species": "chesnaught"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "qwilfish-to-overqwil-legends-arceus",
+    "from": {
+      "species": "qwilfish"
+    },
+    "to": {
+      "species": "overqwil"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after using a strong style move enough times"
+      }
+    ]
+  },
+  {
+    "id": "qwilfish-to-overqwil-legends-za",
+    "from": {
+      "species": "qwilfish"
+    },
+    "to": {
+      "species": "overqwil"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "use move"
+      }
+    ]
+  },
+  {
+    "id": "qwilfish-to-overqwil-scarlet-violet",
+    "from": {
+      "species": "qwilfish"
+    },
+    "to": {
+      "species": "overqwil"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Barb Barrage"
+      }
+    ]
+  },
+  {
+    "id": "raboot-to-cinderace",
+    "from": {
+      "species": "raboot"
+    },
+    "to": {
+      "species": "cinderace"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "ralts-to-kirlia",
+    "from": {
+      "species": "ralts"
+    },
+    "to": {
+      "species": "kirlia"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "rattata-to-raticate-red-blue",
+    "from": {
+      "species": "rattata"
+    },
+    "to": {
+      "species": "raticate"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "rattata-to-raticate-sun-moon",
+    "from": {
+      "species": "rattata"
+    },
+    "to": {
+      "species": "raticate"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      }
+    ]
+  },
+  {
+    "id": "rellor-to-rabsca",
+    "from": {
+      "species": "rellor"
+    },
+    "to": {
+      "species": "rabsca"
+    },
+    "trigger": "levelUp",
+    "conditions": []
+  },
+  {
+    "id": "remoraid-to-octillery",
+    "from": {
+      "species": "remoraid"
+    },
+    "to": {
+      "species": "octillery"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "rhydon-to-rhyperior",
+    "from": {
+      "species": "rhydon"
+    },
+    "to": {
+      "species": "rhyperior"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Protector"
+      }
+    ]
+  },
+  {
+    "id": "rhyhorn-to-rhydon",
+    "from": {
+      "species": "rhyhorn"
+    },
+    "to": {
+      "species": "rhydon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 42
+      }
+    ]
+  },
+  {
+    "id": "riolu-to-lucario",
+    "from": {
+      "species": "riolu"
+    },
+    "to": {
+      "species": "lucario"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "day"
+      }
+    ]
+  },
+  {
+    "id": "rockruff-to-lycanroc-sun-moon",
+    "from": {
+      "species": "rockruff"
+    },
+    "to": {
+      "species": "lycanroc"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "day"
+      }
+    ]
+  },
+  {
+    "id": "rockruff-to-lycanroc-sun-moon-2",
+    "from": {
+      "species": "rockruff"
+    },
+    "to": {
+      "species": "lycanroc"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      }
+    ]
+  },
+  {
+    "id": "rockruff-to-lycanroc-sun-moon-3",
+    "from": {
+      "species": "rockruff"
+    },
+    "to": {
+      "species": "lycanroc"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "dusk"
+      }
+    ]
+  },
+  {
+    "id": "roggenrola-to-boldore",
+    "from": {
+      "species": "roggenrola"
+    },
+    "to": {
+      "species": "boldore"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "rolycoly-to-carkol",
+    "from": {
+      "species": "rolycoly"
+    },
+    "to": {
+      "species": "carkol"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "rookidee-to-corvisquire",
+    "from": {
+      "species": "rookidee"
+    },
+    "to": {
+      "species": "corvisquire"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "roselia-to-roserade",
+    "from": {
+      "species": "roselia"
+    },
+    "to": {
+      "species": "roserade"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Shiny Stone"
+      }
+    ]
+  },
+  {
+    "id": "rowlet-to-dartrix",
+    "from": {
+      "species": "rowlet"
+    },
+    "to": {
+      "species": "dartrix"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 17
+      }
+    ]
+  },
+  {
+    "id": "rufflet-to-braviary-black-white",
+    "from": {
+      "species": "rufflet"
+    },
+    "to": {
+      "species": "braviary"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 54
+      }
+    ]
+  },
+  {
+    "id": "rufflet-to-braviary-legends-arceus",
+    "from": {
+      "species": "rufflet"
+    },
+    "to": {
+      "species": "braviary"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 54
+      },
+      {
+        "condition": "other",
+        "description": "in Hisui"
+      }
+    ]
+  },
+  {
+    "id": "salandit-to-salazzle",
+    "from": {
+      "species": "salandit"
+    },
+    "to": {
+      "species": "salazzle"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 33
+      },
+      {
+        "condition": "gender",
+        "gender": "female"
+      }
+    ]
+  },
+  {
+    "id": "sandile-to-krokorok",
+    "from": {
+      "species": "sandile"
+    },
+    "to": {
+      "species": "krokorok"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 29
+      }
+    ]
+  },
+  {
+    "id": "sandshrew-to-sandslash-red-blue",
+    "from": {
+      "species": "sandshrew"
+    },
+    "to": {
+      "species": "sandslash"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": "sandshrew-to-sandslash-sun-moon",
+    "from": {
+      "species": "sandshrew"
+    },
+    "to": {
+      "species": "sandslash"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Ice Stone"
+      }
+    ]
+  },
+  {
+    "id": "sandygast-to-palossand",
+    "from": {
+      "species": "sandygast"
+    },
+    "to": {
+      "species": "palossand"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 42
+      }
+    ]
+  },
+  {
+    "id": "scatterbug-to-spewpa",
+    "from": {
+      "species": "scatterbug"
+    },
+    "to": {
+      "species": "spewpa"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 9
+      }
+    ]
+  },
+  {
+    "id": "scorbunny-to-raboot",
+    "from": {
+      "species": "scorbunny"
+    },
+    "to": {
+      "species": "raboot"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "scraggy-to-scrafty",
+    "from": {
+      "species": "scraggy"
+    },
+    "to": {
+      "species": "scrafty"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 39
+      }
+    ]
+  },
+  {
+    "id": "scyther-to-kleavor",
+    "from": {
+      "species": "scyther"
+    },
+    "to": {
+      "species": "kleavor"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Black Augurite"
+      }
+    ]
+  },
+  {
+    "id": "scyther-to-scizor",
+    "from": {
+      "species": "scyther"
+    },
+    "to": {
+      "species": "scizor"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Metal Coat"
+      }
+    ]
+  },
+  {
+    "id": "seadra-to-kingdra",
+    "from": {
+      "species": "seadra"
+    },
+    "to": {
+      "species": "kingdra"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Dragon Scale"
+      }
+    ]
+  },
+  {
+    "id": "sealeo-to-walrein",
+    "from": {
+      "species": "sealeo"
+    },
+    "to": {
+      "species": "walrein"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 44
+      }
+    ]
+  },
+  {
+    "id": "seedot-to-nuzleaf",
+    "from": {
+      "species": "seedot"
+    },
+    "to": {
+      "species": "nuzleaf"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 14
+      }
+    ]
+  },
+  {
+    "id": "seel-to-dewgong",
+    "from": {
+      "species": "seel"
+    },
+    "to": {
+      "species": "dewgong"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "sentret-to-furret",
+    "from": {
+      "species": "sentret"
+    },
+    "to": {
+      "species": "furret"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "id": "servine-to-serperior",
+    "from": {
+      "species": "servine"
+    },
+    "to": {
+      "species": "serperior"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "sewaddle-to-swadloon",
+    "from": {
+      "species": "sewaddle"
+    },
+    "to": {
+      "species": "swadloon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "shelgon-to-salamence",
+    "from": {
+      "species": "shelgon"
+    },
+    "to": {
+      "species": "salamence"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 50
+      }
+    ]
+  },
+  {
+    "id": "shellder-to-cloyster",
+    "from": {
+      "species": "shellder"
+    },
+    "to": {
+      "species": "cloyster"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Water Stone"
+      }
+    ]
+  },
+  {
+    "id": "shellos-to-gastrodon",
+    "from": {
+      "species": "shellos"
+    },
+    "to": {
+      "species": "gastrodon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "shelmet-to-accelgor",
+    "from": {
+      "species": "shelmet"
+    },
+    "to": {
+      "species": "accelgor"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "tradePartner",
+        "species": "karrablast"
+      }
+    ]
+  },
+  {
+    "id": "shieldon-to-bastiodon",
+    "from": {
+      "species": "shieldon"
+    },
+    "to": {
+      "species": "bastiodon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "shinx-to-luxio",
+    "from": {
+      "species": "shinx"
+    },
+    "to": {
+      "species": "luxio"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "id": "shroodle-to-grafaiai",
+    "from": {
+      "species": "shroodle"
+    },
+    "to": {
+      "species": "grafaiai"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": "shroomish-to-breloom",
+    "from": {
+      "species": "shroomish"
+    },
+    "to": {
+      "species": "breloom"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 23
+      }
+    ]
+  },
+  {
+    "id": "shuppet-to-banette",
+    "from": {
+      "species": "shuppet"
+    },
+    "to": {
+      "species": "banette"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      }
+    ]
+  },
+  {
+    "id": "silcoon-to-beautifly",
+    "from": {
+      "species": "silcoon"
+    },
+    "to": {
+      "species": "beautifly"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 10
+      }
+    ]
+  },
+  {
+    "id": "silicobra-to-sandaconda",
+    "from": {
+      "species": "silicobra"
+    },
+    "to": {
+      "species": "sandaconda"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "sinistea-to-polteageist-sword-shield",
+    "from": {
+      "species": "sinistea"
+    },
+    "to": {
+      "species": "polteageist"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Cracked Pot"
+      }
+    ]
+  },
+  {
+    "id": "sinistea-to-polteageist-sword-shield-2",
+    "from": {
+      "species": "sinistea"
+    },
+    "to": {
+      "species": "polteageist"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Chipped Pot"
+      }
+    ]
+  },
+  {
+    "id": "sizzlipede-to-centiskorch",
+    "from": {
+      "species": "sizzlipede"
+    },
+    "to": {
+      "species": "centiskorch"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": "skiddo-to-gogoat",
+    "from": {
+      "species": "skiddo"
+    },
+    "to": {
+      "species": "gogoat"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "skiploom-to-jumpluff",
+    "from": {
+      "species": "skiploom"
+    },
+    "to": {
+      "species": "jumpluff"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 27
+      }
+    ]
+  },
+  {
+    "id": "skitty-to-delcatty",
+    "from": {
+      "species": "skitty"
+    },
+    "to": {
+      "species": "delcatty"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Moon Stone"
+      }
+    ]
+  },
+  {
+    "id": "skorupi-to-drapion",
+    "from": {
+      "species": "skorupi"
+    },
+    "to": {
+      "species": "drapion"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "skrelp-to-dragalge",
+    "from": {
+      "species": "skrelp"
+    },
+    "to": {
+      "species": "dragalge"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 48
+      }
+    ]
+  },
+  {
+    "id": "skwovet-to-greedent",
+    "from": {
+      "species": "skwovet"
+    },
+    "to": {
+      "species": "greedent"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 24
+      }
+    ]
+  },
+  {
+    "id": "slakoth-to-vigoroth",
+    "from": {
+      "species": "slakoth"
+    },
+    "to": {
+      "species": "vigoroth"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "sliggoo-to-goodra-legends-arceus",
+    "from": {
+      "species": "sliggoo"
+    },
+    "to": {
+      "species": "goodra"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 50
+      },
+      {
+        "condition": "other",
+        "description": "while it is raining outside"
+      }
+    ]
+  },
+  {
+    "id": "sliggoo-to-goodra-x-y",
+    "from": {
+      "species": "sliggoo"
+    },
+    "to": {
+      "species": "goodra"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 50
+      },
+      {
+        "condition": "other",
+        "description": "while it is raining outside"
+      }
+    ]
+  },
+  {
+    "id": "slowpoke-to-slowbro-red-blue",
+    "from": {
+      "species": "slowpoke"
+    },
+    "to": {
+      "species": "slowbro"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      }
+    ]
+  },
+  {
+    "id": "slowpoke-to-slowbro-the-isle-of-armor",
+    "from": {
+      "species": "slowpoke"
+    },
+    "to": {
+      "species": "slowbro"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Galarica Cuff"
+      }
+    ]
+  },
+  {
+    "id": "slowpoke-to-slowking-gold-silver",
+    "from": {
+      "species": "slowpoke"
+    },
+    "to": {
+      "species": "slowking"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "King’s Rock"
+      }
+    ]
+  },
+  {
+    "id": "slowpoke-to-slowking-the-isle-of-armor",
+    "from": {
+      "species": "slowpoke"
+    },
+    "to": {
+      "species": "slowking"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Galarica Wreath"
+      }
+    ]
+  },
+  {
+    "id": "slugma-to-magcargo",
+    "from": {
+      "species": "slugma"
+    },
+    "to": {
+      "species": "magcargo"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": "smoliv-to-dolliv",
+    "from": {
+      "species": "smoliv"
+    },
+    "to": {
+      "species": "dolliv"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "smoochum-to-jynx",
+    "from": {
+      "species": "smoochum"
+    },
+    "to": {
+      "species": "jynx"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "sneasel-to-sneasler",
+    "from": {
+      "species": "sneasel"
+    },
+    "to": {
+      "species": "sneasler"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Razor Claw"
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "day"
+      }
+    ]
+  },
+  {
+    "id": "sneasel-to-weavile",
+    "from": {
+      "species": "sneasel"
+    },
+    "to": {
+      "species": "weavile"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Razor Claw"
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      }
+    ]
+  },
+  {
+    "id": "snivy-to-servine",
+    "from": {
+      "species": "snivy"
+    },
+    "to": {
+      "species": "servine"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 17
+      }
+    ]
+  },
+  {
+    "id": "snom-to-frosmoth",
+    "from": {
+      "species": "snom"
+    },
+    "to": {
+      "species": "frosmoth"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      }
+    ]
+  },
+  {
+    "id": "snorunt-to-froslass",
+    "from": {
+      "species": "snorunt"
+    },
+    "to": {
+      "species": "froslass"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Dawn Stone"
+      },
+      {
+        "condition": "gender",
+        "gender": "female"
+      }
+    ]
+  },
+  {
+    "id": "snorunt-to-glalie",
+    "from": {
+      "species": "snorunt"
+    },
+    "to": {
+      "species": "glalie"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 42
+      }
+    ]
+  },
+  {
+    "id": "snover-to-abomasnow",
+    "from": {
+      "species": "snover"
+    },
+    "to": {
+      "species": "abomasnow"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "snubbull-to-granbull",
+    "from": {
+      "species": "snubbull"
+    },
+    "to": {
+      "species": "granbull"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 23
+      }
+    ]
+  },
+  {
+    "id": "sobble-to-drizzile",
+    "from": {
+      "species": "sobble"
+    },
+    "to": {
+      "species": "drizzile"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "solosis-to-duosion",
+    "from": {
+      "species": "solosis"
+    },
+    "to": {
+      "species": "duosion"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "spearow-to-fearow",
+    "from": {
+      "species": "spearow"
+    },
+    "to": {
+      "species": "fearow"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "spewpa-to-vivillon",
+    "from": {
+      "species": "spewpa"
+    },
+    "to": {
+      "species": "vivillon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 12
+      }
+    ]
+  },
+  {
+    "id": "spheal-to-sealeo",
+    "from": {
+      "species": "spheal"
+    },
+    "to": {
+      "species": "sealeo"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "spinarak-to-ariados",
+    "from": {
+      "species": "spinarak"
+    },
+    "to": {
+      "species": "ariados"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": "spoink-to-grumpig",
+    "from": {
+      "species": "spoink"
+    },
+    "to": {
+      "species": "grumpig"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "sprigatito-to-floragato",
+    "from": {
+      "species": "sprigatito"
+    },
+    "to": {
+      "species": "floragato"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "spritzee-to-aromatisse",
+    "from": {
+      "species": "spritzee"
+    },
+    "to": {
+      "species": "aromatisse"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Sachet"
+      }
+    ]
+  },
+  {
+    "id": "squirtle-to-wartortle",
+    "from": {
+      "species": "squirtle"
+    },
+    "to": {
+      "species": "wartortle"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "stantler-to-wyrdeer",
+    "from": {
+      "species": "stantler"
+    },
+    "to": {
+      "species": "wyrdeer"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after using an agile style move enough times"
+      }
+    ]
+  },
+  {
+    "id": "staravia-to-staraptor",
+    "from": {
+      "species": "staravia"
+    },
+    "to": {
+      "species": "staraptor"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "starly-to-staravia",
+    "from": {
+      "species": "starly"
+    },
+    "to": {
+      "species": "staravia"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 14
+      }
+    ]
+  },
+  {
+    "id": "staryu-to-starmie",
+    "from": {
+      "species": "staryu"
+    },
+    "to": {
+      "species": "starmie"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Water Stone"
+      }
+    ]
+  },
+  {
+    "id": "steenee-to-tsareena",
+    "from": {
+      "species": "steenee"
+    },
+    "to": {
+      "species": "tsareena"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Stomp"
+      }
+    ]
+  },
+  {
+    "id": "stufful-to-bewear",
+    "from": {
+      "species": "stufful"
+    },
+    "to": {
+      "species": "bewear"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 27
+      }
+    ]
+  },
+  {
+    "id": "stunky-to-skuntank",
+    "from": {
+      "species": "stunky"
+    },
+    "to": {
+      "species": "skuntank"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "sunkern-to-sunflora",
+    "from": {
+      "species": "sunkern"
+    },
+    "to": {
+      "species": "sunflora"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Sun Stone"
+      }
+    ]
+  },
+  {
+    "id": "surskit-to-masquerain",
+    "from": {
+      "species": "surskit"
+    },
+    "to": {
+      "species": "masquerain"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": "swablu-to-altaria",
+    "from": {
+      "species": "swablu"
+    },
+    "to": {
+      "species": "altaria"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "swadloon-to-leavanny",
+    "from": {
+      "species": "swadloon"
+    },
+    "to": {
+      "species": "leavanny"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 220
+      }
+    ]
+  },
+  {
+    "id": "swinub-to-piloswine",
+    "from": {
+      "species": "swinub"
+    },
+    "to": {
+      "species": "piloswine"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 33
+      }
+    ]
+  },
+  {
+    "id": "swirlix-to-slurpuff",
+    "from": {
+      "species": "swirlix"
+    },
+    "to": {
+      "species": "slurpuff"
+    },
+    "trigger": "trade",
+    "conditions": [
+      {
+        "condition": "heldItem",
+        "item": "Whipped Dream"
+      }
+    ]
+  },
+  {
+    "id": "tadbulb-to-bellibolt",
+    "from": {
+      "species": "tadbulb"
+    },
+    "to": {
+      "species": "bellibolt"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Thunder Stone"
+      }
+    ]
+  },
+  {
+    "id": "taillow-to-swellow",
+    "from": {
+      "species": "taillow"
+    },
+    "to": {
+      "species": "swellow"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": "tandemaus-to-maushold-scarlet-violet",
+    "from": {
+      "species": "tandemaus"
+    },
+    "to": {
+      "species": "maushold"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "in battle level up"
+      },
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      },
+      {
+        "condition": "other",
+        "description": "a 99% chance"
+      }
+    ]
+  },
+  {
+    "id": "tandemaus-to-maushold-scarlet-violet-2",
+    "from": {
+      "species": "tandemaus"
+    },
+    "to": {
+      "species": "maushold"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "in battle level up"
+      },
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      },
+      {
+        "condition": "other",
+        "description": "a 1% chance"
+      }
+    ]
+  },
+  {
+    "id": "tangela-to-tangrowth",
+    "from": {
+      "species": "tangela"
+    },
+    "to": {
+      "species": "tangrowth"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Ancient Power"
+      }
+    ]
+  },
+  {
+    "id": "tarountula-to-spidops",
+    "from": {
+      "species": "tarountula"
+    },
+    "to": {
+      "species": "spidops"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "id": "teddiursa-to-ursaring",
+    "from": {
+      "species": "teddiursa"
+    },
+    "to": {
+      "species": "ursaring"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "tentacool-to-tentacruel",
+    "from": {
+      "species": "tentacool"
+    },
+    "to": {
+      "species": "tentacruel"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "tepig-to-pignite",
+    "from": {
+      "species": "tepig"
+    },
+    "to": {
+      "species": "pignite"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 17
+      }
+    ]
+  },
+  {
+    "id": "thwackey-to-rillaboom",
+    "from": {
+      "species": "thwackey"
+    },
+    "to": {
+      "species": "rillaboom"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "timburr-to-gurdurr",
+    "from": {
+      "species": "timburr"
+    },
+    "to": {
+      "species": "gurdurr"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "tinkatink-to-tinkatuff",
+    "from": {
+      "species": "tinkatink"
+    },
+    "to": {
+      "species": "tinkatuff"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 24
+      }
+    ]
+  },
+  {
+    "id": "tinkatuff-to-tinkaton",
+    "from": {
+      "species": "tinkatuff"
+    },
+    "to": {
+      "species": "tinkaton"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 38
+      }
+    ]
+  },
+  {
+    "id": "tirtouga-to-carracosta",
+    "from": {
+      "species": "tirtouga"
+    },
+    "to": {
+      "species": "carracosta"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      }
+    ]
+  },
+  {
+    "id": "toedscool-to-toedscruel",
+    "from": {
+      "species": "toedscool"
+    },
+    "to": {
+      "species": "toedscruel"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "togepi-to-togetic",
+    "from": {
+      "species": "togepi"
+    },
+    "to": {
+      "species": "togetic"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      }
+    ]
+  },
+  {
+    "id": "togetic-to-togekiss",
+    "from": {
+      "species": "togetic"
+    },
+    "to": {
+      "species": "togekiss"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Shiny Stone"
+      }
+    ]
+  },
+  {
+    "id": "torchic-to-combusken",
+    "from": {
+      "species": "torchic"
+    },
+    "to": {
+      "species": "combusken"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "torracat-to-incineroar",
+    "from": {
+      "species": "torracat"
+    },
+    "to": {
+      "species": "incineroar"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "totodile-to-croconaw",
+    "from": {
+      "species": "totodile"
+    },
+    "to": {
+      "species": "croconaw"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "toxel-to-toxtricity",
+    "from": {
+      "species": "toxel"
+    },
+    "to": {
+      "species": "toxtricity"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "tranquill-to-unfezant",
+    "from": {
+      "species": "tranquill"
+    },
+    "to": {
+      "species": "unfezant"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 32
+      }
+    ]
+  },
+  {
+    "id": "trapinch-to-vibrava",
+    "from": {
+      "species": "trapinch"
+    },
+    "to": {
+      "species": "vibrava"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "treecko-to-grovyle",
+    "from": {
+      "species": "treecko"
+    },
+    "to": {
+      "species": "grovyle"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 16
+      }
+    ]
+  },
+  {
+    "id": "trubbish-to-garbodor",
+    "from": {
+      "species": "trubbish"
+    },
+    "to": {
+      "species": "garbodor"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "trumbeak-to-toucannon",
+    "from": {
+      "species": "trumbeak"
+    },
+    "to": {
+      "species": "toucannon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 28
+      }
+    ]
+  },
+  {
+    "id": "turtwig-to-grotle",
+    "from": {
+      "species": "turtwig"
+    },
+    "to": {
+      "species": "grotle"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 18
+      }
+    ]
+  },
+  {
+    "id": "tympole-to-palpitoad",
+    "from": {
+      "species": "tympole"
+    },
+    "to": {
+      "species": "palpitoad"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "tynamo-to-eelektrik",
+    "from": {
+      "species": "tynamo"
+    },
+    "to": {
+      "species": "eelektrik"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 39
+      }
+    ]
+  },
+  {
+    "id": "type-null-to-silvally",
+    "from": {
+      "species": "type-null"
+    },
+    "to": {
+      "species": "silvally"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      }
+    ]
+  },
+  {
+    "id": "tyrogue-to-hitmonchan",
+    "from": {
+      "species": "tyrogue"
+    },
+    "to": {
+      "species": "hitmonchan"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      },
+      {
+        "condition": "other",
+        "description": "with Defense higher than Attack"
+      }
+    ]
+  },
+  {
+    "id": "tyrogue-to-hitmonlee",
+    "from": {
+      "species": "tyrogue"
+    },
+    "to": {
+      "species": "hitmonlee"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      },
+      {
+        "condition": "other",
+        "description": "with Attack higher than Defense"
+      }
+    ]
+  },
+  {
+    "id": "tyrogue-to-hitmontop",
+    "from": {
+      "species": "tyrogue"
+    },
+    "to": {
+      "species": "hitmontop"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      },
+      {
+        "condition": "other",
+        "description": "with Attack and Defense equal"
+      }
+    ]
+  },
+  {
+    "id": "tyrunt-to-tyrantrum",
+    "from": {
+      "species": "tyrunt"
+    },
+    "to": {
+      "species": "tyrantrum"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 39
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "day"
+      }
+    ]
+  },
+  {
+    "id": "ursaring-to-ursaluna",
+    "from": {
+      "species": "ursaring"
+    },
+    "to": {
+      "species": "ursaluna"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Peat Block"
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "full-moon"
+      }
+    ]
+  },
+  {
+    "id": "vanillish-to-vanilluxe",
+    "from": {
+      "species": "vanillish"
+    },
+    "to": {
+      "species": "vanilluxe"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 47
+      }
+    ]
+  },
+  {
+    "id": "vanillite-to-vanillish",
+    "from": {
+      "species": "vanillite"
+    },
+    "to": {
+      "species": "vanillish"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 35
+      }
+    ]
+  },
+  {
+    "id": "varoom-to-revavroom",
+    "from": {
+      "species": "varoom"
+    },
+    "to": {
+      "species": "revavroom"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "venipede-to-whirlipede",
+    "from": {
+      "species": "venipede"
+    },
+    "to": {
+      "species": "whirlipede"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": "venonat-to-venomoth",
+    "from": {
+      "species": "venonat"
+    },
+    "to": {
+      "species": "venomoth"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 31
+      }
+    ]
+  },
+  {
+    "id": "vibrava-to-flygon",
+    "from": {
+      "species": "vibrava"
+    },
+    "to": {
+      "species": "flygon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 45
+      }
+    ]
+  },
+  {
+    "id": "vigoroth-to-slaking",
+    "from": {
+      "species": "vigoroth"
+    },
+    "to": {
+      "species": "slaking"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "voltorb-to-electrode-legends-arceus",
+    "from": {
+      "species": "voltorb"
+    },
+    "to": {
+      "species": "electrode"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Leaf Stone"
+      }
+    ]
+  },
+  {
+    "id": "voltorb-to-electrode-red-blue",
+    "from": {
+      "species": "voltorb"
+    },
+    "to": {
+      "species": "electrode"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "vullaby-to-mandibuzz",
+    "from": {
+      "species": "vullaby"
+    },
+    "to": {
+      "species": "mandibuzz"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 54
+      }
+    ]
+  },
+  {
+    "id": "vulpix-to-ninetales-red-blue",
+    "from": {
+      "species": "vulpix"
+    },
+    "to": {
+      "species": "ninetales"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Fire Stone"
+      }
+    ]
+  },
+  {
+    "id": "vulpix-to-ninetales-sun-moon",
+    "from": {
+      "species": "vulpix"
+    },
+    "to": {
+      "species": "ninetales"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Ice Stone"
+      }
+    ]
+  },
+  {
+    "id": "wailmer-to-wailord",
+    "from": {
+      "species": "wailmer"
+    },
+    "to": {
+      "species": "wailord"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "wartortle-to-blastoise",
+    "from": {
+      "species": "wartortle"
+    },
+    "to": {
+      "species": "blastoise"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      }
+    ]
+  },
+  {
+    "id": "wattrel-to-kilowattrel",
+    "from": {
+      "species": "wattrel"
+    },
+    "to": {
+      "species": "kilowattrel"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "weedle-to-kakuna",
+    "from": {
+      "species": "weedle"
+    },
+    "to": {
+      "species": "kakuna"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 7
+      }
+    ]
+  },
+  {
+    "id": "weepinbell-to-victreebel",
+    "from": {
+      "species": "weepinbell"
+    },
+    "to": {
+      "species": "victreebel"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Leaf Stone"
+      }
+    ]
+  },
+  {
+    "id": "whirlipede-to-scolipede",
+    "from": {
+      "species": "whirlipede"
+    },
+    "to": {
+      "species": "scolipede"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "whismur-to-loudred",
+    "from": {
+      "species": "whismur"
+    },
+    "to": {
+      "species": "loudred"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "wiglett-to-wugtrio",
+    "from": {
+      "species": "wiglett"
+    },
+    "to": {
+      "species": "wugtrio"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 26
+      }
+    ]
+  },
+  {
+    "id": "wimpod-to-golisopod",
+    "from": {
+      "species": "wimpod"
+    },
+    "to": {
+      "species": "golisopod"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "wingull-to-pelipper",
+    "from": {
+      "species": "wingull"
+    },
+    "to": {
+      "species": "pelipper"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "woobat-to-swoobat",
+    "from": {
+      "species": "woobat"
+    },
+    "to": {
+      "species": "swoobat"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "friendship",
+        "minimum": 160
+      }
+    ]
+  },
+  {
+    "id": "wooloo-to-dubwool",
+    "from": {
+      "species": "wooloo"
+    },
+    "to": {
+      "species": "dubwool"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 24
+      }
+    ]
+  },
+  {
+    "id": "wooper-to-clodsire",
+    "from": {
+      "species": "wooper"
+    },
+    "to": {
+      "species": "clodsire"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "wooper-to-quagsire",
+    "from": {
+      "species": "wooper"
+    },
+    "to": {
+      "species": "quagsire"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "wurmple-to-cascoon-ruby-sapphire",
+    "from": {
+      "species": "wurmple"
+    },
+    "to": {
+      "species": "cascoon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 7
+      },
+      {
+        "condition": "other",
+        "description": "a 50% chance"
+      }
+    ]
+  },
+  {
+    "id": "wurmple-to-cascoon-x-y",
+    "from": {
+      "species": "wurmple"
+    },
+    "to": {
+      "species": "cascoon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 7
+      },
+      {
+        "condition": "other",
+        "description": "a 50% chance"
+      }
+    ]
+  },
+  {
+    "id": "wurmple-to-silcoon-ruby-sapphire",
+    "from": {
+      "species": "wurmple"
+    },
+    "to": {
+      "species": "silcoon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 7
+      },
+      {
+        "condition": "other",
+        "description": "a 50% chance"
+      }
+    ]
+  },
+  {
+    "id": "wurmple-to-silcoon-x-y",
+    "from": {
+      "species": "wurmple"
+    },
+    "to": {
+      "species": "silcoon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 7
+      },
+      {
+        "condition": "other",
+        "description": "a 50% chance"
+      }
+    ]
+  },
+  {
+    "id": "wynaut-to-wobbuffet",
+    "from": {
+      "species": "wynaut"
+    },
+    "to": {
+      "species": "wobbuffet"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 15
+      }
+    ]
+  },
+  {
+    "id": "yamask-to-cofagrigus",
+    "from": {
+      "species": "yamask"
+    },
+    "to": {
+      "species": "cofagrigus"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "yamask-to-runerigus",
+    "from": {
+      "species": "yamask"
+    },
+    "to": {
+      "species": "runerigus"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after taking enough damage without fainting"
+      },
+      {
+        "condition": "location",
+        "location": "Dusty Bowl"
+      }
+    ]
+  },
+  {
+    "id": "yamper-to-boltund",
+    "from": {
+      "species": "yamper"
+    },
+    "to": {
+      "species": "boltund"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      }
+    ]
+  },
+  {
+    "id": "yanma-to-yanmega",
+    "from": {
+      "species": "yanma"
+    },
+    "to": {
+      "species": "yanmega"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "knownMove",
+        "move": "Ancient Power"
+      }
+    ]
+  },
+  {
+    "id": "yungoos-to-gumshoos",
+    "from": {
+      "species": "yungoos"
+    },
+    "to": {
+      "species": "gumshoos"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "day"
+      }
+    ]
+  },
+  {
+    "id": "zigzagoon-to-linoone-ruby-sapphire",
+    "from": {
+      "species": "zigzagoon"
+    },
+    "to": {
+      "species": "linoone"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "zigzagoon-to-linoone-sword-shield",
+    "from": {
+      "species": "zigzagoon"
+    },
+    "to": {
+      "species": "linoone"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      }
+    ]
+  },
+  {
+    "id": "zorua-to-zoroark-black-white",
+    "from": {
+      "species": "zorua"
+    },
+    "to": {
+      "species": "zoroark"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "zorua-to-zoroark-legends-arceus",
+    "from": {
+      "species": "zorua"
+    },
+    "to": {
+      "species": "zoroark"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "zubat-to-golbat",
+    "from": {
+      "species": "zubat"
+    },
+    "to": {
+      "species": "golbat"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 22
+      }
+    ]
+  },
+  {
+    "id": "zweilous-to-hydreigon",
+    "from": {
+      "species": "zweilous"
+    },
+    "to": {
+      "species": "hydreigon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 64
+      }
+    ]
+  }
+]

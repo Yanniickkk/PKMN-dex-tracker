@@ -13,12 +13,13 @@ from pathlib import Path
 import httpx
 
 from .boxart import ARCHIVES_MIN_INTERVAL, BoxArtError, fetch_box_art
-from .emit import DatasetWriter, read_dataset, stamp_for
+from .emit import DatasetWriter, read_dataset, read_species, stamp_for
+from .evolutions import evolution_rules
 from .games import BuildContext, GameRegistry, UnknownGameError
 from .http import PoliteClient, RobotsDisallowed
 from .icons import fetch_icons
 from .merge import MergeResult
-from .models import EvolutionRule, Form, Species, TransferEdge
+from .models import EvolutionRule, Form, GameData, Species, TransferEdge
 from .pokeapi import PokeApiClient
 from .validate import ValidationReport, validate
 
@@ -133,6 +134,8 @@ class Build:
         # rightly refuses.
         wanted = self.registry.game_ids if game_id is None else [game_id]
 
+        built: list[GameData] = []
+
         for wanted_id in wanted:
             try:
                 data = self.registry.build(
@@ -141,7 +144,11 @@ class Build:
             except UnknownGameError as error:
                 raise BuildError(str(error)) from error
 
+            built.append(data)
             result.written.append(writer.write_game(data))
+
+        if self.sprites:
+            result.written.extend(self._fetch_game_sprites(api, client, built, writer))
 
         if self.box_art:
             result.written.extend(self._fetch_box_art(wanted, writer))
@@ -169,11 +176,11 @@ class Build:
         sprite_paths = self._fetch_sprites(api, client, species, writer) if self.sprites else []
         icon_paths = self._fetch_icons(client, writer) if self.icons else []
 
-        # Forms and evolution rules are still Phase 2 work; the files are written empty so the
-        # dataset is always a complete set rather than a partial one. The transfer graph is
-        # whatever the registered games brought with them.
+        # Forms are still Phase 2 work; the file is written empty so the dataset is always a
+        # complete set rather than a partial one. The transfer graph is whatever the registered
+        # games brought with them.
         forms: list[Form] = []
-        rules: list[EvolutionRule] = []
+        rules: list[EvolutionRule] = self._fetch_evolution_rules(api, species)
         edges: list[TransferEdge] = self.registry.edges
 
         for game_id, held in self.registry.held_back_edges:
@@ -205,6 +212,22 @@ class Build:
 
         return species
 
+    def _fetch_evolution_rules(
+        self,
+        api: PokeApiClient,
+        species: list[Species],
+    ) -> list[EvolutionRule]:
+        """Every rule in the chains the species table reaches.
+
+        Chains rather than species: everything in one chain shares it, so the 1025 species of a
+        full build are a few hundred fetches. A ``--limit`` build asks for fewer species and so
+        for fewer chains, which is what keeps a smoke build quick.
+        """
+        chains = sorted({one.evolution_chain for one in species})
+        log.info("evolution rules from %s chain(s)", len(chains))
+
+        return evolution_rules(api, chains=chains, refresh=self.refresh)
+
     def _fetch_sprites(
         self,
         api: PokeApiClient,
@@ -227,6 +250,85 @@ class Build:
             written.append(writer.write_sprite(f"{one.id}.png", body))
 
         return written
+
+    def _fetch_game_sprites(
+        self,
+        api: PokeApiClient,
+        client: PoliteClient,
+        built: list[GameData],
+        writer: DatasetWriter,
+    ) -> list[Path]:
+        """The battle sprites of each game that has a set of its own.
+
+        A set is fetched once however many games share it: Ruby and Sapphire were drawn from the
+        same sheet, and writing their sprites twice would double a directory for nothing.
+
+        How far a set reaches is the game's own reach. Emerald's National Dex stops at 386 and so
+        does its sprite sheet; a game with no National Dex is asked only for what its own dex
+        lists. A species the set has no picture of is logged and left out, and the app falls back
+        to the shared set for it - which is the "documented fallback" the checklist asks for.
+        """
+        species = read_species(self.dataset_root)
+        if not species:
+            return []
+
+        written: list[Path] = []
+        done: set[str] = set()
+
+        for data in built:
+            sprite_set = data.game.sprite_set
+            if sprite_set is None or sprite_set in done:
+                continue
+
+            done.add(sprite_set)
+            written.extend(self._fetch_sprite_set(api, client, sprite_set, data, species, writer))
+
+        return written
+
+    def _fetch_sprite_set(
+        self,
+        api: PokeApiClient,
+        client: PoliteClient,
+        sprite_set: str,
+        data: GameData,
+        species: list[Species],
+        writer: DatasetWriter,
+    ) -> list[Path]:
+        wanted = self._species_of(data, species)
+        log.info("%s sprites: %s species from %s", data.game.id, len(wanted), sprite_set)
+
+        written: list[Path] = []
+        missing = 0
+
+        for one in wanted:
+            url = api.sprite_url(one.national_dex_number, sprite_set)
+            try:
+                body = client.fetch(url, refresh=self.refresh).body
+            except (httpx.HTTPError, RobotsDisallowed) as error:
+                # Expected rather than exceptional: a set only covers what its generation drew.
+                log.debug("%s has no sprite in %s: %s", one.id, sprite_set, error)
+                missing += 1
+                continue
+
+            written.append(writer.write_sprite(f"{sprite_set}/{one.id}.png", body))
+
+        if missing:
+            log.info(
+                "%s of them are not in %s; those fall back to the shared set", missing, sprite_set
+            )
+
+        return written
+
+    @staticmethod
+    def _species_of(data: GameData, species: list[Species]) -> list[Species]:
+        """Every species this game's grid can draw."""
+        reach = data.game.national_dex_through
+        if reach is not None:
+            return [one for one in species if one.national_dex_number <= reach]
+
+        # No National Dex, so the grid is the game's own dex and nothing else.
+        listed = {entry.target.species for entry in data.dex_entries}
+        return [one for one in species if one.id in listed]
 
     def _fetch_icons(self, client: PoliteClient, writer: DatasetWriter) -> list[Path]:
         """One icon per way of getting a Pokemon. Shared by every game, so built with the tables."""

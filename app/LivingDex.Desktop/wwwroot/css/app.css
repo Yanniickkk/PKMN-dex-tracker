@@ -534,6 +534,15 @@ code {
   min-width: 0;
 }
 
+/* Breeding names every parent that works, and each one is a link. Laid out with a gap rather
+   than with spaces in the markup: Blazor drops whitespace-only nodes between elements. */
+.method-parents {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 5px;
+}
+
 .method-game {
   color: var(--muted);
   white-space: nowrap;

@@ -98,6 +98,46 @@
         "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
         "retrievedOn": "2026-09-21"
       }
+    },
+    {
+      "kind": "wild",
+      "game": "platinum",
+      "target": {
+        "species": "pikachu"
+      },
+      "location": "Trophy Garden",
+      "method": "walk",
+      "levels": {
+        "minimum": 16,
+        "maximum": 18
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "breeding",
+      "game": "platinum",
+      "target": {
+        "species": "pichu"
+      },
+      "parents": [
+        {
+          "species": "pikachu"
+        },
+        {
+          "species": "raichu"
+        }
+      ],
+      "location": "Solaceon Town",
+      "requirement": "A parent holding a Light Ball hatches a Pichu that knows Volt Tackle",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
     }
   ]
 }
