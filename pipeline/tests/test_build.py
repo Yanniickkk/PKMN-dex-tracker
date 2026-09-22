@@ -67,7 +67,7 @@ def test_a_single_game_build_keeps_the_index_whole(tmp_path: Path) -> None:
     build_for(tmp_path).run("platinum")
 
     index = json.loads((root / "index.json").read_text(encoding="utf-8"))
-    assert index["games"] == ["diamond", "emerald", "home", "platinum", "sword"]
+    assert index["games"] == ["diamond", "emerald", "home", "pearl", "platinum", "shield", "sword"]
     assert index["stamp"]["builtOn"] == "2026-09-21"
 
 
@@ -82,7 +82,9 @@ def test_a_build_leaves_a_validation_report_behind(tmp_path: Path) -> None:
         "every-entry-has-a-method",
         "no-evolution-dead-ends",
         "no-breeding-dead-ends",
+        "unobtainable-entries-really-are",
         "forms-referenced-exist",
+        "version-pairs-name-each-other",
         "transfer-edges-connect-known-games",
         "every-species-has-a-sprite",
         "every-game-has-box-art",
@@ -155,7 +157,9 @@ def test_the_validator_reads_what_was_written_not_what_was_in_memory(tmp_path: P
         "diamond",
         "emerald",
         "home",
+        "pearl",
         "platinum",
+        "shield",
         "sword",
     ]
 

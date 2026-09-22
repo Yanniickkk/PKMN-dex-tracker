@@ -9,7 +9,7 @@ from __future__ import annotations
 import pytest
 
 from livingdex_pipeline.build import default_registry
-from livingdex_pipeline.gamedefs import emerald, platinum
+from livingdex_pipeline.gamedefs import emerald, hoenn, platinum, ruby, sapphire
 from livingdex_pipeline.games import BuildContext, GameRegistry
 from livingdex_pipeline.models import (
     AllSpeciesFilter,
@@ -103,6 +103,16 @@ def stub(game_id: str) -> GameData:
     )
 
 
+def pal_park(left: str, right: str) -> TransferEdge:
+    return TransferEdge(
+        **{"from": left},
+        to=right,
+        mechanism=TransferMechanism.PAL_PARK,
+        direction=TransferDirection.ONE_WAY,
+        filter=AllSpeciesFilter(),
+    )
+
+
 def trade(left: str, right: str) -> TransferEdge:
     return TransferEdge(
         **{"from": left},
@@ -154,8 +164,8 @@ def test_emerald_marks_what_no_amount_of_playing_it_will_produce() -> None:
         entry.target.species: entry for entry in emerald.build(context("emerald", api)).dex_entries
     }
 
-    # Only ever handed out with the Colosseum Bonus Disc. Saying so is what keeps it out of the
-    # list of things the data is missing.
+    # Only ever handed out at a distribution. Saying so is what keeps it out of the list of
+    # things the data is missing.
     assert "Bonus Disc" in (entries["jirachi"].unobtainable_reason or "")
     assert entries["deoxys"].unobtainable_reason is None
 
@@ -174,6 +184,23 @@ def test_emerald_marks_the_hoenn_dex_entries_its_own_grass_never_holds() -> None
     # Nearly obtainable, which is worth saying in full: the swarm is real, and it needs a second
     # cartridge to turn up.
     assert "mixing records" in (entries["surskit"].unobtainable_reason or "")
+    assert entries["treecko"].unobtainable_reason is None
+
+
+def test_emerald_says_which_events_handed_out_what_it_cannot_produce() -> None:
+    # Step 7: an event does not make an entry obtainable, but it is the answer to "then where
+    # does one come from at all", and every one of the six had one.
+    api = FakeApi([(1, "zangoose"), (2, "surskit"), (3, "roselia"), (4, "treecko")])
+
+    entries = {
+        entry.target.species: entry for entry in emerald.build(context("emerald", api)).dex_entries
+    }
+
+    for species in ("zangoose", "surskit", "roselia"):
+        assert "event" in (entries[species].unobtainable_reason or "").lower()
+
+    # The reason it cannot be caught still comes first; the event is the second sentence.
+    assert (entries["zangoose"].unobtainable_reason or "").startswith("Ruby only")
     assert entries["treecko"].unobtainable_reason is None
 
 
@@ -279,15 +306,285 @@ def test_emerald_does_not_claim_pal_park_itself() -> None:
 def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> None:
     registry = default_registry()
 
-    assert registry.game_ids == ["emerald", "platinum"]
-    assert [(edge.from_, edge.to) for edge in registry.edges] == [("emerald", "platinum")]
-    # Emerald's four partners are declared and waiting.
-    assert {edge.to for _, edge in registry.held_back_edges} == {
-        "ruby",
-        "sapphire",
-        "firered",
-        "leafgreen",
+    assert registry.game_ids == ["emerald", "platinum", "ruby", "sapphire"]
+    assert [(edge.from_, edge.to) for edge in registry.edges] == [
+        ("emerald", "platinum"),
+        ("emerald", "ruby"),
+        ("emerald", "sapphire"),
+        ("ruby", "sapphire"),
+    ]
+    # Every Hoenn cartridge names FireRed and LeafGreen, and neither is written yet.
+    assert {edge.to for _, edge in registry.held_back_edges} == {"firered", "leafgreen"}
+
+
+def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:
+    # Ruby names Emerald, Emerald names Ruby. The graph holds the route once.
+    trades = [
+        (edge.from_, edge.to)
+        for edge in default_registry().edges
+        if edge.mechanism is TransferMechanism.TRADE
+    ]
+
+    assert len(trades) == len(set(frozenset(pair) for pair in trades))
+
+
+# --- Ruby and Sapphire ------------------------------------------------------------------------
+
+
+def test_the_pair_are_two_games_that_name_each_other() -> None:
+    both = {
+        ruby.GAME_ID: ruby.build(context("ruby")).game,
+        sapphire.GAME_ID: sapphire.build(context("sapphire")).game,
     }
+
+    # Two entities, not one "Ruby/Sapphire" row: version exclusives are the whole point, and a
+    # player links one of them without linking the other.
+    assert sorted(both) == ["ruby", "sapphire"]
+    assert both["ruby"].pair_partner == "sapphire"
+    assert both["sapphire"].pair_partner == "ruby"
+    assert both["ruby"].title != both["sapphire"].title
+
+
+def test_the_pair_share_what_hoenn_gives_them() -> None:
+    for game in (ruby.build(context("ruby")).game, sapphire.build(context("sapphire")).game):
+        assert game.generation == 3
+        assert game.region == "Hoenn"
+        assert game.national_dex_through == 386
+        assert game.dex_source is DexSource.NATIONAL_DEX
+
+
+def test_the_pair_were_drawn_from_one_sheet_and_emerald_from_another() -> None:
+    # One directory for the two of them, so the build fetches it once however many games name
+    # it. Emerald redrew the set later, which is why the third version points somewhere else.
+    ruby_set = ruby.build(context("ruby")).game.sprite_set
+    sapphire_set = sapphire.build(context("sapphire")).game.sprite_set
+
+    assert ruby_set == sapphire_set == "generation-iii/ruby-sapphire"
+    assert ruby_set != emerald.SPRITE_SET
+
+
+def test_each_of_the_pair_trades_with_every_other_cartridge_but_itself() -> None:
+    for module in (ruby, sapphire):
+        partners = {edge.to for edge in module.edges()}
+
+        assert module.GAME_ID not in partners
+        assert partners == set(hoenn.GBA_CARTRIDGES) - {module.GAME_ID}
+
+
+def test_the_pair_show_the_same_hoenn_dex_as_emerald() -> None:
+    api = FakeApi([(1, "treecko"), (202, "deoxys")])
+
+    for module in (ruby, sapphire):
+        data = module.build(context(module.GAME_ID, api))
+
+        # The same entries and the same numbering. Only the game id differs.
+        assert [(entry.number, entry.target.species) for entry in data.dex_entries] == [
+            (1, "treecko"),
+            (202, "deoxys"),
+        ]
+        assert all(entry.game == module.GAME_ID for entry in data.dex_entries)
+
+    # Not "updated-hoenn", which is Omega Ruby and Alpha Sapphire's 211.
+    assert set(api.asked_for) == {"hoenn"}
+
+
+def exclusive(pokemon: str, ruby_rate: int, sapphire_rate: int) -> dict:
+    """One species on one route, at a different rate in each half of the pair."""
+    return {
+        pokemon: [
+            {
+                "location_area": {"name": "hoenn-route-101-area"},
+                "version_details": [
+                    {
+                        "version": {"name": version},
+                        "encounter_details": [
+                            {
+                                "min_level": 3,
+                                "max_level": 4,
+                                "chance": rate,
+                                "method": {"name": "walk"},
+                                "condition_values": [],
+                            }
+                        ],
+                    }
+                    for version, rate in (("ruby", ruby_rate), ("sapphire", sapphire_rate))
+                ],
+            }
+        ]
+    }
+
+
+def test_each_half_reads_its_own_version_of_the_encounter_table() -> None:
+    # The version is the whole difference between the two files, so it had better be the thing
+    # that decides what comes out.
+    for module, rate in ((ruby, 30), (sapphire, 70)):
+        api = FakeApi([(1, "seedot")], exclusive("seedot", ruby_rate=30, sapphire_rate=70))
+
+        methods = module.build(context(module.GAME_ID, api)).acquisition_methods
+        wild = [one for one in methods if one.kind == "wild"]
+
+        assert [one.rate_percent for one in wild] == [rate]
+        assert all(one.game == module.GAME_ID for one in wild)
+
+
+def test_a_species_only_the_other_half_has_brings_no_slot() -> None:
+    # Zangoose is on Ruby and Seviper on Sapphire. A cartridge that never meets one says so by
+    # having nothing to say, not by inventing an empty slot.
+    api = FakeApi(
+        [(1, "zangoose")],
+        {
+            "zangoose": [
+                {
+                    "location_area": {"name": "hoenn-route-101-area"},
+                    "version_details": [
+                        {
+                            "version": {"name": "ruby"},
+                            "encounter_details": [
+                                {
+                                    "min_level": 30,
+                                    "max_level": 30,
+                                    "chance": 10,
+                                    "method": {"name": "walk"},
+                                    "condition_values": [],
+                                }
+                            ],
+                        }
+                    ],
+                }
+            ]
+        },
+    )
+
+    def wild_of(module):
+        methods = module.build(context(module.GAME_ID, api)).acquisition_methods
+        return [one for one in methods if one.kind == "wild"]
+
+    # The trades and the day care are tables rather than fetches, so they turn up either way.
+    assert len(wild_of(ruby)) == 1
+    assert wild_of(sapphire) == []
+
+
+def test_the_pair_mark_what_only_the_other_half_keeps() -> None:
+    api = FakeApi([(1, "lotad"), (2, "seedot"), (3, "treecko")])
+
+    ruby_entries = {
+        entry.target.species: entry for entry in ruby.build(context("ruby", api)).dex_entries
+    }
+    sapphire_entries = {
+        entry.target.species: entry
+        for entry in sapphire.build(context("sapphire", api)).dex_entries
+    }
+
+    # Each half names the other, and neither marks what it has itself.
+    assert ruby_entries["lotad"].unobtainable_reason.startswith(
+        "Sapphire only in Generation 3; trade one in"
+    )
+    assert ruby_entries["seedot"].unobtainable_reason is None
+    assert sapphire_entries["seedot"].unobtainable_reason.startswith(
+        "Ruby only in Generation 3; trade one in"
+    )
+    assert sapphire_entries["lotad"].unobtainable_reason is None
+    # The starter is in both, so neither says anything about it.
+    assert ruby_entries["treecko"].unobtainable_reason is None
+    assert sapphire_entries["treecko"].unobtainable_reason is None
+
+
+def test_the_exclusives_mirror_each_other_exactly() -> None:
+    # The same number each and no overlap: that is what a version pair is, and a species in both
+    # lists would mean one of the two tables is wrong.
+    left = set(ruby.ONLY_ON_SAPPHIRE)
+    right = set(sapphire.ONLY_ON_RUBY)
+
+    assert len(left) == len(right)
+    assert not left & right
+    # Banette and Dusclops were in these lists and should not have been: each cartridge catches
+    # the stage below and evolves it. `unobtainable-entries-really-are` is what guards it now.
+    assert "banette" not in left
+    assert "dusclops" not in right
+
+
+def test_step_seven_says_which_events_handed_out_what_cannot_be_caught() -> None:
+    api = FakeApi([(1, "lotad"), (2, "kyogre"), (3, "deoxys")])
+
+    entries = {
+        entry.target.species: entry.unobtainable_reason
+        for entry in ruby.build(context("ruby", api)).dex_entries
+    }
+
+    # The reason it cannot be caught comes first; the event is the sentence after it.
+    assert entries["lotad"].startswith("Sapphire only")
+    assert "Fifth Campaign" in entries["lotad"]
+    # A legendary that never had a Generation 3 giveaway says nothing extra rather than guessing.
+    assert entries["kyogre"] == "Sapphire only in Generation 3; trade one in"
+    # Deoxys had two distributions of its own, which is the answer step 5 left open.
+    assert "Doel Deoxys" in entries["deoxys"]
+
+
+def test_the_three_cartridges_word_a_shared_event_once() -> None:
+    # Emerald was covered by the same 2006 campaign, so the sentence lives in one place.
+    assert hoenn.FIFTH_CAMPAIGN.lower() in hoenn.only_on("Ruby", hoenn.FIFTH_CAMPAIGN).lower()
+    assert emerald.UNOBTAINABLE["jirachi"] == hoenn.JIRACHI_REASON
+
+
+def test_both_halves_say_the_same_thing_about_jirachi() -> None:
+    # Nothing in any Generation 3 game produces one, so the three cartridges share one sentence.
+    api = FakeApi([(201, "jirachi")])
+
+    reasons = {
+        module.build(context(module.GAME_ID, api)).dex_entries[0].unobtainable_reason
+        for module in (ruby, sapphire)
+    }
+
+    assert len(reasons) == 1
+    assert "Bonus Disc" in reasons.pop()
+
+
+def test_the_pair_share_their_three_in_game_trades() -> None:
+    for module in (ruby, sapphire):
+        methods = module.build(context(module.GAME_ID)).acquisition_methods
+        trades = [one for one in methods if one.kind == "trade"]
+
+        assert [(one.target.species, one.wants.species) for one in trades] == [
+            ("makuhita", "slakoth"),
+            ("skitty", "pikachu"),
+            ("corsola", "bellossom"),
+        ]
+        assert all(one.game == module.GAME_ID for one in trades)
+        assert all(one.source.source == "bulbapedia" for one in trades)
+
+
+def test_the_pair_hatch_the_same_three_babies() -> None:
+    for module in (ruby, sapphire):
+        methods = module.build(context(module.GAME_ID)).acquisition_methods
+        eggs = {one.target.species: one for one in methods if one.kind == "breeding"}
+
+        assert sorted(eggs) == ["azurill", "igglybuff", "pichu"]
+        assert eggs["pichu"].location == "Route 117, Pokemon Day Care"
+        # Wynaut is not here: both cartridges hand one over in an egg already.
+        assert "wynaut" not in eggs
+
+
+def test_the_pair_evolve_by_their_own_version_group() -> None:
+    api = FakeApi([(1, "treecko"), (2, "grovyle")])
+
+    for module in (ruby, sapphire):
+        methods = module.build(context(module.GAME_ID, api)).acquisition_methods
+        evolutions = [one for one in methods if one.kind == "evolution"]
+
+        assert [one.target.species for one in evolutions] == ["grovyle"]
+
+    # Emerald is its own version group; the pair are one. Both are Generation 3 and the
+    # difference is the point: an ordering, not a generation.
+    assert hoenn.PAIR_VERSION_GROUP == "ruby-sapphire"
+    assert emerald.POKEAPI_VERSION_GROUP == "emerald"
+
+
+def test_the_pair_share_one_gift_table() -> None:
+    # They agree about every species they both have, so the table is written once. A key the
+    # other half never sees simply never matches.
+    assert ruby.hoenn.PAIR_GIFTS is sapphire.hoenn.PAIR_GIFTS
+    assert "groudon" not in ruby.hoenn.PAIR_GIFTS
+    assert ruby.hoenn.PAIR_GIFTS["treecko"].npc == "Professor Birch"
 
 
 # --- the registry itself ----------------------------------------------------------------------
@@ -314,8 +611,9 @@ def test_the_same_edge_declared_from_both_sides_is_written_once() -> None:
     assert len(registry.edges) == 1
 
 
-def test_two_directions_of_one_pair_are_two_edges() -> None:
-    # Same pair, opposite ways round: that is two routes, not one written twice.
+def test_one_both_ways_route_written_from_either_end_is_still_one_route() -> None:
+    # Which end wrote it down is not part of what the route is, and the app expands a both-ways
+    # edge into both directions itself - so keeping the mirror image would show it twice.
     registry = GameRegistry()
     registry.register(
         "emerald",
@@ -323,6 +621,20 @@ def test_two_directions_of_one_pair_are_two_edges() -> None:
         [trade("emerald", "ruby"), trade("ruby", "emerald")],
     )
     registry.register("ruby", lambda _: stub("ruby"))
+
+    assert len(registry.edges) == 1
+
+
+def test_two_one_way_routes_between_the_same_games_stay_two() -> None:
+    # Pal Park carries a Generation 3 cartridge into Platinum and never the other way, so the
+    # same two games in the other order is a different claim rather than the same one repeated.
+    registry = GameRegistry()
+    registry.register(
+        "emerald",
+        lambda _: stub("emerald"),
+        [pal_park("emerald", "platinum"), pal_park("platinum", "emerald")],
+    )
+    registry.register("platinum", lambda _: stub("platinum"))
 
     assert len(registry.edges) == 2
 

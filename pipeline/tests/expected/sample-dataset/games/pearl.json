@@ -1,0 +1,15 @@
+{
+  "game": {
+    "id": "pearl",
+    "title": "Pokemon Pearl Version",
+    "version": "Pearl",
+    "generation": 4,
+    "region": "Sinnoh",
+    "release": "cartridge",
+    "nationalDexThrough": 493,
+    "dexSource": "nationalDex",
+    "pairPartner": "diamond"
+  },
+  "dexEntries": [],
+  "acquisitionMethods": []
+}

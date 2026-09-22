@@ -129,4 +129,41 @@ public class TypeLookupTests
     {
         Assert.Empty(Reference().TypesOf(DexTarget.ForSpecies(new SpeciesId("missingno"))));
     }
+
+    [Fact]
+    public void A_dex_entry_is_findable_by_its_game_and_target()
+    {
+        var reference = new ReferenceData(
+            [],
+            [],
+            [],
+            [
+                new DexEntry(
+                    new GameId("emerald"),
+                    DexTarget.ForSpecies(new SpeciesId("zangoose")),
+                    123,
+                    "Ruby only in Generation 3; trade one in"),
+                new DexEntry(
+                    new GameId("emerald"),
+                    DexTarget.ForSpecies(new SpeciesId("treecko")),
+                    1),
+            ]);
+
+        var zangoose = reference.FindDexEntry(
+            new GameId("emerald"),
+            DexTarget.ForSpecies(new SpeciesId("zangoose")));
+
+        Assert.StartsWith("Ruby only", zangoose?.UnobtainableReason, StringComparison.Ordinal);
+
+        // An entry the dex lists and can fill says nothing, and a target it does not list at all
+        // is not an entry.
+        Assert.Null(
+            reference.FindDexEntry(
+                new GameId("emerald"),
+                DexTarget.ForSpecies(new SpeciesId("treecko")))?.UnobtainableReason);
+        Assert.Null(
+            reference.FindDexEntry(
+                new GameId("ruby"),
+                DexTarget.ForSpecies(new SpeciesId("zangoose"))));
+    }
 }

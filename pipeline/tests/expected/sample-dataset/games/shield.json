@@ -1,0 +1,14 @@
+{
+  "game": {
+    "id": "shield",
+    "title": "Pokemon Shield",
+    "version": "Shield",
+    "generation": 8,
+    "region": "Galar",
+    "release": "cartridge",
+    "dexSource": "gameDex",
+    "pairPartner": "sword"
+  },
+  "dexEntries": [],
+  "acquisitionMethods": []
+}

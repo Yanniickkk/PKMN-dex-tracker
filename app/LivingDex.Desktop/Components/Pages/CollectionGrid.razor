@@ -275,16 +275,27 @@ else
 
             @{
                 var sections = SectionsFor(selected);
+                var unobtainable = UnobtainableHere(selected);
             }
 
-            @if (sections.Count == 0)
+            @if (unobtainable is { } reason)
+            {
+                @* Above the ways of getting it, because it explains why none of them is the
+                   game the player is filling. *@
+                <section class="detail-section">
+                    <h3>Not in @GameName(_collection!.MainGame)</h3>
+                    <p class="muted">@reason</p>
+                </section>
+            }
+
+            @if (sections.Count == 0 && unobtainable is null)
             {
                 <section class="detail-section">
                     <h3>How to get it</h3>
                     <p class="muted">@NothingToListMessage</p>
                 </section>
             }
-            else
+            else if (sections.Count > 0)
             {
                 @foreach (var section in sections)
                 {
@@ -726,6 +737,21 @@ else
     /// <summary>The main game first, then the linked ones in the order the player linked them.</summary>
     private IReadOnlyList<GameId> GamesOfCollection() =>
         _collection is null ? [] : [_collection.MainGame, .. _collection.LinkedGames];
+
+    /// <summary>
+    /// Why the main game's dex says this entry cannot be filled there, when it says so.
+    /// </summary>
+    /// <remarks>
+    /// The pipeline has recorded these since Phase 0.7 and no screen ever read one, so a player
+    /// looking at Zangoose in an Emerald collection saw "no recorded way to get this" - which is
+    /// true of Emerald and unhelpful, because the dataset knows it is a Ruby Pokemon and says so.
+    /// Shown even when there are ways listed: those ways are all in other games, and this is the
+    /// sentence that explains why.
+    /// </remarks>
+    private string? UnobtainableHere(DexLine line) =>
+        _collection is null
+            ? null
+            : Dataset.Reference.FindDexEntry(_collection.MainGame, line.Target)?.UnobtainableReason;
 
     /// <summary>
     /// Why a section list is empty. "We have no data" and "there is no way to get this" are

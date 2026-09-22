@@ -234,7 +234,7 @@
         "species": "surskit"
       },
       "number": 32,
-      "unobtainableReason": "Swarm only, and an Emerald swarm offers it only after mixing records with a Ruby or Sapphire cartridge"
+      "unobtainableReason": "Swarm only, and an Emerald swarm offers it only after mixing records with a Ruby or Sapphire cartridge. Two Japanese events also handed one out: the PokePark Egg in 2005 and the Gather More Pokemon! Fifth Campaign in 2006"
     },
     {
       "game": "emerald",
@@ -543,7 +543,7 @@
         "species": "meditite"
       },
       "number": 76,
-      "unobtainableReason": "Ruby and Sapphire only in Generation 3; trade one in"
+      "unobtainableReason": "Ruby and Sapphire only in Generation 3; trade one in. A 2006 Japanese event (Gather More Pokemon! Fifth Campaign) handed one out"
     },
     {
       "game": "emerald",
@@ -670,7 +670,7 @@
         "species": "roselia"
       },
       "number": 94,
-      "unobtainableReason": "Ruby and Sapphire only in Generation 3; trade one in"
+      "unobtainableReason": "Ruby and Sapphire only in Generation 3; trade one in. A 2006 Japanese event (Gather More Pokemon! Fifth Campaign) handed one out"
     },
     {
       "game": "emerald",
@@ -874,7 +874,7 @@
         "species": "zangoose"
       },
       "number": 123,
-      "unobtainableReason": "Ruby only in Generation 3; trade one in"
+      "unobtainableReason": "Ruby only in Generation 3; trade one in. A 2006 Japanese event (Gather More Pokemon! Fifth Campaign) handed one out"
     },
     {
       "game": "emerald",
@@ -889,7 +889,7 @@
         "species": "lunatone"
       },
       "number": 125,
-      "unobtainableReason": "Sapphire only in Generation 3; trade one in"
+      "unobtainableReason": "Sapphire only in Generation 3; trade one in. A 2006 Japanese event (Gather More Pokemon! Fifth Campaign) handed one out"
     },
     {
       "game": "emerald",
@@ -1422,7 +1422,7 @@
         "species": "jirachi"
       },
       "number": 201,
-      "unobtainableReason": "Distribution event only (the Pokemon Colosseum Bonus Disc)"
+      "unobtainableReason": "Distribution event only: the Pokemon Colosseum Bonus Disc in the West, and the Tanabata Jirachi giveaways in Japan"
     },
     {
       "game": "emerald",
@@ -15170,7 +15170,7 @@
       "location": "Rustboro City",
       "npc": "Devon Corporation scientist",
       "level": 20,
-      "requirement": "Root Fossil from the Mirage Tower; only one of the two fossils can be taken",
+      "requirement": "Root Fossil from the Mirage Tower, or the Desert Underpass after the Elite Four if the Claw Fossil was taken instead",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lileep/encounters",
@@ -15187,7 +15187,7 @@
       "location": "Rustboro City",
       "npc": "Devon Corporation scientist",
       "level": 20,
-      "requirement": "Claw Fossil from the Mirage Tower; only one of the two fossils can be taken",
+      "requirement": "Claw Fossil from the Mirage Tower, or the Desert Underpass after the Elite Four if the Root Fossil was taken instead",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/anorith/encounters",

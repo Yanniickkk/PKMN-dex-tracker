@@ -52,7 +52,9 @@ public class PipelineOutputContractTests
                 new GameId("diamond"),
                 new GameId("emerald"),
                 new GameId("home"),
+                new GameId("pearl"),
                 new GameId("platinum"),
+                new GameId("shield"),
                 new GameId("sword"),
             ],
             index.Games);

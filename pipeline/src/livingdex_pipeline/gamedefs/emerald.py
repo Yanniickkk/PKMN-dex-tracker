@@ -17,32 +17,18 @@ from ..games import BuildContext, GameRegistry
 from ..gifts import GiftDetail, gift_encounters
 from ..models import (
     AcquisitionMethod,
-    AllSpeciesFilter,
     DexEntry,
-    DexSource,
-    DexTarget,
-    Game,
     GameData,
-    GameRelease,
     GiftKind,
-    TransferDirection,
     TransferEdge,
-    TransferMechanism,
 )
 from ..places import LocationNames
 from ..sources import bulbapedia
 from ..trades import InGameTrade, trade_encounters
 from ..wild import wild_encounters
+from . import hoenn
 
 GAME_ID = "emerald"
-
-#: The other Generation 3 cartridges Emerald can trade with over a link cable. Colosseum and XD
-#: also trade with it, but they are not in the plan, so they are not claimed here.
-GBA_PARTNERS = ("ruby", "sapphire", "firered", "leafgreen")
-
-#: PokeAPI's name for the Generation 3 Hoenn dex, the 202-entry one Ruby, Sapphire and Emerald
-#: share. Not "updated-hoenn", which is the 211-entry dex of Omega Ruby and Alpha Sapphire.
-HOENN_DEX = "hoenn"
 
 #: What PokeAPI calls this game when it lists which version an encounter belongs to.
 POKEAPI_VERSION = "emerald"
@@ -61,19 +47,25 @@ SPRITE_SET = "generation-iii/emerald"
 #:
 #: A reason rather than a gap: the validator can tell "we checked and it cannot be caught" from
 #: "we have not gathered this yet", and only the second is a fault.
+#:
+#: Step 7 added the second sentence to each of these. An event does not make an entry
+#: obtainable - nobody can attend a distribution that closed twenty years ago - but "nothing you
+#: can play produces this, and here is what once did" is a different answer from "nothing
+#: produces this", and it is the one a player asking where to look deserves.
 UNOBTAINABLE: dict[str, str] = {
-    # The Bonus Disc that came with Pokemon Colosseum, at shops and events in 2003 and 2004.
-    # Nothing in the game itself produces one.
-    "jirachi": "Distribution event only (the Pokemon Colosseum Bonus Disc)",
+    # The Bonus Disc that came with Pokemon Colosseum in the West, and the Tanabata giveaways in
+    # Japan. Nothing in the game itself produces one, which is what makes it the only entry here
+    # whose reason *is* the event.
+    "jirachi": hoenn.JIRACHI_REASON,
     # In the Hoenn dex, not in the game. Emerald kept Seviper and Solrock and left the other
     # half of each pair on the cartridge it came from; both are still entries you have to fill,
     # and the transfer graph is how - which is the whole reason a route from Ruby exists.
-    "zangoose": "Ruby only in Generation 3; trade one in",
-    "lunatone": "Sapphire only in Generation 3; trade one in",
+    "zangoose": hoenn.only_on("Ruby", hoenn.FIFTH_CAMPAIGN),
+    "lunatone": hoenn.only_on("Sapphire", hoenn.FIFTH_CAMPAIGN),
     # In Ruby and Sapphire's grass and not in Emerald's. Step 3 found no encounter for either,
     # which read like a hole in the data until it was checked: it is the game.
-    "roselia": "Ruby and Sapphire only in Generation 3; trade one in",
-    "meditite": "Ruby and Sapphire only in Generation 3; trade one in",
+    "roselia": hoenn.only_on("Ruby and Sapphire", hoenn.FIFTH_CAMPAIGN),
+    "meditite": hoenn.only_on("Ruby and Sapphire", hoenn.FIFTH_CAMPAIGN),
     # The one entry here that is nearly obtainable. Emerald keeps Surskit for the daily swarm,
     # and an Emerald swarm only offers it once records have been mixed with a Ruby or Sapphire
     # cartridge - so it still takes a second game, the same as the three above. A wild record
@@ -81,7 +73,8 @@ UNOBTAINABLE: dict[str, str] = {
     # because the schema has nowhere to hang the condition that matters.
     "surskit": (
         "Swarm only, and an Emerald swarm offers it only after mixing records with a "
-        "Ruby or Sapphire cartridge"
+        "Ruby or Sapphire cartridge. Two Japanese events also handed one out: the PokePark Egg "
+        "in 2005 and the Gather More Pokemon! Fifth Campaign in 2006"
     ),
 }
 
@@ -138,15 +131,25 @@ GIFTS: dict[str, GiftDetail] = {
         npc="Professor Birch",
         requirement="Pick one of the three; the other two take a trade",
     ),
+    # "Only one of the two can be taken" was written here first and is the opposite of the
+    # truth: the Desert Underpass exists only in Emerald, and the fossil left behind at the
+    # Mirage Tower is waiting at the end of it once the Elite Four are done. Ruby and Sapphire
+    # are the games where the choice is final - which is how this was caught.
     "lileep": GiftDetail(
         kind=GiftKind.FOSSIL,
         npc="Devon Corporation scientist",
-        requirement="Root Fossil from the Mirage Tower; only one of the two fossils can be taken",
+        requirement=(
+            "Root Fossil from the Mirage Tower, or the Desert Underpass after the Elite Four "
+            "if the Claw Fossil was taken instead"
+        ),
     ),
     "anorith": GiftDetail(
         kind=GiftKind.FOSSIL,
         npc="Devon Corporation scientist",
-        requirement="Claw Fossil from the Mirage Tower; only one of the two fossils can be taken",
+        requirement=(
+            "Claw Fossil from the Mirage Tower, or the Desert Underpass after the Elite Four "
+            "if the Root Fossil was taken instead"
+        ),
     ),
     "beldum": GiftDetail(
         npc="Steven",
@@ -180,20 +183,16 @@ def build(context: BuildContext) -> GameData:
     entries = dex_entries(context)
 
     return GameData(
-        game=Game(
-            id=GAME_ID,
+        # Emerald's own dex is the 202-entry Hoenn one, but the National Dex opens after the
+        # Elite Four and that is what a living dex in this game is aiming at; the reach it
+        # shares with Ruby and Sapphire is in the module they all read from.
+        game=hoenn.cartridge(
+            game_id=GAME_ID,
             title="Pokémon Emerald Version",
             version="Emerald",
-            generation=3,
-            region="Hoenn",
-            release=GameRelease.CARTRIDGE,
-            # Emerald's own dex is the 202-entry Hoenn one, but the National Dex opens after the
-            # Elite Four and that is what a living dex in this game is aiming at.
-            national_dex_through=386,
-            dex_source=DexSource.NATIONAL_DEX,
+            sprite_set=SPRITE_SET,
             # The third version of Ruby and Sapphire rather than half of a pair.
             pair_partner=None,
-            sprite_set=SPRITE_SET,
         ),
         dex_entries=entries,
         acquisition_methods=acquisition_methods(context, entries),
@@ -201,49 +200,13 @@ def build(context: BuildContext) -> GameData:
 
 
 def dex_entries(context: BuildContext) -> list[DexEntry]:
-    """The Hoenn dex as Emerald numbers it: Treecko is #001, Deoxys is #202.
-
-    This is the game's own dex, not the list a living dex in Emerald is aiming at. That list is
-    the National Dex, which the entity already says it reaches 386 of; this one is what the
-    game's own Pokedex shows and what the coverage report measures encounters against.
-
-    Ruby, Sapphire and Emerald share these 202 entries and their numbering, so PokeAPI's
-    ``hoenn`` dex answers for all three.
-    """
-    api = context.require_api()
-
-    return [
-        DexEntry(
-            game=GAME_ID,
-            target=DexTarget(species=species),
-            number=number,
-            unobtainable_reason=UNOBTAINABLE.get(species),
-        )
-        for number, species in api.pokedex(HOENN_DEX, refresh=context.refresh)
-    ]
+    """The Hoenn dex as Emerald numbers it, with what Emerald in particular cannot fill."""
+    return hoenn.dex_entries(context, game_id=GAME_ID, unobtainable=UNOBTAINABLE)
 
 
 def edges() -> list[TransferEdge]:
-    """What Emerald can send and receive.
-
-    Trading inside a generation goes both ways and carries anything the game can hold, so one
-    edge per partner says it all. The partners are declared whether or not they are in the
-    dataset yet: the registry holds an edge back until both ends exist, so this file states what
-    is true about Emerald rather than what happens to be built already.
-
-    Pal Park into Generation 4 is not here. It is one way, and it belongs to the game that
-    receives - that is where the National Dex limit it applies is a fact about the receiver.
-    """
-    return [
-        TransferEdge(
-            **{"from": GAME_ID},
-            to=partner,
-            mechanism=TransferMechanism.TRADE,
-            direction=TransferDirection.BOTH_WAYS,
-            filter=AllSpeciesFilter(),
-        )
-        for partner in GBA_PARTNERS
-    ]
+    """What Emerald can send and receive. The same link cable every Hoenn cartridge has."""
+    return hoenn.link_trade_edges(GAME_ID)
 
 
 def register(registry: GameRegistry) -> None:

@@ -15,6 +15,7 @@ public sealed class ReferenceData
     private readonly Dictionary<SpeciesId, Species> _speciesById;
     private readonly Dictionary<SpeciesId, List<Form>> _formsBySpecies;
     private readonly Dictionary<GameId, List<DexEntry>> _dexByGame;
+    private readonly Dictionary<(GameId Game, DexTarget Target), DexEntry> _entryByTarget;
     private readonly Dictionary<EvolutionRuleId, EvolutionRule> _evolutionRulesById;
     private readonly Dictionary<(GameId Game, DexTarget Target), List<AcquisitionMethod>> _methodsByEntry;
     private readonly HashSet<GameId> _gamesWithMethods;
@@ -51,6 +52,14 @@ public sealed class ReferenceData
         _dexByGame = DexEntries
             .GroupBy(entry => entry.Game)
             .ToDictionary(group => group.Key, group => group.ToList());
+
+        // Last one wins rather than throwing: a dex that numbered the same target twice is a
+        // pipeline fault the validator reports, and it must not stop the app from opening.
+        _entryByTarget = new Dictionary<(GameId, DexTarget), DexEntry>();
+        foreach (var entry in DexEntries)
+        {
+            _entryByTarget[(entry.Game, entry.Target)] = entry;
+        }
 
         _evolutionRulesById = EvolutionRules.ToDictionary(rule => rule.Id);
 
@@ -152,4 +161,14 @@ public sealed class ReferenceData
     /// <summary>One game's dex lines, or an empty list.</summary>
     public IReadOnlyList<DexEntry> DexOf(GameId game) =>
         _dexByGame.TryGetValue(game, out var entries) ? entries : [];
+
+    /// <summary>
+    /// One entry of one game's dex, or null when that game does not list it.
+    /// </summary>
+    /// <remarks>
+    /// The entry rather than the dex, because what the popup wants from it is one field: why
+    /// this game cannot fill it, when the pipeline found a reason.
+    /// </remarks>
+    public DexEntry? FindDexEntry(GameId game, DexTarget target) =>
+        _entryByTarget.GetValueOrDefault((game, target));
 }

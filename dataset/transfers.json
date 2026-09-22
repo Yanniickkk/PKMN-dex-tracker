@@ -9,5 +9,32 @@
       "from": 1,
       "to": 386
     }
+  },
+  {
+    "from": "emerald",
+    "to": "ruby",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "emerald",
+    "to": "sapphire",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "ruby",
+    "to": "sapphire",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
   }
 ]

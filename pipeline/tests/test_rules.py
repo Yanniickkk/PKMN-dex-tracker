@@ -385,6 +385,116 @@ def test_one_parent_being_obtainable_is_enough() -> None:
     assert validate(data).ok
 
 
+# --- version pairs name each other ------------------------------------------------------------
+
+
+def paired(game_id: str, partner: str | None):
+    data = game(game_id)
+    return data.model_copy(update={"game": data.game.model_copy(update={"pair_partner": partner})})
+
+
+def test_two_halves_that_name_each_other_are_fine() -> None:
+    assert validate(dataset(games=[paired("ruby", "sapphire"), paired("sapphire", "ruby")])).ok
+
+
+def test_a_half_whose_partner_is_not_in_the_dataset_is_an_error() -> None:
+    report = validate(dataset(games=[paired("ruby", "sapphire")]))
+
+    assert not report.ok
+    assert "not a game in the dataset" in messages(report, "version-pairs-name-each-other")[0]
+
+
+def test_a_partner_that_names_somebody_else_is_an_error() -> None:
+    data = dataset(
+        games=[paired("ruby", "sapphire"), paired("sapphire", "emerald"), paired("emerald", None)]
+    )
+
+    report = validate(data)
+
+    assert not report.ok
+    assert "names emerald" in messages(report, "version-pairs-name-each-other")[0]
+
+
+def test_a_game_cannot_be_its_own_other_half() -> None:
+    report = validate(dataset(games=[paired("ruby", "ruby")]))
+
+    assert "its own pair partner" in messages(report, "version-pairs-name-each-other")[0]
+
+
+# --- unobtainable entries really are ----------------------------------------------------------
+
+
+def test_an_entry_the_game_can_evolve_into_must_not_claim_it_cannot() -> None:
+    data = dataset(
+        games=[
+            game(
+                "ruby",
+                entries=[
+                    entry("ruby", "shuppet", 1),
+                    # Wrong: this game catches Shuppet and evolves one.
+                    entry("ruby", "banette", 2, reason="Sapphire only in Generation 3"),
+                ],
+                methods=[
+                    gift("ruby", "shuppet"),
+                    EvolutionAcquisition(
+                        game="ruby",
+                        target=DexTarget(species="banette"),
+                        rule="shuppet-to-banette",
+                        source=CITATION,
+                    ),
+                ],
+            )
+        ],
+        rules=[
+            EvolutionRule(
+                id="shuppet-to-banette",
+                **{"from": DexTarget(species="shuppet")},
+                to=DexTarget(species="banette"),
+                trigger=EvolutionTrigger.LEVEL_UP,
+            )
+        ],
+    )
+
+    report = validate(data)
+
+    assert not report.ok
+    assert "banette" in messages(report, "unobtainable-entries-really-are")[0]
+
+
+def test_an_evolution_whose_earlier_stage_is_out_of_reach_is_left_alone() -> None:
+    # Emerald evolves a Medicham from a Meditite it cannot catch. Both statements are true and
+    # neither is a mistake, so this rule must not fire on them.
+    data = dataset(
+        games=[
+            game(
+                "emerald",
+                entries=[
+                    entry("emerald", "meditite", 1, reason="Ruby and Sapphire only"),
+                    entry("emerald", "medicham", 2, reason="Ruby and Sapphire only"),
+                ],
+                methods=[
+                    EvolutionAcquisition(
+                        game="emerald",
+                        target=DexTarget(species="medicham"),
+                        rule="meditite-to-medicham",
+                        source=CITATION,
+                    )
+                ],
+            )
+        ],
+        rules=[
+            EvolutionRule(
+                id="meditite-to-medicham",
+                **{"from": DexTarget(species="meditite")},
+                to=DexTarget(species="medicham"),
+                trigger=EvolutionTrigger.LEVEL_UP,
+            )
+        ],
+    )
+
+    assert validate(data).ok
+
+
 # --- forms referenced exist -------------------------------------------------------------------
 
 

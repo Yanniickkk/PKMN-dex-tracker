@@ -180,6 +180,79 @@ class NoBreedingDeadEnds:
                 )
 
 
+class UnobtainableEntriesReallyAre:
+    """An entry a game can actually produce must not also claim it cannot.
+
+    The two are easy to get out of step, because they are established at different times. A
+    version exclusive is worked out from encounter tables, before evolutions exist; the
+    evolutions arrive a step later and can quietly reach the very thing that was written off.
+    Ruby has no wild Banette and was marked accordingly - and it has wild Shuppet, which
+    evolves into one.
+
+    "Can produce" here means the game can get there on its own: something it catches or is
+    handed, and then anything those evolve or hatch into, and so on. A stated reason whose
+    subject is genuinely out of reach - Emerald evolving a Medicham from a Meditite it cannot
+    catch - is not caught by this, which is the point.
+    """
+
+    name = "unobtainable-entries-really-are"
+
+    def check(self, dataset: Dataset) -> Iterator[Finding]:
+        rules_by_id = {rule.id: rule for rule in dataset.evolution_rules}
+
+        for game in dataset.games:
+            reachable = self._reachable_in(game, rules_by_id)
+
+            for entry in game.dex_entries:
+                if entry.unobtainable_reason is None:
+                    continue
+
+                if _target_key(entry.target) in reachable:
+                    yield Finding(
+                        rule=self.name,
+                        severity=Severity.ERROR,
+                        game=game.game.id,
+                        message=(
+                            f"{entry.target} is marked unobtainable, but this game can produce "
+                            "it without help from anywhere else"
+                        ),
+                    )
+
+    @staticmethod
+    def _reachable_in(game, rules_by_id) -> set[tuple[str, str | None]]:
+        """What this game can get to on its own, following evolutions and eggs as far as they go."""
+        # Caught, handed over or traded for: no prerequisite this game has to satisfy first.
+        reachable = {
+            _target_key(method.target)
+            for method in game.acquisition_methods
+            if method.kind in {"wild", "gift", "trade"}
+        }
+
+        # Then anything those turn into, and anything those turn into, until nothing new appears.
+        growing = True
+        while growing:
+            growing = False
+
+            for method in game.acquisition_methods:
+                key = _target_key(method.target)
+                if key in reachable:
+                    continue
+
+                if method.kind == "evolution":
+                    rule = rules_by_id.get(method.rule)
+                    reached = rule is not None and _target_key(rule.from_) in reachable
+                elif method.kind == "breeding":
+                    reached = any(_target_key(parent) in reachable for parent in method.parents)
+                else:
+                    continue
+
+                if reached:
+                    reachable.add(key)
+                    growing = True
+
+        return reachable
+
+
 class FormsReferencedExist:
     """A dex that numbers a form the form table has never heard of would build a broken grid."""
 
@@ -231,6 +304,60 @@ class FormsReferencedExist:
                             "leave it out"
                         ),
                     )
+
+
+class VersionPairsNameEachOther:
+    """A pair is two games, and each one says who the other is.
+
+    The field has been in the schema since Phase 0 and nothing ever checked it, because until
+    Ruby and Sapphire there was no pair to get wrong. A half that names a game the dataset does
+    not have, or one that names a partner which names somebody else, is a claim the app would
+    read and act on.
+    """
+
+    name = "version-pairs-name-each-other"
+
+    def check(self, dataset: Dataset) -> Iterator[Finding]:
+        by_id = {game.game.id: game.game for game in dataset.games}
+
+        for game in dataset.games:
+            partner_id = game.game.pair_partner
+            if partner_id is None:
+                continue
+
+            if partner_id == game.game.id:
+                yield Finding(
+                    rule=self.name,
+                    severity=Severity.ERROR,
+                    game=game.game.id,
+                    message="names itself as its own pair partner",
+                )
+                continue
+
+            partner = by_id.get(partner_id)
+            if partner is None:
+                yield Finding(
+                    rule=self.name,
+                    severity=Severity.ERROR,
+                    game=game.game.id,
+                    message=(
+                        f"names {partner_id} as the other half of its pair, which is not a game "
+                        "in the dataset"
+                    ),
+                )
+                continue
+
+            if partner.pair_partner != game.game.id:
+                named = partner.pair_partner or "nobody"
+                yield Finding(
+                    rule=self.name,
+                    severity=Severity.ERROR,
+                    game=game.game.id,
+                    message=(
+                        f"names {partner_id} as the other half of its pair, but {partner_id} "
+                        f"names {named}"
+                    ),
+                )
 
 
 class TransferEdgesConnectKnownGames:
@@ -356,14 +483,20 @@ def coverage_for(dataset: Dataset) -> list[GameCoverage]:
 def all_rules() -> list:
     """Every check, in the order the spec lists them.
 
-    ``no-breeding-dead-ends`` is not in that list. It arrived with the breeding kind in Phase 2
-    and guards the same lie its evolution twin does, which is reason enough for it to run.
+    Three are not in that list. ``no-breeding-dead-ends`` arrived with the breeding kind and
+    guards the same lie its evolution twin does. ``version-pairs-name-each-other`` arrived with
+    Ruby and Sapphire, the first pair the dataset has ever held, and checks a field that had
+    been carried since Phase 0 without anything ever reading it.
+    ``unobtainable-entries-really-are`` arrived with the same pair, after two entries were
+    written off as version exclusives and then reached by an evolution a step later.
     """
     return [
         EveryEntryHasAMethod(),
         NoEvolutionDeadEnds(),
         NoBreedingDeadEnds(),
+        UnobtainableEntriesReallyAre(),
         FormsReferencedExist(),
+        VersionPairsNameEachOther(),
         TransferEdgesConnectKnownGames(),
         EverySpeciesHasASprite(),
         EveryGameHasBoxArt(),

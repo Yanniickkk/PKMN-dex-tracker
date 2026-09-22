@@ -50,6 +50,32 @@ public class OfflineTests
         Assert.True(missing.Count == 0, $"no sprite for: {string.Join(", ", missing.Take(10))}");
     }
 
+    [Fact]
+    public void The_app_embeds_every_sprite_directory_rather_than_only_the_top_one()
+    {
+        // The check that was missing when per-game sprites arrived. The csproj globbed
+        // dataset/sprites/*.png, which is not recursive, so every per-game directory was written
+        // to disk, committed, and then silently left out of the exe - and the app fell back to
+        // the shared set while looking exactly as though it had not.
+        //
+        // This asserts the rule rather than the exe: the test project does not reference the app,
+        // so it cannot read the app's resources. It fails the moment someone flattens the glob.
+        var csproj = File.ReadAllText(
+            Path.Combine(Repository, "app", "LivingDex.Desktop", "LivingDex.Desktop.csproj"));
+
+        var include = Regex.Match(csproj, @"<_DatasetSprite Include=""(?<path>[^""]+)""");
+        Assert.True(include.Success, "the sprite glob has been renamed");
+        Assert.Contains("**", include.Groups["path"].Value, StringComparison.Ordinal);
+
+        // And the path a sprite is embedded under has to keep the directory it came from, or
+        // every set would collapse onto the shared names.
+        var logical = Regex.Match(
+            csproj,
+            @"<LogicalName>dataset/sprites/(?<name>[^<]+)</LogicalName>");
+        Assert.True(logical.Success, "the sprite logical name has been renamed");
+        Assert.Contains("RecursiveDir", logical.Groups["name"].Value, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("wwwroot")]
     [InlineData("Components")]

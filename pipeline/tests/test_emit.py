@@ -90,7 +90,7 @@ def test_the_index_lists_the_games_and_stamps_the_build(tmp_path: Path) -> None:
     write_sample_dataset(tmp_path)
     index = json.loads((tmp_path / "index.json").read_text(encoding="utf-8"))
 
-    assert index["games"] == ["diamond", "emerald", "home", "platinum", "sword"]
+    assert index["games"] == ["diamond", "emerald", "home", "pearl", "platinum", "shield", "sword"]
     assert index["stamp"] == {"version": "0.1.0-sample", "builtOn": "2026-09-21"}
 
 
@@ -101,7 +101,9 @@ def test_known_games_finds_what_is_already_built(tmp_path: Path) -> None:
         "diamond",
         "emerald",
         "home",
+        "pearl",
         "platinum",
+        "shield",
         "sword",
     ]
 
@@ -116,7 +118,9 @@ def test_what_is_written_can_be_read_back(tmp_path: Path) -> None:
         "diamond",
         "emerald",
         "home",
+        "pearl",
         "platinum",
+        "shield",
         "sword",
     ]
     assert dataset.game("platinum").acquisition_methods[0].kind == "gift"

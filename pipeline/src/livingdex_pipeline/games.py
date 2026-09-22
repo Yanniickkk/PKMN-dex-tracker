@@ -11,7 +11,7 @@ from __future__ import annotations
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
-from .models import GameData, TransferEdge
+from .models import GameData, TransferDirection, TransferEdge
 from .pokeapi import PokeApiClient
 
 
@@ -92,8 +92,8 @@ class GameRegistry:
         the app cannot explain, and adding Ruby later lights the route up without anyone going
         back to edit Emerald.
 
-        Both ends may declare the same edge. They collapse into one, so neither game has to know
-        whether the other got there first.
+        Both ends may declare the same edge, from either side. They collapse into one, so
+        neither game has to know whether the other got there first.
         """
         known = set(self._builders)
         seen: dict[tuple, TransferEdge] = {}
@@ -126,7 +126,19 @@ class GameRegistry:
 
     @staticmethod
     def _edge_key(edge: TransferEdge) -> tuple:
-        return (edge.from_, edge.to, edge.mechanism.value, edge.direction.value)
+        """What makes two declarations the same route.
+
+        A both-ways route is one route however many of its ends declare it, and which end wrote
+        it down is not part of what it is: Ruby names Emerald as a trading partner and Emerald
+        names Ruby, and the graph should hold that once. A one-way route is not the same route
+        backwards - Pal Park carries Emerald into Platinum and never the other way - so its ends
+        keep their order.
+        """
+        ends = (edge.from_, edge.to)
+        if edge.direction is TransferDirection.BOTH_WAYS:
+            ends = tuple(sorted(ends))
+
+        return (*ends, edge.mechanism.value, edge.direction.value)
 
     def build(self, context: BuildContext) -> GameData:
         builder = self._builders.get(context.game_id)

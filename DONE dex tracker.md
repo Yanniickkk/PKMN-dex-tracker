@@ -781,7 +781,7 @@ Worth a validator rule if edges are ever written by hand.
 
 ## Phase 2 — Games
 
-A game lands here only once all 7 steps are ticked and its validation run is green.
+A game lands here only once all 8 steps are ticked and its validation run is green.
 
 ### Generation 1
 
@@ -793,6 +793,176 @@ _Nothing yet._
 
 ### Generation 3
 
+- [x] **Ruby** (`ruby`, gen 3, pair partner: Sapphire) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+- [x] **Sapphire** (`sapphire`, gen 3, pair partner: Ruby) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+  - The pair is built together, because a pair is the one case where two games really are one
+    dataset with a switch in it. What they share is in `gamedefs/hoenn.py` - region, National
+    Dex reach, the name of the Hoenn dex, the link cable - and each game file holds only what is
+    true about itself. Emerald reads from the same module now, so the cartridge list and the
+    edge factory exist once rather than three times.
+  - They are still two entities, and the picker proves it: two cards, two covers, and Ruby can
+    be linked to an Emerald collection without Sapphire coming with it.
+  - Their own sprites are step 6. Declaring the set at step 1 would have pulled 386 files into
+    every build for a game with no dex yet.
+  - **Two things the pair broke on arrival, both worth having found now.**
+  - A both-ways route declared from both ends was two rows in the graph. Nothing noticed while
+    only Emerald declared GBA trades; the moment Ruby named Emerald and Emerald named Ruby, the
+    transfer file held the same route twice - and the app expands a both-ways edge into both
+    directions itself, so it would have drawn four. The registry now keys a both-ways route on
+    its unordered ends. A one-way route keeps its order: Pal Park into Platinum is not the same
+    claim backwards.
+  - `pair_partner` had been in the schema since Phase 0 with nothing ever reading it. Ruby and
+    Sapphire are the first pair the dataset has held, so `version-pairs-name-each-other` now
+    checks that both halves are present and name each other. It found two dangling partners in
+    the committed sample on its first run - sword named a shield that was not there, diamond a
+    pearl - which is a fair advertisement for it.
+  - Step 2 was one function, not two. The three cartridges share these 202 entries *and their
+    numbering*, so `hoenn.dex_entries` answers for all of them and each game passes only its own
+    table of what it cannot hold. Emerald reads it too now, so its own copy is gone.
+  - Neither of the pair brings an unobtainable table yet. Which entries a cartridge's own grass
+    never holds is a fact about its encounters, and those are step 3; writing it down first
+    would be a guess with a citation on it.
+  - So the build is red, 6 errors per game, and they name exactly the six nobody can produce
+    yet: Surskit, Meditite, Roselia, Zangoose, Lunatone and Jirachi. Emerald was red the same
+    way from its step 2 until its step 5. Coverage reads 0 full, 196 partial, 6 missing for
+    each of the pair, which is the true picture: everything they list is a transfer away.
+  - Deoxys is still the one form question, and still waiting for the forms table. It takes a
+    different forme in each of the three cartridges, which is exactly the case the table exists
+    for, and none of the three can say so until it is filled.
+  - Step 3 cost five seconds and no requests. PokeAPI answers `/pokemon/<name>/encounters` with
+    every version at once, so Emerald's run had already fetched everything the pair needed; the
+    version is a filter over a response that was on disk.
+  - Ruby: 691 slots over 114 species and 59 places. Sapphire: 692, 114, 59. Emerald: 706, 115,
+    63 - the third version widened the Safari Zone, which is where most of the difference is.
+  - The version exclusives come out right, which is the check that the switch is doing real work
+    rather than building the same data twice. Ruby alone has Seedot, Nuzleaf, Zangoose, Solrock,
+    Mawile, Dusclops and Latios; Sapphire alone has Lotad, Lombre, Seviper, Lunatone, Sableye,
+    Banette and Latias. Two tests pin it: one that each half reads its own version of a shared
+    encounter table, and one that a species only the other half has brings no slot at all rather
+    than an empty one.
+  - Doing the pair together paid for itself here. Twelve errors became two: Zangoose is on Ruby
+    and Lunatone on Sapphire, so each half accounts for the other's exclusive the moment both
+    exist. Surskit, Meditite and Roselia are now produced by the pair, which is what Emerald's
+    unobtainable reasons said would happen - and it means Medicham and Masquerain have a real
+    source in the dataset rather than only a stated one.
+  - Only Jirachi is left, in both, and it is the same event-only distribution Emerald marks.
+    That is step 4.
+  - 88 dex entries have no wild slot in either half, against Emerald's 87. Those are the gifts,
+    statics, trades and evolutions of steps 4 and 5.
+  - Step 4: 19 gift and static records each, and one table for the two of them. They agree about
+    every species they both have, so `hoenn.PAIR_GIFTS` is written once; where they differ they
+    differ by *which* species turns up at all - Groudon in one Cave of Origin and Kyogre in the
+    other - and a key the other half never sees simply never matches. Emerald keeps its own
+    table, which reads the same in places and must not be merged: its legendary hides in a cave
+    that moves and its Rayquaza waits on a fight only it has.
+  - Southern Island is the nice inversion. Ruby's island holds Latias and Sapphire's holds
+    Latios, each the opposite of the one roaming its own Hoenn - and the wild step had already
+    produced exactly that mirror, from the other direction.
+  - The version exclusives are seven a side and mirror exactly, which is a test now: a species in
+    both lists would mean one of the two tables is wrong. Ruby cannot hold Lotad, Lombre,
+    Sableye, Seviper, Lunatone, Banette or Kyogre; Sapphire cannot hold Seedot, Nuzleaf, Mawile,
+    Zangoose, Solrock, Dusclops or Groudon.
+  - **Validation went green at step 4**, where Emerald stayed red until step 5. The pair covers
+    each other: everything one half keeps, the other can produce, so nothing is unaccounted.
+    Coverage is 127 full, 67 partial, 0 missing, 8 unobtainable for each.
+  - **A shipped Emerald record turned out to be wrong, and building the pair is what caught it.**
+    Emerald said of each fossil "only one of the two can be taken", which is the opposite of the
+    truth: the Desert Underpass exists only in Emerald, and the fossil left behind at the Mirage
+    Tower waits at the end of it once the Elite Four are done. Ruby and Sapphire are the games
+    where the choice really is final. Both wordings corrected.
+  - The 67 still unexplained are evolutions, which is step 5. Deoxys is among them: the Aurora
+    Ticket that reaches Birth Island never came to these two, so it is likely a step 7 answer
+    rather than a step 5 one.
+  - Step 5 closed all 67 but one. Each half now carries 97 evolutions, 3 in-game trades and the
+    same 3 babies, for 813 and 814 methods. Coverage: 193 full, 1 partial, 0 missing, 8
+    unobtainable.
+  - Three trades, shared, where Emerald swapped them for four of its own: a Makuhita for a
+    Slakoth in Rustboro, a Skitty for a Pikachu in Fortree, and a Corsola for a Bellossom in
+    Pacifidlog. The last one is the only trade in either generation that asks for something you
+    have to build first - a Bellossom takes a Sun Stone on a Gloom - so it says so.
+  - The version group is the pair's own, `ruby-sapphire`, where Emerald is its own group. Both
+    are Generation 3 and the difference is the point: the arithmetic is an ordering, not a
+    generation.
+  - Ruby evolves Lombre into Ludicolo although it can never catch a Lotad. That is right, and it
+    only reads as right because of the change that came with Emerald's validation step: a stated
+    reason counts as an answer, and Lombre carries one - "Sapphire only; trade one in". Trade a
+    Lombre in and Ruby will evolve it.
+  - The shared tables are module-level in `hoenn` now rather than passed in. Two copies of the
+    same three trades is how one of them gets edited and the other does not.
+  - **Only Deoxys is left**, in both, which is exactly what step 4 predicted. The Aurora Ticket
+    that reaches Birth Island was never handed out for these two, so this is a step 7 answer
+    rather than anything step 5 can give - the first time the new step has had a question waiting
+    for it before it ran.
+  - Step 6 cost one fetch for two games. They name the same directory, `generation-iii/ruby-
+    sapphire`, and the build already collapsed a set to one download however many games declare
+    it - so the log reads "ruby sprites: 386 species" and says nothing at all about Sapphire.
+    386 files, about 1 MB, beside Emerald's own.
+  - Worth checking that the two sheets are actually different, or the whole exercise is
+    ceremony: 335 of the 386 are byte-identical and **51 were redrawn for Emerald**, Blaziken and
+    Butterfree among them. A game does get its own look out of this.
+  - And the check that mattered more: **nothing had ever been embedded**. Emerald's step 6 shipped
+    a csproj glob of `dataset/sprites/*.png`, which is neither recursive nor path-preserving, so
+    every per-game directory reached the repository and none of them reached the exe. The app had
+    been falling back to the shared set since that step, while a screenshot of it was read as
+    proof that it was not. The glob is `**` now, the logical name keeps `RecursiveDir`, and the
+    assembly carries 772 nested sprites where it carried 0.
+  - The guard for it asserts the build rule rather than the exe, because the test project does
+    not reference the app. It was verified the only way such a test is worth anything: by
+    flattening the glob again and watching it fail.
+  - Step 7 answered Deoxys, the question step 5 left open. It was never catchable in either
+    half: two 2006 distributions handed the Pokemon itself over, the Space Center Deoxys in the
+    United States and the Doel Deoxys in the Netherlands - where Emerald's Aurora Ticket instead
+    opened the island it waits on. Marked unobtainable in both, with that as the reason.
+  - Ten of the twelve remaining entries had an event. Most share the 2006 Japanese campaign that
+    already covered Emerald's; Sableye, Seviper, Mawile and Zangoose were also given away in
+    English at the Pokemon Center in New York in the summer of 2004, and those carts were Ruby
+    and Sapphire specifically. Kyogre and Groudon had no Generation 3 giveaway at all, so their
+    reasons say nothing extra rather than reaching for one.
+  - Lombre and Nuzleaf have no event of their own and did not need one: a Lotad and a Seedot from
+    that same campaign evolve into them, and the reason says so.
+  - **Step 7 caught a mistake from step 4 before writing anything.** Banette was marked "Sapphire
+    only" on Ruby and Dusclops "Ruby only" on Sapphire - and each cartridge catches the stage
+    below and evolves it. The exclusives were worked out from encounter tables at step 4, before
+    step 5 added the evolutions, and nobody went back. Both removed; the lists are six a side.
+  - `unobtainable-entries-really-are` now guards it: a game that can reach an entry on its own -
+    something it catches or is handed, and then whatever those evolve or hatch into - must not
+    also claim it cannot. It fired on exactly those two and on nothing else. Emerald evolving a
+    Medicham from a Meditite it cannot catch is not reachable on its own and is left alone, which
+    is the distinction that makes the rule usable.
+  - Emerald's own reasons now read from the shared wording rather than a second copy of it. The
+    2006 campaign covered all three cartridges, so the sentence lives in one place.
+  - Validation green at 9 rules, 0 errors, 0 warnings. Coverage is identical for the two of
+    them: 194 full, 0 partial, 0 missing, 8 unobtainable.
+  - Smoke test on a collection with Ruby as main game and Sapphire linked, which is the pair's
+    own route and the thing worth looking at. Seviper reads the whole chain in one popup: **Not
+    in Ruby** with the reason and the two events that handed one out, then Sapphire's Route 114
+    slot, then "Then to Ruby: trading". Deoxys shows its reason and no ways at all, which is
+    right - neither half can produce one.
+  - The collection was created, read and deleted again; the data file is byte-identical to what
+    it was before, and the backup the app wrote during the test was removed with it.
+  - The catch toggle was not exercised here. It is the same code Emerald's smoke test already
+    went through, and running it again would only have written more to a file that had to be put
+    back.
+  - One thing the test caught that had nothing to do with the data: the reason on screen was a
+    sentence short, because the Debug build still had the dataset from before step 7. The exe
+    bakes the dataset in at build time, so a stale build shows stale data and looks entirely
+    healthy doing it.
 - [x] **Emerald** (`emerald`, gen 3, standalone) - 2026-09-22
   - [x] 1 Entity + edges - 2026-09-21
   - [x] 2 Dex list - 2026-09-21
@@ -800,7 +970,8 @@ _Nothing yet._
   - [x] 4 Gifts & statics - 2026-09-21
   - [x] 5 Trades & evolutions - 2026-09-22
   - [x] 6 Sprites - 2026-09-22
-  - [x] 7 Validate + smoke test - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
   - Validation went green by fixing the rule rather than the game. `no-evolution-dead-ends`
     called Medicham a dead end because nothing in the dataset produces a Meditite - which is
     true, and which the dex already answered in as many words: "Ruby and Sapphire only in
@@ -820,6 +991,28 @@ _Nothing yet._
     1 of 386, greened the tile and wrote a record with today's date. Setting it back to not
     caught leaves the record with its date, which is deliberate - "an accidental click must not
     erase it" - so the file is not byte-identical afterwards by design.
+  - Events arrived as a step after this game was already finished, so it was done
+    retroactively - and at the time it was numbered 8, after validating. The two were swapped
+    afterwards, so the numbers above read 7 and 8 while Emerald did them the other way round.
+    Nothing turns on it here: the events changed no reason that the validation run depended on.
+  - All six
+    of the entries Emerald cannot produce turned out to have been distributed at an event, and
+    five of them at the same one: a Japanese campaign that ran for three weeks in 2006 and
+    covered Ruby, Sapphire, Emerald, FireRed and LeafGreen alike. Surskit had a second, the
+    PokePark Egg of 2005. Jirachi is the only one whose reason *is* the event.
+  - The place to look is the species' own "In events" section on Bulbapedia, which says which
+    games each distribution was for - the part that matters, since a Generation 4 giveaway is no
+    use to a Hoenn cartridge.
+  - Nothing about what is obtainable changed, and the validation run did not move: an event that
+    closed twenty years ago is not a way to fill a dex. What changed is the answer a player gets
+    when they ask where one comes from at all.
+  - The app did not show any of this until now. `UnobtainableReason` had been carried through the
+    schema, the loader and `ReferenceData` since Phase 0.7 with no screen reading it, so a player
+    looking at Zangoose in an Emerald collection saw "No recorded way to get this in your games" -
+    true of Emerald, and unhelpful, because the dataset knew it was a Ruby Pokemon and said so.
+    The detail popup now has a **Not in <game>** section carrying the reason, and it is shown even
+    when there are ways listed: those ways are all in other games, and the reason is the sentence
+    that explains why. `ReferenceData.FindDexEntry` is the lookup behind it.
   - A game now declares every route it has, including ones to games that are not written yet.
     Emerald claims a both-ways trade with Ruby, Sapphire, FireRed and LeafGreen; the registry
     holds each of those back until the other end exists and the build says which are waiting.
@@ -933,6 +1126,19 @@ _Nothing yet._
   - Form sprites are still not here. `SpriteFor` used to promise them for this step; the forms
     table is empty, so there is nothing to draw them for yet, and the comment now says so
     instead of pointing at a step that has been done.
+  - **This step shipped broken and was reported as working.** The csproj globbed
+    `dataset/sprites/*.png`, which is not recursive and which flattens what it does match, so the
+    386 Emerald sprites were written to disk, committed, embedded nowhere, and silently fallen
+    back on. The app drew the shared set the whole time. It was checked by eye against a
+    screenshot and the shared Charizard was mistaken for the Generation 3 one - a sprite that
+    looks right at a glance is exactly what a fallback is for, which is why looking was not a
+    check.
+  - Fixed while building Ruby and Sapphire, whose set had the same problem: the glob is `**` now
+    and the logical name keeps `RecursiveDir`, so a sprite is embedded under the directory it
+    came from. 772 nested resources where there were 0.
+  - `The_app_embeds_every_sprite_directory_rather_than_only_the_top_one` guards it. It asserts
+    the build rule rather than the exe, because the test project does not reference the app - and
+    it was proved by flattening the glob again and watching it fail.
 
 ### Generation 4
 

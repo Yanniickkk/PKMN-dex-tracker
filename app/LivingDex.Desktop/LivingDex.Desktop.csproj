@@ -86,7 +86,10 @@
       <_DatasetTable Include="$(MSBuildThisFileDirectory)..\..\dataset\*.json"
                      Exclude="$(MSBuildThisFileDirectory)..\..\dataset\validation.json" />
       <_DatasetGame Include="$(MSBuildThisFileDirectory)..\..\dataset\games\*.json" />
-      <_DatasetSprite Include="$(MSBuildThisFileDirectory)..\..\dataset\sprites\*.png" />
+      <!-- Recursive: sprites are a shared set at the top plus one directory per game's own
+           battle sprites. A flat glob here silently shipped only the shared ones, and the app
+           fell back to them for every game while looking as though it had not. -->
+      <_DatasetSprite Include="$(MSBuildThisFileDirectory)..\..\dataset\sprites\**\*.png" />
       <_DatasetBoxArt Include="$(MSBuildThisFileDirectory)..\..\dataset\boxart\*.*" />
       <_DatasetIcon Include="$(MSBuildThisFileDirectory)..\..\dataset\icons\*.png" />
 
@@ -97,7 +100,10 @@
         <LogicalName>dataset/games/%(_DatasetGame.Filename)%(_DatasetGame.Extension)</LogicalName>
       </EmbeddedResource>
       <EmbeddedResource Include="@(_DatasetSprite)">
-        <LogicalName>dataset/sprites/%(_DatasetSprite.Filename)%(_DatasetSprite.Extension)</LogicalName>
+        <!-- RecursiveDir is whatever the ** matched, with a trailing backslash: empty for the
+             shared set, "generation-iii\emerald\" for a game's own. The app asks for the
+             forward-slash form, which is what the dataset directory spells on disk. -->
+        <LogicalName>dataset/sprites/$([System.String]::Copy('%(_DatasetSprite.RecursiveDir)').Replace('\','/'))%(_DatasetSprite.Filename)%(_DatasetSprite.Extension)</LogicalName>
       </EmbeddedResource>
       <EmbeddedResource Include="@(_DatasetBoxArt)">
         <LogicalName>dataset/boxart/%(_DatasetBoxArt.Filename)%(_DatasetBoxArt.Extension)</LogicalName>

@@ -36,7 +36,7 @@ public class DatasetLoaderTests
     public void Every_game_in_the_index_is_loaded()
     {
         Assert.Equal(
-            ["diamond", "emerald", "home", "platinum", "sword"],
+            ["diamond", "emerald", "home", "pearl", "platinum", "shield", "sword"],
             Loaded.Reference.Games.Select(game => game.Id.Value).Order(StringComparer.Ordinal));
     }
 

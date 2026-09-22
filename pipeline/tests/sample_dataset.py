@@ -305,6 +305,39 @@ def diamond() -> GameData:
     )
 
 
+def shield() -> GameData:
+    """Sword's other half. A stub, but a pair only holds up when both halves are there."""
+    return GameData(
+        game=Game(
+            id="shield",
+            title="Pokemon Shield",
+            version="Shield",
+            generation=8,
+            region="Galar",
+            release=GameRelease.CARTRIDGE,
+            dex_source=DexSource.GAME_DEX,
+            pair_partner="sword",
+        )
+    )
+
+
+def pearl() -> GameData:
+    """Diamond's other half, for the same reason."""
+    return GameData(
+        game=Game(
+            id="pearl",
+            title="Pokemon Pearl Version",
+            version="Pearl",
+            generation=4,
+            region="Sinnoh",
+            release=GameRelease.CARTRIDGE,
+            national_dex_through=493,
+            dex_source=DexSource.NATIONAL_DEX,
+            pair_partner="diamond",
+        )
+    )
+
+
 def home() -> GameData:
     """A transfer-only node: not a game, but the graph needs it to exist."""
     return GameData(
@@ -326,7 +359,7 @@ def write_sample_dataset(root: Path) -> DatasetWriter:
     writer.write_forms(forms())
     writer.write_evolution_rules(evolution_rules())
     writer.write_transfers(transfers())
-    for game in (platinum(), sword(), emerald(), diamond(), home()):
+    for game in (platinum(), sword(), shield(), emerald(), diamond(), pearl(), home()):
         writer.write_game(game)
 
     writer.write_index(stamp_for(VERSION, BUILT_ON), writer.known_games())
