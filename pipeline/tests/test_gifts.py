@@ -61,7 +61,7 @@ ROUTE_101 = {"hoenn-route-101-area": ("hoenn-route-101", "Route 101")}
 def build(
     encounters: dict[str, list],
     locations: dict[str, tuple[str, str]],
-    details: dict[str, GiftDetail] | None = None,
+    details: dict[str, GiftDetail | tuple[GiftDetail, ...]] | None = None,
     version: str = "emerald",
     excluded: dict[str, str] | None = None,
 ):
@@ -291,3 +291,49 @@ def test_every_record_says_where_it_came_from() -> None:
     assert found[0].source.source == "pokeapi"
     assert found[0].source.retrieved_on == TODAY
     assert str(found[0].source.url).endswith("/pokemon/treecko/encounters")
+
+
+def test_one_species_handed_over_in_two_places_can_be_described_once_per_place() -> None:
+    # Johto is where this became necessary: Bill hands over an Eevee in Goldenrod and the
+    # Celadon Game Corner sells one for coins. A table keyed by species alone would have put
+    # "From: Bill" on a slot machine prize.
+    found = build(
+        {
+            "eevee": [
+                area("goldenrod-city-bills-house", "heartgold", [row("gift", 5)]),
+                area("celadon-city-prize-corner", "heartgold", [row("gift", 15, ["coins-6666"])]),
+            ]
+        },
+        {
+            "goldenrod-city-bills-house": ("goldenrod-city", "Goldenrod City"),
+            "celadon-city-prize-corner": ("celadon-city", "Celadon City"),
+        },
+        {
+            "eevee": (
+                GiftDetail(npc="Bill", where="Goldenrod City, Bills House"),
+                GiftDetail(),
+            )
+        },
+        version="heartgold",
+    )
+
+    by_place = {one.location: one for one in found}
+
+    assert by_place["Goldenrod City, Bills House"].npc == "Bill"
+    assert by_place["Celadon City, Prize Corner"].npc is None
+    # And the one with nothing of its own still reads what the conditions say.
+    assert by_place["Celadon City, Prize Corner"].requirement == "Game Corner prize, 6666 coins"
+
+
+def test_a_description_that_fits_nowhere_is_said_out_loud(caplog) -> None:
+    # A place renamed or a gift moved leaves a table describing somewhere that no longer exists,
+    # and a silent miss is a sentence nobody notices has stopped being printed.
+    found = build(
+        {"eevee": [area("goldenrod-city-bills-house", "heartgold", [row("gift", 5)])]},
+        {"goldenrod-city-bills-house": ("goldenrod-city", "Goldenrod City")},
+        {"eevee": (GiftDetail(npc="Bill", where="Somewhere Else"),)},
+        version="heartgold",
+    )
+
+    assert found[0].npc is None
+    assert "which its gift table does not describe" in caplog.text

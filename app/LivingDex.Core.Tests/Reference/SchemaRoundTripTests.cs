@@ -172,6 +172,26 @@ public class SchemaRoundTripTests
     }
 
     [Fact]
+    public void A_trader_who_names_no_price_asks_for_nothing()
+    {
+        // Jasmine hands over a Steelix for whatever is in the party. Every other trader in the
+        // dataset names a species, so the field stayed required until Johto arrived.
+        var trade = new TradeAcquisition
+        {
+            Game = new GameId("heartgold"),
+            Target = DexTarget.ForSpecies(new SpeciesId("steelix")),
+            Source = Citation,
+            Location = "Olivine City, Gym",
+            Npc = "Jasmine",
+        };
+
+        var restored = Assert.IsType<TradeAcquisition>(RoundTrip(trade));
+
+        Assert.Null(restored.Wants);
+        Assert.Equal(trade, restored);
+    }
+
+    [Fact]
     public void A_wild_slot_keeps_what_a_player_has_to_arrange_first()
     {
         // Generation 4 puts species in the grass only while a Game Boy Advance cartridge is in

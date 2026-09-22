@@ -74,6 +74,20 @@ class GiftDetail:
     npc: str | None = None
     #: What has to be true first. Replaces the item read off the encounter's conditions.
     requirement: str | None = None
+    #: Which of this species' gifts this describes, as the record spells the place: "Goldenrod
+    #: City, Bills House". Left out when the species is only handed over once, which is the
+    #: usual case.
+    #:
+    #: Johto is where this became necessary. Bill hands over an Eevee in Goldenrod and the
+    #: Celadon Game Corner sells one for 6,666 coins; the Dragon Shrine's Master gives a Dratini
+    #: for answering his quiz and the Goldenrod Game Corner sells one for 2,100. A table keyed
+    #: by species alone would have put "From: Bill" on a slot machine prize, which is worse than
+    #: saying nothing.
+    where: str | None = None
+
+
+#: What a game says about one species' gifts: one description, or one per place.
+GiftDetails = GiftDetail | tuple[GiftDetail, ...]
 
 
 def gift_encounters(
@@ -83,7 +97,7 @@ def gift_encounters(
     version: str,
     species: list[str],
     retrieved_on: date,
-    details: Mapping[str, GiftDetail] | None = None,
+    details: Mapping[str, GiftDetails] | None = None,
     excluded: Mapping[str, str] | None = None,
     refresh: bool = False,
     places: LocationNames | None = None,
@@ -151,13 +165,14 @@ def gift_encounters(
                     if method not in GIFT_METHODS:
                         continue
 
+                    place = where.of(area_slug)
                     record = _record(
                         game_id=game_id,
                         species=name,
-                        place=where.of(area_slug),
+                        place=place,
                         method=method,
                         detail=detail,
-                        known=known.get(name, GiftDetail()),
+                        known=_detail_for(known.get(name), _as_written(place), species=name),
                         citation=citation,
                     )
 
@@ -192,16 +207,13 @@ def _record(
     known: GiftDetail,
     citation: SourceCitation,
 ) -> GiftAcquisition:
-    location, sub_area = place
     values = [one["name"] for one in detail.get("condition_values", [])]
 
     return GiftAcquisition(
         game=game_id,
         target=DexTarget(species=species),
         gift_kind=known.kind or GIFT_METHODS[method],
-        # A gift record has one place and no room for a sub-area, so the two are read as one
-        # line: "Route 119, Weather Institute".
-        location=f"{location}, {sub_area}" if sub_area else location,
+        location=_as_written(place),
         npc=known.npc,
         # A gift comes at one level, so PokeAPI's range is a range of one.
         level=detail.get("min_level"),
@@ -214,6 +226,44 @@ def _record(
         requirement=known.requirement or conditions.requirement(values, subject=species, skip=()),
         source=citation,
     )
+
+
+def _as_written(place: tuple[str, str | None]) -> str:
+    """A place as a gift record spells it.
+
+    A gift has one line for where it happens and no room for a sub-area, so the two are read as
+    one: "Route 119, Weather Institute".
+    """
+    location, sub_area = place
+
+    return f"{location}, {sub_area}" if sub_area else location
+
+
+def _detail_for(known: GiftDetails | None, place: str, *, species: str) -> GiftDetail:
+    """What the game's table says about the gift in this place.
+
+    A single description answers for every place the species is handed over. Several answer one
+    each, and one of them may leave ``where`` out to cover the rest. A set of descriptions that
+    between them say nothing about this place is a table that has drifted from the data - a
+    place renamed, a gift moved - so it is said out loud rather than passing silently.
+    """
+    if known is None:
+        return GiftDetail()
+
+    if isinstance(known, GiftDetail):
+        return known
+
+    for one in known:
+        if one.where == place:
+            return one
+
+    for one in known:
+        if one.where is None:
+            return one
+
+    log.warning("%s is handed over in %s, which its gift table does not describe", species, place)
+
+    return GiftDetail()
 
 
 def _identity(record: GiftAcquisition) -> tuple:

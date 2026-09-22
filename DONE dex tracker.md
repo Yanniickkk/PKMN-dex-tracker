@@ -1433,6 +1433,186 @@ _Nothing yet._
     "0 of 210" on its own list, Manaphy showing the two distributions that were its own, and
     Giratina's two rows on their own terms.
 
+- [x] **HeartGold** (`heartgold`, gen 4, pair partner: SoulSilver) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+- [x] **SoulSilver** (`soulsilver`, gen 4, pair partner: HeartGold) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+  - Built as a pair, the way both Generation 3 pairs and the Sinnoh pair were. 3025 and 3046
+    ways to get something, 446 and 447 of 493 full, validation green on all 9 rules.
+  - **Johto is the first region in this dataset that two generations are set in**, so `johto.py`
+    is about the *place* rather than about the hardware - unlike `kanto.py`, whose first line
+    says "the Generation 3 Kanto cartridges". Gold, Silver and Crystal read from it too when
+    they arrive, and nothing in it should have to be edited for them.
+  - What is true of Johto goes there; what is true of the generation stays with the generation,
+    in `ds.py` now and in Generation 2's own module later. The two factories are named for the
+    hardware for that reason - `ds_cartridge`, `ds_edges` - leaving room for the pair beside
+    them, and a test pins that the region module carries no generation number and no National
+    Dex cap. That is the mistake worth catching: a fact about the DS pair written down as a
+    fact about the place.
+  - A table that belongs to one pair rather than to the region says so in its name, the way
+    Sinnoh's `PAIR_DEX` does. The two dexes will need it: Gold and Silver show the 251-entry
+    Johto dex and HeartGold and SoulSilver the 256-entry one.
+  - The six edges Diamond, Pearl and Platinum had been holding for the Johto half lit up on
+    their own, without either side being edited. 45 routes now: ten link cables, ten wireless
+    trades and twenty-five Pal Park trips.
+  - Building one half alone is a red build, and rightly: `version-pairs-name-each-other` says
+    HeartGold names a partner that is not in the dataset. It goes green when the other half
+    arrives, which is what that rule is for.
+  - The dex is the 256-entry Johto dex, `updated-johto`, Chikorita #001 to Celebi #256. Both
+    halves show the same list in the same order, the way Diamond and Pearl share their 151.
+  - The region names both its dexes rather than one. Gold, Silver and Crystal show
+    `original-johto`, 251 entries, and the five the updated one adds are the Generation 4
+    evolutions of Pokemon already in it - Yanmega, Ambipom, Lickilicky, Tangrowth, Mamoswine -
+    each filed directly behind what it evolves from. So it is not the original with five at the
+    back: everything from Yanmega on is renumbered, 150 entries of it. That is the opposite of
+    Sinnoh, where Platinum's 210 keep Diamond's 151 numbers exactly, and it is why one constant
+    called "the Johto dex" would have been a lie waiting to be believed.
+  - Which entries the cartridge cannot produce is step 5's answer, not this one's. Reading the
+    encounter tables alone cannot tell a version exclusive from something that evolves from one,
+    which is what once put Banette on Ruby's list.
+  - Both are red until step 3, and the message is the one the aggregate rule was written for:
+    "this game's encounters have not been gathered yet". The single entry it counts as missing
+    from the whole dataset is Celebi, which nothing anywhere produces - the other 255 are
+    already obtainable in some other game here.
+  - 2704 wild slots in HeartGold and 2725 in SoulSilver, 248 species over 92 places, both
+    regions included - Kanto is half of these games and none of it is in their 256 entries,
+    which is exactly why the build asks about the living dex instead.
+  - Johto hangs more on its conditions than any region before it, and all of them are in
+    `conditions.py`, which is shared, so Gold and Silver will find most of the sentences already
+    written:
+    - The Pokegear radio does what the Game Boy Advance slot does in Sinnoh - it puts another
+      region's Pokemon in the grass - except it asks for nothing a player does not already own.
+      211 slots on the Hoenn sound, 189 on the Sinnoh sound.
+    - The Safari Zone's numbers are block **points**, not objects. An area holds thirty at a
+      time and each one counts for more once the area has been active long enough, so "at least
+      35 forest" is reachable; a player counting to thirty would have concluded it was not.
+      185 slots hang on it.
+    - Headbutt trees come in three groups and which tree is in which is fixed per save, so it is
+      not "find the right tree" but "find out which of yours it is". 350 slots.
+    - The Bug-Catching Contest replaces the National Park for a day, and the National Dex
+      changes what is in it - one Butterfree slot reads "Only during the Bug-Catching Contest
+      and after the National Dex opens and on a Tuesday", which is three conditions the game
+      really does stack.
+  - The two roamers were worth checking rather than guessing at: the beasts start moving when
+    they are disturbed in the Burned Tower, and Latias or Latios when the player leaves the
+    Vermilion City Pokemon Fan Club with the Copycat's doll. Both read off Bulbapedia's roaming
+    page.
+  - A test in `test_wild.py` used one of the Safari Zone conditions as its example of a
+    condition nobody has worded yet. Somebody worded it, so the test now uses Generation 7's
+    SOS chaining instead - which is the path working exactly as intended.
+  - Coverage after this step: 248 of 493 full, 241 a transfer away, 4 produced nowhere at all -
+    Celebi, Jirachi, Manaphy and Phione. Steps 4 and 5 are what turn the 241 into something
+    smaller: these games hand over a great deal and evolve even more.
+  - 53 gifts and statics over 50 species, one table for both halves. What they disagree about -
+    which of two the Game Corner sells, which legendary sleeps in the Embedded Tower, what level
+    a cover legendary is caught at - PokeAPI already files per version, so none of it needs a
+    switch in the table.
+  - **One species, two different gifts** is new here and needed a change to `gifts.py`. Bill
+    hands over an Eevee in Goldenrod and the Celadon Game Corner sells one for 6,666 coins; the
+    Master of the Dragon Shrine gives a Dratini for his quiz and Goldenrod sells one for 2,100.
+    A table keyed by species alone would have printed "From: Bill" on a slot machine prize. A
+    `GiftDetail` can now say `where` it applies, a species can carry several, and a set of
+    descriptions that between them fit nowhere is logged rather than passing silently.
+  - Three sets of first partners in one game, which nothing else in the dataset does: Elm's
+    three in New Bark Town, Oak's three in Pallet Town after Red is beaten, and Steven's three
+    Hoenn starters in Silph Co. once a Kanto one has been taken.
+  - Four things were worth reading rather than guessing at, and all four came off Bulbapedia:
+    - The Embedded Tower legendaries wait behind an **in-game** item, not an event. Mr. Pokemon
+      hands over the Blue Orb (HeartGold) or Red Orb (SoulSilver) once Red is beaten and a Kanto
+      first partner has been taken, and Professor Oak gives the Jade Orb for being shown a
+      Kyogre and a Groudon **both caught in that tower** - so a Rayquaza needs the other version
+      to have been played too.
+    - Primo's three eggs take a password, which is a set of phrases picked in conversation. The
+      codes were printed in magazines and are freely known; nothing about it needs an event.
+    - The Togepi egg comes from Professor Elm's assistant after the Zephyr Badge.
+    - The Dragon Shrine's Dratini is the reward for the Master's quiz, and a first-time perfect
+      set of answers is what makes it know ExtremeSpeed. PokeAPI files that as two rows; one
+      sentence collapses them into the one gift it is.
+  - Manaphy is skipped with a word, the way Sinnoh's is: its egg is a Pokemon Ranger reward sent
+    across, which is a fact about two games and a wireless link. It cannot be marked unobtainable
+    here, though, because it is not in these games' own 256-entry dex and a reason lives on a dex
+    entry. Same for Jirachi and Phione. Worth fixing where the coverage report counts, not here.
+  - 22 species are handed over that the table says nothing about, and the build names them: the
+    Rocket HQ's trap Voltorb, the Game Corner's cheaper prizes, the birds, the beasts. Each one
+    still carries its place, its level and whatever its conditions said; what they lack is a
+    sentence somebody has checked. That number is the size of the job, not a fault.
+  - Coverage after this step: 282 of 493 full, 207 a transfer away, 4 produced nowhere. Step 5
+    is the big one for these games - Johto is where breeding was invented.
+  - Step 5 in three parts: 246 evolutions, 10 in-game trades, 12 babies from the day care on
+    Route 34 - which is the same building Gold and Silver put there, so it is the region's and
+    not the pair's.
+  - **A trader who names no price.** Jasmine hands over a Steelix for whatever is in the party,
+    and every other trader in the dataset asks for a species. Rather than invent a price she
+    never asked for, `wants` became optional - in the pipeline's schema, in the app's model and
+    in the sentence the popup prints, which now reads "Trade anything for it". Four of the ten
+    traders are characters a player already knows: HeartGold gave its new trades to Brock,
+    Jasmine, Lt. Surge and Steven rather than to invented strangers.
+  - Two trades are only open at certain hours, which no other game in the dataset has done:
+    Brock's Rhyhorn on Saturday evenings after he is beaten at the Pewter Gym, and Jasmine's
+    Steelix between one and two in the afternoon after a rematch, on the second time she is
+    spoken to. Both came off Bulbapedia's in-game trade table, along with the trainer names the
+    games record as the original trainer.
+  - **The incense is only for the babies Generation 4 invented.** A Pikachu has always simply
+    laid a Pichu; a Marill lays another Marill unless a parent is holding a Sea Incense. The
+    six older babies - Pichu, Cleffa, Igglybuff, Smoochum, Elekid, Magby - hatch from nothing
+    but two parents, and the six newer ones each need their own item. Getting that backwards
+    would send a player shopping for something they do not need.
+  - Johto invented breeding and still needs a short table: Azurill, Budew and Chingling are in
+    its own grass, so an egg is not the only way to one and they are not listed. Bonsly is,
+    and it has to be - Brock will not hand over his Rhyhorn without one, and nothing else in
+    these games produces a Bonsly.
+  - Coverage after this step: 446 of 493 full in HeartGold and 447 in SoulSilver, 43 and 42 a
+    transfer away, 4 produced nowhere. What is left to explain is Celebi, which is step 7's.
+  - The pair redrew Generation 4's sprites rather than reusing Diamond and Pearl's or
+    Platinum's, so they get a sheet of their own: 493 of them, the whole National Dex these
+    games reach, and not one missing. Three sheets in Generation 4 now, one per release.
+  - Step 7's input is the list of entries nothing in the game produces, and for these two it is
+    eight and seven: the other half's exclusives, plus Mew and Celebi. **Validation is green** -
+    9 rules, 0 errors, 0 warnings across all ten games.
+  - The pair is not symmetrical. Six species are SoulSilver's and five are HeartGold's, which
+    is worth saying out loud because every other pair in this dataset mirrors exactly.
+  - What is *not* on those lists matters as much. Ledian is caught nowhere in HeartGold either,
+    and it evolves from a Ledyba that comes over the link - the distinction that once put
+    Banette on Ruby's list. Reading only the encounter tables cannot make it.
+  - Eleven *In events* tables read, and one hit: not a Pokemon that was handed out, but a place
+    to walk. The Sightseeing route for the Pokewalker holds a Meowth, and that route was itself
+    an event download. Every other distribution those eleven have is for Generation 1 to 3 or
+    for Black and White. An empty finding is still a finding.
+  - Mew came over Wi-Fi rather than over a counter, which is what the generation changed: the
+    Susumu Mew in Japan in 2009 and 2010, and the Fall 2010 Mew in five languages.
+  - Celebi is more than a dex entry here. The Cinema Celebi of 2010 and the Winter 2011 Celebi
+    are what put the GS Ball in the player's hands and Giovanni in Ilex Forest, so the
+    distribution carried a piece of the game with it - and saying only "event only" would have
+    left out half of what it does.
+  - The Pokewalker was worth checking for another reason: PokeAPI has nothing about it, so a
+    course holding something the cartridge does not could have made a whole list wrong. Only
+    one of the eleven is on any route at all, and that route is an event.
+  - Adding a game's edges needs a **full** build. A single-game build reads the shared tables
+    rather than rewriting them - that is what makes adding a game cost nothing for the others -
+    and the transfer graph is one of them. Roughly seven minutes from a warm cache.
+  - Smoke test on the published exe: a collection made through the wizard with HeartGold as
+    main game and Emerald and SoulSilver linked. Vulpix reads "Not in HeartGold: SoulSilver
+    only in Generation 4; trade one in", then Emerald's Mt. Pyre by Pal Park and SoulSilver's
+    Route 36 by trading - both routes in one popup, which no other game in the dataset has
+    shown. Celebi carries its distributions and no ways at all. Marking Vulpix caught elsewhere
+    wrote the record with today's date, and the counter moved to "1 still to transfer". The
+    user's own settings were copied out first and restored afterwards; nothing touched their
+    data file.
+
 ### Generation 5
 
 _Nothing yet._

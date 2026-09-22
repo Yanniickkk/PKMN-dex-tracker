@@ -6,6 +6,8 @@ to get subtly wrong later - a dex source, a National Dex cap, an edge pointing a
 
 from __future__ import annotations
 
+from datetime import date
+
 import pytest
 
 from livingdex_pipeline.build import default_registry
@@ -15,7 +17,9 @@ from livingdex_pipeline.gamedefs import (
     emerald,
     firered,
     gba,
+    heartgold,
     hoenn,
+    johto,
     kanto,
     leafgreen,
     pearl,
@@ -23,8 +27,10 @@ from livingdex_pipeline.gamedefs import (
     ruby,
     sapphire,
     sinnoh,
+    soulsilver,
 )
 from livingdex_pipeline.games import BuildContext, GameRegistry
+from livingdex_pipeline.gifts import GiftDetail
 from livingdex_pipeline.models import (
     AllSpeciesFilter,
     DexSource,
@@ -65,6 +71,7 @@ VERSION_GROUP_ORDER = {
     "firered-leafgreen": 7,
     "diamond-pearl": 8,
     "platinum": 9,
+    "heartgold-soulsilver": 10,
 }
 
 
@@ -828,7 +835,7 @@ def test_a_step_that_has_not_been_gathered_yet_brings_nothing_rather_than_bare_r
 def test_a_generation_4_cartridge_brings_its_trades_and_its_pal_park_together() -> None:
     # The two kinds of route come from one call, because Platinum once declared them in two
     # places and only one of them grew when Ruby and Sapphire arrived.
-    for module in (diamond, pearl, platinum):
+    for module in (diamond, pearl, platinum, heartgold, soulsilver):
         edges = module.edges()
 
         trades = {edge.to for edge in edges if edge.mechanism is TransferMechanism.TRADE}
@@ -840,6 +847,240 @@ def test_a_generation_4_cartridge_brings_its_trades_and_its_pal_park_together() 
         assert all(edge.direction is TransferDirection.ONE_WAY for edge in migrations)
 
 
+# --- HeartGold and SoulSilver -----------------------------------------------------------------
+
+
+def test_the_johto_pair_are_two_games_that_name_each_other() -> None:
+    both = {
+        module.GAME_ID: module.build(context(module.GAME_ID)).game
+        for module in (heartgold, soulsilver)
+    }
+
+    assert sorted(both) == ["heartgold", "soulsilver"]
+    assert both["heartgold"].pair_partner == "soulsilver"
+    assert both["soulsilver"].pair_partner == "heartgold"
+    assert both["heartgold"].title != both["soulsilver"].title
+
+
+def test_the_johto_games_are_generation_4_cartridges_set_in_johto() -> None:
+    for module in (heartgold, soulsilver):
+        game = module.build(context(module.GAME_ID)).game
+
+        assert game.generation == 4
+        # Kanto is the second half of the map in both, and neither is a Kanto game.
+        assert game.region == "Johto"
+        assert game.national_dex_through == 493
+        assert game.dex_source is DexSource.NATIONAL_DEX
+        assert game.released is not None
+
+
+def test_johto_is_a_region_rather_than_a_generation() -> None:
+    # Gold, Silver and Crystal are Johto too, and none of Generation 4 is true of them. So this
+    # module carries the region and delegates the hardware, unlike `kanto`, which is written for
+    # one generation and says so. A National Dex cap or a generation number appearing here is
+    # the mistake this pins: it would be a fact about the DS pair written down as a fact about
+    # the place.
+    assert johto.REGION == "Johto"
+    assert not hasattr(johto, "GENERATION")
+    assert not hasattr(johto, "NATIONAL_DEX_THROUGH")
+
+    # What it does know is how to put the region on a cartridge, which is the one argument the
+    # Generation 2 factory beside it will pass as well.
+    assert (
+        johto.ds_cartridge(
+            game_id="heartgold",
+            title="Pokémon HeartGold Version",
+            version="HeartGold",
+            released=date(2009, 9, 12),
+            pair_partner="soulsilver",
+        ).region
+        == johto.REGION
+    )
+
+
+def test_both_johto_halves_show_the_same_updated_johto_dex() -> None:
+    api = FakeApi([(1, "chikorita"), (256, "celebi")])
+
+    for module in (heartgold, soulsilver):
+        data = module.build(context(module.GAME_ID, api))
+
+        assert [(entry.number, entry.target.species) for entry in data.dex_entries] == [
+            (1, "chikorita"),
+            (256, "celebi"),
+        ]
+        assert all(entry.game == module.GAME_ID for entry in data.dex_entries)
+
+    # Not "original-johto", which is Gold and Silver's 251. Both halves asked for the same one.
+    assert api.asked_for == ["updated-johto", "updated-johto"]
+
+
+def test_the_region_names_both_of_its_dexes_apart() -> None:
+    # The five Generation 4 evolutions the updated one adds are filed behind what they evolve
+    # from, so it is not the original with five at the back: everything from Yanmega on shifts,
+    # and Celebi is #256 where Gold and Silver have it at #251. One constant called "the Johto
+    # dex" would have been read as "they share a dex", which is exactly what they do not do.
+    assert johto.ORIGINAL_DEX != johto.UPDATED_DEX
+    assert johto.UPDATED_DEX == "updated-johto"
+
+
+def test_each_johto_half_asks_about_its_own_version() -> None:
+    # One function answers for both halves and each brings its own version name. A slot that
+    # belongs to one of them must not turn up in the other.
+    slots = {
+        "location_area": {"name": "hoenn-route-101-area"},
+        "version_details": [
+            {
+                "version": {"name": "heartgold"},
+                "encounter_details": [
+                    {
+                        "min_level": 5,
+                        "max_level": 5,
+                        "chance": 10,
+                        "method": {"name": "walk"},
+                        "condition_values": [],
+                    }
+                ],
+            }
+        ],
+    }
+    api = FakeApi([(1, "sentret")], {"sentret": [slots]})
+
+    caught = {
+        module.GAME_ID: [
+            one
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "wild"
+        ]
+        for module in (heartgold, soulsilver)
+    }
+
+    assert [one.target.species for one in caught["heartgold"]] == ["sentret"]
+    assert caught["soulsilver"] == []
+
+
+def test_a_johto_cartridge_asks_about_its_whole_living_dex_not_its_own_pokedex() -> None:
+    # Kanto is half of these games and none of it is in their 256 entries. Asking only about
+    # the regional dex is what once left everything outside it with nothing recorded against
+    # it, in games that are full of it.
+    slots = {
+        "location_area": {"name": "hoenn-route-101-area"},
+        "version_details": [
+            {
+                "version": {"name": "heartgold"},
+                "encounter_details": [
+                    {
+                        "min_level": 5,
+                        "max_level": 5,
+                        "chance": 10,
+                        "method": {"name": "walk"},
+                        "condition_values": [],
+                    }
+                ],
+            }
+        ],
+    }
+    # Rattata is not in the fake Johto dex; the living dex reaches it anyway.
+    api = FakeApi([(1, "sentret")], {"rattata": [slots]})
+
+    caught = [
+        one
+        for one in heartgold.build(
+            context("heartgold", api, reaches=["rattata"])
+        ).acquisition_methods
+        if one.kind == "wild"
+    ]
+
+    assert [one.target.species for one in caught] == ["rattata"]
+
+
+def test_the_johto_pair_hand_over_the_same_things_from_one_table() -> None:
+    # What the two halves disagree about - which of two the Game Corner sells, which legendary
+    # sleeps in the Embedded Tower, what level a cover legendary is caught at - PokeAPI already
+    # files per version, so none of it needs a switch in the table.
+    assert johto.DS_PAIR_GIFTS["chikorita"].kind is GiftKind.STARTER
+    assert johto.DS_PAIR_GIFTS["chikorita"].npc == "Professor Elm"
+    # Three sets of first partners in one game, which no other game in the dataset does.
+    givers = {johto.DS_PAIR_GIFTS[species].npc for species in ("chikorita", "bulbasaur", "treecko")}
+    assert givers == {"Professor Elm", "Professor Oak", "Steven"}
+
+
+def test_the_two_gifts_of_one_species_are_described_one_at_a_time() -> None:
+    # Bill's Eevee and the Celadon Game Corner's are the same species and nothing else alike.
+    bill, rest = johto.DS_PAIR_GIFTS["eevee"]
+
+    assert bill.npc == "Bill"
+    assert bill.where == "Goldenrod City, Bills House"
+    # The other has nothing of its own: the coins it costs are in the encounter's conditions.
+    assert rest == GiftDetail()
+
+
+def test_the_johto_pair_share_ten_traders_and_one_of_them_names_no_price() -> None:
+    wanted = {trade.gets: trade.wants for trade in johto.DS_PAIR_TRADES}
+
+    assert len(johto.DS_PAIR_TRADES) == 10
+    assert wanted["onix"] == "bellsprout"
+    # Jasmine takes whatever is in the party, so there is nothing to put here.
+    assert wanted["steelix"] is None
+    # Four of the ten are characters a player already knows, which is HeartGold's doing.
+    assert {"Brock", "Jasmine", "Lt. Surge", "Steven"} <= {
+        trade.npc for trade in johto.DS_PAIR_TRADES
+    }
+
+
+def test_only_the_generation_4_babies_need_an_incense() -> None:
+    # A Pikachu has always simply laid a Pichu; a Marill lays another Marill unless a parent is
+    # holding a Sea Incense. Getting that backwards sends a player shopping for nothing.
+    eggs = johto.DS_PAIR_EGGS
+
+    assert eggs["pichu"].requirement is None
+    assert eggs["magby"].requirement is None
+    assert "Odd Incense" in (eggs["mime-jr"].requirement or "")
+    assert "Rock Incense" in (eggs["bonsly"].requirement or "")
+    # Azurill, Budew and Chingling are in Johto's own grass, so an egg is not the only way to
+    # one and the table does not claim it is.
+    assert not ({"azurill", "budew", "chingling"} & set(eggs))
+    # And a Bonsly is only ever hatched here, which is what Brock's trade asks for.
+    assert eggs["bonsly"].parents == ("sudowoodo",)
+
+
+def test_each_johto_half_keeps_the_others_exclusives_out_of_reach() -> None:
+    # A version pair does not have to be symmetrical, and this one is not: six one way, five the
+    # other. What is not on either list is as deliberate - Ledian is caught nowhere in HeartGold
+    # either, and it evolves from a Ledyba that comes over the link.
+    assert set(heartgold.ONLY_ON_SOULSILVER) == {
+        "ledyba",
+        "vulpix",
+        "meowth",
+        "delibird",
+        "teddiursa",
+        "skarmory",
+    }
+    assert set(soulsilver.ONLY_ON_HEARTGOLD) == {
+        "spinarak",
+        "growlithe",
+        "mankey",
+        "gligar",
+        "phanpy",
+    }
+    assert "ledian" not in heartgold.UNOBTAINABLE
+    assert "arcanine" not in soulsilver.UNOBTAINABLE
+
+
+def test_the_two_the_series_hands_out_say_which_distributions_reached_these_games() -> None:
+    for module in (heartgold, soulsilver):
+        assert "Wi-Fi" in module.UNOBTAINABLE["mew"]
+        # Celebi is more than a dex entry here: the event one is what puts the GS Ball in Ilex
+        # Forest, so saying only "event only" would have left out half of what it does.
+        assert "GS Ball" in module.UNOBTAINABLE["celebi"]
+
+
+def test_the_only_event_that_ever_covered_an_exclusive_was_a_place_to_walk() -> None:
+    # Eleven species, eleven *In events* tables, and one hit: not a Pokemon that was handed out
+    # but a Pokewalker route that was. An empty finding is still a finding.
+    assert "Pokewalker" in (heartgold.ONLY_ON_SOULSILVER["meowth"] or "")
+    assert all(event is None for event in soulsilver.ONLY_ON_HEARTGOLD.values())
+
+
 def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> None:
     registry = default_registry()
 
@@ -847,25 +1088,27 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "diamond",
         "emerald",
         "firered",
+        "heartgold",
         "leafgreen",
         "pearl",
         "platinum",
         "ruby",
         "sapphire",
+        "soulsilver",
     ]
 
     routes = [(edge.from_, edge.to) for edge in registry.edges]
 
-    # Ten link cables between the five Generation 3 cartridges, three wireless trades between
-    # the three Sinnoh games, and fifteen one-way Pal Park trips from each of the five into each
-    # of the three.
-    assert len(routes) == 10 + 3 + 15
+    # Ten link cables between the five Generation 3 cartridges, ten wireless trades between the
+    # five Generation 4 games, and twenty-five one-way Pal Park trips from each of the five into
+    # each of the five.
+    assert len(routes) == 10 + 10 + 25
     assert routes == sorted(routes)
     assert ("diamond", "pearl") in routes
     assert ("ruby", "diamond") in routes
 
-    # What is waiting is the Johto half of Generation 4, which is not written yet.
-    assert {edge.to for _, edge in registry.held_back_edges} == {"heartgold", "soulsilver"}
+    # Nothing is waiting any more: the six edges Sinnoh declared into Johto have both ends now.
+    assert registry.held_back_edges == []
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:

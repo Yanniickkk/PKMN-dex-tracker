@@ -8,11 +8,34 @@ in one place.
 from __future__ import annotations
 
 from ..games import GameRegistry
-from . import diamond, emerald, firered, leafgreen, pearl, platinum, ruby, sapphire
+from . import (
+    diamond,
+    emerald,
+    firered,
+    heartgold,
+    leafgreen,
+    pearl,
+    platinum,
+    ruby,
+    sapphire,
+    soulsilver,
+)
 
 # In the order they came out: the Hoenn pair, the Kanto pair, the third version that followed
-# them, then the Sinnoh pair and its own third version.
-MODULES = [ruby, sapphire, firered, leafgreen, emerald, diamond, pearl, platinum]
+# them, then the Sinnoh pair and its own third version, and the Johto pair that closes
+# Generation 4.
+MODULES = [
+    ruby,
+    sapphire,
+    firered,
+    leafgreen,
+    emerald,
+    diamond,
+    pearl,
+    platinum,
+    heartgold,
+    soulsilver,
+]
 
 
 def register_all(registry: GameRegistry) -> None:

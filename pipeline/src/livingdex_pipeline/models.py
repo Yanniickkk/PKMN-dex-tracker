@@ -354,7 +354,9 @@ class TradeAcquisition(Model):
     target: DexTarget
     location: str
     npc: str | None = None
-    wants: DexTarget
+    # Left out by the traders who will take anything. Jasmine hands over a Steelix for whatever
+    # is in the party, and naming a species there would have invented a price she never asked.
+    wants: DexTarget | None = None
     requirement: str | None = None
     source: SourceCitation
 

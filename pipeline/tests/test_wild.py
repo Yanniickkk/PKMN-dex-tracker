@@ -357,13 +357,17 @@ def test_a_condition_on_something_the_place_gives_no_other_way_stays() -> None:
 
 
 def test_a_condition_nobody_has_worded_yet_is_carried_and_complained_about(caplog) -> None:
+    # The example here used to be one of Johto's Safari Zone blocks, until HeartGold arrived and
+    # somebody wrote the sentence. That is the whole point of this path: an unread condition is
+    # carried and complained about until a generation gets round to it. This one is Generation
+    # 7's, and its turn will come.
     found = build(
         {
             "shellder": [
                 area(
                     "hoenn-route-101-area",
                     "diamond",
-                    [slot("walk", 20, 20, 5, conditions=["johto-safari-blocks-water-min-4"])],
+                    [slot("walk", 20, 20, 5, conditions=["sos-battle-chain"])],
                 )
             ]
         },
@@ -372,8 +376,49 @@ def test_a_condition_nobody_has_worded_yet_is_carried_and_complained_about(caplo
     )
 
     # Carried through rather than dropped: a restriction nobody has read is still a restriction.
-    assert found[0].requirement == "Johto safari blocks water min 4"
+    assert found[0].requirement == "Sos battle chain"
     assert "no wording yet" in caplog.text
+
+
+def test_johtos_own_conditions_read_as_sentences(caplog) -> None:
+    found = build(
+        {
+            "buizel": [
+                area(
+                    "johto-route-30-area",
+                    "heartgold",
+                    [slot("walk", 5, 5, 10, conditions=["radio-sinnoh"])],
+                )
+            ],
+            "fearow": [
+                area(
+                    "johto-route-30-area",
+                    "heartgold",
+                    [slot("walk", 20, 20, 5, conditions=["johto-safari-blocks-forest-min-5"])],
+                )
+            ],
+            "heracross": [
+                area(
+                    "johto-route-30-area",
+                    "heartgold",
+                    [slot("headbutt", 10, 10, 5, conditions=["headbutt-tree-rare"])],
+                )
+            ],
+        },
+        {"johto-route-30-area": ("johto-route-30", "Route 30")},
+        version="heartgold",
+    )
+
+    said = {one.target.species: one.requirement for one in found}
+
+    # A Sinnoh Pokemon in Johto's grass, put there by the radio rather than by a cartridge in
+    # the slot underneath - which is what Sinnoh needed for the same trick.
+    assert said["buizel"] == "With the Pokegear radio tuned to the Sinnoh sound"
+    # Points rather than objects: an area holds thirty, and days of use make each count for more.
+    assert said["fearow"] == "With at least 5 forest block points in that area of the Safari Zone"
+    assert said["heracross"] == "On one of the rare headbutt trees"
+    # Every one of them had a sentence waiting; nothing was carried through as a slug.
+    assert "no wording yet" not in caplog.text
 
 
 def test_the_same_place_is_looked_up_once_however_many_pokemon_live_there() -> None:

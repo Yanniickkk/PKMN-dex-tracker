@@ -106,21 +106,11 @@ _Done: Ruby, Sapphire, Emerald, FireRed and LeafGreen. All five are in `DONE dex
 
 ### Generation 4
 
-_Done: Diamond, Pearl and Platinum. All three are in `DONE dex tracker.md`. What is left of
-Generation 4 is Johto: HeartGold and SoulSilver, whose six held-back edges are already declared._
+_Done: all five. Diamond, Pearl and Platinum are Sinnoh; HeartGold and SoulSilver are Johto._
 
-_What the Sinnoh games share is in `sinnoh.py`; what every Generation 4 cartridge shares - the
-wireless trading between all five, the National Dex to 493, Pal Park out of the slot underneath -
-is in `ds.py`, which HeartGold and SoulSilver will read from too._
-
-- [ ] **HeartGold** (`heartgold`, gen 4, pair partner: SoulSilver)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
-- [ ] **SoulSilver** (`soulsilver`, gen 4, pair partner: HeartGold)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
+_What the Sinnoh games share is in `sinnoh.py` and what the Johto ones share is in `johto.py`;
+what every Generation 4 cartridge shares - the wireless trading between all five, the National
+Dex to 493, Pal Park out of the slot underneath - is in `ds.py`._
 
 ### Generation 5
 

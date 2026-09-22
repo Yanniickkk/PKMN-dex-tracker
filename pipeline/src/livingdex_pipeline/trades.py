@@ -23,10 +23,11 @@ class InGameTrade:
 
     #: What the player receives.
     gets: str
-    #: What the player has to hand over. The NPC will not take anything else.
-    wants: str
     #: The town or place the trader stands in.
     location: str
+    #: What the player has to hand over. The NPC will not take anything else - unless this is
+    #: left out, which is the trader who will take whatever is in the party.
+    wants: str | None = None
     #: Who trades. The games record the trader as the original trainer of what they hand over,
     #: which is where this name comes from.
     npc: str | None = None
@@ -47,7 +48,7 @@ def trade_encounters(
             target=DexTarget(species=trade.gets),
             location=trade.location,
             npc=trade.npc,
-            wants=DexTarget(species=trade.wants),
+            wants=DexTarget(species=trade.wants) if trade.wants else None,
             requirement=trade.requirement,
             source=citation,
         )

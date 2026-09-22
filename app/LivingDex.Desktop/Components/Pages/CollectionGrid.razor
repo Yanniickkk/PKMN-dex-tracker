@@ -864,7 +864,9 @@ else
             ? $"From {Dataset.Reference.NameOf(rule.From)}"
             : "From an earlier stage",
 
-        TradeAcquisition trade => $"Trade a {Dataset.Reference.NameOf(trade.Wants)}",
+        TradeAcquisition trade => trade.Wants is { } wanted
+            ? $"Trade a {Dataset.Reference.NameOf(wanted)}"
+            : "Trade anything for it",
 
         _ => "Another way",
     };

@@ -79,3 +79,18 @@ def test_a_generation_that_asks_for_an_incense_says_so() -> None:
     )
 
     assert methods[0].requirement == "The parent has to be holding a Sea Incense"
+
+
+def test_a_trader_who_names_no_price_asks_for_nothing() -> None:
+    # Jasmine hands over a Steelix for whatever is in the party. Filling `wants` in with a
+    # species would invent a price she never asked for.
+    methods = trade_encounters(
+        game_id="heartgold",
+        trades=[
+            InGameTrade(gets="steelix", location="Olivine City, Gym", npc="Jasmine"),
+        ],
+        citation=CITATION,
+    )
+
+    assert methods[0].target.species == "steelix"
+    assert methods[0].wants is None

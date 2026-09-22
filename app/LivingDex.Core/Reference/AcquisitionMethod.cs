@@ -186,8 +186,11 @@ public sealed record TradeAcquisition : AcquisitionMethod
     /// <summary>The character who trades.</summary>
     public string? Npc { get; init; }
 
-    /// <summary>What the player has to hand over.</summary>
-    public required DexTarget Wants { get; init; }
+    /// <summary>
+    /// What the player has to hand over, or nothing when the trader will take anything. Jasmine
+    /// gives away a Steelix for whatever is in the party.
+    /// </summary>
+    public DexTarget? Wants { get; init; }
 
     /// <summary>What has to be true first.</summary>
     public string? Requirement { get; init; }

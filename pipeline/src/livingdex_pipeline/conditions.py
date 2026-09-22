@@ -46,6 +46,10 @@ ORDINARY = frozenset(
         # And the Trophy Garden the same way: Pichu and Pikachu live there, and the two Mr.
         # Backlot talks about are the ones that change.
         "backlot-not-mentioned",
+        # Johto's Safari Zone before anything has been put in it. Baoba only offers the blocks
+        # once the National Dex has been received, so an empty area is where every player of
+        # these games starts.
+        "johto-safari-blocks-inactive",
     }
 )
 
@@ -73,6 +77,18 @@ REQUIREMENTS: dict[str, str] = {
     ),
     "radar-on": "With the Poke Radar running",
     "swarm-yes": "Only while it is swarming",
+    # The Pokegear radio in Johto does what the Game Boy Advance slot does in Sinnoh: it puts
+    # Pokemon from another region into grass that otherwise has none of them. Two cards rather
+    # than a cartridge, so this one asks for nothing a player does not already own.
+    "radio-hoenn": "With the Pokegear radio tuned to the Hoenn sound",
+    "radio-sinnoh": "With the Pokegear radio tuned to the Sinnoh sound",
+    "bug-catching-contest-yes": "Only during the Bug-Catching Contest",
+    # Johto's headbutt trees come in three groups, and which tree is in which is fixed per save
+    # by the trainer id. So it is not "find the right tree" but "find out which of yours it is",
+    # and a player who has the wrong trees near them has a walk ahead.
+    "headbutt-tree-common": "On one of the common headbutt trees",
+    "headbutt-tree-rare": "On one of the rare headbutt trees",
+    "headbutt-tree-secret": "On one of the two special headbutt trees",
     # The three tables the honey trees are drawn from. Which tree belongs to which group is the
     # game's business; what a player needs to know is that not every tree will do.
     "honey-tree-group-a": "On a honey tree of the first group",
@@ -88,6 +104,30 @@ REQUIREMENTS: dict[str, str] = {
     "story-progress-before-national-dex": "Before the National Dex opens",
     "story-progress-national-dex": "After the National Dex opens",
     "story-progress-beat-galactic-coronet": "After Team Galactic is beaten at Mt. Coronet",
+    # Johto's postgame, which is most of Kanto. Every one of these is a gate a player has to
+    # have walked through before the Pokemon on the other side exists at all.
+    "story-progress-beat-red": "After Red is beaten at the top of Mt. Silver",
+    "other-received-kanto-starter": "After a Kanto first partner has been taken in Pallet Town",
+    "story-progress-zephyr-badge": "After the Zephyr Badge",
+    "story-progress-receive-tm-from-claire": ("After Clair hands over her TM at the Dragon's Den"),
+    "story-progress-returned-machine-part": (
+        "After the stolen machine part is returned to the Power Plant"
+    ),
+    # Primo stands in a Pokemon Center and asks the player's opinion of him. Answer with the
+    # right set of phrases and he hands over an egg; the codes were printed in magazines, and
+    # nothing about it needs a cartridge or an event.
+    "other-correct-password": "Only if Primo is given the right set of phrases",
+    "other-event-arceus-in-party": "With an event Arceus in the party",
+    # PokeAPI's own label, in words: the second Snorlax only turns up once the first is dealt
+    # with and the League is behind you.
+    "other-snorlax-11-beat-league": (
+        "Only once the Route 11 Snorlax is gone and the League has been beaten"
+    ),
+    # Johto's two roamers, and each one starts moving at a moment a player would remember.
+    "story-progress-awakened-beasts": "After the beasts are disturbed in the Burned Tower",
+    "story-progress-vermilion-copycat": (
+        "After leaving the Vermilion City Pokemon Fan Club with the Copycat's doll"
+    ),
     "story-progress-defeat-mars": "After Mars is beaten at the Valley Windworks",
     "story-progress-beat-team-galactic-iron-island": "After Team Galactic is beaten on Iron Island",
     "other-talked-to-32-people-underground": "After talking to 32 people in the Underground",
@@ -126,6 +166,15 @@ REQUIREMENTS: dict[str, str] = {
 #: The Great Marsh rotates two of thirty-two species in each day, and PokeAPI says which of the
 #: two slots a species is drawn for. The number is the slot, not the odds.
 _GREAT_MARSH = "great-marsh-daily-slot-"
+
+#: Johto's Safari Zone, where what lives in an area depends on what has been put in it.
+#:
+#: The number is not a count of objects, quite. An area holds thirty at a time, and each one
+#: counts for more once the area has been active long enough - two block points after the first
+#: upgrade, three after the second - so what the condition asks for is points. A player reading
+#: "at least 35" and counting to thirty would otherwise conclude it cannot be done.
+_SAFARI = "johto-safari-blocks-"
+_SAFARI_MINIMUM = "-min-"
 
 #: An item in the bag, named as the game names it: a fossil to revive, a keystone to place.
 _ITEM = "item-"
@@ -179,6 +228,10 @@ def phrase(value: str, *, subject: str) -> str:
     if value.startswith(_GREAT_MARSH):
         slot = value.removeprefix(_GREAT_MARSH).replace("-of-", " of ")
         return f"Only on days the Great Marsh rotates it in (daily slot {slot})"
+
+    if value.startswith(_SAFARI) and _SAFARI_MINIMUM in value:
+        kind, _, points = value.removeprefix(_SAFARI).partition(_SAFARI_MINIMUM)
+        return f"With at least {points} {kind} block points in that area of the Safari Zone"
 
     if value.startswith(_ITEM):
         return pretty(value.removeprefix(_ITEM))
