@@ -1300,6 +1300,128 @@ visible now where before they were not even asked about.
     date and moved the counter to "1 of 251".
   - The user's own settings were copied out first and restored byte-for-byte afterwards, and
     only the instance this test started was stopped.
+- [x] **Crystal** (`crystal`, gen 2, standalone) - 2026-09-22
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-22
+  - [x] 6 Sprites - 2026-09-22
+  - [x] 7 Events - 2026-09-22
+  - [x] 8 Validate + smoke test - 2026-09-22
+  - 1982 ways to get something, 236 of 251 full and 15 explained - the most fillable of the
+    three, and the only game in the dataset that produces a Celebi. Validation green on all 9
+    rules.
+  - Crystal inherits four things from its pair without doing any work: the Tin Tower's name, the
+    Bug-Catching Contest table, the renamed-places machinery and `gbc.py` itself. What is its own
+    is a third sprite sheet, one more in-game trade (a Xatu for a Haunter, in the same house in
+    Pewter that trades the Rapidash), a Suicune that does not roam, and the GS Ball.
+  - **The GS Ball is the reason Crystal matters to this dataset.** Its Virtual Console release
+    turns on the event that was Japan's alone, so Celebi is catchable in Ilex Forest - the only
+    game in three generations that can produce one. Gold and Silver already point at it.
+  - Step 1 cost one file and one line, which is what the two module splits were for: `crystal.py`
+    names itself, its date and its box art, and everything else comes from `johto.gbc_release` and
+    `johto.gbc_edges`. Nothing outside its own file changed except the registry - not even a
+    `pair_partner` argument, which Johto's Generation 2 factory had already been given as optional
+    when Gold and Silver went in.
+  - **Generation 2's triangle is closed and every Time Capsule is lit.** Sixteen games, 60 routes:
+    three link cables between the Generation 1 releases, three between the Generation 2 ones, and
+    nine Time Capsules - each of Red, Blue and Yellow to each of Gold, Silver and Crystal. The
+    last two generations of Game Boy are now one connected piece.
+  - **Six edges are waiting, and for the first time they are all the same thing:** Poke
+    Transporter into Bank, one from each Virtual Console release. Every held-back route in the
+    dataset now waits on a node that is not a game, which is the next piece of work rather than
+    the next game.
+  - The date is 26 January 2018, worldwide on one day - five months after Gold and Silver's
+    Virtual Console release, where the cartridge had followed theirs by a year.
+  - Step 2 was a repeat rather than a decision, which is what a shared module is for: the same 251
+    through `johto.gbc_dex_entries`, the national list cut off at Celebi, Chikorita at #152. The
+    test that pinned the numbering for the pair now runs over all three.
+  - The one thing that is not a repeat is the last entry. Celebi is #251 in all three games and in
+    this one it is an entry a player can fill, which is step 4's business.
+  - Step 3: 1819 wild slots over the same 81 places, filling 148 of the 251 - three hundred more
+    slots than Gold, and thirteen more species. The contest's ten and the Tin Tower's name arrived
+    without a line being written for them, which is what the two module splits were for.
+  - Crystal's grass is its own. It adds Granbull, Parasect, Pupitar, Rhydon and Weezing, which the
+    pair can only evolve or trade for, and it drops Mareep and Flaaffy, Girafarig, Mankey and
+    Primeape, Remoraid and Vulpix - PokeAPI has no Crystal encounter for any of them. Whether that
+    makes them unfillable is step 7's answer, after the trades.
+  - Step 4: 26 gifts and statics, and **Celebi is one of them**. Three generations of games have
+    had it in their dex and none could fill it; this one can, and only because the dataset models
+    the 3DS release. PokeAPI marks the Ilex Forest encounter `other-virtual-console`, which is the
+    rarest thing a source can do - say out loud that a re-release changed what is catchable - and
+    that condition now has a wording of its own.
+  - `GBC_PAIR_GIFTS` became `GBC_GIFTS`, because reading Crystal showed the table was never the
+    pair's: it keeps every row - Elm's three, the Egg in Violet City, Bill, Mania, the trap floor
+    under Mahogany Town - and brings four of its own.
+  - Those four are the game: a Dratini from the Master of the Dragon Shrine for passing his
+    five-question quiz (perfect first time and it knows ExtremeSpeed, which nothing else in
+    Generation 2 or 4 can teach it); Suicune waiting on the Tin Tower's first floor behind the
+    Clear Bell; Ho-Oh behind a Rainbow Wing a Sage only hands over once the Hall of Fame is
+    entered *and* all three beasts are caught with your own trainer ID - the hardest condition in
+    the dataset; and Lugia, which simply is not there unless the Silver Wing is in the Bag.
+  - Where Crystal's Silver Wing comes from is deliberately left unsaid: two Bulbapedia pages
+    disagree about whether it is the Radio Tower Director or the old man in Pewter City, and the
+    sentence reads fine without it.
+  - **PokeAPI files the day care's seven babies as gifts here and as nothing at all in Gold and
+    Silver.** Route 34 is the day care, so what it is describing is breeding - in the one
+    generation that invented it. They are excluded and left to the egg table, which names the
+    parents a player has to leave there, and all three games now say the same thing about a Pichu.
+    That is the second disagreement with PokeAPI worth recording, after the Sinnoh fossils.
+  - Step 5: eight trades, 122 evolutions and six eggs; 1982 ways to get something. The eighth
+    trade is the only one in Generation 2 that is not in all three releases - a Xatu for a
+    Haunter, from a trainer the game records as PAUL, in the same house in Pewter City that trades
+    the Rapidash. `GBC_PAIR_TRADES` and `GBC_PAIR_EGGS` lost their "pair" the way the gift table
+    did: all three releases share them.
+  - **PokeAPI is missing the Karate King's Tyrogue for this game.** It has the row for Gold and
+    Silver and not for Crystal, and without it the game has no Tyrogue *and* no Hitmon: all three
+    of those evolve from it and nothing here hatches one, so the gap closes a circle rather than
+    leaving a hole. Bulbapedia is clear that he hands over a level 10 Tyrogue in all three.
+  - So `gifts.py` got the same second source `wild.py` did: `RecordedGift` and `recorded_gifts`,
+    for gifts written down by hand and cited. Two hand-written sources in one generation is more
+    than any other has needed, and both are for things the games themselves are known for.
+  - Step 6: 251 sprites of its own, and **Generation 2 drew all 251 three times over**. Not one
+    of the 753 is byte-for-byte identical across all three sheets: Gold and Silver agree about
+    five drawings, Gold and Crystal about eight, and no species is the same in all three. The
+    dataset is at 4772 files.
+  - Checking again rather than assuming paid off once more: Crystal's default sheet is 56x56 where
+    Gold's and Silver's are 40x40, and it still carries no alpha chunk. Only the transparent sets
+    have `tRNS` - in all three, at 56x56.
+  - Step 7: fifteen entries, where each half of the pair has seventeen - and **the two it does
+    not share are the whole point of this game.** Ten are the generation's: three Kanto first
+    partners nobody hands over, two fossils nobody revives, four legendaries standing nowhere, and
+    Mew. Celebi is the eleventh for the pair and is simply not on this list.
+  - The other five are Crystal's own, and they are not a version switch: nothing here is held back
+    for Gold or Silver to have instead. **A third version that drops five things**, where Yellow,
+    Emerald and Platinum all add. Vulpix is Silver's, Mankey is Gold's, and Mareep, Girafarig and
+    Remoraid are in both halves and in no grass here.
+  - Read off each species' own game-locations table rather than from PokeAPI's silence, which is
+    the lesson the legendary birds taught at Gold's step 7: every one of the five says "Trade" in
+    its Crystal row. Remoraid is the only one Generation 2 ever distributed at all - twice, at
+    Gotta Catch 'Em All Station! in the United States in 2002 - and both went onto cartridges,
+    which a 3DS download is not.
+  - `GBC_PAIR_UNOBTAINABLE` split into `GBC_UNOBTAINABLE` (the ten every release lacks) and the
+    pair's eleven, which is the one place in the generation where the third version is not a
+    superset of a half but the only way in.
+  - **Suicune leaves the wild list entirely, and that is the version's own story.** Gold and
+    Silver set all three beasts roaming Johto; here only Raikou and Entei do, and Suicune waits on
+    the first floor of the Tin Tower at the end of a chase the game scripts. PokeAPI files it as a
+    static, so it arrives with step 4 rather than here - the roamer count in the data, two against
+    three, says the same thing without anyone writing it down.
+  - Smoke test on the published exe: a collection made through the wizard with Crystal as main
+    game. Its linked-games step offers five in two groups with the mechanism on each - Blue, Red
+    and Yellow "via the Time Capsule", Gold and Silver "via trading". Celebi's tile reads "Ilex
+    Forest, level 30, GS Ball taken to the shrine; on the Virtual Console release it is handed
+    over at the Goldenrod Pokemon Center once the Hall of Fame is entered; the cartridge only
+    ever gave it out in Japan". Suicune's shows both versions of its own story at once: Tin
+    Tower 1F behind the Clear Bell here, and "Roaming Johto - after the beasts are disturbed in
+    the Burned Tower" in Gold. Tyrogue's shows the point of the hand-written records - two gift
+    cards with the same Karate King, the same floor and the same level, one cited to bulbapedia
+    because it is this game's and PokeAPI has no row for it, the other cited to pokeapi because
+    it is Gold's. Marking Celebi caught in Crystal wrote the record and moved the counter to
+    "1 of 251".
+  - The user's own settings were copied out first and restored byte-for-byte afterwards, and
+    only the instance this test started was stopped.
 
 ### Generation 3
 

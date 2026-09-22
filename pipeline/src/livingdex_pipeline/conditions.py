@@ -117,6 +117,11 @@ REQUIREMENTS: dict[str, str] = {
     # right set of phrases and he hands over an egg; the codes were printed in magazines, and
     # nothing about it needs a cartridge or an event.
     "other-correct-password": "Only if Primo is given the right set of phrases",
+    # PokeAPI's own marker for something the 3DS release turns on and the cartridge did not.
+    # Every Generation 1 and 2 game in this dataset *is* the Virtual Console release, so this
+    # is always true where it appears - and it is worth printing anyway, because a player who
+    # knows the cartridge will not believe the entry otherwise.
+    "other-virtual-console": "On the Virtual Console release, which the cartridge did not allow",
     "other-event-arceus-in-party": "With an event Arceus in the party",
     # PokeAPI's own label, in words: the second Snorlax only turns up once the first is dealt
     # with and the League is behind you.

@@ -86,25 +86,12 @@ a Time Capsule with each of Gold, Silver and Crystal, and each reaches Bank._
 
 ### Generation 2
 
-_Gold and Silver are done and in `DONE dex tracker.md`. Crystal reads the same modules -
-`vc.py`, `gbc.py` for the generation, `johto.py` for the region - and everything below applies
-to it too._
+_Done: all three. Gold, Silver and Crystal are Johto on the 3DS, and everything they reach is in
+`DONE dex tracker.md`._
 
-**Virtual Console only,** for the reason Generation 1 gives above. All six releases reach Bank
-through Poké Transporter, and each of the three here opens a Time Capsule with each of the three
-before it.
-
-- [ ] **Crystal** (`crystal`, gen 2, standalone)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
-- Crystal inherits four things from its pair without doing any work: the Tin Tower's name, the
-  Bug-Catching Contest table, the renamed-places machinery and `gbc.py` itself. What is its own
-  is a third sprite sheet, one more in-game trade (a Xatu for a Haunter, in the same house in
-  Pewter that trades the Rapidash), a Suicune that does not roam, and the GS Ball.
-- **The GS Ball is the reason Crystal matters to this dataset.** Its Virtual Console release
-  turns on the event that was Japan's alone, so Celebi is catchable in Ilex Forest - the only
-  game in three generations that can produce one. Gold and Silver already point at it.
+_What Johto shares is in `johto.py`, what Generation 2 shares is in `gbc.py`, and what every
+Virtual Console release shares is in `vc.py`. **Every Time Capsule is lit and every trade is
+made: the six waiting edges all point at Bank.**_
 
 ### Generation 3
 

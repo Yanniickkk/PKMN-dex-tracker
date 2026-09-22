@@ -10,12 +10,17 @@ it over, what you have to have done first, and whether a "gift" is a starter, a 
 present from a stranger - `gift` is one word for all three. Those are facts about one game, so
 they come from that game's own file as a table of :class:`GiftDetail`, and this module only
 puts the two halves together.
+
+And sometimes it does not know the gift at all. The Karate King hands over a Tyrogue in all
+three Generation 2 games and PokeAPI has the row for two of them, so a game may also bring
+gifts written down by hand, cited to whoever was read - the same last resort, and the same
+warning, as the hand-written wild slots in :mod:`wild`.
 """
 
 from __future__ import annotations
 
 import logging
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import date
 
@@ -277,3 +282,50 @@ def _identity(record: GiftAcquisition) -> tuple:
         record.level,
         record.requirement,
     )
+
+
+@dataclass(frozen=True)
+class RecordedGift:
+    """One gift or static a source other than PokeAPI knows about.
+
+    Everything a PokeAPI row and a :class:`GiftDetail` would have carried between them, in one
+    place, because there is no row here for a table to describe.
+    """
+
+    species: str
+    location: str
+    level: int | None = None
+    kind: GiftKind = GiftKind.NPC_GIFT
+    npc: str | None = None
+    requirement: str | None = None
+
+
+def recorded_gifts(
+    *,
+    game_id: str,
+    gifts: Sequence[RecordedGift],
+    species: Sequence[str],
+    citation: SourceCitation,
+) -> list[GiftAcquisition]:
+    """Gifts written down by hand, for what PokeAPI does not carry.
+
+    One record per gift, filtered to what this game's living dex asks for. The citation is the
+    game file's to give and it is not a PokeAPI url, which is what makes these records tellable
+    from the rest.
+    """
+    wanted = set(species)
+
+    return [
+        GiftAcquisition(
+            game=game_id,
+            target=DexTarget(species=gift.species),
+            gift_kind=gift.kind,
+            location=gift.location,
+            npc=gift.npc,
+            level=gift.level,
+            requirement=gift.requirement,
+            source=citation,
+        )
+        for gift in gifts
+        if gift.species in wanted
+    ]

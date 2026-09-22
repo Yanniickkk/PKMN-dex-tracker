@@ -27,7 +27,7 @@ from datetime import date
 from ..breeding import EggFrom, breeding_encounters
 from ..evolutions import evolution_encounters
 from ..games import BuildContext
-from ..gifts import GiftDetail, GiftDetails, gift_encounters
+from ..gifts import GiftDetail, GiftDetails, RecordedGift, gift_encounters, recorded_gifts
 from ..models import AcquisitionMethod, DexEntry, DexTarget, Game, GiftKind, TransferEdge
 from ..places import LocationNames
 from ..sources import bulbapedia
@@ -165,17 +165,19 @@ DS_PAIR_GIFTS: dict[str, GiftDetails] = {
 }
 
 
-#: What only the game knows about each thing Gold and Silver hand over or leave standing in one
-#: spot.
+#: What only the game knows about each thing a Generation 2 release hands over or leaves
+#: standing in one spot.
 #:
-#: Named for the pair, as its DS counterpart above is. Crystal moves one of these and adds
-#: several of its own, and it will bring its own table beside this one.
+#: Named for the generation rather than the pair, which is what reading Crystal showed: it keeps
+#: every row here - the same three in Elm's lab, the same Egg in Violet City, the same Bill, the
+#: same Mania, the same trap floor - and changes only where a Dratini comes from and which birds
+#: wait where. Its own four sit in its own file.
 #:
 #: The Goldenrod Game Corner needs no rows here and neither does Celadon's: PokeAPI carries what
 #: each window charges as a condition on the encounter, so "Game Corner prize, 2100 coins" is
 #: already written. Ekans at 700 coins is Gold's window and Sandshrew at 700 is Silver's, which
 #: is the pair switch reaching a place no grass ever does.
-GBC_PAIR_GIFTS: dict[str, GiftDetails] = {
+GBC_GIFTS: dict[str, GiftDetails] = {
     # Johto's own three, from the lab next door to the house you start in. The same sentence the
     # remake uses, because the remake changed nothing about it.
     "chikorita": GiftDetail(kind=GiftKind.STARTER, npc="Professor Elm", requirement=STARTER_ELM),
@@ -260,7 +262,7 @@ def gbc_gifts(version: str) -> dict[str, GiftDetails]:
         for species, requirement in GBC_PAIR_WINGS[version].items()
     }
 
-    return {**GBC_PAIR_GIFTS, **wings}
+    return {**GBC_GIFTS, **wings}
 
 
 #: Why no Generation 2 game hands over a Kanto first partner.
@@ -318,11 +320,12 @@ GBC_CELEBI_REASON = (
     "caught in Ilex Forest there can be traded across"
 )
 
-#: Dex entries no Generation 2 game fills, whichever half of the pair a player owns.
+#: Dex entries no Generation 2 release fills, whichever of the three a player owns.
 #:
-#: Eleven of the seventeen each half cannot produce, and the other six are the version
-#: exclusives, which each game names for itself.
-GBC_PAIR_UNOBTAINABLE: dict[str, str] = {
+#: Ten, and all of them Kanto's: half the map of these games is a region whose first partners
+#: nobody hands over, whose fossils nobody revives, and whose four legendaries stand nowhere at
+#: all. Mew is the tenth and its reasoning is the same one Red's gets.
+GBC_UNOBTAINABLE: dict[str, str] = {
     "bulbasaur": GBC_KANTO_STARTERS,
     "charmander": GBC_KANTO_STARTERS,
     "squirtle": GBC_KANTO_STARTERS,
@@ -333,6 +336,14 @@ GBC_PAIR_UNOBTAINABLE: dict[str, str] = {
     "moltres": GBC_KANTO_LEGENDS,
     "mewtwo": GBC_KANTO_LEGENDS,
     "mew": GBC_MEW_REASON,
+}
+
+#: And the eleventh, which is the pair's alone.
+#:
+#: Crystal can produce a Celebi and Gold and Silver cannot, so this is the one entry in the
+#: generation where the third version is not a superset of a half but the only way in.
+GBC_PAIR_UNOBTAINABLE: dict[str, str] = {
+    **GBC_UNOBTAINABLE,
     "celebi": GBC_CELEBI_REASON,
 }
 
@@ -386,7 +397,7 @@ GBC_CONTEST: tuple[RecordedSlot, ...] = tuple(
 #: this group would be asking about another game.
 GBC_PAIR_VERSION_GROUP = "gold-silver"
 
-#: The seven trades Gold and Silver share, and what each one wants.
+#: The seven trades every Generation 2 release offers, and what each one wants.
 #:
 #: Generation 2 is the first in the dataset to record who you traded with: a Pokemon that comes
 #: over one of these carries an original trainer, where a Generation 1 trade carries the word
@@ -396,10 +407,11 @@ GBC_PAIR_VERSION_GROUP = "gold-silver"
 #: The nicknames are ROCKY, MUSCLE, VOLTY, DON, AEROY, RUNNY and MAGGIE, in the order below.
 #: There is no field for them, so they are kept here rather than lost.
 #:
-#: Crystal adds an eighth - a Xatu called PAUL for a Haunter, in the same house in Pewter City
-#: that trades the Rapidash - and changes none of these. The remake is the one that rearranged
-#: them: HeartGold hands over a Dodrio where these hand over a Rhydon, and renames every trainer.
-GBC_PAIR_TRADES = (
+#: Named for the generation rather than the pair, as the gift table is: Crystal offers all seven
+#: and adds an eighth of its own, which sits in its own file. The remake is the one that
+#: rearranged them - HeartGold hands over a Dodrio where these hand over a Rhydon, and renames
+#: every trainer.
+GBC_TRADES = (
     InGameTrade(gets="onix", wants="bellsprout", location="Violet City", npc="Kyle"),
     InGameTrade(
         gets="machop",
@@ -414,7 +426,7 @@ GBC_PAIR_TRADES = (
     InGameTrade(gets="magneton", wants="dugtrio", location="Power Plant", npc="Forest"),
 )
 
-#: Which babies the day care on Route 34 is the only way to, and what has to be left there.
+#: Which babies the day care on Route 34 is the only way to, in any of the three.
 #:
 #: The first eggs in the dataset that are not a remake's. Generation 2 invented breeding and
 #: invented the babies that need it, and these six are in no grass in either game: a Pichu is
@@ -425,7 +437,7 @@ GBC_PAIR_TRADES = (
 #: an incense that does not exist here; and its Elekid may hatch from an Electivire, which these
 #: games have never heard of. Tyrogue and Togepi are left out of both tables for the same
 #: reason: the Karate King hands one over and Elm's assistant brings the other.
-GBC_PAIR_EGGS: dict[str, EggFrom] = {
+GBC_EGGS: dict[str, EggFrom] = {
     "pichu": EggFrom(parents=("pikachu", "raichu")),
     "cleffa": EggFrom(parents=("clefairy", "clefable")),
     "igglybuff": EggFrom(parents=("jigglypuff", "wigglytuff")),
@@ -693,6 +705,9 @@ def gbc_acquisition_methods(
     version_group: str | None = None,
     trades: Sequence[InGameTrade] = (),
     eggs: Mapping[str, EggFrom] | None = None,
+    excluded: Mapping[str, str] | None = None,
+    handed_over: Sequence[RecordedGift] = (),
+    handed_over_from: str | None = None,
 ) -> list[AcquisitionMethod]:
     """Every way to get something in one Generation 2 release, whichever of the three it is.
 
@@ -723,6 +738,9 @@ def gbc_acquisition_methods(
         version_group=version_group,
         trades=trades,
         eggs=eggs,
+        excluded=excluded,
+        handed_over=handed_over,
+        handed_over_from=handed_over_from,
         renamed=gbc.RENAMED_PLACES,
         recorded=GBC_CONTEST,
         recorded_from="Bug-Catching_Contest",
@@ -825,9 +843,12 @@ def acquisition_methods(
     version_group: str | None = None,
     trades: Sequence[InGameTrade] = (),
     eggs: Mapping[str, EggFrom] | None = None,
+    excluded: Mapping[str, str] | None = None,
     renamed: Mapping[str, str] | None = None,
     recorded: Sequence[RecordedSlot] = (),
     recorded_from: str | None = None,
+    handed_over: Sequence[RecordedGift] = (),
+    handed_over_from: str | None = None,
 ) -> list[AcquisitionMethod]:
     """Every way to get something in one Johto cartridge.
 
@@ -878,6 +899,7 @@ def acquisition_methods(
                 species=species,
                 retrieved_on=today,
                 details=gifts,
+                excluded=excluded,
                 refresh=context.refresh,
                 places=places,
             )
@@ -902,6 +924,16 @@ def acquisition_methods(
                 day_care=DAY_CARE,
                 eggs=eggs,
                 citation=bulbapedia("Baby_Pok%C3%A9mon", retrieved_on=today),
+            )
+        )
+
+    if handed_over and handed_over_from:
+        found.extend(
+            recorded_gifts(
+                game_id=game_id,
+                gifts=handed_over,
+                species=species,
+                citation=bulbapedia(handed_over_from, retrieved_on=today),
             )
         )
 

@@ -136,8 +136,8 @@ def acquisition_methods(
         entries=entries,
         gifts=johto.gbc_gifts(POKEAPI_VERSION),
         version_group=johto.GBC_PAIR_VERSION_GROUP,
-        trades=johto.GBC_PAIR_TRADES,
-        eggs=johto.GBC_PAIR_EGGS,
+        trades=johto.GBC_TRADES,
+        eggs=johto.GBC_EGGS,
     )
 
 

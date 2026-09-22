@@ -1,6 +1,17 @@
 [
   {
     "from": "blue",
+    "to": "crystal",
+    "mechanism": "timeCapsule",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 151
+    }
+  },
+  {
+    "from": "blue",
     "to": "gold",
     "mechanism": "timeCapsule",
     "direction": "bothWays",
@@ -33,6 +44,24 @@
   {
     "from": "blue",
     "to": "yellow",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "crystal",
+    "to": "gold",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "crystal",
+    "to": "silver",
     "mechanism": "trade",
     "direction": "bothWays",
     "filter": {
@@ -386,6 +415,17 @@
   },
   {
     "from": "red",
+    "to": "crystal",
+    "mechanism": "timeCapsule",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 151
+    }
+  },
+  {
+    "from": "red",
     "to": "gold",
     "mechanism": "timeCapsule",
     "direction": "bothWays",
@@ -532,6 +572,17 @@
       "filter": "nationalDexRange",
       "from": 1,
       "to": 386
+    }
+  },
+  {
+    "from": "yellow",
+    "to": "crystal",
+    "mechanism": "timeCapsule",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 151
     }
   },
   {
