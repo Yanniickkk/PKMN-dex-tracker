@@ -10,6 +10,77 @@
     "dexSource": "gameDex",
     "pairPartner": "sword"
   },
-  "dexEntries": [],
-  "acquisitionMethods": []
+  "dexEntries": [
+    {
+      "game": "shield",
+      "target": {
+        "species": "vulpix"
+      },
+      "dex": "Galar",
+      "number": 100
+    },
+    {
+      "game": "shield",
+      "target": {
+        "species": "chimchar"
+      },
+      "dex": "Isle of Armor",
+      "number": 100
+    }
+  ],
+  "acquisitionMethods": [
+    {
+      "kind": "gift",
+      "game": "shield",
+      "target": {
+        "species": "vulpix"
+      },
+      "giftKind": "npcGift",
+      "location": "Wedgehurst",
+      "npc": "A boy on the station platform",
+      "level": 5,
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "shield",
+      "target": {
+        "species": "chimchar"
+      },
+      "giftKind": "npcGift",
+      "location": "Master Dojo",
+      "npc": "Mustard",
+      "level": 5,
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "shield",
+      "target": {
+        "species": "chimchar"
+      },
+      "location": "Friend Safari",
+      "subArea": "Fire",
+      "method": "walk",
+      "levels": {
+        "minimum": 30,
+        "maximum": 30
+      },
+      "ratePercent": 33.0,
+      "doesNotCount": "a friend code decided what it holds",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
+    }
+  ]
 }

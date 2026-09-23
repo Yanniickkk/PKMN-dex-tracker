@@ -849,6 +849,15 @@
     }
   },
   {
+    "from": "x",
+    "to": "y",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
     "from": "yellow",
     "to": "crystal",
     "mechanism": "timeCapsule",

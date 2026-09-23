@@ -28,14 +28,17 @@ from . import (
     soulsilver,
     white,
     white2,
+    x,
+    y,
     yellow,
 )
 
 # In the order they came out: the pair that started it and its own third version, the Johto
 # pair and its third version, then the Hoenn pair, the Kanto pair, the third version after
 # them, the Sinnoh pair and its third version, the Johto pair that closes Generation 4, the
-# pair that opens Generation 5, and the sequels to it - which are a second pair rather than a
-# third version, and the only ones in the series.
+# pair that opens Generation 5, the sequels to it - which are a second pair rather than a
+# third version, and the only ones in the series - and the pair that opens Generation 6, the
+# first the whole world got on the same day.
 MODULES = [
     red,
     blue,
@@ -57,6 +60,8 @@ MODULES = [
     white,
     black2,
     white2,
+    x,
+    y,
 ]
 
 

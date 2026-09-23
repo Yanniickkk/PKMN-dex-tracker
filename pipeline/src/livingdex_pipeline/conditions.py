@@ -50,6 +50,12 @@ ORDINARY = frozenset(
         # once the National Dex has been received, so an empty area is where every player of
         # these games starts.
         "johto-safari-blocks-inactive",
+        # The first two slots of a Friend Safari, which is every Safari a player can reach:
+        # both are there from the moment the friend is registered. What that takes is a fact
+        # about the place rather than about these two rows, and `kalos` says it once for all of
+        # them. The third slot is not ordinary and has a sentence of its own below.
+        "friend-safari-slot-1",
+        "friend-safari-slot-2",
     }
 )
 
@@ -183,6 +189,35 @@ REQUIREMENTS: dict[str, str] = {
     "weekday-thursday": "On a Thursday",
     "weekday-friday": "On a Friday",
     "weekday-saturday": "On a Saturday",
+    # Kalos. A Friend Safari's third slot is the one thing in this dataset that got harder to
+    # reach after the games came out: it used to open when the friend turned up in the Player
+    # Search System, and the network that did that is switched off.
+    "friend-safari-slot-3": (
+        "Only from the third slot, which opens once that friend has entered their own Hall of "
+        "Fame and is playing at the same time as you - since the 3DS network closed in April "
+        "2024, that means sitting side by side"
+    ),
+    # The bins in the Lost Hotel and the Pokemon Village, which hold different things on
+    # different days.
+    "trash-can-type-daily": "In a bin that is worth checking any day",
+    "trash-can-type-tuesday": "In a bin, on a Tuesday",
+    "trash-can-type-thursday": "In a bin, on a Thursday",
+    # Which of the three a save started with, which in Kalos decides more than the first battle:
+    # the legendary bird that roams the region afterwards is chosen by it.
+    "starter-chespin": "Only in a save that started with Chespin",
+    "starter-fennekin": "Only in a save that started with Fennekin",
+    "starter-froakie": "Only in a save that started with Froakie",
+    "other-found-11-times-roaming": (
+        "Only once it has been met eleven times while roaming, which is when it stops fleeing "
+        "and waits here"
+    ),
+    # The Berry Fields, where each tree keeps its own resident and the colour says which.
+    "berry-tree-type-red": "In a red berry tree",
+    "berry-tree-type-blue": "In a blue berry tree",
+    "berry-tree-type-purple": "In a purple berry tree",
+    "berry-tree-type-green": "In a green berry tree",
+    "berry-tree-type-yellow": "In a yellow berry tree",
+    "berry-tree-type-pink": "In a pink berry tree",
 }
 
 #: The Great Marsh rotates two of thirty-two species in each day, and PokeAPI says which of the

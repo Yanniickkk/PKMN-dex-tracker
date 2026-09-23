@@ -379,7 +379,6 @@ code {
   width: 96px;
   height: 96px;
   object-fit: contain;
-  image-rendering: pixelated;
 }
 
 .detail-title {
@@ -934,6 +933,14 @@ code {
 /* Two classes deep on purpose: `.field label` above sets display:block and would otherwise win
    on specificity, because the main game picker sits inside a field. */
 .game-grid .game-card {
+  /* The card is the containing block for the radio inside it, which is .visually-hidden and so
+     position:absolute. Without this, that radio's containing block is the document: it still
+     looks right, but the *document* now has scrollable overflow reaching down to wherever the
+     card is. Clicking the card focuses the radio, the browser scrolls whatever it has to in
+     order to reveal it - including the document, which overflow:hidden does not stop, only
+     hides the bar for - and the whole shell slides up with the sidebar and the name field above
+     the window. It showed up the day Generation 6 made the page long enough to notice. */
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1247,6 +1254,15 @@ code {
   width: 56px;
   height: 56px;
   object-fit: contain;
+}
+
+/*
+ * Drawn sprites keep their pixels; rendered ones do not. Everything up to Generation 5 was drawn
+ * by hand on a fixed grid and goes ragged when it is smoothed, and Generation 6 onward is a shot
+ * of a 3D model, which goes ragged when it is not. The grid asks the main game which it is.
+ */
+.tile-sprite.is-drawn,
+.detail-sprite.is-drawn {
   image-rendering: pixelated;
 }
 

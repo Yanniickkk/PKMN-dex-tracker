@@ -23,10 +23,12 @@ from livingdex_pipeline.gamedefs import (
     firered,
     gba,
     gbc,
+    gen6,
     gold,
     heartgold,
     hoenn,
     johto,
+    kalos,
     kanto,
     leafgreen,
     pearl,
@@ -40,6 +42,8 @@ from livingdex_pipeline.gamedefs import (
     unova,
     white,
     white2,
+    x,
+    y,
     yellow,
 )
 from livingdex_pipeline.games import BuildContext, GameRegistry
@@ -49,6 +53,8 @@ from livingdex_pipeline.models import (
     DexSource,
     DexTarget,
     EncounterMethod,
+    Form,
+    FormKind,
     Game,
     GameData,
     GameRelease,
@@ -93,6 +99,7 @@ VERSION_GROUP_ORDER = {
     "heartgold-soulsilver": 10,
     "black-white": 11,
     "black-2-white-2": 12,
+    "x-y": 13,
 }
 
 
@@ -131,13 +138,26 @@ class FakeApi:
 
     def resource(self, path: str, *, refresh: bool = False) -> dict:
         if path.startswith("location-area/"):
-            return {"location": {"name": "hoenn-route-101"}}
+            # Everywhere is Route 101, with one exception: the Friend Safari, which is the only
+            # place in the dataset that asks something of a player before any of its slots can
+            # be reached, and a gate is keyed by the place's name.
+            area = path.removeprefix("location-area/")
+            named = "friend-safari" if area.startswith("friend-safari") else "hoenn-route-101"
+            return {"location": {"name": named}}
 
         if path.startswith("evolution-chain/"):
-            return {"chain": TREECKO_CHAIN}
+            return {"chain": TREECKO_CHAIN, "baby_trigger_item": None}
+
+        if path.startswith("pokemon-species/"):
+            # Only the day care asks for this, and only for the one thing PokeAPI knows that a
+            # pair in it might not have: a species with no sexes needs a Ditto.
+            return {"gender_rate": 4}
 
         if path.startswith("version-group/"):
             return {"order": VERSION_GROUP_ORDER[path.removeprefix("version-group/")]}
+
+        if path == "location/friend-safari":
+            return {"names": [{"language": {"name": "en"}, "name": "Friend Safari"}]}
 
         return {"names": [{"language": {"name": "en"}, "name": "Route 101"}]}
 
@@ -1865,6 +1885,8 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "soulsilver",
         "white",
         "white-2",
+        "x",
+        "y",
         "yellow",
     ]
 
@@ -1875,8 +1897,10 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # ten between the five Generation 3 cartridges, ten wireless trades between the five
     # Generation 4 games, and twenty-five one-way Pal Park trips from each of the five into each
     # of the five. Then six trades between the four Generation 5 cartridges, and twenty one-way
-    # Poke Transfers, from each Generation 4 cartridge into each of the four.
-    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20
+    # Poke Transfers, from each Generation 4 cartridge into each of the four. And one for the
+    # whole of Generation 6: X and Y trade with each other and with two games nobody has
+    # written, and their route to Bank waits on a node that is not written either.
+    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 1
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -1897,13 +1921,19 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     assert ("black-2", "white-2") in routes
     assert ("platinum", "white-2") in routes
 
-    # What is left waiting is one node. Ten releases declare Poke Transporter into Bank, which
-    # is not a game and is not written yet, and nothing else in the dataset is waiting on
-    # anything: every route between two cartridges now has both of its ends.
+    # What is left waiting is one node and one pair. Ten releases declare Poke Transporter into
+    # Bank and two more declare Bank itself, neither of which is a game and none of which is
+    # written; X and Y each name Omega Ruby and Alpha Sapphire, which are the first cartridges
+    # to be waited on since the Generation 5 sequels arrived.
     waiting = {(edge.to, edge.mechanism) for _, edge in registry.held_back_edges}
 
-    assert waiting == {("bank", TransferMechanism.POKE_TRANSPORTER)}
-    assert len(registry.held_back_edges) == 6 + 2 + 2
+    assert waiting == {
+        ("bank", TransferMechanism.POKE_TRANSPORTER),
+        ("bank", TransferMechanism.BANK),
+        ("omega-ruby", TransferMechanism.TRADE),
+        ("alpha-sapphire", TransferMechanism.TRADE),
+    }
+    assert len(registry.held_back_edges) == 6 + 2 + 2 + 2 + 4
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:
@@ -3553,6 +3583,532 @@ def test_the_route_to_bank_is_one_route_the_cartridges_and_the_3ds_releases_shar
     # three years later, so it belongs to neither side and both ask `bank` for it.
     for game_id, module in (("black", black), ("white", white), ("red", red), ("crystal", crystal)):
         assert bank.transporter_edge(game_id) in module.edges()
+
+
+# --- X and Y ----------------------------------------------------------------------------------
+
+
+def test_the_kalos_pair_are_two_games_that_name_each_other() -> None:
+    both = {module.GAME_ID: module.build(context(module.GAME_ID)).game for module in (x, y)}
+
+    assert sorted(both) == ["x", "y"]
+    assert both["x"].pair_partner == "y"
+    assert both["y"].pair_partner == "x"
+    assert both["x"].title != both["y"].title
+    # The same day, as every pair in this dataset has - and for the first time the same day
+    # everywhere, rather than a Japanese date this file keeps and a player never saw.
+    assert both["x"].released == both["y"].released == date(2013, 10, 12)
+
+
+def test_the_kalos_pair_are_generation_6_cartridges_reaching_volcanion() -> None:
+    for module in (x, y):
+        game = module.build(context(module.GAME_ID)).game
+
+        assert game.generation == 6
+        assert game.region == "Kalos"
+        assert game.national_dex_through == 721
+        assert game.dex_source is DexSource.NATIONAL_DEX
+        assert game.release is GameRelease.CARTRIDGE
+
+
+def test_the_kalos_pair_show_three_pokedexes_and_every_entry_says_which() -> None:
+    # The first game in the series with more than one regional list, and the reason `DexEntry`
+    # has a dex name at all. Central, Coastal and Mountain Kalos share no species and each
+    # starts at #001, so an entry that does not name its list is not a fact about anything.
+    api = FakeApi([(1, "chespin"), (2, "quilladin")])
+    entries = x.build(context("x", api)).dex_entries
+
+    assert api.asked_for == ["kalos-central", "kalos-coastal", "kalos-mountain"]
+    assert [one.dex for one in entries] == [
+        "Central Kalos",
+        "Central Kalos",
+        "Coastal Kalos",
+        "Coastal Kalos",
+        "Mountain Kalos",
+        "Mountain Kalos",
+    ]
+    # Numbering restarts with each list rather than running on, which is what the games do and
+    # what nothing in this dataset could say before now.
+    assert [one.number for one in entries] == [1, 2, 1, 2, 1, 2]
+    assert all(one.game == "x" for one in entries)
+
+
+def test_the_three_lists_are_in_the_order_a_player_is_handed_them() -> None:
+    # Lumiose City, then Ambrette Town, then Anistar. Not alphabetical and not by size: the
+    # file's order is what the switch in the app offers, so it should be the order a player
+    # already knows.
+    assert [name for _, name in kalos.DEXES] == ["Central Kalos", "Coastal Kalos", "Mountain Kalos"]
+    assert kalos.DEX_TOTAL == 457
+
+
+def test_both_halves_of_the_kalos_pair_show_the_same_three_lists() -> None:
+    api = FakeApi([(1, "chespin")])
+    both = {
+        module.GAME_ID: module.build(context(module.GAME_ID, api)).dex_entries for module in (x, y)
+    }
+
+    assert [(one.dex, one.number) for one in both["x"]] == [
+        (one.dex, one.number) for one in both["y"]
+    ]
+    assert api.asked_for == [dex for dex, _ in kalos.DEXES] * 2
+
+
+def test_a_game_with_one_pokedex_does_not_name_it() -> None:
+    # Twenty games were written before the field existed and none of them needs it: a number
+    # that can only belong to one list does not have to say which. The field is written out
+    # only where it decides something.
+    entries = black.build(context("black")).dex_entries
+
+    assert entries
+    assert all(one.dex is None for one in entries)
+
+
+def test_kalos_outlives_its_generation_and_the_modules_are_split_for_it() -> None:
+    # Legends: Z-A is Lumiose City on the Switch, three generations after X and Y, so Kalos is
+    # the second region in this dataset whose games are not all from one generation - Johto was
+    # the first. The region module carries no generation and the generation module no region,
+    # which is what stops a fact about Bank or a National Dex cap from being handed to a game
+    # that has neither.
+    assert kalos.REGION == "Kalos"
+    assert not hasattr(kalos, "GENERATION")
+    assert gen6.GENERATION == 6
+    assert not hasattr(gen6, "REGION")
+    # Named for the generation rather than called `cartridge`, so Z-A's factory can sit beside
+    # this one instead of replacing it.
+    assert not hasattr(kalos, "cartridge")
+
+
+def test_every_generation_6_cartridge_trades_with_every_other() -> None:
+    # Six routes between four games, declared from both ends, the way Generation 5's are. Two
+    # of the four are not written yet, and both halves name them anyway; the registry holds
+    # those edges back until they are.
+    for module in (x, y):
+        traded = {edge.to for edge in module.edges() if edge.mechanism is TransferMechanism.TRADE}
+
+        assert traded == set(gen6.CARTRIDGES) - {module.GAME_ID}
+
+    assert not {"omega-ruby", "alpha-sapphire"} & set(default_registry().game_ids)
+
+
+def test_nothing_carries_an_older_cartridge_into_generation_6() -> None:
+    # Every generation since the third has had one: Pal Park, then the Poke Transfer. This one
+    # has no slot to put a cartridge in, and what replaces both is Bank - which is not a game,
+    # and so not a route between two of them.
+    for module in (x, y):
+        mechanisms = {edge.mechanism for edge in module.edges()}
+
+        assert TransferMechanism.PAL_PARK not in mechanisms
+        assert TransferMechanism.POKE_TRANSFER not in mechanisms
+        assert TransferMechanism.POKE_TRANSPORTER not in mechanisms
+
+
+def test_generation_6_talks_to_bank_itself_and_in_both_directions() -> None:
+    # The line between the cartridge era and what came after. Black reaches Bank through Poke
+    # Transporter, one way and permanently; X deposits and withdraws, so a living dex can be
+    # kept in Bank rather than only sent there.
+    for module in (x, y):
+        [to_bank] = [edge for edge in module.edges() if edge.to == bank.NODE]
+
+        assert to_bank.mechanism is TransferMechanism.BANK
+        assert to_bank.direction is TransferDirection.BOTH_WAYS
+        assert isinstance(to_bank.filter, AllSpeciesFilter)
+
+    assert bank.transporter_edge("black").direction is TransferDirection.ONE_WAY
+
+
+def kalos_slot(
+    version: str,
+    method: str,
+    *,
+    chance: int = 20,
+    conditions: list[str] | None = None,
+    area: str = "kalos-route-18-area",
+) -> dict:
+    return {
+        "location_area": {"name": area},
+        "version_details": [
+            {
+                "version": {"name": version},
+                "encounter_details": [
+                    {
+                        "min_level": 44,
+                        "max_level": 46,
+                        "chance": chance,
+                        "method": {"name": method},
+                        "condition_values": [{"name": one} for one in (conditions or [])],
+                    }
+                ],
+            }
+        ],
+    }
+
+
+def kalos_wild(module, api: FakeApi) -> list:
+    return [
+        one
+        for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+        if one.kind == "wild"
+    ]
+
+
+def test_each_kalos_half_reads_its_own_version_of_the_encounter_table() -> None:
+    for module, rate in ((x, 20), (y, 45)):
+        api = FakeApi(
+            [(1, "sandslash")],
+            {
+                "sandslash": [
+                    kalos_slot("x", "walk", chance=20),
+                    kalos_slot("y", "walk", chance=45),
+                ]
+            },
+        )
+
+        wild = kalos_wild(module, api)
+
+        # Three dexes, one encounter table read three times over - so the same slot arrives
+        # once per list and all three say the same thing about it.
+        assert {one.rate_percent for one in wild} == {rate}
+        assert all(one.game == module.GAME_ID for one in wild)
+
+
+def test_the_friend_safari_says_what_it_takes_before_it_says_where() -> None:
+    # PokeAPI files it as eighteen ordinary areas full of ordinary tables. It is a room in a
+    # city that opens after the Hall of Fame, holding whatever a stranger's friend code decided,
+    # and the percentage beside each row is not an encounter rate at all.
+    api = FakeApi(
+        [(1, "ivysaur")],
+        {"ivysaur": [kalos_slot("x", "walk", conditions=["friend-safari-slot-1"],
+                                area="friend-safari-grass")]},
+    )
+
+    [found, *_] = kalos_wild(x, api)
+
+    assert found.requirement == kalos.PLACE_GATES["Friend Safari"]
+    assert "friend code" in found.requirement
+    assert "not how often it turns up" in found.requirement
+
+
+def test_the_third_friend_safari_slot_says_what_closed_in_2024() -> None:
+    # The one thing in this dataset that got harder after the games came out: the third slot
+    # opened when the friend appeared in the Player Search System, and that network is off.
+    api = FakeApi(
+        [(1, "ivysaur")],
+        {"ivysaur": [kalos_slot("x", "walk", conditions=["friend-safari-slot-3"],
+                                area="friend-safari-grass")]},
+    )
+
+    [found, *_] = kalos_wild(x, api)
+
+    assert found.requirement.startswith(kalos.PLACE_GATES["Friend Safari"])
+    assert "April 2024" in found.requirement
+
+
+def test_kalos_gives_zygardes_chamber_back_its_apostrophe() -> None:
+    # A sub-area has no name of its own in PokeAPI and is generated from the slug, which cannot
+    # hold an apostrophe. Terminus Cave's bottom room is Zygarde's Chamber.
+    assert kalos.RENAMED_SUB_AREAS["Zygardes Chamber"] == "Zygarde's Chamber"
+
+
+def kalos_gifts(module, api: FakeApi) -> list:
+    return [
+        one
+        for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+        if one.kind == "gift"
+    ]
+
+
+def test_kalos_hands_over_six_starters_which_no_game_had_done_since_firered() -> None:
+    # Three at the table in Aquacorde Town and three more in Professor Sycamore's lab. Both sets
+    # are starters rather than one set and a present: a player picks one of three either time.
+    api = FakeApi(
+        [(1, "chespin"), (2, "bulbasaur")],
+        {
+            "chespin": [kalos_slot("x", "gift")],
+            "bulbasaur": [kalos_slot("x", "gift")],
+        },
+    )
+
+    gifts = {one.target.species: one for one in kalos_gifts(x, api)}
+
+    assert gifts["chespin"].gift_kind is GiftKind.STARTER
+    assert gifts["bulbasaur"].gift_kind is GiftKind.STARTER
+    assert gifts["chespin"].npc is None
+    assert gifts["bulbasaur"].npc == "Professor Sycamore"
+
+
+def test_a_fossil_says_which_of_the_two_it_was_and_what_the_other_one_is() -> None:
+    # One of the pair is dug up and the other stays in the cave, so the answer to "how do I get
+    # a Tyrunt" has to name the fossil and admit what picking it costs.
+    api = FakeApi([(1, "tyrunt")], {"tyrunt": [kalos_slot("x", "gift")]})
+
+    [found] = kalos_gifts(x, api)
+
+    assert found.gift_kind is GiftKind.FOSSIL
+    assert "Jaw Fossil" in found.requirement
+    assert "Amaura" in found.requirement
+
+
+def test_the_bird_a_save_gets_is_decided_by_the_starter_it_began_with() -> None:
+    # The sharpest fact in this step, and it is in the encounter's own conditions rather than in
+    # anything written here: one playthrough can reach one of the three, and the other two are a
+    # trade. Which is which was checked against the wiki - Chespin brings Articuno.
+    api = FakeApi(
+        [(1, "articuno")],
+        {"articuno": [kalos_slot("x", "static", conditions=["starter-chespin"])]},
+    )
+
+    [found] = kalos_gifts(x, api)
+
+    assert found.gift_kind is GiftKind.STATIC_ENCOUNTER
+    assert found.requirement == "Only in a save that started with Chespin"
+
+
+def test_a_roaming_bird_stops_running_after_the_eleventh_meeting() -> None:
+    api = FakeApi(
+        [(1, "articuno")],
+        {
+            "articuno": [
+                kalos_slot(
+                    "x",
+                    "static",
+                    conditions=["starter-chespin", "other-found-11-times-roaming"],
+                )
+            ]
+        },
+    )
+
+    [found] = kalos_gifts(x, api)
+
+    assert "eleven times while roaming" in found.requirement
+
+
+def test_a_gift_nobody_has_read_up_on_still_says_where_and_at_what_level() -> None:
+    # Lapras is handed over on Route 12 and this dataset knows nothing else about it. The record
+    # keeps what PokeAPI does know; inventing an NPC to fill the line would be worse than blank.
+    api = FakeApi([(1, "lapras")], {"lapras": [kalos_slot("x", "gift")]})
+
+    [found] = kalos_gifts(x, api)
+
+    assert found.npc is None
+    assert found.requirement is None
+    assert found.level == 44
+    assert "lapras" not in kalos.XY_GIFTS
+
+
+def test_the_cover_legendary_is_the_one_static_the_two_halves_disagree_about() -> None:
+    # Xerneas is on X's box and in X's Team Flare HQ; Yveltal is on Y's and in Y's. PokeAPI
+    # files each under its own version, so this needs nothing written down - but it is the
+    # version exclusive a player can see from the outside, so it is worth pinning.
+    api = FakeApi(
+        [(1, "xerneas"), (2, "yveltal")],
+        {
+            "xerneas": [kalos_slot("x", "static")],
+            "yveltal": [kalos_slot("y", "static")],
+        },
+    )
+
+    assert [one.target.species for one in kalos_gifts(x, api)] == ["xerneas"]
+    assert [one.target.species for one in kalos_gifts(y, api)] == ["yveltal"]
+
+
+def test_two_of_the_kalos_traders_will_take_whatever_is_in_the_party() -> None:
+    # New in this pair: an in-game trade had always been one named species for another. Both of
+    # these hand over a held item worth more than the Pokemon.
+    anything = [one for one in kalos.XY_TRADES if one.wants is None]
+
+    assert {one.gets for one in anything} == {"ralts", "eevee"}
+    assert "Gardevoirite" in next(one for one in anything if one.gets == "ralts").requirement
+
+
+def test_shaunas_trade_is_three_trades_one_per_save() -> None:
+    # She takes the first partner yours is strong against and hands it back at the end, so a
+    # save reaches two of the three and the third is in neither game at all.
+    hers = [one for one in kalos.xy_trades() if one.npc == "Shauna"]
+
+    assert {one.gets for one in hers} == {"chespin", "fennekin", "froakie"}
+    assert kalos.SHAUNA_TRADE["chespin"] == "froakie"
+    assert "started with Chespin" in next(one for one in hers if one.gets == "froakie").requirement
+
+
+def test_the_aerodactyl_pokeapi_has_no_row_for_is_written_down_by_hand() -> None:
+    # Coastal Kalos #068 with nothing in either encounter table, which read as an entry neither
+    # half can fill. The Fossil Lab revives an Old Amber, and the Old Amber is under a rock.
+    [amber] = kalos.XY_HANDED_OVER
+
+    assert amber.species == "aerodactyl"
+    assert amber.kind is GiftKind.FOSSIL
+    assert "Rock Smash" in amber.requirement
+
+
+def test_the_two_halves_keep_the_same_number_of_exclusives_as_each_other() -> None:
+    # Sixteen each, which is what a version pair has always looked like. It came out three
+    # against ten while the Friend Safari counted as a way to get one: a Safari holds what a
+    # stranger's friend code decided and pays no attention to which cartridge is asking, so it
+    # dissolved one half's exclusives and not the other's. Not counting it put the pair back
+    # into balance without anybody deciding what the answer should be.
+    assert len(x.ELSEWHERE_IN_GENERATION_6) == 16
+    assert len(y.ELSEWHERE_IN_GENERATION_6) == 16
+    assert set(x.ELSEWHERE_IN_GENERATION_6) & set(y.ELSEWHERE_IN_GENERATION_6) == set()
+
+    # The cover legendaries are the pair a player can see from the outside.
+    assert "yveltal" in x.ELSEWHERE_IN_GENERATION_6
+    assert "xerneas" in y.ELSEWHERE_IN_GENERATION_6
+
+
+def test_an_exclusive_a_safari_can_hold_says_so_and_still_reads_as_a_trade() -> None:
+    # Both halves of the truth in one sentence: the way to fill this entry is a trade, and a
+    # Safari might hold one if the right person is on the 3DS.
+    assert x.ELSEWHERE_IN_GENERATION_6["spritzee"] == x.IN_A_SAFARI
+    assert x.UNOBTAINABLE["spritzee"].startswith("Y only in Generation 6; trade one in.")
+    assert "friend code" in x.UNOBTAINABLE["spritzee"]
+    # And one no Safari holds says only the first half.
+    assert x.UNOBTAINABLE["skrelp"] == "Y only in Generation 6; trade one in"
+
+
+def test_the_friend_safari_is_recorded_and_not_counted() -> None:
+    # The first place in the dataset that is both. The rows are true and a player cannot be
+    # told to go and use them, so they are kept and left out of every count.
+    api = FakeApi(
+        [(1, "ivysaur")],
+        {"ivysaur": [kalos_slot("x", "walk", area="friend-safari-grass")]},
+    )
+
+    [found] = kalos_wild(x, api)
+
+    assert found.does_not_count == kalos.FRIEND_SAFARI_DOES_NOT_COUNT
+    assert "friend code" in found.does_not_count
+
+
+def test_an_ordinary_kalos_slot_still_counts() -> None:
+    api = FakeApi([(1, "sandslash")], {"sandslash": [kalos_slot("x", "walk")]})
+
+    [found] = kalos_wild(x, api)
+
+    assert found.does_not_count is None
+
+
+def test_a_kalos_exclusive_reads_as_generation_6_rather_than_as_an_older_number() -> None:
+    assert x.UNOBTAINABLE["skrelp"] == "Y only in Generation 6; trade one in"
+    assert y.UNOBTAINABLE["aron"].startswith("X only in Generation 6")
+
+
+def test_both_halves_of_the_kalos_pair_are_drawn_from_one_sheet() -> None:
+    # One sheet for the two of them, fetched once. It is not a sheet of drawings at all: X and Y
+    # are in 3D, and what stands in for one is a shot of each model.
+    for module in (x, y):
+        assert module.build(context(module.GAME_ID)).game.sprite_set == "generation-vi/x-y"
+
+    # Named for the pair, because Omega Ruby and Alpha Sapphire have one of their own.
+    assert kalos.XY_SPRITE_SET != unova.SPRITE_SET
+    assert kalos.XY_SPRITE_SET.startswith("generation-vi/")
+
+
+def test_the_three_mythicals_are_in_the_dex_and_only_ever_given_away() -> None:
+    # Central Kalos #151 to #153, which the games hold and do not ask for - the only entries in
+    # any dex here that a player is excused from. A living dex asks for them anyway.
+    for module in (x, y):
+        for species in ("diancie", "hoopa", "volcanion"):
+            reason = module.UNOBTAINABLE[species]
+
+            assert reason.startswith("Nothing in Kalos produces one")
+            assert "handed one out" in reason
+
+
+def test_the_2014_championship_gave_each_half_what_it_cannot_catch() -> None:
+    # Step 7's find. Three exclusives handed to X players and three to Y players, on the same
+    # two days, each chosen for the half that has no way to it.
+    assert "Korean World Championship" in x.UNOBTAINABLE["heracross"]
+    assert "Korean World Championship" in x.UNOBTAINABLE["manectric"]
+    assert "Korean World Championship" in x.UNOBTAINABLE["tyranitar"]
+    assert "Korean World Championship" in y.UNOBTAINABLE["aggron"]
+    assert "Korean World Championship" in y.UNOBTAINABLE["houndoom"]
+    assert "Korean World Championship" in y.UNOBTAINABLE["pinsir"]
+
+
+def test_an_entry_with_both_a_safari_and_a_giveaway_says_both() -> None:
+    # Three sentences, in the order a player would want them: trade for one, a Safari might
+    # hold one, and here is what once handed one over.
+    reason = x.UNOBTAINABLE["heracross"]
+
+    assert reason.startswith("Y only in Generation 6; trade one in.")
+    assert "A Friend Safari can hold one" in reason
+    assert reason.endswith("handed one out")
+    # Capitalised properly rather than flattened: the names of the distributions are names.
+    assert "Summer 2014 Heracross" in reason
+
+
+def test_an_entry_nothing_ever_handed_out_says_only_the_first_half() -> None:
+    assert x.UNOBTAINABLE["skrelp"] == "Y only in Generation 6; trade one in"
+    assert y.UNOBTAINABLE["aron"] == "X only in Generation 6; trade one in"
+
+
+def kalos_form(form_id: str, species: str, kind: FormKind = FormKind.COSMETIC) -> Form:
+    return Form(id=form_id, species=species, name=form_id, kind=kind, games=["x", "y"])
+
+
+def test_one_sentence_answers_for_every_vivillon_pattern() -> None:
+    # Nineteen patterns and one answer, keyed by species rather than listed: the answer is the
+    # same for each, and a list of nineteen ids is a list to get wrong.
+    patterns = [kalos_form(f"vivillon-{name}", "vivillon") for name in ("sun", "polar", "fancy")]
+
+    changes = kalos.xy_form_changes(patterns)
+
+    assert {change.requirement for change in changes.values()} == {
+        kalos.XY_FORM_CHANGES_BY_SPECIES["vivillon"].requirement
+    }
+    # The fact that makes this pair's forms unlike any before them: the console decides.
+    assert "country and region" in changes["vivillon-sun"].requirement
+
+
+def test_a_furfrou_trim_says_it_cannot_be_kept() -> None:
+    # The one form in the dataset a living dex cannot hold: five days, and gone the moment it
+    # goes in a box. Saying where to get it and not that would be half an answer.
+    [trim] = kalos.xy_form_changes([kalos_form("furfrou-kabuki", "furfrou")]).values()
+
+    assert "five days" in trim.requirement
+    assert "put in a box" in trim.requirement
+    assert trim.where == "Lumiose City"
+
+
+def test_each_item_that_changes_an_older_legendary_is_a_favour_for_showing_it() -> None:
+    # All four are in Kalos and all four are handed over for showing the legendary itself -
+    # which no Kalos save can catch. The Pokemon has to come first, and the item follows.
+    changes = kalos.XY_FORM_CHANGES
+
+    assert "Reveal Glass" in changes["landorus-therian"].requirement
+    assert changes["landorus-therian"].where == "Reflection Cave"
+    assert "DNA Splicers" in changes["kyurem-black"].requirement
+    assert "Griseous Orb" in changes["giratina-origin"].requirement
+    assert "Gracidea" in changes["shaymin-sky"].requirement
+    assert all("shown" in changes[form].requirement for form in ("kyurem-black", "shaymin-sky"))
+
+
+def test_a_form_with_no_way_here_gets_no_record_rather_than_a_guess() -> None:
+    # AZ's Floette was never handed over by any game, and its four colour siblings are caught in
+    # the grass - so the species-wide answer must not quietly cover it.
+    forms = [
+        kalos_form("floette-blue", "floette"),
+        kalos_form("floette-eternal", "floette", FormKind.FUNCTIONAL),
+    ]
+
+    changes = kalos.xy_form_changes(forms)
+
+    assert "floette-blue" in changes
+    assert "floette-eternal" not in changes
+    assert "floette-eternal" in kalos.XY_NO_WAY_HERE
+
+
+def test_the_seasons_are_gone_and_kalos_says_so() -> None:
+    [coat] = kalos.xy_form_changes([kalos_form("deerling-winter", "deerling")]).values()
+
+    assert "no seasons" in coat.requirement
+    assert "hatch" in coat.requirement
+
+
+def test_a_sex_needs_no_table_here_either() -> None:
+    # Ninety-nine of this pair's forms are a sex, and not one of them is written down: the
+    # answer is the same everywhere and `formchanges` keeps it.
+    assert "pikachu-female" not in kalos.xy_form_changes([kalos_form("pikachu-female", "pikachu")])
 
 
 # --- the registry itself ----------------------------------------------------------------------

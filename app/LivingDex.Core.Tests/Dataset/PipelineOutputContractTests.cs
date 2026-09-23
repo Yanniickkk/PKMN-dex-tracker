@@ -195,6 +195,38 @@ public class PipelineOutputContractTests
     }
 
     [Fact]
+    public void A_game_that_shows_several_pokedexes_says_which_each_entry_is_numbered_in()
+    {
+        var shield = Read<GameData>("games", "shield.json");
+        var sword = Read<GameData>("games", "sword.json");
+
+        // Two entries, both #100, and neither is wrong: they are numbered in different lists.
+        // X and Y are what this is for, with three of them.
+        Assert.Equal(["Galar", "Isle of Armor"], shield.DexEntries.Select(entry => entry.Dex));
+        Assert.Equal([100, 100], shield.DexEntries.Select(entry => entry.Number));
+
+        // A game with one list writes nothing, and reads back as null rather than as an empty
+        // name: twenty games were written before the field existed and none of them needs it.
+        Assert.All(sword.DexEntries, entry => Assert.Null(entry.Dex));
+    }
+
+    [Fact]
+    public void A_way_that_does_not_count_crosses_the_wire_with_its_reason()
+    {
+        var shield = Read<GameData>("games", "shield.json");
+
+        var safari = shield.AcquisitionMethods.OfType<WildAcquisition>().Single();
+        var gift = shield.AcquisitionMethods.OfType<GiftAcquisition>().First();
+
+        Assert.False(safari.Counts);
+        Assert.Equal("a friend code decided what it holds", safari.DoesNotCount);
+        // And the ordinary way beside it, for the same entry, is untouched: the field is absent
+        // rather than false, and everything written before it reads back as counting.
+        Assert.True(gift.Counts);
+        Assert.Null(gift.DoesNotCount);
+    }
+
+    [Fact]
     public void An_entry_that_cannot_be_filled_says_why_rather_than_carrying_a_bare_flag()
     {
         var platinum = Read<GameData>("games", "platinum.json");

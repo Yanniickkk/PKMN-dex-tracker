@@ -340,6 +340,69 @@ checks is a bad thing to commit. It gained acquisition methods for what its dex 
 files for the transfer endpoints it referenced, and is now a small but valid dataset as well as a
 wire-format fixture.
 
+### 0.8 The shared forms table
+
+Numbered 0.8 rather than 0.2, which is what it was called while it was open: Phase 0 had already
+spent 0.2 through 0.7 by the time this was written, and two sections with one number is worse
+than a gap in the sequence.
+
+- [x] Fill `dataset/forms.json`, which had been written empty since Phase 1 - 2026-09-23
+  - Noticed by Yannick: turning on functional forms in a collection added no entries. Not a bug
+    in the app - `FormSelection`, `DexBuilder` and `ReferenceData` all worked, and functional
+    forms are on by default. There was simply nothing in the table for them to expand.
+  - `forms.json` holds 154 entries: 97 gender differences, 39 cosmetic and 18 functional. Nothing
+    regional, because the earliest of those is Alolan and this dataset stops at Generation 5.
+  - Read rather than listed. `forms.py` walks each species' varieties and then each variety's own
+    faces, which is the two shapes PokeAPI uses, and works out the kind by measuring: a form
+    whose typing, base stats or abilities differ from the species' is functional and one that
+    differs in none of them is cosmetic. That is why Unown's letters come out cosmetic and
+    Wormadam's cloaks functional without anybody deciding it twice - the letters are one Pokemon
+    with 28 faces and the cloaks are three Pokemon. Which games a form is in comes from the
+    version group it arrived in, so every Mega, Gigantamax and regional form falls outside this
+    dataset by itself.
+  - Two kinds are left out on purpose. Battle-only, which the source flags - Castform's weather,
+    Darmanitan's Zen Mode, Meloetta's Pirouette - and held-item, which it does not: Arceus's
+    seventeen plates and Genesect's four drives. Take the item off and it is the same Pokemon, so
+    an entry each would ask a player to catch one Arceus eighteen times. Say so if you want them
+    back.
+  - Four entries the source gets wrong are written by hand in `ONLY_IN`: Deoxys changes into a
+    different form in each of the three Generation 3 cartridges and PokeAPI can only name the
+    version group, which pairs FireRed and LeafGreen; and the spiky-eared Pichu cannot leave
+    HeartGold or SoulSilver.
+
+### 0.9 What the forms table still could not say
+
+- [x] A picture of its own for each form - 2026-09-23
+  - 704 form sprites, and every form of every game has one bar a female Eevee in Generation 4,
+    which the sheet never drew. The sheets file them two ways and both are tried: a variety is a
+    Pokemon with a number of its own - Wash Rotom is 10009 - and a face of one Pokemon is filed
+    under the species' number and the face's name, `585-summer.png`. Gender differences live in
+    a `female/` folder beside the rest. `SpritePath` now takes the whole target, so a form falls
+    back to its species before the species falls back to the shared set.
+  - One thing the fetch had to learn: a sheet is fetched once however many games share it, and
+    which games share it still matters. All four Generation 5 games are drawn from one sheet and
+    only two of them have a Therian Landorus, so asking the first game alone left six forms
+    without a picture.
+- [x] How a form is obtained, for the twenty games already written - 2026-09-23
+  - 1269 records, of which 187 are a sentence somebody wrote and the rest are a sex. Every form
+    of every game has an answer except Unown in Ruby and Sapphire, where there is genuinely none:
+    those two have the letters in their dex and no ruins to find one in.
+  - A kind of its own, `formChange`, beside the other five. It is last in the popup's order for a
+    reason the order already had: the sections run from the surest way to the least, and this is
+    the only one that needs the Pokemon already - everything above it answers "how do I get one"
+    and this answers "and then what".
+  - The sentences live in the region that owns them, as gifts and trades do, and the same form
+    gets a different one per region because the games do: Rotom's appliances are behind the
+    Secret Key in Sinnoh, up a broken lift shaft in Johto, and in boxes in a shop basement in
+    Unova. The Griseous Orb turns up in a different place in every pair since Platinum.
+  - A sex needs no table anywhere. It is the one form that is not something done to a Pokemon
+    already caught - you look for it while catching - and the answer is the same in every game
+    that has the question, so it is written once in `formchanges.py`.
+  - What is deliberately not written twice: Generation 5 has Burmy's cloaks and Shellos's seas in
+    its dex and no way to make one, because neither species lives in Unova. The Sinnoh record
+    carries over the transfer graph and shows as "Then to Black 2: the Poke Transfer", which is
+    both true and the answer a player needs.
+
 ---
 
 ## Phase 1 — First vertical slice
@@ -811,7 +874,7 @@ A game lands here only once every step is ticked and its validation run is green
 
 The twenty games below were written against a checklist of 8 steps. It is 9 now: alternate forms
 went in between the events step and the validation one, and the games here did not have it. Their
-forms were filled in afterwards in one pass, which Phase 0.2 and 0.3 describe - twenty games had
+forms were filled in afterwards in one pass, which Phase 0.8 and 0.9 describe - twenty games had
 already been written by the time the shared table existed, and doing it per game would have meant
 going back through all of them. From Generation 6 on it is part of writing a game.
 
@@ -2526,7 +2589,178 @@ visible now where before they were not even asked about.
 
 ### Generation 6
 
-_Nothing yet._
+- [x] **X** (`x`, gen 6, pair partner: Y) - 2026-09-23
+  - [x] 1 Entity + edges - 2026-09-23
+  - [x] 2 Dex list - 2026-09-23
+  - [x] 3 Wild - 2026-09-23
+  - [x] 4 Gifts & statics - 2026-09-23
+  - [x] 5 Trades & evolutions - 2026-09-23
+  - [x] 6 Sprites - 2026-09-23
+  - [x] 7 Events - 2026-09-23
+  - [x] 8 Alternate forms - 2026-09-23
+  - [x] 9 Validate + smoke test - 2026-09-23
+  - 1377 ways to get something: 797 wild slots, 355 evolutions, 168 form changes, 53 eggs, 20
+    gifts and statics and nine trades. 562 of the 721 its living dex asks for are filled in the
+    game itself, 133 are a transfer away, 19 are explained and seven are left over. Validation
+    green on all 10 rules, for the whole dataset.
+- [x] **Y** (`y`, gen 6, pair partner: X) - 2026-09-23
+  - [x] 1 Entity + edges - 2026-09-23
+  - [x] 2 Dex list - 2026-09-23
+  - [x] 3 Wild - 2026-09-23
+  - [x] 4 Gifts & statics - 2026-09-23
+  - [x] 5 Trades & evolutions - 2026-09-23
+  - [x] 6 Sprites - 2026-09-23
+  - [x] 7 Events - 2026-09-23
+  - [x] 8 Alternate forms - 2026-09-23
+  - [x] 9 Validate + smoke test - 2026-09-23
+  - The same counts entry for entry, bar the fishing rods: the two halves differ by eight Super
+    Rod slots, eight Good Rod ones and three eggs. Sixteen exclusives each, which is what a
+    version pair looks like.
+  - Step 1 for both: released the same day everywhere, which no game before them was, and the
+    first pair whose only route out of its generation is a service rather than a cartridge. They
+    trade with each other and with the two Hoenn remakes, and they talk to Bank in both
+    directions - where Generation 5 and the Virtual Console releases only ever push into it. Six
+    of the eight routes they declare are waiting on a game or a node that is not written yet.
+  - Step 2 made a decision no game before it had to: **X and Y show three Pokedexes**, Central
+    (153), Coastal (153) and Mountain Kalos (151), sharing no species and each numbering from
+    #001. The three are kept apart rather than run together into one list of 457, because a
+    number spanning them is a number no game has ever shown. A dex entry now names which of its
+    game's Pokedexes it is numbered in - null for the twenty games that show one list - and the
+    switch in the app offers the three beside the National Dex. A tenth validation rule,
+    `every-dex-number-means-one-thing`, guards it.
+  - The three lists hold 457 and the games ask for 454: Diancie, Hoopa and Volcanion sit at the
+    end of the Central list and are not counted towards completing it. They are the only entries
+    in any dex here that the game itself excuses a player from, and step 7 is where that gets
+    written down.
+  - Step 3: 797 slots each, covering 338 of the 721 species X asks for and 337 of Y's. Four new
+    methods, because Kalos stops hiding its second tables: **a horde** of five at once, **a
+    flower patch** whose colour is a different table, **a berry tree** at the Berry Fields, and
+    **an ambush** - which is one method rather than five, with what jumped written beside the
+    slot: off a cave ceiling, out of the ground, out of the sky, out of a bush, out of a bin.
+  - The **Friend Safari** needed more care than anything since the Hidden Grottoes. PokeAPI
+    files it as eighteen ordinary areas with ordinary tables and it is none of those things: it
+    is one room in Kiloude City that opens after the Hall of Fame, what lives in a Safari is
+    decided by the friend code of somebody registered on the player's own 3DS, and the
+    percentage on each row is how likely that Safari is to hold the species rather than how
+    often it turns up. All three are said, once, as a gate on the place. The third slot is the
+    only thing in this dataset that got *harder* after release: it opened when the friend
+    appeared in the Player Search System, and that network closed in April 2024, so it now means
+    playing side by side.
+  - One find for step 7: every Friend Safari exclusive can be caught normally in Omega Ruby or
+    Alpha Sapphire, which is worth knowing before anything is written off.
+  - Step 4: 20 handed over or standing still in each half. **Six starters**, which no game had
+    done since FireRed - three at the table in Aquacorde Town and three more from Professor
+    Sycamore in his lab, so two of the three Kanto lines are in a Kalos living dex without a
+    trade. Two fossils, one of which costs the other. Lucario, kept after the one-on-one battle
+    atop the Tower of Mastery whether it is won or lost. Snorlax, woken with a Poke Flute
+    borrowed at Parfum Palace.
+  - **Which legendary bird a save gets is decided by the starter it began with**: Chespin brings
+    Articuno, Fennekin Zapdos, Froakie Moltres. It roams from the Hall of Fame, flees every
+    time, and waits at the Sea Spirit's Den once it has been met eleven times. So one
+    playthrough reaches one of the three and the other two are a trade - checked against the
+    wiki, because it is the kind of claim a source could easily have backwards.
+  - Lapras is in the data with a place and a level and nothing else. Who hands it over was not
+    established by anything read, and an invented NPC would be worse than a blank line.
+  - Step 5: 355 evolutions, nine trades and 53 eggs. X covers 562 of the 721 its living dex asks
+    for on its own, with 133 a transfer away and 16 left to the other half. Two of the six
+    traders will take **anything in the party**, which no game had done before - both hand over a
+    held item worth more than the Pokemon, the Gardevoirite and a Rare Candy.
+  - **Shauna's trade is three trades.** She takes the first partner yours is strong against and
+    gives it back in Vaniville Town at the end, so a save reaches two of the three Kalos
+    starters and the third is in neither game by any means at all.
+  - The egg table is **worked out rather than written down**, and that is new. Unova's is 27
+    names typed by hand; X's is 53, and every one is the same three questions asked of PokeAPI -
+    what does this grow into, can the game reach any of those, is it the bottom of its chain.
+    The two things a hand-written table exists for turn out to be in the source as well: the
+    incense is `baby_trigger_item` on the chain, and a Beldum needing a Ditto is a `gender_rate`
+    of -1. Guarded by tests for the two ways it could lie - a Silcoon is not an egg, because
+    breeding its Beautifly gives a Wurmple, and a Bayleef this game only knows how to evolve is
+    not a parent anybody can put in the day care. Fifty-six of X's evolution records are that
+    second case.
+  - **PokeAPI has no Aerodactyl in Kalos at all**, which read as an entry neither half could
+    fill - the only one in the region that is not a Mythical. It is simply missing: the Ambrette
+    Town Fossil Lab revives an Old Amber, and the Old Amber is under a rock in the Glittering
+    Cave. Written down by hand and cited, the way Johto's Bug-Catching Contest had to be.
+  - **The Friend Safari is recorded and not counted**, which nothing in the dataset was before.
+    Its rows are true - eighteen areas, real tables, 194 records - and a player cannot be sent to
+    use them: a Safari holds what somebody else's friend code decided, there is no choosing
+    which, and a third of every Safari has been shut since the 3DS network closed. So the records
+    are kept and shown, with the reason on each, and they answer no to "can I get this here".
+    A wild slot can now carry `doesNotCount`, the validator and the coverage report skip such
+    rows, and the app's availability filter does too.
+  - It showed up as a broken version pair. Counting the Safari left X with three exclusives and
+    Y with ten, because a Safari pays no attention to which cartridge is asking and so dissolved
+    one half's list and not the other's. Not counting it put the pair at **sixteen each**, which
+    is what every pair before it looks like. The seven that a Safari really does hold say so in
+    their reason rather than being silently written off.
+  - What is left with no source anywhere is Diancie, Hoopa and Volcanion, which are step 7's.
+  - Step 6: 919 files in `generation-vi/x-y`, one sheet for both halves - 721 species with not
+    one gap, and 198 of the 199 forms. **The first generation with no sprites at all.** X and Y
+    are in 3D; what stands in for a sheet is a shot of each model, and it shows: every sheet
+    before this one is a grid of one size, and these are cropped to the Pokemon - 43x48 for a
+    Bulbasaur, 121x129 for a Rayquaza.
+  - Which needed the grid changed. Drawn sprites are scaled with nearest-neighbour, and doing
+    that to a rendered model makes every edge ragged, so the grid now asks the main game which
+    kind it has: `generation-vi` and later are smoothed, everything before it keeps its pixels.
+    One prefix covers both 3D generations, because `generation-vi` is not a prefix of
+    `generation-v/`.
+  - The one form with no picture of its own is the female Eevee, whose file the sheet simply
+    does not have - the Generation 5 sheet does. It falls back to the species picture, which is
+    what the fallback is for.
+  - Step 7 read the *In events* table on all 35 entries either half cannot fill. **Validation is
+    green: ten rules, no errors, no warnings, for the whole dataset.** Each half now explains 19
+    entries - the 16 the other keeps and the three Mythicals - and 562 of its 721 are filled in
+    the game itself.
+  - Diancie, Hoopa and Volcanion were only ever given away, which is the cleanest case this step
+    ever meets: no cave to search and no version to trade with, only dates that have passed.
+    Every one of their distributions went to X and Y alike.
+  - Step 8: 199 forms each, and 168 of them now say how they are come by - 99 sexes, which need
+    no table, and 69 written out. The step it was invented for: four of the families here are
+    settled when the Pokemon is generated and cannot be changed afterwards at all, so what a
+    player can act on is where to look and what to breed.
+  - **Vivillon's pattern is a fact about the console**: the 3DS's own country and region decide
+    it, before the Scatterbug even hatches, so one machine reaches one of the eighteen and the
+    rest are a trade. **A Furfrou trim cannot be kept at all** - five days, and gone the moment
+    it goes in a box - so no living dex can hold one, and in X and Y a trim is not a Pokedex
+    entry of its own either. Both facts are in the data rather than left for a player to find.
+  - All four items that change an older legendary are in Kalos, and every one is handed over for
+    being shown the legendary itself, which no Kalos save can catch: the Reveal Glass in
+    Reflection Cave, the DNA Splicers in Kiloude City, the Griseous Orb in Terminus Cave, the
+    Gracidea at the Snowbelle City Pokemon Center. Each is a favour done for a Pokemon that came
+    from somewhere else.
+  - 31 forms are left without a record on purpose: the Eternal Flower Floette, which no game ever
+    handed over, and Unown's letters, Basculin's stripe and Shellos's sea, which are settled
+    where the Pokemon is caught and none of those is caught here.
+  - The find is that **the 2014 Korean World Championship Series gave each half what it cannot
+    catch**: a Heracross, a Manectric and a Tyranitar to X players, and an Aggron, a Houndoom
+    and a Pinsir to Y players, on the same two days. A distribution covering a version exclusive
+    is not new - Black and White's legendaries were the same - but one covering three at once,
+    chosen for the half with no way to them, is deliberate work. Twelve of the 32 exclusives had
+    no distribution at all.
+  - Smoke test on the published exe: a collection called "X on the 3DS", with X as main game, Y
+    linked and every kind of form ticked - 920 tiles, 721 species and 199 forms. The linked-games
+    step offered **one** candidate, Y, "via trading", which is the transfer graph being right:
+    everything older reaches X through Bank, and Bank is not written.
+  - The *Showing* switch is the three-dex decision made visible. National dex reads "0 of 920";
+    Central Kalos "0 of 229" and renumbers the grid to Chespin #001; Coastal Kalos "0 of 169"
+    and starts at Drifloon #001. Vivillon's nineteen patterns all sit at #022, which is what a
+    form taking its species' number looks like when there are nineteen of them.
+  - Four popups were read closely. **Spritzee** is the one that matters: it says "not in X - Y
+    only in Generation 6; trade one in. A Friend Safari can hold one, which takes somebody else's
+    3DS and their friend code", and below it the Friend Safari row itself, with the gate under
+    *Needs* and the reason it does not count under *But*, and Y's Route 7 slot with "Then to X:
+    trading". Searching for it with *Available in X* ticked finds nothing; with *Available in Y*
+    it is there. Recorded and not counted, end to end.
+  - Skrelp shows three Y fishing slots and the trade across. Chespin shows the starter at the
+    table in Aquacorde Town and Shauna's trade, requirement included: "only in a save that
+    started with Fennekin: she picks the first partner yours is strong against". Diancie shows no
+    method at all and the whole of what step 7 found. Furfrou (Dandy) shows the trim under
+    *Changing its form*, with the five days and the box in the sentence.
+  - Marking Chespin caught moved the counter to "1 of 920".
+  - The user's settings were copied out first and restored byte for byte - same checksum as the
+    backup - and their data file was untouched: same checksum and timestamp afterwards as
+    before. The test ran against a data file in the scratchpad, and only the instance it started
+    was stopped.
 
 ### Generation 7
 

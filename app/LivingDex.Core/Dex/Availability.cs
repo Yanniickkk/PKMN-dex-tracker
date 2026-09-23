@@ -15,6 +15,12 @@ namespace LivingDex.Core.Dex;
 /// the same goes for an egg and its parents. The validator has said so since Phase 0.7; the
 /// filter beside the grid did not.
 ///
+/// A way the dataset records and does not count is not an answer either. Kalos's Friend Safari
+/// really does hold a Spritzee that X has nowhere else, and which Safari a player can walk into
+/// was settled by somebody else's friend code - so "available in X" would be promising something
+/// this app cannot know. The row stays in the popup, with its own reason; it just does not make
+/// the entry available.
+///
 /// What a player already owns counts. Once a Bulbasaur has been transferred into Platinum, the
 /// Ivysaur it becomes really is available there, so this reads the collection's records as well
 /// as the dataset - which is why it belongs to a screen and is rebuilt when the records change.
@@ -55,7 +61,11 @@ public sealed class Availability
             return false;
         }
 
-        answer = _reference.MethodsFor(game, target).Any(method => Follows(game, method, visiting));
+        answer = _reference.MethodsFor(game, target)
+            // A record can be true and still not be a way anybody can be sent to use. The
+            // Friend Safari is one: what it holds was decided by a stranger's friend code.
+            .Where(method => method.Counts)
+            .Any(method => Follows(game, method, visiting));
 
         visiting.Remove(key);
         _known[key] = answer;

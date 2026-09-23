@@ -58,6 +58,20 @@ WILD_METHODS: dict[str, EncounterMethod] = {
     # is the half a player can be missing - so it stays a Super Rod slot and the water it is
     # cast into is said in the requirement, by :data:`METHOD_REQUIREMENTS`.
     "super-rod-spots": EncounterMethod.SUPER_ROD,
+    # Generation 6's. A horde is five at once; the flower patches are three tables that differ
+    # by the colour of the flowers standing in them, and the colour is the requirement rather
+    # than three methods; the Berry Fields' trees each hold one species by the colour of the
+    # tree. The five ambushes are one method for the reason `EncounterMethod` gives.
+    "horde": EncounterMethod.HORDE,
+    "red-flowers": EncounterMethod.FLOWER_PATCH,
+    "yellow-flowers": EncounterMethod.FLOWER_PATCH,
+    "purple-flowers": EncounterMethod.FLOWER_PATCH,
+    "berry-trees": EncounterMethod.BERRY_TREE,
+    "ceiling-ambush": EncounterMethod.AMBUSH,
+    "ground-ambush": EncounterMethod.AMBUSH,
+    "sky-ambush": EncounterMethod.AMBUSH,
+    "rustling-bush-ambush": EncounterMethod.AMBUSH,
+    "trash-can-ambush": EncounterMethod.AMBUSH,
     # Still a wild encounter, but not one of the named ways of starting one.
     "seaweed": EncounterMethod.OTHER,
     "feebas-tile-fishing": EncounterMethod.OTHER,
@@ -73,6 +87,16 @@ WILD_METHODS: dict[str, EncounterMethod] = {
 #: kind of fact: something has to be true before the slot is there at all.
 METHOD_REQUIREMENTS: dict[str, str] = {
     "super-rod-spots": "Cast into rippling water",
+    # Which flowers, which is the whole difference between the three tables.
+    "red-flowers": "In a patch of red flowers",
+    "yellow-flowers": "In a patch of yellow flowers",
+    "purple-flowers": "In a patch of purple flowers",
+    # And what it is that jumps out, which the one ambush method does not say by itself.
+    "ceiling-ambush": "Dropping from the ceiling",
+    "ground-ambush": "Bursting out of the ground",
+    "sky-ambush": "Swooping down out of the sky",
+    "rustling-bush-ambush": "Out of a rustling bush",
+    "trash-can-ambush": "Out of a bin",
 }
 
 
@@ -103,6 +127,7 @@ def wild_encounters(
     refresh: bool = False,
     places: LocationNames | None = None,
     gates: Mapping[str, str] | None = None,
+    not_counted: Mapping[str, str] | None = None,
 ) -> list[WildAcquisition]:
     """Every wild slot in one game, for the species given, as one record per place and method.
 
@@ -114,6 +139,11 @@ def wild_encounters(
     which the cache remembers, so rebuilding a dataset from unchanged pages does not quietly
     re-date every claim in it.
 
+    ``not_counted`` is why a whole place's slots are real and still do not answer "can I get one
+    here", keyed the same way. Kalos's Friend Safari is the first: eighteen areas of ordinary
+    tables that want another person's 3DS. The records are kept - they are true, and a player
+    with a friend can use them - and they are left out of what the dataset counts as obtainable.
+
     ``gates`` is what a whole place asks of a player before any of its slots can be reached,
     keyed by the place's name. PokeAPI marks conditions on a row rather than on a location, so
     a door that is locked from the outside is invisible to it: the Nature Preserve in Unova is
@@ -123,6 +153,7 @@ def wild_encounters(
     """
     places = places or LocationNames(api, refresh=refresh)
     gates = gates or {}
+    uncounted = not_counted or {}
     found: list[WildAcquisition] = []
     seen: set[tuple] = set()
 
@@ -154,6 +185,7 @@ def wild_encounters(
                         slot=slot,
                         citation=citation,
                         gate=gates.get(location),
+                        does_not_count=uncounted.get(location),
                     )
 
                     # Two of PokeAPI's methods can land on one of ours - a roamer is listed
@@ -224,6 +256,7 @@ def _record(
     slot: _Slot,
     citation: SourceCitation,
     gate: str | None = None,
+    does_not_count: str | None = None,
 ) -> WildAcquisition:
     return WildAcquisition(
         game=game_id,
@@ -241,6 +274,7 @@ def _record(
         # The way in comes first: it is the thing a player cannot do anything about, and what
         # the row itself asks for only matters once they are standing there.
         requirement=conditions.joined(gate, state.requirement),
+        does_not_count=does_not_count,
         source=citation,
     )
 

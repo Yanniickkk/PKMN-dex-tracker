@@ -33,11 +33,19 @@ public readonly record struct DexTarget(SpeciesId Species, FormId? Form)
 /// tell "we checked, and it cannot be caught" apart from "we have nothing", and the UI has to be
 /// able to say which.
 /// </param>
+/// <param name="Dex">
+/// Which of the game's own Pokédexes this number belongs to, for a game that shows more than
+/// one, and null for a game that shows a single list. X and Y hand a player three — Central,
+/// Coastal and Mountain Kalos — which share no species and each start at #001, so three entries
+/// of the same game are numbered #001 and all three are right. Last in the list because it
+/// arrived twenty games late: every dex written before it needs nothing here.
+/// </param>
 public sealed record DexEntry(
     GameId Game,
     DexTarget Target,
     int Number,
-    string? UnobtainableReason = null)
+    string? UnobtainableReason = null,
+    string? Dex = null)
 {
     /// <summary>
     /// Whether this entry is known to be unfillable. Derived from

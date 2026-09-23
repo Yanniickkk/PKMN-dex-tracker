@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import date
 
-from livingdex_pipeline.breeding import EggFrom, breeding_encounters
+from livingdex_pipeline.breeding import EggFrom, breeding_encounters, day_care_eggs
 from livingdex_pipeline.sources import bulbapedia
 from livingdex_pipeline.trades import InGameTrade, trade_encounters
 
@@ -94,3 +94,97 @@ def test_a_trader_who_names_no_price_asks_for_nothing() -> None:
 
     assert methods[0].target.species == "steelix"
     assert methods[0].wants is None
+
+
+class FakeChains:
+    """PokeAPI with the two resources the day care needs: a chain, and a species' sexes."""
+
+    def __init__(self, chains: dict[str, dict], genderless: set[str] | None = None) -> None:
+        self._chains = chains
+        self._genderless = genderless or set()
+
+    def resource(self, path: str, *, refresh: bool = False) -> dict:
+        if path.startswith("evolution-chain/"):
+            return self._chains[path.removeprefix("evolution-chain/")]
+
+        name = path.removeprefix("pokemon-species/")
+        return {"gender_rate": -1 if name in self._genderless else 4}
+
+
+def chain(name: str, *into: dict, baby_item: str | None = None) -> dict:
+    return {
+        "baby_trigger_item": {"name": baby_item} if baby_item else None,
+        "chain": _stage(name, *into),
+    }
+
+
+def _stage(name: str, *into: dict) -> dict:
+    return {"species": {"name": name}, "evolves_to": list(into)}
+
+
+def test_the_day_care_is_asked_only_for_what_nothing_else_here_produces() -> None:
+    # Vulpix is not in this game and its Ninetales is, so the day care answers for it. Ninetales
+    # itself is not asked about: the game already has one.
+    api = FakeChains({"vulpix": chain("vulpix", _stage("ninetales"))})
+
+    eggs = day_care_eggs(
+        api,
+        chains={"vulpix": "vulpix", "ninetales": "vulpix"},
+        caught={"ninetales"},
+        evolved=set(),
+    )
+
+    assert list(eggs) == ["vulpix"]
+    assert eggs["vulpix"].parents == ("ninetales",)
+
+
+def test_an_egg_hatches_into_the_bottom_of_the_chain_and_nothing_higher() -> None:
+    # Breeding a Beautifly gives a Wurmple. A Silcoon the game happens not to produce is not
+    # something the day care can be asked for, however missing it is.
+    api = FakeChains({"wurmple": chain("wurmple", _stage("silcoon", _stage("beautifly")))})
+    chains = dict.fromkeys(("wurmple", "silcoon", "beautifly"), "wurmple")
+
+    eggs = day_care_eggs(api, chains=chains, caught={"beautifly"}, evolved=set())
+
+    assert list(eggs) == ["wurmple"]
+    assert eggs["wurmple"].parents == ("beautifly",)
+
+
+def test_a_parent_the_game_cannot_actually_get_is_not_offered_as_one() -> None:
+    # The mistake this guards against, and X makes it fifty-six times over: the game knows that
+    # a Bayleef becomes a Meganium and has no Chikorita anywhere, so neither of the two is a
+    # parent anybody can put in the day care.
+    api = FakeChains({"chikorita": chain("chikorita", _stage("bayleef", _stage("meganium")))})
+    chains = dict.fromkeys(("chikorita", "bayleef", "meganium"), "chikorita")
+
+    eggs = day_care_eggs(api, chains=chains, caught=set(), evolved={"bayleef", "meganium"})
+
+    assert eggs == {}
+
+
+def test_a_stage_the_game_evolves_from_something_it_has_counts_as_a_parent() -> None:
+    api = FakeChains({"chikorita": chain("chikorita", _stage("bayleef", _stage("meganium")))})
+    chains = dict.fromkeys(("chikorita", "bayleef", "meganium"), "chikorita")
+
+    eggs = day_care_eggs(api, chains=chains, caught={"bayleef"}, evolved={"meganium"})
+
+    # Bayleef is caught and Meganium is what it becomes here, so both can be left at the door.
+    assert eggs["chikorita"].parents == ("bayleef", "meganium")
+
+
+def test_the_two_things_a_pair_can_need_are_read_off_the_source() -> None:
+    # Neither is a fact somebody keeps a list of: the incense is on the chain, and a species
+    # with no sex at all has a gender rate of -1.
+    api = FakeChains(
+        {
+            "bonsly": chain("bonsly", _stage("sudowoodo"), baby_item="rock-incense"),
+            "beldum": chain("beldum", _stage("metang")),
+        },
+        genderless={"beldum"},
+    )
+    chains = {"bonsly": "bonsly", "sudowoodo": "bonsly", "beldum": "beldum", "metang": "beldum"}
+
+    eggs = day_care_eggs(api, chains=chains, caught={"sudowoodo", "metang"}, evolved=set())
+
+    assert eggs["bonsly"].requirement == "A parent has to hold a Rock Incense"
+    assert "Ditto" in eggs["beldum"].requirement

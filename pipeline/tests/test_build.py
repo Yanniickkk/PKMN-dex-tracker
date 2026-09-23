@@ -84,6 +84,7 @@ def test_a_build_leaves_a_validation_report_behind(tmp_path: Path) -> None:
         "no-breeding-dead-ends",
         "unobtainable-entries-really-are",
         "forms-referenced-exist",
+        "every-dex-number-means-one-thing",
         "version-pairs-name-each-other",
         "transfer-edges-connect-known-games",
         "every-species-has-a-sprite",

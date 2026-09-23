@@ -27,61 +27,6 @@ Phase 2 feeds it one game at a time.
     folder with nothing beside it. Still open: a Windows install without the WebView2
     Runtime, and a Windows 10 box.
 
-### 0.2 The shared forms table
-
-_Done. `forms.json` holds 154 entries: 97 gender differences, 39 cosmetic and 18 functional.
-Nothing regional, because the earliest of those is Alolan and this dataset stops at Generation 5._
-
-_Read rather than listed. `forms.py` walks each species' varieties and then each variety's own
-faces, which is the two shapes PokeAPI uses, and works out the kind by measuring: a form whose
-typing, base stats or abilities differ from the species' is functional and one that differs in
-none of them is cosmetic. That is why Unown's letters come out cosmetic and Wormadam's cloaks
-functional without anybody deciding it twice - the letters are one Pokemon with 28 faces and the
-cloaks are three Pokemon. Which games a form is in comes from the version group it arrived in,
-so every Mega, Gigantamax and regional form falls outside this dataset by itself._
-
-_Two kinds are left out on purpose. Battle-only, which the source flags - Castform's weather,
-Darmanitan's Zen Mode, Meloetta's Pirouette - and held-item, which it does not: Arceus's
-seventeen plates and Genesect's four drives. Take the item off and it is the same Pokemon, so an
-entry each would ask a player to catch one Arceus eighteen times. Say so if you want them back._
-
-_Four entries the source gets wrong are written by hand in `ONLY_IN`: Deoxys changes into a
-different form in each of the three Generation 3 cartridges and PokeAPI can only name the
-version group, which pairs FireRed and LeafGreen; and the spiky-eared Pichu cannot leave
-HeartGold or SoulSilver._
-
-### 0.3 What the forms table still cannot say
-- [x] A picture of its own for each form - 2026-09-23
-  - 704 form sprites, and every form of every game has one bar a female Eevee in Generation 4,
-    which the sheet never drew. The sheets file them two ways and both are tried: a variety is a
-    Pokemon with a number of its own - Wash Rotom is 10009 - and a face of one Pokemon is filed
-    under the species' number and the face's name, `585-summer.png`. Gender differences live in
-    a `female/` folder beside the rest. `SpritePath` now takes the whole target, so a form falls
-    back to its species before the species falls back to the shared set.
-  - One thing the fetch had to learn: a sheet is fetched once however many games share it, and
-    which games share it still matters. All four Generation 5 games are drawn from one sheet and
-    only two of them have a Therian Landorus, so asking the first game alone left six forms
-    without a picture.
-- [x] How a form is obtained, for the twenty games already written - 2026-09-23
-  - 1269 records, of which 187 are a sentence somebody wrote and the rest are a sex. Every form
-    of every game has an answer except Unown in Ruby and Sapphire, where there is genuinely none:
-    those two have the letters in their dex and no ruins to find one in.
-  - A kind of its own, `formChange`, beside the other five. It is last in the popup's order for a
-    reason the order already had: the sections run from the surest way to the least, and this is
-    the only one that needs the Pokemon already - everything above it answers "how do I get one"
-    and this answers "and then what".
-  - The sentences live in the region that owns them, as gifts and trades do, and the same form
-    gets a different one per region because the games do: Rotom's appliances are behind the
-    Secret Key in Sinnoh, up a broken lift shaft in Johto, and in boxes in a shop basement in
-    Unova. The Griseous Orb turns up in a different place in every pair since Platinum.
-  - A sex needs no table anywhere. It is the one form that is not something done to a Pokemon
-    already caught - you look for it while catching - and the answer is the same in every game
-    that has the question, so it is written once in `formchanges.py`.
-  - What is deliberately not written twice: Generation 5 has Burmy's cloaks and Shellos's seas in
-    its dex and no way to make one, because neither species lives in Unova. The Sinnoh record
-    carries over the transfer graph and shows as "Then to Black 2: the Poke Transfer", which is
-    both true and the answer a player needs.
-
 ---
 
 ## Phase 1 — First vertical slice
@@ -121,10 +66,10 @@ The place to look is the species' own *In events* section on Bulbapedia, which l
 each distribution was for.
 
 Step 8 is new, and the first five generations did not have it: their forms were filled in one
-pass afterwards, as Phase 0.2 and 0.3 describe, because twenty games had already been written by
-the time the table existed. From Generation 6 on it is part of writing a game, and it has to be,
-because that is where forms stop being a curiosity — Mega Evolution, then the regional forms, then
-Gigantamax. Three things belong to it:
+pass afterwards, as Phase 0.8 and 0.9 in `DONE dex tracker.md` describe, because twenty games had
+already been written by the time the table existed. From Generation 6 on it is part of writing a
+game, and it has to be, because that is where forms stop being a curiosity — Mega Evolution, then
+the regional forms, then Gigantamax. Three things belong to it:
 
 - **Which forms this game has.** `forms.py` works most of it out from the version group a form
   arrived in, and what it cannot know is a form that arrived and went no further, or one that is
@@ -189,14 +134,19 @@ its ends, and the ten edges still waiting all point at Bank.**_
 
 ### Generation 6
 
-- [ ] **X** (`x`, gen 6, pair partner: Y)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
-- [ ] **Y** (`y`, gen 6, pair partner: X)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
+_Done: X and Y. Omega Ruby and Alpha Sapphire are Hoenn again, and still to write._
+
+_The region and the generation are two modules again, after a generation that had nothing on
+either side of that line: `kalos.py` is the place and `gen6.py` is the hardware, the National Dex
+to Volcanion and the four cartridges that trade with each other. Omega Ruby and Alpha Sapphire
+will read `hoenn.py` and the same `gen6.py`._
+
+_The split matters more here than it looks. **Legends: Z-A is a Kalos game too** - Lumiose City on
+the Switch, three generations later - so `kalos.py` is the second region in this dataset, after
+Johto, whose games are not all from one generation. Its factories are named `gen6_cartridge` and
+`gen6_edges` for that reason: Z-A gets its own beside them rather than editing these, and nothing
+about Bank, a dex cap or a 3DS trade set may be written down as a fact about Kalos._
+
 - [ ] **Omega Ruby** (`omega-ruby`, gen 6, pair partner: Alpha Sapphire)
   - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events

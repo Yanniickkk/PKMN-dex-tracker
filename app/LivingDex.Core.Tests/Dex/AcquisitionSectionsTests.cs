@@ -217,6 +217,28 @@ public class AcquisitionSectionsTests
     }
 
     [Fact]
+    public void Generation_6s_own_ways_are_named_too_and_an_ambush_is_one_of_them()
+    {
+        // Kalos puts its second tables in plain sight: five at once, a patch of flowers, a
+        // berry tree, and five different things that jump a player. The last five are one
+        // method - what jumped is written beside the slot - so there are four names here.
+        EncounterMethod[] ownToKalos =
+        [
+            EncounterMethod.Horde,
+            EncounterMethod.FlowerPatch,
+            EncounterMethod.BerryTree,
+            EncounterMethod.Ambush,
+        ];
+
+        var names = ownToKalos.Select(AcquisitionNames.Of).ToList();
+
+        Assert.DoesNotContain("another way", names);
+        Assert.Equal(names.Count, names.Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal("a horde", AcquisitionNames.Of(EncounterMethod.Horde));
+        Assert.Equal("an ambush", AcquisitionNames.Of(EncounterMethod.Ambush));
+    }
+
+    [Fact]
     public void A_hidden_grotto_is_a_place_rather_than_another_way()
     {
         // The sequels' own, and the only method in the dataset that no encounter table

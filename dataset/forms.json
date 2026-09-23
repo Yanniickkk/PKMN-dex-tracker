@@ -13,7 +13,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -30,7 +32,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -47,7 +51,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -64,7 +70,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -76,7 +84,9 @@
       "black",
       "black-2",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -93,7 +103,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -110,7 +122,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -127,7 +141,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -144,7 +160,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -161,7 +179,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -178,7 +198,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -195,7 +217,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -212,7 +236,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -229,7 +255,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -246,7 +274,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -263,7 +293,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -280,7 +312,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -297,7 +331,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -309,7 +345,9 @@
       "black",
       "black-2",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -321,7 +359,9 @@
       "black",
       "black-2",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -333,7 +373,9 @@
       "black",
       "black-2",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -377,7 +419,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -394,7 +438,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -411,7 +457,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -428,7 +476,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -445,7 +495,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -462,7 +514,49 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "flabebe-blue",
+    "species": "flabebe",
+    "name": "Blue",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "flabebe-orange",
+    "species": "flabebe",
+    "name": "Orange",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "flabebe-white",
+    "species": "flabebe",
+    "name": "White",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "flabebe-yellow",
+    "species": "flabebe",
+    "name": "Yellow",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
     ]
   },
   {
@@ -479,7 +573,99 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "floette-blue",
+    "species": "floette",
+    "name": "Blue",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "floette-eternal",
+    "species": "floette",
+    "name": "Eternal",
+    "kind": "functional",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "floette-orange",
+    "species": "floette",
+    "name": "Orange",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "floette-white",
+    "species": "floette",
+    "name": "White",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "floette-yellow",
+    "species": "floette",
+    "name": "Yellow",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "florges-blue",
+    "species": "florges",
+    "name": "Blue",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "florges-orange",
+    "species": "florges",
+    "name": "Orange",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "florges-white",
+    "species": "florges",
+    "name": "White",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "florges-yellow",
+    "species": "florges",
+    "name": "Yellow",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
     ]
   },
   {
@@ -491,7 +677,99 @@
       "black",
       "black-2",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "furfrou-dandy",
+    "species": "furfrou",
+    "name": "Dandy",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "furfrou-debutante",
+    "species": "furfrou",
+    "name": "Debutante",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "furfrou-diamond",
+    "species": "furfrou",
+    "name": "Diamond",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "furfrou-heart",
+    "species": "furfrou",
+    "name": "Heart",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "furfrou-kabuki",
+    "species": "furfrou",
+    "name": "Kabuki",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "furfrou-la-reine",
+    "species": "furfrou",
+    "name": "La-Reine",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "furfrou-matron",
+    "species": "furfrou",
+    "name": "Matron",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "furfrou-pharaoh",
+    "species": "furfrou",
+    "name": "Pharaoh",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "furfrou-star",
+    "species": "furfrou",
+    "name": "Star",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
     ]
   },
   {
@@ -508,7 +786,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -525,7 +805,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -542,7 +824,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -559,7 +843,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -576,7 +862,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -591,7 +879,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -608,7 +898,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -625,7 +917,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -642,7 +936,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -659,7 +955,39 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "gourgeist-large",
+    "species": "gourgeist",
+    "name": "Large",
+    "kind": "functional",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "gourgeist-small",
+    "species": "gourgeist",
+    "name": "Small",
+    "kind": "functional",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "gourgeist-super",
+    "species": "gourgeist",
+    "name": "Super",
+    "kind": "functional",
+    "games": [
+      "x",
+      "y"
     ]
   },
   {
@@ -676,7 +1004,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -693,7 +1023,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -710,7 +1042,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -727,7 +1061,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -744,7 +1080,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -761,7 +1099,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -778,7 +1118,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -790,7 +1132,9 @@
       "black",
       "black-2",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -807,7 +1151,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -817,7 +1163,9 @@
     "kind": "cosmetic",
     "games": [
       "black-2",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -834,7 +1182,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -851,7 +1201,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -861,7 +1213,9 @@
     "kind": "functional",
     "games": [
       "black-2",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -871,7 +1225,9 @@
     "kind": "functional",
     "games": [
       "black-2",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -881,7 +1237,9 @@
     "kind": "functional",
     "games": [
       "black-2",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -898,7 +1256,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -915,7 +1275,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -932,7 +1294,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -949,7 +1313,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -966,7 +1332,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -983,7 +1351,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1000,7 +1370,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1017,7 +1389,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1034,7 +1408,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1051,7 +1427,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1068,7 +1446,19 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "meowstic-female",
+    "species": "meowstic",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "x",
+      "y"
     ]
   },
   {
@@ -1085,7 +1475,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1102,7 +1494,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1119,7 +1513,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1136,7 +1532,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1153,7 +1551,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1170,7 +1570,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1197,7 +1599,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1214,7 +1618,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1231,7 +1637,49 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "pumpkaboo-large",
+    "species": "pumpkaboo",
+    "name": "Large",
+    "kind": "functional",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "pumpkaboo-small",
+    "species": "pumpkaboo",
+    "name": "Small",
+    "kind": "functional",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "pumpkaboo-super",
+    "species": "pumpkaboo",
+    "name": "Super",
+    "kind": "functional",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "pyroar-female",
+    "species": "pyroar",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "x",
+      "y"
     ]
   },
   {
@@ -1248,7 +1696,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1265,7 +1715,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1282,7 +1734,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1299,7 +1753,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1316,7 +1772,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1333,7 +1791,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1350,7 +1810,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1367,7 +1829,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1384,7 +1848,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1401,7 +1867,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1416,7 +1884,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ],
     "types": [
       "electric",
@@ -1435,7 +1905,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ],
     "types": [
       "electric",
@@ -1454,7 +1926,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ],
     "types": [
       "electric",
@@ -1473,7 +1947,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ],
     "types": [
       "electric",
@@ -1492,7 +1968,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ],
     "types": [
       "electric",
@@ -1508,7 +1986,9 @@
       "black",
       "black-2",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1520,7 +2000,9 @@
       "black",
       "black-2",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1532,7 +2014,9 @@
       "black",
       "black-2",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1549,7 +2033,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1566,7 +2052,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1583,7 +2071,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1598,7 +2088,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ],
     "types": [
       "grass",
@@ -1619,7 +2111,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1636,7 +2130,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1653,7 +2149,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1670,7 +2168,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1687,7 +2187,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1704,7 +2206,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1721,7 +2225,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1738,7 +2244,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1755,7 +2263,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1772,7 +2282,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1789,7 +2301,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1806,7 +2320,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1816,7 +2332,9 @@
     "kind": "functional",
     "games": [
       "black-2",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1833,7 +2351,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1843,7 +2363,9 @@
     "kind": "functional",
     "games": [
       "black-2",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1860,7 +2382,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1872,7 +2396,9 @@
       "black",
       "black-2",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1897,7 +2423,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1922,7 +2450,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1947,7 +2477,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1972,7 +2504,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -1994,7 +2528,9 @@
       "sapphire",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2019,7 +2555,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2044,7 +2582,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2069,7 +2609,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2094,7 +2636,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2119,7 +2663,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2144,7 +2690,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2169,7 +2717,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2194,7 +2744,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2219,7 +2771,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2244,7 +2798,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2269,7 +2825,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2294,7 +2852,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2316,7 +2876,9 @@
       "sapphire",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2341,7 +2903,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2366,7 +2930,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2391,7 +2957,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2416,7 +2984,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2441,7 +3011,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2466,7 +3038,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2491,7 +3065,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2516,7 +3092,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2541,7 +3119,9 @@
       "silver",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2558,7 +3138,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2575,7 +3157,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2592,7 +3176,199 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-archipelago",
+    "species": "vivillon",
+    "name": "Archipelago",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-continental",
+    "species": "vivillon",
+    "name": "Continental",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-elegant",
+    "species": "vivillon",
+    "name": "Elegant",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-fancy",
+    "species": "vivillon",
+    "name": "Fancy",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-garden",
+    "species": "vivillon",
+    "name": "Garden",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-high-plains",
+    "species": "vivillon",
+    "name": "High-Plains",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-icy-snow",
+    "species": "vivillon",
+    "name": "Icy-Snow",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-jungle",
+    "species": "vivillon",
+    "name": "Jungle",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-marine",
+    "species": "vivillon",
+    "name": "Marine",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-modern",
+    "species": "vivillon",
+    "name": "Modern",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-monsoon",
+    "species": "vivillon",
+    "name": "Monsoon",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-ocean",
+    "species": "vivillon",
+    "name": "Ocean",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-poke-ball",
+    "species": "vivillon",
+    "name": "Poke-Ball",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-polar",
+    "species": "vivillon",
+    "name": "Polar",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-river",
+    "species": "vivillon",
+    "name": "River",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-sandstorm",
+    "species": "vivillon",
+    "name": "Sandstorm",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-savanna",
+    "species": "vivillon",
+    "name": "Savanna",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-sun",
+    "species": "vivillon",
+    "name": "Sun",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
+    ]
+  },
+  {
+    "id": "vivillon-tundra",
+    "species": "vivillon",
+    "name": "Tundra",
+    "kind": "cosmetic",
+    "games": [
+      "x",
+      "y"
     ]
   },
   {
@@ -2609,7 +3385,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2626,7 +3404,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2643,7 +3423,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2660,7 +3442,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ],
     "types": [
       "bug",
@@ -2681,7 +3465,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ],
     "types": [
       "bug",
@@ -2702,7 +3488,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -2719,7 +3507,9 @@
       "platinum",
       "soulsilver",
       "white",
-      "white-2"
+      "white-2",
+      "x",
+      "y"
     ]
   }
 ]

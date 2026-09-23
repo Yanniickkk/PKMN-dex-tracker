@@ -166,6 +166,18 @@ public sealed class ReferenceData
         _dexByGame.TryGetValue(game, out var entries) ? entries : [];
 
     /// <summary>
+    /// What this game calls each of its own Pokédexes, in the order the file lists them, or an
+    /// empty list for a game whose dex has no name because it only has one.
+    /// </summary>
+    /// <remarks>
+    /// The order is the pipeline's, and the pipeline writes them in the order the game hands
+    /// them over: Central Kalos, then Coastal, then Mountain. Sorting them here would put
+    /// Coastal first and teach a player an order the game never used.
+    /// </remarks>
+    public IReadOnlyList<string> DexNamesOf(GameId game) =>
+        [.. DexOf(game).Select(entry => entry.Dex).OfType<string>().Distinct()];
+
+    /// <summary>
     /// One entry of one game's dex, or null when that game does not list it.
     /// </summary>
     /// <remarks>

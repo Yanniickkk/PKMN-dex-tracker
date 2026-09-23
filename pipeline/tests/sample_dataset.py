@@ -322,7 +322,13 @@ def diamond() -> GameData:
 
 
 def shield() -> GameData:
-    """Sword's other half. A stub, but a pair only holds up when both halves are there."""
+    """Sword's other half, and the one game here that names its Pokedexes.
+
+    A pair only holds up when both halves are there, and this half carries the newest shape in
+    the schema: two entries, the same number, different lists. X and Y are why the field exists
+    - three Kalos Pokedexes that each start at #001 - and without the name on each entry those
+    two hundred below are one list in which #001 means several things.
+    """
     return GameData(
         game=Game(
             id="shield",
@@ -334,7 +340,56 @@ def shield() -> GameData:
             release=GameRelease.CARTRIDGE,
             dex_source=DexSource.GAME_DEX,
             pair_partner="sword",
-        )
+        ),
+        dex_entries=[
+            DexEntry(
+                game="shield",
+                target=DexTarget(species="vulpix"),
+                dex="Galar",
+                number=100,
+            ),
+            DexEntry(
+                game="shield",
+                target=DexTarget(species="chimchar"),
+                dex="Isle of Armor",
+                number=100,
+            ),
+        ],
+        # A dex entry with no way to fill it is a game nobody has gathered yet, and the sample
+        # has to pass its own validator - so this half hands both of them over.
+        acquisition_methods=[
+            GiftAcquisition(
+                game="shield",
+                target=DexTarget(species="vulpix"),
+                gift_kind=GiftKind.NPC_GIFT,
+                location="Wedgehurst",
+                npc="A boy on the station platform",
+                level=5,
+                source=CITATION,
+            ),
+            GiftAcquisition(
+                game="shield",
+                target=DexTarget(species="chimchar"),
+                gift_kind=GiftKind.NPC_GIFT,
+                location="Master Dojo",
+                npc="Mustard",
+                level=5,
+                source=CITATION,
+            ),
+            # A way that is recorded and does not count, beside a way that does. Kalos's Friend
+            # Safari is the real one: true tables in a place a player cannot be sent to.
+            WildAcquisition(
+                game="shield",
+                target=DexTarget(species="chimchar"),
+                location="Friend Safari",
+                sub_area="Fire",
+                method=EncounterMethod.WALK,
+                levels=LevelRange(minimum=30, maximum=30),
+                rate_percent=33.0,
+                does_not_count="a friend code decided what it holds",
+                source=CITATION,
+            ),
+        ],
     )
 
 

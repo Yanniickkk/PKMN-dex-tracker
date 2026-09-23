@@ -51,6 +51,13 @@ METHOD_ICONS: dict[str, str] = {
     # And the sequels' grottoes, which are the one place in Unova a player is looking for
     # something rather than walking into it. A Dowsing Machine is the picture of looking.
     "hidden-grotto": "dowsing-machine",
+    # Generation 6's. Honey is what a player throws to call a horde, so the jar is the picture
+    # of one; the Gracidea is the only flower in the item set; a berry tree is drawn as a berry.
+    # Nothing in the games is a picture of being jumped, so an ambush keeps the ball.
+    "horde": "honey",
+    "flower-patch": "gracidea",
+    "berry-tree": "oran-berry",
+    "ambush": "poke-ball",
     "other": "poke-ball",
     # Gifts and statics.
     "starter": "poke-ball",

@@ -20,16 +20,34 @@ def _target_key(target: DexTarget) -> tuple[str, str | None]:
     return (target.species, target.form)
 
 
+def _counts(method) -> bool:
+    """Whether a recorded way is one a player can be told to go and use.
+
+    A record can be true and still not answer "can I get one here". Kalos's Friend Safari is
+    eighteen areas of ordinary encounter tables that want another person's 3DS friend code, and
+    a third of what they hold is behind a network switched off in April 2024. The rows are kept,
+    because they are real and a player with the right friend can use them; what they are kept
+    out of is every count and every question below. The record says why in its own words.
+    """
+    return getattr(method, "does_not_count", None) is None
+
+
 def _obtainable_anywhere(dataset: Dataset) -> set[tuple[str, str | None]]:
     """Every target some game in the dataset can produce."""
     return {
-        _target_key(method.target) for game in dataset.games for method in game.acquisition_methods
+        _target_key(method.target)
+        for game in dataset.games
+        for method in game.acquisition_methods
+        if _counts(method)
     }
 
 
 def _obtainable_in(dataset: Dataset, game_id: str) -> set[tuple[str, str | None]]:
     game = dataset.game(game_id)
-    return {_target_key(method.target) for method in game.acquisition_methods} if game else set()
+    if game is None:
+        return set()
+
+    return {_target_key(method.target) for method in game.acquisition_methods if _counts(method)}
 
 
 def _living_dex(dataset: Dataset, game) -> list[str]:
@@ -323,7 +341,7 @@ class UnobtainableEntriesReallyAre:
         reachable = {
             _target_key(method.target)
             for method in game.acquisition_methods
-            if method.kind in {"wild", "gift", "trade"}
+            if method.kind in {"wild", "gift", "trade"} and _counts(method)
         }
 
         # Then anything those turn into, and anything those turn into, until nothing new appears.
@@ -402,6 +420,65 @@ class FormsReferencedExist:
                             "leave it out"
                         ),
                     )
+
+
+class EveryDexNumberMeansOneThing:
+    """A number in a game's dex points at one Pokemon, and a game with several says which list.
+
+    Twenty games were written before a dex entry could name the list it belongs to, because
+    twenty games had one list each and a number could not be ambiguous. X and Y have three -
+    Central, Coastal and Mountain Kalos - which share no species and each start at #001, so
+    three entries are numbered #001 in the same game and all three are right.
+
+    That makes two things worth checking, and neither could go wrong before now. A game that
+    names the list on some entries and not others has three lists that will be read as one and
+    a half; and two different species numbered the same within one list is the collision the
+    naming exists to prevent, arriving anyway. A species numbered twice is not that: a dex may
+    list a species and its forms separately, and the app already shows such a species under its
+    lowest number.
+    """
+
+    name = "every-dex-number-means-one-thing"
+
+    def check(self, dataset: Dataset) -> Iterator[Finding]:
+        for game in dataset.games:
+            named = [entry for entry in game.dex_entries if entry.dex is not None]
+
+            if named and len(named) != len(game.dex_entries):
+                yield Finding(
+                    rule=self.name,
+                    severity=Severity.ERROR,
+                    game=game.game.id,
+                    message=(
+                        f"{len(named)} of its {len(game.dex_entries)} dex entries say which of "
+                        "this game's Pokedexes they are numbered in and the rest do not, so the "
+                        "numbering of the ones that do not cannot be read"
+                    ),
+                )
+                continue
+
+            yield from self._collisions(game)
+
+    def _collisions(self, game) -> Iterator[Finding]:
+        seen: dict[tuple[str | None, int], str] = {}
+
+        for entry in game.dex_entries:
+            key = (entry.dex, entry.number)
+            first = seen.setdefault(key, entry.target.species)
+
+            if first == entry.target.species:
+                continue
+
+            where = f"the {entry.dex} dex" if entry.dex else "its dex"
+            yield Finding(
+                rule=self.name,
+                severity=Severity.ERROR,
+                game=game.game.id,
+                message=(
+                    f"{where} numbers both {first} and {entry.target.species} #{entry.number}, "
+                    "so one of them is unreachable in the grid"
+                ),
+            )
 
 
 class VersionPairsNameEachOther:
@@ -588,12 +665,14 @@ def coverage_for(dataset: Dataset) -> list[GameCoverage]:
 def all_rules() -> list:
     """Every check, in the order the spec lists them.
 
-    Three are not in that list. ``no-breeding-dead-ends`` arrived with the breeding kind and
+    Four are not in that list. ``no-breeding-dead-ends`` arrived with the breeding kind and
     guards the same lie its evolution twin does. ``version-pairs-name-each-other`` arrived with
     Ruby and Sapphire, the first pair the dataset has ever held, and checks a field that had
     been carried since Phase 0 without anything ever reading it.
     ``unobtainable-entries-really-are`` arrived with the same pair, after two entries were
     written off as version exclusives and then reached by an evolution a step later.
+    ``every-dex-number-means-one-thing`` arrived with X and Y, the first games to show more than
+    one Pokedex, and guards the field that keeps their three lists apart.
     """
     return [
         EveryEntryHasAMethod(),
@@ -601,6 +680,7 @@ def all_rules() -> list:
         NoBreedingDeadEnds(),
         UnobtainableEntriesReallyAre(),
         FormsReferencedExist(),
+        EveryDexNumberMeansOneThing(),
         VersionPairsNameEachOther(),
         TransferEdgesConnectKnownGames(),
         EverySpeciesHasASprite(),

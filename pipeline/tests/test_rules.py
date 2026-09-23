@@ -12,6 +12,7 @@ from livingdex_pipeline.models import (
     DexEntry,
     DexSource,
     DexTarget,
+    EncounterMethod,
     EvolutionAcquisition,
     EvolutionRule,
     EvolutionTrigger,
@@ -22,12 +23,14 @@ from livingdex_pipeline.models import (
     GameRelease,
     GiftAcquisition,
     GiftKind,
+    LevelRange,
     PokemonType,
     SourceCitation,
     Species,
     TransferDirection,
     TransferEdge,
     TransferMechanism,
+    WildAcquisition,
 )
 from livingdex_pipeline.rules import coverage_for
 from livingdex_pipeline.validate import Dataset, Severity, validate
@@ -54,11 +57,17 @@ def game(game_id: str, entries=(), methods=()) -> GameData:
 
 
 def entry(
-    game_id: str, species: str, number: int, form: str | None = None, reason: str | None = None
+    game_id: str,
+    species: str,
+    number: int,
+    form: str | None = None,
+    reason: str | None = None,
+    dex: str | None = None,
 ):
     return DexEntry(
         game=game_id,
         target=DexTarget(species=species, form=form),
+        dex=dex,
         number=number,
         unobtainable_reason=reason,
     )
@@ -839,3 +848,149 @@ def test_a_build_that_skipped_sprites_is_not_reported_species_by_species() -> No
     data = dataset(species=[_chimchar()], sprites=[])
 
     assert messages(validate(data), "every-species-has-a-sprite") == []
+
+
+# --- every dex number means one thing ---------------------------------------------------------
+
+
+def test_three_lists_that_each_start_at_one_are_not_a_collision() -> None:
+    # X and Y, in miniature. Three species numbered #001 in one game, each in a different one of
+    # the game's three Pokedexes, and all three are right.
+    data = dataset(
+        games=[
+            game(
+                "x",
+                entries=[
+                    entry("x", "chespin", 1, dex="Central Kalos"),
+                    entry("x", "drifloon", 1, dex="Coastal Kalos"),
+                    entry("x", "diglett", 1, dex="Mountain Kalos"),
+                ],
+                methods=[gift("x", "chespin")],
+            )
+        ]
+    )
+
+    assert messages(validate(data), "every-dex-number-means-one-thing") == []
+
+
+def test_two_species_numbered_the_same_in_one_list_is_an_error() -> None:
+    data = dataset(
+        games=[
+            game(
+                "x",
+                entries=[
+                    entry("x", "chespin", 1, dex="Central Kalos"),
+                    entry("x", "drifloon", 1, dex="Central Kalos"),
+                ],
+                methods=[gift("x", "chespin")],
+            )
+        ]
+    )
+
+    report = validate(data)
+
+    assert not report.ok
+    assert "Central Kalos" in messages(report, "every-dex-number-means-one-thing")[0]
+
+
+def test_a_species_and_its_form_may_share_a_number() -> None:
+    # A dex that lists a form separately is not numbering two different Pokemon the same, and
+    # the grid already shows such a species under its lowest number.
+    data = dataset(
+        games=[
+            game(
+                "platinum",
+                entries=[
+                    entry("platinum", "shellos", 4),
+                    entry("platinum", "shellos", 4, form="shellos-east"),
+                ],
+                methods=[gift("platinum", "shellos")],
+            )
+        ]
+    )
+
+    assert messages(validate(data), "every-dex-number-means-one-thing") == []
+
+
+def test_a_game_that_names_some_of_its_lists_and_not_others_is_an_error() -> None:
+    # Half-labelled is worse than unlabelled: the entries that do not say which list they are in
+    # are read as one nameless dex beside the named ones, and their numbering means nothing.
+    data = dataset(
+        games=[
+            game(
+                "x",
+                entries=[
+                    entry("x", "chespin", 1, dex="Central Kalos"),
+                    entry("x", "drifloon", 1),
+                ],
+                methods=[gift("x", "chespin")],
+            )
+        ]
+    )
+
+    report = validate(data)
+
+    assert not report.ok
+    assert "1 of its 2 dex entries" in messages(report, "every-dex-number-means-one-thing")[0]
+
+
+# --- a way that is recorded and does not count ------------------------------------------------
+
+
+def _one(name: str, number: int) -> Species:
+    return Species(
+        id=name,
+        national_dex_number=number,
+        name=name.title(),
+        types=[PokemonType.NORMAL],
+        evolution_chain=name,
+    )
+
+
+def test_a_way_that_does_not_count_does_not_make_an_entry_obtainable() -> None:
+    # Kalos's Friend Safari. The record is kept because it is true; what it must not do is
+    # answer "this dex entry has a source", because the source is somebody else's 3DS.
+    safari = WildAcquisition(
+        game="x",
+        target=DexTarget(species="spritzee"),
+        location="Friend Safari",
+        method=EncounterMethod.WALK,
+        levels=LevelRange(minimum=30, maximum=30),
+        does_not_count="a friend code decided what it holds",
+        source=CITATION,
+    )
+    data = dataset(games=[game("x", entries=[entry("x", "spritzee", 1)], methods=[safari])])
+
+    report = validate(data)
+
+    assert not report.ok
+    assert "spritzee" in messages(report, "every-entry-has-a-method")[0]
+
+
+def test_a_way_that_does_not_count_is_not_full_coverage_either() -> None:
+    caught = gift("x", "chespin")
+    safari = WildAcquisition(
+        game="x",
+        target=DexTarget(species="spritzee"),
+        location="Friend Safari",
+        method=EncounterMethod.WALK,
+        levels=LevelRange(minimum=30, maximum=30),
+        does_not_count="a friend code decided what it holds",
+        source=CITATION,
+    )
+    data = dataset(
+        games=[
+            game(
+                "x",
+                entries=[entry("x", "chespin", 1), entry("x", "spritzee", 2)],
+                methods=[caught, safari],
+            )
+        ],
+        species=[_one("chespin", 1), _one("spritzee", 2)],
+    )
+
+    [coverage] = [one for one in coverage_for(data) if one.game == "x"]
+
+    # The one it really produces is full; the Safari one is a hole rather than a tick.
+    assert coverage.full == 1
+    assert coverage.missing == 1

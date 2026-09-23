@@ -109,6 +109,10 @@ public static class AcquisitionNames
         EncounterMethod.RipplingWater => "rippling water",
         EncounterMethod.BridgeShadow => "shadows on a bridge",
         EncounterMethod.HiddenGrotto => "a Hidden Grotto",
+        EncounterMethod.Horde => "a horde",
+        EncounterMethod.FlowerPatch => "a flower patch",
+        EncounterMethod.BerryTree => "a berry tree",
+        EncounterMethod.Ambush => "an ambush",
         _ => "another way",
     };
 

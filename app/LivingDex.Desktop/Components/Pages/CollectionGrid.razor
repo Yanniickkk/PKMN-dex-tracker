@@ -32,14 +32,20 @@ else
 
     @* Two lists, one game. Diamond asks a player for 493 entries and shows a Sinnoh Pokedex of
        151 with its own numbering; which of the two is on screen is the player's choice. Only
-       offered when the game really has both. *@
+       offered when the game really has both.
+
+       Two is the usual number and not the rule: X and Y show three Pokedexes of their own, so
+       the game's side of the switch is a list rather than a second option. *@
     @if (BothDexesExist())
     {
         <div class="dex-switch">
             <label for="dex-view">Showing</label>
-            <select id="dex-view" value="@_view" @onchange="OnViewChanged">
-                <option value="@DexSource.NationalDex">National dex</option>
-                <option value="@DexSource.GameDex">@RegionalDexName()</option>
+            <select id="dex-view" value="@ChosenView()" @onchange="OnViewChanged">
+                <option value="@NationalOption">National dex</option>
+                @foreach (var (value, label) in GameDexOptions())
+                {
+                    <option value="@value">@label</option>
+                }
             </select>
         </div>
     }
@@ -146,7 +152,7 @@ else
                         var label = StatusLabel(line, status);
 
                         <div class="tile @TileClass(status)" title="@line.Name - @label">
-                            <img class="tile-sprite" src="@SpriteFor(line)" alt="" loading="lazy" />
+                            <img class="tile-sprite @SpriteScaling" src="@SpriteFor(line)" alt="" loading="lazy" />
                             <span class="tile-number">#@line.Number.ToString("000", CultureInfo.InvariantCulture)</span>
                             <span class="tile-name">@line.Name</span>
 
@@ -219,7 +225,7 @@ else
             }
 
             <header class="detail-header">
-                <img class="detail-sprite" src="@SpriteFor(selected)" alt="" />
+                <img class="detail-sprite @SpriteScaling" src="@SpriteFor(selected)" alt="" />
 
                 <div class="detail-title">
                     <p class="detail-number">#@selected.Number.ToString("000", CultureInfo.InvariantCulture)</p>
@@ -459,10 +465,19 @@ else
     private IReadOnlyList<DexLine> _shown = [];
     private DexFilter _filter = DexFilter.None;
     private string _search = string.Empty;
-    //: Which of the game's two lists is on screen. Not saved to the data file: it is a way of
+    //: What the switch calls the National Dex, and what it prefixes a game's own list with.
+    //: A prefix rather than a bare name because a dex is named by the pipeline and "national"
+    //: is a name somebody could give one; with the prefix, no name can be mistaken for it.
+    private const string NationalOption = "national";
+    private const string GameDexPrefix = "game:";
+
+    //: Which of the game's lists is on screen. Not saved to the data file: it is a way of
     //: looking at a collection rather than part of what the collection is, the same as the
     //: filters beside it.
     private DexSource _view = DexSource.NationalDex;
+    //: And which of the game's own Pokedexes, for a game that shows more than one. Null means
+    //: the first one it lists, which is what a player is shown before they choose.
+    private string? _dex;
     //: Answers "can this be got here", and remembers its answers. Rebuilt whenever the records
     //: change: transferring a Bulbasaur in is what makes Ivysaur available.
     private Availability _availability = new(ReferenceData.Empty, CaptureIndex.Empty);
@@ -517,6 +532,7 @@ else
 
         // Whichever list the game itself names, which for every game so far is the National Dex.
         _view = Dataset.Reference.FindGame(_collection.MainGame)?.DexSource ?? DexSource.NationalDex;
+        _dex = null;
 
         if (!Rebuild())
         {
@@ -538,7 +554,7 @@ else
     {
         try
         {
-            _lines = new DexBuilder(Dataset.Reference).Build(_collection!, _view);
+            _lines = new DexBuilder(Dataset.Reference).Build(_collection!, _view, _dex);
         }
         catch (DexBuildException exception)
         {
@@ -564,14 +580,49 @@ else
             ? $"{game.Region} dex"
             : "This game's dex";
 
+    private static string GameDexOption(string? dex) => GameDexPrefix + dex;
+
+    /// <summary>The value of the option in the switch that is currently on screen.</summary>
+    private string ChosenView() =>
+        _view == DexSource.NationalDex ? NationalOption : GameDexOption(_dex);
+
+    /// <summary>
+    /// The game's own lists, as (option value, label) pairs: one per Pokédex it names, or a
+    /// single nameless one for the twenty games that show one list and never had to call it
+    /// anything.
+    /// </summary>
+    private IReadOnlyList<(string Value, string Label)> GameDexOptions()
+    {
+        if (_collection is null)
+        {
+            return [];
+        }
+
+        var named = Dataset.Reference.DexNamesOf(_collection.MainGame);
+
+        return named.Count == 0
+            ? [(GameDexOption(null), RegionalDexName())]
+            : [.. named.Select(name => (GameDexOption(name), $"{name} dex"))];
+    }
+
     private void OnViewChanged(ChangeEventArgs args)
     {
-        if (!Enum.TryParse<DexSource>(args.Value?.ToString(), out var view) || view == _view)
+        var chosen = args.Value?.ToString() ?? NationalOption;
+
+        var view = chosen == NationalOption ? DexSource.NationalDex : DexSource.GameDex;
+        var dex = chosen.StartsWith(GameDexPrefix, StringComparison.Ordinal)
+            ? chosen[GameDexPrefix.Length..]
+            : null;
+
+        if (view == _view && dex == _dex)
         {
             return;
         }
 
         _view = view;
+        // Empty is how a nameless dex arrives back from the select, and null is what the builder
+        // reads as "the list this game shows".
+        _dex = string.IsNullOrEmpty(dex) ? null : dex;
 
         if (Rebuild())
         {
@@ -597,6 +648,27 @@ else
     /// </summary>
     private string? MainGameSpriteSet =>
         _collection is null ? null : Dataset.Reference.FindGame(_collection.MainGame)?.SpriteSet;
+
+    /// <summary>
+    /// How this game's pictures want to be scaled, as a class name.
+    /// </summary>
+    /// <remarks>
+    /// Every generation up to the fifth drew its battle sprites by hand on a fixed grid — 64×64
+    /// in Generation 3, 96×96 in Generation 5 — and those want nearest-neighbour scaling:
+    /// smoothing turns a drawn Emerald sprite into a blur. Generation 6 has no sprites at all.
+    /// X and Y are in 3D, what stands in for a sheet is a shot of each model, and the files are
+    /// not even one size: 43×48 for a Bulbasaur, 121×129 for a Rayquaza. Scaling those with
+    /// nearest-neighbour makes every edge ragged.
+    ///
+    /// The set names the generation, so the answer is already in the string the dataset carries,
+    /// and one prefix covers both 3D generations: <c>generation-vi</c> is not a prefix of
+    /// <c>generation-v/</c>. A game with no set of its own shows today's artwork, which is
+    /// rendered too.
+    /// </remarks>
+    private string SpriteScaling =>
+        MainGameSpriteSet is { } set && !set.StartsWith("generation-vi", StringComparison.Ordinal)
+            ? "is-drawn"
+            : string.Empty;
 
     /// <summary>
     /// Opens the detail for one entry, caught or not. An entry you have not found yet is
@@ -935,6 +1007,11 @@ else
             default:
                 break;
         }
+
+        // Last, and on every kind: a way that is real and does not count as being able to get
+        // one here. The row is shown because the game has it; the line says why the filter
+        // beside the grid will not offer it.
+        fields.Add(("But", method.DoesNotCount));
 
         return
         [

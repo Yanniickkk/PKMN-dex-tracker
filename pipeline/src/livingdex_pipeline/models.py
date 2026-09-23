@@ -121,6 +121,20 @@ class EncounterMethod(StrEnum):
     # of an API. A grotto is not a rarer slot in an ordinary place - it is its own place, with
     # its own table, holding species that are nowhere else in the game.
     HIDDEN_GROTTO = "hiddenGrotto"
+    # Generation 6's four. Kalos stops hiding its second tables and puts them in plain sight: a
+    # horde of five walks up at once, a patch of coloured flowers holds what the grass around it
+    # does not, the berry trees at the Berry Fields each have a resident, and five different
+    # things jump a player who is minding their own business - out of the cave ceiling, out of
+    # the ground, out of the sky, out of a bush and out of a bin.
+    #
+    # The ambushes are one method with the place it comes from said beside it, unlike Unova's
+    # four spots, which are four. A spot is somewhere a player chooses to walk into; an ambush
+    # is the same event with different scenery, and five enum values would be five names for
+    # "something jumped out".
+    HORDE = "horde"
+    FLOWER_PATCH = "flowerPatch"
+    BERRY_TREE = "berryTree"
+    AMBUSH = "ambush"
     OTHER = "other"
 
 
@@ -192,6 +206,16 @@ class Form(Model):
 class DexEntry(Model):
     game: str
     target: DexTarget
+    #: Which of the game's own Pokedexes this entry is numbered in, when the game shows more
+    #: than one. None for every game that shows a single list, which is all twenty written
+    #: before X and Y: a number that can only belong to one list does not need to name it.
+    #:
+    #: X and Y hand a player three - Central, Coastal and Mountain Kalos - and the three share
+    #: nothing. Each starts at #001, each holds species the others do not, and no game ever
+    #: shows a number that spans them. Without a name on each entry the three would arrive as
+    #: one list with three species numbered #001, and the only way out would be to renumber
+    #: them 1 to 457 - which would be a dex no player has ever seen.
+    dex: str | None = None
     number: int
     # Why this entry cannot be filled in this game, when that is a known fact rather than a
     # gap in the data. A reason rather than a flag, so the validator can tell "we checked,
@@ -343,6 +367,20 @@ class WildAcquisition(Model):
     #: group. Time of day, season and weather have fields of their own; this is everything else,
     #: and a slot without it is one a player meets by playing.
     requirement: str | None = None
+    #: Why this slot does not count towards being able to get one here, when it does not.
+    #:
+    #: A real way that a player cannot be told to go and use. The Friend Safari is the first:
+    #: it is in the game, the tables are real, and reaching it wants somebody else's 3DS friend
+    #: code and - for a third of it - the network that closed in April 2024. Counting it would
+    #: tell a player of X that they can have a Spritzee, which is true of nobody without a
+    #: friend who happens to have the right code.
+    #:
+    #: A reason rather than a flag, like a dex entry's, so the app can say why rather than
+    #: quietly leaving the row out of an answer. The row is still shown: the question it is kept
+    #: out of is "can I get this here", not "what does this game have".
+    #:
+    #: Only wild slots so far. It belongs on the others the day one of them needs it.
+    does_not_count: str | None = None
     source: SourceCitation
 
 

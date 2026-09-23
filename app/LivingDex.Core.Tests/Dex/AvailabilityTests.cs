@@ -181,4 +181,49 @@ public class AvailabilityTests
 
         Assert.False(availability.In(Platinum, Of(Bulbasaur)));
     }
+
+    [Fact]
+    public void A_way_the_dataset_records_and_does_not_count_is_not_availability()
+    {
+        // Kalos's Friend Safari: the table is real, and which Safari a player can walk into was
+        // settled by somebody else's friend code. "Available in X" must not promise it.
+        var safari = Wild(Platinum, Bulbasaur) with
+        {
+            DoesNotCount = "a Friend Safari holds what a stranger's friend code decided",
+        };
+
+        var reference = new ReferenceData(
+            [Game(Platinum)],
+            [],
+            [],
+            [],
+            acquisitionMethods: [safari]);
+
+        var availability = new Availability(reference, CaptureIndex.Empty);
+
+        Assert.False(availability.In(Platinum, Of(Bulbasaur)));
+        // And it is still there to be read: the popup shows what the game has, reason included.
+        Assert.Single(reference.MethodsFor(Platinum, Of(Bulbasaur)));
+        Assert.False(safari.Counts);
+    }
+
+    [Fact]
+    public void Nothing_can_be_evolved_from_something_only_an_uncounted_way_produces()
+    {
+        // The same lie one step further on: an Ivysaur evolved from a Bulbasaur nobody can be
+        // told how to get is not available either.
+        var safari = Wild(Platinum, Bulbasaur) with { DoesNotCount = "needs somebody else's 3DS" };
+
+        var reference = new ReferenceData(
+            [Game(Platinum)],
+            [],
+            [],
+            [],
+            evolutionRules: [Rule(Bulbasaur, Ivysaur)],
+            acquisitionMethods: [safari, Evolves(Platinum, Bulbasaur, Ivysaur)]);
+
+        var availability = new Availability(reference, CaptureIndex.Empty);
+
+        Assert.False(availability.In(Platinum, Of(Ivysaur)));
+    }
 }

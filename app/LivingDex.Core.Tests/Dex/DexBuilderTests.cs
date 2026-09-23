@@ -9,6 +9,7 @@ public class DexBuilderTests
 {
     private static readonly GameId Platinum = new("platinum");
     private static readonly GameId Sword = new("sword");
+    private static readonly GameId X = new("x");
     private static readonly DexCollectionId CollectionId = new("test");
 
     private static readonly SpeciesId Bulbasaur = new("bulbasaur");
@@ -31,6 +32,7 @@ public class DexBuilderTests
         [
             new(Platinum, "Pokemon Platinum Version", "Platinum", 4, "Sinnoh", GameRelease.Cartridge, 493, DexSource.NationalDex, null),
             new(Sword, "Pokemon Sword", "Sword", 8, "Galar", GameRelease.Cartridge, null, DexSource.GameDex, new GameId("shield")),
+            new(X, "Pokemon X", "X", 6, "Kalos", GameRelease.Cartridge, 721, DexSource.NationalDex, new GameId("y")),
         ];
 
         Species[] species =
@@ -64,6 +66,12 @@ public class DexBuilderTests
             new(Sword, DexTarget.ForSpecies(Zacian), 888),
             new(Platinum, DexTarget.ForSpecies(Turtwig), 1),
             new(Platinum, DexTarget.ForSpecies(Rotom), 152),
+            // X shows three lists of its own, each numbering from 1, which is what the Dex name
+            // on an entry exists for: three species are #001 here and none of them is wrong.
+            new(X, DexTarget.ForSpecies(Vivillon), 1, null, "Central Kalos"),
+            new(X, DexTarget.ForSpecies(Pikachu), 1, null, "Coastal Kalos"),
+            new(X, DexTarget.ForSpecies(Bulbasaur), 1, null, "Mountain Kalos"),
+            new(X, DexTarget.ForSpecies(Vulpix), 2, null, "Mountain Kalos"),
         ];
 
         return new ReferenceData(games, species, forms, dexEntries);
@@ -315,6 +323,56 @@ public class DexBuilderTests
         Assert.Equal(
             builder.Build(Collection(Sword), DexSource.GameDex).Count,
             builder.Build(Collection(Sword)).Count);
+    }
+
+    [Fact]
+    public void A_game_with_several_lists_names_them_in_the_order_it_hands_them_over()
+    {
+        // Not sorted: Coastal would come first, and a player was given Central first.
+        Assert.Equal(
+            ["Central Kalos", "Coastal Kalos", "Mountain Kalos"],
+            Reference().DexNamesOf(X));
+
+        // A game with one list has nothing to name it, and says so with an empty list rather
+        // than with a made-up name.
+        Assert.Empty(Reference().DexNamesOf(Sword));
+    }
+
+    [Fact]
+    public void One_of_several_lists_is_built_at_a_time()
+    {
+        var builder = new DexBuilder(Reference());
+
+        var mountain = builder.Build(Collection(X), DexSource.GameDex, "Mountain Kalos");
+
+        // Only that list, and numbered as that list numbers it. The two species that are also
+        // #001 elsewhere in the same game are not in it.
+        Assert.Equal([Bulbasaur, Vulpix], mountain.Select(line => line.Target.Species));
+        Assert.Equal([1, 2], mountain.Select(line => line.Number));
+    }
+
+    [Fact]
+    public void The_first_list_is_what_a_game_with_several_shows_before_one_is_chosen()
+    {
+        var builder = new DexBuilder(Reference());
+
+        var shown = builder.Build(Collection(X), DexSource.GameDex);
+
+        // Central Kalos, because that is the one the game hands over first - and one list
+        // rather than all three run together, which would number three species #001.
+        Assert.Equal([Vivillon], shown.Select(line => line.Target.Species));
+    }
+
+    [Fact]
+    public void A_game_with_one_unnamed_list_still_builds_it()
+    {
+        // The twenty games written before a dex could be named: every entry leaves the name
+        // empty, and asking for the game's own dex has to mean all of them.
+        var builder = new DexBuilder(Reference());
+
+        // Four: its five entries are four species, one of which the dex lists twice - once as
+        // itself and once as its Alolan form.
+        Assert.Equal(4, builder.Build(Collection(Sword), DexSource.GameDex).Count);
     }
 
     [Fact]

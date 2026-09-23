@@ -71,6 +71,7 @@ def build(
     locations: dict[str, tuple[str, str]],
     version="emerald",
     gates: dict[str, str] | None = None,
+    not_counted: dict[str, str] | None = None,
 ):
     return wild_encounters(
         FakeApi(encounters, locations),
@@ -78,6 +79,7 @@ def build(
         version=version,
         species=list(encounters),
         gates=gates,
+        not_counted=not_counted,
     )
 
 
@@ -574,3 +576,141 @@ def test_a_hand_written_slot_is_kept_only_if_the_dex_asks_for_it() -> None:
     assert found[0].levels.minimum == 13
     # And it says where it came from, which is the whole point of writing it down by hand.
     assert found[0].source.source == "bulbapedia"
+
+
+ROUTE_18 = {"kalos-route-18-area": ("kalos-route-18", "Route 18")}
+
+
+def test_a_horde_is_a_method_of_its_own() -> None:
+    # Five at once, and the rarest way to meet several of the species Kalos has. It is not a
+    # walk-up encounter with a note on it: the table is different.
+    [found] = build(
+        {"ekans": [area("kalos-route-18-area", "x", [slot("horde", 17, 17, 5)])]},
+        ROUTE_18,
+        version="x",
+    )
+
+    assert found.method is EncounterMethod.HORDE
+    assert found.requirement is None
+
+
+def test_the_three_flower_patches_are_one_method_and_three_requirements() -> None:
+    # The colour is the whole difference between the tables, so it cannot be dropped - and it is
+    # not three ways of starting an encounter either. One method, three sentences.
+    found = build(
+        {
+            "sandslash": [
+                area(
+                    "kalos-route-18-area",
+                    "x",
+                    [slot("red-flowers", 44, 44, 10), slot("yellow-flowers", 44, 44, 10)],
+                )
+            ]
+        },
+        ROUTE_18,
+        version="x",
+    )
+
+    assert {one.method for one in found} == {EncounterMethod.FLOWER_PATCH}
+    assert sorted(one.requirement or "" for one in found) == [
+        "In a patch of red flowers",
+        "In a patch of yellow flowers",
+    ]
+
+
+def test_the_five_ambushes_are_one_method_that_says_what_jumped() -> None:
+    # A spot in Unova is somewhere a player walks into on purpose; an ambush is the same event
+    # with different scenery each time, and five enum values would be five names for one thing.
+    found = build(
+        {
+            "durant": [
+                area(
+                    "kalos-route-18-area",
+                    "x",
+                    [slot("rustling-bush-ambush", 44, 46, 90), slot("sky-ambush", 44, 46, 5)],
+                )
+            ]
+        },
+        ROUTE_18,
+        version="x",
+    )
+
+    assert {one.method for one in found} == {EncounterMethod.AMBUSH}
+    assert sorted(one.requirement or "" for one in found) == [
+        "Out of a rustling bush",
+        "Swooping down out of the sky",
+    ]
+
+
+def test_a_berry_tree_keeps_the_colour_that_decides_what_lives_in_it() -> None:
+    [found] = build(
+        {
+            "ledyba": [
+                area(
+                    "kalos-berry-fields-area",
+                    "x",
+                    [slot("berry-trees", 14, 15, 100, ["berry-tree-type-red"])],
+                )
+            ]
+        },
+        {"kalos-berry-fields-area": ("kalos-berry-fields", "Kalos Berry Fields")},
+        version="x",
+    )
+
+    assert found.method is EncounterMethod.BERRY_TREE
+    assert found.requirement == "In a red berry tree"
+
+
+def test_a_place_can_be_recorded_and_not_counted() -> None:
+    # The Friend Safari is real and unusable to order: the rows are kept, and the dataset does
+    # not answer "yes, in X" on their strength. Every row of that place carries the reason.
+    found = build(
+        {"ivysaur": [area("friend-safari-grass", "x", [slot("walk", 30, 30, 33)])]},
+        {"friend-safari-grass": ("friend-safari", "Friend Safari")},
+        version="x",
+        not_counted={"Friend Safari": "a friend code decided what it holds"},
+    )
+
+    assert [one.does_not_count for one in found] == ["a friend code decided what it holds"]
+
+
+def test_a_place_nobody_discounted_counts_as_usual() -> None:
+    found = build(
+        {"poochyena": [area("hoenn-route-101-area", "emerald", [slot("walk", 2, 2, 20)])]},
+        ROUTE_101,
+        not_counted={"Friend Safari": "not this one"},
+    )
+
+    assert found[0].does_not_count is None
+
+
+def test_the_first_two_friend_safari_slots_add_nothing_to_what_the_place_already_says() -> None:
+    # Every Safari a player can reach has both of them, so "slot 1" restricts nothing. What it
+    # takes to stand there at all is a fact about the place, and the gate says it once.
+    gate = "Only in Kiloude City after the Hall of Fame"
+    found = build(
+        {
+            "ivysaur": [
+                area(
+                    "friend-safari-grass",
+                    "x",
+                    [
+                        slot("walk", 30, 30, 33, ["friend-safari-slot-1"]),
+                        slot("walk", 30, 30, 33, ["friend-safari-slot-3"]),
+                    ],
+                )
+            ]
+        },
+        {"friend-safari-grass": ("friend-safari", "Friend Safari")},
+        version="x",
+        gates={"Friend Safari": gate},
+    )
+
+    first, third = sorted(found, key=lambda one: len(one.requirement or ""))
+
+    assert first.requirement == gate
+    # And the third slot does restrict something, because the network that used to open it is
+    # switched off.
+    assert third.requirement is not None
+    assert third.requirement.startswith(gate)
+    assert "April 2024" in third.requirement

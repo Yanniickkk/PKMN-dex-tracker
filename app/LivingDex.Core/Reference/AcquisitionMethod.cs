@@ -40,6 +40,27 @@ public abstract record AcquisitionMethod
     [JsonPropertyOrder(-2)]
     public required DexTarget Target { get; init; }
 
+    /// <summary>
+    /// Why this way does not count towards being able to get one here, when it does not.
+    /// </summary>
+    /// <remarks>
+    /// A real way that a player cannot be told to go and use. Kalos's Friend Safari is the
+    /// first: the tables are true, and which of them a player can reach was decided by somebody
+    /// else's friend code, with a third of every Safari shut since the 3DS network closed in
+    /// April 2024. The row is kept and shown — it is part of what the game has — and it is left
+    /// out of "can I get this here", which is what the availability check and the filter
+    /// beside the grid answer.
+    ///
+    /// A reason rather than a flag, so the popup can say why instead of quietly showing a row
+    /// that the filter disagrees with.
+    /// </remarks>
+    [JsonPropertyOrder(99)]
+    public string? DoesNotCount { get; init; }
+
+    /// <summary>Whether this way counts towards being able to get one here.</summary>
+    [JsonIgnore]
+    public bool Counts => DoesNotCount is null;
+
     /// <summary>Where this record came from.</summary>
     [JsonPropertyOrder(100)]
     public required SourceCitation Source { get; init; }
@@ -114,6 +135,21 @@ public enum EncounterMethod
 
     /// <summary>One of the twenty hidden patches of grass in the Unova sequels.</summary>
     HiddenGrotto,
+
+    /// <summary>Five at once, which is Kalos's own way of filling a patch of grass.</summary>
+    Horde,
+
+    /// <summary>A patch of coloured flowers, with a table the grass around it does not have.</summary>
+    FlowerPatch,
+
+    /// <summary>A tree at the Kalos Berry Fields, each colour of which keeps its own resident.</summary>
+    BerryTree,
+
+    /// <summary>
+    /// Something that jumps out: off a cave ceiling, out of the ground, out of the sky, out of a
+    /// bush or out of a bin. One method with the scenery said beside it rather than five.
+    /// </summary>
+    Ambush,
 
     Other,
 }

@@ -70,18 +70,25 @@ public sealed class DexBuilder
     /// of 151 with its own numbering, and which of the two is on screen is the player's choice
     /// rather than a fact about the game.
     /// </param>
+    /// <param name="dex">
+    /// Which of the game's own Pokédexes to build, for a game that shows more than one, and null
+    /// for the first one it lists. Ignored when the National Dex is being built. X and Y show
+    /// three, each numbering from #001, so "the game's own dex" is not a question with one
+    /// answer there and asking for all three at once would be asking for a list in which #001
+    /// means three different Pokémon.
+    /// </param>
     /// <exception cref="DexBuildException">
     /// The main game is not in the dataset, or it claims a National Dex without saying where
     /// that dex ends.
     /// </exception>
-    public IReadOnlyList<DexLine> Build(DexCollection collection, DexSource? source)
+    public IReadOnlyList<DexLine> Build(DexCollection collection, DexSource? source, string? dex = null)
     {
         ArgumentNullException.ThrowIfNull(collection);
 
         var game = _reference.FindGame(collection.MainGame)
             ?? throw new DexBuildException($"No game named {collection.MainGame} in the dataset.");
 
-        var numbers = BaseSpeciesNumbers(game, source ?? game.DexSource);
+        var numbers = BaseSpeciesNumbers(game, source ?? game.DexSource, dex);
         var lines = new List<DexLine>(numbers.Count);
 
         foreach (var (species, number) in numbers)
@@ -121,7 +128,7 @@ public sealed class DexBuilder
     /// expanding from the form table keeps the two sources on the same footing, and stops a form
     /// appearing twice when it is both numbered by the game and listed in the form table.
     /// </remarks>
-    private Dictionary<SpeciesId, int> BaseSpeciesNumbers(Game game, DexSource source)
+    private Dictionary<SpeciesId, int> BaseSpeciesNumbers(Game game, DexSource source, string? dex)
     {
         if (source == DexSource.NationalDex)
         {
@@ -136,8 +143,19 @@ public sealed class DexBuilder
 
         var numbers = new Dictionary<SpeciesId, int>();
 
+        // A game with several lists builds one of them. Which one is the player's choice, and
+        // the first is what it shows before they make one; merging them would be a list in
+        // which several species share a number.
+        var names = _reference.DexNamesOf(game.Id);
+        var wanted = dex ?? (names.Count > 0 ? names[0] : null);
+
         foreach (var entry in _reference.DexOf(game.Id))
         {
+            if (entry.Dex != wanted)
+            {
+                continue;
+            }
+
             // A species listed several times, once per form, is shown under its lowest number.
             if (!numbers.TryGetValue(entry.Target.Species, out var existing) || entry.Number < existing)
             {
