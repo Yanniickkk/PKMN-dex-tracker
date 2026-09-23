@@ -2417,6 +2417,106 @@ visible now where before they were not even asked about.
     app - theirs - was running throughout, so the automation was pointed at one window by
     process id rather than by title, and only the instance this test started was stopped.
 
+- [x] **Black 2** (`black-2`, gen 5, pair partner: White 2) - 2026-09-23
+  - [x] 1 Entity + edges - 2026-09-23
+  - [x] 2 Dex list - 2026-09-23
+  - [x] 3 Wild - 2026-09-23
+  - [x] 4 Gifts & statics - 2026-09-23
+  - [x] 5 Trades & evolutions - 2026-09-23
+  - [x] 6 Sprites - 2026-09-23
+  - [x] 7 Events - 2026-09-23
+  - [x] 8 Validate + smoke test - 2026-09-23
+  - 1688 ways to get something: 1288 wild slots, 320 evolutions, 47 gifts and statics, 27 eggs
+    and 6 trades. 509 of the 649 its living dex asks for are fully covered, 117 partly, 20
+    explained, 3 left over. Validation green on all 9 rules, for the whole dataset.
+- [x] **White 2** (`white-2`, gen 5, pair partner: Black 2) - 2026-09-23
+  - [x] 1 Entity + edges - 2026-09-23
+  - [x] 2 Dex list - 2026-09-23
+  - [x] 3 Wild - 2026-09-23
+  - [x] 4 Gifts & statics - 2026-09-23
+  - [x] 5 Trades & evolutions - 2026-09-23
+  - [x] 6 Sprites - 2026-09-23
+  - [x] 7 Events - 2026-09-23
+  - [x] 8 Validate + smoke test - 2026-09-23
+  - One more wild slot than Black 2 and one fewer fully covered entry, and otherwise the same
+    counts entry for entry, which is what a version pair is.
+
+  _Black 2 and White 2 are not a third version but a second pair - own story, own half of the map,
+  own Pokedex - so `unova.py` keeps the two pairs apart wherever they disagree._
+
+  _Their dex is 301 entries against the pair's 156, and it is not that list with more on the end:
+  it keeps all 156 and adds 145 from older generations, and only the first twelve numbers survive
+  the renumbering. So Black and White's regional dex, which held nothing a player had seen before,
+  is the odd one out in the series and the sequels put it back - in the same region, two years
+  later. Two lists that disagree about what nearly every number means, which is Johto's situation
+  rather than Platinum's._
+
+  _Registering them lit the four trades Black and White had been declaring into an empty space,
+  and neither of those two files was edited to do it. Every route between two cartridges now has
+  both of its ends: the ten still waiting all point at Bank._
+
+  _Step 3 needed a second source. Twenty Hidden Grottoes are hidden around the sequels' Unova and
+  PokeAPI has never heard of one: they are in no encounter table anywhere, and a dozen species are
+  in nothing else. So `grottoes.py` reads the Bulbapedia page rather than asking an API - the first
+  source in this dataset that is parsed instead of typed - and `hiddenGrotto` is a method in the
+  schema beside the four spot types. The Funfest Mission grottoes at the foot of that page are
+  deliberately not read: they were opened by a mission handed out over Wi-Fi and the service closed
+  in 2014, so Glameow, Stunky and the Eevee line are step 7's business rather than step 3's._
+
+  _Step 4 turned up the one case in this dataset of a species that is obtainable and still needs a
+  second cartridge. Regirock, Regice and Registeel are in both halves and neither half can catch
+  all three: catching Regirock is rewarded with the Iron Key in Black 2 and the Iceberg Key in
+  White 2, and the other chamber only opens with the key the other game was given, sent over the
+  Unova Link. That is not a trade and not a version exclusive, and it looks exactly like both._
+
+  _Step 5's number is the day care's: twenty-seven babies against the first pair's four. It is one
+  fact about Unova written large - the grass is full of grown-ups from older generations and almost
+  none of their young, so Hariyama is on Route 23 with no Makuhita anywhere and Banette is in the
+  Strange House with no Shuppet. Every parent named was checked to be reachable in that half
+  without leaving it._
+
+  _Step 6 had nothing to fetch, which is itself the finding. The sequels reuse the first pair's
+  sprites exactly, so one set of 649 pictures answers for four games - and no generation before
+  this one managed that: Platinum redrew Diamond and Pearl's, and HeartGold redrew Generation 4's
+  again. Every one of the 649 a living dex here asks for is in the sheet, so nothing falls back._
+
+  _Step 7 found Victini and Genesect swapping places between the two pairs. Black and White were
+  never offered a Genesect outside Japan and South Korea; the sequels were offered one over Wi-Fi
+  five weeks after they came out. And exactly one Victini distribution ever named the sequels - in
+  Japanese, in Japan, for six weeks - where the first pair's went out worldwide._
+
+  _It also grew the first pair's sentences. With four cartridges in one generation, "the other half
+  has it" stopped being the whole answer: Black's Zekrom is in White and in Black 2, and Black did
+  not have to be edited for that to be true, only for its reason to say so._
+
+  - Smoke test on the published exe: a collection called "Black 2 on the DS", with Black 2 as
+    main game and Ruby, Platinum and White 2 linked. The linked-games step shows the whole
+    transfer graph in one screen, and the four edges step 1 lit up are in it: Generation 5
+    offers Black, White and White 2, all "via trading", with Black 2 itself left out. The five
+    Generation 3 cartridges read "via Pal Park, then the Poke Transfer" - a two-hop route the
+    app composes - and the five Generation 4 games "via the Poke Transfer". Generations 1 and 2
+    are absent, correctly: their only way out is Bank, and Bank is not written.
+  - The grid reads "0 of 649 in Black 2", drawn from the Generation 5 sheet. Switching *Showing*
+    to the Unova dex makes it "1 of 301" and renumbers every tile - Solosis moves from #577 to
+    #139, which is step 2's whole point in one tile.
+  - Four popups were read closely. Pachirisu shows "Route 3, Dark grass - How: a Hidden Grotto -
+    55-59 - 15%", cited to "bulbapedia, read 23 Sep 2026", which is step 3's second source
+    working end to end. Kecleon shows the Nature Preserve twice with the Permit sentence in
+    full, and Ruby's two Devon Scope statics above it. Landorus says "Only at the Abundant
+    Shrine, and only with Tornadus and Thundurus in the party - both of which the Pokemon Dream
+    Radar is the only source of here". Solosis reads "White and White 2 only in Generation 5;
+    trade one in", then White 2's own slots, each ending "Then to Black 2: trading".
+  - Regice is the one that needed the whole step: three cards side by side, Black 2's saying the
+    Iceberg Key is White 2's reward and has to be sent over the Unova Link, White 2's saying it
+    is simply the reward, and Ruby's Braille puzzle with "Then to Black 2: Pal Park, then the
+    Poke Transfer" under it. A player sees both halves of the asymmetry and the way round it at
+    once.
+  - Marking Solosis caught moved the counter to "1 of 649".
+  - The user's settings were copied out first and restored byte for byte - same checksum as the
+    backup - and their data file was untouched: same checksum, timestamp and size afterwards as
+    before. The test ran against a data file in the scratchpad, and only the instance it started
+    was stopped.
+
 ### Generation 6
 
 _Nothing yet._

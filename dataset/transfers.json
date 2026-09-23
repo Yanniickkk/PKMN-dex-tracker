@@ -1,7 +1,43 @@
 [
   {
     "from": "black",
+    "to": "black-2",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "black",
     "to": "white",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "black",
+    "to": "white-2",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "black-2",
+    "to": "white",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "black-2",
+    "to": "white-2",
     "mechanism": "trade",
     "direction": "bothWays",
     "filter": {
@@ -90,6 +126,17 @@
   },
   {
     "from": "diamond",
+    "to": "black-2",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "diamond",
     "to": "heartgold",
     "mechanism": "trade",
     "direction": "bothWays",
@@ -127,6 +174,17 @@
   {
     "from": "diamond",
     "to": "white",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "diamond",
+    "to": "white-2",
     "mechanism": "pokeTransfer",
     "direction": "oneWay",
     "filter": {
@@ -330,6 +388,17 @@
   },
   {
     "from": "heartgold",
+    "to": "black-2",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "heartgold",
     "to": "pearl",
     "mechanism": "trade",
     "direction": "bothWays",
@@ -358,6 +427,17 @@
   {
     "from": "heartgold",
     "to": "white",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "heartgold",
+    "to": "white-2",
     "mechanism": "pokeTransfer",
     "direction": "oneWay",
     "filter": {
@@ -452,6 +532,17 @@
   },
   {
     "from": "pearl",
+    "to": "black-2",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "pearl",
     "to": "platinum",
     "mechanism": "trade",
     "direction": "bothWays",
@@ -480,8 +571,30 @@
     }
   },
   {
+    "from": "pearl",
+    "to": "white-2",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
     "from": "platinum",
     "to": "black",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "platinum",
+    "to": "black-2",
     "mechanism": "pokeTransfer",
     "direction": "oneWay",
     "filter": {
@@ -502,6 +615,17 @@
   {
     "from": "platinum",
     "to": "white",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "platinum",
+    "to": "white-2",
     "mechanism": "pokeTransfer",
     "direction": "oneWay",
     "filter": {
@@ -684,6 +808,17 @@
   },
   {
     "from": "soulsilver",
+    "to": "black-2",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "soulsilver",
     "to": "white",
     "mechanism": "pokeTransfer",
     "direction": "oneWay",
@@ -691,6 +826,26 @@
       "filter": "nationalDexRange",
       "from": 1,
       "to": 493
+    }
+  },
+  {
+    "from": "soulsilver",
+    "to": "white-2",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "white",
+    "to": "white-2",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
     }
   },
   {

@@ -27,6 +27,32 @@ Phase 2 feeds it one game at a time.
     folder with nothing beside it. Still open: a Windows install without the WebView2
     Runtime, and a Windows 10 box.
 
+### 0.2 The shared forms table
+- [ ] Fill `dataset/forms.json`, which has been written empty since Phase 1
+  - Noticed by Yannick on 2026-09-23: turning on functional forms in a collection adds no
+    entries. Not a bug in the app - `FormSelection`, `DexBuilder` and `ReferenceData` all work,
+    and `FormSelection.Default` has functional forms on. There is simply nothing in the table
+    for them to expand, and there never has been. Every game's step 2 has been deferring to it:
+    Unown in Johto, Castform in Hoenn, Burmy's cloaks and Shellos in Sinnoh, and in Unova
+    Deerling, Basculin, the drawn-apart sexes, the Therian trio, Kyurem's fusions and Keldeo.
+  - PokeAPI holds this in three different places and each needs its own reading:
+    - **Varieties** on the species, which are separate Pokemon entries: Landorus Therian,
+      Kyurem Black and White, Keldeo Resolute, Basculin's stripes. The easy third.
+    - **Forms** under a Pokemon, where the species has one variety and several appearances:
+      Deerling and Sawsbuck wear a season each this way, and so do Shellos and Burmy.
+    - **A flag and nothing else**: `has_gender_differences` on the species. Unfezant, Frillish
+      and Jellicent have no separate entry anywhere - there are two sprites and a boolean.
+  - Two things PokeAPI does not answer and a game module has to:
+    - **Which `FormKind` it is.** The app's four switches are the whole point of the table, and
+      the source has no equivalent field. Kyurem Black changes stats and typing; a Deerling's
+      season changes nothing; the difference is the user's decision about what to chase.
+    - **Which games it exists in.** `Form.Games` is what keeps Alolan Vulpix out of a Kanto
+      collection. It has to be worked out from the generation the form arrived in and what each
+      cartridge can actually produce - Therian Landorus is in Black 2 and White 2 only because
+      the Reveal Glass is, and Kyurem's fusions want the DNA Splicers.
+  - Worth doing before Generation 6, which is where regional and mega forms start arriving in
+    numbers, and where an empty table stops being a gap and starts being wrong.
+
 ---
 
 ## Phase 1 — First vertical slice
@@ -107,22 +133,13 @@ Dex to 493, Pal Park out of the slot underneath - is in `ds.py`._
 
 ### Generation 5
 
-_Black and White are done and in `DONE dex tracker.md`. What all four games share is in
-`unova.py`, which is also the region module: Generation 5 never left Unova, so the
-hardware-and-region split `ds.py` explains has nothing on either side of it._
+_Done: all four. Black and White are the pair, Black 2 and White 2 the sequels, and everything
+they reach is in `DONE dex tracker.md`._
 
-_Black 2 and White 2 are not a third version but a second pair - own story, own half of the map,
-own Pokedex - so `unova.py` keeps the two pairs apart wherever they disagree. `B2W2_DEX` is
-already named and waiting; their four trade edges are already declared and held back._
-
-- [ ] **Black 2** (`black-2`, gen 5, pair partner: White 2)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
-- [ ] **White 2** (`white-2`, gen 5, pair partner: Black 2)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
+_What all four share is in `unova.py`, which is also the region module: Generation 5 never left
+Unova, so the hardware-and-region split `ds.py` explains has nothing on either side of it. **The
+whole cartridge chain is closed: every route between two games in this dataset now has both of
+its ends, and the ten edges still waiting all point at Bank.**_
 
 ### Generation 6
 
@@ -239,6 +256,10 @@ the dataset at all._
     (`READ_ON = date(...)`, passed to `bulbapedia(...)`), or the build actually fetches the page
     it cites and lets the cache answer, which is honest but makes the build depend on a page it
     does not read. The first is simpler and does not pretend.
+  - A third way turned up at Black 2's step 3 and is worth weighing before the other two:
+    `grottoes.py` reads its page instead of citing it from memory, and its dates come out of the
+    cache for free. That only works where the page is uniform enough to parse, which is not most
+    of the 209 - but a table that is worth parsing never joins the queue in the first place.
 
 - [ ] Multiple collections: list, switch, rename, delete
 - [ ] Editing a collection's settings after creation, records preserved

@@ -5,6 +5,7 @@
   },
   "games": [
     "black",
+    "black-2",
     "blue",
     "crystal",
     "diamond",
@@ -21,6 +22,7 @@
     "silver",
     "soulsilver",
     "white",
+    "white-2",
     "yellow"
   ]
 }
