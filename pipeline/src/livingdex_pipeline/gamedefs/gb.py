@@ -23,7 +23,7 @@ from ..models import (
     TransferEdge,
     TransferMechanism,
 )
-from . import exclusives, vc
+from . import bank, exclusives, vc
 
 GENERATION = 1
 
@@ -113,7 +113,7 @@ def edges(game_id: str) -> list[TransferEdge]:
     return [
         *link_trade_edges(game_id),
         *time_capsule_edges(game_id),
-        vc.transporter_edge(game_id),
+        bank.transporter_edge(game_id),
     ]
 
 

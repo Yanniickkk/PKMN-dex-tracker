@@ -100,6 +100,11 @@ public static class AcquisitionNames
         EncounterMethod.Headbutt => "headbutting trees",
         EncounterMethod.HoneyTree => "honey trees",
         EncounterMethod.Swarm => "a swarm",
+        EncounterMethod.DarkGrass => "dark grass",
+        EncounterMethod.RustlingGrass => "rustling grass",
+        EncounterMethod.DustCloud => "dust clouds",
+        EncounterMethod.RipplingWater => "rippling water",
+        EncounterMethod.BridgeShadow => "shadows on a bridge",
         _ => "another way",
     };
 

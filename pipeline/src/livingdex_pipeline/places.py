@@ -71,18 +71,57 @@ def sub_area(area_slug: str, location_slug: str) -> str | None:
 
     ``meteor-falls-b1f`` under ``meteor-falls`` is "B1F"; ``hoenn-route-101-area`` is nothing,
     because the area is the whole location.
+
+    What PokeAPI has no name for is dropped rather than printed. Unova's Victory Road is filed
+    as a dozen ``unknown-area-53``, and "Victory Road, Unknown Area 62" tells a player nothing
+    they can walk to - it is the source admitting it does not know, written out as if it were a
+    place. Whatever else the slug holds is kept: ``1f-unknown-room`` is still 1F.
     """
     tail = area_slug.removesuffix("-area")
     if tail == location_slug:
         return None
 
-    return pretty(tail.removeprefix(f"{location_slug}-")) or None
+    return pretty(_named(tail.removeprefix(f"{location_slug}-"))) or None
+
+
+#: How PokeAPI spells an area it has not named: ``unknown-area-53``, or ``unknown-room``.
+_UNNAMED = ("unknown-area", "unknown-room")
+
+
+def _named(slug: str) -> str:
+    """The slug without the part that says the source has no name for it."""
+    words = slug.split("-")
+    kept: list[str] = []
+    index = 0
+
+    while index < len(words):
+        pair = "-".join(words[index : index + 2])
+
+        if pair in _UNNAMED:
+            # An unknown area is followed by its number, which goes with it; an unknown room
+            # is not numbered.
+            numbered = words[index + 2 : index + 3]
+            index += 3 if pair == "unknown-area" and numbered and numbered[0].isdigit() else 2
+            continue
+
+        kept.append(words[index])
+        index += 1
+
+    return "-".join(kept)
+
+
+#: Words a slug spells in lower case that are shouted in English. Only the ones the dataset has
+#: met: Unova files Game Freak's offices as ``game-freak-hq``, and "Game Freak Hq" reads like a
+#: typo rather than like a building.
+_ACRONYMS = frozenset({"hq"})
 
 
 def pretty(slug: str) -> str:
     """A slug as words. Floor names keep their shape: ``b1f`` is B1F, not "B1f"."""
     words = [
-        word.upper() if _is_floor(word) else word.capitalize() for word in slug.split("-") if word
+        word.upper() if _is_floor(word) or word in _ACRONYMS else word.capitalize()
+        for word in slug.split("-")
+        if word
     ]
 
     return " ".join(words)

@@ -38,6 +38,10 @@ class FakeApi:
         self._encounters = encounters
         self._locations = locations
 
+    def retrieved_on(self, url: str) -> date:
+        """The day the cache says this url was fetched, which a citation carries."""
+        return TODAY
+
     def default_pokemon(self, species: str, *, refresh: bool = False) -> str:
         return f"{species}-normal" if species == "deoxys" else species
 
@@ -70,7 +74,6 @@ def build(
         game_id="emerald",
         version=version,
         species=[name.removesuffix("-normal") for name in encounters],
-        retrieved_on=TODAY,
         details=details,
         excluded=excluded,
     )

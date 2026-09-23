@@ -21,7 +21,6 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
-from datetime import date
 
 from . import conditions
 from .models import (
@@ -47,18 +46,33 @@ WILD_METHODS: dict[str, EncounterMethod] = {
     "headbutt-normal": EncounterMethod.HEADBUTT,
     "headbutt-high": EncounterMethod.HEADBUTT,
     "honey-tree": EncounterMethod.HONEY_TREE,
+    # Generation 5's four moving spots and the darker grass beside the ordinary kind. PokeAPI
+    # calls them all "spots"; a player calls them rustling grass, a dust cloud, a ripple and a
+    # shadow, and each one is a different table in a different place.
+    "dark-grass": EncounterMethod.DARK_GRASS,
+    "grass-spots": EncounterMethod.RUSTLING_GRASS,
+    "cave-spots": EncounterMethod.DUST_CLOUD,
+    "surf-spots": EncounterMethod.RIPPLING_WATER,
+    "bridge-spots": EncounterMethod.BRIDGE_SHADOW,
+    # The one compound case. Fishing in a ripple wants both the rod and the ripple, and the rod
+    # is the half a player can be missing - so it stays a Super Rod slot and the water it is
+    # cast into is said in the requirement, by :data:`METHOD_REQUIREMENTS`.
+    "super-rod-spots": EncounterMethod.SUPER_ROD,
     # Still a wild encounter, but not one of the named ways of starting one.
     "seaweed": EncounterMethod.OTHER,
     "feebas-tile-fishing": EncounterMethod.OTHER,
     "roaming-grass": EncounterMethod.OTHER,
     "roaming-water": EncounterMethod.OTHER,
-    "grass-spots": EncounterMethod.OTHER,
-    "cave-spots": EncounterMethod.OTHER,
-    "surf-spots": EncounterMethod.OTHER,
-    "bridge-spots": EncounterMethod.OTHER,
-    "super-rod-spots": EncounterMethod.SUPER_ROD,
-    "dark-grass": EncounterMethod.WALK,
     "rough-terrain": EncounterMethod.WALK,
+}
+
+#: What a method says about a slot that its name does not carry once it is mapped.
+#:
+#: Only where a PokeAPI method means two things and this project's enum can hold one of them.
+#: The sentence lands in the same field a condition would, because to a player it is the same
+#: kind of fact: something has to be true before the slot is there at all.
+METHOD_REQUIREMENTS: dict[str, str] = {
+    "super-rod-spots": "Cast into rippling water",
 }
 
 
@@ -86,7 +100,6 @@ def wild_encounters(
     game_id: str,
     version: str,
     species: list[str],
-    retrieved_on: date,
     refresh: bool = False,
     places: LocationNames | None = None,
 ) -> list[WildAcquisition]:
@@ -95,6 +108,10 @@ def wild_encounters(
     PokeAPI lists a row per level and per state of the world, so a Pokemon on one route appears
     several times over. They are added back up here: one record per place, method and state,
     carrying the whole level range and the chance of meeting it at all.
+
+    Each record is cited to the exact url it came out of, on the day that url was fetched -
+    which the cache remembers, so rebuilding a dataset from unchanged pages does not quietly
+    re-date every claim in it.
     """
     places = places or LocationNames(api, refresh=refresh)
     found: list[WildAcquisition] = []
@@ -105,7 +122,7 @@ def wild_encounters(
         # two are spelled differently.
         pokemon = api.default_pokemon(name, refresh=refresh)
         url = f"{BASE_URL}/pokemon/{pokemon}/encounters"
-        citation = SourceCitation(source="pokeapi", url=url, retrieved_on=retrieved_on)
+        citation = SourceCitation(source="pokeapi", url=url, retrieved_on=api.retrieved_on(url))
 
         for area in api.encounters(pokemon, refresh=refresh):
             area_slug = area["location_area"]["name"]
@@ -140,7 +157,7 @@ def wild_encounters(
                     seen.add(key)
                     found.append(record)
 
-    return _without_redundant_conditions(_without_unconditional_twins(found))
+    return _merged(_without_redundant_conditions(_without_unconditional_twins(found)))
 
 
 def _add_up(details: list[dict], *, species: str) -> dict[tuple[str, _State], _Slot]:
@@ -154,7 +171,7 @@ def _add_up(details: list[dict], *, species: str) -> dict[tuple[str, _State], _S
             continue
 
         conditions = sorted(one["name"] for one in detail.get("condition_values", []))
-        key = (method, _state(conditions, species=species))
+        key = (method, _state(conditions, species=species, method=method))
         low, high = detail["min_level"], detail["max_level"]
         chance = detail.get("chance") or 0
 
@@ -169,12 +186,20 @@ def _add_up(details: list[dict], *, species: str) -> dict[tuple[str, _State], _S
     return grouped
 
 
-def _state(values: list[str], *, species: str) -> _State:
-    """What a row's conditions say about when it holds this species."""
+def _state(values: list[str], *, species: str, method: str) -> _State:
+    """What a row's conditions say about when it holds this species.
+
+    The method can say something too, where PokeAPI's is narrower than ours: fishing in a
+    ripple is a Super Rod slot here, and where the rod is cast would be lost otherwise.
+    """
+    said = conditions.requirement(values, subject=species)
+    by_method = METHOD_REQUIREMENTS.get(method)
+    requirement = " and ".join(one for one in (by_method, said) if one) or None
+
     return _State(
         time_of_day=conditions.of(values, conditions.TIME),
         season=conditions.of(values, conditions.SEASON),
-        requirement=conditions.requirement(values, subject=species),
+        requirement=requirement,
     )
 
 
@@ -240,6 +265,48 @@ def _without_redundant_conditions(records: list[WildAcquisition]) -> list[WildAc
         for record in records
         if record.requirement is None or _where(record) not in unconditional
     ]
+
+
+def _merged(records: list[WildAcquisition]) -> list[WildAcquisition]:
+    """Fold together records a player has no way of telling apart.
+
+    Dropping a room the source has no name for leaves several records alike in species, place,
+    method and the state of the world, differing only in levels and odds: Boldore stands in
+    three of Victory Road's unnamed rooms at slightly different levels, and three rows that all
+    read "Victory Road, walking" are three ways of saying one thing.
+
+    The level range is widened to cover all of them and the odds are the best of them rather
+    than their sum - a player is in one room at a time, so meeting it is as likely as the room
+    they are standing in makes it, and adding the rooms up would promise something the game
+    never offers.
+    """
+    merged: dict[tuple, WildAcquisition] = {}
+
+    for record in records:
+        key = (*_where(record), record.time_of_day, record.season, record.requirement)
+        already = merged.get(key)
+
+        if already is None:
+            merged[key] = record
+            continue
+
+        merged[key] = already.model_copy(
+            update={
+                "levels": LevelRange(
+                    minimum=min(already.levels.minimum, record.levels.minimum),
+                    maximum=max(already.levels.maximum, record.levels.maximum),
+                ),
+                "rate_percent": _best(already.rate_percent, record.rate_percent),
+            }
+        )
+
+    return list(merged.values())
+
+
+def _best(left: float | None, right: float | None) -> float | None:
+    known = [one for one in (left, right) if one is not None]
+
+    return max(known) if known else None
 
 
 def _twin(record: WildAcquisition) -> tuple:

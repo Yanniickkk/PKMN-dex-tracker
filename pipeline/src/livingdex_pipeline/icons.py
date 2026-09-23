@@ -39,6 +39,15 @@ METHOD_ICONS: dict[str, str] = {
     "headbutt": "poke-ball",
     "honey-tree": "honey",
     "swarm": "poke-radar",
+    # Generation 5's own. Only the dust cloud has an item that looks like the thing itself; the
+    # other three borrow the picture of what a player is doing when they walk into one, which is
+    # walking, surfing and walking again. Better a true picture of half of it than a stand-in
+    # invented for the other half.
+    "dark-grass": "poke-ball",
+    "rustling-grass": "poke-ball",
+    "dust-cloud": "smoke-ball",
+    "rippling-water": "hm03",
+    "bridge-shadow": "poke-ball",
     "other": "poke-ball",
     # Gifts and statics.
     "starter": "poke-ball",

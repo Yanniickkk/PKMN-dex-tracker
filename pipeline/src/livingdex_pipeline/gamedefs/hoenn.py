@@ -161,7 +161,6 @@ def pair_acquisition_methods(
             game_id=game_id,
             version=version,
             species=species,
-            retrieved_on=today,
             refresh=context.refresh,
             places=places,
         ),
@@ -170,7 +169,6 @@ def pair_acquisition_methods(
             game_id=game_id,
             version=version,
             species=species,
-            retrieved_on=today,
             details=PAIR_GIFTS,
             refresh=context.refresh,
             places=places,
@@ -180,7 +178,6 @@ def pair_acquisition_methods(
             game_id=game_id,
             version_group=PAIR_VERSION_GROUP,
             species=species,
-            retrieved_on=today,
             refresh=context.refresh,
         ),
         *breeding_encounters(

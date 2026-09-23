@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from ..games import GameRegistry
 from . import (
+    black,
     blue,
     crystal,
     diamond,
@@ -24,12 +25,14 @@ from . import (
     sapphire,
     silver,
     soulsilver,
+    white,
     yellow,
 )
 
 # In the order they came out: the pair that started it and its own third version, the Johto
 # pair and its third version, then the Hoenn pair, the Kanto pair, the third version after
-# them, the Sinnoh pair and its third version, and the Johto pair that closes Generation 4.
+# them, the Sinnoh pair and its third version, the Johto pair that closes Generation 4, and the
+# pair that opens Generation 5.
 MODULES = [
     red,
     blue,
@@ -47,6 +50,8 @@ MODULES = [
     platinum,
     heartgold,
     soulsilver,
+    black,
+    white,
 ]
 
 

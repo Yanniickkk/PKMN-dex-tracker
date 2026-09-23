@@ -378,7 +378,6 @@ def acquisition_methods(
             game_id=game_id,
             version=version,
             species=species,
-            retrieved_on=today,
             refresh=context.refresh,
             places=places,
         )
@@ -391,7 +390,6 @@ def acquisition_methods(
                 game_id=game_id,
                 version=version,
                 species=species,
-                retrieved_on=today,
                 details=gifts,
                 excluded=excluded,
                 refresh=context.refresh,
@@ -406,7 +404,6 @@ def acquisition_methods(
                 game_id=game_id,
                 version_group=version_group,
                 species=species,
-                retrieved_on=today,
                 refresh=context.refresh,
             )
         )

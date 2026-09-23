@@ -12,6 +12,8 @@ import pytest
 
 from livingdex_pipeline.build import default_registry
 from livingdex_pipeline.gamedefs import (
+    bank,
+    black,
     blue,
     crystal,
     diamond,
@@ -34,7 +36,8 @@ from livingdex_pipeline.gamedefs import (
     silver,
     sinnoh,
     soulsilver,
-    vc,
+    unova,
+    white,
     yellow,
 )
 from livingdex_pipeline.games import BuildContext, GameRegistry
@@ -43,6 +46,7 @@ from livingdex_pipeline.models import (
     AllSpeciesFilter,
     DexSource,
     DexTarget,
+    EncounterMethod,
     Game,
     GameData,
     GameRelease,
@@ -85,6 +89,7 @@ VERSION_GROUP_ORDER = {
     "diamond-pearl": 8,
     "platinum": 9,
     "heartgold-soulsilver": 10,
+    "black-white": 11,
 }
 
 
@@ -107,6 +112,10 @@ class FakeApi:
     def pokedex(self, name: str, *, refresh: bool = False) -> list[tuple[int, str]]:
         self.asked_for.append(name)
         return list(self._entries)
+
+    def retrieved_on(self, url: str) -> date:
+        """The day the cache says this url was fetched, which a citation carries."""
+        return date(2026, 9, 21)
 
     def default_pokemon(self, species: str, *, refresh: bool = False) -> str:
         return species
@@ -1624,7 +1633,7 @@ def test_a_generation_1_release_brings_its_trades_its_time_capsule_and_bank() ->
     assert capsule.direction is TransferDirection.BOTH_WAYS
     assert capsule.filter.to == 151
     # And the one route these releases exist for.
-    transporter = edges[(vc.BANK, TransferMechanism.POKE_TRANSPORTER)]
+    transporter = edges[(bank.NODE, TransferMechanism.POKE_TRANSPORTER)]
     assert transporter.direction is TransferDirection.ONE_WAY
 
 
@@ -1806,6 +1815,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     registry = default_registry()
 
     assert registry.game_ids == [
+        "black",
         "blue",
         "crystal",
         "diamond",
@@ -1821,6 +1831,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "sapphire",
         "silver",
         "soulsilver",
+        "white",
         "yellow",
     ]
 
@@ -1830,8 +1841,9 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # Generation 2 ones; nine Time Capsules, each of the older three to each of the newer three;
     # ten between the five Generation 3 cartridges, ten wireless trades between the five
     # Generation 4 games, and twenty-five one-way Pal Park trips from each of the five into each
-    # of the five.
-    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25
+    # of the five. Then one trade between the two halves of Generation 5, and ten one-way Poke
+    # Transfers, from each Generation 4 cartridge into each of them.
+    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 1 + 10
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -1844,12 +1856,18 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     assert ("red", "crystal") in routes
     assert ("crystal", "red") not in routes
 
-    # And what is left waiting is one node rather than a game: every Virtual Console release
-    # declares Poke Transporter into Bank, and Bank is not written yet.
+    # What is left waiting is a node and a pair of games. Eight releases declare Poke
+    # Transporter into Bank, which is not a game and is not written yet; Black and White declare
+    # trades with the sequels, which are games and are not written yet either. Both kinds sit in
+    # the same queue, and neither game had to know which kind it was declaring.
     waiting = {(edge.to, edge.mechanism) for _, edge in registry.held_back_edges}
 
-    assert waiting == {("bank", TransferMechanism.POKE_TRANSPORTER)}
-    assert len(registry.held_back_edges) == 6
+    assert waiting == {
+        ("bank", TransferMechanism.POKE_TRANSPORTER),
+        ("black-2", TransferMechanism.TRADE),
+        ("white-2", TransferMechanism.TRADE),
+    }
+    assert len(registry.held_back_edges) == 6 + 2 + 4
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:
@@ -2510,6 +2528,582 @@ def test_a_prize_only_one_half_sells_is_priced_for_that_half_alone() -> None:
     assert set(kanto.GBA_PRIZE_CORNER["pinsir"]) == {"leafgreen"}
     assert "scyther" not in kanto.gba_gifts("leafgreen")
     assert "pinsir" not in kanto.gba_gifts("firered")
+
+
+# --- Black and White --------------------------------------------------------------------------
+
+
+def test_the_unova_pair_are_two_games_that_name_each_other() -> None:
+    both = {module.GAME_ID: module.build(context(module.GAME_ID)).game for module in (black, white)}
+
+    assert sorted(both) == ["black", "white"]
+    assert both["black"].pair_partner == "white"
+    assert both["white"].pair_partner == "black"
+    assert both["black"].title != both["white"].title
+    # The same day, as every pair in this dataset has been.
+    assert both["black"].released == both["white"].released == date(2010, 9, 18)
+
+
+def test_the_unova_games_are_generation_5_cartridges_reaching_genesect() -> None:
+    for module in (black, white):
+        game = module.build(context(module.GAME_ID)).game
+
+        assert game.generation == 5
+        assert game.region == "Unova"
+        assert game.national_dex_through == 649
+        assert game.dex_source is DexSource.NATIONAL_DEX
+        assert game.release is GameRelease.CARTRIDGE
+
+
+def test_generation_5_keeps_its_region_and_its_generation_in_one_module() -> None:
+    # Everywhere else these are two modules: `kanto` is pinned against carrying a generation
+    # number and `ds` against carrying a region. Generation 5 never left Unova, so one module
+    # carries both and there is no second one for it to disagree with.
+    assert unova.REGION == "Unova"
+    assert unova.GENERATION == 5
+    assert not hasattr(ds, "REGION")
+
+
+def unova_slot(
+    version: str,
+    method: str,
+    *,
+    chance: int = 20,
+    conditions: list[str] | None = None,
+    area: str = "unova-route-3-area",
+) -> dict:
+    return {
+        "location_area": {"name": area},
+        "version_details": [
+            {
+                "version": {"name": version},
+                "encounter_details": [
+                    {
+                        "min_level": 14,
+                        "max_level": 16,
+                        "chance": chance,
+                        "method": {"name": method},
+                        "condition_values": [{"name": one} for one in (conditions or [])],
+                    }
+                ],
+            }
+        ],
+    }
+
+
+def unova_wild(module, api: FakeApi) -> list:
+    return [
+        one
+        for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+        if one.kind == "wild"
+    ]
+
+
+def test_each_unova_half_reads_its_own_version_of_the_encounter_table() -> None:
+    # The version is the whole difference between the two files, so it had better be the thing
+    # that decides what comes out.
+    for module, rate in ((black, 20), (white, 45)):
+        api = FakeApi(
+            [(1, "audino")],
+            {
+                "audino": [
+                    unova_slot("black", "walk", chance=20),
+                    unova_slot("white", "walk", chance=45),
+                ]
+            },
+        )
+
+        wild = unova_wild(module, api)
+
+        assert [one.rate_percent for one in wild] == [rate]
+        assert all(one.game == module.GAME_ID for one in wild)
+
+
+def test_each_of_generation_5s_own_spots_is_its_own_method() -> None:
+    # Sixty-two of the species a player of Black can catch are only in one of these. Calling
+    # them "another way" - which is what the dataset did before Unova arrived - leaves a third
+    # of the game with no answer to "where do I find it", and dark grass called plain walking
+    # is worse than vague: a Bisharp is not in the ordinary patch beside it.
+    expected = {
+        "dark-grass": EncounterMethod.DARK_GRASS,
+        "grass-spots": EncounterMethod.RUSTLING_GRASS,
+        "cave-spots": EncounterMethod.DUST_CLOUD,
+        "surf-spots": EncounterMethod.RIPPLING_WATER,
+        "bridge-spots": EncounterMethod.BRIDGE_SHADOW,
+    }
+
+    for method, expected_method in expected.items():
+        api = FakeApi([(1, "audino")], {"audino": [unova_slot("black", method)]})
+        wild = unova_wild(black, api)
+
+        assert [one.method for one in wild] == [expected_method]
+        assert all(one.method is not EncounterMethod.OTHER for one in wild)
+
+
+def test_fishing_in_a_ripple_keeps_the_rod_and_says_where_it_is_cast() -> None:
+    # The one method that means two things. The rod is the half a player can be missing, so the
+    # slot stays a Super Rod slot; the water it is cast into would be lost without a sentence.
+    api = FakeApi([(1, "relicanth")], {"relicanth": [unova_slot("black", "super-rod-spots")]})
+
+    wild = unova_wild(black, api)
+
+    assert [one.method for one in wild] == [EncounterMethod.SUPER_ROD]
+    assert wild[0].requirement == "Cast into rippling water"
+
+
+def test_a_method_that_means_two_things_keeps_the_conditions_on_the_row_as_well() -> None:
+    # The sentence the method adds must not push out the sentence the row already carried.
+    api = FakeApi(
+        [(1, "relicanth")],
+        {"relicanth": [unova_slot("black", "super-rod-spots", conditions=["swarm-yes"])]},
+    )
+
+    requirement = unova_wild(black, api)[0].requirement
+
+    assert "Cast into rippling water" in requirement
+    assert "swarming" in requirement
+
+
+def unova_gift(version: str, method: str, level: int, area: str, conditions=None) -> dict:
+    return {
+        "location_area": {"name": area},
+        "version_details": [
+            {
+                "version": {"name": version},
+                "encounter_details": [
+                    {
+                        "min_level": level,
+                        "max_level": level,
+                        "chance": 100,
+                        "method": {"name": method},
+                        "condition_values": [{"name": one} for one in (conditions or [])],
+                    }
+                ],
+            }
+        ],
+    }
+
+
+class Placed(FakeApi):
+    """A fake whose encounters happen in a place with a name, rather than in Route 101."""
+
+    def __init__(self, entries, encounters, *, slug: str, name: str) -> None:
+        super().__init__(entries, encounters)
+        self._slug = slug
+        self._name = name
+
+    def resource(self, path: str, *, refresh: bool = False) -> dict:
+        if path.startswith("location-area/"):
+            return {"location": {"name": self._slug}}
+
+        if path.startswith("location/"):
+            return {"names": [{"language": {"name": "en"}, "name": self._name}]}
+
+        return super().resource(path, refresh=refresh)
+
+
+def unova_gifts(module, api: FakeApi) -> list:
+    return [
+        one
+        for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+        if one.kind == "gift"
+    ]
+
+
+def test_both_unova_halves_hand_over_the_same_things_from_one_table() -> None:
+    api = FakeApi([(1, "snivy")], {"snivy": [unova_gift("black", "gift", 5, "nuvema-town-area")]})
+
+    gifts = unova_gifts(black, api)
+
+    assert len(gifts) == 1
+    # PokeAPI calls a starter, a fossil and a present from a stranger all "gift"; which of the
+    # three this is, and whose hand it comes out of, are the game's own facts.
+    assert gifts[0].gift_kind is GiftKind.STARTER
+    assert gifts[0].npc == "Professor Juniper"
+    # One table for both halves, and one description for all three of the box's occupants.
+    assert {unova.BW_GIFTS[one] for one in ("snivy", "tepig", "oshawott")} == {
+        unova.BW_GIFTS["snivy"]
+    }
+
+
+def test_the_monkey_a_player_is_given_depends_on_the_starter_they_picked() -> None:
+    # The woman outside the Dreamyard hands over the one the player's own first partner beats,
+    # and PokeAPI files all three with no condition at all - so without this table the dataset
+    # would promise every player all three.
+    wanted = {"pansage": "Tepig", "pansear": "Oshawott", "panpour": "Snivy"}
+
+    for species, starter in wanted.items():
+        api = FakeApi(
+            [(1, species)],
+            {species: [unova_gift("black", "gift", 10, "dreamyard-area")]},
+        )
+
+        gifts = unova_gifts(black, api)
+
+        assert gifts[0].requirement == f"Only in a save that started with {starter}"
+
+
+def test_a_revived_fossil_says_where_the_fossil_itself_comes_from() -> None:
+    # PokeAPI's condition is the bare item - "Helix Fossil" - which tells a player nothing about
+    # the one thing that is hard here: seven of the nine are one a day from a Worker in Twist
+    # Mountain, and only after the story ends.
+    api = FakeApi(
+        [(1, "omanyte")],
+        {
+            "omanyte": [
+                unova_gift(
+                    "black", "gift", 25, "nacrene-city-nacrene-museum", ["item-helix-fossil"]
+                )
+            ]
+        },
+    )
+
+    gifts = unova_gifts(black, api)
+
+    assert gifts[0].gift_kind is GiftKind.FOSSIL
+    assert "Twist Mountain" in gifts[0].requirement
+    assert "Ghetsis" in gifts[0].requirement
+    # And the two this generation brought are a choice instead of a queue.
+    assert "Relic Castle" in unova.BW_GIFTS["tirtouga"].requirement
+
+
+def test_every_static_in_unova_says_what_it_takes_to_reach_it() -> None:
+    # Five of these stood with a place and a level and nothing else, because PokeAPI carries no
+    # condition on their rows and the species pages of two other sources say only the place.
+    # What was missing was the door: Cobalion is behind Surf, Terrakion and Virizion are behind
+    # Cobalion, and the two that respawn say when.
+    gates = {
+        "cobalion": "Surf",
+        "terrakion": "Cobalion",
+        "virizion": "Cobalion",
+        "kyurem": "first visit",
+        "volcarona": "Ghetsis",
+    }
+
+    for species, expected in gates.items():
+        described = unova.BW_GIFTS[species]
+
+        assert described.kind is GiftKind.STATIC_ENCOUNTER
+        assert expected in described.requirement
+
+    # Nothing in the table is a static with no way in written down.
+    statics = [
+        one
+        for one in unova.BW_GIFTS.values()
+        if isinstance(one, GiftDetail) and one.kind is GiftKind.STATIC_ENCOUNTER
+    ]
+    assert all(one.requirement for one in statics)
+
+
+def test_each_unova_half_is_traded_the_other_halfs_exclusive() -> None:
+    # Dye swaps each half what its own grass does not hold, which means two of the six species
+    # that look like version exclusives are not exclusive at all. Step 7 has to know that before
+    # it writes anyone off - the Kanto pair's Banette is the mistake this prevents.
+    traded = {
+        module.GAME_ID: [
+            one
+            for one in module.build(context(module.GAME_ID)).acquisition_methods
+            if one.kind == "trade"
+        ]
+        for module in (black, white)
+    }
+
+    black_gets = {one.target.species: one for one in traded["black"]}
+    white_gets = {one.target.species: one for one in traded["white"]}
+
+    assert black_gets["petilil"].wants.species == "cottonee"
+    assert white_gets["cottonee"].wants.species == "petilil"
+    assert black_gets["petilil"].npc == white_gets["cottonee"].npc == "Dye"
+
+    # And the other four are the same in both halves, so five each.
+    assert len(traded["black"]) == len(traded["white"]) == 5
+    assert set(black_gets) - {"petilil"} == set(white_gets) - {"cottonee"}
+
+
+def test_a_trade_that_is_only_open_in_one_season_says_so() -> None:
+    # The first game in the dataset where the calendar closes a door rather than changing what
+    # is behind it: the Munchlax trade is in Undella Town and only in summer.
+    munchlax = next(
+        one
+        for one in black.build(context("black")).acquisition_methods
+        if one.kind == "trade" and one.target.species == "munchlax"
+    )
+
+    assert munchlax.requirement == "Only in summer"
+    assert munchlax.wants.species == "cinccino"
+
+
+def test_the_unova_pair_evolve_by_their_own_version_group() -> None:
+    api = FakeApi([(1, "treecko"), (2, "grovyle")])
+
+    for module in (black, white):
+        methods = module.build(context(module.GAME_ID, api)).acquisition_methods
+        evolutions = [one for one in methods if one.kind == "evolution"]
+
+        assert [one.target.species for one in evolutions] == ["grovyle"]
+
+    # The two halves are one group, and it is the group that brought this generation's own
+    # triggers - Karrablast and Shelmet, who evolve only by being traded for each other.
+    assert unova.BW_VERSION_GROUP == "black-white"
+
+
+def test_the_day_care_hatches_the_four_babies_whose_parents_live_here() -> None:
+    # Unova's grass is full of grown-up Pokemon from earlier generations and empty of their
+    # babies, which is the opposite of Sinnoh - so this pair hatches four where that one hatched
+    # none. The other eleven babies are left out because nothing here produces a parent: a record
+    # saying "hatch a Pichu" in a game with no Pikachu is the lie the dead-end rule watches for.
+    eggs = [
+        one for one in black.build(context("black")).acquisition_methods if one.kind == "breeding"
+    ]
+
+    assert {one.target.species for one in eggs} == {
+        "cleffa",
+        "igglybuff",
+        "smoochum",
+        "chingling",
+    }
+    assert all(one.location == "Route 3, Pokemon Day Care" for one in eggs)
+    assert "pichu" not in unova.BW_EGGS
+
+    # Three of the four are Generation 2's babies and need nothing; the fourth is Generation 4's
+    # and hides behind an item that is not on sale until the National Pokedex opens.
+    chingling = next(one for one in eggs if one.target.species == "chingling")
+    assert "Pure Incense" in chingling.requirement
+    assert all(one.requirement is None for one in eggs if one.target.species != "chingling")
+
+
+def test_the_unova_pair_mark_what_only_the_other_half_keeps() -> None:
+    api = FakeApi([(83, "solosis"), (80, "gothita"), (150, "zekrom"), (1, "snivy")])
+
+    reasons = {
+        module.GAME_ID: {
+            entry.target.species: entry.unobtainable_reason
+            for entry in module.build(context(module.GAME_ID, api)).dex_entries
+        }
+        for module in (black, white)
+    }
+
+    assert reasons["black"]["solosis"].startswith("White only in Generation 5")
+    assert reasons["white"]["gothita"].startswith("Black only in Generation 5")
+    # And what this half does produce says nothing at all.
+    assert reasons["black"]["snivy"] is None
+
+
+def test_the_unova_exclusives_mirror_each_other_exactly() -> None:
+    # Seven each, and neither list holds Cottonee or Petilil: Dye swaps each half the one its
+    # own grass is missing, so two species that look exactly like exclusives are not. Reading
+    # the encounter tables alone would have written both of them off.
+    assert len(black.ELSEWHERE_IN_GENERATION_5) == len(white.ELSEWHERE_IN_GENERATION_5) == 7
+    assert all(partner == "White" for partner, _ in black.ELSEWHERE_IN_GENERATION_5.values())
+    assert all(partner == "Black" for partner, _ in white.ELSEWHERE_IN_GENERATION_5.values())
+
+    both = set(black.ELSEWHERE_IN_GENERATION_5) | set(white.ELSEWHERE_IN_GENERATION_5)
+    assert "cottonee" not in both
+    assert "petilil" not in both
+
+
+def test_every_generation_5_giveaway_went_to_the_half_that_could_not_catch_it() -> None:
+    # Generation 4's four exclusives had no distribution at all. Here the four legendaries each
+    # had one, and every one of them was for the other half - the Milos Island Thundurus for
+    # Black, which has the Tornadus, and Ash's Zekrom for Black, whose box has Reshiram on it.
+    covered = {
+        module.GAME_ID: {
+            species: event
+            for species, (_, event) in module.ELSEWHERE_IN_GENERATION_5.items()
+            if event is not None
+        }
+        for module in (black, white)
+    }
+
+    assert set(covered["black"]) == {"thundurus", "zekrom"}
+    assert set(covered["white"]) == {"tornadus", "reshiram"}
+    assert "Milos Island" in covered["black"]["thundurus"]
+    assert "Ash's Reshiram" in covered["white"]["reshiram"]
+
+    # The ordinary five were never handed out anywhere, which is a finding rather than a gap.
+    assert [
+        species for species, (_, event) in black.ELSEWHERE_IN_GENERATION_5.items() if event is None
+    ] == ["solosis", "duosion", "reuniclus", "rufflet", "braviary"]
+
+
+def test_the_six_neither_half_reaches_say_which_door_was_shut() -> None:
+    # None of these is missing because the cartridge never held it. Each one is in the game,
+    # behind a giveaway that has ended - which is the opposite of Mew in Kanto or Manaphy in
+    # Sinnoh, where nothing in the game produced one at all.
+    reasons = unova.BW_UNOBTAINABLE
+
+    assert set(reasons) == {"victini", "zorua", "zoroark", "keldeo", "meloetta", "genesect"}
+    assert "Liberty Pass" in reasons["victini"]
+    assert "event Celebi" in reasons["zorua"]
+    # Zorua is the one entry in the six that no distribution anywhere ever covered: what was
+    # handed out was the key rather than the Pokemon.
+    assert "No distribution ever handed out a Zorua" in reasons["zorua"]
+    # And Genesect is the one where reading the games column mattered: it was handed out
+    # plenty, and in the West every one of those was for the sequels.
+    assert "rather than the sequels" in reasons["genesect"]
+
+
+def test_both_unova_halves_count_thirteen_they_cannot_fill() -> None:
+    for module in (black, white):
+        assert len(module.UNOBTAINABLE) == 6 + 7
+
+
+def test_all_four_generation_5_games_were_drawn_from_one_sheet() -> None:
+    # New in this generation: Platinum redrew Diamond and Pearl's sprites and HeartGold redrew
+    # Generation 4's again, but the Unova sequels reuse these exactly - so one set answers for
+    # four games, and the build fetches it once.
+    for module in (black, white):
+        assert module.build(context(module.GAME_ID)).game.sprite_set == unova.SPRITE_SET
+
+    assert unova.SPRITE_SET == "generation-v/black-white"
+    # Not the `transparent` variant Generations 1 and 2 needed: these sprites are already cut
+    # out, and there is no such folder to ask for.
+    assert not unova.SPRITE_SET.endswith("transparent")
+    # And not the animated one beside it, which is the thing these games are famous for and is
+    # a folder of GIFs the grid has nowhere to play.
+    assert "animated" not in unova.SPRITE_SET
+
+
+def test_the_three_that_wait_on_a_distribution_bring_no_record_at_all() -> None:
+    # Victini needs the Liberty Pass, Zorua the event Celebi, Zoroark a shiny event beast. All
+    # three are really in the game, and all three are behind a giveaway that ended - so the
+    # honest answer is step 7's sentence rather than a tile pointing at Liberty Garden.
+    for species, area in (
+        ("victini", "liberty-garden-lighthouse-basement"),
+        ("zorua", "castelia-city-game-freak-hq-1f"),
+        ("zoroark", "lostlorn-forest-area"),
+    ):
+        api = FakeApi([(1, species)], {species: [unova_gift("black", "static", 15, area)]})
+
+        assert unova_gifts(black, api) == []
+
+
+def test_one_encounter_filed_twice_is_kept_once() -> None:
+    # PokeAPI has the Friday Musharna in the Dreamyard and in its basement, and only the first
+    # row carries the conditions. Bulbapedia has one Musharna, in the basement - so the place is
+    # dropped rather than the species, which still keeps its real row.
+    api = Placed(
+        [(1, "musharna")],
+        {
+            "musharna": [
+                unova_gift("black", "static", 50, "dreamyard-area", ["weekday-friday"]),
+                unova_gift("black", "static", 50, "dreamyard-b1f"),
+            ]
+        },
+        slug="dreamyard",
+        name="Dreamyard",
+    )
+
+    gifts = unova_gifts(black, api)
+
+    assert len(gifts) == 1
+    assert gifts[0].location.endswith("B1F")
+    assert "Friday" in gifts[0].requirement
+
+
+def test_the_forces_of_nature_are_put_back_in_the_region_they_roam() -> None:
+    # PokeAPI files the roaming Tornadus in the Team Flare Secret HQ, which is in Kalos and is
+    # not a place either of these games has. The same correction the Bell Tower needed, for a
+    # different fault in the source.
+    api = Placed(
+        [(1, "tornadus")],
+        {"tornadus": [unova_gift("black", "static", 40, "team-flare-secret-hq-area")]},
+        slug="team-flare-secret-hq",
+        name="Team Flare Secret HQ",
+    )
+
+    gifts = unova_gifts(black, api)
+
+    assert gifts[0].location == "Roaming Unova"
+    assert "Legend Badge" in gifts[0].requirement
+
+
+def test_unova_is_the_first_region_whose_slots_carry_a_season() -> None:
+    # Four tables where every game before had one. The field has been in the schema since
+    # Phase 0 and empty in all sixteen games until now.
+    api = FakeApi(
+        [(1, "deerling")],
+        {"deerling": [unova_slot("black", "walk", conditions=["season-winter"])]},
+    )
+
+    wild = unova_wild(black, api)
+
+    assert wild[0].season == "winter"
+    # It has a column of its own, so it does not also turn up in the sentence.
+    assert wild[0].requirement is None
+
+
+def test_both_unova_halves_show_the_same_dex_and_it_is_the_pairs_own() -> None:
+    api = FakeApi([(0, "victini"), (155, "genesect")])
+
+    for module in (black, white):
+        entries = module.build(context(module.GAME_ID, api)).dex_entries
+
+        assert [one.number for one in entries] == [0, 155]
+        assert [str(one.target) for one in entries] == ["victini", "genesect"]
+        assert all(one.game == module.GAME_ID for one in entries)
+
+    # The pair's list, not the sequels'. Both halves ask for the same one.
+    assert api.asked_for == [unova.BW_DEX, unova.BW_DEX]
+
+
+def test_the_unova_dex_starts_at_zero_where_every_other_dex_starts_at_one() -> None:
+    # Victini is #000 in these games, and the grid prints three digits, so a player sees the
+    # number the game showed them. Nothing in the dataset had a zero before this.
+    entries = black.build(context("black", FakeApi([(0, "victini"), (1, "snivy")]))).dex_entries
+
+    assert entries[0].number == 0
+    assert str(entries[0].target) == "victini"
+
+
+def test_the_region_names_its_two_dexes_apart() -> None:
+    # Black 2 and White 2 keep twelve of these numbers and renumber the rest, so the two lists
+    # disagree about what nearly every number means - as Johto's two do, and unlike Platinum's,
+    # which is the pair's with more at the end. One constant called DEX would be a lie here.
+    assert unova.BW_DEX == "original-unova"
+    assert unova.B2W2_DEX == "updated-unova"
+    assert unova.BW_DEX != unova.B2W2_DEX
+
+
+def test_each_unova_cartridge_trades_with_the_sequels_it_has_never_met() -> None:
+    trades = [edge for edge in black.edges() if edge.mechanism is TransferMechanism.TRADE]
+
+    assert {edge.to for edge in trades} == {"white", "black-2", "white-2"}
+    assert all(edge.direction is TransferDirection.BOTH_WAYS for edge in trades)
+    assert all(isinstance(edge.filter, AllSpeciesFilter) for edge in trades)
+    # Two of the three are not written yet, and the registry is what holds those back - so the
+    # day the sequels arrive nobody has to remember to come back here.
+    assert {edge.to for edge in trades} - set(default_registry().game_ids) == {
+        "black-2",
+        "white-2",
+    }
+
+
+def test_no_generation_4_cartridge_claims_the_poke_transfer_itself() -> None:
+    # The same reasoning as Pal Park: it is one way, and its National Dex limit is a fact about
+    # the game that receives.
+    for module in (diamond, pearl, platinum, heartgold, soulsilver):
+        assert all(edge.mechanism is not TransferMechanism.POKE_TRANSFER for edge in module.edges())
+
+
+def test_the_poke_transfer_takes_all_five_generation_4_games_and_stops_where_they_do() -> None:
+    receiving = [
+        edge for edge in white.edges() if edge.mechanism is TransferMechanism.POKE_TRANSFER
+    ]
+
+    assert {edge.from_ for edge in receiving} == set(ds.CARTRIDGES)
+    assert all(edge.to == "white" for edge in receiving)
+    assert all(edge.direction is TransferDirection.ONE_WAY for edge in receiving)
+    # The cap is the sending generation's rather than this one's: nothing above Arceus existed
+    # to be transferred, and the 156 species these games added never went the other way.
+    assert all(edge.filter.to == 493 for edge in receiving)
+
+
+def test_the_route_to_bank_is_one_route_the_cartridges_and_the_3ds_releases_share() -> None:
+    # Poke Transporter shipped in 2013 for these four and was given the Virtual Console releases
+    # three years later, so it belongs to neither side and both ask `bank` for it.
+    for game_id, module in (("black", black), ("white", white), ("red", red), ("crystal", crystal)):
+        assert bank.transporter_edge(game_id) in module.edges()
 
 
 # --- the registry itself ----------------------------------------------------------------------

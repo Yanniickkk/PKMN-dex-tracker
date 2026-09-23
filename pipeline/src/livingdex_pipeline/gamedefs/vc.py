@@ -5,7 +5,8 @@ cartridges they were in 1996. That is a decision about what this tracker is for 
 about what is true: a Game Boy cartridge trades with another Game Boy cartridge and reaches
 nothing else, so a Pokemon caught on one can never join a living dex kept anywhere later. The
 Virtual Console releases can, through Poke Transporter into Pokemon Bank, and that one route is
-the whole reason they are here.
+the whole reason they are here. The route itself is not here but in :mod:`bank`: Transporter
+was built for Generation 5 and given these releases afterwards.
 
 So there is no ``red-vc`` beside a ``red``. There is one Red, it is the 3DS one, and its
 release says so. A file that needs to know which it is asks the entity rather than the id.
@@ -18,19 +19,7 @@ from __future__ import annotations
 
 from datetime import date
 
-from ..models import (
-    AllSpeciesFilter,
-    DexSource,
-    Game,
-    GameRelease,
-    TransferDirection,
-    TransferEdge,
-    TransferMechanism,
-)
-
-#: The transfer graph's node for Pokemon Bank. Not a game, and not written yet: every release
-#: here declares the route to it and the registry holds each one back until the node exists.
-BANK = "bank"
+from ..models import DexSource, Game, GameRelease
 
 
 def release(
@@ -70,20 +59,4 @@ def release(
         dex_source=DexSource.GAME_DEX,
         pair_partner=pair_partner,
         sprite_set=sprite_set,
-    )
-
-
-def transporter_edge(game_id: str) -> TransferEdge:
-    """Poke Transporter into Pokemon Bank: the route these releases exist for.
-
-    One way, and permanently. The filter is everything the game can hold, because Transporter
-    does not choose: what it refuses is a Pokemon holding an item or one that knows an HM move,
-    and neither of those is a species.
-    """
-    return TransferEdge(
-        **{"from": game_id},
-        to=BANK,
-        mechanism=TransferMechanism.POKE_TRANSPORTER,
-        direction=TransferDirection.ONE_WAY,
-        filter=AllSpeciesFilter(),
     )

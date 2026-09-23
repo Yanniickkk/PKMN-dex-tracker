@@ -28,3 +28,20 @@ def only_on(partner: str, *, generation: int, event: str | None = None) -> str:
 def with_event(reason: str, event: str | None) -> str:
     """One reason, with what step 7 found about it added as a second sentence."""
     return f"{reason}. {event[0].upper()}{event[1:]}" if event else reason
+
+
+def handed_out(*events: str) -> str:
+    """One sentence naming every distribution that ever handed this species out.
+
+    Written as a list of events rather than one sentence per event because most of these were
+    covered twice, and "an event existed" is the answer a player is after - which one is detail
+    they can read once and forget.
+
+    Here rather than in a region, because step 7 asks the same question of every game and the
+    answer is the same shape in all of them. Kanto wrote it first and Unova needed it next.
+    """
+    named = (
+        " and ".join(events) if len(events) < 3 else f"{', '.join(events[:-1])} and {events[-1]}"
+    )
+
+    return f"{named} handed one out"

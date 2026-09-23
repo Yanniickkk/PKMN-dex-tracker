@@ -21,7 +21,7 @@ from __future__ import annotations
 from datetime import date
 
 from ..models import AllSpeciesFilter, Game, TransferDirection, TransferEdge, TransferMechanism
-from . import exclusives, vc
+from . import bank, exclusives, vc
 
 GENERATION = 2
 
@@ -124,7 +124,7 @@ def edges(game_id: str) -> list[TransferEdge]:
     Both kinds together, for the reason :mod:`gb` gives: a game that declares its routes in two
     places grows one of them and not the other.
     """
-    return [*link_trade_edges(game_id), vc.transporter_edge(game_id)]
+    return [*link_trade_edges(game_id), bank.transporter_edge(game_id)]
 
 
 def only_on(partner: str, event: str | None = None) -> str:

@@ -8,6 +8,7 @@ because per-game encounter detail is where PokeAPI is thinnest.
 
 from __future__ import annotations
 
+from datetime import date
 from typing import Any
 
 from .http import PoliteClient
@@ -23,6 +24,14 @@ class PokeApiClient:
 
     def resource(self, path: str, *, refresh: bool = False) -> Any:
         return self._client.get_json(f"{self._base_url}/{path.lstrip('/')}", refresh=refresh)
+
+    def retrieved_on(self, url: str) -> date:
+        """When the answer at this url was fetched.
+
+        Takes the whole url rather than a path, because it answers for the citation a caller
+        is already building and that is what a citation carries.
+        """
+        return self._client.retrieved_on(url)
 
     def species_list(self, *, limit: int = 2000, refresh: bool = False) -> list[dict[str, Any]]:
         """Every species, name and url, in National Dex order."""

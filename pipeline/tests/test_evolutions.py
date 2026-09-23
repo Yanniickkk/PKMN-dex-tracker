@@ -39,6 +39,10 @@ class FakeApi:
         self._chains = chains
         self._species = species or {}
 
+    def retrieved_on(self, url: str) -> date:
+        """The day the cache says this url was fetched, which a citation carries."""
+        return RETRIEVED_ON
+
     def evolution_chain(self, species: str, *, refresh: bool = False) -> str:
         return self._species.get(species, next(iter(self._chains)))
 
@@ -187,7 +191,6 @@ def test_a_game_gets_the_newest_variant_it_is_old_enough_for() -> None:
         game_id="emerald",
         version_group="emerald",
         species=["feebas", "milotic"],
-        retrieved_on=RETRIEVED_ON,
     )
 
     # Emerald came before Black and White, so it evolves Feebas the way its own generation did.
@@ -201,7 +204,6 @@ def test_a_later_game_gets_the_variant_that_replaced_it() -> None:
         game_id="black",
         version_group="black-white",
         species=["feebas", "milotic"],
-        retrieved_on=RETRIEVED_ON,
     )
 
     assert [one.rule for one in methods] == ["feebas-to-milotic-black-white"]
@@ -229,7 +231,6 @@ def test_an_evolution_from_a_later_generation_is_not_offered() -> None:
             game_id="emerald",
             version_group="emerald",
             species=["roselia"],
-            retrieved_on=RETRIEVED_ON,
         )
         == []
     )
@@ -253,7 +254,6 @@ def test_a_species_the_game_does_not_have_evolves_into_nothing_here() -> None:
             game_id="emerald",
             version_group="emerald",
             species=["kirlia"],
-            retrieved_on=RETRIEVED_ON,
         )
         == []
     )

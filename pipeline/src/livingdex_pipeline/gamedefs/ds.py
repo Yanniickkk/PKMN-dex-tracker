@@ -18,6 +18,7 @@ from ..models import (
     DexSource,
     Game,
     GameRelease,
+    NationalDexRangeFilter,
     TransferDirection,
     TransferEdge,
     TransferMechanism,
@@ -72,6 +73,31 @@ def link_trade_edges(game_id: str) -> list[TransferEdge]:
         )
         for partner in CARTRIDGES
         if partner != game_id
+    ]
+
+
+def poke_transfer_edges(*, into: str) -> list[TransferEdge]:
+    """Every Generation 4 cartridge sending into one Generation 5 game.
+
+    The successor to Pal Park and the same shape of route: one way, permanently, and declared by
+    the game that receives rather than by the five that send - the limit it carries is a fact
+    about what Generation 5 will accept from before it, and the cartridge has no opinion about
+    it.
+
+    What changed is the hardware rather than the rule. Pal Park wanted a Game Pak in the slot
+    underneath, so it could only ever run on a DS that had one; the Poke Transfer wants a second
+    DS beside the first, which is why a DSi or a 3DS can receive a Sinnoh Pokemon and could
+    never have migrated one.
+    """
+    return [
+        TransferEdge(
+            **{"from": cartridge_id},
+            to=into,
+            mechanism=TransferMechanism.POKE_TRANSFER,
+            direction=TransferDirection.ONE_WAY,
+            filter=NationalDexRangeFilter(**{"from": 1}, to=NATIONAL_DEX_THROUGH),
+        )
+        for cartridge_id in CARTRIDGES
     ]
 
 

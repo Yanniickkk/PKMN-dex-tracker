@@ -240,7 +240,6 @@ def acquisition_methods(context: BuildContext, entries: list[DexEntry]) -> list[
             game_id=GAME_ID,
             version=POKEAPI_VERSION,
             species=species,
-            retrieved_on=today,
             refresh=context.refresh,
             places=places,
         ),
@@ -249,7 +248,6 @@ def acquisition_methods(context: BuildContext, entries: list[DexEntry]) -> list[
             game_id=GAME_ID,
             version=POKEAPI_VERSION,
             species=species,
-            retrieved_on=today,
             details=GIFTS,
             refresh=context.refresh,
             places=places,
@@ -259,7 +257,6 @@ def acquisition_methods(context: BuildContext, entries: list[DexEntry]) -> list[
             game_id=GAME_ID,
             version_group=POKEAPI_VERSION_GROUP,
             species=species,
-            retrieved_on=today,
             refresh=context.refresh,
         ),
         *breeding_encounters(

@@ -16,6 +16,7 @@ import logging
 import time
 import urllib.robotparser
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit, urlunsplit
@@ -41,6 +42,10 @@ class CacheEntry:
     url: str
     body: bytes
     from_cache: bool
+    #: The day this body came off the network, whether that was a moment ago or last month.
+    #: It is what a citation means by "retrieved on", and it is why that date does not move
+    #: every time the dataset is rebuilt from a cache that has not changed.
+    retrieved_on: date
 
 
 class DiskCache:
@@ -63,14 +68,45 @@ class DiskCache:
         body_path, _ = self._paths(url)
         return body_path.read_bytes() if body_path.exists() else None
 
-    def put(self, url: str, body: bytes) -> None:
+    def put(self, url: str, body: bytes, *, retrieved_on: date | None = None) -> None:
         body_path, meta_path = self._paths(url)
         body_path.parent.mkdir(parents=True, exist_ok=True)
         body_path.write_bytes(body)
         meta_path.write_text(
-            json.dumps({"url": url, "bytes": len(body)}, indent=2),
+            json.dumps(
+                {
+                    "url": url,
+                    "bytes": len(body),
+                    "retrieved_on": (retrieved_on or date.today()).isoformat(),
+                },
+                indent=2,
+            ),
             encoding="utf-8",
         )
+
+    def retrieved_on(self, url: str) -> date | None:
+        """The day this body was fetched, or nothing if it was never fetched.
+
+        From the metadata beside the body rather than the file's timestamp, because a cache
+        that is copied, restored from a backup or checked out again keeps its metadata and
+        loses its timestamps. The timestamp is the fallback for entries written before this
+        was recorded: it is the same fact by a less reliable route, and it beats calling
+        everything in an old cache today's news.
+        """
+        body_path, meta_path = self._paths(url)
+        if not body_path.exists():
+            return None
+
+        if meta_path.exists():
+            try:
+                recorded = json.loads(meta_path.read_text(encoding="utf-8")).get("retrieved_on")
+            except (OSError, ValueError):
+                recorded = None
+
+            if recorded:
+                return date.fromisoformat(recorded)
+
+        return date.fromtimestamp(body_path.stat().st_mtime)
 
     def forget(self, url: str) -> None:
         for path in self._paths(url):
@@ -118,7 +154,12 @@ class PoliteClient:
             cached = self.cache.get(url)
             if cached is not None:
                 log.debug("cache hit %s", url)
-                return CacheEntry(url=url, body=cached, from_cache=True)
+                return CacheEntry(
+                    url=url,
+                    body=cached,
+                    from_cache=True,
+                    retrieved_on=self.cache.retrieved_on(url) or date.today(),
+                )
 
         # robots.txt itself is exempt, or checking it would need itself first.
         if self.respect_robots and urlsplit(url).path != "/robots.txt" and not self._allowed(url):
@@ -129,8 +170,18 @@ class PoliteClient:
         response = self._client.get(url)
         response.raise_for_status()
 
-        self.cache.put(url, response.content)
-        return CacheEntry(url=url, body=response.content, from_cache=False)
+        today = date.today()
+        self.cache.put(url, response.content, retrieved_on=today)
+
+        return CacheEntry(url=url, body=response.content, from_cache=False, retrieved_on=today)
+
+    def retrieved_on(self, url: str) -> date:
+        """When the answer at this url was fetched, for whoever has to cite it.
+
+        Today for anything not in the cache, which is the honest answer for a page this build
+        is about to ask for.
+        """
+        return self.cache.retrieved_on(url) or date.today()
 
     def get_text(self, url: str, *, refresh: bool = False) -> str:
         return self.fetch(url, refresh=refresh).body.decode("utf-8")

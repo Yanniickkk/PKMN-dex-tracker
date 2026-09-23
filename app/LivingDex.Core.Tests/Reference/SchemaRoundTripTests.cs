@@ -212,6 +212,27 @@ public class SchemaRoundTripTests
     }
 
     [Fact]
+    public void A_generation_5_spot_is_spelled_the_way_the_pipeline_writes_it()
+    {
+        // The pipeline writes camelCase and the enum is PascalCase, so a new value is only
+        // really added once both halves agree about the word in the file.
+        var slot = new WildAcquisition
+        {
+            Game = new GameId("black"),
+            Target = DexTarget.ForSpecies(new SpeciesId("audino")),
+            Source = Citation,
+            Location = "Route 3",
+            Method = EncounterMethod.RustlingGrass,
+            Levels = new LevelRange(14, 16),
+        };
+
+        var json = Serialize<AcquisitionMethod>(slot);
+
+        Assert.Equal("rustlingGrass", json.GetProperty("method").GetString());
+        Assert.Equal(EncounterMethod.RustlingGrass, RoundTrip(slot).Method);
+    }
+
+    [Fact]
     public void The_acquisition_discriminator_is_the_kind_the_ui_orders_by()
     {
         var json = Serialize<AcquisitionMethod>(new EvolutionAcquisition

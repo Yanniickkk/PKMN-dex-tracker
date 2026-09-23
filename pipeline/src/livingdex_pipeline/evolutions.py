@@ -22,7 +22,6 @@ from __future__ import annotations
 import logging
 from collections.abc import Sequence
 from dataclasses import dataclass, field
-from datetime import date
 
 import httpx
 
@@ -189,13 +188,17 @@ def evolution_rules(
     ]
 
 
+def _cited(api: PokeApiClient, url: str) -> SourceCitation:
+    """One chain's url, dated by the day the cache last fetched it."""
+    return SourceCitation(source="pokeapi", url=url, retrieved_on=api.retrieved_on(url))
+
+
 def evolution_encounters(
     api: PokeApiClient,
     *,
     game_id: str,
     version_group: str,
     species: Sequence[str],
-    retrieved_on: date,
     refresh: bool = False,
 ) -> list[EvolutionAcquisition]:
     """Every evolution the given species can go through in one game.
@@ -240,11 +243,7 @@ def evolution_encounters(
                 game=game_id,
                 target=DexTarget(species=variant.to_species),
                 rule=names[variant],
-                source=SourceCitation(
-                    source="pokeapi",
-                    url=f"{BASE_URL}/evolution-chain/{chain_of[pair[0]]}",
-                    retrieved_on=retrieved_on,
-                ),
+                source=_cited(api, f"{BASE_URL}/evolution-chain/{chain_of[pair[0]]}"),
             )
         )
 

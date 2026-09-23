@@ -43,6 +43,10 @@ class FakeApi:
         self._locations = locations
         self.asked: list[str] = []
 
+    def retrieved_on(self, url: str) -> date:
+        """The day the cache says this url was fetched, which a citation carries."""
+        return TODAY
+
     def default_pokemon(self, species: str, *, refresh: bool = False) -> str:
         return species
 
@@ -68,7 +72,6 @@ def build(encounters: dict[str, list], locations: dict[str, tuple[str, str]], ve
         game_id="emerald",
         version=version,
         species=list(encounters),
-        retrieved_on=TODAY,
     )
 
 
@@ -436,7 +439,6 @@ def test_the_same_place_is_looked_up_once_however_many_pokemon_live_there() -> N
         game_id="emerald",
         version="emerald",
         species=["poochyena", "zigzagoon"],
-        retrieved_on=TODAY,
     )
 
     # Two requests for the first Pokemon, none for the second.
@@ -469,7 +471,6 @@ def test_a_game_can_call_a_place_what_its_own_players_call_it() -> None:
         game_id="gold",
         version="gold",
         species=["ho-oh"],
-        retrieved_on=TODAY,
         places=places,
     )
 

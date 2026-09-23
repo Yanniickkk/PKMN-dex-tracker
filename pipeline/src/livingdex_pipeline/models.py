@@ -102,6 +102,20 @@ class EncounterMethod(StrEnum):
     HEADBUTT = "headbutt"
     HONEY_TREE = "honeyTree"
     SWARM = "swarm"
+    # Generation 5's own. Unova hides a second table inside the first almost everywhere: a
+    # darker patch of the same grass with its own species in it, and four kinds of moving spot
+    # - grass that rustles, a cloud of dust in a cave, a ripple on the water, a shadow crossing
+    # a bridge - that hold what is otherwise nowhere. Sixty-two of the two hundred and fourteen
+    # species a player of Black can catch are only in one of those, so calling them "other"
+    # would leave a third of the game with no answer to "where do I find it".
+    #
+    # Named the way `honeyTree` is, for the same reason: a generation's own way of starting an
+    # encounter is a method rather than a note on one.
+    DARK_GRASS = "darkGrass"
+    RUSTLING_GRASS = "rustlingGrass"
+    DUST_CLOUD = "dustCloud"
+    RIPPLING_WATER = "ripplingWater"
+    BRIDGE_SHADOW = "bridgeShadow"
     OTHER = "other"
 
 

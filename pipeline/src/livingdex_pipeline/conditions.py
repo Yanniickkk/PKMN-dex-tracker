@@ -159,6 +159,13 @@ REQUIREMENTS: dict[str, str] = {
     "other-giratina-not-caught-in-distortion-world": (
         "Only if it was not caught in the Distortion World"
     ),
+    # The same fact in Unova, and PokeAPI words it generally because it happens twice there:
+    # the cover legendary waits at Dragonspiral Tower if it got away at N's Castle, and Landorus
+    # comes back to the Abundant Shrine.
+    "special-encounter-couldnt-capture-before": "Only if it got away the first time",
+    # Unova's postgame gate. Ghetsis is the last thing in the story, so this is Generation 5's
+    # way of saying what other games say with a Hall of Fame.
+    "defeated-ghetsis": "After Ghetsis is beaten",
     "weekday-sunday": "On a Sunday",
     "weekday-monday": "On a Monday",
     "weekday-tuesday": "On a Tuesday",

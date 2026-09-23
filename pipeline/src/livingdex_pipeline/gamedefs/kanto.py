@@ -33,7 +33,7 @@ from ..places import LocationNames
 from ..sources import bulbapedia
 from ..trades import InGameTrade, trade_encounters
 from ..wild import wild_encounters
-from . import gb, gba
+from . import exclusives, gb, gba
 
 #: Kanto proper.
 REGION = "Kanto"
@@ -190,17 +190,8 @@ POKEPARK_EGG = "the PokePark Egg in Japan in 2005"
 
 
 def handed_out(*events: str) -> str:
-    """One sentence naming every distribution that ever handed this species out.
-
-    Written as a list of events rather than one sentence per event because most of these were
-    covered twice, and "an event existed" is the answer a player is after - which one is detail
-    they can read once and forget.
-    """
-    named = (
-        " and ".join(events) if len(events) < 3 else f"{', '.join(events[:-1])} and {events[-1]}"
-    )
-
-    return f"{named} handed one out"
+    """One sentence naming every distribution that ever handed this species out."""
+    return exclusives.handed_out(*events)
 
 
 def dex_entries(
@@ -284,7 +275,6 @@ def acquisition_methods(
             game_id=game_id,
             version=version,
             species=species,
-            retrieved_on=today,
             refresh=context.refresh,
             places=places,
         )
@@ -297,7 +287,6 @@ def acquisition_methods(
                 game_id=game_id,
                 version=version,
                 species=species,
-                retrieved_on=today,
                 details=gifts,
                 refresh=context.refresh,
                 places=places,
@@ -311,7 +300,6 @@ def acquisition_methods(
                 game_id=game_id,
                 version_group=version_group,
                 species=species,
-                retrieved_on=today,
                 refresh=context.refresh,
             )
         )

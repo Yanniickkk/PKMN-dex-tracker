@@ -22,7 +22,6 @@ from __future__ import annotations
 import logging
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from datetime import date
 
 from . import conditions
 from .models import DexTarget, GiftAcquisition, GiftKind, SourceCitation
@@ -94,6 +93,13 @@ class GiftDetail:
 #: What a game says about one species' gifts: one description, or one per place.
 GiftDetails = GiftDetail | tuple[GiftDetail, ...]
 
+#: Why a row is not kept: one reason for the whole species, or one per place it is filed under.
+#:
+#: The second shape is for a source that lists one encounter twice. PokeAPI has Unova's Friday
+#: Musharna both in the Dreamyard and in the Dreamyard basement, and only the first row carries
+#: the conditions that make it true - so the species is not wrong, one of its two places is.
+Exclusion = str | Mapping[str, str]
+
 
 def gift_encounters(
     api: PokeApiClient,
@@ -101,9 +107,8 @@ def gift_encounters(
     game_id: str,
     version: str,
     species: list[str],
-    retrieved_on: date,
     details: Mapping[str, GiftDetails] | None = None,
-    excluded: Mapping[str, str] | None = None,
+    excluded: Mapping[str, Exclusion] | None = None,
     refresh: bool = False,
     places: LocationNames | None = None,
 ) -> list[GiftAcquisition]:
@@ -118,6 +123,9 @@ def gift_encounters(
     Sinnoh fossils under both halves of the pair, and Bulbapedia is clear that the Skull Fossil
     is Diamond's and the Armor Fossil is Pearl's. A source that is wrong about a version is a
     disagreement to record, not a row to keep.
+
+    A reason can also be given per place rather than for the species, for the case where only
+    one of its rows is wrong - see :data:`Exclusion`.
     """
     known = details or {}
     skip = excluded or {}
@@ -130,14 +138,15 @@ def gift_encounters(
     seen: set[tuple] = set()
 
     for name in species:
-        if name in skip:
-            log.info("%s is not one of %s's gifts: %s", name, game_id, skip[name])
+        whole_species = skip.get(name)
+        if isinstance(whole_species, str):
+            log.info("%s is not one of %s's gifts: %s", name, game_id, whole_species)
             continue
 
         # Encounters hang off a Pokemon rather than a species, as they do for wild slots.
         pokemon = api.default_pokemon(name, refresh=refresh)
         url = f"{BASE_URL}/pokemon/{pokemon}/encounters"
-        citation = SourceCitation(source="pokeapi", url=url, retrieved_on=retrieved_on)
+        citation = SourceCitation(source="pokeapi", url=url, retrieved_on=api.retrieved_on(url))
 
         for area in api.encounters(pokemon, refresh=refresh):
             area_slug = area["location_area"]["name"]
@@ -171,6 +180,17 @@ def gift_encounters(
                         continue
 
                     place = where.of(area_slug)
+                    not_here = _not_here(skip.get(name), _as_written(place))
+                    if not_here is not None:
+                        log.info(
+                            "%s is not handed over in %s in %s: %s",
+                            name,
+                            _as_written(place),
+                            game_id,
+                            not_here,
+                        )
+                        continue
+
                     record = _record(
                         game_id=game_id,
                         species=name,
@@ -231,6 +251,14 @@ def _record(
         requirement=known.requirement or conditions.requirement(values, subject=species, skip=()),
         source=citation,
     )
+
+
+def _not_here(exclusion: Exclusion | None, place: str) -> str | None:
+    """Why this one place is not kept, when the species itself is."""
+    if exclusion is None or isinstance(exclusion, str):
+        return None
+
+    return exclusion.get(place)
 
 
 def _as_written(place: tuple[str, str | None]) -> str:

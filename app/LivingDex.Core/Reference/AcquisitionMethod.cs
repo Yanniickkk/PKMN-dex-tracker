@@ -94,6 +94,22 @@ public enum EncounterMethod
     Headbutt,
     HoneyTree,
     Swarm,
+
+    /// <summary>The darker patch of grass beside the ordinary kind, with its own table.</summary>
+    DarkGrass,
+
+    /// <summary>Grass that shakes: Generation 5's rarest walk-up encounters.</summary>
+    RustlingGrass,
+
+    /// <summary>A cloud of dust in a cave, which is sometimes a Pokemon and sometimes a gem.</summary>
+    DustCloud,
+
+    /// <summary>A ripple on the water, surfed into.</summary>
+    RipplingWater,
+
+    /// <summary>A shadow crossing a bridge, walked under.</summary>
+    BridgeShadow,
+
     Other,
 }
 

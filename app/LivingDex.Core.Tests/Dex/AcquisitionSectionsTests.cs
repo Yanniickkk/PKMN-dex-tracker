@@ -181,4 +181,27 @@ public class AcquisitionSectionsTests
             Enum.GetValues<GiftKind>().Select(AcquisitionNames.Of),
             name => string.IsNullOrWhiteSpace(name));
     }
+
+    [Fact]
+    public void Generation_5s_own_ways_of_meeting_something_are_named_rather_than_lumped()
+    {
+        // Unova hides a second table inside the first almost everywhere, and a third of what a
+        // player can catch there is only in one of these. "another way" is the fallback for a
+        // method nobody has read, and none of these five is that.
+        EncounterMethod[] ownToUnova =
+        [
+            EncounterMethod.DarkGrass,
+            EncounterMethod.RustlingGrass,
+            EncounterMethod.DustCloud,
+            EncounterMethod.RipplingWater,
+            EncounterMethod.BridgeShadow,
+        ];
+
+        var names = ownToUnova.Select(AcquisitionNames.Of).ToList();
+
+        Assert.DoesNotContain("another way", names);
+        Assert.Equal(names.Count, names.Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal("dark grass", AcquisitionNames.Of(EncounterMethod.DarkGrass));
+        Assert.Equal("rustling grass", AcquisitionNames.Of(EncounterMethod.RustlingGrass));
+    }
 }
