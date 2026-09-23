@@ -2177,7 +2177,245 @@ visible now where before they were not even asked about.
 
 ### Generation 5
 
-_Nothing yet._
+- [x] **Black** (`black`, gen 5, pair partner: White) - 2026-09-23
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-23
+  - [x] 6 Sprites - 2026-09-23
+  - [x] 7 Events - 2026-09-23
+  - [x] 8 Validate + smoke test - 2026-09-23
+  - 1168 ways to get something: 809 wild slots, 320 evolutions, 30 gifts and statics, 5 trades
+    and 4 eggs. 455 of the 649 its living dex asks for are fully covered, 178 partly, 13
+    explained. Validation green on all 9 rules, for the whole dataset.
+- [x] **White** (`white`, gen 5, pair partner: Black) - 2026-09-23
+  - [x] 1 Entity + edges - 2026-09-22
+  - [x] 2 Dex list - 2026-09-22
+  - [x] 3 Wild - 2026-09-22
+  - [x] 4 Gifts & statics - 2026-09-22
+  - [x] 5 Trades & evolutions - 2026-09-23
+  - [x] 6 Sprites - 2026-09-23
+  - [x] 7 Events - 2026-09-23
+  - [x] 8 Validate + smoke test - 2026-09-23
+  - The same counts as Black, entry for entry, which is what a version pair is.
+
+  _What all four games share is in `unova.py`, which is also the region module: Generation 5 never
+  left Unova, so the hardware-and-region split `ds.py` explains has nothing on either side of it.
+  Black 2 and White 2 are not a third version but a second pair - own story, own half of the map,
+  own Pokedex - so `unova.py` keeps the two pairs apart wherever they disagree._
+
+  _Step 4 for both: 30 gifts and statics each. The fossils are the interesting half - nine of them,
+  revived by the museum's machine in Nacrene City, and PokeAPI's condition is the bare item name.
+  Where the item comes from is the part that is hard: seven are from earlier generations and a
+  Worker in Twist Mountain hands out one a day, and only once Ghetsis is beaten; the two this
+  generation brought are a choice a person in the Relic Castle offers, so one save fills one of
+  them and the other waits for a trade. That looks exactly like a version exclusive and is not one._
+
+  _The woman outside the Dreamyard hands over the monkey the player's own first partner beats -
+  Pansage for a Tepig - and PokeAPI files all three with no condition at all, so without the table
+  the dataset would have promised every player all three. All three are in the rustling grass as
+  well, so the gift decides which one is free rather than which one is possible._
+
+  _**Three entries turned out not to be answers**, and all three are really in the game: Victini
+  behind the Liberty Pass, which went out over Nintendo Wi-Fi in 2011 and closed with the service in
+  2014; Zorua behind the event Celebi; Zoroark behind one of the shiny event beasts, both of them
+  Generation 4 giveaways carried across with the Relocator. They bring no record now and step 7
+  writes their sentence._
+
+  _Two more faults in the source, and one new piece of machinery for the second:_
+
+  _- PokeAPI files the roaming Tornadus and Thundurus under **Team Flare Secret HQ**, which is in
+  Kalos, two generations away. Corrected with the same rename table the Bell Tower needed._
+  _- It has the Friday Musharna twice, once in the Dreamyard with the conditions and once in the
+  basement without them, and Bulbapedia has one Musharna, in the basement. `excluded` can now name
+  a place rather than a species, so one row is dropped and the species keeps its real one._
+
+  _And two conditions nobody had words for: `defeated-ghetsis` ("After Ghetsis is beaten", which is
+  this generation's Hall of Fame) and `special-encounter-couldnt-capture-before` ("Only if it got
+  away the first time" - the cover legendary waiting at Dragonspiral Tower, and Landorus coming
+  back to the Abundant Shrine)._
+
+  _Step 5 for both: five traders, 320 evolutions and four eggs._
+
+  _The five traders are small for a Unova game and every one of them is worth something. Two are
+  the only way here to a Rotom and a Munchlax, neither of which is in this generation's dex at all,
+  and the Munchlax is **only in summer** - the first door in this dataset that the calendar closes.
+  The fifth is the pair's own switch written as a trade: Dye swaps Petilil for a Cottonee in Black
+  and Cottonee for a Petilil in White, so **two of the six species that look like version
+  exclusives are not**, and step 7 has to know that before it writes anyone off._
+
+  _Four eggs, of fifteen babies that could have needed one. Unova's grass is full of grown-up
+  Pokemon from earlier generations and empty of their babies - Clefable in the Giant Chasm's
+  rustling grass, Wigglytuff on Route 14 - which is the exact opposite of Sinnoh, where the babies
+  were in the grass and the day care was not needed at all. Cleffa, Igglybuff and Smoochum need
+  nothing; Chingling needs a Chimecho holding a **Pure Incense**, which the Driftveil Market only
+  sells once the National Pokedex is open. The other eleven are left out because nothing here
+  produces a parent - there is no Pikachu in these games at all, so "hatch a Pichu" would be the
+  lie the no-breeding-dead-ends rule watches for._
+
+  _Validation is down to six errors each: Victini, Zorua, Keldeo, Meloetta, Genesect, and Zoroark
+  for evolving from a Zorua nothing explains yet. All six are step 7's._
+
+  _Step 7 for both: thirteen entries each, and **validation is green** - nine rules, no errors, no
+  warnings, for the whole dataset._
+
+  _Seven of the thirteen are the other half's, mirrored exactly, and the events there are the
+  surprise. Generation 4's four exclusives had no distribution at all; here both of the legendaries
+  each half is missing were handed out, and **every one of those giveaways was aimed at the half
+  that could not catch it** - the Milos Island Thundurus for Black, which has the Tornadus, and
+  Ash's Zekrom for Black, whose box has Reshiram on it. The ordinary five - the Solosis and Gothita
+  lines, Rufflet and Vullaby - were never handed out anywhere._
+
+  _Cottonee and Petilil are not on either list, which is step 5 paying off: they look exactly like
+  two more exclusives, and Dye swaps each half the one its own grass is missing._
+
+  _The other six are neither half's, and none of them is missing because the cartridge never held
+  it - each is really in the game, behind a giveaway that has ended. That is the opposite of Mew in
+  Kanto or Manaphy in Sinnoh. Two of the six needed the games column read carefully: **Zorua** is the
+  only entry anywhere in the six that no distribution ever covered - what was handed out was the key
+  rather than the Pokemon, an event Celebi for the Generation 4 games - and **Genesect** was handed
+  out plenty, but in the West every one of those was for the sequels, so a player of Black in Europe
+  or America was never offered one._
+
+  _`handed_out` moved from `kanto.py` to `exclusives.py` on the way: step 7 asks the same question
+  of every game, and the answer is the same shape in all of them._
+
+  _Step 6 for both: `generation-v/black-white`, 649 sprites, not one of them missing. One sheet for
+  the whole generation, which is new - every generation before this redrew itself either for its
+  third version or for its remakes, and the Unova sequels reuse these exactly. No `transparent` on
+  the end: unlike the Generation 1 and 2 sheets these are already cut out. The animated sheet beside
+  it is what these games are actually famous for, and it stays unused - they are GIFs, the grid
+  draws a still picture, and a folder of animations nobody plays is megabytes in the exe for
+  nothing. 1.9 MB added._
+
+  _Double-checked afterwards, and the four statics that were left without a sentence now have one.
+  PokeAPI carries no condition on any of those rows, and two other sources - Pokemon Database and
+  the species' own Bulbapedia pages - say only the place, the same place PokeAPI says. Three sources
+  agreeing about where something stands is not three sources saying how to reach it. The answers are
+  on the *Swords of Justice* page and on the two locations' own pages: Cobalion is in Mistralton
+  Cave's Guidance Chamber behind Surf, and **Terrakion and Virizion do not exist until Cobalion has
+  been met**; Volcarona waits on the Relic Castle's lowest floor once Ghetsis is beaten; and Kyurem
+  is not postgame at all, which was the easy thing to assume - it is in the cave depths on the first
+  visit, and what waits for the Hall of Fame is the second chance if it faints or is run from._
+
+  _Validation is down to 39 errors each from 55. Thirty-three of them are evolutions and belong to
+  step 5; the other six are the three above and the three mythicals, and they belong to step 7._
+
+  _Step 3 for both: every wild slot in Unova, read per version. What it cost was five new
+  encounter methods, because Unova hides a second table inside the first almost everywhere and the
+  schema had nowhere to put it: `darkGrass`, `rustlingGrass`, `dustCloud`, `ripplingWater` and
+  `bridgeShadow`, in `models.py`, the C# enum, the section labels and the icon set. 62 of the 214
+  species a player of Black can catch are only in one of those, and 13 more only in the dark grass,
+  which the dataset would otherwise have called plain walking. Fishing in a ripple is the one
+  compound case: it stays a Super Rod slot and says "Cast into rippling water", because the rod is
+  the half a player can be missing._
+
+  _Unova is also the first region whose slots carry a **season** - 127 of Black's do. The field has
+  been in the schema since Phase 0 and empty in all sixteen games before these two._
+
+  _Two things in the shared machinery changed while this was written, and both touched games that
+  were already finished:_
+
+  _- A room PokeAPI has no name for is no longer printed as one. Unova's Victory Road is filed as a
+  dozen `unknown-area-53`, and "Victory Road, Unknown Area 62" is the source admitting it does not
+  know, written out as if it were a place. Whatever else the slug holds is kept, so `1f-unknown-room`
+  is still 1F._
+  _- Records a player cannot tell apart are now folded into one: same species, place, method and
+  state of the world, differing only in levels and odds. That is what dropping the rooms needed -
+  Boldore stood in three of them - and it also caught 21 groups each in Gold, Silver and Crystal,
+  where a headbutt tree was listed twice at the same level with two different odds. The level range
+  widens to cover both and the odds are the best of them rather than their sum: a player is in one
+  room at a time._
+
+  _Left for step 4, found while reading the tables: PokeAPI files the roaming Tornadus and Thundurus
+  under **Team Flare Secret HQ**, which is a Kalos place and plainly wrong; `defeated-ghetsis` and
+  `special-encounter-couldnt-capture-before` have no wording yet; and the fossils arrive as `item-`
+  conditions on gift rows._
+
+  _Step 2 for both: 156 entries each, `original-unova`, Victini #000 to Genesect #155. It is the
+  first dex in this dataset that starts at zero, and the only one anywhere that holds nothing but
+  its own generation - all 156 of the species Generation 5 added, 494 to 649, and no older Pokemon
+  at all. So the gap between a game's dex and a living dex in it is widest here: 156 against 649.
+  Validation is red until step 3, and says so in as many words - "this game's encounters have not
+  been gathered yet"._
+
+  _The sequels show `updated-unova`, which is a different list rather than a longer one: it keeps
+  twelve of these numbers, Victini through Watchog, and renumbers everything after them. Both names
+  are in `unova.py` so that neither can quietly become "the" dex._
+
+  _Step 1 for both: 11 new routes. One trade between the halves, and ten one-way Poke Transfers -
+  each of the five Generation 4 cartridges into each of them, capped at 493 because nothing above
+  Arceus existed to send. Four more wait for the sequels and two for Bank._
+
+  _Two things moved while these were written. `bank.py` now holds the Bank node and the Poke
+  Transporter edge, which were in `vc.py`: Transporter shipped in 2013 for the Generation 5
+  cartridges and was given the Virtual Console releases three years later, so it was never a
+  Virtual Console fact. And `ds.poke_transfer_edges` sits beside `gba.pal_park_edges`, declared by
+  the generation that sends and called by the game that receives._
+
+  _Decided: the Dream Radar is in and the Dream World is out. Both hand Pokemon to these games and
+  neither is a game, but only one of them can still hand anything over - the Dream World was a
+  website and it closed in 2014, so nothing it gave is reachable by anyone starting today. The
+  Radar is a 3DS app someone can still run. It only feeds Black 2 and White 2, and it is in Phase 3
+  rather than in a game's step 4 because it needs a shape this dataset does not have yet._
+
+  - [ ] **Black** (`black`, gen 5, pair partner: White)
+    - [x] 1 Entity + edges - 2026-09-22
+    - [x] 2 Dex list - 2026-09-22
+    - [x] 3 Wild - 2026-09-22
+    - [x] 4 Gifts & statics - 2026-09-22
+    - [x] 5 Trades & evolutions - 2026-09-23
+    - [x] 6 Sprites - 2026-09-23
+    - [x] 7 Events - 2026-09-23
+    - [ ] 8 Validate + smoke test
+    - 809 wild slots, 214 species catchable, 158 of those slots in the dark grass alone, and 30
+      things handed over or standing in one spot.
+    - Black City stands where White Forest does and is not the same kind of place: no wild
+      Pokemon at all in the city, and a dozen older species in the forest. **PokeAPI has neither
+      area** - no `black-city`, no `white-forest` - so step 7 must not read its silence as "cannot
+      be caught", the way Gold's legendary birds taught. Hand-written slots may be needed, as the
+      Bug-Catching Contest needed them.
+  - [ ] **White** (`white`, gen 5, pair partner: Black)
+    - [x] 1 Entity + edges - 2026-09-22
+    - [x] 2 Dex list - 2026-09-22
+    - [x] 3 Wild - 2026-09-22
+    - [x] 4 Gifts & statics - 2026-09-22
+    - [x] 5 Trades & evolutions - 2026-09-23
+    - [x] 6 Sprites - 2026-09-23
+    - [x] 7 Events - 2026-09-23
+    - [ ] 8 Validate + smoke test
+    - 809 wild slots too, and the same 214 species. The same gap as well: White Forest's dozen
+      depend on who has moved in, and PokeAPI carries none of it.
+  - [ ] **Black 2** (`black-2`, gen 5, pair partner: White 2)
+    - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
+    - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
+    - [ ] 8 Validate + smoke test
+  - [ ] **White 2** (`white-2`, gen 5, pair partner: Black 2)
+    - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
+    - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
+    - [ ] 8 Validate + smoke test
+
+  - Smoke test on the published exe: a collection made through the wizard called "Black on the
+    DS", with Black as main game and Platinum and White linked. The linked-games step is the
+    whole transfer graph in one screen - eleven games in three groups, and each card says how it
+    reaches Black: the five Generation 3 cartridges "via Pal Park, then the Poke Transfer",
+    which is a two-hop route composed by the app; the five Generation 4 games "via the Poke
+    Transfer"; White "via trading". Generations 1 and 2 are absent, correctly - their only way
+    out is Bank, and Bank is not written yet.
+  - The grid reads "0 of 649 in Black", drawn from the Generation 5 sprite sheet. Audino's
+    popup is what step 3 was for: four slots, each "How: rustling grass", with levels and odds.
+    Victini's says "Liberty Garden only opens with the Liberty Pass, which went out over
+    Nintendo Wi-Fi in 2011; the service closed in 2014", then the two distributions that handed
+    one out. Solosis shows all three layers at once - "White only in Generation 5; trade one
+    in", then White's own slots including one in the dark grass, each ending "Then to Black:
+    trading". Marking Audino caught moved the counter to "1 of 649".
+  - Every citation in the app reads "read 22 Sep 2026" rather than the day of the build, which
+    is the cache-dated citation working end to end.
+  - The user's settings were copied out first and restored byte for byte, and their data file
+    was untouched: same checksum and same timestamp afterwards as before. A second copy of the
+    app - theirs - was running throughout, so the automation was pointed at one window by
+    process id rather than by title, and only the instance this test started was stopped.
 
 ### Generation 6
 

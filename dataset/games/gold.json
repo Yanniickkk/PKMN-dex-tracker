@@ -1933,64 +1933,7 @@
       "target": {
         "species": "caterpie"
       },
-      "location": "Ilex Forest",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "caterpie"
-      },
       "location": "Route 34",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 65.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "caterpie"
-      },
-      "location": "Route 34",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "caterpie"
-      },
-      "location": "Route 35",
       "method": "headbutt",
       "levels": {
         "minimum": 10,
@@ -2015,7 +1958,7 @@
         "minimum": 10,
         "maximum": 10
       },
-      "ratePercent": 50.0,
+      "ratePercent": 65.0,
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
@@ -2087,25 +2030,6 @@
       "target": {
         "species": "caterpie"
       },
-      "location": "Route 36",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "caterpie"
-      },
       "location": "Route 37",
       "method": "headbutt",
       "levels": {
@@ -2113,25 +2037,6 @@
         "maximum": 10
       },
       "ratePercent": 65.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "caterpie"
-      },
-      "location": "Route 37",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
@@ -2163,25 +2068,6 @@
       "target": {
         "species": "caterpie"
       },
-      "location": "Route 38",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "caterpie"
-      },
       "location": "Route 39",
       "method": "headbutt",
       "levels": {
@@ -2189,25 +2075,6 @@
         "maximum": 10
       },
       "ratePercent": 65.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "caterpie"
-      },
-      "location": "Route 39",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
@@ -2239,64 +2106,7 @@
       "target": {
         "species": "caterpie"
       },
-      "location": "Lake of Rage",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "caterpie"
-      },
       "location": "Route 26",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 65.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "caterpie"
-      },
-      "location": "Route 26",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "caterpie"
-      },
-      "location": "Route 27",
       "method": "headbutt",
       "levels": {
         "minimum": 10,
@@ -2321,7 +2131,7 @@
         "minimum": 10,
         "maximum": 10
       },
-      "ratePercent": 50.0,
+      "ratePercent": 65.0,
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
@@ -2383,25 +2193,6 @@
         "maximum": 10
       },
       "ratePercent": 65.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "caterpie"
-      },
-      "location": "Azalea Town",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/caterpie/encounters",
@@ -6067,25 +5858,6 @@
       "target": {
         "species": "spearow"
       },
-      "location": "Route 29",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "spearow"
-      },
       "location": "Route 30",
       "method": "headbutt",
       "levels": {
@@ -6093,25 +5865,6 @@
         "maximum": 10
       },
       "ratePercent": 80.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "spearow"
-      },
-      "location": "Route 30",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
@@ -6143,25 +5896,6 @@
       "target": {
         "species": "spearow"
       },
-      "location": "Route 31",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "spearow"
-      },
       "location": "Route 32",
       "method": "headbutt",
       "levels": {
@@ -6169,25 +5903,6 @@
         "maximum": 10
       },
       "ratePercent": 80.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "spearow"
-      },
-      "location": "Route 32",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
@@ -6259,25 +5974,6 @@
       "target": {
         "species": "spearow"
       },
-      "location": "Route 33",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "spearow"
-      },
       "location": "Route 42",
       "method": "walk",
       "levels": {
@@ -6337,25 +6033,6 @@
       "target": {
         "species": "spearow"
       },
-      "location": "Route 42",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "spearow"
-      },
       "location": "Route 43",
       "method": "headbutt",
       "levels": {
@@ -6363,25 +6040,6 @@
         "maximum": 10
       },
       "ratePercent": 80.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "spearow"
-      },
-      "location": "Route 43",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
@@ -6413,25 +6071,6 @@
       "target": {
         "species": "spearow"
       },
-      "location": "Route 44",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "spearow"
-      },
       "location": "Route 45",
       "method": "headbutt",
       "levels": {
@@ -6439,25 +6078,6 @@
         "maximum": 10
       },
       "ratePercent": 80.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "spearow"
-      },
-      "location": "Route 45",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
@@ -6517,25 +6137,6 @@
         "maximum": 10
       },
       "ratePercent": 80.0,
-      "source": {
-        "source": "pokeapi",
-        "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
-        "retrievedOn": "2026-09-22"
-      }
-    },
-    {
-      "kind": "wild",
-      "game": "gold",
-      "target": {
-        "species": "spearow"
-      },
-      "location": "Route 46",
-      "method": "headbutt",
-      "levels": {
-        "minimum": 10,
-        "maximum": 10
-      },
-      "ratePercent": 50.0,
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/spearow/encounters",
@@ -7040,7 +6641,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/pikachu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7061,7 +6662,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/pikachu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7082,7 +6683,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/pikachu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7102,7 +6703,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/sandshrew/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7122,7 +6723,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/sandshrew/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7142,7 +6743,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/sandshrew/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7162,7 +6763,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/sandslash/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7182,7 +6783,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/sandslash/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7202,7 +6803,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/sandslash/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7222,7 +6823,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/sandslash/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7242,7 +6843,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/sandslash/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7262,7 +6863,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/sandslash/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7282,7 +6883,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/sandslash/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7922,7 +7523,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/jigglypuff/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7942,7 +7543,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/jigglypuff/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7962,7 +7563,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/jigglypuff/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -7982,7 +7583,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/jigglypuff/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8002,7 +7603,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/jigglypuff/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8022,7 +7623,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/jigglypuff/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8042,7 +7643,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/jigglypuff/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8062,7 +7663,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/jigglypuff/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8082,7 +7683,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/jigglypuff/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8102,7 +7703,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8122,7 +7723,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8142,7 +7743,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8162,7 +7763,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8182,7 +7783,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8202,7 +7803,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8222,7 +7823,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8242,7 +7843,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8262,7 +7863,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8282,7 +7883,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8302,7 +7903,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8322,7 +7923,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8342,7 +7943,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8363,7 +7964,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8384,7 +7985,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8405,7 +8006,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8425,7 +8026,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8445,7 +8046,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8465,7 +8066,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8485,7 +8086,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8505,7 +8106,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8525,7 +8126,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8545,7 +8146,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8565,7 +8166,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8586,7 +8187,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8607,7 +8208,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8628,7 +8229,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8649,7 +8250,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8670,7 +8271,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8691,7 +8292,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8712,7 +8313,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8733,7 +8334,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8754,7 +8355,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8775,7 +8376,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8796,7 +8397,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8817,7 +8418,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8837,7 +8438,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8857,7 +8458,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8877,7 +8478,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8897,7 +8498,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8917,7 +8518,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8937,7 +8538,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8957,7 +8558,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8976,7 +8577,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zubat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -8996,7 +8597,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9016,7 +8617,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9036,7 +8637,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9056,7 +8657,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9076,7 +8677,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9096,7 +8697,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9116,7 +8717,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9137,7 +8738,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9158,7 +8759,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9179,7 +8780,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9200,7 +8801,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9221,7 +8822,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9242,7 +8843,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9263,7 +8864,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9284,7 +8885,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9305,7 +8906,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9326,7 +8927,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9347,7 +8948,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9368,7 +8969,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9388,7 +8989,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9409,7 +9010,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9430,7 +9031,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9451,7 +9052,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9471,7 +9072,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9491,7 +9092,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9511,7 +9112,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9530,7 +9131,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9550,7 +9151,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9570,7 +9171,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golbat/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9590,7 +9191,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/oddish/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9610,7 +9211,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/oddish/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9630,7 +9231,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/oddish/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9650,7 +9251,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/oddish/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9670,7 +9271,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/oddish/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9690,7 +9291,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/gloom/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -9987,7 +9588,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/psyduck/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -10006,7 +9607,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/psyduck/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -10025,7 +9626,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/psyduck/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -10044,7 +9645,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golduck/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -10063,7 +9664,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golduck/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -10084,7 +9685,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golduck/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -10105,7 +9706,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golduck/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -10126,7 +9727,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golduck/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -10146,7 +9747,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golduck/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -10165,7 +9766,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/golduck/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11752,7 +11353,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11772,7 +11373,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11792,7 +11393,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11812,7 +11413,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11832,7 +11433,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11852,7 +11453,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11872,7 +11473,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11892,7 +11493,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11912,7 +11513,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11932,7 +11533,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11952,7 +11553,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11972,7 +11573,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -11992,7 +11593,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12012,7 +11613,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12032,7 +11633,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12052,7 +11653,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12072,7 +11673,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12092,7 +11693,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12112,7 +11713,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12132,7 +11733,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/kadabra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12152,7 +11753,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/kadabra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12172,7 +11773,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/kadabra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12193,7 +11794,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/machop/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12213,7 +11814,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/machop/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12233,7 +11834,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/machop/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12253,7 +11854,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/machop/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12273,7 +11874,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/machop/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12293,7 +11894,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/machoke/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12313,7 +11914,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/machoke/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12850,7 +12451,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12869,7 +12470,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12888,7 +12489,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12907,7 +12508,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12926,7 +12527,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12945,7 +12546,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12964,7 +12565,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -12983,7 +12584,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13003,7 +12604,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13022,7 +12623,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13041,7 +12642,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13060,7 +12661,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13079,7 +12680,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13098,7 +12699,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13117,7 +12718,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13137,7 +12738,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13156,7 +12757,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13175,7 +12776,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13194,7 +12795,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13213,7 +12814,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13232,7 +12833,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13251,7 +12852,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13270,7 +12871,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13289,7 +12890,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13308,7 +12909,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13327,7 +12928,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13346,7 +12947,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13365,7 +12966,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13384,7 +12985,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13403,7 +13004,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13422,7 +13023,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13441,7 +13042,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13460,7 +13061,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13479,7 +13080,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13498,7 +13099,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13517,7 +13118,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13536,7 +13137,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13555,7 +13156,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13574,7 +13175,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13593,7 +13194,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13612,7 +13213,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13631,7 +13232,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13650,7 +13251,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13669,7 +13270,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13688,7 +13289,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13707,7 +13308,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13726,7 +13327,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13746,7 +13347,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13766,7 +13367,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13786,7 +13387,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacool/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13805,7 +13406,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13824,7 +13425,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13843,7 +13444,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13862,7 +13463,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13882,7 +13483,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13901,7 +13502,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13920,7 +13521,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13939,7 +13540,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13958,7 +13559,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13977,7 +13578,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -13997,7 +13598,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14017,7 +13618,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14037,7 +13638,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14056,7 +13657,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14075,7 +13676,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14094,7 +13695,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14113,7 +13714,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14132,7 +13733,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14151,7 +13752,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14170,7 +13771,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14189,7 +13790,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14208,7 +13809,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14227,7 +13828,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14246,7 +13847,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14265,7 +13866,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14284,7 +13885,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14303,7 +13904,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14322,7 +13923,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14341,7 +13942,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14360,7 +13961,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14379,7 +13980,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14399,7 +14000,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14419,7 +14020,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/tentacruel/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14439,7 +14040,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14459,7 +14060,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14479,7 +14080,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14500,7 +14101,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14520,7 +14121,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14540,7 +14141,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14560,7 +14161,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14579,7 +14180,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14599,7 +14200,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14619,7 +14220,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14639,7 +14240,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14659,7 +14260,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14679,7 +14280,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14699,7 +14300,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14719,7 +14320,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14739,7 +14340,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14759,7 +14360,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/graveler/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14778,7 +14379,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/graveler/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14798,7 +14399,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/graveler/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14818,7 +14419,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/graveler/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14838,7 +14439,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/graveler/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14858,7 +14459,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/graveler/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -14878,7 +14479,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/graveler/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15462,7 +15063,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magnemite/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15482,7 +15083,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magnemite/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15502,7 +15103,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magnemite/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15522,7 +15123,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magnemite/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15542,7 +15143,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magnemite/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15562,7 +15163,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magnemite/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15582,7 +15183,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magnemite/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15602,7 +15203,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magnemite/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15622,7 +15223,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magnemite/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15641,7 +15242,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magnemite/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15742,7 +15343,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/doduo/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15763,7 +15364,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/doduo/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15783,7 +15384,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/doduo/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15803,7 +15404,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/doduo/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15823,7 +15424,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/doduo/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15843,7 +15444,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/doduo/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15863,7 +15464,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/doduo/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15883,7 +15484,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/doduo/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15903,7 +15504,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/doduo/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15923,7 +15524,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/doduo/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15944,7 +15545,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/dodrio/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15965,7 +15566,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/dodrio/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -15985,7 +15586,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/dodrio/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16005,7 +15606,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/dodrio/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16025,7 +15626,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/dodrio/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16045,7 +15646,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/dodrio/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16144,7 +15745,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/grimer/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16164,7 +15765,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/grimer/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16184,7 +15785,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/grimer/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16204,7 +15805,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/grimer/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16224,7 +15825,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/grimer/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16244,7 +15845,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/grimer/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16264,7 +15865,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/grimer/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16284,7 +15885,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/grimer/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16304,7 +15905,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/grimer/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16324,7 +15925,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/grimer/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16343,7 +15944,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/muk/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16363,7 +15964,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/muk/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16383,7 +15984,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/muk/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16403,7 +16004,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/muk/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16423,7 +16024,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/muk/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16443,7 +16044,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/muk/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16463,7 +16064,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/muk/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16483,7 +16084,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/muk/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16503,7 +16104,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/muk/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -16523,7 +16124,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/muk/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -19233,7 +18834,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/voltorb/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -19253,7 +18854,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/voltorb/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -19273,7 +18874,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/voltorb/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -19581,7 +19182,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/koffing/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -19602,7 +19203,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/koffing/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -19623,7 +19224,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/koffing/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -19644,7 +19245,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/koffing/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -19664,7 +19265,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/rhyhorn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -19684,7 +19285,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/rhyhorn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -19704,7 +19305,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/rhyhorn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20126,7 +19727,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/horsea/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20146,7 +19747,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/horsea/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20166,7 +19767,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/horsea/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20186,7 +19787,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/horsea/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20206,7 +19807,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/horsea/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20226,7 +19827,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/horsea/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20246,7 +19847,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/horsea/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20266,7 +19867,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/horsea/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20286,7 +19887,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/horsea/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20306,7 +19907,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seadra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20326,7 +19927,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seadra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20346,7 +19947,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seadra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20366,7 +19967,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20386,7 +19987,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20406,7 +20007,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20426,7 +20027,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20446,7 +20047,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20466,7 +20067,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20486,7 +20087,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20506,7 +20107,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20526,7 +20127,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20546,7 +20147,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20566,7 +20167,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20586,7 +20187,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20605,7 +20206,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20624,7 +20225,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20643,7 +20244,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20662,7 +20263,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20682,7 +20283,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20702,7 +20303,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20722,7 +20323,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20742,7 +20343,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20762,7 +20363,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20782,7 +20383,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20802,7 +20403,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20822,7 +20423,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20842,7 +20443,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20862,7 +20463,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20882,7 +20483,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20902,7 +20503,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20922,7 +20523,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20942,7 +20543,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20962,7 +20563,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -20982,7 +20583,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21002,7 +20603,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21022,7 +20623,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21042,7 +20643,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21062,7 +20663,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21082,7 +20683,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21102,7 +20703,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21121,7 +20722,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21140,7 +20741,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21159,7 +20760,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21178,7 +20779,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21197,7 +20798,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21216,7 +20817,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21235,7 +20836,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21254,7 +20855,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21273,7 +20874,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21292,7 +20893,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21311,7 +20912,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21330,7 +20931,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21349,7 +20950,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21368,7 +20969,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21387,7 +20988,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21406,7 +21007,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21425,7 +21026,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21444,7 +21045,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21463,7 +21064,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21482,7 +21083,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21501,7 +21102,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21520,7 +21121,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21539,7 +21140,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21558,7 +21159,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21577,7 +21178,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/goldeen/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21597,7 +21198,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21617,7 +21218,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21637,7 +21238,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21657,7 +21258,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21676,7 +21277,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21695,7 +21296,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21715,7 +21316,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21735,7 +21336,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21755,7 +21356,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21775,7 +21376,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21795,7 +21396,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21815,7 +21416,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21835,7 +21436,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21855,7 +21456,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21875,7 +21476,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21895,7 +21496,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21914,7 +21515,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21933,7 +21534,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21952,7 +21553,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21971,7 +21572,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -21990,7 +21591,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22009,7 +21610,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22028,7 +21629,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22047,7 +21648,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22066,7 +21667,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22085,7 +21686,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22104,7 +21705,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22123,7 +21724,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22142,7 +21743,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/seaking/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22162,7 +21763,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22182,7 +21783,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22203,7 +21804,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22224,7 +21825,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22244,7 +21845,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22264,7 +21865,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22284,7 +21885,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22304,7 +21905,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22324,7 +21925,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22344,7 +21945,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22364,7 +21965,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22384,7 +21985,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22404,7 +22005,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22424,7 +22025,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/staryu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -22998,7 +22599,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23017,7 +22618,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23036,7 +22637,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23056,7 +22657,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23076,7 +22677,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23096,7 +22697,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23115,7 +22716,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23134,7 +22735,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23153,7 +22754,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23172,7 +22773,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23191,7 +22792,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23210,7 +22811,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23229,7 +22830,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23248,7 +22849,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23267,7 +22868,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23286,7 +22887,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23305,7 +22906,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23324,7 +22925,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23344,7 +22945,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23364,7 +22965,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23384,7 +22985,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23404,7 +23005,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23424,7 +23025,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23444,7 +23045,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23464,7 +23065,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23484,7 +23085,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23504,7 +23105,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23524,7 +23125,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23545,7 +23146,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23566,7 +23167,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23587,7 +23188,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23607,7 +23208,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23627,7 +23228,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23647,7 +23248,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23667,7 +23268,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23687,7 +23288,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23707,7 +23308,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23726,7 +23327,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23745,7 +23346,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23764,7 +23365,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23783,7 +23384,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23803,7 +23404,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23823,7 +23424,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23843,7 +23444,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23862,7 +23463,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23881,7 +23482,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23900,7 +23501,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23919,7 +23520,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23938,7 +23539,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23957,7 +23558,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23976,7 +23577,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -23996,7 +23597,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24016,7 +23617,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24036,7 +23637,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24055,7 +23656,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24075,7 +23676,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24095,7 +23696,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24115,7 +23716,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24134,7 +23735,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24153,7 +23754,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24173,7 +23774,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24193,7 +23794,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24213,7 +23814,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24233,7 +23834,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24253,7 +23854,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24273,7 +23874,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24292,7 +23893,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24312,7 +23913,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24332,7 +23933,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24352,7 +23953,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24371,7 +23972,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24390,7 +23991,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24409,7 +24010,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24429,7 +24030,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24449,7 +24050,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24469,7 +24070,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24489,7 +24090,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24509,7 +24110,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24529,7 +24130,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24549,7 +24150,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24569,7 +24170,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24589,7 +24190,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24608,7 +24209,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24627,7 +24228,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24646,7 +24247,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24665,7 +24266,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24684,7 +24285,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24703,7 +24304,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24722,7 +24323,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24741,7 +24342,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24760,7 +24361,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24779,7 +24380,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24798,7 +24399,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24817,7 +24418,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24836,7 +24437,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24855,7 +24456,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24874,7 +24475,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24893,7 +24494,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24912,7 +24513,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24931,7 +24532,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24950,7 +24551,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24969,7 +24570,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -24988,7 +24589,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25007,7 +24608,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25026,7 +24627,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25046,7 +24647,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25066,7 +24667,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25086,7 +24687,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25106,7 +24707,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25126,7 +24727,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25146,7 +24747,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25166,7 +24767,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25186,7 +24787,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25206,7 +24807,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25226,7 +24827,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25246,7 +24847,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25266,7 +24867,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25286,7 +24887,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25306,7 +24907,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25325,7 +24926,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25344,7 +24945,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25363,7 +24964,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25382,7 +24983,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25402,7 +25003,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25422,7 +25023,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25442,7 +25043,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25461,7 +25062,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25480,7 +25081,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25499,7 +25100,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25518,7 +25119,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25537,7 +25138,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25556,7 +25157,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25575,7 +25176,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25594,7 +25195,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25613,7 +25214,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25632,7 +25233,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25651,7 +25252,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25670,7 +25271,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25689,7 +25290,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25708,7 +25309,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25727,7 +25328,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25746,7 +25347,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25765,7 +25366,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25784,7 +25385,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25803,7 +25404,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25822,7 +25423,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25841,7 +25442,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25860,7 +25461,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25879,7 +25480,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25898,7 +25499,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25917,7 +25518,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25936,7 +25537,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25955,7 +25556,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25974,7 +25575,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -25993,7 +25594,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26012,7 +25613,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26031,7 +25632,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26050,7 +25651,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26069,7 +25670,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26088,7 +25689,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26107,7 +25708,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26126,7 +25727,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26145,7 +25746,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26164,7 +25765,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26183,7 +25784,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26202,7 +25803,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26221,7 +25822,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26240,7 +25841,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26259,7 +25860,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26278,7 +25879,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26297,7 +25898,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26316,7 +25917,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26335,7 +25936,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26354,7 +25955,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26374,7 +25975,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26394,7 +25995,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26413,7 +26014,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/gyarados/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26432,7 +26033,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/gyarados/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26451,7 +26052,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/gyarados/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26470,7 +26071,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/gyarados/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -26489,7 +26090,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/gyarados/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27244,7 +26845,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27263,7 +26864,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27282,7 +26883,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27301,7 +26902,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27320,7 +26921,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27339,7 +26940,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27358,7 +26959,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27377,7 +26978,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27396,7 +26997,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27415,7 +27016,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27434,7 +27035,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27453,7 +27054,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27472,7 +27073,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27491,7 +27092,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27510,7 +27111,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27529,7 +27130,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27548,7 +27149,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27567,7 +27168,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27587,7 +27188,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27607,7 +27208,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/chinchou/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27626,7 +27227,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lanturn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27645,7 +27246,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lanturn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27664,7 +27265,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lanturn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27683,7 +27284,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lanturn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27702,7 +27303,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lanturn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27721,7 +27322,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lanturn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27740,7 +27341,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lanturn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27759,7 +27360,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lanturn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27778,7 +27379,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lanturn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27798,7 +27399,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lanturn/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -27818,7 +27419,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/natu/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -28138,7 +27739,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/marill/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -28159,7 +27760,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/marill/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -29410,7 +29011,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/wobbuffet/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -29430,7 +29031,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/girafarig/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -29450,7 +29051,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/girafarig/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -29470,7 +29071,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/girafarig/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -29952,7 +29553,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/heracross/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -29971,7 +29572,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/heracross/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -29990,7 +29591,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/heracross/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30009,7 +29610,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/heracross/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30028,7 +29629,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/heracross/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30047,7 +29648,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/heracross/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30066,7 +29667,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/heracross/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30085,7 +29686,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/heracross/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30104,7 +29705,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/heracross/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30123,7 +29724,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/heracross/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30489,7 +30090,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30509,7 +30110,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30529,7 +30130,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30549,7 +30150,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30569,7 +30170,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30589,7 +30190,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30609,7 +30210,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30629,7 +30230,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30649,7 +30250,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/slugma/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30921,7 +30522,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30941,7 +30542,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30961,7 +30562,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -30981,7 +30582,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31002,7 +30603,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31023,7 +30624,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31044,7 +30645,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31065,7 +30666,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31085,7 +30686,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31105,7 +30706,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31125,7 +30726,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31145,7 +30746,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31165,7 +30766,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31185,7 +30786,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31205,7 +30806,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31225,7 +30826,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31245,7 +30846,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31265,7 +30866,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31285,7 +30886,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31305,7 +30906,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31325,7 +30926,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31345,7 +30946,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31365,7 +30966,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31385,7 +30986,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31405,7 +31006,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31425,7 +31026,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31445,7 +31046,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -31465,7 +31066,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/corsola/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -32035,7 +31636,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/abra/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -32051,7 +31652,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/geodude/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -32067,7 +31668,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/voltorb/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -32083,7 +31684,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/electrode/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -32099,7 +31700,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/koffing/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -32131,7 +31732,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/gyarados/encounters",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-21"
       }
     },
     {
@@ -33985,7 +33586,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Baby_Pok%C3%A9mon",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34006,7 +33607,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Baby_Pok%C3%A9mon",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34027,7 +33628,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Baby_Pok%C3%A9mon",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34045,7 +33646,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Baby_Pok%C3%A9mon",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34063,7 +33664,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Baby_Pok%C3%A9mon",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34081,7 +33682,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Baby_Pok%C3%A9mon",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34101,7 +33702,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Bug-Catching_Contest",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34121,7 +33722,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Bug-Catching_Contest",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34141,7 +33742,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Bug-Catching_Contest",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34161,7 +33762,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Bug-Catching_Contest",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34181,7 +33782,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Bug-Catching_Contest",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34201,7 +33802,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Bug-Catching_Contest",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34221,7 +33822,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Bug-Catching_Contest",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34241,7 +33842,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Bug-Catching_Contest",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34261,7 +33862,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Bug-Catching_Contest",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34281,7 +33882,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/Bug-Catching_Contest",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34298,7 +33899,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/In-game_trade",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34315,7 +33916,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/In-game_trade",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34332,7 +33933,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/In-game_trade",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34349,7 +33950,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/In-game_trade",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34366,7 +33967,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/In-game_trade",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34383,7 +33984,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/In-game_trade",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -34400,7 +34001,7 @@
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/In-game_trade",
-        "retrievedOn": "2026-09-22"
+        "retrievedOn": "2026-09-23"
       }
     }
   ]

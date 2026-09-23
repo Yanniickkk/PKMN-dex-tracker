@@ -1,5 +1,14 @@
 [
   {
+    "from": "black",
+    "to": "white",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
     "from": "blue",
     "to": "crystal",
     "mechanism": "timeCapsule",
@@ -70,6 +79,17 @@
   },
   {
     "from": "diamond",
+    "to": "black",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "diamond",
     "to": "heartgold",
     "mechanism": "trade",
     "direction": "bothWays",
@@ -102,6 +122,17 @@
     "direction": "bothWays",
     "filter": {
       "filter": "all"
+    }
+  },
+  {
+    "from": "diamond",
+    "to": "white",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
     }
   },
   {
@@ -288,6 +319,17 @@
   },
   {
     "from": "heartgold",
+    "to": "black",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "heartgold",
     "to": "pearl",
     "mechanism": "trade",
     "direction": "bothWays",
@@ -311,6 +353,17 @@
     "direction": "bothWays",
     "filter": {
       "filter": "all"
+    }
+  },
+  {
+    "from": "heartgold",
+    "to": "white",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
     }
   },
   {
@@ -388,6 +441,17 @@
   },
   {
     "from": "pearl",
+    "to": "black",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "pearl",
     "to": "platinum",
     "mechanism": "trade",
     "direction": "bothWays",
@@ -405,12 +469,45 @@
     }
   },
   {
+    "from": "pearl",
+    "to": "white",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "platinum",
+    "to": "black",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
     "from": "platinum",
     "to": "soulsilver",
     "mechanism": "trade",
     "direction": "bothWays",
     "filter": {
       "filter": "all"
+    }
+  },
+  {
+    "from": "platinum",
+    "to": "white",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
     }
   },
   {
@@ -572,6 +669,28 @@
       "filter": "nationalDexRange",
       "from": 1,
       "to": 386
+    }
+  },
+  {
+    "from": "soulsilver",
+    "to": "black",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
+    }
+  },
+  {
+    "from": "soulsilver",
+    "to": "white",
+    "mechanism": "pokeTransfer",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 493
     }
   },
   {

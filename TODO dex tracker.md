@@ -107,14 +107,14 @@ Dex to 493, Pal Park out of the slot underneath - is in `ds.py`._
 
 ### Generation 5
 
-- [ ] **Black** (`black`, gen 5, pair partner: White)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
-- [ ] **White** (`white`, gen 5, pair partner: Black)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Validate + smoke test
+_Black and White are done and in `DONE dex tracker.md`. What all four games share is in
+`unova.py`, which is also the region module: Generation 5 never left Unova, so the
+hardware-and-region split `ds.py` explains has nothing on either side of it._
+
+_Black 2 and White 2 are not a third version but a second pair - own story, own half of the map,
+own Pokedex - so `unova.py` keeps the two pairs apart wherever they disagree. `B2W2_DEX` is
+already named and waiting; their four trade edges are already declared and held back._
+
 - [ ] **Black 2** (`black-2`, gen 5, pair partner: White 2)
   - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
@@ -229,6 +229,17 @@ the dataset at all._
 
 ## Phase 3 — Polish
 
+- [ ] A hand-written table's citation should carry the day a human read the page
+  - The fetched half is done: a PokeAPI citation now takes its date from the cache entry the
+    answer came out of, so a rebuild from unchanged pages no longer re-dates 27,000 records
+    with the build day. What is left is the 209 records whose source was read by a person and
+    typed in - the in-game trades, the day care, the Bug-Catching Contest, the Karate King -
+    because there is no fetch to take a date from.
+  - Two ways to do it. Either each game module declares when its tables were read
+    (`READ_ON = date(...)`, passed to `bulbapedia(...)`), or the build actually fetches the page
+    it cites and lets the cache answer, which is honest but makes the build depend on a page it
+    does not read. The first is simpler and does not pretend.
+
 - [ ] Multiple collections: list, switch, rename, delete
 - [ ] Editing a collection's settings after creation, records preserved
 - [ ] Dataset version and build date shown somewhere in the UI
@@ -237,3 +248,12 @@ the dataset at all._
 - [ ] Empty and error states: no dataset, corrupt data file, cloud file locked
 - [ ] Export a collection to CSV
 - [ ] Collections list can be filtered on main game, name
+- [ ] The Pokemon Dream Radar as a source for Black 2 and White 2
+  - A 3DS app rather than a game: no dex of its own, nothing caught in it, and it sends one way
+    into those two and nowhere else. So it is neither a transfer edge nor an NPC with a gift,
+    and it needs a shape of its own - a source that is not a game, which nothing in the dataset
+    is yet. What it is worth is that some of what it sends has no other way in.
+  - Not the Dream World, and not by oversight: that was a website, it closed in 2014, and a
+    player starting today cannot reach any of it. The Radar is still runnable by whoever has it.
+  - Worth saying in the reason a player reads: the eShop it came from shut in 2023, so it is
+    ownable rather than buyable. That is a different answer from "this cannot be done".
