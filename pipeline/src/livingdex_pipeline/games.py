@@ -11,6 +11,7 @@ from __future__ import annotations
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
+from .http import PoliteClient
 from .models import DexEntry, GameData, Species, TransferDirection, TransferEdge
 from .pokeapi import PokeApiClient
 
@@ -20,8 +21,9 @@ class BuildContext:
     """What a game builder is handed.
 
     The API client is here because step 2 of a game is a dex list and that is PokeAPI's to
-    answer. Sources a game scrapes for its encounters bring their own client, because they are
-    the ones that have to keep to another site's pace.
+    answer. A wiki client is here beside it and is a different object on purpose: it is held to
+    another site's pace, which is measured in seconds rather than in fifths of one, and a game
+    that reads a page should not be able to read it at PokeAPI speed by accident.
 
     The species table is here because a game has to ask about more species than its own Pokedex
     lists - see :meth:`living_dex`.
@@ -30,6 +32,9 @@ class BuildContext:
     game_id: str
     refresh: bool
     api: PokeApiClient | None = None
+    #: For the one thing PokeAPI has no answer to. Only Unova's sequels use it so far, for the
+    #: Hidden Grottoes, which are in no encounter table anywhere.
+    wiki: PoliteClient | None = None
     #: Every species the dataset knows, in National Dex order. The shared tables are built
     #: before any game is, so this is always filled in by the time a builder runs.
     species: Sequence[Species] = ()
@@ -42,6 +47,16 @@ class BuildContext:
             )
 
         return self.api
+
+    def require_wiki(self) -> PoliteClient:
+        """The wiki client, or a clear failure rather than one three frames down."""
+        if self.wiki is None:
+            raise RuntimeError(
+                f"building {self.game_id} needs a client for the pages it reads, and the build "
+                "did not pass one"
+            )
+
+        return self.wiki
 
     def living_dex(
         self,

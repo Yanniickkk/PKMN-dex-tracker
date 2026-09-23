@@ -19,7 +19,7 @@ goes stale without saying so.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 from . import conditions
@@ -102,6 +102,7 @@ def wild_encounters(
     species: list[str],
     refresh: bool = False,
     places: LocationNames | None = None,
+    gates: Mapping[str, str] | None = None,
 ) -> list[WildAcquisition]:
     """Every wild slot in one game, for the species given, as one record per place and method.
 
@@ -112,8 +113,16 @@ def wild_encounters(
     Each record is cited to the exact url it came out of, on the day that url was fetched -
     which the cache remembers, so rebuilding a dataset from unchanged pages does not quietly
     re-date every claim in it.
+
+    ``gates`` is what a whole place asks of a player before any of its slots can be reached,
+    keyed by the place's name. PokeAPI marks conditions on a row rather than on a location, so
+    a door that is locked from the outside is invisible to it: the Nature Preserve in Unova is
+    an ordinary forest full of ordinary tables, and it is behind a plane ride nobody is offered
+    until the regional dex is filled. A player told to walk into a place they cannot enter has
+    been told nothing.
     """
     places = places or LocationNames(api, refresh=refresh)
+    gates = gates or {}
     found: list[WildAcquisition] = []
     seen: set[tuple] = set()
 
@@ -144,6 +153,7 @@ def wild_encounters(
                         state=state,
                         slot=slot,
                         citation=citation,
+                        gate=gates.get(location),
                     )
 
                     # Two of PokeAPI's methods can land on one of ours - a roamer is listed
@@ -213,6 +223,7 @@ def _record(
     state: _State,
     slot: _Slot,
     citation: SourceCitation,
+    gate: str | None = None,
 ) -> WildAcquisition:
     return WildAcquisition(
         game=game_id,
@@ -227,7 +238,9 @@ def _record(
         rate_percent=min(slot.chance, 100) or None,
         time_of_day=state.time_of_day,
         season=state.season,
-        requirement=state.requirement,
+        # The way in comes first: it is the thing a player cannot do anything about, and what
+        # the row itself asks for only matters once they are standing there.
+        requirement=conditions.joined(gate, state.requirement),
         source=citation,
     )
 

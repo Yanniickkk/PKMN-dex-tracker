@@ -16,6 +16,7 @@ from .boxart import ARCHIVES_MIN_INTERVAL, BoxArtError, fetch_box_art
 from .emit import DatasetWriter, read_dataset, read_species, stamp_for
 from .evolutions import evolution_rules
 from .games import BuildContext, GameRegistry, UnknownGameError
+from .grottoes import MIN_INTERVAL as GROTTO_MIN_INTERVAL
 from .http import PoliteClient, RobotsDisallowed
 from .icons import fetch_icons
 from .merge import MergeResult
@@ -141,21 +142,29 @@ class Build:
 
         built: list[GameData] = []
 
-        for wanted_id in wanted:
-            try:
-                data = self.registry.build(
-                    BuildContext(
-                        game_id=wanted_id,
-                        refresh=self.refresh,
-                        api=api,
-                        species=species,
+        # A second client for the games that read a wiki page. Its own, because Bulbapedia is
+        # not a site to visit at the pace PokeAPI is fetched at, and the floor belongs to the
+        # slower host rather than to whichever step happens to be running.
+        with PoliteClient(
+            self.cache_root / "http",
+            min_interval_seconds=GROTTO_MIN_INTERVAL,
+        ) as wiki:
+            for wanted_id in wanted:
+                try:
+                    data = self.registry.build(
+                        BuildContext(
+                            game_id=wanted_id,
+                            refresh=self.refresh,
+                            api=api,
+                            wiki=wiki,
+                            species=species,
+                        )
                     )
-                )
-            except UnknownGameError as error:
-                raise BuildError(str(error)) from error
+                except UnknownGameError as error:
+                    raise BuildError(str(error)) from error
 
-            built.append(data)
-            result.written.append(writer.write_game(data))
+                built.append(data)
+                result.written.append(writer.write_game(data))
 
         if self.sprites:
             result.written.extend(self._fetch_game_sprites(api, client, built, writer))

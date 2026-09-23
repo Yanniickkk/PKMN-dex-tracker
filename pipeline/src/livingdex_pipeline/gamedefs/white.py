@@ -32,7 +32,7 @@ POKEAPI_VERSION = "white"
 RELEASED = date(2010, 9, 18)
 
 
-#: In the Unova dex and never in this half, which of the two does have it, and what step 7 found.
+#: In the Unova dex and never in this half, which games do have it, and what step 7 found.
 #:
 #: Seven, mirroring the other half exactly - which is what a version pair is. They are still
 #: entries to fill, and the link between the two halves is how.
@@ -46,15 +46,21 @@ RELEASED = date(2010, 9, 18)
 #: of the legendaries Black keeps were handed out, and every one of those distributions was
 #: aimed at the half that could not catch it. What no distribution ever covered is the ordinary
 #: five - two whole lines and a pair of birds - which nobody made a fuss of.
-ELSEWHERE_IN_GENERATION_5: dict[str, tuple[str, str | None]] = {
-    "gothita": ("Black", None),
-    "gothorita": ("Black", None),
-    "gothitelle": ("Black", None),
-    "vullaby": ("Black", None),
-    "mandibuzz": ("Black", None),
+#:
+#: The names were one name each until the sequels were written. Four cartridges in one
+#: generation means a version exclusive can be in more than one other place, and five of these
+#: seven now are: Solosis is in White and in White 2, and Zekrom is in White and in Black 2.
+#: Thundurus is the one that did not grow - the sequels do not have it either, and what they
+#: have instead is a 3DS download.
+ELSEWHERE_IN_GENERATION_5: dict[str, tuple[tuple[str, ...], str | None]] = {
+    "gothita": (("Black", "Black 2"), None),
+    "gothorita": (("Black", "Black 2"), None),
+    "gothitelle": (("Black", "Black 2"), None),
+    "vullaby": (("Black", "Black 2"), None),
+    "mandibuzz": (("Black", "Black 2"), None),
     # The forces of nature: one roams each half, and the giveaway covered the other.
     "tornadus": (
-        "Black",
+        ("Black",),
         unova.handed_out("the Milos Island Tornadus over Wi-Fi in December 2011")
         + ", in Japan and South Korea and nowhere else",
     ),
@@ -62,7 +68,7 @@ ELSEWHERE_IN_GENERATION_5: dict[str, tuple[str, str | None]] = {
     # has Reshiram, so this is the one entry in the pair that a player can see is missing from
     # the outside.
     "reshiram": (
-        "Black",
+        ("Black", "White 2"),
         unova.handed_out(
             "Ash's Reshiram in Japan in the summer of 2011",
             "the Spring 2012 Reshiram over Wi-Fi",
@@ -76,8 +82,8 @@ ELSEWHERE_IN_GENERATION_5: dict[str, tuple[str, str | None]] = {
 UNOBTAINABLE: dict[str, str] = {
     **unova.BW_UNOBTAINABLE,
     **{
-        species: unova.only_on(partner, event)
-        for species, (partner, event) in ELSEWHERE_IN_GENERATION_5.items()
+        species: unova.only_on(elsewhere, event)
+        for species, (elsewhere, event) in ELSEWHERE_IN_GENERATION_5.items()
     },
 }
 

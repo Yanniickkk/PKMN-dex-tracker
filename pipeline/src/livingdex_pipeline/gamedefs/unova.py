@@ -28,6 +28,7 @@ from ..breeding import EggFrom, breeding_encounters
 from ..evolutions import evolution_encounters
 from ..games import BuildContext
 from ..gifts import Exclusion, GiftDetail, GiftDetails, gift_encounters
+from ..grottoes import grotto_encounters
 from ..models import (
     AcquisitionMethod,
     AllSpeciesFilter,
@@ -97,9 +98,8 @@ BW_DEX = "original-unova"
 
 #: PokeAPI's name for the 301-entry Unova dex, the one Black 2 and White 2 show.
 #:
-#: Not used yet - the sequels are not written. It is here so that the pair's dex has something
-#: to be named apart from, which is the mistake this dataset has made before: a region with two
-#: dexes and one constant called ``DEX``.
+#: Named apart from :data:`BW_DEX` rather than called ``DEX``, which is the mistake this dataset
+#: has made before: a region with two dexes and one constant for both of them.
 B2W2_DEX = "updated-unova"
 
 
@@ -172,9 +172,25 @@ def handed_out(*events: str) -> str:
     return exclusives.handed_out(*events)
 
 
-def only_on(partner: str, event: str | None = None) -> str:
-    """Why an entry in this dex is not in this half, when the other half has it."""
-    return exclusives.only_on(partner, generation=GENERATION, event=event)
+def only_on(partners: Sequence[str] | str, event: str | None = None) -> str:
+    """Why an entry in this dex is not in this game, and which of the other three has it.
+
+    Several games rather than one, which is what four cartridges in one generation does to a
+    version exclusive. Black's Zekrom is in White, as it always was, and since the sequels were
+    written it is in Black 2 as well - so the answer to "where do I get one" grew a second half
+    without anything about Black changing. Naming only the pair partner would leave a player
+    with a Black 2 in the drawer looking for a trade they do not need.
+    """
+    named = partners if isinstance(partners, str) else _listed(partners)
+
+    return exclusives.only_on(named, generation=GENERATION, event=event)
+
+
+def _listed(names: Sequence[str]) -> str:
+    if len(names) < 3:
+        return " and ".join(names)
+
+    return f"{', '.join(names[:-1])} and {names[-1]}"
 
 
 #: Dex entries neither half fills, and what step 7 found about each.
@@ -274,6 +290,114 @@ def bw_dex_entries(
     return _dex_entries(context, game_id=game_id, dex=BW_DEX, unobtainable=unobtainable)
 
 
+#: Dex entries neither sequel fills, and what step 7 found about each.
+#:
+#: Seven where the first pair has six, and the two lists overlap in only three names. Reading
+#: Black's answers into Black 2 would have been wrong about four of the seven, in both
+#: directions: Zorua and Zoroark are simply handed over here, and three Pokemon that walk about
+#: freely in the first pair cannot be met in these two at all.
+#:
+#: Those three are the forces of nature, and they are the sharpest thing this step turned up.
+#: They are not behind a distribution that ended - they are behind another game. The Pokemon
+#: Dream Radar is a 3DS download that sends what it catches down into these two cartridges and
+#: into nothing else, and it is the only way any of the three reaches Unova a second time.
+#:
+#: Read off each species' own *In events* table, and the tables repay the reading twice over:
+#: Victini and Genesect swap places between the two pairs.
+B2W2_UNOBTAINABLE: dict[str, str] = {
+    # The mirror of the first pair's Genesect, and the reason step 7 reads the games column.
+    # Victini is not shut behind a distribution here - it is not in the game at all, because
+    # Liberty Garden is not on the sequels' map. Exactly one distribution ever reached these two
+    # and it was in Japanese, in Japan, for six weeks.
+    "victini": exclusives.with_event(
+        "Liberty Garden is not on the sequels' map, and nothing else here produces one",
+        exclusives.handed_out("the Pokemon Center Tohoku Victini in Japan over the winter of 2012")
+        + ", and every other Victini distribution was for the first pair rather than these two",
+    ),
+    "keldeo": exclusives.with_event(
+        "Nothing in Unova produces one; it was only ever given away",
+        exclusives.handed_out(
+            "the Winter 2013 Keldeo over Wi-Fi",
+            "the Shokotan Keldeo in Japan and Taiwan before it",
+            "the Sacred Swordsman Keldeo in South Korea",
+        ),
+    ),
+    "meloetta": exclusives.with_event(
+        "Nothing in Unova produces one; it was only ever given away",
+        exclusives.handed_out(
+            "the Spring 2013 Meloetta in Europe, the Americas and Australia",
+            "the Cinema Meloetta in Japan, Taiwan and South Korea before it",
+        ),
+    ),
+    # And the other half of the mirror. The first pair was never offered a Genesect outside
+    # Japan and South Korea; these two were offered one everywhere, over Wi-Fi, five weeks after
+    # they came out in the West.
+    "genesect": exclusives.with_event(
+        "Nothing in Unova produces one; it was only ever given away",
+        exclusives.handed_out(
+            "the Plasma Genesect over Wi-Fi in the autumn of 2012",
+            "the P2 Laboratory Genesect in Japan and Taiwan",
+            "the Cinema Genesect there the summer after",
+        ),
+    ),
+    # The three that are behind another game rather than behind a date. Tornadus and Thundurus
+    # roam the first pair's Unova and are nowhere in the sequels' - what replaced them is the
+    # Pokemon Dream Radar, which is a Nintendo 3DS download rather than a cartridge, has no dex
+    # of its own, and sends one way into these two and nowhere else. It is written down as a
+    # Phase 3 item; until it is, this is the honest answer.
+    **{
+        species: (
+            "Only from the Pokemon Dream Radar, a Nintendo 3DS download that sends into these "
+            "two and nowhere else. No distribution ever handed one out for them"
+        )
+        for species in ("tornadus", "thundurus")
+    },
+    # And the third waits on the other two, so the Radar is two steps back rather than one.
+    "landorus": (
+        "Only at the Abundant Shrine, and only with Tornadus and Thundurus in the party - both "
+        "of which the Pokemon Dream Radar is the only source of here. No distribution ever "
+        "handed one out for these two"
+    ),
+}
+
+
+def b2w2_dex_entries(
+    context: BuildContext,
+    *,
+    game_id: str,
+    unobtainable: Mapping[str, str] | None = None,
+) -> list[DexEntry]:
+    """The Unova dex as Black 2 and White 2 number it: Victini #000 to Genesect #300.
+
+    Twice the length of the list the first pair showed, and it starts at zero the same way.
+    Every one of those 156 is still in it - nothing was dropped when the region was revisited -
+    and the 145 it adds are all from older generations: 38 from Generation 1, 32 from
+    Generation 2, 43 from Generation 3 and 32 from Generation 4. So the difference is one of
+    kind rather than of size. Black and White showed a regional dex with no older Pokemon
+    anywhere in it, which nothing else in the series has done; the sequels put the series back
+    the way it has always been, in the same region, two years later.
+
+    Which makes the two lists disagree almost everywhere. Twelve numbers survive - Victini
+    through Watchog, the first pair's #000 to #011 - and from #012 they part: Black has
+    Lillipup there and Black 2 has Purrloin. That is Johto's situation rather than Platinum's.
+    Platinum's dex is Diamond's with more on the end, so a number means the same thing in both;
+    here a number means two different things, and a dataset with one constant called ``DEX``
+    would have quietly said otherwise.
+
+    A living dex is still 649, and this is 301 of them. The gap is narrower than the first
+    pair's - 156 against 649 - and it is the same kind of gap: what the regional list leaves out
+    is not unobtainable, it is simply not what the game numbers.
+
+    Nothing here carries a form yet, and the sequels add to the queue rather than shorten it.
+    The first pair's questions are all still open - Deerling and Sawsbuck with a season each,
+    Basculin's two stripes, the drawn-apart sexes of Unfezant, Frillish and Jellicent - and
+    these two bring the formes this generation is remembered for: the Therian trio through the
+    Reveal Glass, Kyurem's two fusions through the DNA Splicers, and Keldeo's Resolute form. All
+    of them wait for the shared forms table, which is still empty.
+    """
+    return _dex_entries(context, game_id=game_id, dex=B2W2_DEX, unobtainable=unobtainable)
+
+
 def _dex_entries(
     context: BuildContext,
     *,
@@ -298,13 +422,52 @@ def _dex_entries(
 
 #: What these games call a place PokeAPI files under another name.
 #:
-#: One entry, and it is not a renaming at all but a misfiling: PokeAPI puts the roaming Tornadus
-#: and Thundurus in the Team Flare Secret HQ, which is in Kalos, two generations away, and is not
-#: a place either of these games has. Bulbapedia is plain about where they are - "Roaming Unova" -
-#: and a player told to look in Kalos has been sent somewhere that does not exist for them.
+#: Two entries, and neither is a renaming of the kind the Bell Tower needed - where two games
+#: genuinely called one place different things. Both are the source being wrong.
 #:
-#: The same mechanism the Bell Tower needed in Johto, used for a different fault in the source.
-RENAMED_PLACES = {"Team Flare Secret HQ": "Roaming Unova"}
+#: The first is a misfiling: PokeAPI puts the roaming Tornadus and Thundurus in the Team Flare
+#: Secret HQ, which is in Kalos, two generations away, and is not a place either of the first
+#: pair has. Bulbapedia is plain about where they are - "Roaming Unova" - and a player told to
+#: look in Kalos has been sent somewhere that does not exist for them.
+#:
+#: The second is a name nobody was ever shown. PokeAPI's English for the forest the sequels hide
+#: behind the regional dex is "Nature Sanctuary", which is its Japanese name carried across; the
+#: English games call it the Nature Preserve, and Bulbapedia's "Nature Sanctuary" is a redirect
+#: to that page rather than an article of its own. It is the only place in these four games that
+#: no player could search a guide for under the name the dataset would have printed.
+RENAMED_PLACES = {
+    "Team Flare Secret HQ": "Roaming Unova",
+    "Nature Sanctuary": "Nature Preserve",
+}
+
+#: And one below a location, where the fault is a different one.
+#:
+#: A location's English name was written by a person; a sub-area's is generated from the slug,
+#: so nobody ever read it. The building on Route 6 where a scientist studies what the seasons do
+#: to Deerling is the Season Research Lab, and the slug calls it ``weather-institute``, which is
+#: a building in Hoenn. "Route 6, Weather Institute" sends a player to another region for
+#: something standing in front of them.
+RENAMED_SUB_AREAS = {"Weather Institute": "Season Research Lab"}
+
+#: A door a whole place is behind, which PokeAPI has no way of writing down.
+#:
+#: Conditions in the source hang on a row of an encounter table, so they can say "only while it
+#: is swarming" and cannot say "only if you are allowed in here at all". The Nature Preserve is
+#: the case that makes the difference matter: its tables are ordinary grass and water, twenty-
+#: four slots of nothing unusual, and eight of the species in them are nowhere else in the game.
+#: Kecleon is nowhere else in the generation.
+#:
+#: What it takes is the Permit, which Professor Juniper hands over for *seeing* - not catching -
+#: every entry in the sequels' 301-entry dex except the four Mythical Pokemon. So it is the last
+#: thing a player does rather than something they can plan around, and a record that says
+#: "Nature Preserve, dark grass, 10%" without saying so is telling them to walk somewhere there
+#: is no road to.
+PLACE_GATES: dict[str, str] = {
+    "Nature Preserve": (
+        "Only by plane from Mistralton City, with the Permit Professor Juniper hands over for "
+        "seeing all 297 entries in the sequels' dex that are not Mythical"
+    ),
+}
 
 #: The fossil each older Fossil revives into, and what the Nacrene Museum machine says about it.
 #:
@@ -506,6 +669,209 @@ BW_NOT_A_GIFT: dict[str, Exclusion] = {
 }
 
 
+#: The Kanto, Hoenn and Sinnoh fossils, and what the sequels do differently with them.
+#:
+#: Still revived by the museum's machine in Nacrene City, and no longer a queue with an order to
+#: it: a Worker in Twist Mountain hands out one a day and which one is random, so a player after
+#: a particular one is soft-resetting rather than waiting a particular number of days. The gate
+#: moved too - the National Dex rather than Ghetsis, which is a later door than the first pair's.
+_B2W2_FROM_TWIST_MOUNTAIN = {
+    "omanyte": "Helix Fossil",
+    "kabuto": "Dome Fossil",
+    "aerodactyl": "Old Amber",
+    "lileep": "Root Fossil",
+    "anorith": "Claw Fossil",
+    "cranidos": "Skull Fossil",
+    "shieldon": "Armor Fossil",
+}
+
+#: And Unova's own two, which stopped being a choice a save has to live with.
+#:
+#: Still one or the other in Nacrene City, as the Relic Castle offered one or the other in the
+#: first pair. What is new is that the one left behind can be bought afterwards, in an Antique
+#: Shop on Join Avenue - so both entries are fillable in a single save here, and in Black and
+#: White the other one waits for a trade. Same two species, same choice, opposite answer.
+_B2W2_FROM_NACRENE = {"tirtouga": "Cover Fossil", "archen": "Plume Fossil"}
+
+#: The weekly visitors, per half, and the day each one turns up on.
+#:
+#: Two of them in each game and both are mirrored: the bird of prey that half keeps stands on
+#: Route 4, and a Jellicent surfaces in Undella Bay. A player who reads "Route 4, level 25" and
+#: goes on a Tuesday finds nothing at all, and nothing in the source says why - PokeAPI carries
+#: no condition on either row.
+_WEEKLY = {
+    "black-2": {"mandibuzz": "Thursday", "jellicent": "Monday"},
+    "white-2": {"braviary": "Monday", "jellicent": "Thursday"},
+}
+
+#: Which key catching Regirock hands this half, and which one it has to be sent.
+#:
+#: The one place in this dataset where a species is obtainable and still needs another cartridge.
+#: Catching Regirock is rewarded with a key, and it is the wrong key for the other chamber:
+#: Black 2 is given the Iron Key and White 2 the Iceberg Key, so Regice in Black 2 and Registeel
+#: in White 2 both wait on a key sent over the Unova Link from a copy of the other game. That is
+#: not a trade and not a version exclusive, and it looks exactly like both.
+_KEYS = {
+    "black-2": ("Iron Key", "registeel", "regice", "White 2"),
+    "white-2": ("Iceberg Key", "regice", "registeel", "Black 2"),
+}
+
+_CHAMBER = {"registeel": ("Iron Chamber", "Iron Key"), "regice": ("Iceberg Chamber", "Iceberg Key")}
+
+#: What only the game knows about each thing it hands over or leaves standing in one spot.
+#:
+#: One table for both halves, as the first pair has. What they disagree about - which bird is on
+#: Route 4, which of the eon duo is in the Dreamyard, which stone is at Dragonspiral Tower -
+#: PokeAPI files per version already, so only the day of the week needs a switch here.
+#:
+#: The Swords of Justice are missing from it on purpose. They moved out of their chambers and
+#: onto Routes 11, 13 and 22, nothing in the source conditions the first row, and the page about
+#: all three says nothing about an order this time - so the place and the level are the whole
+#: answer, and a sentence would be an invention. The same goes for Volcarona, whose two rows
+#: PokeAPI does condition, correctly and in the right order.
+B2W2_GIFTS: dict[str, GiftDetails] = {
+    **{
+        species: GiftDetail(
+            kind=GiftKind.STARTER,
+            npc="Bianca",
+            requirement="Pick one of the three she brings to the Aspertia City outlook",
+        )
+        for species in ("snivy", "tepig", "oshawott")
+    },
+    **{
+        species: GiftDetail(
+            kind=GiftKind.FOSSIL,
+            npc="The museum's machine in Nacrene City",
+            requirement=(
+                f"Revived from the {fossil}, which a Worker in Twist Mountain hands out one a "
+                "day once the National Dex has been received; which fossil it is is random"
+            ),
+        )
+        for species, fossil in _B2W2_FROM_TWIST_MOUNTAIN.items()
+    },
+    **{
+        species: GiftDetail(
+            kind=GiftKind.FOSSIL,
+            npc="The museum's machine in Nacrene City",
+            requirement=(
+                f"Revived from the {fossil}, one of the two offered in Nacrene City; the other "
+                "one can be bought later at an Antique Shop on Join Avenue"
+            ),
+        )
+        for species, fossil in _B2W2_FROM_NACRENE.items()
+    },
+    "happiny": GiftDetail(
+        kind=GiftKind.EGG,
+        npc="A Pokemon Breeder in the Nacrene Gate",
+    ),
+    "deerling": GiftDetail(
+        npc="A scientist in the Season Research Lab on Route 6",
+        requirement="Wears whichever season the game is in when it is handed over",
+    ),
+    "eevee": GiftDetail(
+        npc="Amanita, on the third floor of the Game Freak building in Castelia City",
+        requirement="After the Hall of Fame; it is always male and has its Hidden Ability",
+    ),
+    "magikarp": GiftDetail(
+        npc="The Magikarp salesman on Marvelous Bridge",
+        requirement="Bought for 500 Pokedollars",
+    ),
+    # N's own, handed over rather than caught - and the whole reason this entry reads
+    # differently in the sequels than in the first pair, where it took an event Celebi nobody
+    # can be given any more.
+    "zorua": GiftDetail(
+        npc="Rood, at Team Plasma's safehouse in Driftveil City",
+        requirement="N's Zorua, offered for adoption once Rood has been battled",
+    ),
+    # The two the postgame tower hands out, and the only shiny Pokemon in this dataset that a
+    # player is simply given. Which of the two depends on the half, and PokeAPI files that.
+    **{
+        species: GiftDetail(
+            npc="Benga",
+            requirement=(
+                f"Shiny, for beating Benga in Area 10 of the {tower}; it holds an Exp. Share"
+            ),
+        )
+        for species, tower in (("gible", "Black Tower"), ("dratini", "White Treehollow"))
+    },
+    # Not a gift and not quite a static either: it lies on the ground looking like a Poke Ball,
+    # and picking it up starts a battle. The same trick the first pair plays.
+    **{
+        species: GiftDetail(
+            kind=GiftKind.STATIC_ENCOUNTER,
+            requirement="Disguised as a Poke Ball lying on the ground",
+        )
+        for species in ("foongus", "amoonguss")
+    },
+    "crustle": GiftDetail(
+        kind=GiftKind.STATIC_ENCOUNTER,
+        requirement="Blocking the way during the story; the Colress MCHN is what moves it",
+    ),
+    # The one entry in these two games that is both shiny and behind the Permit, which makes it
+    # the last thing a player of Black 2 can reach and the thing they reach it for.
+    "haxorus": GiftDetail(
+        kind=GiftKind.STATIC_ENCOUNTER,
+        requirement=(
+            "Shiny, on the first visit to the Nature Preserve - which only opens with the "
+            "Permit Professor Juniper hands over for seeing all 297 entries in the dex that "
+            "are not Mythical; if it faints or is run from it waits there again once the Hall "
+            "of Fame is entered"
+        ),
+    ),
+    # The fourth giant needs both halves whichever half is being played, because the three it
+    # asks for cannot all be caught on one cartridge. The other three are per half, below.
+    "regigigas": GiftDetail(
+        kind=GiftKind.STATIC_ENCOUNTER,
+        requirement=(
+            "With Regirock, Regice and Registeel in the party - which takes a key from the "
+            "other half of the pair whichever half this is"
+        ),
+    ),
+    "heatran": GiftDetail(
+        kind=GiftKind.STATIC_ENCOUNTER,
+        requirement="Once the Magma Stone is carried down to the mountain's lowest floor",
+    ),
+    "cresselia": GiftDetail(
+        kind=GiftKind.STATIC_ENCOUNTER,
+        requirement=(
+            "By returning the Lunar Wing from the Strange House to the girl on the bridge"
+        ),
+    ),
+    # The lake trio, which arrive in Unova rather than living there: they are in the Cave of
+    # Being until Professor Juniper is spoken to, and none of them can be caught in it.
+    **{
+        species: GiftDetail(
+            kind=GiftKind.STATIC_ENCOUNTER,
+            requirement=(
+                "Waits here once Professor Juniper has been spoken to in the Cave of Being, "
+                "which she stands in after the Champion is beaten"
+            ),
+        )
+        for species in ("uxie", "mesprit", "azelf")
+    },
+    **{
+        species: GiftDetail(
+            kind=GiftKind.STATIC_ENCOUNTER,
+            requirement="In the northern Dreamyard, past the ruins; only one to a save",
+        )
+        for species in ("latias", "latios")
+    },
+    # The cover legendaries, which are not the story's this time: the story's Kyurem takes N's
+    # dragon and gives it back. What Dragonspiral Tower holds is the stone, and it is found
+    # after the Champion rather than walked into during the last battle.
+    **{
+        species: GiftDetail(
+            kind=GiftKind.STATIC_ENCOUNTER,
+            requirement=(
+                f"Woken from the {stone} at the top of Dragonspiral Tower, after the Champion "
+                "is beaten"
+            ),
+        )
+        for species, stone in (("zekrom", "Dark Stone"), ("reshiram", "Light Stone"))
+    },
+}
+
+
 #: What PokeAPI calls the pair when it says which version group an evolution started in.
 #:
 #: One group for the two halves, as every pair in this dataset has. It is the group that brought
@@ -575,6 +941,169 @@ BW_EGGS: dict[str, EggFrom] = {
 }
 
 
+#: What PokeAPI calls the sequels when it says which version group an evolution started in.
+#:
+#: Their own group, not the first pair's, and the evolutions in it are the same ones. It matters
+#: anyway: an evolution is recorded per version group, and reading Black's group into Black 2
+#: would be claiming that a rule nobody checked still holds two years later.
+B2W2_VERSION_GROUP = "black-2-white-2"
+
+#: The five both halves offer, in the order a player meets them.
+#:
+#: Two of them are the first pair's traders doing something else. Manny still stands on Route 7
+#: and the trade has turned around - he handed over an Emolga for a Boldore in Black and White,
+#: and here he wants the Emolga and gives a Gigalith - and Lillian on Route 15 still swaps a
+#: Rotom for a Ditto, which is the one trade in Unova that did not change at all.
+#:
+#: Diana's two are the awkward ones and worth keeping in this order. She asks for an Excadrill
+#: first and a Hippowdon after, and both times she battles the player with what they just handed
+#: over, which is what the wiki's dagger means.
+B2W2_SHARED_TRADES = (
+    InGameTrade(gets="gigalith", wants="emolga", location="Route 7", npc="Manny"),
+    InGameTrade(gets="tangrowth", wants="mantine", location="Humilau City", npc="Slick"),
+    InGameTrade(gets="rotom", wants="ditto", location="Route 15", npc="Lillian"),
+    InGameTrade(gets="ambipom", wants="excadrill", location="Accumula Town", npc="Diana"),
+    InGameTrade(
+        gets="alakazam",
+        wants="hippowdon",
+        location="Accumula Town",
+        npc="Diana",
+        requirement="Her second trade, offered once the Excadrill has been handed over",
+    ),
+)
+
+#: And the sixth, which is the pair's own switch written as a trade - again.
+#:
+#: Exactly what Dye does in the first pair, two years later, on a different route and with two
+#: different people doing it: Black 2 hands over a Cottonee and is given a Petilil, White 2 the
+#: other way round. So the same two species look like version exclusives in all four games and
+#: are not in any of them.
+B2W2_COTTON_TRADE = {
+    "black-2": InGameTrade(gets="petilil", wants="cottonee", location="Route 4", npc="Calla"),
+    "white-2": InGameTrade(gets="cottonee", wants="petilil", location="Route 4", npc="Cotton"),
+}
+
+
+def b2w2_trades(version: str) -> tuple[InGameTrade, ...]:
+    """The six this half offers, in the order a player meets them."""
+    return (B2W2_COTTON_TRADE[version], *B2W2_SHARED_TRADES)
+
+
+#: The babies nothing in the sequels can be met as, and what has to be in the day care for one.
+#:
+#: Twenty-seven, where the first pair needs four - and it is the same fact about Unova, much
+#: larger. The grass here is full of grown-up Pokemon from older generations and almost none of
+#: their young: Hariyama on Route 23 and no Makuhita anywhere, Pelipper in Undella Bay and no
+#: Wingull, Banette in the Strange House and no Shuppet. Twenty-two of these twenty-seven are
+#: a species whose only adult a player meets is already fully grown.
+#:
+#: Worked out from what the game actually produces rather than guessed at, which is what the
+#: first pair's note about Pichu and Togepi is warning against: a parent that has to be traded
+#: in first is a dead end dressed up as a way. Every parent named here is reachable in this
+#: half without leaving it.
+B2W2_EGGS: dict[str, EggFrom] = {
+    "abra": EggFrom(parents=("alakazam",)),
+    "hoothoot": EggFrom(parents=("noctowl",)),
+    "cleffa": EggFrom(parents=("clefairy", "clefable")),
+    "igglybuff": EggFrom(parents=("jigglypuff", "wigglytuff")),
+    "aipom": EggFrom(parents=("ambipom",)),
+    "snubbull": EggFrom(parents=("granbull",)),
+    "swinub": EggFrom(parents=("piloswine", "mamoswine")),
+    "larvitar": EggFrom(parents=("pupitar", "tyranitar")),
+    "lotad": EggFrom(parents=("lombre", "ludicolo")),
+    "seedot": EggFrom(parents=("nuzleaf", "shiftry")),
+    "wingull": EggFrom(parents=("pelipper",)),
+    "shroomish": EggFrom(parents=("breloom",)),
+    "slakoth": EggFrom(parents=("vigoroth", "slaking")),
+    "makuhita": EggFrom(parents=("hariyama",)),
+    "meditite": EggFrom(parents=("medicham",)),
+    "electrike": EggFrom(parents=("manectric",)),
+    "shuppet": EggFrom(parents=("banette",)),
+    # The two genderless families, where the day care needs a Ditto rather than a pair. Both
+    # of the adults are reachable and neither has a mate anywhere in the game.
+    "beldum": EggFrom(
+        parents=("metang", "metagross"),
+        requirement="Genderless, so the other half of the pairing has to be a Ditto",
+    ),
+    "golett": EggFrom(
+        parents=("golurk",),
+        requirement="Genderless, so the other half of the pairing has to be a Ditto",
+    ),
+    "bidoof": EggFrom(parents=("bibarel",)),
+    # The one that costs money, as Chingling does in the first pair - and it costs less trouble
+    # here: the Driftveil Market sells the incense from the start rather than once the National
+    # Pokedex is open.
+    "budew": EggFrom(
+        parents=("roselia", "roserade"),
+        requirement=("A parent has to hold a Rose Incense, which the Driftveil Market sells"),
+    ),
+    "blitzle": EggFrom(parents=("zebstrika",)),
+    "tympole": EggFrom(parents=("palpitoad", "seismitoad")),
+    "vanillite": EggFrom(parents=("vanillish", "vanilluxe")),
+    "deino": EggFrom(parents=("zweilous", "hydreigon")),
+    "larvesta": EggFrom(parents=("volcarona",)),
+}
+
+#: And the one each half has of its own, which is the oldest version exclusive in the series.
+#:
+#: Caterpie and Weedle, still opposite each other twelve years on - and in these two games
+#: neither of them is in the grass at all. What each half has is the moth or the wasp, in one
+#: Hidden Grotto in Pinwheel Forest, and the caterpillar is only an egg.
+B2W2_FIRST_BUG = {
+    "black-2": ("weedle", "beedrill"),
+    "white-2": ("caterpie", "butterfree"),
+}
+
+
+def b2w2_eggs(version: str) -> dict[str, EggFrom]:
+    """The twenty-seven this half's day care can produce."""
+    baby, parent = B2W2_FIRST_BUG[version]
+
+    return {**B2W2_EGGS, baby: EggFrom(parents=(parent,))}
+
+
+def b2w2_gifts(version: str) -> dict[str, GiftDetails]:
+    """What this half hands over, with the four entries the two halves word differently.
+
+    Everything the sequels share is in :data:`B2W2_GIFTS`. What is not shared is a day of the
+    week and a key, and neither is a version exclusive - both games have all four species, and
+    both games describe getting them differently. A single table would have had to say "every
+    Monday in Black 2 and every Thursday in White 2" on a record that already knows which game
+    it belongs to.
+    """
+    key, rewarded, sent, other = _KEYS[version]
+
+    return {
+        **B2W2_GIFTS,
+        **{
+            species: GiftDetail(kind=GiftKind.STATIC_ENCOUNTER, requirement=f"Every {day}")
+            for species, day in _WEEKLY[version].items()
+        },
+        "regirock": GiftDetail(
+            kind=GiftKind.STATIC_ENCOUNTER,
+            requirement=(
+                "In the Rock Peak Chamber, which opens once the ruins' riddle has been "
+                f"answered; catching it is rewarded with the {key}"
+            ),
+        ),
+        rewarded: GiftDetail(
+            kind=GiftKind.STATIC_ENCOUNTER,
+            requirement=(
+                f"In the {_CHAMBER[rewarded][0]}, which the {key} opens - the reward for "
+                "catching Regirock"
+            ),
+        ),
+        sent: GiftDetail(
+            kind=GiftKind.STATIC_ENCOUNTER,
+            requirement=(
+                f"In the {_CHAMBER[sent][0]}, which only the {_CHAMBER[sent][1]} opens - and "
+                f"that key is {other}'s reward for catching Regirock, sent over from a copy of "
+                f"{other} through the Unova Link"
+            ),
+        ),
+    }
+
+
 def bw_trades(version: str) -> tuple[InGameTrade, ...]:
     """The five this half offers, in the order a player meets them."""
     return (BW_DYE_TRADE[version], *BW_SHARED_TRADES)
@@ -606,6 +1135,36 @@ def bw_acquisition_methods(
     )
 
 
+def b2w2_acquisition_methods(
+    context: BuildContext,
+    *,
+    game_id: str,
+    version: str,
+    column: str,
+    entries: Sequence[DexEntry],
+) -> list[AcquisitionMethod]:
+    """Every way to get something in Black 2 or White 2, the grottoes included.
+
+    The one thing the sequels need that the first pair did not. PokeAPI's encounter tables have
+    no Hidden Grotto in them at all, and twenty of them are hidden around this Unova holding
+    species that are nowhere else in the game - so a build from that source alone is not short
+    of detail, it is wrong about what these two cartridges contain.
+
+    ``column`` is how the wiki page's Games column spells this half: "B2" or "W2".
+    """
+    return acquisition_methods(
+        context,
+        game_id=game_id,
+        version=version,
+        entries=entries,
+        gifts=b2w2_gifts(version),
+        version_group=B2W2_VERSION_GROUP,
+        trades=b2w2_trades(version),
+        eggs=b2w2_eggs(version),
+        grotto_column=column,
+    )
+
+
 def acquisition_methods(
     context: BuildContext,
     *,
@@ -617,6 +1176,7 @@ def acquisition_methods(
     version_group: str | None = None,
     trades: Sequence[InGameTrade] = (),
     eggs: Mapping[str, EggFrom] | None = None,
+    grotto_column: str | None = None,
 ) -> list[AcquisitionMethod]:
     """Every way to get something in one Unova cartridge.
 
@@ -634,7 +1194,12 @@ def acquisition_methods(
     # The wild and gift steps read the same encounter tables and walk into the same places, so
     # they share one lookup - and one correction: whatever the forces of nature are filed under,
     # both steps call it the same thing.
-    places = LocationNames(api, refresh=context.refresh, renamed=RENAMED_PLACES)
+    places = LocationNames(
+        api,
+        refresh=context.refresh,
+        renamed=RENAMED_PLACES,
+        renamed_sub_areas=RENAMED_SUB_AREAS,
+    )
 
     found: list[AcquisitionMethod] = [
         *wild_encounters(
@@ -644,8 +1209,20 @@ def acquisition_methods(
             species=species,
             refresh=context.refresh,
             places=places,
+            gates=PLACE_GATES,
         )
     ]
+
+    if grotto_column is not None:
+        found.extend(
+            grotto_encounters(
+                context.require_wiki(),
+                game_id=game_id,
+                column=grotto_column,
+                species=set(species),
+                refresh=context.refresh,
+            )
+        )
 
     if gifts is not None:
         found.extend(

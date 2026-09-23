@@ -48,6 +48,9 @@ METHOD_ICONS: dict[str, str] = {
     "dust-cloud": "smoke-ball",
     "rippling-water": "hm03",
     "bridge-shadow": "poke-ball",
+    # And the sequels' grottoes, which are the one place in Unova a player is looking for
+    # something rather than walking into it. A Dowsing Machine is the picture of looking.
+    "hidden-grotto": "dowsing-machine",
     "other": "poke-ball",
     # Gifts and statics.
     "starter": "poke-ball",

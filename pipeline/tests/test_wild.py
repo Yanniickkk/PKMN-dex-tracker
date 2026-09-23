@@ -66,12 +66,18 @@ class FakeApi:
         return {"names": [{"language": {"name": "en"}, "name": name}]}
 
 
-def build(encounters: dict[str, list], locations: dict[str, tuple[str, str]], version="emerald"):
+def build(
+    encounters: dict[str, list],
+    locations: dict[str, tuple[str, str]],
+    version="emerald",
+    gates: dict[str, str] | None = None,
+):
     return wild_encounters(
         FakeApi(encounters, locations),
         game_id="emerald",
         version=version,
         species=list(encounters),
+        gates=gates,
     )
 
 
@@ -181,6 +187,65 @@ def test_a_sub_area_is_what_is_left_of_the_slug() -> None:
     assert found[0].location == "Meteor Falls"
     # Floor names keep their shape rather than being title-cased into "B1f".
     assert found[0].sub_area == "B1F"
+
+
+def test_a_sub_area_shouts_the_acronyms_a_slug_writes_in_lower_case() -> None:
+    # The Pokemon World Tournament, which Unova's Relic Passage has an entrance to. "Pwt
+    # Entrance" is not a place; it is a title-caser that did not know what it was reading.
+    found = build(
+        {"woobat": [area("relic-passage-pwt-entrance", "black-2", [slot("walk", 30, 35, 100)])]},
+        {"relic-passage-pwt-entrance": ("relic-passage", "Relic Passage")},
+        version="black-2",
+    )
+
+    assert found[0].sub_area == "PWT Entrance"
+
+
+def test_a_sub_area_can_be_renamed_where_the_generated_name_belongs_elsewhere() -> None:
+    # A location's English name was written by a person; a sub-area's comes out of the slug and
+    # nobody read it. Unova's Season Research Lab is filed as `weather-institute`, and the
+    # Weather Institute is a building in Hoenn - so the generated name is not a worse name, it
+    # is another region's.
+    api = FakeApi(
+        {},
+        {
+            "unova-route-6-weather-institute": ("unova-route-6", "Route 6"),
+            "meteor-falls-b1f": ("meteor-falls", "Meteor Falls"),
+        },
+    )
+    places = LocationNames(api, renamed_sub_areas={"Weather Institute": "Season Research Lab"})
+
+    assert places.of("unova-route-6-weather-institute") == ("Route 6", "Season Research Lab")
+    # And a sub-area nobody renamed comes through as it was.
+    assert places.of("meteor-falls-b1f") == ("Meteor Falls", "B1F")
+
+
+def test_a_gated_place_puts_the_way_in_in_front_of_every_slot() -> None:
+    # A condition in the source hangs on a row of a table, so it cannot say that the whole
+    # place is locked from the outside. The caller knows, and every slot in that place carries
+    # it.
+    found = build(
+        {"kecleon": [area("nature-sanctuary-area", "black-2", [slot("dark-grass", 65, 65, 10)])]},
+        {"nature-sanctuary-area": ("nature-sanctuary", "Nature Preserve")},
+        version="black-2",
+        gates={"Nature Preserve": "Only by plane from Mistralton City"},
+    )
+
+    assert found[0].requirement == "Only by plane from Mistralton City"
+
+
+def test_a_gate_is_matched_against_the_name_a_player_reads() -> None:
+    # Keyed by the location's name rather than its slug, so a place the caller has renamed is
+    # gated under the name it renamed it to. Keying on the slug would mean writing the source's
+    # mistake down twice.
+    found = build(
+        {"kecleon": [area("somewhere-area", "black-2", [slot("dark-grass", 65, 65, 10)])]},
+        {"somewhere-area": ("somewhere", "Nature Sanctuary")},
+        version="black-2",
+        gates={"Nature Sanctuary": "Only by plane"},
+    )
+
+    assert found[0].requirement == "Only by plane"
 
 
 def test_a_time_of_day_condition_is_carried_into_its_own_field() -> None:

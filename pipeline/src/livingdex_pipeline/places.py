@@ -13,6 +13,10 @@ the series and wrong wherever a place was renamed: Ho-Oh waits on top of the Bel
 HeartGold and on top of the Tin Tower in Gold, and a Gold player reading "Bell Tower" is being
 told the name of a game they are not playing. So a set of games can hand over what it calls the
 places it disagrees about, and everything else is left alone.
+
+A sub-area can be renamed the same way and for a worse reason. A sub-area's name is generated
+from the slug and nobody wrote it: Unova's Season Research Lab is filed as
+``unova-route-6-weather-institute``, and the Weather Institute is a building in Hoenn.
 """
 
 from __future__ import annotations
@@ -39,6 +43,8 @@ class LocationNames:
     api: PokeApiClient
     refresh: bool = False
     renamed: Mapping[str, str] = field(default_factory=dict)
+    #: The same for the part below the location, keyed by what the slug generates.
+    renamed_sub_areas: Mapping[str, str] = field(default_factory=dict)
     _cache: dict[str, tuple[str, str | None]] = field(default_factory=dict)
 
     def of(self, area_slug: str) -> tuple[str, str | None]:
@@ -50,9 +56,10 @@ class LocationNames:
         location = self.api.resource(f"location/{location_slug}", refresh=self.refresh)
 
         name = english(location.get("names", []), fallback=pretty(location_slug))
+        below = sub_area(area_slug, location_slug)
         self._cache[area_slug] = (
             self.renamed.get(name, name),
-            sub_area(area_slug, location_slug),
+            self.renamed_sub_areas.get(below, below) if below else below,
         )
 
         return self._cache[area_slug]
@@ -112,8 +119,9 @@ def _named(slug: str) -> str:
 
 #: Words a slug spells in lower case that are shouted in English. Only the ones the dataset has
 #: met: Unova files Game Freak's offices as ``game-freak-hq``, and "Game Freak Hq" reads like a
-#: typo rather than like a building.
-_ACRONYMS = frozenset({"hq"})
+#: typo rather than like a building. The sequels brought the second one - Relic Passage has an
+#: entrance at the Pokemon World Tournament, and "Pwt Entrance" reads like nothing at all.
+_ACRONYMS = frozenset({"hq", "pwt"})
 
 
 def pretty(slug: str) -> str:

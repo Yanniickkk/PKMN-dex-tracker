@@ -14,6 +14,7 @@ from livingdex_pipeline.build import default_registry
 from livingdex_pipeline.gamedefs import (
     bank,
     black,
+    black2,
     blue,
     crystal,
     diamond,
@@ -38,6 +39,7 @@ from livingdex_pipeline.gamedefs import (
     soulsilver,
     unova,
     white,
+    white2,
     yellow,
 )
 from livingdex_pipeline.games import BuildContext, GameRegistry
@@ -90,6 +92,7 @@ VERSION_GROUP_ORDER = {
     "platinum": 9,
     "heartgold-soulsilver": 10,
     "black-white": 11,
+    "black-2-white-2": 12,
 }
 
 
@@ -139,6 +142,33 @@ class FakeApi:
         return {"names": [{"language": {"name": "en"}, "name": "Route 101"}]}
 
 
+class FakeWiki:
+    """Stands in for the client that reads a wiki page.
+
+    One grotto holding one species, which is enough for the two games that read a page to build
+    at all. What the parser does with a real page is :mod:`test_grottoes`, and this only has to
+    hand back something it can read.
+    """
+
+    def __init__(self, species: str) -> None:
+        self.species = species
+
+    def get_text(self, url: str, *, refresh: bool = False) -> str:
+        return (
+            "<html><body><div id='mw-content-text'><h3>Route 2</h3><table><tbody>"
+            "<tr><th>Pokémon</th><th>Games</th><th>Location</th>"
+            "<th>Levels</th><th>Rate</th></tr>"
+            f"<tr><td>{self.species}</td>"
+            "<th style='background:#303E51;'>B2</th>"
+            "<th style='background:#303E51;'>W2</th>"
+            "<td>Hidden Grotto</td><td>55-59</td><td>1%</td></tr>"
+            "</tbody></table></div></body></html>"
+        )
+
+    def retrieved_on(self, url: str) -> date:
+        return date(2026, 9, 21)
+
+
 def context(
     game_id: str, api: FakeApi | None = None, reaches: list[str] | None = None
 ) -> BuildContext:
@@ -156,6 +186,7 @@ def context(
         game_id=game_id,
         refresh=False,
         api=api,
+        wiki=FakeWiki(listed[0]),
         species=[
             Species(
                 id=name,
@@ -1816,6 +1847,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
 
     assert registry.game_ids == [
         "black",
+        "black-2",
         "blue",
         "crystal",
         "diamond",
@@ -1832,6 +1864,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "silver",
         "soulsilver",
         "white",
+        "white-2",
         "yellow",
     ]
 
@@ -1841,9 +1874,9 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # Generation 2 ones; nine Time Capsules, each of the older three to each of the newer three;
     # ten between the five Generation 3 cartridges, ten wireless trades between the five
     # Generation 4 games, and twenty-five one-way Pal Park trips from each of the five into each
-    # of the five. Then one trade between the two halves of Generation 5, and ten one-way Poke
-    # Transfers, from each Generation 4 cartridge into each of them.
-    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 1 + 10
+    # of the five. Then six trades between the four Generation 5 cartridges, and twenty one-way
+    # Poke Transfers, from each Generation 4 cartridge into each of the four.
+    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -1856,18 +1889,21 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     assert ("red", "crystal") in routes
     assert ("crystal", "red") not in routes
 
-    # What is left waiting is a node and a pair of games. Eight releases declare Poke
-    # Transporter into Bank, which is not a game and is not written yet; Black and White declare
-    # trades with the sequels, which are games and are not written yet either. Both kinds sit in
-    # the same queue, and neither game had to know which kind it was declaring.
+    # The four trades Black and White had been declaring into an empty space are here, which is
+    # what registering the sequels was for: neither of the two older files was edited, and both
+    # halves of each pair now reach both halves of the other.
+    assert ("black", "black-2") in routes
+    assert ("black-2", "white") in routes
+    assert ("black-2", "white-2") in routes
+    assert ("platinum", "white-2") in routes
+
+    # What is left waiting is one node. Ten releases declare Poke Transporter into Bank, which
+    # is not a game and is not written yet, and nothing else in the dataset is waiting on
+    # anything: every route between two cartridges now has both of its ends.
     waiting = {(edge.to, edge.mechanism) for _, edge in registry.held_back_edges}
 
-    assert waiting == {
-        ("bank", TransferMechanism.POKE_TRANSPORTER),
-        ("black-2", TransferMechanism.TRADE),
-        ("white-2", TransferMechanism.TRADE),
-    }
-    assert len(registry.held_back_edges) == 6 + 2 + 4
+    assert waiting == {("bank", TransferMechanism.POKE_TRANSPORTER)}
+    assert len(registry.held_back_edges) == 6 + 2 + 2
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:
@@ -2564,6 +2600,71 @@ def test_generation_5_keeps_its_region_and_its_generation_in_one_module() -> Non
     assert not hasattr(ds, "REGION")
 
 
+# --- Black 2 and White 2 ----------------------------------------------------------------------
+
+
+def test_the_unova_sequels_are_a_pair_of_their_own() -> None:
+    both = {
+        module.GAME_ID: module.build(context(module.GAME_ID)).game for module in (black2, white2)
+    }
+
+    assert sorted(both) == ["black-2", "white-2"]
+    # Each names the other and neither names Black or White. That is the whole claim step 1
+    # makes about the sequels: they are a second pair, not two more versions of the first.
+    assert both["black-2"].pair_partner == "white-2"
+    assert both["white-2"].pair_partner == "black-2"
+    assert both["black-2"].title != both["white-2"].title
+    assert both["black-2"].released == both["white-2"].released == date(2012, 6, 23)
+
+
+def test_the_unova_sequels_are_generation_5_cartridges_drawn_from_the_same_sheet() -> None:
+    for module in (black2, white2):
+        game = module.build(context(module.GAME_ID)).game
+
+        assert game.generation == 5
+        assert game.region == "Unova"
+        assert game.national_dex_through == 649
+        assert game.dex_source is DexSource.NATIONAL_DEX
+        assert game.release is GameRelease.CARTRIDGE
+        # Two years later and the same drawings: Generation 5 is the only one that never
+        # redrew itself for a later release.
+        assert game.sprite_set == unova.SPRITE_SET
+
+
+def test_the_sequels_read_the_other_unova_dex() -> None:
+    api = FakeApi([(0, "victini"), (300, "genesect")])
+
+    for module in (black2, white2):
+        entries = module.build(context(module.GAME_ID, api)).dex_entries
+
+        assert [one.number for one in entries] == [0, 300]
+        assert [str(one.target) for one in entries] == ["victini", "genesect"]
+        assert all(one.game == module.GAME_ID for one in entries)
+
+    # The sequels' list, not the pair's. Both halves ask for the same one, and neither half of
+    # either pair ever asks for the other pair's.
+    assert api.asked_for == [unova.B2W2_DEX, unova.B2W2_DEX]
+
+
+def test_the_sequels_number_from_zero_like_the_pair_before_them() -> None:
+    # Victini is #000 in all four Unova games. The dex around it is a different list in the
+    # sequels, and the one thing the renumbering left alone is where it starts.
+    entries = black2.build(context("black-2", FakeApi([(0, "victini"), (1, "snivy")]))).dex_entries
+
+    assert entries[0].number == 0
+    assert str(entries[0].target) == "victini"
+
+
+def test_every_generation_5_cartridge_trades_with_every_other() -> None:
+    # Six routes between four games, and each one is declared twice - once from each end -
+    # because a cartridge names the whole set whether or not the others are built. The registry
+    # collapses the pairs; what is checked here is that all four agree about the set.
+    for module in (black, white, black2, white2):
+        traded = {edge.to for edge in module.edges() if edge.mechanism is TransferMechanism.TRADE}
+
+        assert traded == set(unova.CARTRIDGES) - {module.GAME_ID}
+
+
 def unova_slot(
     version: str,
     method: str,
@@ -2592,10 +2693,16 @@ def unova_slot(
 
 
 def unova_wild(module, api: FakeApi) -> list:
+    """The slots one game reads out of the encounter tables.
+
+    Hidden Grottoes are wild records too and are not in those tables: they come off a wiki
+    page, they are :mod:`test_grottoes`, and the two sequels would otherwise carry one here
+    that has nothing to do with what is being asked.
+    """
     return [
         one
         for one in module.build(context(module.GAME_ID, api)).acquisition_methods
-        if one.kind == "wild"
+        if one.kind == "wild" and one.method is not EncounterMethod.HIDDEN_GROTTO
     ]
 
 
@@ -2700,6 +2807,332 @@ class Placed(FakeApi):
             return {"names": [{"language": {"name": "en"}, "name": self._name}]}
 
         return super().resource(path, refresh=refresh)
+
+
+def test_each_sequel_reads_its_own_version_of_the_encounter_table() -> None:
+    # The version is the whole difference between the two files here too, and the sequels read
+    # a version name of their own rather than the pair's.
+    for module, rate in ((black2, 25), (white2, 55)):
+        api = FakeApi(
+            [(1, "audino")],
+            {
+                "audino": [
+                    unova_slot("black-2", "grass-spots", chance=25),
+                    unova_slot("white-2", "grass-spots", chance=55),
+                    # The pair's tables are in the same source and are not theirs to read.
+                    unova_slot("black", "grass-spots", chance=99),
+                ]
+            },
+        )
+
+        wild = unova_wild(module, api)
+
+        assert len(wild) == 1
+        assert wild[0].rate_percent == rate
+
+
+def test_the_forest_behind_the_dex_says_what_it_takes_to_get_there() -> None:
+    # PokeAPI marks conditions on a row, so it can say "only while it is swarming" and has no
+    # way of saying "only if you are allowed in here". The Nature Preserve's tables are
+    # ordinary grass; the plane is the whole story, and it is not in the source at all.
+    api = Placed(
+        [(1, "kecleon")],
+        {"kecleon": [unova_slot("black-2", "dark-grass", area="nature-sanctuary-area")]},
+        slug="nature-sanctuary",
+        name="Nature Sanctuary",
+    )
+
+    [record] = unova_wild(black2, api)
+
+    # And the name is wrong in the source as well: "Nature Sanctuary" is the Japanese name
+    # carried across, and no English player was ever shown it.
+    assert record.location == "Nature Preserve"
+    assert record.requirement is not None
+    assert record.requirement.startswith("Only by plane from Mistralton City")
+    assert "297" in record.requirement
+
+
+def test_a_gated_place_and_a_gated_slot_read_as_one_sentence() -> None:
+    # Two requirements on one record: the way in, and what the row itself asks for. The way in
+    # comes first because it is the part a player cannot do anything about, and the second is
+    # lowered into the sentence rather than starting a new one.
+    api = Placed(
+        [(1, "basculin")],
+        {"basculin": [unova_slot("black-2", "super-rod-spots", area="nature-sanctuary-area")]},
+        slug="nature-sanctuary",
+        name="Nature Sanctuary",
+    )
+
+    [record] = unova_wild(black2, api)
+
+    assert record.requirement is not None
+    assert record.requirement.endswith(" and cast into rippling water")
+    assert "and Cast into" not in record.requirement
+
+
+def test_an_ungated_place_says_nothing_extra() -> None:
+    api = Placed(
+        [(1, "audino")],
+        {"audino": [unova_slot("black-2", "grass-spots", area="unova-route-3-area")]},
+        slug="unova-route-3",
+        name="Route 3",
+    )
+
+    [record] = unova_wild(black2, api)
+
+    assert record.location == "Route 3"
+    assert record.requirement is None
+
+
+def test_the_sequels_mark_twenty_they_cannot_fill() -> None:
+    for module in (black2, white2):
+        assert len(module.UNOBTAINABLE) == 7 + 13
+
+
+def test_victini_and_genesect_swap_places_between_the_two_pairs() -> None:
+    # The clearest thing step 7 found in this generation, and it only shows up if the games
+    # column is read rather than the rows counted. Black and White were never offered a
+    # Genesect in the West; the sequels were offered one over Wi-Fi five weeks after they came
+    # out. And Victini is the mirror: the first pair had it behind a Wi-Fi pass the world could
+    # reach, and exactly one Victini distribution ever named the sequels - in Japan, in
+    # Japanese, for six weeks.
+    assert "rather than the sequels" in unova.BW_UNOBTAINABLE["genesect"]
+    assert "Plasma Genesect" in unova.B2W2_UNOBTAINABLE["genesect"]
+
+    assert "Liberty Pass" in unova.BW_UNOBTAINABLE["victini"]
+    sequels = unova.B2W2_UNOBTAINABLE["victini"]
+    assert "Liberty Garden is not on the sequels' map" in sequels
+    assert "every other Victini distribution was for the first pair" in sequels
+
+
+def test_the_forces_of_nature_are_behind_another_game_rather_than_a_date() -> None:
+    # Not a distribution that ended: the Pokemon Dream Radar is a 3DS download that sends into
+    # these two cartridges and nowhere else, and it is the only source of any of the three here.
+    # Every other entry in either pair's list is a door that shut; this one is a door nobody
+    # has written yet.
+    for species in ("tornadus", "thundurus", "landorus"):
+        reason = unova.B2W2_UNOBTAINABLE[species]
+
+        assert "Dream Radar" in reason
+        assert "No distribution ever handed one out" in reason
+        # And they are not in the first pair's list at all, because the first pair has them
+        # roaming its own Unova.
+        assert species not in unova.BW_UNOBTAINABLE
+
+    # The third one waits on the other two, so the Radar is two steps back rather than one.
+    assert "Tornadus and Thundurus in the party" in unova.B2W2_UNOBTAINABLE["landorus"]
+
+
+def test_the_sequels_split_almost_twice_as_much_as_the_first_pair() -> None:
+    # Seven each in Black and White, thirteen each here - and what grew is the part nobody
+    # thinks of as a version exclusive: five whole families from older generations, none of
+    # which the first pair disagreed about at all.
+    assert len(black2.ELSEWHERE_IN_GENERATION_5) == 13
+    assert len(white2.ELSEWHERE_IN_GENERATION_5) == len(black2.ELSEWHERE_IN_GENERATION_5)
+    assert len(black.ELSEWHERE_IN_GENERATION_5) == 7
+
+    older = {"numel", "camerupt", "skitty", "delcatty", "elekid", "electabuzz", "electivire"}
+    assert older <= set(black2.ELSEWHERE_IN_GENERATION_5)
+    assert not older & set(black.ELSEWHERE_IN_GENERATION_5)
+    assert not older & set(white.ELSEWHERE_IN_GENERATION_5)
+
+    # And still not Cottonee or Petilil, for the same reason as in the first pair: the game
+    # hands each half the one it is missing, two years later and on a different route.
+    both = set(black2.ELSEWHERE_IN_GENERATION_5) | set(white2.ELSEWHERE_IN_GENERATION_5)
+    assert not {"cottonee", "petilil"} & both
+
+
+def test_not_one_of_the_sequels_exclusives_was_ever_handed_out() -> None:
+    # The opposite of the first pair, where all four legendaries had a distribution and every
+    # one of them was aimed at the half that could not catch it. Here the cover legendary was
+    # not covered either: every Reshiram and Zekrom giveaway named Black or White alone.
+    assert "reshiram" in black2.ELSEWHERE_IN_GENERATION_5
+    assert "zekrom" in white2.ELSEWHERE_IN_GENERATION_5
+
+    for module in (black2, white2):
+        assert all("handed one out" not in reason for reason in _exclusive_reasons(module))
+
+
+def _exclusive_reasons(module) -> list[str]:
+    return [module.UNOBTAINABLE[species] for species in module.ELSEWHERE_IN_GENERATION_5]
+
+
+def test_a_version_exclusive_can_now_name_more_than_one_other_game() -> None:
+    # Four cartridges in one generation, so "the other half has it" stopped being the whole
+    # answer. Black's Zekrom is in White, as it always was, and in Black 2 as well - and Black
+    # did not have to be edited for that to become true, only for the sentence to say so.
+    assert black.UNOBTAINABLE["zekrom"].startswith("White and Black 2 only in Generation 5")
+    assert white.UNOBTAINABLE["reshiram"].startswith("Black and White 2 only in Generation 5")
+    assert black2.UNOBTAINABLE["reshiram"].startswith("Black and White 2 only in Generation 5")
+
+    # Thundurus is the one that did not grow: the sequels have no Thundurus either.
+    assert black.UNOBTAINABLE["thundurus"].startswith("White only in Generation 5")
+
+    # And an exclusive the first pair never had names one game, because only one has it.
+    assert black2.UNOBTAINABLE["numel"].startswith("White 2 only in Generation 5")
+
+
+def test_the_sequels_evolve_by_their_own_version_group() -> None:
+    # The same rules as the first pair, read under the sequels' name. Passing "black-white"
+    # through would be claiming a rule nobody checked still held two years later, which is the
+    # sort of thing that is right until it is not.
+    assert unova.B2W2_VERSION_GROUP == "black-2-white-2"
+    assert unova.B2W2_VERSION_GROUP != unova.BW_VERSION_GROUP
+
+    api = FakeApi([(1, "treecko"), (2, "grovyle")])
+
+    for module in (black2, white2):
+        evolutions = [
+            one
+            for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+            if one.kind == "evolution"
+        ]
+
+        assert [one.target.species for one in evolutions] == ["grovyle"]
+
+
+def test_the_pair_that_swaps_its_exclusives_does_it_again_two_years_later() -> None:
+    # Dye does this in Nacrene City in the first pair; here it is two different people on Route
+    # 4. So Cottonee and Petilil look like version exclusives in all four games and are not in
+    # any of them, and step 7 has to know that before it writes either of them off.
+    black_2 = unova.b2w2_trades("black-2")[0]
+    white_2 = unova.b2w2_trades("white-2")[0]
+
+    assert (black_2.wants, black_2.gets) == ("cottonee", "petilil")
+    assert (white_2.wants, white_2.gets) == ("petilil", "cottonee")
+    assert black_2.location == white_2.location == "Route 4"
+    # Two traders rather than one who changes their mind, which is how the first pair did it.
+    assert black_2.npc != white_2.npc
+    assert unova.BW_DYE_TRADE["black"].npc == unova.BW_DYE_TRADE["white"].npc
+
+
+def test_a_trader_the_first_pair_had_is_asking_for_the_opposite_thing() -> None:
+    # Manny still stands on Route 7. In Black and White he hands over an Emolga for a Boldore;
+    # here he wants the Emolga and gives the Gigalith a Boldore turns into. Reading the first
+    # pair's table into the sequels would have had a player hand over the wrong Pokemon.
+    before = next(one for one in unova.BW_SHARED_TRADES if one.npc == "Manny")
+    after = next(one for one in unova.B2W2_SHARED_TRADES if one.npc == "Manny")
+
+    assert (before.wants, before.gets) == ("boldore", "emolga")
+    assert (after.wants, after.gets) == ("emolga", "gigalith")
+
+    # And one that did not change at all, which is what makes the other one worth noticing.
+    assert any(one.npc == "Lillian" and one.gets == "rotom" for one in unova.BW_SHARED_TRADES)
+    assert any(one.npc == "Lillian" and one.gets == "rotom" for one in unova.B2W2_SHARED_TRADES)
+
+
+def test_the_sequels_day_care_carries_most_of_what_is_missing() -> None:
+    # Twenty-seven against the first pair's four, and it is one fact about Unova written large:
+    # the grass is full of grown-ups from older generations and almost none of their young.
+    for version in ("black-2", "white-2"):
+        assert len(unova.b2w2_eggs(version)) == 27
+
+    assert len(unova.BW_EGGS) == 4
+
+    # The oldest version exclusive in the series, still opposite itself, and in these two games
+    # neither caterpillar is in the grass at all - each half has the adult in one grotto.
+    assert "weedle" in unova.b2w2_eggs("black-2")
+    assert "caterpie" not in unova.b2w2_eggs("black-2")
+    assert "caterpie" in unova.b2w2_eggs("white-2")
+    assert "weedle" not in unova.b2w2_eggs("white-2")
+
+
+def test_the_two_genderless_families_say_a_ditto_is_needed() -> None:
+    # Every other baby in the table hatches from a pair. These two adults have no mate anywhere
+    # in the game, so "leave a Golurk at the day care" is only half an instruction.
+    for species in ("beldum", "golett"):
+        requirement = unova.B2W2_EGGS[species].requirement
+        assert requirement is not None and "Ditto" in requirement
+
+
+def sequel_gifts(module, api: FakeApi) -> list:
+    return [
+        one
+        for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+        if one.kind == "gift"
+    ]
+
+
+def test_the_sequels_hand_their_first_partner_over_at_a_different_desk() -> None:
+    api = FakeApi([(1, "snivy")], {"snivy": [unova_gift("black-2", "gift", 5, "aspertia-city")]})
+
+    [gift] = sequel_gifts(black2, api)
+
+    assert gift.gift_kind is GiftKind.STARTER
+    # Bianca, at a lookout in a town the first pair does not have. Juniper hands these three
+    # over in Black and White, and two years later she is not the one doing it.
+    assert gift.npc == "Bianca"
+    assert unova.BW_GIFTS["snivy"].npc == "Professor Juniper"
+
+
+def test_the_two_unova_fossils_stopped_being_a_choice_a_save_lives_with() -> None:
+    # The same two species and the same one-or-the-other, and the opposite answer. The first
+    # pair's other fossil never comes back, so one of Tirtouga and Archen waits for a trade;
+    # here the one left behind turns up for sale, and both entries fill in a single save.
+    first = unova.BW_GIFTS["tirtouga"].requirement
+    sequels = unova.B2W2_GIFTS["tirtouga"].requirement
+
+    assert first is not None and sequels is not None
+    assert "stays with them" in first
+    assert "Join Avenue" in sequels
+
+
+def test_each_half_is_rewarded_one_key_and_has_to_be_sent_the_other() -> None:
+    # Regirock, Regice and Registeel are in both games and neither game can produce all three:
+    # catching Regirock hands over one key, and the other chamber's key is the other half's
+    # reward. So two of the six entries need a second cartridge, and it is not a trade - what
+    # crosses over is a key, through the Unova Link.
+    black_2 = unova.b2w2_gifts("black-2")
+    white_2 = unova.b2w2_gifts("white-2")
+
+    assert "rewarded with the Iron Key" in black_2["regirock"].requirement
+    assert "rewarded with the Iceberg Key" in white_2["regirock"].requirement
+
+    assert "the reward for catching Regirock" in black_2["registeel"].requirement
+    assert "Unova Link" in black_2["regice"].requirement
+
+    # And the mirror, which is what makes it a pair rather than an exclusive.
+    assert "the reward for catching Regirock" in white_2["regice"].requirement
+    assert "Unova Link" in white_2["registeel"].requirement
+
+    # The fourth asks for all three at once, so it needs the other cartridge either way.
+    assert unova.B2W2_GIFTS["regigigas"].requirement is not None
+    assert "whichever half this is" in unova.B2W2_GIFTS["regigigas"].requirement
+
+
+def test_the_weekly_visitors_come_on_different_days_in_the_two_halves() -> None:
+    # Two rows PokeAPI carries no condition on at all. A player who reads "Route 4, level 25"
+    # and walks there on a Tuesday finds an empty route and no reason why.
+    assert unova.b2w2_gifts("black-2")["jellicent"].requirement == "Every Monday"
+    assert unova.b2w2_gifts("white-2")["jellicent"].requirement == "Every Thursday"
+
+    # And the bird of prey each half keeps, which is the other half's exclusive.
+    assert "mandibuzz" in unova.b2w2_gifts("black-2")
+    assert "braviary" in unova.b2w2_gifts("white-2")
+    assert "braviary" not in unova.b2w2_gifts("black-2")
+
+
+def test_the_zorua_the_first_pair_could_not_reach_is_simply_handed_over_here() -> None:
+    # The sharpest difference step 4 found between the two pairs. In Black and White it takes
+    # an event Celebi that was distributed for the Generation 4 games and cannot be got today;
+    # two years later a man in Driftveil City offers N's Zorua to anyone who asks.
+    assert "zorua" in unova.BW_UNOBTAINABLE
+    assert "event Celebi" in unova.BW_UNOBTAINABLE["zorua"]
+
+    handed_over = unova.B2W2_GIFTS["zorua"]
+
+    assert handed_over.npc is not None and "Rood" in handed_over.npc
+    assert "zorua" not in unova.b2w2_gifts("black-2")["regigigas"].requirement
+
+
+def test_the_swords_of_justice_are_left_to_say_where_they_are() -> None:
+    # They moved out of their chambers onto three routes, nothing in the source conditions the
+    # first row, and the page about all three says nothing about an order this time. The first
+    # pair needed three sentences here; inventing them again would be writing down a rule that
+    # was true of the other games.
+    for species in ("cobalion", "terrakion", "virizion"):
+        assert species in unova.BW_GIFTS
+        assert species not in unova.B2W2_GIFTS
 
 
 def unova_gifts(module, api: FakeApi) -> list:
@@ -2883,8 +3316,10 @@ def test_the_unova_pair_mark_what_only_the_other_half_keeps() -> None:
         for module in (black, white)
     }
 
-    assert reasons["black"]["solosis"].startswith("White only in Generation 5")
-    assert reasons["white"]["gothita"].startswith("Black only in Generation 5")
+    # Two games rather than one, since the sequels were written: what Black is missing is in
+    # White, as it always was, and in White 2 as well.
+    assert reasons["black"]["solosis"].startswith("White and White 2 only in Generation 5")
+    assert reasons["white"]["gothita"].startswith("Black and Black 2 only in Generation 5")
     # And what this half does produce says nothing at all.
     assert reasons["black"]["snivy"] is None
 
@@ -2894,8 +3329,10 @@ def test_the_unova_exclusives_mirror_each_other_exactly() -> None:
     # own grass is missing, so two species that look exactly like exclusives are not. Reading
     # the encounter tables alone would have written both of them off.
     assert len(black.ELSEWHERE_IN_GENERATION_5) == len(white.ELSEWHERE_IN_GENERATION_5) == 7
-    assert all(partner == "White" for partner, _ in black.ELSEWHERE_IN_GENERATION_5.values())
-    assert all(partner == "Black" for partner, _ in white.ELSEWHERE_IN_GENERATION_5.values())
+    # Every one of them is in the pair partner, which is what makes it a pair. Some are in one
+    # of the sequels as well, and that is named beside it rather than instead of it.
+    assert all("White" in games for games, _ in black.ELSEWHERE_IN_GENERATION_5.values())
+    assert all("Black" in games for games, _ in white.ELSEWHERE_IN_GENERATION_5.values())
 
     both = set(black.ELSEWHERE_IN_GENERATION_5) | set(white.ELSEWHERE_IN_GENERATION_5)
     assert "cottonee" not in both
@@ -2948,13 +3385,20 @@ def test_both_unova_halves_count_thirteen_they_cannot_fill() -> None:
         assert len(module.UNOBTAINABLE) == 6 + 7
 
 
+FOUR = (black, white, black2, white2)
+
+
 def test_all_four_generation_5_games_were_drawn_from_one_sheet() -> None:
     # New in this generation: Platinum redrew Diamond and Pearl's sprites and HeartGold redrew
     # Generation 4's again, but the Unova sequels reuse these exactly - so one set answers for
     # four games, and the build fetches it once.
-    for module in (black, white):
-        assert module.build(context(module.GAME_ID)).game.sprite_set == unova.SPRITE_SET
+    sets = {module.build(context(module.GAME_ID)).game.sprite_set for module in FOUR}
 
+    # One set, named after the pair that was drawn first, and the sequels two years later use
+    # it unchanged. Nothing before this generation managed that: Platinum redrew Diamond and
+    # Pearl's sprites and HeartGold redrew Generation 4's again. So the build fetches 649
+    # pictures once and four games point at them.
+    assert sets == {unova.SPRITE_SET}
     assert unova.SPRITE_SET == "generation-v/black-white"
     # Not the `transparent` variant Generations 1 and 2 needed: these sprites are already cut
     # out, and there is no such folder to ask for.
@@ -2962,6 +3406,13 @@ def test_all_four_generation_5_games_were_drawn_from_one_sheet() -> None:
     # And not the animated one beside it, which is the thing these games are famous for and is
     # a folder of GIFs the grid has nowhere to play.
     assert "animated" not in unova.SPRITE_SET
+
+    # All four reach the same distance into it, which is why one fetch covers them: a set is
+    # asked for as far as the game's National Dex goes, and Generation 5 stops at Genesect in
+    # every one of the four.
+    reach = {module.build(context(module.GAME_ID)).game.national_dex_through for module in FOUR}
+
+    assert reach == {unova.NATIONAL_DEX_THROUGH} == {649}
 
 
 def test_the_three_that_wait_on_a_distribution_bring_no_record_at_all() -> None:
@@ -3065,18 +3516,16 @@ def test_the_region_names_its_two_dexes_apart() -> None:
     assert unova.BW_DEX != unova.B2W2_DEX
 
 
-def test_each_unova_cartridge_trades_with_the_sequels_it_has_never_met() -> None:
+def test_each_unova_cartridge_trades_with_the_sequels_it_never_shipped_beside() -> None:
     trades = [edge for edge in black.edges() if edge.mechanism is TransferMechanism.TRADE]
 
     assert {edge.to for edge in trades} == {"white", "black-2", "white-2"}
     assert all(edge.direction is TransferDirection.BOTH_WAYS for edge in trades)
     assert all(isinstance(edge.filter, AllSpeciesFilter) for edge in trades)
-    # Two of the three are not written yet, and the registry is what holds those back - so the
-    # day the sequels arrive nobody has to remember to come back here.
-    assert {edge.to for edge in trades} - set(default_registry().game_ids) == {
-        "black-2",
-        "white-2",
-    }
+    # Black named all three two years before the sequels existed and was not edited when they
+    # arrived: the registry held those two back and let them through on their own. What this
+    # asserts now is the other end of that - nothing Black declares is still waiting.
+    assert not {edge.to for edge in trades} - set(default_registry().game_ids)
 
 
 def test_no_generation_4_cartridge_claims_the_poke_transfer_itself() -> None:

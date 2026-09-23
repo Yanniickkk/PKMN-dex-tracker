@@ -166,6 +166,16 @@ REQUIREMENTS: dict[str, str] = {
     # Unova's postgame gate. Ghetsis is the last thing in the story, so this is Generation 5's
     # way of saying what other games say with a Hall of Fame.
     "defeated-ghetsis": "After Ghetsis is beaten",
+    # And the sequels' three. The first is an ordinary badge gate, the shape Johto's already
+    # has above; the other two are one Pokemon standing behind another.
+    "story-progress-quake-badge": "After the Quake Badge",
+    "story-progress-juniper-cave-of-being": (
+        "After Professor Juniper is spoken to in the Cave of Being, which she waits in once the "
+        "Champion has been beaten"
+    ),
+    "other-captured-reshiram-or-zekrom": (
+        "Only once the cover legendary has been caught at Dragonspiral Tower"
+    ),
     "weekday-sunday": "On a Sunday",
     "weekday-monday": "On a Monday",
     "weekday-tuesday": "On a Tuesday",
@@ -224,10 +234,22 @@ def requirement(
         if value not in ORDINARY and not (skip and value.startswith(skip))
     ]
 
-    if not phrases:
+    return joined(*phrases)
+
+
+def joined(*phrases: str | None) -> str | None:
+    """Several stand-alone phrases as one sentence, in the order they were given.
+
+    Each phrase is written to stand on its own, so the ones after the first are lowered into
+    the sentence they are joined onto: "... and After the National Dex opens" reads like two
+    sentences that collided. Empty phrases are left out, and nothing at all is ``None`` rather
+    than an empty string, because that is what a record with no requirement carries.
+    """
+    kept = [one for one in phrases if one]
+    if not kept:
         return None
 
-    first, *rest = phrases
+    first, *rest = kept
 
     return " and ".join([first, *(one[:1].lower() + one[1:] for one in rest)])
 

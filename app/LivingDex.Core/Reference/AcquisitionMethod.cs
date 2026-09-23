@@ -110,6 +110,9 @@ public enum EncounterMethod
     /// <summary>A shadow crossing a bridge, walked under.</summary>
     BridgeShadow,
 
+    /// <summary>One of the twenty hidden patches of grass in the Unova sequels.</summary>
+    HiddenGrotto,
+
     Other,
 }
 

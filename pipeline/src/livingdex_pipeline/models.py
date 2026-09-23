@@ -116,6 +116,11 @@ class EncounterMethod(StrEnum):
     DUST_CLOUD = "dustCloud"
     RIPPLING_WATER = "ripplingWater"
     BRIDGE_SHADOW = "bridgeShadow"
+    # And the sequels' own, which is the first method in this dataset that no encounter table
+    # anywhere mentions: twenty hidden patches of grass, read off a wiki page rather than out
+    # of an API. A grotto is not a rarer slot in an ordinary place - it is its own place, with
+    # its own table, holding species that are nowhere else in the game.
+    HIDDEN_GROTTO = "hiddenGrotto"
     OTHER = "other"
 
 

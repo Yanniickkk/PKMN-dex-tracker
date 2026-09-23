@@ -204,4 +204,13 @@ public class AcquisitionSectionsTests
         Assert.Equal("dark grass", AcquisitionNames.Of(EncounterMethod.DarkGrass));
         Assert.Equal("rustling grass", AcquisitionNames.Of(EncounterMethod.RustlingGrass));
     }
+
+    [Fact]
+    public void A_hidden_grotto_is_a_place_rather_than_another_way()
+    {
+        // The sequels' own, and the only method in the dataset that no encounter table
+        // anywhere lists. Twenty of them hold species that are nowhere else in those games, so
+        // "another way" would be the answer to the one question a player is asking.
+        Assert.Equal("a Hidden Grotto", AcquisitionNames.Of(EncounterMethod.HiddenGrotto));
+    }
 }

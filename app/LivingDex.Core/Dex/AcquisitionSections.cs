@@ -105,6 +105,7 @@ public static class AcquisitionNames
         EncounterMethod.DustCloud => "dust clouds",
         EncounterMethod.RipplingWater => "rippling water",
         EncounterMethod.BridgeShadow => "shadows on a bridge",
+        EncounterMethod.HiddenGrotto => "a Hidden Grotto",
         _ => "another way",
     };
 
