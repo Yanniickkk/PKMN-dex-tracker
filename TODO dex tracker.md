@@ -244,7 +244,9 @@ rather than appended: the numbering parts company at #024 and most of what follo
     writing down because a build that trusted it would have fetched 404s in silence.
   - What Generation 7 does have there is a folder of box icons. They are a different kind of
     picture from the battle sprites every other game shows, so they are not used: the entities
-    carry no sprite set and the app draws the shared one, as every sheetless game already does.
+    carry no sprite set and the app draws the shared one, as every sheetless game already does. That
+    is a fallback rather than an answer, so finding these four a sheet of their own is queued in
+    Phase 3 as *Generation 7's pictures from a source that has them*.
   - **That would have been a bad answer on its own, and the fix reaches the whole dataset.** A
     form used to have nothing but its species to fall back on, so in a region where most of the
     Kanto Pokemon *are* the regional form, an Alolan Rattata's tile drew a Kantonian one. The
@@ -425,6 +427,31 @@ the dataset at all._
     `grottoes.py` reads its page instead of citing it from memory, and its dates come out of the
     cache for free. That only works where the page is uniform enough to parse, which is not most
     of the 209 - but a table that is worth parsing never joins the queue in the first place.
+
+- [ ] Generation 7's pictures from a source that has them
+  - Step 6 for Sun and Moon found that PokeAPI's sprite repository has a folder of battle
+    sprites for every generation from the first to the sixth and none for the seventh - not for
+    these two and not for Ultra Sun and Ultra Moon, whose URL it publishes and whose file it does
+    not have. So all four carry no `sprite_set` and draw the shared set. That is the right
+    fallback and a poor ending: they would be the only games in the dataset never shown in a
+    picture of their own.
+  - Three candidates, and the cheapest is already refused. The same repository has
+    `versions/generation-vii/icons`, which is box icons - a different kind of picture from the
+    battle sprites every other game shows, and one grid holding both would look like a fault.
+  - The second is `other/home`, in that same repository and so needing no new host, no robots.txt
+    and no politeness budget: renders of the very models Generation 7 used, one per species and
+    per form, Alolan Rattata included. Two honest costs. They are Pokemon HOME's renders rather
+    than these games' own, so a sheet built from them would be a *style* that suits Generation 7
+    rather than a picture Sun took; and they are 512x512 and 80-90 KB each against the 96x96 and
+    under a kilobyte of everything the dataset holds now, so roughly 800 of them is some 70 MB
+    against today's 1311 files. Whether they go in the repository at that size, or are scaled on
+    the way in, is the first thing to settle.
+  - The third is Bulbapedia's Archives, which the pipeline can already read politely and which
+    has the games' own artwork. At five seconds a request that is over an hour for one sheet,
+    and it is the only one of the three that would actually be Sun and Moon's picture.
+  - Whatever is picked, nothing about how a picture is chosen has to change: `SpritePath` already
+    tries a sheet's form, a sheet's species, the shared form and the shared species in that
+    order, so a Generation 7 sheet is a constant in `alola.py` and a fetch, and the tiles follow.
 
 - [ ] Multiple collections: list, switch, rename, delete
 - [ ] Editing a collection's settings after creation, records preserved
