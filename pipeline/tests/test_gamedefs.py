@@ -12,6 +12,7 @@ import pytest
 
 from livingdex_pipeline.build import default_registry
 from livingdex_pipeline.gamedefs import (
+    alpha_sapphire,
     bank,
     black,
     black2,
@@ -31,6 +32,7 @@ from livingdex_pipeline.gamedefs import (
     kalos,
     kanto,
     leafgreen,
+    omega_ruby,
     pearl,
     platinum,
     red,
@@ -100,6 +102,7 @@ VERSION_GROUP_ORDER = {
     "black-white": 11,
     "black-2-white-2": 12,
     "x-y": 13,
+    "omega-ruby-alpha-sapphire": 14,
 }
 
 
@@ -142,8 +145,15 @@ class FakeApi:
             # place in the dataset that asks something of a player before any of its slots can
             # be reached, and a gate is keyed by the place's name.
             area = path.removeprefix("location-area/")
-            named = "friend-safari" if area.startswith("friend-safari") else "hoenn-route-101"
-            return {"location": {"name": named}}
+            if area.startswith("friend-safari"):
+                return {"location": {"name": "friend-safari"}}
+
+            # And the Mirage spots, which are the one part of the Hoenn remakes' wild that
+            # PokeAPI still answers for - and the one place a sub-area comes out of a slug.
+            if area.startswith("mirage-spot-cave"):
+                return {"location": {"name": "mirage-spot-cave"}}
+
+            return {"location": {"name": "hoenn-route-101"}}
 
         if path.startswith("evolution-chain/"):
             return {"chain": TREECKO_CHAIN, "baby_trigger_item": None}
@@ -159,30 +169,63 @@ class FakeApi:
         if path == "location/friend-safari":
             return {"names": [{"language": {"name": "en"}, "name": "Friend Safari"}]}
 
+        if path == "location/mirage-spot-cave":
+            return {"names": [{"language": {"name": "en"}, "name": "Mirage Cave"}]}
+
         return {"names": [{"language": {"name": "en"}, "name": "Route 101"}]}
 
 
 class FakeWiki:
     """Stands in for the client that reads a wiki page.
 
-    One grotto holding one species, which is enough for the two games that read a page to build
-    at all. What the parser does with a real page is :mod:`test_grottoes`, and this only has to
-    hand back something it can read.
+    Two shapes, because two generations read pages: one grotto for the Unova sequels and one
+    location table for the Hoenn remakes. Every page it is asked for answers with both, which
+    is enough for either game to build - what a parser does with a real page is
+    :mod:`test_grottoes` and :mod:`test_encountertables`.
+
+    ``in_omega_ruby`` and ``in_alpha_sapphire`` are the colours of the two games cells, because
+    that is the only thing on a page that says which half of the pair a species is in. The
+    Hoenn row is served on one page only - the remakes ask for sixty-nine - so a test counting
+    records counts one.
     """
 
-    def __init__(self, species: str) -> None:
+    def __init__(
+        self,
+        species: str,
+        *,
+        page: str = "Hoenn_Route_101",
+        in_omega_ruby: bool = True,
+        in_alpha_sapphire: bool = True,
+    ) -> None:
         self.species = species
+        self.page = page
+        self.halves = (in_omega_ruby, in_alpha_sapphire)
+        self.asked_for: list[str] = []
 
     def get_text(self, url: str, *, refresh: bool = False) -> str:
+        self.asked_for.append(url)
+        filled = "background:#303E51;"
+        white = "background:#FFF;"
+        omega, alpha = (filled if one else white for one in self.halves)
+        here = url.endswith(f"/{self.page}")
+
         return (
             "<html><body><div id='mw-content-text'><h3>Route 2</h3><table><tbody>"
             "<tr><th>Pokémon</th><th>Games</th><th>Location</th>"
             "<th>Levels</th><th>Rate</th></tr>"
             f"<tr><td>{self.species}</td>"
-            "<th style='background:#303E51;'>B2</th>"
-            "<th style='background:#303E51;'>W2</th>"
+            f"<th style='{filled}'>B2</th>"
+            f"<th style='{filled}'>W2</th>"
             "<td>Hidden Grotto</td><td>55-59</td><td>1%</td></tr>"
-            "</tbody></table></div></body></html>"
+            + (
+                f"<tr><td>{self.species}</td>"
+                f"<th style='{omega}'>OR</th>"
+                f"<th style='{alpha}'>AS</th>"
+                "<td>Grass</td><td>5-7</td><td>20%</td></tr>"
+                if here
+                else ""
+            )
+            + "</tbody></table></div></body></html>"
         )
 
     def retrieved_on(self, url: str) -> date:
@@ -190,7 +233,10 @@ class FakeWiki:
 
 
 def context(
-    game_id: str, api: FakeApi | None = None, reaches: list[str] | None = None
+    game_id: str,
+    api: FakeApi | None = None,
+    reaches: list[str] | None = None,
+    wiki: FakeWiki | None = None,
 ) -> BuildContext:
     """A builder's context, with a species table that covers the fake dex.
 
@@ -206,7 +252,7 @@ def context(
         game_id=game_id,
         refresh=False,
         api=api,
-        wiki=FakeWiki(listed[0]),
+        wiki=wiki or FakeWiki(listed[0]),
         species=[
             Species(
                 id=name,
@@ -1607,9 +1653,8 @@ def test_only_the_generation_4_babies_need_an_incense() -> None:
 
 
 def test_each_johto_half_keeps_the_others_exclusives_out_of_reach() -> None:
-    # A version pair does not have to be symmetrical, and this one is not: six one way, five the
-    # other. What is not on either list is as deliberate - Ledian is caught nowhere in HeartGold
-    # either, and it evolves from a Ledyba that comes over the link.
+    # A version pair does not have to be symmetrical, and this one is not: six one way, six the
+    # other, and they became six the same day rather than at the same time.
     assert set(heartgold.ONLY_ON_SOULSILVER) == {
         "ledyba",
         "vulpix",
@@ -1624,7 +1669,14 @@ def test_each_johto_half_keeps_the_others_exclusives_out_of_reach() -> None:
         "mankey",
         "gligar",
         "phanpy",
+        # The sixth was found by the pass that walks a game's own evolutions back to what
+        # starts them. A Mantine surfaces on Route 41 in HeartGold and nowhere here, and this
+        # half's only other route to one is a Mantyke - which hatches from a Mantine.
+        "mantine",
     }
+    # What is not on either list is as deliberate: an evolution whose base is on it needs no
+    # line of its own, because `reach.spread_unobtainable` hands it the same sentence. Ledian
+    # is caught nowhere in HeartGold either, and it comes from a Ledyba that comes over the link.
     assert "ledian" not in heartgold.UNOBTAINABLE
     assert "arcanine" not in soulsilver.UNOBTAINABLE
 
@@ -1866,6 +1918,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     registry = default_registry()
 
     assert registry.game_ids == [
+        "alpha-sapphire",
         "black",
         "black-2",
         "blue",
@@ -1876,6 +1929,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "gold",
         "heartgold",
         "leafgreen",
+        "omega-ruby",
         "pearl",
         "platinum",
         "red",
@@ -1897,10 +1951,12 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # ten between the five Generation 3 cartridges, ten wireless trades between the five
     # Generation 4 games, and twenty-five one-way Pal Park trips from each of the five into each
     # of the five. Then six trades between the four Generation 5 cartridges, and twenty one-way
-    # Poke Transfers, from each Generation 4 cartridge into each of the four. And one for the
-    # whole of Generation 6: X and Y trade with each other and with two games nobody has
-    # written, and their route to Bank waits on a node that is not written either.
-    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 1
+    # Poke Transfers, from each Generation 4 cartridge into each of the four. Then six between
+    # the four Generation 6 cartridges, which is the whole of that generation's trading: the two
+    # remakes arrived and the four routes X and Y had been declaring into an empty space became
+    # real without either of those files being touched. Nothing else - the route out of the
+    # generation is Bank, and Bank is not a game.
+    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -1921,19 +1977,29 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     assert ("black-2", "white-2") in routes
     assert ("platinum", "white-2") in routes
 
-    # What is left waiting is one node and one pair. Ten releases declare Poke Transporter into
-    # Bank and two more declare Bank itself, neither of which is a game and none of which is
-    # written; X and Y each name Omega Ruby and Alpha Sapphire, which are the first cartridges
-    # to be waited on since the Generation 5 sequels arrived.
+    # And the same thing one generation later, which is what registering the remakes was for.
+    # Held once, whichever end is asked: X declared this route a generation before its other
+    # end existed.
+    assert ("omega-ruby", "x") in routes
+    assert ("alpha-sapphire", "omega-ruby") in routes
+    # What is not here, and will never be: a remake and the game it remakes. No cable reaches a
+    # Game Boy Advance cartridge from a 3DS, and the five-game route between them runs through
+    # Bank rather than between the two of them.
+    assert ("ruby", "omega-ruby") not in routes
+    assert ("omega-ruby", "ruby") not in routes
+
+    # What is left waiting is one node, and for the first time since the Generation 5 sequels
+    # there is no game being waited on at all. Ten releases declare Poke Transporter into Bank
+    # and the four Generation 6 cartridges declare Bank itself, which is not a game and is not
+    # written: Phase 3's work.
     waiting = {(edge.to, edge.mechanism) for _, edge in registry.held_back_edges}
 
     assert waiting == {
         ("bank", TransferMechanism.POKE_TRANSPORTER),
         ("bank", TransferMechanism.BANK),
-        ("omega-ruby", TransferMechanism.TRADE),
-        ("alpha-sapphire", TransferMechanism.TRADE),
     }
-    assert len(registry.held_back_edges) == 6 + 2 + 2 + 2 + 4
+    assert len(registry.held_back_edges) == 10 + 4
+    assert all(edge.to == "bank" for _, edge in registry.held_back_edges)
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:
@@ -2141,8 +2207,8 @@ def test_step_seven_says_which_events_handed_out_what_cannot_be_caught() -> None
 
 def test_the_three_cartridges_word_a_shared_event_once() -> None:
     # Emerald was covered by the same 2006 campaign, so the sentence lives in one place.
-    assert hoenn.FIFTH_CAMPAIGN.lower() in hoenn.only_on("Ruby", hoenn.FIFTH_CAMPAIGN).lower()
-    assert emerald.UNOBTAINABLE["jirachi"] == hoenn.JIRACHI_REASON
+    assert hoenn.FIFTH_CAMPAIGN.lower() in hoenn.gba_only_on("Ruby", hoenn.FIFTH_CAMPAIGN).lower()
+    assert emerald.UNOBTAINABLE["jirachi"] == hoenn.GBA_JIRACHI_REASON
 
 
 def test_both_halves_say_the_same_thing_about_jirachi() -> None:
@@ -2194,16 +2260,16 @@ def test_the_pair_evolve_by_their_own_version_group() -> None:
 
     # Emerald is its own version group; the pair are one. Both are Generation 3 and the
     # difference is the point: an ordering, not a generation.
-    assert hoenn.PAIR_VERSION_GROUP == "ruby-sapphire"
+    assert hoenn.GBA_PAIR_VERSION_GROUP == "ruby-sapphire"
     assert emerald.POKEAPI_VERSION_GROUP == "emerald"
 
 
 def test_the_pair_share_one_gift_table() -> None:
     # They agree about every species they both have, so the table is written once. A key the
     # other half never sees simply never matches.
-    assert ruby.hoenn.PAIR_GIFTS is sapphire.hoenn.PAIR_GIFTS
-    assert "groudon" not in ruby.hoenn.PAIR_GIFTS
-    assert ruby.hoenn.PAIR_GIFTS["treecko"].npc == "Professor Birch"
+    assert ruby.hoenn.GBA_PAIR_GIFTS is sapphire.hoenn.GBA_PAIR_GIFTS
+    assert "groudon" not in ruby.hoenn.GBA_PAIR_GIFTS
+    assert ruby.hoenn.GBA_PAIR_GIFTS["treecko"].npc == "Professor Birch"
 
 
 # --- FireRed and LeafGreen --------------------------------------------------------------------
@@ -2293,7 +2359,7 @@ def test_the_kanto_pair_were_drawn_from_one_sheet_of_their_own() -> None:
     }
 
     assert sets == {"generation-iii/firered-leafgreen"}
-    assert hoenn.PAIR_SPRITE_SET not in sets
+    assert hoenn.GBA_PAIR_SPRITE_SET not in sets
     assert emerald.SPRITE_SET not in sets
 
 
@@ -3679,22 +3745,22 @@ def test_kalos_outlives_its_generation_and_the_modules_are_split_for_it() -> Non
 
 
 def test_every_generation_6_cartridge_trades_with_every_other() -> None:
-    # Six routes between four games, declared from both ends, the way Generation 5's are. Two
-    # of the four are not written yet, and both halves name them anyway; the registry holds
-    # those edges back until they are.
-    for module in (x, y):
+    # Six routes between four games, declared from both ends, the way Generation 5's are. X and
+    # Y named the two remakes for a whole generation before either existed; the registry held
+    # those edges back, and adding the remakes let them through without those files changing.
+    for module in (x, y, omega_ruby, alpha_sapphire):
         traded = {edge.to for edge in module.edges() if edge.mechanism is TransferMechanism.TRADE}
 
         assert traded == set(gen6.CARTRIDGES) - {module.GAME_ID}
 
-    assert not {"omega-ruby", "alpha-sapphire"} & set(default_registry().game_ids)
+    assert {"omega-ruby", "alpha-sapphire"} <= set(default_registry().game_ids)
 
 
 def test_nothing_carries_an_older_cartridge_into_generation_6() -> None:
     # Every generation since the third has had one: Pal Park, then the Poke Transfer. This one
     # has no slot to put a cartridge in, and what replaces both is Bank - which is not a game,
     # and so not a route between two of them.
-    for module in (x, y):
+    for module in (x, y, omega_ruby, alpha_sapphire):
         mechanisms = {edge.mechanism for edge in module.edges()}
 
         assert TransferMechanism.PAL_PARK not in mechanisms
@@ -4109,6 +4175,516 @@ def test_a_sex_needs_no_table_here_either() -> None:
     # Ninety-nine of this pair's forms are a sex, and not one of them is written down: the
     # answer is the same everywhere and `formchanges` keeps it.
     assert "pikachu-female" not in kalos.xy_form_changes([kalos_form("pikachu-female", "pikachu")])
+
+
+# --- Omega Ruby and Alpha Sapphire ------------------------------------------------------------
+
+
+def oras_slot(
+    version: str,
+    method: str,
+    *,
+    area: str = "hoenn-route-101-area",
+    conditions: list[str] | None = None,
+) -> dict:
+    return {
+        "location_area": {"name": area},
+        "version_details": [
+            {
+                "version": {"name": version},
+                "encounter_details": [
+                    {
+                        "min_level": 20,
+                        "max_level": 22,
+                        "chance": 30,
+                        "method": {"name": method},
+                        "condition_values": [{"name": one} for one in (conditions or [])],
+                    }
+                ],
+            }
+        ],
+    }
+
+
+def test_the_hoenn_remakes_are_two_games_that_name_each_other() -> None:
+    both = {
+        module.GAME_ID: module.build(context(module.GAME_ID)).game
+        for module in (omega_ruby, alpha_sapphire)
+    }
+
+    assert sorted(both) == ["alpha-sapphire", "omega-ruby"]
+    assert both["omega-ruby"].pair_partner == "alpha-sapphire"
+    assert both["alpha-sapphire"].pair_partner == "omega-ruby"
+    assert both["omega-ruby"].title != both["alpha-sapphire"].title
+    # One day in Japan, America, Australia, Korea, Hong Kong and Taiwan, and a week later in
+    # Europe - so not quite the single worldwide day X and Y had a year before.
+    assert both["omega-ruby"].released == both["alpha-sapphire"].released == date(2014, 11, 21)
+
+
+def test_the_hoenn_remakes_are_generation_6_cartridges_set_in_generation_3s_region() -> None:
+    # The whole reason the region and the generation are two modules: these two say Hoenn, like
+    # three cartridges written twelve years earlier, and every other fact about them belongs to
+    # the generation that X and Y opened.
+    for module in (omega_ruby, alpha_sapphire):
+        game = module.build(context(module.GAME_ID)).game
+
+        assert game.generation == 6
+        assert game.region == "Hoenn"
+        assert game.national_dex_through == 721
+        assert game.dex_source is DexSource.NATIONAL_DEX
+        assert game.release is GameRelease.CARTRIDGE
+
+    assert ruby.build(context("ruby")).game.region == "Hoenn"
+    assert ruby.build(context("ruby")).game.generation == 3
+
+
+def test_hoenn_outlives_its_generation_and_the_modules_are_split_for_it() -> None:
+    # Hoenn joins Kanto, Johto and Kalos as a region whose games are not all from one
+    # generation, and it took the second one the way Kanto did when FireRed arrived: every
+    # Generation 3 fact in the region module now says which generation it is a fact about, so
+    # nothing can hand a remake a link cable or a 202-entry Pokedex by having the shorter name.
+    assert hoenn.REGION == "Hoenn"
+    assert not hasattr(hoenn, "GENERATION")
+    assert not hasattr(hoenn, "cartridge")
+    assert not hasattr(hoenn, "dex_entries")
+    assert hoenn.GBA_DEX == "hoenn"
+    assert hoenn.GBA_NATIONAL_DEX_THROUGH == 386
+    # And what stayed unprefixed is the one thing both generations really do share.
+    assert hoenn.DAY_CARE == "Route 117, Pokemon Day Care"
+
+
+def test_the_remakes_show_a_different_pokedex_from_the_region_they_remake() -> None:
+    # Two games set in the same region, both calling the list "the Hoenn Pokedex", and they are
+    # not the same list: 211 entries against 202. Which one a game asks PokeAPI for is the whole
+    # of step 2, and getting it wrong would renumber a game by hand.
+    api = FakeApi([(1, "treecko")])
+
+    omega_ruby.build(context("omega-ruby", api))
+    ruby.build(context("ruby", api))
+
+    assert api.asked_for == ["updated-hoenn", "hoenn"]
+    assert hoenn.ORAS_DEX_TOTAL == 211
+
+
+def test_both_remakes_show_the_same_list_and_number_it_the_same_way() -> None:
+    api = FakeApi([(1, "treecko"), (2, "grovyle")])
+    both = {
+        module.GAME_ID: module.build(context(module.GAME_ID, api)).dex_entries
+        for module in (omega_ruby, alpha_sapphire)
+    }
+
+    assert [one.number for one in both["omega-ruby"]] == [1, 2]
+    assert [(one.target.species, one.number) for one in both["omega-ruby"]] == [
+        (one.target.species, one.number) for one in both["alpha-sapphire"]
+    ]
+    assert all(one.game == "omega-ruby" for one in both["omega-ruby"])
+
+
+def test_the_remakes_show_one_pokedex_and_so_do_not_name_it() -> None:
+    # X and Y had to say which of three lists an entry was numbered in. These two show one, like
+    # the twenty games before them, and a number that can only belong to one list says nothing.
+    entries = omega_ruby.build(context("omega-ruby")).dex_entries
+
+    assert entries
+    assert all(one.dex is None for one in entries)
+
+
+def test_the_remakes_read_their_wild_off_the_wiki_rather_than_the_api() -> None:
+    # The one game in this dataset whose encounter tables are not PokeAPI's. It has rows for
+    # these two versions - hordes, the Mirage spots - and no grass, no water and no fishing at
+    # all, so what a player would call the game is missing from the source.
+    api = FakeApi([(1, "treecko")], {"treecko": [oras_slot("omega-ruby", "walk")]})
+    wiki = FakeWiki("Treecko")
+
+    [found] = [
+        one
+        for one in omega_ruby.build(context("omega-ruby", api, wiki=wiki)).acquisition_methods
+        if one.kind == "wild"
+    ]
+
+    assert found.source.source == "bulbapedia"
+    assert found.method is EncounterMethod.WALK
+    assert (found.levels.minimum, found.levels.maximum) == (5, 7)
+    # Sixty-nine pages, each fetched once, and the place named the way the rest of the dataset
+    # names it rather than the way the wiki titles it.
+    assert len(wiki.asked_for) == len(hoenn.ORAS_PAGES) == 69
+    assert found.location == "Route 101"
+
+
+def test_a_place_the_wiki_pages_do_not_cover_still_comes_from_the_api() -> None:
+    # The Mirage spots are the other half of this pair's wild: islands, caves, forests and
+    # mountains that appear off the coast for a day and hold what Hoenn otherwise does not.
+    # PokeAPI has their tables and the wiki keeps them on pages that are not tables at all, so
+    # each source answers where the other is silent.
+    api = FakeApi(
+        [(1, "treecko")],
+        {"treecko": [oras_slot("omega-ruby", "walk", area="mirage-spot-cave-north-of-fallarbor")]},
+    )
+
+    wild = [
+        one
+        for one in omega_ruby.build(context("omega-ruby", api)).acquisition_methods
+        if one.kind == "wild"
+    ]
+
+    [mirage] = [one for one in wild if one.source.source == "pokeapi"]
+    assert mirage.location == "Mirage Cave"
+    # And the joining word is not shouted, which is what a slug made into a name does.
+    assert mirage.sub_area == "North of Fallarbor"
+
+
+def test_a_place_both_sources_know_about_is_the_wikis() -> None:
+    # Otherwise every horde in Hoenn would be recorded twice: PokeAPI has them for the routes,
+    # and so does the page this step reads.
+    api = FakeApi([(1, "treecko")], {"treecko": [oras_slot("omega-ruby", "horde")]})
+
+    wild = [
+        one
+        for one in omega_ruby.build(context("omega-ruby", api)).acquisition_methods
+        if one.kind == "wild"
+    ]
+
+    assert [one.source.source for one in wild] == ["bulbapedia"]
+
+
+def test_which_half_has_a_species_is_a_colour_on_the_page() -> None:
+    # The two cells say "OR" and "AS" whichever game a row belongs to. Reading the letters
+    # would hand both halves every exclusive in Hoenn; the filled-in background is the answer.
+    api = FakeApi([(1, "treecko")])
+    wiki = FakeWiki("Treecko", in_alpha_sapphire=False)
+
+    both = {
+        module.GAME_ID: [
+            one
+            for one in module.build(context(module.GAME_ID, api, wiki=wiki)).acquisition_methods
+            if one.kind == "wild"
+        ]
+        for module in (omega_ruby, alpha_sapphire)
+    }
+
+    assert len(both["omega-ruby"]) == 1
+    assert both["alpha-sapphire"] == []
+
+
+def test_the_two_ways_hoenn_was_never_reachable_before_are_methods_of_their_own() -> None:
+    # Under the sea and over it. Both are this pair's own, both are a table rather than a rarer
+    # kind of surfing, and both are what the games are remembered for.
+    assert hoenn.ORAS_METHODS["Dive"] is EncounterMethod.DIVE
+    assert hoenn.ORAS_METHODS["Seaweed"] is EncounterMethod.DIVE
+    assert hoenn.ORAS_METHODS["Flocks"] is EncounterMethod.SOARING
+
+
+def test_the_dexnav_gets_a_sentence_rather_than_the_wikis_four_words() -> None:
+    # A hundred and sixty-five rows of these two games are "Exclusively as hidden Pokemon",
+    # which says nothing to anybody who has not read the rest of the page. The wiki words it
+    # four ways - the sea gets its own, and half the pages say "capturing" where the rest say
+    # "catching" - and all four mean the same sentence here.
+    hidden = [
+        one
+        for key, one in hoenn.ORAS_CONDITIONS.items()
+        if "hidden Pokémon After" in key or "hidden Pokémon )" in key
+    ]
+
+    assert len(hidden) == 4
+    assert len(set(hidden)) == 1
+    assert "DexNav" in hidden[0]
+    assert "Groudon or Kyogre" in hidden[0]
+    # And a heading that says only what the record already carries is rewritten as nothing.
+    assert hoenn.ORAS_CONDITIONS["Underwater"] == ""
+
+
+def test_a_remake_cannot_trade_with_the_game_it_remakes() -> None:
+    # The obvious route that does not exist. Ruby and Omega Ruby are the same region and the
+    # same story, and no cable reaches a Game Boy Advance cartridge from a 3DS: what a Ruby has
+    # to travel is Pal Park, the Poke Transfer, Poke Transporter and Bank.
+    reached = {edge.to for edge in omega_ruby.edges()}
+
+    assert reached == {"x", "y", "alpha-sapphire", "bank"}
+    assert "ruby" not in reached
+    assert "ruby" not in {edge.to for edge in alpha_sapphire.edges()}
+    assert "omega-ruby" not in {edge.to for edge in ruby.edges()}
+
+
+def test_both_remakes_show_the_same_cover_the_picker_will_draw() -> None:
+    # Registered at step 1 like every game before them, so the picker has a cover to draw from
+    # the first build that knows these two exist.
+    registry = default_registry()
+
+    assert registry.box_art_of("omega-ruby") == "Omega Ruby EN boxart.png"
+    assert registry.box_art_of("alpha-sapphire") == "Alpha Sapphire EN boxart.png"
+
+
+def test_the_remakes_hand_over_twelve_first_partners_which_no_game_had_done() -> None:
+    # Three on Route 101 the way Hoenn always has, and then Johto's, Unova's and Sinnoh's, each
+    # after something a player has finished. Four choices of three, so a save keeps four of the
+    # twelve and the other eight are a trade away.
+    starters = {
+        species: one
+        for species, one in hoenn.ORAS_GIFTS.items()
+        if isinstance(one, GiftDetail) and one.kind is GiftKind.STARTER
+    }
+
+    assert len(starters) == 12
+    assert all(one.npc == "Professor Birch" for one in starters.values())
+    assert {"treecko", "chikorita", "snivy", "turtwig"} <= set(starters)
+    assert "Delta Episode" in starters["snivy"].requirement
+    assert "second time" in starters["turtwig"].requirement
+
+
+def test_a_mirage_spot_asks_for_a_party_before_it_appears_at_all() -> None:
+    # What makes these two games a living dex in a way no game before them was: the legendaries
+    # of five generations, each standing on an island that only rises for a player who has
+    # already built something. PokeAPI cannot know that, so the place says it.
+    api = FakeApi(
+        [(1, "raikou")],
+        {"raikou": [oras_slot("omega-ruby", "static", conditions=["time-minute-00-to-19"])]},
+    )
+
+    [found] = [
+        one
+        for one in hoenn.gen6_acquisition_methods(
+            context("omega-ruby", api),
+            game_id="omega-ruby",
+            version="omega-ruby",
+            column="OR",
+            entries=[],
+        )
+        if one.kind == "gift"
+    ]
+
+    # The place's own sentence comes first and the row's own condition after it. Neither would
+    # do on its own: the forest is not there without the bird, and which of the three beasts is
+    # standing in it is the minute of the hour.
+    assert found.requirement == (
+        "The Trackless Forest appears east of Petalburg Woods only with Ho-Oh or Lugia in the "
+        "party and in the first twenty minutes of the hour"
+    )
+    assert "maxed EVs" in hoenn.PATHLESS_PLAIN
+    assert hoenn.ORAS_GIFTS["cobalion"].gate == hoenn.PATHLESS_PLAIN
+    # PokeAPI has two of Cobalion's three days and files the third with no condition at all, so
+    # the days are written out and its three rows collapse into one record.
+    assert hoenn.ORAS_GIFTS["cobalion"].requirement == "On a Wednesday, a Friday or a Sunday"
+
+
+def test_the_fossils_are_written_by_hand_because_no_table_has_them() -> None:
+    # Nine species that are an item carried to the Devon Corporation rather than a Pokemon met
+    # anywhere, and PokeAPI has an encounter for none of them.
+    both = {one.species for one in hoenn.ORAS_FOSSILS_BOTH}
+    omega = {one.species for one in hoenn.ORAS_HANDED_OVER["omega-ruby"]}
+    alpha = {one.species for one in hoenn.ORAS_HANDED_OVER["alpha-sapphire"]}
+
+    assert both == {"lileep", "anorith", "aerodactyl"}
+    assert omega == {"kabuto", "shieldon", "archen"}
+    assert alpha == {"omanyte", "cranidos", "tirtouga"}
+    assert not omega & alpha
+    assert all(one.kind is GiftKind.FOSSIL for one in hoenn.oras_handed_over("omega-ruby"))
+    # The choice Hoenn has always asked for, and the answer that has never changed.
+    [root] = [one for one in hoenn.ORAS_FOSSILS_BOTH if one.species == "lileep"]
+    assert "lost for good" in root.requirement
+
+
+def test_the_eon_duo_swap_places_between_the_halves() -> None:
+    # Each half meets one of them in its own story and the other waits on the same island for
+    # anybody holding a ticket that was only ever handed out at an event.
+    omega = hoenn.oras_gifts("omega-ruby")
+    alpha = hoenn.oras_gifts("alpha-sapphire")
+
+    assert "in the story" in omega["latios"].requirement
+    assert "Eon Ticket" in omega["latias"].requirement
+    assert "in the story" in alpha["latias"].requirement
+    assert "Eon Ticket" in alpha["latios"].requirement
+    # Written as statics, which is also what folds PokeAPI's two rows for one island into one.
+    assert all(
+        omega[species].kind is GiftKind.STATIC_ENCOUNTER for species in ("latias", "latios")
+    )
+
+
+def test_the_remakes_trade_the_same_three_towns_and_not_the_same_trades() -> None:
+    # Rustboro, Fortree and Pacifidlog, as in Ruby and Sapphire - and Fortree wants a Spinda
+    # where it wanted a Pikachu, which is a Hoenn Pokemon put where a Kanto one had been. The
+    # two trainers whose names the game records swapped towns as well.
+    remade = {one.location: one for one in hoenn.ORAS_TRADES}
+    older = {one.location: one for one in hoenn.GBA_PAIR_TRADES}
+
+    assert sorted(remade) == sorted(older)
+    assert remade["Fortree City"].wants == "spinda"
+    assert older["Fortree City"].wants == "pikachu"
+    assert remade["Rustboro City"].npc == "Darrell"
+    assert older["Rustboro City"].npc == "Elyssa"
+    assert remade["Fortree City"].npc == "Elyssa"
+
+
+def test_the_remakes_evolve_by_their_own_version_group() -> None:
+    api = FakeApi([(1, "treecko"), (2, "grovyle")])
+
+    for module in (omega_ruby, alpha_sapphire):
+        methods = module.build(context(module.GAME_ID, api)).acquisition_methods
+        evolutions = [one for one in methods if one.kind == "evolution"]
+
+        assert [one.target.species for one in evolutions] == ["grovyle"]
+
+    # Their own group, and not the one the three cartridges in the same region share.
+    assert hoenn.ORAS_VERSION_GROUP == "omega-ruby-alpha-sapphire"
+    assert hoenn.GBA_PAIR_VERSION_GROUP == "ruby-sapphire"
+
+
+def test_each_half_keeps_seven_and_a_whole_line_is_missing_rather_than_two_thirds() -> None:
+    # Ruby and Sapphire split six entries; these two split seven, and the extra one is the same
+    # line's last stage. The remakes' Pokedex holds every stage of the Lotad and Seedot lines
+    # where Generation 3's stopped short, so a line that is not here is three entries.
+    assert len(omega_ruby.ONLY_ON_ALPHA_SAPPHIRE) == len(alpha_sapphire.ONLY_ON_OMEGA_RUBY) == 7
+    assert {"lotad", "lombre", "ludicolo"} <= set(omega_ruby.ONLY_ON_ALPHA_SAPPHIRE)
+    assert {"seedot", "nuzleaf", "shiftry"} <= set(alpha_sapphire.ONLY_ON_OMEGA_RUBY)
+    # Nothing is on both lists, which is what a version pair means.
+    assert not set(omega_ruby.ONLY_ON_ALPHA_SAPPHIRE) & set(alpha_sapphire.ONLY_ON_OMEGA_RUBY)
+    assert omega_ruby.UNOBTAINABLE["kyogre"].startswith(
+        "Alpha Sapphire only in Generation 6; trade one in"
+    )
+    assert alpha_sapphire.UNOBTAINABLE["groudon"].startswith(
+        "Omega Ruby only in Generation 6; trade one in"
+    )
+
+
+def test_the_third_stage_of_a_missing_line_is_explained_rather_than_evolved_into() -> None:
+    # The quiet way this goes wrong: a game records "evolve a Lombre" for its Ludicolo, and
+    # nothing in it can produce a Lotad. The evolution record is true and the entry is still
+    # one this half cannot fill, so it says so.
+    entries = {
+        one.target.species: one
+        for one in omega_ruby.build(context("omega-ruby", FakeApi([(1, "ludicolo")]))).dex_entries
+    }
+
+    assert entries["ludicolo"].unobtainable_reason == (
+        "Alpha Sapphire only in Generation 6; trade one in"
+    )
+
+
+def test_step_7_read_every_entry_either_half_cannot_fill() -> None:
+    # Fifteen entries and four hits. Both legendaries were given away by the same campaign, a
+    # Mawile went out in South Korea and a Sableye in Japan, and the eleven others were never
+    # handed out at all - which is an answer too, and the reason the tables carry None.
+    events = {
+        **omega_ruby.ONLY_ON_ALPHA_SAPPHIRE,
+        **alpha_sapphire.ONLY_ON_OMEGA_RUBY,
+    }
+
+    assert sorted(species for species, event in events.items() if event) == [
+        "groudon",
+        "kyogre",
+        "mawile",
+        "sableye",
+    ]
+    assert "Dahara City" in events["kyogre"]
+    assert "Dahara City" in events["groudon"]
+
+
+def test_the_one_entry_no_game_has_ever_produced_says_so_in_both_halves() -> None:
+    # Jirachi has never been catchable anywhere, in any generation. Generation 3's answer was a
+    # bonus disc that came with another game; this one's is nine distributions, and the one most
+    # players outside Japan could have had is the twentieth anniversary giveaway of April 2016.
+    for module in (omega_ruby, alpha_sapphire):
+        reason = module.UNOBTAINABLE["jirachi"]
+
+        assert reason == hoenn.ORAS_JIRACHI_REASON
+        assert "only been given away" in reason
+        assert "20th Anniversary" in reason
+
+
+def hoenn_form(form_id: str, species: str, kind: FormKind = FormKind.COSMETIC) -> Form:
+    return Form(
+        id=form_id, species=species, name=form_id, kind=kind, games=["omega-ruby", "alpha-sapphire"]
+    )
+
+
+def test_every_item_that_changes_a_form_is_somewhere_else_in_hoenn() -> None:
+    # The same forms X and Y explain, and not one of the items is in the same place - which is
+    # the whole reason a form's answer belongs to the region rather than to the generation.
+    changes = hoenn.ORAS_FORM_CHANGES
+
+    assert changes["landorus-therian"].where == "Mauville City"
+    assert "selling mirrors" in changes["landorus-therian"].requirement
+    assert "Gnarled Den" in changes["kyurem-black"].requirement
+    assert "Route 130" in changes["giratina-origin"].requirement
+    assert changes["shaymin-sky"].where == "Route 123"
+    # Kalos sends a player somewhere else for every one of them.
+    assert changes["landorus-therian"].where != kalos.XY_FORM_CHANGES["landorus-therian"].where
+
+
+def test_the_form_these_two_invented_cannot_be_kept_either() -> None:
+    # Hoopa Unbound is the second form in the dataset a living dex cannot hold, after Furfrou's
+    # trim: three days, and back in the bottle the moment it is put in a box.
+    unbound = hoenn.ORAS_FORM_CHANGES["hoopa-unbound"]
+
+    assert "Prison Bottle" in unbound.requirement
+    assert "three days" in unbound.requirement
+    assert "box" in unbound.requirement
+
+
+def test_deoxys_changes_forme_at_the_meteorite_these_games_have_a_fetch_quest_about() -> None:
+    # What step 8 found in the shared table: the three formes were pinned to the Generation 3
+    # cartridges that hold one each, and every game since Diamond has a meteorite that cycles
+    # through all four.
+    [forme] = set(
+        hoenn.oras_form_changes(
+            [hoenn_form("deoxys-attack", "deoxys", FormKind.FUNCTIONAL)], game_id="omega-ruby"
+        ).values()
+    )
+
+    assert forme.where == "Fallarbor Town, Professor Cozmo's house"
+    assert "cycles through all four" in forme.requirement
+
+
+def test_the_east_sea_shellos_is_one_half_of_the_pairs_and_not_the_others() -> None:
+    # The only form in this dataset whose answer is the version's. Both halves hold Shellos in
+    # the same two places, and which sea it belongs to is what differs.
+    forms = [hoenn_form("shellos-east", "shellos"), hoenn_form("gastrodon-east", "gastrodon")]
+
+    alpha = hoenn.oras_form_changes(forms, game_id="alpha-sapphire")
+    omega = hoenn.oras_form_changes(forms, game_id="omega-ruby")
+
+    assert "East Sea kind" in alpha["shellos-east"].requirement
+    assert "shellos-east" not in omega
+    assert "gastrodon-east" not in omega
+
+
+def test_the_cosplay_pikachu_is_six_costumes_that_cannot_leave_the_cartridge() -> None:
+    # Nothing else in the dataset is like it: it cannot evolve, cannot breed, and cannot be
+    # traded or put into Bank. A player who wants those six in a living dex has to keep the
+    # cartridge they were given on.
+    costumes = [
+        hoenn_form(one, "pikachu")
+        for one in ("pikachu-libre", "pikachu-belle", "pikachu-cosplay")
+    ]
+
+    changes = hoenn.oras_form_changes(costumes, game_id="omega-ruby")
+
+    assert sorted(changes) == ["pikachu-belle", "pikachu-cosplay", "pikachu-libre"]
+    [one] = set(changes.values())
+    assert one.where == "Any Contest Hall"
+    assert "cannot be traded or put into Bank" in one.requirement
+    # Written out as six rather than keyed by species: a female Pikachu is a form too, and it
+    # is not in a costume.
+    assert "pikachu" not in hoenn.ORAS_FORM_CHANGES_BY_SPECIES
+    assert hoenn.oras_form_changes(
+        [hoenn_form("pikachu-female", "pikachu", FormKind.GENDER)], game_id="omega-ruby"
+    ) == {}
+
+
+def test_a_species_hoenn_does_not_have_gets_no_form_records_at_all() -> None:
+    # Seventy-five forms over nine species, and every one for the same reason: Unown wants ruins
+    # that are in Johto, and Vivillon, Furfrou, Flabebe and Pumpkaboo all want Kalos - the other
+    # half of this generation and a different pair of games.
+    forms = [
+        hoenn_form("unown-b", "unown"),
+        hoenn_form("vivillon-sun", "vivillon"),
+        hoenn_form("furfrou-kabuki", "furfrou"),
+        hoenn_form("rotom-heat", "rotom", FormKind.FUNCTIONAL),
+    ]
+
+    changes = hoenn.oras_form_changes(forms, game_id="omega-ruby")
+
+    assert sorted(changes) == ["rotom-heat"]
+    assert changes["rotom-heat"].where == "Littleroot Town, Professor Birch's lab"
 
 
 # --- the registry itself ----------------------------------------------------------------------

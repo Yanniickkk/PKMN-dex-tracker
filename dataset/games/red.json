@@ -207,7 +207,8 @@
       "target": {
         "species": "sandslash"
       },
-      "number": 28
+      "number": 28,
+      "unobtainableReason": "Blue only in Generation 1; trade one in"
     },
     {
       "game": "red",
@@ -278,7 +279,8 @@
       "target": {
         "species": "ninetales"
       },
-      "number": 38
+      "number": 38,
+      "unobtainableReason": "Blue only in Generation 1; trade one in"
     },
     {
       "game": "red",
@@ -384,7 +386,8 @@
       "target": {
         "species": "persian"
       },
-      "number": 53
+      "number": 53,
+      "unobtainableReason": "Blue only in Generation 1; trade one in"
     },
     {
       "game": "red",
@@ -504,14 +507,16 @@
       "target": {
         "species": "weepinbell"
       },
-      "number": 70
+      "number": 70,
+      "unobtainableReason": "Blue only in Generation 1; trade one in"
     },
     {
       "game": "red",
       "target": {
         "species": "victreebel"
       },
-      "number": 71
+      "number": 71,
+      "unobtainableReason": "Blue only in Generation 1; trade one in"
     },
     {
       "game": "red",

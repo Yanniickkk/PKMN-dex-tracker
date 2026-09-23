@@ -13,6 +13,7 @@ from __future__ import annotations
 from collections.abc import Iterable, Iterator
 
 from .models import DexTarget
+from .reach import parents_in, reachable_in
 from .validate import Dataset, Finding, GameCoverage, Severity
 
 
@@ -244,6 +245,74 @@ class NoEvolutionDeadEnds:
 
             if outside:
                 yield _not_covered_yet(self.name, game.game.id, "evolving", outside)
+
+
+class UnreachableEntriesSaySo:
+    """An entry a game can only reach by evolving something it has never seen is not fillable.
+
+    The subtler half of ``no-evolution-dead-ends``, which asks whether the earlier stage is
+    obtainable *anywhere*. That is the right question for the dataset and the wrong one for a
+    player holding one cartridge: Omega Ruby records "evolve a Lombre" for its Ludicolo, the
+    record is true, and no Omega Ruby will ever produce a Lotad.
+
+    It was true of sixteen games when this was written, because every version exclusive in the
+    dataset had been worked out from encounter tables and nobody had walked the evolutions
+    afterwards. :func:`reach.spread_unobtainable` now gives each of those entries the reason its
+    own line already carries, and this rule is what notices when a new one arrives without it.
+
+    An entry with nothing explained anywhere in its line is left to ``every-entry-has-a-method``,
+    which says the same thing about the whole of it rather than about its last stage.
+    """
+
+    name = "unreachable-entries-say-so"
+
+    def check(self, dataset: Dataset) -> Iterator[Finding]:
+        by_id = {rule.id: rule for rule in dataset.evolution_rules}
+
+        for game in dataset.games:
+            # A game with no methods of its own has not been gathered yet, which is one finding
+            # in `every-entry-has-a-method` and would be two hundred here.
+            if not game.acquisition_methods:
+                continue
+
+            reached = reachable_in(game, rules=by_id)
+            explained = {
+                entry.target.species
+                for entry in game.dex_entries
+                if entry.unobtainable_reason is not None
+            }
+            parents = parents_in(game.acquisition_methods, rules=by_id)
+
+            for entry in game.dex_entries:
+                species = entry.target.species
+                if species in reached or species in explained:
+                    continue
+
+                if not _ancestors(species, parents) & explained:
+                    continue
+
+                yield Finding(
+                    rule=self.name,
+                    severity=Severity.ERROR,
+                    game=game.game.id,
+                    message=(
+                        f"{entry.target} is in the dex at #{entry.number} and nothing in this "
+                        "game can reach it: what it comes from cannot be had here, and the "
+                        "entry says nothing about that"
+                    ),
+                )
+
+
+def _ancestors(species: str, parents: Iterable) -> set[str]:
+    """Everything this species comes from in one game, however far back."""
+    found: set[str] = set()
+    edge = set(parents.get(species, ()))
+
+    while edge:
+        found |= edge
+        edge = {older for one in edge for older in parents.get(one, ()) if older not in found}
+
+    return found
 
 
 class NoBreedingDeadEnds:
@@ -673,10 +742,14 @@ def all_rules() -> list:
     written off as version exclusives and then reached by an evolution a step later.
     ``every-dex-number-means-one-thing`` arrived with X and Y, the first games to show more than
     one Pokedex, and guards the field that keeps their three lists apart.
+    ``unreachable-entries-say-so`` arrived with Omega Ruby, whose Ludicolo has an evolution to
+    come from and no Lotad to start it - which turned out to be true of eighty-six entries in
+    sixteen games.
     """
     return [
         EveryEntryHasAMethod(),
         NoEvolutionDeadEnds(),
+        UnreachableEntriesSaySo(),
         NoBreedingDeadEnds(),
         UnobtainableEntriesReallyAre(),
         FormsReferencedExist(),

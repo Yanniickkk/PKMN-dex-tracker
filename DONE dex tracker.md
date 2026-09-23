@@ -923,6 +923,49 @@ All eight rebuilt, validation green: 0 errors and 0 warnings. Three species in t
 are produced by nothing and explained by nothing - Celebi, Jirachi and Phione - and they are
 visible now where before they were not even asked about.
 
+### A correction that touched sixteen — 2026-09-23
+
+An evolved form whose base a game cannot produce is as unfillable as the base, and sixteen games
+said nothing about it. Omega Ruby records "evolve a Lombre" for its Ludicolo - the record is
+true, a Lombre does become one - and no Omega Ruby will ever produce a Lotad. Ruby had the same
+hole, and Red said nothing about Sandslash, and Gold and Silver nothing about twelve entries
+each.
+
+Found while writing Omega Ruby's step 5, by walking each game's own caught records forward
+through its own evolutions and eggs and listing what never came up. Nothing in the TODO ever
+asked for it: every exclusives table in the dataset was worked out from encounter tables, and
+nobody went back through the evolutions afterwards.
+
+`no-evolution-dead-ends` could not catch it. It asks whether the earlier stage is obtainable
+*anywhere*, which is the right question for the dataset and the wrong one for a player holding
+one cartridge.
+
+- **`reach.py`** answers what one game can reach on its own: what it puts in a player's hands -
+  caught, handed over, traded for - and then everything that evolves or hatches from that, as a
+  fixed point rather than one pass. A wild slot that does not count is not a start: the Friend
+  Safari answers no here for the same reason it answers no to "can I get one in X".
+- `spread_unobtainable` gives an entry nothing here can reach the reason its own line already
+  carries, and invents nothing where the line says nothing - `every-entry-has-a-method` is
+  left to say that about the whole of it. It runs in the build, after a game is built, because
+  the answer depends on records that are not finished until then.
+- **`unreachable-entries-say-so`** is the eleventh rule, and asks the same question the other
+  way round, so that a game which grows a new exclusive and forgets its evolutions is told.
+
+**86 entries in 16 games**, every one of them inheriting a sentence that was already checked:
+Blue learns that Gloom and Vileplume are Red's like the Oddish they come from; the three
+Generation 2 games say what they had never said about Ivysaur, Venusaur and four more - "nobody
+hands one over in Generation 2: Oak's lab is a visit rather than a choice" - and about Omastar
+and Kabutops, which no Generation 2 scientist revives. Yellow says it about Beedrill and
+Weezing, Diamond about Bastiodon, Emerald about Medicham, Ruby about Ludicolo.
+
+And one the rule could not answer, found in the same pass and written by hand: **SoulSilver
+cannot produce a Mantine**. It surfaces on Route 41 in HeartGold and nowhere here, and this
+half's only other route to one is a Mantyke - which hatches from a Mantine. A circle nobody had
+looked at, and the only entry in the dataset whose whole line was unreachable and unexplained.
+
+The whole dataset rebuilt: 11 rules, 0 warnings, and nothing unreachable and unexplained
+anywhere but Omega Ruby and Alpha Sapphire's Jirachi, which is their step 7.
+
 ### Generation 1
 
 - [x] **Red** (`red`, gen 1, pair partner: Blue) - 2026-09-22
@@ -2761,6 +2804,232 @@ visible now where before they were not even asked about.
     backup - and their data file was untouched: same checksum and timestamp afterwards as
     before. The test ran against a data file in the scratchpad, and only the instance it started
     was stopped.
+
+- [x] **Omega Ruby** (`omega-ruby`, gen 6, pair partner: Alpha Sapphire) - 2026-09-23
+  - [x] 1 Entity + edges - 2026-09-23
+  - [x] 2 Dex list - 2026-09-23
+  - [x] 3 Wild - 2026-09-23
+  - [x] 4 Gifts & statics - 2026-09-23
+  - [x] 5 Trades & evolutions - 2026-09-23
+  - [x] 6 Sprites - 2026-09-23
+  - [x] 7 Events - 2026-09-23
+  - [x] 8 Alternate forms - 2026-09-23
+  - [x] 9 Validate + smoke test - 2026-09-23
+  - 1724 ways to get something: 1150 wild slots, 355 evolutions, 132 form changes, 62 gifts and
+    statics, 22 eggs and three trades. **203 of the 211 its own Pokedex asks for can be reached
+    in the game itself**; the other eight say why not - seven are Alpha Sapphire's and the
+    eighth is Jirachi. It records something about 596 of the 721 a living dex here wants, and
+    the rest are a transfer away. Validation green on all 11 rules, for the whole dataset.
+- [x] **Alpha Sapphire** (`alpha-sapphire`, gen 6, pair partner: Omega Ruby) - 2026-09-23
+  - [x] 1 Entity + edges - 2026-09-23
+  - [x] 2 Dex list - 2026-09-23
+  - [x] 3 Wild - 2026-09-23
+  - [x] 4 Gifts & statics - 2026-09-23
+  - [x] 5 Trades & evolutions - 2026-09-23
+  - [x] 6 Sprites - 2026-09-23
+  - [x] 7 Events - 2026-09-23
+  - [x] 8 Alternate forms - 2026-09-23
+  - [x] 9 Validate + smoke test - 2026-09-23
+  - 1727, which is the same but for one wild slot and two form records: the East Sea Shellos
+    and its Gastrodon are this half's, and Omega Ruby has no way to make either. The same 203
+    of 211 reachable, and seven exclusives each, which is what a version pair looks like.
+
+  _The region and the generation are two modules again, after a generation that had nothing on
+  either side of that line: `kalos.py` is the place and `gen6.py` is the hardware, the National Dex
+  to Volcanion and the four cartridges that trade with each other. Omega Ruby and Alpha Sapphire
+  will read `hoenn.py` and the same `gen6.py`._
+
+  _The split matters more here than it looks. **Legends: Z-A is a Kalos game too** - Lumiose City on
+  the Switch, three generations later - so `kalos.py` is the second region in this dataset, after
+  Johto, whose games are not all from one generation. Its factories are named `gen6_cartridge` and
+  `gen6_edges` for that reason: Z-A gets its own beside them rather than editing these, and nothing
+  about Bank, a dex cap or a 3DS trade set may be written down as a fact about Kalos._
+
+  - Step 1 for both: `hoenn.py` now holds two generations, the way `kanto.py` has since
+    FireRed. Every Generation 3 name in it says so - `gba_cartridge`, `gba_edges`,
+    `gba_dex_entries`, `GBA_DEX`, `GBA_PAIR_GIFTS` - beside `gen6_cartridge` and `gen6_edges`.
+    What kept its plain name is `REGION` and the day care, which really is on Route 117 in all
+    five games set here.
+  - The four trades X and Y had been declaring into an empty space became real the moment these
+    two registered, and neither of those files was touched. Nothing is left waiting on a game
+    now - all 14 held-back edges are Bank's, which is Phase 3.
+  - No route runs between a remake and the game it remakes. What a Ruby has to travel to reach
+    an Omega Ruby is Pal Park, the Poke Transfer, Poke Transporter and Bank: five games, two
+    services, and every step of it already in the graph.
+  - Step 2: **211 entries, not the 202 Ruby shows.** The nine the remakes added - Gallade,
+    Probopass, Magnezone, Budew, Roserade, Dusknoir, Chingling, Rhyperior, Froslass - are all
+    Generation 4 relatives of families Hoenn already had, and each goes in beside its family
+    rather than at the end. So from #032 on almost everything moves: 171 of the 202 entries
+    have a number here that means a different species in Ruby, starting with #032, which is
+    Surskit there and Gallade here. Pokemon Bank named the older list *Good Old Hoenn* to keep
+    the two apart, which is the games agreeing that a regional dex is not one list for all time.
+  - One Pokedex, so no entry names its list - unlike X and Y, which had to. The game asks for
+    208 of the 211: Rayquaza, Jirachi and Deoxys are not counted towards completing it. That is
+    the second dex here to excuse a player from anything, after Central Kalos, and not the same
+    kind of excusing - two of these three are caught in the story after the story.
+  - Validation is one error, which is the guard doing its job: `every-entry-has-a-method` folds
+    a game with no encounters yet into a single finding rather than 211. The one entry nothing
+    in the whole dataset can produce is **Jirachi**, which no game has ever handed over outside
+    an event.
+  - Step 3 found that **PokeAPI has no encounter tables for these two games**. Its rows for
+    Omega Ruby and Alpha Sapphire are hordes, the Mirage spots, a little Rock Smash and the
+    statics - no grass, no water, no fishing at all. Built from that source alone the games say
+    a Tentacool cannot be caught in Hoenn. So the wild step reads **Bulbapedia's location
+    pages** instead: `encountertables.py`, the second source in this dataset that is parsed
+    rather than typed, after the Hidden Grottoes. Sixty-nine pages, one row per species, and
+    the games a row belongs to written as a **colour** rather than as text - both cells say
+    "OR" and "AS" either way, so a parser reading the letters would hand both halves every
+    exclusive in Hoenn.
+  - 1150 slots in Omega Ruby and 1151 in Alpha Sapphire, over 66 places, covering 205 species
+    each - 108 of the 211 the regional dex asks for, before a single gift or evolution. 1043 of
+    them are the wiki's and 107 are PokeAPI's: the Mirage spots, which the wiki keeps on pages
+    that are not tables, so each source answers where the other is silent and a place both know
+    is the wiki's. Otherwise every horde in Hoenn would be recorded twice.
+  - Two new methods, and they are the two halves of Hoenn nobody could reach before: **Dive**,
+    the table under the water a player is surfing on, and **Soaring**, the flocks met in mid-air
+    on a Latios. Their icons are HM07, which is Dive in these games, and the Eon Flute, which is
+    the whole of Soaring.
+  - The **DexNav** is what 165 of those rows depend on and what the wiki explains in four words.
+    It says "Exclusively as hidden Pokemon"; the dataset says a patch that rustles, named on the
+    touch screen, crept up on rather than walked into - and, for most of them, only once Groudon
+    or Kyogre has been dealt with.
+  - Three things the pages said that a parser had to be taught. A heading opens a group and the
+    next heading closes it, or the condition at the foot of a table would be read as true of the
+    grass at the top of it. A heading that names a method outranks the Location column, which is
+    twelve rows on Routes 118 and 121 where five Wingull walking up at once is a horde standing
+    in long grass. And **Omega Ruby's Shellos is the West Sea one where Alpha Sapphire's is the
+    East Sea one** - the only thing these two halves differ about by form rather than by species.
+  - One correction outside Hoenn: a place name made out of a slug shouted its joining words, so
+    the Mirage spots read "North Of Fallarbor" and Sinnoh's Spear Pillar "Between Pillars 1 And
+    2". Fixed in `places.py` and the three Sinnoh games rebuilt. PokeAPI also files one Mirage
+    Cave as west of *Rustburo*; the town has been Rustboro since 2002.
+  - Step 4: 62 handed over or standing still in each half, and the shape of the list is unlike
+    any game before it. **Twelve first partners** - Birch gives one of Hoenn's three on Route
+    101, one of Johto's after the Hall of Fame, one of Unova's after the Delta Episode and one
+    of Sinnoh's after the Hall of Fame a second time. Four choices of three, so a save keeps
+    four and the other eight are a trade.
+  - And **the legendaries of five generations**, which is what makes these two games a living
+    dex in a way none before them were. The Mirage spots put Cobalion, Terrakion and Virizion on
+    an island that only rises while three Pokemon in the party have maxed EVs; Uxie, Mesprit and
+    Azelf in a cavern that wants three at maximum friendship; Raikou, Entei and Suicune in a
+    forest that wants Ho-Oh or Lugia in the party, and which of the three is standing there is
+    the minute of the hour. Dialga and Palkia are a gap in the sky that opens for the lake trio,
+    Giratina a second gap behind them; Tornadus and Thundurus a black cloud that wants a
+    Castform, Landorus the cloud behind that. Kyurem waits on Reshiram and Zekrom, who wait on a
+    Pokemon at level 100.
+  - A gift record can now carry a **gate** beside its conditions rather than instead of them,
+    which is what those places needed: PokeAPI knows the day and the hour and cannot know that
+    the island is not there at all.
+  - The **fossils** are the second thing in this dataset written by hand, after Kalos's Old
+    Amber: nine species that are an item carried to the Devon Corporation and no encounter
+    anywhere. Route 111 still asks Hoenn's oldest question - the Root Fossil or the Claw Fossil,
+    and the other is lost for good - and the remakes added seven more in rocks at the Mirage
+    spots, split by version: Omega Ruby's hold the Dome, Armor and Plume Fossils, Alpha
+    Sapphire's the Helix, Skull and Cover. The Old Amber is in both, and Kalos's two fossils in
+    neither.
+  - Which turned up an error in a game written two days ago: Ruby and Sapphire said their
+    fossils came from the **Mirage Tower**, and that tower is Emerald's alone. Both corrected.
+  - The **eon duo** swap places: each half meets one on Southern Island in its own story and the
+    other waits on the same island for anybody holding an Eon Ticket. PokeAPI files each of them
+    twice, as a gift and as a static; written as statics they fold into the one encounter they
+    are.
+  - Two things the source got wrong and one it could not know. Cobalion appears on three days
+    and PokeAPI carries two of them, filing the Sunday with no condition at all. Giratina's gap
+    is marked as a Sunday by PokeAPI and by nothing else, so the requirement says only what
+    Bulbapedia says. And the Clear Bell and Tidal Bell, which Captain Stern swaps for the
+    Scanner found on the same wreck, are what Ho-Oh and Lugia are waiting for - one each, Omega
+    Ruby's and Alpha Sapphire's.
+  - 126 of the 211 the dex asks for are now covered in the game itself. The 85 left over are
+    evolutions, babies and version exclusives - step 5 - and Jirachi, which is step 7's.
+  - Step 5: 355 evolutions, 22 eggs and three trades, which takes each half to 1592 records and
+    **205 of the 211** its dex asks for. The egg table is worked out rather than typed, the way
+    Kalos's is; the set that decides what counts as "already in your hands" moved to
+    `breeding.py`, where the day care is, because it was never a fact about Kalos.
+  - The three trades are the same three towns Ruby and Sapphire use and not the same trades.
+    **Fortree wants a Spinda** where it wanted a Pikachu - a Hoenn Pokemon put where a Kanto one
+    had been - and the two trainers whose names the game records swapped towns: Darrell is in
+    Rustboro here and was in Fortree.
+  - **Seven version exclusives each**, against Ruby and Sapphire's six, and the extra one is the
+    same line's last stage: the remakes' Pokedex holds every stage of the Lotad and Seedot lines
+    where Generation 3's stopped short. So Omega Ruby is missing Lotad, Lombre *and* Ludicolo,
+    and Alpha Sapphire Seedot, Nuzleaf and Shiftry - plus Sableye, Seviper, Lunatone and Kyogre
+    against Mawile, Zangoose, Solrock and Groudon.
+  - Step 6: 926 files in `generation-vi/omegaruby-alphasapphire`, one sheet for both halves -
+    **721 species with not one gap**, and 205 of the 206 forms. The second set in this dataset
+    that is not a sprite sheet: these two are in 3D like X and Y, so what stands in for a sheet
+    is a shot of each model, and the grid already knows to smooth `generation-vi` rather than
+    scale it with nearest-neighbour.
+  - The one form with no picture of its own is the **female Eevee** - the same one X and Y are
+    missing, in a different sheet. It falls back to the species picture, which is what the
+    fallback is for.
+  - Step 7 read the *In events* table on all fifteen entries either half cannot fill, and found
+    four. Both story legendaries went out in the same campaign - the **Dahara City Groudon and
+    Kyogre**, Japan and South Korea over 2015 - a Mawile went to South Korea with XY&Z in 2016,
+    and a Sableye went to Japan in the Mega Campaign of January 2016. The other eleven were
+    never handed out at all, which is an answer too.
+  - The joke in the Sableye row: Generation 6's *other* Sableye giveaway, Shigeki Morimoto's,
+    went to **Alpha Sapphire alone** - the half that catches them in the wild.
+  - **Jirachi has never been catchable in any game, in any generation.** Generation 3's answer
+    was a disc that came in the box with another game; this generation's is nine distributions,
+    of which the Pokemon 20th Anniversary Jirachi of April 2016 is the one most players outside
+    Japan could have had. In between there was nothing at all.
+  - **Validation is green: 11 rules, 0 errors, 0 warnings, for the whole dataset.** Step 8 is
+    the forms, and step 9 the smoke test.
+  - Step 8: 132 form records in Omega Ruby and 134 in Alpha Sapphire. The pair holds 110 forms
+    and 75 of them get no record on purpose - Unown wants ruins that are in Johto, and Vivillon,
+    Furfrou, Flabebe and Pumpkaboo all want Kalos, which is the other half of this generation
+    and a different pair of games.
+  - Every item that changes an older legendary is somewhere else than it is in X and Y, which is
+    the whole reason a form's answer belongs to a region: the Reveal Glass is a woman selling
+    mirrors on Mauville City 1F, the **DNA Splicers are hidden in the Gnarled Den - the Mirage
+    spot Kyurem itself waits in**, the Griseous Orb is underwater off Route 130, and the
+    Gracidea is handed over on Route 123 for showing somebody a Shaymin.
+  - Three answers only these two games have. **Hoopa Unbound** is the second form here a living
+    dex cannot hold, after Furfrou's trim: three days, and back in the bottle the moment it goes
+    in a box. **The Cosplay Pikachu** is six costumes that cannot evolve, cannot breed and
+    cannot be traded or put into Bank - they stay on the cartridge they were given on, which
+    nothing else in the dataset does. And the **East Sea Shellos** is the only form whose answer
+    is the version's: Alpha Sapphire catches them on Routes 103 and 110 where Omega Ruby catches
+    the West Sea kind.
+  - And step 8 found something in the shared table. **Deoxys's three formes were pinned to the
+    three Generation 3 cartridges** that hold one each - right while the dataset stopped at
+    Generation 3, wrong from Diamond on, where a meteorite cycles through all four. Thirteen
+    games got them back, each with its own place: outside in Veilstone City, on Route 3 in
+    Johto, in the Nacrene Museum, in Ambrette Town's Fossil Lab, and here in Professor Cozmo's
+    house in Fallarbor - the same meteorite Ruby and Sapphire have a fetch quest about.
+
+  - Smoke test on the published exe: a collection called "Omega Ruby on the 3DS", with Omega
+    Ruby as main game, Alpha Sapphire linked and every kind of form ticked - **930 tiles**, 721
+    species and 209 forms. The linked-games step offered exactly three, X, Y and Alpha Sapphire,
+    all "via trading", which is the transfer graph being right: everything older reaches these
+    two through Bank, and Bank is not written.
+  - The *Showing* switch reads "National dex" at 930 and "Hoenn dex" at 261, renumbered from
+    Treecko #001 - and it is the remakes' list rather than Ruby's: **#031 Gardevoir and #032
+    Gallade stand side by side**, which is what the nine inserted entries do to the numbering.
+  - Five popups were read closely. **Ludicolo** is the one that matters, because it is what the
+    eleventh rule was written for: "Not in Omega Ruby - Alpha Sapphire only in Generation 6;
+    trade one in", and under it the evolution from Lombre that this game can perform and never
+    start. **Cobalion** shows the Pathless Plain, level 50, and one sentence carrying both the
+    gate and the days: three Pokemon with maxed EVs, on a Wednesday, a Friday or a Sunday.
+    **Deoxys** shows four tiles at #386 and the meteorite in Professor Cozmo's house. **Pikachu
+    (Libre)** shows the Cosplay sentence in full, cited to Bulbapedia. **Treecko** shows Birch
+    on Route 101.
+  - The *Available in* filter was checked both ways round: Lotad with "Available in Omega Ruby"
+    finds nothing and with "Available in Alpha Sapphire" finds one. Marking Treecko caught in
+    Omega Ruby moved the counter to "1 of 930" and wrote the data file.
+  - One blemish worth writing down rather than fixing here: the Cosplay Pikachu's record in the
+    linked game still carries the app's generic footer, "Then to Omega Ruby: trading", under a
+    sentence that says it cannot be traded. The sentence is right and the footer is the transfer
+    graph talking about the game rather than about the form. A form that cannot leave its
+    cartridge is new in this dataset and nothing above the graph knows it yet.
+  - The user's settings were copied out first and restored byte for byte - same checksum as the
+    backup - and their data file was untouched: same checksum and timestamp afterwards as
+    before. The test ran against a data file in the scratchpad, and only the instance it started
+    was stopped.
+  - One thing went wrong and is worth the note: the first attempt wrote the settings file with
+    single backslashes, which is not JSON, so the app fell back to its defaults, asked where to
+    keep data, and rewrote the real settings with the default path and theme. The backup put it
+    back, byte for byte, and the second attempt wrote the file through a JSON encoder instead.
 
 ### Generation 7
 

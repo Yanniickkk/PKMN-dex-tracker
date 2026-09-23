@@ -68,6 +68,15 @@ def breeding_encounters(
 DITTO = "Genderless, so the other half of the pairing has to be a Ditto"
 
 
+#: The record kinds that put a Pokemon in a player's hands with nothing else needed first.
+#:
+#: Not evolving, which is the whole point of the distinction: a game can know that a Bayleef
+#: becomes a Meganium and have no Chikorita in it anywhere, and offering an egg from a parent
+#: nobody can get is worse than offering none. Written here rather than in a region's file
+#: because it is a fact about :func:`day_care_eggs` and not about anywhere.
+CAUGHT = frozenset({"wild", "gift", "trade"})
+
+
 def day_care_eggs(
     api: PokeApiClient,
     *,

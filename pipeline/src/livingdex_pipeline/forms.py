@@ -87,10 +87,37 @@ HELD_ITEM_FORMS = frozenset({"arceus", "genesect"})
 #: which version *group* each form belongs to, so FireRed and LeafGreen come out sharing two
 #: forms that neither of them shares. The spiky-eared Pichu is the other kind: it is in
 #: HeartGold and SoulSilver, it cannot be traded or transferred, and so it goes no further.
+#: Every game in this dataset that has a meteorite to change a Deoxys with.
+#:
+#: Generation 3 decides the forme by the cartridge and there is nothing a player can do about
+#: it: a Deoxys is Normal in Ruby and Sapphire, Attack in FireRed, Defense in LeafGreen and
+#: Speed in Emerald, and trading it is the only way to see another. From Generation 4 on a
+#: meteorite cycles it through all four - outside in Veilstone City, on Route 3 in Johto, in the
+#: Nacrene Museum, in Ambrette Town's Fossil Lab, in Professor Cozmo's house in Fallarbor.
+#:
+#: Written out because the version group a form arrived in cannot say it. All three formes
+#: arrived with Generation 3 and were pinned to the one cartridge each of them came from, which
+#: was right while this dataset held nothing later and wrong from Diamond on.
+METEORITE: tuple[str, ...] = (
+    "diamond",
+    "pearl",
+    "platinum",
+    "heartgold",
+    "soulsilver",
+    "black",
+    "white",
+    "black-2",
+    "white-2",
+    "x",
+    "y",
+    "omega-ruby",
+    "alpha-sapphire",
+)
+
 ONLY_IN: Mapping[str, tuple[str, ...]] = {
-    "deoxys-attack": ("firered",),
-    "deoxys-defense": ("leafgreen",),
-    "deoxys-speed": ("emerald",),
+    "deoxys-attack": ("firered", *METEORITE),
+    "deoxys-defense": ("leafgreen", *METEORITE),
+    "deoxys-speed": ("emerald", *METEORITE),
     "pichu-spiky-eared": ("heartgold", "soulsilver"),
 }
 

@@ -26,7 +26,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from datetime import date
 
-from ..breeding import breeding_encounters, day_care_eggs
+from ..breeding import CAUGHT, breeding_encounters, day_care_eggs
 from ..evolutions import evolution_encounters
 from ..formchanges import FormChange, form_change_encounters, spread
 from ..games import BuildContext
@@ -66,13 +66,6 @@ DAY_CARE = "Route 7, Pokemon Day Care"
 #: Named for the pair rather than for the region or the generation. Omega Ruby and Alpha
 #: Sapphire have a sheet of their own, and a Kalos game on the Switch will have neither.
 XY_SPRITE_SET = "generation-vi/x-y"
-
-#: The kinds that put a Pokemon in a player's hands with nothing else needed first.
-#:
-#: Not evolving, which is the whole point of the distinction: a game can know that a Bayleef
-#: becomes a Meganium and have no Chikorita in it anywhere, and offering an egg from a parent
-#: nobody can get is worse than offering none.
-CAUGHT = frozenset({"wild", "gift", "trade"})
 
 #: The three Pokedexes X and Y show, as PokeAPI names them and as the games do.
 #:
@@ -328,6 +321,15 @@ def with_event(reason: str, event: str | None) -> str:
 #: transfer. So the Reveal Glass, the DNA Splicers, the Griseous Orb and the Gracidea are each a
 #: favour done for a Pokemon that came from somewhere else.
 XY_FORM_CHANGES: dict[str, FormChange] = {
+    **spread(
+        FormChange(
+            requirement="Touch one of the meteorites there; they cycle through all four formes",
+            where="Ambrette Town, Fossil Lab",
+        ),
+        "deoxys-attack",
+        "deoxys-defense",
+        "deoxys-speed",
+    ),
     # The forces of nature, and the one item a player has to bring all three of them to.
     **spread(
         FormChange(

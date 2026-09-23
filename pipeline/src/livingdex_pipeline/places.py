@@ -123,16 +123,35 @@ def _named(slug: str) -> str:
 #: entrance at the Pokemon World Tournament, and "Pwt Entrance" reads like nothing at all.
 _ACRONYMS = frozenset({"hq", "pwt"})
 
+#: Words English leaves in lower case in the middle of a name.
+#:
+#: The Hoenn remakes are what asked for this: their Mirage spots are filed as
+#: ``mirage-spot-cave-north-of-fallarbor``, and a rule that capitalises every word turns two
+#: dozen places into "North Of Fallarbor". Sinnoh had the same thing quietly - Spear Pillar's
+#: "Between Pillars 1 And 2" - and nobody had looked.
+_JOINING = frozenset({"of", "the", "and", "in", "at", "to", "on", "a"})
+
 
 def pretty(slug: str) -> str:
-    """A slug as words. Floor names keep their shape: ``b1f`` is B1F, not "B1f"."""
-    words = [
-        word.upper() if _is_floor(word) or word in _ACRONYMS else word.capitalize()
-        for word in slug.split("-")
-        if word
-    ]
+    """A slug as words. Floor names keep their shape: ``b1f`` is B1F, not "B1f".
 
-    return " ".join(words)
+    A joining word keeps its lower case where English keeps it, which is anywhere but the ends
+    of the name: "North of Fallarbor", and the room called "A" at the end of ``sealed-chamber-a``
+    is still A.
+    """
+    words = [word for word in slug.split("-") if word]
+
+    return " ".join(
+        _word(word, joining=0 < position < len(words) - 1)
+        for position, word in enumerate(words)
+    )
+
+
+def _word(word: str, *, joining: bool) -> str:
+    if _is_floor(word) or word in _ACRONYMS:
+        return word.upper()
+
+    return word if joining and word in _JOINING else word.capitalize()
 
 
 def _is_floor(word: str) -> bool:

@@ -58,6 +58,10 @@ METHOD_ICONS: dict[str, str] = {
     "flower-patch": "gracidea",
     "berry-tree": "oran-berry",
     "ambush": "poke-ball",
+    # The Hoenn remakes'. Dive is HM07 in these games, picked up in Mossdeep City, and the Eon
+    # Flute is the whole of Soaring: play it and a Latios or Latias comes for you.
+    "dive": "hm07",
+    "soaring": "eon-flute",
     "other": "poke-ball",
     # Gifts and statics.
     "starter": "poke-ball",

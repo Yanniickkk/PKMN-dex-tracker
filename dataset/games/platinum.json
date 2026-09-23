@@ -522,7 +522,8 @@
       "target": {
         "species": "mismagius"
       },
-      "number": 73
+      "number": 73,
+      "unobtainableReason": "Pearl only in Generation 4; trade one in"
     },
     {
       "game": "platinum",
@@ -537,7 +538,8 @@
       "target": {
         "species": "honchkrow"
       },
-      "number": 75
+      "number": 75,
+      "unobtainableReason": "Diamond only in Generation 4; trade one in"
     },
     {
       "game": "platinum",
@@ -552,7 +554,8 @@
       "target": {
         "species": "purugly"
       },
-      "number": 77
+      "number": 77,
+      "unobtainableReason": "Pearl only in Generation 4; trade one in"
     },
     {
       "game": "platinum",
@@ -609,7 +612,8 @@
       "target": {
         "species": "skuntank"
       },
-      "number": 85
+      "number": 85,
+      "unobtainableReason": "Diamond only in Generation 4; trade one in"
     },
     {
       "game": "platinum",
@@ -4459,7 +4463,7 @@
         "species": "golbat"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 25,
@@ -4479,7 +4483,7 @@
         "species": "golbat"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 37,
@@ -10177,7 +10181,7 @@
         "species": "haunter"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 25,
@@ -10197,7 +10201,7 @@
         "species": "haunter"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 26,
@@ -10218,7 +10222,7 @@
         "species": "haunter"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 26,
@@ -10239,7 +10243,7 @@
         "species": "haunter"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 35,
@@ -10259,7 +10263,7 @@
         "species": "haunter"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 36,
@@ -10280,7 +10284,7 @@
         "species": "haunter"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 36,
@@ -21140,7 +21144,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -26086,7 +26090,7 @@
         "species": "lunatone"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 28,
@@ -26107,7 +26111,7 @@
         "species": "lunatone"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 38,
@@ -26524,7 +26528,7 @@
         "species": "solrock"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 28,
@@ -26545,7 +26549,7 @@
         "species": "solrock"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 38,
@@ -27682,7 +27686,7 @@
         "species": "duskull"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 28,
@@ -27990,7 +27994,7 @@
         "species": "dusclops"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 26,
@@ -28011,7 +28015,7 @@
         "species": "dusclops"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 28,
@@ -28031,7 +28035,7 @@
         "species": "dusclops"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 36,
@@ -28052,7 +28056,7 @@
         "species": "dusclops"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 38,
@@ -28381,7 +28385,7 @@
         "species": "chimecho"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 28,
@@ -28401,7 +28405,7 @@
         "species": "chimecho"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 36,
@@ -34767,7 +34771,7 @@
         "species": "chingling"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 26,
@@ -34947,7 +34951,7 @@
         "species": "bronzor"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 25,
@@ -35207,7 +35211,7 @@
         "species": "bronzong"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 35,
@@ -42655,6 +42659,51 @@
         "form": "relicanth-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "platinum",
+      "target": {
+        "species": "deoxys",
+        "form": "deoxys-attack"
+      },
+      "requirement": "Touch one of the meteorites there; they cycle through all four formes",
+      "location": "Veilstone City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "platinum",
+      "target": {
+        "species": "deoxys",
+        "form": "deoxys-defense"
+      },
+      "requirement": "Touch one of the meteorites there; they cycle through all four formes",
+      "location": "Veilstone City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "platinum",
+      "target": {
+        "species": "deoxys",
+        "form": "deoxys-speed"
+      },
+      "requirement": "Touch one of the meteorites there; they cycle through all four formes",
+      "location": "Veilstone City",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",

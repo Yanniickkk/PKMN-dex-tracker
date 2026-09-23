@@ -108,14 +108,16 @@
       "target": {
         "species": "kakuna"
       },
-      "number": 14
+      "number": 14,
+      "unobtainableReason": "Red and Blue only in Generation 1; trade one in"
     },
     {
       "game": "yellow",
       "target": {
         "species": "beedrill"
       },
-      "number": 15
+      "number": 15,
+      "unobtainableReason": "Red and Blue only in Generation 1; trade one in"
     },
     {
       "game": "yellow",
@@ -179,7 +181,8 @@
       "target": {
         "species": "arbok"
       },
-      "number": 24
+      "number": 24,
+      "unobtainableReason": "Red only in Generation 1; trade one in"
     },
     {
       "game": "yellow",
@@ -383,7 +386,8 @@
       "target": {
         "species": "persian"
       },
-      "number": 53
+      "number": 53,
+      "unobtainableReason": "Blue only in Generation 1; trade one in"
     },
     {
       "game": "yellow",
@@ -783,7 +787,8 @@
       "target": {
         "species": "weezing"
       },
-      "number": 110
+      "number": 110,
+      "unobtainableReason": "Red and Blue only in Generation 1; trade one in"
     },
     {
       "game": "yellow",

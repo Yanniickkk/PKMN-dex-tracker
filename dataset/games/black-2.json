@@ -33746,6 +33746,51 @@
       "kind": "formChange",
       "game": "black-2",
       "target": {
+        "species": "deoxys",
+        "form": "deoxys-attack"
+      },
+      "requirement": "Touch the meteorite there; it cycles through all four formes",
+      "location": "Nacrene City, Nacrene Museum",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "black-2",
+      "target": {
+        "species": "deoxys",
+        "form": "deoxys-defense"
+      },
+      "requirement": "Touch the meteorite there; it cycles through all four formes",
+      "location": "Nacrene City, Nacrene Museum",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "black-2",
+      "target": {
+        "species": "deoxys",
+        "form": "deoxys-speed"
+      },
+      "requirement": "Touch the meteorite there; it cycles through all four formes",
+      "location": "Nacrene City, Nacrene Museum",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "black-2",
+      "target": {
         "species": "starly",
         "form": "starly-female"
       },

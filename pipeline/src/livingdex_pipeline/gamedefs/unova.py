@@ -1122,6 +1122,15 @@ def bw_trades(version: str) -> tuple[InGameTrade, ...]:
 B2W2_ONLY = ("black-2", "white-2")
 
 BW_FORM_CHANGES: dict[str, FormChange] = {
+    **spread(
+        FormChange(
+            requirement="Touch the meteorite there; it cycles through all four formes",
+            where="Nacrene City, Nacrene Museum",
+        ),
+        "deoxys-attack",
+        "deoxys-defense",
+        "deoxys-speed",
+    ),
     # Not a change a player makes at all: the coat is whatever season the DS clock says, and the
     # season turns over on the first of the month. Worth a record anyway, because "how do I get
     # a winter Deerling" has an answer and it is "wait, or change the date".

@@ -5,10 +5,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -24,10 +26,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -43,10 +47,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -62,10 +68,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -81,8 +89,10 @@
     "name": "Blue-Striped",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
+      "omega-ruby",
       "white",
       "white-2",
       "x",
@@ -95,10 +105,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -114,10 +126,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -133,10 +147,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -152,10 +168,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -171,10 +189,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -190,10 +210,12 @@
     "name": "Sandy",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -209,10 +231,12 @@
     "name": "Trash",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -228,10 +252,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -247,10 +273,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -266,10 +294,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -285,10 +315,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -304,10 +336,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -323,10 +357,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -342,8 +378,10 @@
     "name": "Autumn",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
+      "omega-ruby",
       "white",
       "white-2",
       "x",
@@ -356,8 +394,10 @@
     "name": "Summer",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
+      "omega-ruby",
       "white",
       "white-2",
       "x",
@@ -370,8 +410,10 @@
     "name": "Winter",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
+      "omega-ruby",
       "white",
       "white-2",
       "x",
@@ -384,7 +426,20 @@
     "name": "Attack",
     "kind": "functional",
     "games": [
-      "firered"
+      "alpha-sapphire",
+      "black",
+      "black-2",
+      "diamond",
+      "firered",
+      "heartgold",
+      "omega-ruby",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -393,7 +448,20 @@
     "name": "Defense",
     "kind": "functional",
     "games": [
-      "leafgreen"
+      "alpha-sapphire",
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "leafgreen",
+      "omega-ruby",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -402,7 +470,20 @@
     "name": "Speed",
     "kind": "functional",
     "games": [
-      "emerald"
+      "alpha-sapphire",
+      "black",
+      "black-2",
+      "diamond",
+      "emerald",
+      "heartgold",
+      "omega-ruby",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2",
+      "x",
+      "y"
     ]
   },
   {
@@ -411,10 +492,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -430,10 +513,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -449,10 +534,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -468,10 +555,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -487,10 +576,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -506,10 +597,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -525,6 +618,8 @@
     "name": "Blue",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -535,6 +630,8 @@
     "name": "Orange",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -545,6 +642,8 @@
     "name": "White",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -555,6 +654,8 @@
     "name": "Yellow",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -565,10 +666,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -584,6 +687,8 @@
     "name": "Blue",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -594,6 +699,8 @@
     "name": "Eternal",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -604,6 +711,8 @@
     "name": "Orange",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -614,6 +723,8 @@
     "name": "White",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -624,6 +735,8 @@
     "name": "Yellow",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -634,6 +747,8 @@
     "name": "Blue",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -644,6 +759,8 @@
     "name": "Orange",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -654,6 +771,8 @@
     "name": "White",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -664,6 +783,8 @@
     "name": "Yellow",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -674,8 +795,10 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
+      "omega-ruby",
       "white",
       "white-2",
       "x",
@@ -688,6 +811,8 @@
     "name": "Dandy",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -698,6 +823,8 @@
     "name": "Debutante",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -708,6 +835,8 @@
     "name": "Diamond",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -718,6 +847,8 @@
     "name": "Heart",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -728,6 +859,8 @@
     "name": "Kabuki",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -738,6 +871,8 @@
     "name": "La-Reine",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -748,6 +883,8 @@
     "name": "Matron",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -758,6 +895,8 @@
     "name": "Pharaoh",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -768,6 +907,8 @@
     "name": "Star",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -778,10 +919,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -797,10 +940,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -816,10 +961,12 @@
     "name": "East Sea",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -835,10 +982,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -854,10 +1003,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -873,9 +1024,11 @@
     "name": "Origin",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "heartgold",
+      "omega-ruby",
       "platinum",
       "soulsilver",
       "white",
@@ -890,10 +1043,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -909,10 +1064,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -928,10 +1085,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -947,10 +1106,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -966,6 +1127,8 @@
     "name": "Large",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -976,6 +1139,8 @@
     "name": "Small",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -986,6 +1151,8 @@
     "name": "Super",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -996,10 +1163,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1015,10 +1184,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1034,10 +1205,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1053,10 +1226,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1072,10 +1247,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1086,15 +1263,31 @@
     ]
   },
   {
+    "id": "hoopa-unbound",
+    "species": "hoopa",
+    "name": "Unbound",
+    "kind": "functional",
+    "games": [
+      "alpha-sapphire",
+      "omega-ruby"
+    ],
+    "types": [
+      "psychic",
+      "dark"
+    ]
+  },
+  {
     "id": "houndoom-female",
     "species": "houndoom",
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1110,10 +1303,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1129,8 +1324,10 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
+      "omega-ruby",
       "white",
       "white-2",
       "x",
@@ -1143,10 +1340,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1162,7 +1361,9 @@
     "name": "Resolute",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black-2",
+      "omega-ruby",
       "white-2",
       "x",
       "y"
@@ -1174,10 +1375,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1193,10 +1396,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1212,7 +1417,9 @@
     "name": "Black",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black-2",
+      "omega-ruby",
       "white-2",
       "x",
       "y"
@@ -1224,7 +1431,9 @@
     "name": "White",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black-2",
+      "omega-ruby",
       "white-2",
       "x",
       "y"
@@ -1236,7 +1445,9 @@
     "name": "Therian",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black-2",
+      "omega-ruby",
       "white-2",
       "x",
       "y"
@@ -1248,10 +1459,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1267,10 +1480,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1286,10 +1501,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1305,10 +1522,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1324,10 +1543,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1343,10 +1564,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1362,10 +1585,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1381,10 +1606,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1400,10 +1627,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1419,10 +1648,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1438,10 +1669,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1457,6 +1690,8 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -1467,10 +1702,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1486,10 +1723,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1505,10 +1744,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1524,10 +1765,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1543,10 +1786,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1562,10 +1807,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1586,15 +1833,37 @@
     ]
   },
   {
+    "id": "pikachu-belle",
+    "species": "pikachu",
+    "name": "Belle",
+    "kind": "cosmetic",
+    "games": [
+      "alpha-sapphire",
+      "omega-ruby"
+    ]
+  },
+  {
+    "id": "pikachu-cosplay",
+    "species": "pikachu",
+    "name": "Cosplay",
+    "kind": "cosmetic",
+    "games": [
+      "alpha-sapphire",
+      "omega-ruby"
+    ]
+  },
+  {
     "id": "pikachu-female",
     "species": "pikachu",
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1605,15 +1874,57 @@
     ]
   },
   {
+    "id": "pikachu-libre",
+    "species": "pikachu",
+    "name": "Libre",
+    "kind": "cosmetic",
+    "games": [
+      "alpha-sapphire",
+      "omega-ruby"
+    ]
+  },
+  {
+    "id": "pikachu-phd",
+    "species": "pikachu",
+    "name": "Phd",
+    "kind": "cosmetic",
+    "games": [
+      "alpha-sapphire",
+      "omega-ruby"
+    ]
+  },
+  {
+    "id": "pikachu-pop-star",
+    "species": "pikachu",
+    "name": "Pop-Star",
+    "kind": "cosmetic",
+    "games": [
+      "alpha-sapphire",
+      "omega-ruby"
+    ]
+  },
+  {
+    "id": "pikachu-rock-star",
+    "species": "pikachu",
+    "name": "Rock-Star",
+    "kind": "cosmetic",
+    "games": [
+      "alpha-sapphire",
+      "omega-ruby"
+    ]
+  },
+  {
     "id": "piloswine-female",
     "species": "piloswine",
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1629,10 +1940,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1648,6 +1961,8 @@
     "name": "Large",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -1658,6 +1973,8 @@
     "name": "Small",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -1668,6 +1985,8 @@
     "name": "Super",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -1678,6 +1997,8 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -1688,10 +2009,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1707,10 +2030,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1726,10 +2051,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1745,10 +2072,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1764,10 +2093,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1783,10 +2114,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1802,10 +2135,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1821,10 +2156,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1840,10 +2177,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1859,10 +2198,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -1878,9 +2219,11 @@
     "name": "Fan",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "heartgold",
+      "omega-ruby",
       "platinum",
       "soulsilver",
       "white",
@@ -1899,9 +2242,11 @@
     "name": "Frost",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "heartgold",
+      "omega-ruby",
       "platinum",
       "soulsilver",
       "white",
@@ -1920,9 +2265,11 @@
     "name": "Heat",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "heartgold",
+      "omega-ruby",
       "platinum",
       "soulsilver",
       "white",
@@ -1941,9 +2288,11 @@
     "name": "Mow",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "heartgold",
+      "omega-ruby",
       "platinum",
       "soulsilver",
       "white",
@@ -1962,9 +2311,11 @@
     "name": "Wash",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "heartgold",
+      "omega-ruby",
       "platinum",
       "soulsilver",
       "white",
@@ -1983,8 +2334,10 @@
     "name": "Autumn",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
+      "omega-ruby",
       "white",
       "white-2",
       "x",
@@ -1997,8 +2350,10 @@
     "name": "Summer",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
+      "omega-ruby",
       "white",
       "white-2",
       "x",
@@ -2011,8 +2366,10 @@
     "name": "Winter",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
+      "omega-ruby",
       "white",
       "white-2",
       "x",
@@ -2025,10 +2382,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2044,10 +2403,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2063,10 +2424,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2082,9 +2445,11 @@
     "name": "Sky",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "heartgold",
+      "omega-ruby",
       "platinum",
       "soulsilver",
       "white",
@@ -2103,10 +2468,12 @@
     "name": "East Sea",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2122,10 +2489,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2141,10 +2510,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2160,10 +2531,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2179,10 +2552,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2198,10 +2573,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2217,10 +2594,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2236,10 +2615,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2255,10 +2636,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2274,10 +2657,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2293,10 +2678,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2312,10 +2699,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2331,7 +2720,9 @@
     "name": "Therian",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black-2",
+      "omega-ruby",
       "white-2",
       "x",
       "y"
@@ -2343,10 +2734,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2362,7 +2755,9 @@
     "name": "Therian",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black-2",
+      "omega-ruby",
       "white-2",
       "x",
       "y"
@@ -2374,10 +2769,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -2393,8 +2790,10 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
+      "omega-ruby",
       "white",
       "white-2",
       "x",
@@ -2407,6 +2806,7 @@
     "name": "B",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2416,6 +2816,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2434,6 +2835,7 @@
     "name": "C",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2443,6 +2845,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2461,6 +2864,7 @@
     "name": "D",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2470,6 +2874,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2488,6 +2893,7 @@
     "name": "E",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2497,6 +2903,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2515,6 +2922,7 @@
     "name": "!",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
@@ -2522,6 +2930,7 @@
       "firered",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2539,6 +2948,7 @@
     "name": "F",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2548,6 +2958,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2566,6 +2977,7 @@
     "name": "G",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2575,6 +2987,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2593,6 +3006,7 @@
     "name": "H",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2602,6 +3016,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2620,6 +3035,7 @@
     "name": "I",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2629,6 +3045,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2647,6 +3064,7 @@
     "name": "J",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2656,6 +3074,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2674,6 +3093,7 @@
     "name": "K",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2683,6 +3103,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2701,6 +3122,7 @@
     "name": "L",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2710,6 +3132,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2728,6 +3151,7 @@
     "name": "M",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2737,6 +3161,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2755,6 +3180,7 @@
     "name": "N",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2764,6 +3190,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2782,6 +3209,7 @@
     "name": "O",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2791,6 +3219,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2809,6 +3238,7 @@
     "name": "P",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2818,6 +3248,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2836,6 +3267,7 @@
     "name": "Q",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2845,6 +3277,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2863,6 +3296,7 @@
     "name": "?",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
@@ -2870,6 +3304,7 @@
       "firered",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2887,6 +3322,7 @@
     "name": "R",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2896,6 +3332,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2914,6 +3351,7 @@
     "name": "S",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2923,6 +3361,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2941,6 +3380,7 @@
     "name": "T",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2950,6 +3390,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2968,6 +3409,7 @@
     "name": "U",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -2977,6 +3419,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -2995,6 +3438,7 @@
     "name": "V",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -3004,6 +3448,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -3022,6 +3467,7 @@
     "name": "W",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -3031,6 +3477,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -3049,6 +3496,7 @@
     "name": "X",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -3058,6 +3506,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -3076,6 +3525,7 @@
     "name": "Y",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -3085,6 +3535,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -3103,6 +3554,7 @@
     "name": "Z",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "crystal",
@@ -3112,6 +3564,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "omega-ruby",
       "pearl",
       "platinum",
       "ruby",
@@ -3130,10 +3583,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -3149,10 +3604,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -3168,10 +3625,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -3187,6 +3646,8 @@
     "name": "Archipelago",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3197,6 +3658,8 @@
     "name": "Continental",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3207,6 +3670,8 @@
     "name": "Elegant",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3217,6 +3682,8 @@
     "name": "Fancy",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3227,6 +3694,8 @@
     "name": "Garden",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3237,6 +3706,8 @@
     "name": "High-Plains",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3247,6 +3718,8 @@
     "name": "Icy-Snow",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3257,6 +3730,8 @@
     "name": "Jungle",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3267,6 +3742,8 @@
     "name": "Marine",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3277,6 +3754,8 @@
     "name": "Modern",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3287,6 +3766,8 @@
     "name": "Monsoon",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3297,6 +3778,8 @@
     "name": "Ocean",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3307,6 +3790,8 @@
     "name": "Poke-Ball",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3317,6 +3802,8 @@
     "name": "Polar",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3327,6 +3814,8 @@
     "name": "River",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3337,6 +3826,8 @@
     "name": "Sandstorm",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3347,6 +3838,8 @@
     "name": "Savanna",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3357,6 +3850,8 @@
     "name": "Sun",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3367,6 +3862,8 @@
     "name": "Tundra",
     "kind": "cosmetic",
     "games": [
+      "alpha-sapphire",
+      "omega-ruby",
       "x",
       "y"
     ]
@@ -3377,10 +3874,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -3396,10 +3895,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -3415,10 +3916,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -3434,10 +3937,12 @@
     "name": "Sandy",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -3457,10 +3962,12 @@
     "name": "Trash",
     "kind": "functional",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -3480,10 +3987,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",
@@ -3499,10 +4008,12 @@
     "name": "Female",
     "kind": "gender",
     "games": [
+      "alpha-sapphire",
       "black",
       "black-2",
       "diamond",
       "heartgold",
+      "omega-ruby",
       "pearl",
       "platinum",
       "soulsilver",

@@ -51,6 +51,11 @@ ONLY_ON_HEARTGOLD: dict[str, str | None] = {
     "mankey": None,
     "gligar": None,
     "phanpy": None,
+    # Found by the pass that walked every game's evolutions back to what starts them. Mantine
+    # surfaces on Route 41 in HeartGold and nowhere at all here, and this half's only other
+    # route to one is a Mantyke - which hatches from a Mantine. A circle, and the entry had
+    # never been written off.
+    "mantine": None,
 }
 
 #: Dex entries no amount of playing this cartridge will fill, and why.

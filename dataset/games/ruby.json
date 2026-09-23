@@ -160,7 +160,8 @@
       "target": {
         "species": "ludicolo"
       },
-      "number": 21
+      "number": 21,
+      "unobtainableReason": "Sapphire only in Generation 3; trade one in. No event handed one out, but a Lotad from that same 2006 campaign evolves into one"
     },
     {
       "game": "ruby",
@@ -8389,7 +8390,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8408,7 +8409,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8427,7 +8428,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8446,7 +8447,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8465,7 +8466,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8484,7 +8485,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8503,7 +8504,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8522,7 +8523,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8541,7 +8542,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8560,7 +8561,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8579,7 +8580,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8598,7 +8599,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -8617,7 +8618,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -14871,7 +14872,7 @@
       "location": "Rustboro City",
       "npc": "Devon Corporation scientist",
       "level": 20,
-      "requirement": "Root Fossil from the Mirage Tower; the other fossil is lost for good",
+      "requirement": "Root Fossil, taken on Route 111 instead of the Claw Fossil; the other is lost for good",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/lileep/encounters",
@@ -14888,7 +14889,7 @@
       "location": "Rustboro City",
       "npc": "Devon Corporation scientist",
       "level": 20,
-      "requirement": "Claw Fossil from the Mirage Tower; the other fossil is lost for good",
+      "requirement": "Claw Fossil, taken on Route 111 instead of the Root Fossil; the other is lost for good",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/anorith/encounters",

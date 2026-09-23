@@ -51,9 +51,12 @@ ONLY_ON_SAPPHIRE: dict[str, str | None] = {
 #: A reason rather than a gap: the validator can tell "we checked and it cannot be caught" from
 #: "we have not gathered this yet", and only the second is a fault.
 UNOBTAINABLE: dict[str, str] = {
-    "jirachi": hoenn.JIRACHI_REASON,
-    "deoxys": hoenn.DEOXYS_REASON,
-    **{species: hoenn.only_on("Sapphire", event) for species, event in ONLY_ON_SAPPHIRE.items()},
+    "jirachi": hoenn.GBA_JIRACHI_REASON,
+    "deoxys": hoenn.GBA_DEOXYS_REASON,
+    **{
+        species: hoenn.gba_only_on("Sapphire", event)
+        for species, event in ONLY_ON_SAPPHIRE.items()
+    },
 }
 
 
@@ -61,13 +64,13 @@ def build(context: BuildContext) -> GameData:
     entries = dex_entries(context)
 
     return GameData(
-        game=hoenn.cartridge(
+        game=hoenn.gba_cartridge(
             game_id=GAME_ID,
             title="Pokémon Ruby Version",
             version="Ruby",
             released=date(2002, 11, 21),
             pair_partner=PAIR_PARTNER,
-            sprite_set=hoenn.PAIR_SPRITE_SET,
+            sprite_set=hoenn.GBA_PAIR_SPRITE_SET,
         ),
         dex_entries=entries,
         acquisition_methods=acquisition_methods(context, entries),
@@ -81,7 +84,7 @@ def dex_entries(context: BuildContext) -> list[DexEntry]:
     nothing in any Generation 3 game produces. What is left unexplained after this is evolutions,
     which is step 5.
     """
-    return hoenn.dex_entries(context, game_id=GAME_ID, unobtainable=UNOBTAINABLE)
+    return hoenn.gba_dex_entries(context, game_id=GAME_ID, unobtainable=UNOBTAINABLE)
 
 
 def acquisition_methods(
@@ -89,7 +92,7 @@ def acquisition_methods(
     entries: list[DexEntry],
 ) -> list[AcquisitionMethod]:
     """Every way to get something here: caught, handed over, evolved, hatched or traded for."""
-    return hoenn.pair_acquisition_methods(
+    return hoenn.gba_pair_acquisition_methods(
         context,
         game_id=GAME_ID,
         version=POKEAPI_VERSION,
@@ -98,7 +101,7 @@ def acquisition_methods(
 
 
 def edges() -> list[TransferEdge]:
-    return hoenn.link_trade_edges(GAME_ID)
+    return hoenn.gba_edges(GAME_ID)
 
 
 def register(registry: GameRegistry) -> None:

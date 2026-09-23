@@ -229,7 +229,8 @@
       "target": {
         "species": "ledian"
       },
-      "number": 31
+      "number": 31,
+      "unobtainableReason": "SoulSilver only in Generation 4; trade one in"
     },
     {
       "game": "heartgold",
@@ -909,7 +910,8 @@
       "target": {
         "species": "ninetales"
       },
-      "number": 128
+      "number": 128,
+      "unobtainableReason": "SoulSilver only in Generation 4; trade one in"
     },
     {
       "game": "heartgold",
@@ -987,7 +989,8 @@
       "target": {
         "species": "persian"
       },
-      "number": 139
+      "number": 139,
+      "unobtainableReason": "SoulSilver only in Generation 4; trade one in. The Sightseeing route for the Pokewalker holds one, and that route was an event download"
     },
     {
       "game": "heartgold",
@@ -1409,7 +1412,8 @@
       "target": {
         "species": "ursaring"
       },
-      "number": 199
+      "number": 199,
+      "unobtainableReason": "SoulSilver only in Generation 4; trade one in"
     },
     {
       "game": "heartgold",
@@ -43339,7 +43343,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43360,7 +43364,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43381,7 +43385,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43402,7 +43406,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43423,7 +43427,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43444,7 +43448,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43465,7 +43469,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43486,7 +43490,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43507,7 +43511,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43528,7 +43532,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43549,7 +43553,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43570,7 +43574,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43591,7 +43595,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43611,7 +43615,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43632,7 +43636,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -43653,7 +43657,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -56449,7 +56453,7 @@
         "species": "omanyte"
       },
       "giftKind": "fossil",
-      "location": "Pewter City, Pewter Museum Of Science",
+      "location": "Pewter City, Pewter Museum of Science",
       "npc": "A scientist in the Pewter Museum",
       "level": 20,
       "requirement": "Helix Fossil",
@@ -56466,7 +56470,7 @@
         "species": "kabuto"
       },
       "giftKind": "fossil",
-      "location": "Pewter City, Pewter Museum Of Science",
+      "location": "Pewter City, Pewter Museum of Science",
       "npc": "A scientist in the Pewter Museum",
       "level": 20,
       "requirement": "Dome Fossil",
@@ -56483,7 +56487,7 @@
         "species": "aerodactyl"
       },
       "giftKind": "fossil",
-      "location": "Pewter City, Pewter Museum Of Science",
+      "location": "Pewter City, Pewter Museum of Science",
       "npc": "A scientist in the Pewter Museum",
       "level": 20,
       "requirement": "Old Amber",
@@ -56888,7 +56892,7 @@
         "species": "lileep"
       },
       "giftKind": "fossil",
-      "location": "Pewter City, Pewter Museum Of Science",
+      "location": "Pewter City, Pewter Museum of Science",
       "npc": "A scientist in the Pewter Museum",
       "level": 20,
       "requirement": "Root Fossil",
@@ -56905,7 +56909,7 @@
         "species": "anorith"
       },
       "giftKind": "fossil",
-      "location": "Pewter City, Pewter Museum Of Science",
+      "location": "Pewter City, Pewter Museum of Science",
       "npc": "A scientist in the Pewter Museum",
       "level": 20,
       "requirement": "Claw Fossil",
@@ -56954,7 +56958,7 @@
         "species": "cranidos"
       },
       "giftKind": "fossil",
-      "location": "Pewter City, Pewter Museum Of Science",
+      "location": "Pewter City, Pewter Museum of Science",
       "npc": "A scientist in the Pewter Museum",
       "level": 20,
       "requirement": "Skull Fossil",
@@ -56971,7 +56975,7 @@
         "species": "shieldon"
       },
       "giftKind": "fossil",
-      "location": "Pewter City, Pewter Museum Of Science",
+      "location": "Pewter City, Pewter Museum of Science",
       "npc": "A scientist in the Pewter Museum",
       "level": 20,
       "requirement": "Armor Fossil",
@@ -61932,6 +61936,51 @@
         "form": "relicanth-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "heartgold",
+      "target": {
+        "species": "deoxys",
+        "form": "deoxys-attack"
+      },
+      "requirement": "Touch one of the meteorites there; they cycle through all four formes",
+      "location": "Route 3",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "heartgold",
+      "target": {
+        "species": "deoxys",
+        "form": "deoxys-defense"
+      },
+      "requirement": "Touch one of the meteorites there; they cycle through all four formes",
+      "location": "Route 3",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "heartgold",
+      "target": {
+        "species": "deoxys",
+        "form": "deoxys-speed"
+      },
+      "requirement": "Touch one of the meteorites there; they cycle through all four formes",
+      "location": "Route 3",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",

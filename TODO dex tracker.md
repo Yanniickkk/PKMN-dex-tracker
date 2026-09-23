@@ -134,27 +134,13 @@ its ends, and the ten edges still waiting all point at Bank.**_
 
 ### Generation 6
 
-_Done: X and Y. Omega Ruby and Alpha Sapphire are Hoenn again, and still to write._
+_Done: all four. X and Y are Kalos, Omega Ruby and Alpha Sapphire are Hoenn again, and
+everything they reach is in `DONE dex tracker.md`._
 
-_The region and the generation are two modules again, after a generation that had nothing on
-either side of that line: `kalos.py` is the place and `gen6.py` is the hardware, the National Dex
-to Volcanion and the four cartridges that trade with each other. Omega Ruby and Alpha Sapphire
-will read `hoenn.py` and the same `gen6.py`._
-
-_The split matters more here than it looks. **Legends: Z-A is a Kalos game too** - Lumiose City on
-the Switch, three generations later - so `kalos.py` is the second region in this dataset, after
-Johto, whose games are not all from one generation. Its factories are named `gen6_cartridge` and
-`gen6_edges` for that reason: Z-A gets its own beside them rather than editing these, and nothing
-about Bank, a dex cap or a 3DS trade set may be written down as a fact about Kalos._
-
-- [ ] **Omega Ruby** (`omega-ruby`, gen 6, pair partner: Alpha Sapphire)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
-- [ ] **Alpha Sapphire** (`alpha-sapphire`, gen 6, pair partner: Omega Ruby)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
+_What Kalos shares is in `kalos.py` and what Hoenn shares is in `hoenn.py`; what every
+Generation 6 cartridge shares - the trades between all four, the National Dex to Volcanion, and
+Pokemon Bank where the Poke Transfer used to be - is in `gen6.py`. **The four edges X and Y
+declared into an empty space are lit; the fourteen still waiting all point at Bank.**_
 
 ### Generation 7
 

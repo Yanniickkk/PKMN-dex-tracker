@@ -1,5 +1,32 @@
 [
   {
+    "from": "alpha-sapphire",
+    "to": "omega-ruby",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "alpha-sapphire",
+    "to": "x",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "alpha-sapphire",
+    "to": "y",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
     "from": "black",
     "to": "black-2",
     "mechanism": "trade",
@@ -517,6 +544,24 @@
       "filter": "nationalDexRange",
       "from": 1,
       "to": 386
+    }
+  },
+  {
+    "from": "omega-ruby",
+    "to": "x",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "omega-ruby",
+    "to": "y",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
     }
   },
   {

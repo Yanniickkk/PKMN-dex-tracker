@@ -343,6 +343,17 @@ def gifts(version: str) -> dict[str, GiftDetail]:
 #: is where forms stop being a curiosity and start being a thing to keep track of - it has more
 #: of them than the three generations before it put together.
 PAIR_FORM_CHANGES: dict[str, FormChange] = {
+    # The meteorites a Deoxys is changed at, which Generation 4 is the first to have: before
+    # these, the cartridge decided its forme and nothing could undo it.
+    **spread(
+        FormChange(
+            requirement="Touch one of the meteorites there; they cycle through all four formes",
+            where="Veilstone City",
+        ),
+        "deoxys-attack",
+        "deoxys-defense",
+        "deoxys-speed",
+    ),
     **spread(
         FormChange(
             requirement=(

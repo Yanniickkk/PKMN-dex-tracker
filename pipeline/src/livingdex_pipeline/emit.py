@@ -161,6 +161,22 @@ def read_forms(root: Path) -> list[Form]:
     return [Form.model_validate(one) for one in json.loads(path.read_text(encoding="utf-8"))]
 
 
+def read_evolution_rules(root: Path) -> list[EvolutionRule]:
+    """The evolution rules as they stand on disk, for the same reason :func:`read_species` does.
+
+    A single-game build never rebuilds the shared tables, and it has to walk this game's own
+    evolution records back to what starts them - see :mod:`reach`.
+    """
+    path = root / EVOLUTION_RULES_FILE
+    if not path.exists():
+        return []
+
+    return [
+        EvolutionRule.model_validate(one)
+        for one in json.loads(path.read_text(encoding="utf-8"))
+    ]
+
+
 def read_dataset(root: Path) -> Dataset:
     """Read back what was written.
 

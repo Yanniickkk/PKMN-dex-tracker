@@ -208,7 +208,8 @@
       "target": {
         "species": "sandslash"
       },
-      "number": 28
+      "number": 28,
+      "unobtainableReason": "LeafGreen only in Generation 3; trade one in. The Pokemon Trade and Battle Day in the United States on 25 September 2004 handed one out"
     },
     {
       "game": "firered",
@@ -279,7 +280,8 @@
       "target": {
         "species": "ninetales"
       },
-      "number": 38
+      "number": 38,
+      "unobtainableReason": "LeafGreen only in Generation 3; trade one in. The Pokemon Trade and Battle Day in the United States on 25 September 2004 handed one out"
     },
     {
       "game": "firered",
@@ -504,14 +506,16 @@
       "target": {
         "species": "weepinbell"
       },
-      "number": 70
+      "number": 70,
+      "unobtainableReason": "LeafGreen only in Generation 3; trade one in. The Egg Pokemon Present in Japan in 2004 and a 2006 Japanese campaign (Gather More Pokemon! Third Campaign) handed one out"
     },
     {
       "game": "firered",
       "target": {
         "species": "victreebel"
       },
-      "number": 71
+      "number": 71,
+      "unobtainableReason": "LeafGreen only in Generation 3; trade one in. The Egg Pokemon Present in Japan in 2004 and a 2006 Japanese campaign (Gather More Pokemon! Third Campaign) handed one out"
     },
     {
       "game": "firered",
@@ -575,7 +579,8 @@
       "target": {
         "species": "slowbro"
       },
-      "number": 80
+      "number": 80,
+      "unobtainableReason": "LeafGreen only in Generation 3; trade one in. The Pokemon Trade and Battle Day in the United States on 25 September 2004 and a 2006 Japanese campaign (Gather More Pokemon! Third Campaign) handed one out"
     },
     {
       "game": "firered",
@@ -863,7 +868,8 @@
       "target": {
         "species": "starmie"
       },
-      "number": 121
+      "number": 121,
+      "unobtainableReason": "LeafGreen only in Generation 3; trade one in. The Pokemon Trade and Battle Day in the United States on 25 September 2004 handed one out"
     },
     {
       "game": "firered",

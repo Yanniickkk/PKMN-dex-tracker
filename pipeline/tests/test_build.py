@@ -81,6 +81,7 @@ def test_a_build_leaves_a_validation_report_behind(tmp_path: Path) -> None:
     assert report["rulesRun"] == [
         "every-entry-has-a-method",
         "no-evolution-dead-ends",
+        "unreachable-entries-say-so",
         "no-breeding-dead-ends",
         "unobtainable-entries-really-are",
         "forms-referenced-exist",

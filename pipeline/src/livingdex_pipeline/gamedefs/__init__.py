@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from ..games import GameRegistry
 from . import (
+    alpha_sapphire,
     black,
     black2,
     blue,
@@ -19,6 +20,7 @@ from . import (
     gold,
     heartgold,
     leafgreen,
+    omega_ruby,
     pearl,
     platinum,
     red,
@@ -37,8 +39,9 @@ from . import (
 # pair and its third version, then the Hoenn pair, the Kanto pair, the third version after
 # them, the Sinnoh pair and its third version, the Johto pair that closes Generation 4, the
 # pair that opens Generation 5, the sequels to it - which are a second pair rather than a
-# third version, and the only ones in the series - and the pair that opens Generation 6, the
-# first the whole world got on the same day.
+# third version, and the only ones in the series - the pair that opens Generation 6, the first
+# the whole world got on the same day, and the remakes that close it, which are the Hoenn pair
+# again a year later and twelve years on.
 MODULES = [
     red,
     blue,
@@ -62,6 +65,8 @@ MODULES = [
     white2,
     x,
     y,
+    omega_ruby,
+    alpha_sapphire,
 ]
 
 

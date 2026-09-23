@@ -14,7 +14,14 @@ from pathlib import Path
 import httpx
 
 from .boxart import ARCHIVES_MIN_INTERVAL, BoxArtError, fetch_box_art
-from .emit import DatasetWriter, read_dataset, read_forms, read_species, stamp_for
+from .emit import (
+    DatasetWriter,
+    read_dataset,
+    read_evolution_rules,
+    read_forms,
+    read_species,
+    stamp_for,
+)
 from .evolutions import evolution_rules
 from .forms import form_pictures, form_table
 from .games import BuildContext, GameRegistry, UnknownGameError
@@ -24,6 +31,7 @@ from .icons import fetch_icons
 from .merge import MergeResult
 from .models import EvolutionRule, Form, GameData, Species, TransferEdge
 from .pokeapi import PokeApiClient
+from .reach import spread_unobtainable
 from .validate import ValidationReport, validate
 
 log = logging.getLogger(__name__)
@@ -101,6 +109,7 @@ class Build:
     registry: GameRegistry = field(default_factory=default_registry)
     #: Filled by the shared step, or read back off disk when that step does not run.
     _forms: list[Form] = field(default_factory=list, repr=False)
+    _rules: list[EvolutionRule] = field(default_factory=list, repr=False)
     _form_pictures: Mapping[str, tuple[str, ...]] = field(default_factory=dict, repr=False)
 
     def run(self, game_id: str | None = None) -> BuildResult:
@@ -153,6 +162,10 @@ class Build:
         # a game has to know which forms are its own to say how they are come by.
         forms = self._forms or read_forms(self.dataset_root)
         self._forms = forms
+        # For the pass below: what this game's own evolution records start from, which is how
+        # an entry it can only reach by evolving something it has never seen is found.
+        rules = self._rules or read_evolution_rules(self.dataset_root)
+        self._rules = rules
 
         built: list[GameData] = []
 
@@ -177,6 +190,12 @@ class Build:
                     )
                 except UnknownGameError as error:
                     raise BuildError(str(error)) from error
+
+                # An entry a game cannot reach is owed the reason its own line already
+                # carries. Done here rather than in each game's file because it is the same
+                # question in all of them, and because the answer depends on records that are
+                # only finished once the game has been built.
+                data = spread_unobtainable(data, rules=rules)
 
                 built.append(data)
                 result.written.append(writer.write_game(data))
@@ -225,6 +244,7 @@ class Build:
         self._forms = forms
         self._form_pictures = table.pictures
         rules: list[EvolutionRule] = self._fetch_evolution_rules(api, species)
+        self._rules = rules
         edges: list[TransferEdge] = self.registry.edges
 
         for game_id, held in self.registry.held_back_edges:

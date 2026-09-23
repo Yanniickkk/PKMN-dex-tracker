@@ -271,7 +271,8 @@
       "target": {
         "species": "rampardos"
       },
-      "number": 37
+      "number": 37,
+      "unobtainableReason": "Diamond only in Generation 4; trade one in, or trade for a Pokemon holding the Skull Fossil and revive that"
     },
     {
       "game": "pearl",
@@ -538,7 +539,8 @@
       "target": {
         "species": "honchkrow"
       },
-      "number": 75
+      "number": 75,
+      "unobtainableReason": "Diamond only in Generation 4; trade one in"
     },
     {
       "game": "pearl",
@@ -609,7 +611,8 @@
       "target": {
         "species": "skuntank"
       },
-      "number": 85
+      "number": 85,
+      "unobtainableReason": "Diamond only in Generation 4; trade one in"
     },
     {
       "game": "pearl",
@@ -3741,7 +3744,7 @@
         "species": "golbat"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 55,
@@ -3761,7 +3764,7 @@
         "species": "golbat"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 65,
@@ -10557,7 +10560,7 @@
         "species": "haunter"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 54,
@@ -10577,7 +10580,7 @@
         "species": "haunter"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 64,
@@ -21955,7 +21958,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -27433,7 +27436,7 @@
         "species": "lunatone"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 54,
@@ -27454,7 +27457,7 @@
         "species": "lunatone"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 64,
@@ -27871,7 +27874,7 @@
         "species": "solrock"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 54,
@@ -27892,7 +27895,7 @@
         "species": "solrock"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 64,
@@ -36483,7 +36486,7 @@
         "species": "bronzor"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 54,
@@ -36503,7 +36506,7 @@
         "species": "bronzor"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 64,
@@ -36862,7 +36865,7 @@
         "species": "bronzong"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 1 And 2",
+      "subArea": "Between Pillars 1 and 2",
       "method": "walk",
       "levels": {
         "minimum": 55,
@@ -36882,7 +36885,7 @@
         "species": "bronzong"
       },
       "location": "Turnback Cave",
-      "subArea": "Between Pillars 2 And 3",
+      "subArea": "Between Pillars 2 and 3",
       "method": "walk",
       "levels": {
         "minimum": 65,
@@ -43806,6 +43809,51 @@
         "form": "relicanth-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "pearl",
+      "target": {
+        "species": "deoxys",
+        "form": "deoxys-attack"
+      },
+      "requirement": "Touch one of the meteorites there; they cycle through all four formes",
+      "location": "Veilstone City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "pearl",
+      "target": {
+        "species": "deoxys",
+        "form": "deoxys-defense"
+      },
+      "requirement": "Touch one of the meteorites there; they cycle through all four formes",
+      "location": "Veilstone City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "pearl",
+      "target": {
+        "species": "deoxys",
+        "form": "deoxys-speed"
+      },
+      "requirement": "Touch one of the meteorites there; they cycle through all four formes",
+      "location": "Veilstone City",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",

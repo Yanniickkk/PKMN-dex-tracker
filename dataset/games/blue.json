@@ -179,7 +179,8 @@
       "target": {
         "species": "arbok"
       },
-      "number": 24
+      "number": 24,
+      "unobtainableReason": "Red only in Generation 1; trade one in"
     },
     {
       "game": "blue",
@@ -320,14 +321,16 @@
       "target": {
         "species": "gloom"
       },
-      "number": 44
+      "number": 44,
+      "unobtainableReason": "Red only in Generation 1; trade one in"
     },
     {
       "game": "blue",
       "target": {
         "species": "vileplume"
       },
-      "number": 45
+      "number": 45,
+      "unobtainableReason": "Red only in Generation 1; trade one in"
     },
     {
       "game": "blue",
@@ -412,7 +415,8 @@
       "target": {
         "species": "primeape"
       },
-      "number": 57
+      "number": 57,
+      "unobtainableReason": "Red only in Generation 1; trade one in"
     },
     {
       "game": "blue",
@@ -427,7 +431,8 @@
       "target": {
         "species": "arcanine"
       },
-      "number": 59
+      "number": 59,
+      "unobtainableReason": "Red only in Generation 1; trade one in"
     },
     {
       "game": "blue",

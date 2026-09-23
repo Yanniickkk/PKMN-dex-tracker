@@ -379,14 +379,26 @@ def test_the_gender_flag_is_filed_in_the_folder_a_sheet_keeps_its_females_in() -
     assert table.pictures["venusaur-female"] == ("female/1.png",)
 
 
-def test_a_form_that_went_no_further_says_so_by_hand() -> None:
-    # Deoxys is the awkward case: three Generation 3 cartridges each change it into a different
-    # form, and the source can only name the version group, which pairs FireRed and LeafGreen
-    # together. The spiky-eared Pichu is the other kind - it cannot leave the game it is in.
+def test_a_form_the_version_group_cannot_place_is_written_out_by_hand() -> None:
+    # Deoxys is the awkward case twice over. Three Generation 3 cartridges each hold it in a
+    # different forme and the source can only name the version group, which pairs FireRed and
+    # LeafGreen together - and from Generation 4 on a meteorite changes it at will, so all three
+    # formes belong to every game that has one. Pinning them to the cartridge they came from was
+    # right while the dataset stopped at Generation 3 and wrong from Diamond onwards.
     from livingdex_pipeline import forms as module
 
-    assert module.ONLY_IN["deoxys-attack"] == ("firered",)
-    assert module.ONLY_IN["deoxys-defense"] == ("leafgreen",)
+    assert module.ONLY_IN["deoxys-attack"][0] == "firered"
+    assert module.ONLY_IN["deoxys-defense"][0] == "leafgreen"
+    assert module.ONLY_IN["deoxys-speed"][0] == "emerald"
+    for one in ("deoxys-attack", "deoxys-defense", "deoxys-speed"):
+        assert set(module.ONLY_IN[one]) - {"firered", "leafgreen", "emerald"} == set(
+            module.METEORITE
+        )
+
+    # Ruby and Sapphire have no meteorite and no forme but the one they hold, so they are not on
+    # the list; the spiky-eared Pichu is the other kind of hand-written answer, a form that
+    # cannot leave the game it is in.
+    assert "ruby" not in module.METEORITE
     assert module.ONLY_IN["pichu-spiky-eared"] == ("heartgold", "soulsilver")
 
 

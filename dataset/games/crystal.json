@@ -24,14 +24,16 @@
       "target": {
         "species": "ivysaur"
       },
-      "number": 2
+      "number": 2,
+      "unobtainableReason": "Nobody hands one over in Generation 2: Oak's lab is a visit rather than a choice. The Time Capsule is the way in, from Red, Blue or Yellow"
     },
     {
       "game": "crystal",
       "target": {
         "species": "venusaur"
       },
-      "number": 3
+      "number": 3,
+      "unobtainableReason": "Nobody hands one over in Generation 2: Oak's lab is a visit rather than a choice. The Time Capsule is the way in, from Red, Blue or Yellow"
     },
     {
       "game": "crystal",
@@ -46,14 +48,16 @@
       "target": {
         "species": "charmeleon"
       },
-      "number": 5
+      "number": 5,
+      "unobtainableReason": "Nobody hands one over in Generation 2: Oak's lab is a visit rather than a choice. The Time Capsule is the way in, from Red, Blue or Yellow"
     },
     {
       "game": "crystal",
       "target": {
         "species": "charizard"
       },
-      "number": 6
+      "number": 6,
+      "unobtainableReason": "Nobody hands one over in Generation 2: Oak's lab is a visit rather than a choice. The Time Capsule is the way in, from Red, Blue or Yellow"
     },
     {
       "game": "crystal",
@@ -68,14 +72,16 @@
       "target": {
         "species": "wartortle"
       },
-      "number": 8
+      "number": 8,
+      "unobtainableReason": "Nobody hands one over in Generation 2: Oak's lab is a visit rather than a choice. The Time Capsule is the way in, from Red, Blue or Yellow"
     },
     {
       "game": "crystal",
       "target": {
         "species": "blastoise"
       },
-      "number": 9
+      "number": 9,
+      "unobtainableReason": "Nobody hands one over in Generation 2: Oak's lab is a visit rather than a choice. The Time Capsule is the way in, from Red, Blue or Yellow"
     },
     {
       "game": "crystal",
@@ -279,7 +285,8 @@
       "target": {
         "species": "ninetales"
       },
-      "number": 38
+      "number": 38,
+      "unobtainableReason": "Silver only in Generation 2; trade one in"
     },
     {
       "game": "crystal",
@@ -413,7 +420,8 @@
       "target": {
         "species": "primeape"
       },
-      "number": 57
+      "number": 57,
+      "unobtainableReason": "Gold only in Generation 2; trade one in"
     },
     {
       "game": "crystal",
@@ -988,7 +996,8 @@
       "target": {
         "species": "omastar"
       },
-      "number": 139
+      "number": 139,
+      "unobtainableReason": "No fossil is revived in Generation 2: the scientist in the Pewter Museum starts doing that in the remake. The Time Capsule is the way in, from Red, Blue or Yellow"
     },
     {
       "game": "crystal",
@@ -1003,7 +1012,8 @@
       "target": {
         "species": "kabutops"
       },
-      "number": 141
+      "number": 141,
+      "unobtainableReason": "No fossil is revived in Generation 2: the scientist in the Pewter Museum starts doing that in the remake. The Time Capsule is the way in, from Red, Blue or Yellow"
     },
     {
       "game": "crystal",
@@ -1282,14 +1292,16 @@
       "target": {
         "species": "flaaffy"
       },
-      "number": 180
+      "number": 180,
+      "unobtainableReason": "Gold and Silver only in Generation 2; trade one in"
     },
     {
       "game": "crystal",
       "target": {
         "species": "ampharos"
       },
-      "number": 181
+      "number": 181,
+      "unobtainableReason": "Gold and Silver only in Generation 2; trade one in"
     },
     {
       "game": "crystal",
@@ -1592,7 +1604,8 @@
       "target": {
         "species": "octillery"
       },
-      "number": 224
+      "number": 224,
+      "unobtainableReason": "Gold and Silver only in Generation 2; trade one in"
     },
     {
       "game": "crystal",

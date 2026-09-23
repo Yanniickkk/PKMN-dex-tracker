@@ -888,6 +888,15 @@ GBC_FORM_CHANGES: dict[str, FormChange] = spread(
 DS_FORM_CHANGES: dict[str, FormChange] = {
     **spread(
         FormChange(
+            requirement="Touch one of the meteorites there; they cycle through all four formes",
+            where="Route 3",
+        ),
+        "deoxys-attack",
+        "deoxys-defense",
+        "deoxys-speed",
+    ),
+    **spread(
+        FormChange(
             requirement=(
                 "Its letter is fixed before you meet it, and which letters are about depends on "
                 "how many of the ruins' puzzles have been solved"

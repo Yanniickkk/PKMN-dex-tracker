@@ -135,6 +135,12 @@ class EncounterMethod(StrEnum):
     FLOWER_PATCH = "flowerPatch"
     BERRY_TREE = "berryTree"
     AMBUSH = "ambush"
+    # And the two the Hoenn remakes brought, which are the two halves of Hoenn nobody could
+    # reach before: under the sea and over it. Diving is an HM taught in Mossdeep and a table of
+    # its own beneath the water a player is surfing on; Soaring is the Eon Flute, a Latias or
+    # Latios underfoot, and flocks met in mid-air. Neither is a rarer kind of surfing or walking.
+    DIVE = "dive"
+    SOARING = "soaring"
     OTHER = "other"
 
 

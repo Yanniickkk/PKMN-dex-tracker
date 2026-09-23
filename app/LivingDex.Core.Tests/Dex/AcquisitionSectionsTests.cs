@@ -239,6 +239,17 @@ public class AcquisitionSectionsTests
     }
 
     [Fact]
+    public void The_two_halves_of_Hoenn_nobody_could_reach_before_are_named_as_well()
+    {
+        // The remakes' own: the table under the water a player is surfing on, and the flocks
+        // met in mid-air while Soaring on a Latios. Neither is a rarer kind of what it looks
+        // like from the surface, and "another way" would be the whole of what a player is told.
+        Assert.Equal("diving", AcquisitionNames.Of(EncounterMethod.Dive));
+        Assert.Equal("soaring", AcquisitionNames.Of(EncounterMethod.Soaring));
+        Assert.NotEqual(AcquisitionNames.Of(EncounterMethod.Surf), AcquisitionNames.Of(EncounterMethod.Dive));
+    }
+
+    [Fact]
     public void A_hidden_grotto_is_a_place_rather_than_another_way()
     {
         // The sequels' own, and the only method in the dataset that no encounter table

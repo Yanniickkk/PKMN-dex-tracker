@@ -348,7 +348,16 @@ def test_a_stated_reason_is_an_answer_rather_than_a_dead_end() -> None:
                         1,
                         reason="Ruby and Sapphire only in Generation 3; trade one in",
                     ),
-                    entry("emerald", "medicham", 2),
+                    # And so is what it evolves into, for the same reason and in the same
+                    # words: an Emerald cannot produce a Meditite, so it cannot produce a
+                    # Medicham either. `unreachable-entries-say-so` is what asks for this
+                    # second line.
+                    entry(
+                        "emerald",
+                        "medicham",
+                        2,
+                        reason="Ruby and Sapphire only in Generation 3; trade one in",
+                    ),
                 ],
                 methods=[
                     EvolutionAcquisition(
@@ -371,6 +380,82 @@ def test_a_stated_reason_is_an_answer_rather_than_a_dead_end() -> None:
     )
 
     assert validate(data).ok
+
+
+def test_an_entry_only_reached_by_evolving_something_absent_has_to_say_so() -> None:
+    # The gap that was in sixteen games at once. The evolution record is true - a Lombre does
+    # become a Ludicolo - and no Omega Ruby will ever produce a Lotad, so the Ludicolo entry is
+    # as unfillable as the Lotad's and said nothing about it.
+    data = dataset(
+        games=[
+            game(
+                "omega-ruby",
+                entries=[
+                    entry(
+                        "omega-ruby",
+                        "lotad",
+                        1,
+                        reason="Alpha Sapphire only in Generation 6; trade one in",
+                    ),
+                    entry("omega-ruby", "lombre", 2),
+                ],
+                methods=[
+                    EvolutionAcquisition(
+                        game="omega-ruby",
+                        target=DexTarget(species="lombre"),
+                        rule="lotad-to-lombre",
+                        source=CITATION,
+                    )
+                ],
+            )
+        ],
+        rules=[
+            EvolutionRule(
+                id="lotad-to-lombre",
+                **{"from": DexTarget(species="lotad")},
+                to=DexTarget(species="lombre"),
+                trigger=EvolutionTrigger.LEVEL_UP,
+            )
+        ],
+    )
+
+    report = validate(data)
+
+    assert "lombre" in " ".join(messages(report, "unreachable-entries-say-so"))
+    # And `no-evolution-dead-ends` is silent, because it asks a different question: a Lotad is
+    # obtainable somewhere, which is true and is not what a player with one cartridge needs.
+    assert not messages(report, "no-evolution-dead-ends")
+
+
+def test_an_entry_whose_whole_line_is_unexplained_is_left_to_the_other_rule() -> None:
+    # Saying it twice about the last stage would bury the one finding that matters: this game
+    # cannot produce the line at all and nobody has written down why.
+    data = dataset(
+        games=[
+            game(
+                "omega-ruby",
+                entries=[entry("omega-ruby", "lotad", 1), entry("omega-ruby", "lombre", 2)],
+                methods=[
+                    EvolutionAcquisition(
+                        game="omega-ruby",
+                        target=DexTarget(species="lombre"),
+                        rule="lotad-to-lombre",
+                        source=CITATION,
+                    )
+                ],
+            )
+        ],
+        rules=[
+            EvolutionRule(
+                id="lotad-to-lombre",
+                **{"from": DexTarget(species="lotad")},
+                to=DexTarget(species="lombre"),
+                trigger=EvolutionTrigger.LEVEL_UP,
+            )
+        ],
+    )
+
+    assert not messages(validate(data), "unreachable-entries-say-so")
 
 
 def test_a_previous_stage_the_dex_asks_for_and_nothing_produces_is_a_dead_end() -> None:

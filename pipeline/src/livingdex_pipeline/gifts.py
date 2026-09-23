@@ -78,6 +78,14 @@ class GiftDetail:
     npc: str | None = None
     #: What has to be true first. Replaces the item read off the encounter's conditions.
     requirement: str | None = None
+    #: What the place itself asks before anything in it can be reached.
+    #:
+    #: Written *beside* what the conditions say rather than instead of them, which is the whole
+    #: difference between this and :attr:`requirement`. The Hoenn remakes are why it exists:
+    #: the Pathless Plain only appears off Route 131 while three Pokemon in the party have
+    #: maxed EVs - which PokeAPI does not know - and which of the three legendaries is standing
+    #: in it depends on the day, which PokeAPI does know and says better than a person would.
+    gate: str | None = None
     #: Which of this species' gifts this describes, as the record spells the place: "Goldenrod
     #: City, Bills House". Left out when the species is only handed over once, which is the
     #: usual case.
@@ -248,7 +256,10 @@ def _record(
         # out yet loses nothing.
         # ``skip`` is empty because a gift record has no column for any of it: not the time of
         # day, not the season. Whatever the row says has to fit in this one sentence or be lost.
-        requirement=known.requirement or conditions.requirement(values, subject=species, skip=()),
+        requirement=conditions.joined(
+            known.gate,
+            known.requirement or conditions.requirement(values, subject=species, skip=()),
+        ),
         source=citation,
     )
 

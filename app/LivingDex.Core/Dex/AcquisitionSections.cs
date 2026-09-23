@@ -113,6 +113,8 @@ public static class AcquisitionNames
         EncounterMethod.FlowerPatch => "a flower patch",
         EncounterMethod.BerryTree => "a berry tree",
         EncounterMethod.Ambush => "an ambush",
+        EncounterMethod.Dive => "diving",
+        EncounterMethod.Soaring => "soaring",
         _ => "another way",
     };
 

@@ -151,6 +151,12 @@ public enum EncounterMethod
     /// </summary>
     Ambush,
 
+    /// <summary>The table under the water a player is surfing on, reached with Dive.</summary>
+    Dive,
+
+    /// <summary>A flock met in mid-air, while Soaring over Hoenn on a Latios or Latias.</summary>
+    Soaring,
+
     Other,
 }
 

@@ -182,6 +182,32 @@ REQUIREMENTS: dict[str, str] = {
     "other-captured-reshiram-or-zekrom": (
         "Only once the cover legendary has been caught at Dragonspiral Tower"
     ),
+    # The Hoenn remakes, where the legendaries of five generations are waiting in places that
+    # appear for a day. Which one is standing in a place is decided by the clock or the
+    # calendar, and PokeAPI carries that better than a person would write it out: the three
+    # beasts take twenty minutes of the hour each, and the lake trio take a stretch of the day.
+    "time-minute-00-to-19": "In the first twenty minutes of the hour",
+    "time-minute-20-to-39": "In the middle twenty minutes of the hour",
+    "time-minute-40-to-59": "In the last twenty minutes of the hour",
+    "time-04-00-to-19-59": "Between 4am and 8pm",
+    "time-20-00-to-21-59": "Between 8pm and 10pm",
+    "time-21-00-to-03-59": "Between 9pm and 4am",
+    # And which are a party a player has to have built first. Every one of these is a legendary
+    # standing behind another legendary, which is what makes these two games a living dex in a
+    # way no game before them was.
+    "other-uxie-mesprit-azelf-in-party": "With Uxie, Mesprit and Azelf in the party",
+    "other-dialga-or-palkia-in-party": "With Dialga and Palkia in the party",
+    "other-castform-in-party": "With a Castform in the party",
+    "other-tornadus-thundurus-in-party": "With Tornadus and Thundurus in the party",
+    "other-reshiram-zekrom-in-party": "With Reshiram and Zekrom in the party",
+    "other-level-100-pokemon-in-party": "With a Pokemon at level 100 in the party",
+    # PokeAPI's slug for this one is mangled, and what it means is the three Regis together.
+    "other-nicknamed-cold-item-regice-regirock-registeel3": (
+        "With Regirock, Regice and Registeel in the party"
+    ),
+    "story-progress-defeated-groudon-or-kyogre": (
+        "After Groudon or Kyogre has been dealt with at the Cave of Origin"
+    ),
     "weekday-sunday": "On a Sunday",
     "weekday-monday": "On a Monday",
     "weekday-tuesday": "On a Tuesday",

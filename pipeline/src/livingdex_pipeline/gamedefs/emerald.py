@@ -57,16 +57,16 @@ UNOBTAINABLE: dict[str, str] = {
     # The Bonus Disc that came with Pokemon Colosseum in the West, and the Tanabata giveaways in
     # Japan. Nothing in the game itself produces one, which is what makes it the only entry here
     # whose reason *is* the event.
-    "jirachi": hoenn.JIRACHI_REASON,
+    "jirachi": hoenn.GBA_JIRACHI_REASON,
     # In the Hoenn dex, not in the game. Emerald kept Seviper and Solrock and left the other
     # half of each pair on the cartridge it came from; both are still entries you have to fill,
     # and the transfer graph is how - which is the whole reason a route from Ruby exists.
-    "zangoose": hoenn.only_on("Ruby", hoenn.FIFTH_CAMPAIGN),
-    "lunatone": hoenn.only_on("Sapphire", hoenn.FIFTH_CAMPAIGN),
+    "zangoose": hoenn.gba_only_on("Ruby", hoenn.FIFTH_CAMPAIGN),
+    "lunatone": hoenn.gba_only_on("Sapphire", hoenn.FIFTH_CAMPAIGN),
     # In Ruby and Sapphire's grass and not in Emerald's. Step 3 found no encounter for either,
     # which read like a hole in the data until it was checked: it is the game.
-    "roselia": hoenn.only_on("Ruby and Sapphire", hoenn.FIFTH_CAMPAIGN),
-    "meditite": hoenn.only_on("Ruby and Sapphire", hoenn.FIFTH_CAMPAIGN),
+    "roselia": hoenn.gba_only_on("Ruby and Sapphire", hoenn.FIFTH_CAMPAIGN),
+    "meditite": hoenn.gba_only_on("Ruby and Sapphire", hoenn.FIFTH_CAMPAIGN),
     # The one entry here that is nearly obtainable. Emerald keeps Surskit for the daily swarm,
     # and an Emerald swarm only offers it once records have been mixed with a Ruby or Sapphire
     # cartridge - so it still takes a second game, the same as the three above. A wild record
@@ -187,7 +187,7 @@ def build(context: BuildContext) -> GameData:
         # Emerald's own dex is the 202-entry Hoenn one, but the National Dex opens after the
         # Elite Four and that is what a living dex in this game is aiming at; the reach it
         # shares with Ruby and Sapphire is in the module they all read from.
-        game=hoenn.cartridge(
+        game=hoenn.gba_cartridge(
             game_id=GAME_ID,
             title="Pokémon Emerald Version",
             version="Emerald",
@@ -203,12 +203,12 @@ def build(context: BuildContext) -> GameData:
 
 def dex_entries(context: BuildContext) -> list[DexEntry]:
     """The Hoenn dex as Emerald numbers it, with what Emerald in particular cannot fill."""
-    return hoenn.dex_entries(context, game_id=GAME_ID, unobtainable=UNOBTAINABLE)
+    return hoenn.gba_dex_entries(context, game_id=GAME_ID, unobtainable=UNOBTAINABLE)
 
 
 def edges() -> list[TransferEdge]:
     """What Emerald can send and receive. The same link cable every Hoenn cartridge has."""
-    return hoenn.link_trade_edges(GAME_ID)
+    return hoenn.gba_edges(GAME_ID)
 
 
 def register(registry: GameRegistry) -> None:
@@ -231,7 +231,7 @@ def acquisition_methods(context: BuildContext, entries: list[DexEntry]) -> list[
     # are two different lists, and asking only about the second is what left every entry
     # outside the regional dex with nothing recorded against it - in games that produce plenty
     # of them.
-    species = context.living_dex(through=hoenn.NATIONAL_DEX_THROUGH, entries=entries)
+    species = context.living_dex(through=hoenn.GBA_NATIONAL_DEX_THROUGH, entries=entries)
     today = date.today()
     places = LocationNames(api, refresh=context.refresh)
 

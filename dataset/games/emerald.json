@@ -242,7 +242,8 @@
       "target": {
         "species": "masquerain"
       },
-      "number": 33
+      "number": 33,
+      "unobtainableReason": "Swarm only, and an Emerald swarm offers it only after mixing records with a Ruby or Sapphire cartridge. Two Japanese events also handed one out: the PokePark Egg in 2005 and the Gather More Pokemon! Fifth Campaign in 2006"
     },
     {
       "game": "emerald",
@@ -551,7 +552,8 @@
       "target": {
         "species": "medicham"
       },
-      "number": 77
+      "number": 77,
+      "unobtainableReason": "Ruby and Sapphire only in Generation 3; trade one in. A 2006 Japanese event (Gather More Pokemon! Fifth Campaign) handed one out"
     },
     {
       "game": "emerald",
@@ -9421,7 +9423,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -9440,7 +9442,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -9459,7 +9461,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -9478,7 +9480,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {
@@ -9497,7 +9499,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/zigzagoon/encounters",
-        "retrievedOn": "2026-09-21"
+        "retrievedOn": "2026-09-23"
       }
     },
     {

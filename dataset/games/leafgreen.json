@@ -180,7 +180,8 @@
       "target": {
         "species": "arbok"
       },
-      "number": 24
+      "number": 24,
+      "unobtainableReason": "FireRed only in Generation 3; trade one in. The Pokemon Trade and Battle Day in the United States on 25 September 2004 and a 2006 Japanese campaign (Gather More Pokemon! Third Campaign) handed one out"
     },
     {
       "game": "leafgreen",
@@ -321,14 +322,16 @@
       "target": {
         "species": "gloom"
       },
-      "number": 44
+      "number": 44,
+      "unobtainableReason": "FireRed only in Generation 3; trade one in. The Egg Pokemon Present in Japan in 2004 and the Pokemon Trade and Battle Day in the United States on 25 September 2004 handed one out"
     },
     {
       "game": "leafgreen",
       "target": {
         "species": "vileplume"
       },
-      "number": 45
+      "number": 45,
+      "unobtainableReason": "FireRed only in Generation 3; trade one in. The Egg Pokemon Present in Japan in 2004 and the Pokemon Trade and Battle Day in the United States on 25 September 2004 handed one out"
     },
     {
       "game": "leafgreen",
@@ -399,7 +402,8 @@
       "target": {
         "species": "golduck"
       },
-      "number": 55
+      "number": 55,
+      "unobtainableReason": "FireRed only in Generation 3; trade one in. The Pokemon Trade and Battle Day in the United States on 25 September 2004 and the PokePark Egg in Japan in 2005 handed one out"
     },
     {
       "game": "leafgreen",
@@ -428,7 +432,8 @@
       "target": {
         "species": "arcanine"
       },
-      "number": 59
+      "number": 59,
+      "unobtainableReason": "FireRed only in Generation 3; trade one in. The Pokemon Trade and Battle Day in the United States on 25 September 2004 and a 2006 Japanese campaign (Gather More Pokemon! Third Campaign) handed one out"
     },
     {
       "game": "leafgreen",
@@ -653,7 +658,8 @@
       "target": {
         "species": "cloyster"
       },
-      "number": 91
+      "number": 91,
+      "unobtainableReason": "FireRed only in Generation 3; trade one in. The Pokemon Trade and Battle Day in the United States on 25 September 2004 and a 2006 Japanese campaign (Gather More Pokemon! Third Campaign) handed one out"
     },
     {
       "game": "leafgreen",
