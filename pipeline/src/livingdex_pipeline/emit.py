@@ -147,6 +147,20 @@ def read_species(root: Path) -> list[Species]:
     return [Species.model_validate(one) for one in json.loads(path.read_text(encoding="utf-8"))]
 
 
+def read_forms(root: Path) -> list[Form]:
+    """The form table as it stands on disk, for the same reason :func:`read_species` exists.
+
+    A single-game build has to know which of a game's forms have a picture in its sheet, and
+    rebuilding the table to find out would be a thousand requests for a list that is already
+    written down.
+    """
+    path = root / FORMS_FILE
+    if not path.exists():
+        return []
+
+    return [Form.model_validate(one) for one in json.loads(path.read_text(encoding="utf-8"))]
+
+
 def read_dataset(root: Path) -> Dataset:
     """Read back what was written.
 

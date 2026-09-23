@@ -380,12 +380,33 @@ class TradeAcquisition(Model):
     source: SourceCitation
 
 
+class FormChangeAcquisition(Model):
+    """A form of something already caught, and what turns it into this one.
+
+    The sixth kind, and the one the other five could not be bent into. A form is not caught,
+    handed over, hatched, traded or evolved: the Pokemon is already yours and something changes
+    it. Filing that under any of the others would have said the wrong thing twice - "gift" puts
+    an NPC where there is none, and "evolution" says a rule made it that nothing can undo.
+    """
+
+    kind: Literal["formChange"] = "formChange"
+    game: str
+    #: The form. Its species is what has to be caught first.
+    target: DexTarget
+    #: What makes the change, in words a player can act on.
+    requirement: str
+    #: Where it happens, when it is somewhere rather than something.
+    location: str | None = None
+    source: SourceCitation
+
+
 AcquisitionMethod = Annotated[
     GiftAcquisition
     | WildAcquisition
     | EvolutionAcquisition
     | BreedingAcquisition
-    | TradeAcquisition,
+    | TradeAcquisition
+    | FormChangeAcquisition,
     Field(discriminator="kind"),
 ]
 

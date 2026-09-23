@@ -26,6 +26,7 @@ from datetime import date
 
 from ..breeding import EggFrom, breeding_encounters
 from ..evolutions import evolution_encounters
+from ..formchanges import FormChange, form_change_encounters, spread
 from ..games import BuildContext
 from ..gifts import GiftDetail, GiftDetails, RecordedGift, gift_encounters, recorded_gifts
 from ..models import AcquisitionMethod, DexEntry, DexTarget, Game, GiftKind, TransferEdge
@@ -739,6 +740,7 @@ def gbc_acquisition_methods(
         trades=trades,
         eggs=eggs,
         excluded=excluded,
+        form_changes=GBC_FORM_CHANGES,
         handed_over=handed_over,
         handed_over_from=handed_over_from,
         renamed=gbc.RENAMED_PLACES,
@@ -832,6 +834,166 @@ def _dex_entries(
     ]
 
 
+#: How Johto's forms are come by on the Game Boy Color, which is one family and one sentence.
+#:
+#: Generation 2 invented the idea: Unown is the first Pokemon in the series with a form at all,
+#: and the Ruins of Alph are the whole of it. The two that are not letters came later - ! and ?
+#: arrive in Generation 3 - so this table has twenty-five entries and the Generation 4 one has
+#: twenty-seven.
+GBC_FORM_CHANGES: dict[str, FormChange] = spread(
+    FormChange(
+        requirement=(
+            "Its letter is fixed before you meet it, and which letters are about depends on how "
+            "many of the ruins' four puzzles have been solved"
+        ),
+        where="Ruins of Alph",
+    ),
+    "unown-b",
+    "unown-c",
+    "unown-d",
+    "unown-e",
+    "unown-f",
+    "unown-g",
+    "unown-h",
+    "unown-i",
+    "unown-j",
+    "unown-k",
+    "unown-l",
+    "unown-m",
+    "unown-n",
+    "unown-o",
+    "unown-p",
+    "unown-q",
+    "unown-r",
+    "unown-s",
+    "unown-t",
+    "unown-u",
+    "unown-v",
+    "unown-w",
+    "unown-x",
+    "unown-y",
+    "unown-z",
+)
+
+#: And how they are come by when Johto is on the DS, which is the same ruins and a longer answer.
+#:
+#: HeartGold and SoulSilver put the letters downstairs and the two that are not letters upstairs,
+#: and the upstairs pair only turn up for a player who has already found all twenty-six. That is
+#: the only form in this dataset that asks you to finish collecting it before it will appear.
+#:
+#: The rest of the table is Sinnoh's, because these two are Generation 4 games and hold
+#: Generation 4's forms: a Burmy carries its cloak here as it does there, Rotom's appliances are
+#: in a lift shaft in Silph Co. instead of behind the Secret Key, and the Griseous Orb is in the
+#: Sinjoh Ruins rather than the Distortion World.
+DS_FORM_CHANGES: dict[str, FormChange] = {
+    **spread(
+        FormChange(
+            requirement=(
+                "Its letter is fixed before you meet it, and which letters are about depends on "
+                "how many of the ruins' puzzles have been solved"
+            ),
+            where="Ruins of Alph, B1F",
+        ),
+        "unown-b",
+        "unown-c",
+        "unown-d",
+        "unown-e",
+        "unown-f",
+        "unown-g",
+        "unown-h",
+        "unown-i",
+        "unown-j",
+        "unown-k",
+        "unown-l",
+        "unown-m",
+        "unown-n",
+        "unown-o",
+        "unown-p",
+        "unown-q",
+        "unown-r",
+        "unown-s",
+        "unown-t",
+        "unown-u",
+        "unown-v",
+        "unown-w",
+        "unown-x",
+        "unown-y",
+        "unown-z",
+    ),
+    **spread(
+        FormChange(
+            requirement="Only once all twenty-six letters have been found",
+            where="Ruins of Alph, 1F",
+        ),
+        "unown-exclamation",
+        "unown-question",
+    ),
+    **spread(
+        FormChange(
+            requirement=(
+                "Its cloak is made of whatever it last battled in - sand in caves and on sand, "
+                "rubbish indoors, and leaves everywhere else"
+            )
+        ),
+        "burmy-sandy",
+        "burmy-trash",
+    ),
+    **spread(
+        FormChange(
+            requirement=(
+                "The cloak its Burmy was wearing when it evolved, which it keeps for good; "
+                "only the Burmy's own cloak can still be changed"
+            )
+        ),
+        "wormadam-sandy",
+        "wormadam-trash",
+    ),
+    **spread(
+        FormChange(
+            requirement=(
+                "Which coast it lives on decides it, and Johto's Shellos come over from Sinnoh: "
+                "the West Sea is west of Mt. Coronet and the East Sea east of it"
+            )
+        ),
+        "shellos-east",
+        "gastrodon-east",
+    ),
+    **spread(
+        FormChange(
+            requirement=(
+                "Let it possess one of the appliances in Rotom's Room, which opens to a player "
+                "who steps into the broken lift with Rotom walking behind them"
+            ),
+            where="Saffron City, Silph Co.",
+        ),
+        "rotom-heat",
+        "rotom-wash",
+        "rotom-frost",
+        "rotom-fan",
+        "rotom-mow",
+    ),
+    "giratina-origin": FormChange(
+        requirement="While it holds the Griseous Orb, which it is carrying in the Sinjoh Ruins"
+    ),
+    "shaymin-sky": FormChange(
+        requirement=(
+            "Use the Gracidea on it in daylight; it goes back to Land Forme at night and while "
+            "it is frozen"
+        )
+    ),
+    # The one Pokemon in this dataset whose form is a story rather than a rule. It is not a
+    # Pichu that was changed: it is a particular Pichu, and it cannot be traded or transferred
+    # anywhere afterwards.
+    "pichu-spiky-eared": FormChange(
+        requirement=(
+            "From the shrine, to a player carrying the Pikachu-coloured Pichu that was handed "
+            "out for these two. It can never leave the game it is caught in"
+        ),
+        where="Ilex Forest",
+    ),
+}
+
+
 def acquisition_methods(
     context: BuildContext,
     *,
@@ -845,6 +1007,7 @@ def acquisition_methods(
     eggs: Mapping[str, EggFrom] | None = None,
     excluded: Mapping[str, str] | None = None,
     renamed: Mapping[str, str] | None = None,
+    form_changes: Mapping[str, FormChange] | None = None,
     recorded: Sequence[RecordedSlot] = (),
     recorded_from: str | None = None,
     handed_over: Sequence[RecordedGift] = (),
@@ -952,6 +1115,15 @@ def acquisition_methods(
         )
     )
 
+    found.extend(
+        form_change_encounters(
+            game_id=game_id,
+            forms=context.forms_here(),
+            changes=form_changes or {},
+            citation=bulbapedia("List_of_Pok%C3%A9mon_with_form_differences", retrieved_on=today),
+        )
+    )
+
     return found
 
 
@@ -978,4 +1150,5 @@ def ds_acquisition_methods(
         version_group=DS_PAIR_VERSION_GROUP,
         trades=DS_PAIR_TRADES,
         eggs=DS_PAIR_EGGS,
+        form_changes=DS_FORM_CHANGES,
     )

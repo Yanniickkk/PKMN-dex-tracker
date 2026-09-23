@@ -60,6 +60,10 @@ METHOD_ICONS: dict[str, str] = {
     "static": "ultra-ball",
     # Evolution. A Moon Stone is the oldest picture of one thing becoming another.
     "evolution": "moon-stone",
+    # Changing a form, which is a different thing from evolving: it is the same Pokemon after.
+    # The Reveal Glass is the item that does it most plainly - point it at a Tornadus and it is
+    # still a Tornadus.
+    "form-change": "reveal-glass",
     # Breeding. The same egg as the gift kind above, on purpose: what the day care hands over
     # is an egg, and drawing it as something else to keep the two apart would be a worse
     # picture for the sake of a distinction the section headings already make.

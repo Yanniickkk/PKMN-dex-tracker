@@ -59,16 +59,38 @@ public sealed record LoadedDataset(
     /// leaving a hole: a generation only drew what existed at the time, and a Sinnoh Pokemon
     /// transferred into a Hoenn collection still has to appear somewhere.
     /// </remarks>
-    public string SpritePath(SpeciesId species, string? spriteSet)
+    public string SpritePath(SpeciesId species, string? spriteSet) =>
+        SpritePath(DexTarget.ForSpecies(species), spriteSet);
+
+    /// <summary>
+    /// What to ask the web view for to draw one entry, form or species.
+    /// </summary>
+    /// <param name="target">The species, or one of its forms.</param>
+    /// <param name="spriteSet">
+    /// The set the game being played uses, or null to go straight to the shared one.
+    /// </param>
+    /// <remarks>
+    /// A form falls back to its species before the species falls back to the shared set, so
+    /// there are three things to try rather than two. Most sheets have pictures of very few
+    /// forms - the Generation 5 one drew Deerling's seasons and has nothing for Wash Rotom,
+    /// which the games themselves did draw - and a tile with the species' picture and the
+    /// form's name is better than a hole.
+    /// </remarks>
+    public string SpritePath(DexTarget target, string? spriteSet)
     {
-        var shared = $"{DatasetLayout.SpritesDirectory}/{species.Value}.png";
+        var shared = $"{DatasetLayout.SpritesDirectory}/{target.Species.Value}.png";
 
         if (spriteSet is null)
         {
             return shared;
         }
 
-        var own = $"{spriteSet}/{species.Value}";
+        if (target.Form is { } form && Sprites.Contains($"{spriteSet}/{form.Value}"))
+        {
+            return $"{DatasetLayout.SpritesDirectory}/{spriteSet}/{form.Value}.png";
+        }
+
+        var own = $"{spriteSet}/{target.Species.Value}";
 
         return Sprites.Contains(own)
             ? $"{DatasetLayout.SpritesDirectory}/{own}.png"

@@ -13,6 +13,7 @@ from datetime import date
 
 from ..breeding import EggFrom, breeding_encounters
 from ..evolutions import evolution_encounters
+from ..formchanges import form_change_encounters
 from ..games import BuildContext, GameRegistry
 from ..gifts import GiftDetail, gift_encounters
 from ..models import (
@@ -26,7 +27,7 @@ from ..places import LocationNames
 from ..sources import bulbapedia
 from ..trades import InGameTrade, trade_encounters
 from ..wild import wild_encounters
-from . import hoenn
+from . import hoenn, kanto
 
 GAME_ID = "emerald"
 
@@ -270,5 +271,14 @@ def acquisition_methods(context: BuildContext, entries: list[DexEntry]) -> list[
             game_id=GAME_ID,
             trades=TRADES,
             citation=bulbapedia("In-game_trade", retrieved_on=today),
+        ),
+        # Two forms and both are Kanto's business rather than Hoenn's: the letters of Unown are
+        # in the Sevii Islands, and which Deoxys a cartridge makes is decided by the cartridge.
+        # Emerald is in that table because it is the third answer to the same question.
+        *form_change_encounters(
+            game_id=GAME_ID,
+            forms=context.forms_here(),
+            changes=kanto.gba_form_changes(POKEAPI_VERSION),
+            citation=bulbapedia("List_of_Pok%C3%A9mon_with_form_differences", retrieved_on=today),
         ),
     ]

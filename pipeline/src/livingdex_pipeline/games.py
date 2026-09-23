@@ -12,7 +12,7 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
 from .http import PoliteClient
-from .models import DexEntry, GameData, Species, TransferDirection, TransferEdge
+from .models import DexEntry, Form, GameData, Species, TransferDirection, TransferEdge
 from .pokeapi import PokeApiClient
 
 
@@ -38,6 +38,9 @@ class BuildContext:
     #: Every species the dataset knows, in National Dex order. The shared tables are built
     #: before any game is, so this is always filled in by the time a builder runs.
     species: Sequence[Species] = ()
+    #: Every form the dataset knows, for the same reason and at the same time. A game reads the
+    #: ones that are its own with :meth:`forms_here`.
+    forms: Sequence[Form] = ()
 
     def require_api(self) -> PokeApiClient:
         """The API client, or a clear failure rather than an AttributeError three frames down."""
@@ -57,6 +60,14 @@ class BuildContext:
             )
 
         return self.wiki
+
+    def forms_here(self) -> list[Form]:
+        """The forms this game has, which is what its own table has to explain.
+
+        Which games a form is in is worked out once for the whole dataset; which of them can be
+        explained is the game's business, and it cannot answer for a form it does not have.
+        """
+        return [one for one in self.forms if self.game_id in one.games]
 
     def living_dex(
         self,

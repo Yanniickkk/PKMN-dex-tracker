@@ -206,6 +206,17 @@ public class AcquisitionSectionsTests
     }
 
     [Fact]
+    public void Changing_a_form_is_its_own_section_and_the_last_one()
+    {
+        // The only kind that needs the Pokemon already. Everything above it answers "how do I
+        // get one"; this answers "and then what", so it reads last.
+        Assert.Equal("Changing its form", AcquisitionNames.Of(AcquisitionKind.FormChange));
+        Assert.Equal(
+            AcquisitionKind.FormChange,
+            Enum.GetValues<AcquisitionKind>().Max());
+    }
+
+    [Fact]
     public void A_hidden_grotto_is_a_place_rather_than_another_way()
     {
         // The sequels' own, and the only method in the dataset that no encounter table

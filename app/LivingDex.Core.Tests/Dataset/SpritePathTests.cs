@@ -49,6 +49,36 @@ public sealed class SpritePathTests
     }
 
     [Fact]
+    public void A_form_the_set_drew_gets_its_own_picture()
+    {
+        var dataset = Shipping(
+            "deerling",
+            "generation-v/black-white/deerling",
+            "generation-v/black-white/deerling-summer");
+
+        Assert.Equal(
+            "sprites/generation-v/black-white/deerling-summer.png",
+            dataset.SpritePath(
+                DexTarget.ForForm(new SpeciesId("deerling"), new FormId("deerling-summer")),
+                "generation-v/black-white"));
+    }
+
+    [Fact]
+    public void A_form_the_set_never_drew_falls_back_to_its_species_before_the_shared_set()
+    {
+        // Most sheets drew very few forms. The Generation V one has Deerling's seasons and
+        // nothing for Wash Rotom, which those games themselves did draw - and a tile with
+        // Rotom's picture and the form's name reads better than today's artwork or a hole.
+        var dataset = Shipping("rotom", "generation-v/black-white/rotom");
+
+        Assert.Equal(
+            "sprites/generation-v/black-white/rotom.png",
+            dataset.SpritePath(
+                DexTarget.ForForm(new SpeciesId("rotom"), new FormId("rotom-wash")),
+                "generation-v/black-white"));
+    }
+
+    [Fact]
     public void A_build_that_shipped_no_sprites_still_names_a_path()
     {
         // Nothing to draw, but the caller gets the path it would have been: the missing file is

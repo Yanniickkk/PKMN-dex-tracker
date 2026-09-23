@@ -237,6 +237,7 @@ def acquisition_methods(
         version_group=POKEAPI_VERSION_GROUP,
         trades=sinnoh.TRADES,
         eggs=EGGS,
+        form_changes=sinnoh.PLATINUM_FORM_CHANGES,
     )
 
 

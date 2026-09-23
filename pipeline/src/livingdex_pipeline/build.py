@@ -6,6 +6,7 @@ Split from the CLI so a build can be run and tested without going through argume
 from __future__ import annotations
 
 import logging
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -13,8 +14,9 @@ from pathlib import Path
 import httpx
 
 from .boxart import ARCHIVES_MIN_INTERVAL, BoxArtError, fetch_box_art
-from .emit import DatasetWriter, read_dataset, read_species, stamp_for
+from .emit import DatasetWriter, read_dataset, read_forms, read_species, stamp_for
 from .evolutions import evolution_rules
+from .forms import form_pictures, form_table
 from .games import BuildContext, GameRegistry, UnknownGameError
 from .grottoes import MIN_INTERVAL as GROTTO_MIN_INTERVAL
 from .http import PoliteClient, RobotsDisallowed
@@ -29,6 +31,11 @@ log = logging.getLogger(__name__)
 #: PokeAPI is a public API built to be used, but it still asks callers to cache and be
 #: reasonable. Five a second with everything cached on disk is well inside that.
 POKEAPI_MIN_INTERVAL = 0.2
+
+#: Where the sprite repository keeps a Pokemon's pictures. The species sprites are asked for
+#: through :meth:`PokeApiClient.sprite_url`; a form's file name is not a National Dex number, so
+#: its address is built here.
+SPRITES = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon"
 
 CONFLICT_LOG = "conflicts.json"
 VALIDATION_REPORT = "validation.json"
@@ -92,6 +99,9 @@ class Build:
     box_art: bool = True
     icons: bool = True
     registry: GameRegistry = field(default_factory=default_registry)
+    #: Filled by the shared step, or read back off disk when that step does not run.
+    _forms: list[Form] = field(default_factory=list, repr=False)
+    _form_pictures: Mapping[str, tuple[str, ...]] = field(default_factory=dict, repr=False)
 
     def run(self, game_id: str | None = None) -> BuildResult:
         """Build everything, or one game.
@@ -139,6 +149,10 @@ class Build:
         # step, and both paths need the same table. A game asks about every species its living
         # dex reaches, which is most of this list rather than the handful its own Pokedex lists.
         species = read_species(self.dataset_root)
+        # Same reason as the species table: a single-game build never ran the shared step, and
+        # a game has to know which forms are its own to say how they are come by.
+        forms = self._forms or read_forms(self.dataset_root)
+        self._forms = forms
 
         built: list[GameData] = []
 
@@ -158,6 +172,7 @@ class Build:
                             api=api,
                             wiki=wiki,
                             species=species,
+                            forms=forms,
                         )
                     )
                 except UnknownGameError as error:
@@ -195,10 +210,20 @@ class Build:
         sprite_paths = self._fetch_sprites(api, client, species, writer) if self.sprites else []
         icon_paths = self._fetch_icons(client, writer) if self.icons else []
 
-        # Forms are still Phase 2 work; the file is written empty so the dataset is always a
-        # complete set rather than a partial one. The transfer graph is whatever the registered
-        # games brought with them.
-        forms: list[Form] = []
+        # The transfer graph is whatever the registered games brought with them, and the form
+        # table is read for every species the dataset holds - both are about the whole set
+        # rather than about any one game, which is why they are built here.
+        table = form_table(
+            api,
+            species=species,
+            game_ids=self.registry.game_ids,
+            refresh=self.refresh,
+        )
+        forms: list[Form] = table.forms
+        # Kept for the sprite step, which runs after every game is built and needs to know
+        # which file each form's picture would be in.
+        self._forms = forms
+        self._form_pictures = table.pictures
         rules: list[EvolutionRule] = self._fetch_evolution_rules(api, species)
         edges: list[TransferEdge] = self.registry.edges
 
@@ -280,7 +305,9 @@ class Build:
         """The battle sprites of each game that has a set of its own.
 
         A set is fetched once however many games share it: Ruby and Sapphire were drawn from the
-        same sheet, and writing their sprites twice would double a directory for nothing.
+        same sheet, and writing their sprites twice would double a directory for nothing. Which
+        games share it still matters for the forms, though - all four Generation 5 games are
+        drawn from one sheet and only two of them have a Therian Landorus in it.
 
         How far a set reaches is the game's own reach. Emerald's National Dex stops at 386 and so
         does its sprite sheet; a game with no National Dex is asked only for what its own dex
@@ -291,6 +318,12 @@ class Build:
         if not species:
             return []
 
+        if not self._forms:
+            # A single-game build never ran the shared step, so the table is read back off disk.
+            # Where each picture lives is worked out later and only for the forms a sheet is
+            # actually being fetched for.
+            self._forms = read_forms(self.dataset_root)
+
         written: list[Path] = []
         done: set[str] = set()
 
@@ -300,7 +333,10 @@ class Build:
                 continue
 
             done.add(sprite_set)
-            written.extend(self._fetch_sprite_set(api, client, sprite_set, data, species, writer))
+            sharing = [one for one in built if one.game.sprite_set == sprite_set]
+            written.extend(
+                self._fetch_sprite_set(api, client, sprite_set, data, sharing, species, writer)
+            )
 
         return written
 
@@ -310,6 +346,7 @@ class Build:
         client: PoliteClient,
         sprite_set: str,
         data: GameData,
+        sharing: list[GameData],
         species: list[Species],
         writer: DatasetWriter,
     ) -> list[Path]:
@@ -336,7 +373,57 @@ class Build:
                 "%s of them are not in %s; those fall back to the shared set", missing, sprite_set
             )
 
+        return written + self._fetch_form_sprites(api, client, sprite_set, sharing, writer)
+
+    def _fetch_form_sprites(
+        self,
+        api: PokeApiClient,
+        client: PoliteClient,
+        sprite_set: str,
+        sharing: list[GameData],
+        writer: DatasetWriter,
+    ) -> list[Path]:
+        """The pictures of this game's forms, where the sheet has one.
+
+        Most sheets have few: the Generation 5 sheet draws Deerling's four seasons and Unown's
+        letters and has nothing for Wash Rotom, which the games themselves did draw. A form
+        with no picture here falls back to its species' one in the app, which is the same
+        fallback a species with no picture in its set already uses.
+        """
+        games = {one.game.id for one in sharing}
+        forms = [one for one in self._forms if games & set(one.games)]
+        if not forms:
+            return []
+
+        # Asked for here rather than when the table was built, and only about these: a build
+        # that fetches no sprites should ask the source nothing, and a single-game build should
+        # ask about one game's forms instead of every species in the dataset.
+        pictures = self._form_pictures or form_pictures(api, forms, refresh=self.refresh)
+        written: list[Path] = []
+
+        for form in (one.id for one in forms if one.id in pictures):
+            body = self._first_picture(client, sprite_set, pictures[form])
+            if body is not None:
+                written.append(writer.write_sprite(f"{sprite_set}/{form}.png", body))
+
+        log.info("form sprites: %s of %s in %s", len(written), len(forms), sprite_set)
+
         return written
+
+    def _first_picture(
+        self,
+        client: PoliteClient,
+        sprite_set: str,
+        candidates: tuple[str, ...],
+    ) -> bytes | None:
+        for name in candidates:
+            url = f"{SPRITES}/versions/{sprite_set}/{name}"
+            try:
+                return client.fetch(url, refresh=self.refresh).body
+            except (httpx.HTTPError, RobotsDisallowed):
+                continue
+
+        return None
 
     @staticmethod
     def _species_of(data: GameData, species: list[Species]) -> list[Species]:

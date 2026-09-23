@@ -580,8 +580,8 @@ else
     }
 
     /// <summary>
-    /// Sprites are per species. A form shows its base species' sprite until the pipeline has
-    /// form sprites.
+    /// The picture for one line: the form's own where the sheet has one, its species' where it
+    /// does not.
     /// </summary>
     /// <remarks>
     /// Drawn in the main game's own style: an Emerald collection shows the 64x64 battle sprites
@@ -589,7 +589,7 @@ else
     /// is one dex and one look, and the main game is whose dex it is.
     /// </remarks>
     private string SpriteFor(DexLine line) =>
-        Dataset.SpritePath(line.Target.Species, MainGameSpriteSet);
+        Dataset.SpritePath(line.Target, MainGameSpriteSet);
 
     /// <summary>
     /// The sprite set of the game this collection is built around, or null before one is loaded
@@ -868,6 +868,11 @@ else
             ? $"Trade a {Dataset.Reference.NameOf(wanted)}"
             : "Trade anything for it",
 
+        // The one line that names the Pokemon rather than the way, because the way is the whole
+        // of the record below it and what a player needs first is "catch one of these".
+        FormChangeAcquisition change =>
+            $"From {Dataset.Reference.NameOf(DexTarget.ForSpecies(change.Target.Species))}",
+
         _ => "Another way",
     };
 
@@ -920,6 +925,11 @@ else
                 fields.Add(("Where", trade.Location));
                 fields.Add(("With", trade.Npc));
                 fields.Add(("First", trade.Requirement));
+                break;
+
+            case FormChangeAcquisition change:
+                fields.Add(("How", change.Requirement));
+                fields.Add(("Where", change.Location));
                 break;
 
             default:

@@ -324,7 +324,27 @@ public class SchemaRoundTripTests
     }
 
     [Fact]
-    public void Sections_are_ordered_gift_wild_evolution_breeding_trade()
+    public void A_form_change_crosses_the_wire_intact()
+    {
+        var method = new FormChangeAcquisition
+        {
+            Game = new GameId("platinum"),
+            Target = DexTarget.ForForm(new SpeciesId("rotom"), new FormId("rotom-heat")),
+            Source = Citation,
+            Requirement = "Let it possess one of the appliances in Rotom's Room",
+            Location = "Eterna City, Team Galactic Eterna Building",
+        };
+
+        var restored = Assert.IsType<FormChangeAcquisition>(RoundTrip<AcquisitionMethod>(method));
+
+        Assert.Equal(method.Target, restored.Target);
+        Assert.Equal(method.Requirement, restored.Requirement);
+        Assert.Equal(method.Location, restored.Location);
+        Assert.Equal(AcquisitionKind.FormChange, restored.Kind);
+    }
+
+    [Fact]
+    public void Sections_are_ordered_gift_wild_evolution_breeding_trade_form_change()
     {
         Assert.Equal(
             [
@@ -333,6 +353,7 @@ public class SchemaRoundTripTests
                 AcquisitionKind.Evolution,
                 AcquisitionKind.Breeding,
                 AcquisitionKind.Trade,
+                AcquisitionKind.FormChange,
             ],
             Enum.GetValues<AcquisitionKind>().OrderBy(kind => (int)kind));
     }

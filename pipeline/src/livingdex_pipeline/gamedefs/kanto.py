@@ -26,6 +26,7 @@ from collections.abc import Mapping, Sequence
 from datetime import date
 
 from ..evolutions import evolution_encounters
+from ..formchanges import FormChange, form_change_encounters, spread
 from ..games import BuildContext
 from ..gifts import GiftDetail, gift_encounters
 from ..models import AcquisitionMethod, DexEntry, DexTarget, Game, GiftKind, TransferEdge
@@ -232,6 +233,70 @@ def dex_entries(
     ]
 
 
+#: Which Deoxys each of the Generation 3 cartridges makes, which is not a choice anybody has.
+#:
+#: The one form in the series decided by the box the game came in. Deoxys is the same Pokemon in
+#: all three and takes a different shape in each, and there is nothing to do about it - no item,
+#: no place, no order of events. It is also why :data:`forms.ONLY_IN` exists: the source can say
+#: which version *group* a form belongs to, and FireRed and LeafGreen are one group with two
+#: answers between them.
+DEOXYS_FORM = {"firered": "deoxys-attack", "leafgreen": "deoxys-defense", "emerald": "deoxys-speed"}
+
+#: And Unown, which Kanto keeps in a corner of the Sevii Islands.
+#:
+#: Johto invented the letters and Kanto moved them: the same twenty-six plus the two this
+#: generation added, in seven chambers instead of four puzzles.
+GBA_UNOWN: dict[str, FormChange] = spread(
+    FormChange(
+        requirement=(
+            "Its letter is fixed before you meet it; each of the seven chambers holds its own "
+            "set, and the chambers open once the Ruin Valley writing has been read"
+        ),
+        where="Tanoby Ruins",
+    ),
+    "unown-b",
+    "unown-c",
+    "unown-d",
+    "unown-e",
+    "unown-f",
+    "unown-g",
+    "unown-h",
+    "unown-i",
+    "unown-j",
+    "unown-k",
+    "unown-l",
+    "unown-m",
+    "unown-n",
+    "unown-o",
+    "unown-p",
+    "unown-q",
+    "unown-r",
+    "unown-s",
+    "unown-t",
+    "unown-u",
+    "unown-v",
+    "unown-w",
+    "unown-x",
+    "unown-y",
+    "unown-z",
+    "unown-exclamation",
+    "unown-question",
+)
+
+
+def gba_form_changes(version: str) -> dict[str, FormChange]:
+    """What this cartridge can make: the letters, and whichever Deoxys it was built with."""
+    return {
+        **GBA_UNOWN,
+        DEOXYS_FORM[version]: FormChange(
+            requirement=(
+                f"Deoxys takes this shape in {version.title()} and no other. Nothing in the game "
+                "changes it; the cartridge decides"
+            )
+        ),
+    }
+
+
 def acquisition_methods(
     context: BuildContext,
     *,
@@ -242,6 +307,7 @@ def acquisition_methods(
     gifts: Mapping[str, GiftDetail] | None = None,
     version_group: str | None = None,
     trades: Sequence[InGameTrade] = (),
+    form_changes: Mapping[str, FormChange] | None = None,
 ) -> list[AcquisitionMethod]:
     """Every way to get something in one Kanto game.
 
@@ -312,6 +378,15 @@ def acquisition_methods(
         )
     )
 
+    found.extend(
+        form_change_encounters(
+            game_id=game_id,
+            forms=context.forms_here(),
+            changes=form_changes or {},
+            citation=bulbapedia("List_of_Pok%C3%A9mon_with_form_differences", retrieved_on=today),
+        )
+    )
+
     return found
 
 
@@ -337,6 +412,7 @@ def gba_pair_acquisition_methods(
         gifts=gba_gifts(version),
         version_group=PAIR_VERSION_GROUP,
         trades=trades(version),
+        form_changes=gba_form_changes(version),
     )
 
 

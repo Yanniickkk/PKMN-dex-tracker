@@ -16,6 +16,7 @@ from datetime import date
 
 from ..breeding import EggFrom, breeding_encounters
 from ..evolutions import evolution_encounters
+from ..formchanges import FormChange, form_change_encounters, spread
 from ..games import BuildContext
 from ..gifts import GiftDetail, gift_encounters
 from ..models import AcquisitionMethod, DexEntry, DexTarget, Game, GiftKind, TransferEdge
@@ -334,6 +335,119 @@ def gifts(version: str) -> dict[str, GiftDetail]:
     return {**PAIR_GIFTS, **SPLIT_GIFTS[version]}
 
 
+#: How each of Sinnoh's forms is come by, in the two games that came first.
+#:
+#: Four families and four different kinds of answer, and only one of them is something a player
+#: chooses. A Burmy's cloak is where it last fought, a Wormadam's is what its Burmy wore, a
+#: Shellos's is which coast it lives on, and an Unown's is fixed before you ever see it. Sinnoh
+#: is where forms stop being a curiosity and start being a thing to keep track of - it has more
+#: of them than the three generations before it put together.
+PAIR_FORM_CHANGES: dict[str, FormChange] = {
+    **spread(
+        FormChange(
+            requirement=(
+                "Its cloak is made of whatever it last battled in - sand in caves and on sand, "
+                "rubbish indoors, and leaves everywhere else"
+            )
+        ),
+        "burmy-sandy",
+        "burmy-trash",
+    ),
+    **spread(
+        FormChange(
+            requirement=(
+                "The cloak its Burmy was wearing when it evolved, which it keeps for good; "
+                "only the Burmy's own cloak can still be changed"
+            )
+        ),
+        "wormadam-sandy",
+        "wormadam-trash",
+    ),
+    **spread(
+        FormChange(
+            requirement=(
+                "Which coast it lives on decides it: the West Sea is west of Mt. Coronet and "
+                "the East Sea east of it, and a Shellos does not change shore"
+            )
+        ),
+        "shellos-east",
+        "gastrodon-east",
+    ),
+    **spread(
+        FormChange(
+            requirement=(
+                "Its letter is fixed before you meet it; the rooms of the Solaceon Ruins hold "
+                "different sets of them"
+            ),
+            where="Solaceon Ruins",
+        ),
+        "unown-b",
+        "unown-c",
+        "unown-d",
+        "unown-e",
+        "unown-f",
+        "unown-g",
+        "unown-h",
+        "unown-i",
+        "unown-j",
+        "unown-k",
+        "unown-l",
+        "unown-m",
+        "unown-n",
+        "unown-o",
+        "unown-p",
+        "unown-q",
+        "unown-r",
+        "unown-s",
+        "unown-t",
+        "unown-u",
+        "unown-v",
+        "unown-w",
+        "unown-x",
+        "unown-y",
+        "unown-z",
+        "unown-exclamation",
+        "unown-question",
+    ),
+}
+
+#: And the three the third version added, which are the first forms in the series a player makes
+#: on purpose.
+#:
+#: Rotom's appliances, the Griseous Orb and the Gracidea all arrive in Platinum, and all three
+#: are an item or a room rather than an accident of where something was standing. Every later
+#: generation keeps them: the boxes move to a shop basement in Unova, and the Orb turns up in a
+#: different place in every pair since.
+PLATINUM_FORM_CHANGES: dict[str, FormChange] = {
+    **PAIR_FORM_CHANGES,
+    **spread(
+        FormChange(
+            requirement=(
+                "Let it possess one of the appliances in Rotom's Room, which the Secret Key opens"
+            ),
+            where="Eterna City, Team Galactic Eterna Building",
+        ),
+        "rotom-heat",
+        "rotom-wash",
+        "rotom-frost",
+        "rotom-fan",
+        "rotom-mow",
+    ),
+    "giratina-origin": FormChange(
+        requirement=(
+            "In the Distortion World it is always in this form; anywhere else, while it holds "
+            "the Griseous Orb that Turnback Cave leads to"
+        )
+    ),
+    "shaymin-sky": FormChange(
+        requirement=(
+            "Use the Gracidea on it in daylight; it goes back to Land Forme at night and while "
+            "it is frozen"
+        )
+    ),
+}
+
+
 def acquisition_methods(
     context: BuildContext,
     *,
@@ -345,6 +459,7 @@ def acquisition_methods(
     version_group: str | None = None,
     trades: Sequence[InGameTrade] = (),
     eggs: Mapping[str, EggFrom] | None = None,
+    form_changes: Mapping[str, FormChange] | None = None,
 ) -> list[AcquisitionMethod]:
     """Every way to get something in one Sinnoh cartridge.
 
@@ -426,6 +541,15 @@ def acquisition_methods(
         )
     )
 
+    found.extend(
+        form_change_encounters(
+            game_id=game_id,
+            forms=context.forms_here(),
+            changes=form_changes or {},
+            citation=bulbapedia("List_of_Pok%C3%A9mon_with_form_differences", retrieved_on=today),
+        )
+    )
+
     return found
 
 
@@ -451,6 +575,7 @@ def pair_acquisition_methods(
         excluded=NOT_A_GIFT[version],
         version_group=PAIR_VERSION_GROUP,
         trades=TRADES,
+        form_changes=PAIR_FORM_CHANGES,
     )
 
 

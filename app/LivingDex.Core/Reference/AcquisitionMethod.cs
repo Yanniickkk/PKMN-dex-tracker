@@ -16,6 +16,7 @@ public enum AcquisitionKind
     Evolution = 2,
     Breeding = 3,
     Trade = 4,
+    FormChange = 5,
 }
 
 /// <summary>
@@ -28,6 +29,7 @@ public enum AcquisitionKind
 [JsonDerivedType(typeof(EvolutionAcquisition), "evolution")]
 [JsonDerivedType(typeof(BreedingAcquisition), "breeding")]
 [JsonDerivedType(typeof(TradeAcquisition), "trade")]
+[JsonDerivedType(typeof(FormChangeAcquisition), "formChange")]
 public abstract record AcquisitionMethod
 {
     /// <summary>The game this method applies to.</summary>
@@ -213,4 +215,25 @@ public sealed record TradeAcquisition : AcquisitionMethod
 
     /// <summary>What has to be true first.</summary>
     public string? Requirement { get; init; }
+}
+
+/// <summary>
+/// A form of something already caught, and what turns it into this one.
+/// </summary>
+/// <remarks>
+/// The sixth kind, and the one the other five could not be bent into. A form is not caught,
+/// handed over, hatched, traded or evolved: the Pokemon is already yours and something changes
+/// it. Filing it under any of the others would have said the wrong thing twice — a gift puts an
+/// NPC where there is none, and an evolution says a rule made it that nothing can undo.
+/// </remarks>
+public sealed record FormChangeAcquisition : AcquisitionMethod
+{
+    [JsonIgnore]
+    public override AcquisitionKind Kind => AcquisitionKind.FormChange;
+
+    /// <summary>What makes the change, in words a player can act on.</summary>
+    public required string Requirement { get; init; }
+
+    /// <summary>Where it happens, when it is somewhere rather than something.</summary>
+    public string? Location { get; init; }
 }

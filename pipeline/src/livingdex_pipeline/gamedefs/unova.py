@@ -26,6 +26,7 @@ from datetime import date
 
 from ..breeding import EggFrom, breeding_encounters
 from ..evolutions import evolution_encounters
+from ..formchanges import FormChange, form_change_encounters, spread
 from ..games import BuildContext
 from ..gifts import Exclusion, GiftDetail, GiftDetails, gift_encounters
 from ..grottoes import grotto_encounters
@@ -1109,6 +1110,99 @@ def bw_trades(version: str) -> tuple[InGameTrade, ...]:
     return (BW_DYE_TRADE[version], *BW_SHARED_TRADES)
 
 
+#: How each of this generation's forms is come by, for the games that can make one.
+#:
+#: Five families, and they are five different kinds of answer: a clock, a cartridge, an item, a
+#: fusion and a move. Only the last three are something a player does.
+#:
+#: What is not here is everything Unova inherited. Burmy's cloaks, Shellos's two seas and the
+#: letters of Unown are in these games' dexes and are made in Sinnoh, Johto and Kanto; the
+#: records that explain them belong to those games, and the transfer graph carries them here.
+#: Rotom is the exception and has its own entry, because the sequels' Unova can make one.
+B2W2_ONLY = ("black-2", "white-2")
+
+BW_FORM_CHANGES: dict[str, FormChange] = {
+    # Not a change a player makes at all: the coat is whatever season the DS clock says, and the
+    # season turns over on the first of the month. Worth a record anyway, because "how do I get
+    # a winter Deerling" has an answer and it is "wait, or change the date".
+    **spread(
+        FormChange(
+            requirement=(
+                "Its coat is whichever season Unova is in, and the season follows the DS clock "
+                "- one month each, turning over on the first"
+            )
+        ),
+        "deerling-summer",
+        "deerling-autumn",
+        "deerling-winter",
+        "sawsbuck-summer",
+        "sawsbuck-autumn",
+        "sawsbuck-winter",
+    ),
+    # And the one that is not a change either: the stripe is the cartridge. Both are in both
+    # games, in different water, which is why this is not a version exclusive.
+    "basculin-blue-striped": FormChange(
+        requirement=(
+            "The stripe follows the game: Black and Black 2 fill their water with the red one "
+            "and White and White 2 with the blue, and the other is the rarer of the two"
+        )
+    ),
+    # Rotom's appliances moved with the player. Sinnoh keeps them behind the Secret Key and
+    # Johto behind a broken lift; Unova simply leaves them in boxes in a shop's basement.
+    **spread(
+        FormChange(
+            requirement="Let it possess one of the appliances in the boxes there",
+            where="Shopping Mall Nine, basement",
+        ),
+        "rotom-heat",
+        "rotom-wash",
+        "rotom-frost",
+        "rotom-fan",
+        "rotom-mow",
+    ),
+    # The Griseous Orb is in all four games and in a different place in each pair.
+    "giratina-origin": FormChange(
+        requirement=(
+            "While it holds the Griseous Orb, which the Shadow Triad hand over on Marvelous "
+            "Bridge in Black and White and which lies in Dragonspiral Tower in the sequels"
+        )
+    ),
+}
+
+#: And the three the sequels brought, which are the reason the Reveal Glass exists.
+B2W2_FORM_CHANGES: dict[str, FormChange] = {
+    **spread(
+        FormChange(
+            requirement=(
+                "Use the Reveal Glass on it, which Cedric Juniper hands over in the Abundant "
+                "Shrine's house once the trio has been caught"
+            )
+        ),
+        "tornadus-therian",
+        "thundurus-therian",
+        "landorus-therian",
+    ),
+    "kyurem-black": FormChange(
+        requirement="Fuse it with Zekrom using the DNA Splicers; the fusion can be undone again"
+    ),
+    "kyurem-white": FormChange(
+        requirement="Fuse it with Reshiram using the DNA Splicers; the fusion can be undone again"
+    ),
+    "keldeo-resolute": FormChange(
+        requirement=(
+            "Teach it Secret Sword, which the Swords of Justice do once all three have been "
+            "caught and Keldeo is brought to them"
+        ),
+        where="Pledge Grove",
+    ),
+}
+
+
+def b2w2_form_changes() -> dict[str, FormChange]:
+    """What the sequels can make, which is everything the first pair can and three more."""
+    return {**BW_FORM_CHANGES, **B2W2_FORM_CHANGES}
+
+
 def bw_acquisition_methods(
     context: BuildContext,
     *,
@@ -1132,6 +1226,7 @@ def bw_acquisition_methods(
         version_group=BW_VERSION_GROUP,
         trades=bw_trades(version),
         eggs=BW_EGGS,
+        form_changes=BW_FORM_CHANGES,
     )
 
 
@@ -1161,6 +1256,7 @@ def b2w2_acquisition_methods(
         version_group=B2W2_VERSION_GROUP,
         trades=b2w2_trades(version),
         eggs=b2w2_eggs(version),
+        form_changes=b2w2_form_changes(),
         grotto_column=column,
     )
 
@@ -1176,6 +1272,7 @@ def acquisition_methods(
     version_group: str | None = None,
     trades: Sequence[InGameTrade] = (),
     eggs: Mapping[str, EggFrom] | None = None,
+    form_changes: Mapping[str, FormChange] | None = None,
     grotto_column: str | None = None,
 ) -> list[AcquisitionMethod]:
     """Every way to get something in one Unova cartridge.
@@ -1264,6 +1361,15 @@ def acquisition_methods(
             game_id=game_id,
             trades=trades,
             citation=bulbapedia("In-game_trade", retrieved_on=today),
+        )
+    )
+
+    found.extend(
+        form_change_encounters(
+            game_id=game_id,
+            forms=context.forms_here(),
+            changes=form_changes or {},
+            citation=bulbapedia("List_of_Pok%C3%A9mon_with_form_differences", retrieved_on=today),
         )
     )
 
