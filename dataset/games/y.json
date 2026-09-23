@@ -25258,400 +25258,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "venusaur",
-        "form": "venusaur-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "butterfree",
-        "form": "butterfree-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "rattata",
-        "form": "rattata-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "raticate",
-        "form": "raticate-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "pikachu",
-        "form": "pikachu-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "raichu",
-        "form": "raichu-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "zubat",
-        "form": "zubat-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "golbat",
-        "form": "golbat-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "gloom",
-        "form": "gloom-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "vileplume",
-        "form": "vileplume-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "kadabra",
-        "form": "kadabra-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "alakazam",
-        "form": "alakazam-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "doduo",
-        "form": "doduo-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "dodrio",
-        "form": "dodrio-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "hypno",
-        "form": "hypno-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "rhyhorn",
-        "form": "rhyhorn-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "rhydon",
-        "form": "rhydon-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "goldeen",
-        "form": "goldeen-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "seaking",
-        "form": "seaking-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "scyther",
-        "form": "scyther-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "magikarp",
-        "form": "magikarp-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "gyarados",
-        "form": "gyarados-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "eevee",
-        "form": "eevee-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "meganium",
-        "form": "meganium-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "ledyba",
-        "form": "ledyba-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "ledian",
-        "form": "ledian-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "xatu",
-        "form": "xatu-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "sudowoodo",
-        "form": "sudowoodo-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "politoed",
-        "form": "politoed-female"
+        "species": "abomasnow",
+        "form": "abomasnow-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -25678,8 +25286,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "wooper",
-        "form": "wooper-female"
+        "species": "alakazam",
+        "form": "alakazam-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -25692,232 +25300,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "quagsire",
-        "form": "quagsire-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "murkrow",
-        "form": "murkrow-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "wobbuffet",
-        "form": "wobbuffet-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "girafarig",
-        "form": "girafarig-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "gligar",
-        "form": "gligar-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "steelix",
-        "form": "steelix-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "scizor",
-        "form": "scizor-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "heracross",
-        "form": "heracross-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "sneasel",
-        "form": "sneasel-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "ursaring",
-        "form": "ursaring-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "piloswine",
-        "form": "piloswine-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "octillery",
-        "form": "octillery-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "houndoom",
-        "form": "houndoom-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "donphan",
-        "form": "donphan-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "torchic",
-        "form": "torchic-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "combusken",
-        "form": "combusken-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "blaziken",
-        "form": "blaziken-female"
+        "species": "ambipom",
+        "form": "ambipom-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -25944,8 +25328,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "dustox",
-        "form": "dustox-female"
+        "species": "bibarel",
+        "form": "bibarel-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -25958,8 +25342,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "ludicolo",
-        "form": "ludicolo-female"
+        "species": "bidoof",
+        "form": "bidoof-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -25972,8 +25356,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "nuzleaf",
-        "form": "nuzleaf-female"
+        "species": "blaziken",
+        "form": "blaziken-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -25986,8 +25370,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "shiftry",
-        "form": "shiftry-female"
+        "species": "buizel",
+        "form": "buizel-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26000,10 +25384,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "meditite",
-        "form": "meditite-female"
+        "species": "burmy",
+        "form": "burmy-sandy"
       },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "requirement": "Let it battle in a cave or on sand; its cloak is wherever it last fought",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26014,10 +25398,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "medicham",
-        "form": "medicham-female"
+        "species": "burmy",
+        "form": "burmy-trash"
       },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "requirement": "Let it battle indoors; its cloak is wherever it last fought",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26028,64 +25412,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "roselia",
-        "form": "roselia-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "gulpin",
-        "form": "gulpin-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "swalot",
-        "form": "swalot-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "numel",
-        "form": "numel-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "camerupt",
-        "form": "camerupt-female"
+        "species": "butterfree",
+        "form": "butterfree-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26112,8 +25440,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "milotic",
-        "form": "milotic-female"
+        "species": "camerupt",
+        "form": "camerupt-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26126,10 +25454,80 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "relicanth",
-        "form": "relicanth-female"
+        "species": "combee",
+        "form": "combee-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "combusken",
+        "form": "combusken-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "croagunk",
+        "form": "croagunk-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "deerling",
+        "form": "deerling-autumn"
+      },
+      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "deerling",
+        "form": "deerling-summer"
+      },
+      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "deerling",
+        "form": "deerling-winter"
+      },
+      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26185,8 +25583,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "starly",
-        "form": "starly-female"
+        "species": "dodrio",
+        "form": "dodrio-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26199,8 +25597,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "staravia",
-        "form": "staravia-female"
+        "species": "doduo",
+        "form": "doduo-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26213,8 +25611,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "staraptor",
-        "form": "staraptor-female"
+        "species": "donphan",
+        "form": "donphan-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26227,8 +25625,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "bidoof",
-        "form": "bidoof-female"
+        "species": "dustox",
+        "form": "dustox-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26241,8 +25639,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "bibarel",
-        "form": "bibarel-female"
+        "species": "eevee",
+        "form": "eevee-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26255,8 +25653,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "kricketot",
-        "form": "kricketot-female"
+        "species": "finneon",
+        "form": "finneon-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26269,10 +25667,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "kricketune",
-        "form": "kricketune-female"
+        "species": "flabebe",
+        "form": "flabebe-blue"
       },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26283,10 +25681,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "shinx",
-        "form": "shinx-female"
+        "species": "flabebe",
+        "form": "flabebe-orange"
       },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26297,10 +25695,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "luxio",
-        "form": "luxio-female"
+        "species": "flabebe",
+        "form": "flabebe-white"
       },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26311,122 +25709,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "luxray",
-        "form": "luxray-female"
+        "species": "flabebe",
+        "form": "flabebe-yellow"
       },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "roserade",
-        "form": "roserade-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "burmy",
-        "form": "burmy-sandy"
-      },
-      "requirement": "Let it battle in a cave or on sand; its cloak is wherever it last fought",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "burmy",
-        "form": "burmy-trash"
-      },
-      "requirement": "Let it battle indoors; its cloak is wherever it last fought",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "wormadam",
-        "form": "wormadam-sandy"
-      },
-      "requirement": "Evolve a female Burmy wearing the Sandy Cloak; a Wormadam keeps that cloak",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "wormadam",
-        "form": "wormadam-trash"
-      },
-      "requirement": "Evolve a female Burmy wearing the Trash Cloak; a Wormadam keeps that cloak",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "combee",
-        "form": "combee-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "pachirisu",
-        "form": "pachirisu-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "buizel",
-        "form": "buizel-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26451,8 +25737,120 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "ambipom",
-        "form": "ambipom-female"
+        "species": "floette",
+        "form": "floette-blue"
+      },
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "floette",
+        "form": "floette-orange"
+      },
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "floette",
+        "form": "floette-white"
+      },
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "floette",
+        "form": "floette-yellow"
+      },
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "florges",
+        "form": "florges-blue"
+      },
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "florges",
+        "form": "florges-orange"
+      },
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "florges",
+        "form": "florges-white"
+      },
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "florges",
+        "form": "florges-yellow"
+      },
+      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "frillish",
+        "form": "frillish-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26465,10 +25863,131 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "gible",
-        "form": "gible-female"
+        "species": "furfrou",
+        "form": "furfrou-dandy"
       },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
+      "location": "Lumiose City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "furfrou",
+        "form": "furfrou-debutante"
+      },
+      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
+      "location": "Lumiose City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "furfrou",
+        "form": "furfrou-diamond"
+      },
+      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
+      "location": "Lumiose City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "furfrou",
+        "form": "furfrou-heart"
+      },
+      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
+      "location": "Lumiose City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "furfrou",
+        "form": "furfrou-kabuki"
+      },
+      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
+      "location": "Lumiose City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "furfrou",
+        "form": "furfrou-la-reine"
+      },
+      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
+      "location": "Lumiose City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "furfrou",
+        "form": "furfrou-matron"
+      },
+      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
+      "location": "Lumiose City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "furfrou",
+        "form": "furfrou-pharaoh"
+      },
+      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
+      "location": "Lumiose City",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "furfrou",
+        "form": "furfrou-star"
+      },
+      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
+      "location": "Lumiose City",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26495,6 +26014,188 @@
       "target": {
         "species": "garchomp",
         "form": "garchomp-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "gible",
+        "form": "gible-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "girafarig",
+        "form": "girafarig-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "giratina",
+        "form": "giratina-origin"
+      },
+      "requirement": "While it holds the Griseous Orb, which lies in Terminus Cave",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "gligar",
+        "form": "gligar-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "gloom",
+        "form": "gloom-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "golbat",
+        "form": "golbat-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "goldeen",
+        "form": "goldeen-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "gourgeist",
+        "form": "gourgeist-large"
+      },
+      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "gourgeist",
+        "form": "gourgeist-small"
+      },
+      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "gourgeist",
+        "form": "gourgeist-super"
+      },
+      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "gulpin",
+        "form": "gulpin-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "gyarados",
+        "form": "gyarados-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "heracross",
+        "form": "heracross-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26535,8 +26236,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "croagunk",
-        "form": "croagunk-female"
+        "species": "houndoom",
+        "form": "houndoom-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26549,335 +26250,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "toxicroak",
-        "form": "toxicroak-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "finneon",
-        "form": "finneon-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "lumineon",
-        "form": "lumineon-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "snover",
-        "form": "snover-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "abomasnow",
-        "form": "abomasnow-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "weavile",
-        "form": "weavile-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "rhyperior",
-        "form": "rhyperior-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "tangrowth",
-        "form": "tangrowth-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "mamoswine",
-        "form": "mamoswine-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "rotom",
-        "form": "rotom-heat"
-      },
-      "requirement": "Let it possess one of the appliances in the boxes there",
-      "location": "Lumiose City, Sycamore Pokemon Lab 2F",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "rotom",
-        "form": "rotom-wash"
-      },
-      "requirement": "Let it possess one of the appliances in the boxes there",
-      "location": "Lumiose City, Sycamore Pokemon Lab 2F",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "rotom",
-        "form": "rotom-frost"
-      },
-      "requirement": "Let it possess one of the appliances in the boxes there",
-      "location": "Lumiose City, Sycamore Pokemon Lab 2F",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "rotom",
-        "form": "rotom-fan"
-      },
-      "requirement": "Let it possess one of the appliances in the boxes there",
-      "location": "Lumiose City, Sycamore Pokemon Lab 2F",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "rotom",
-        "form": "rotom-mow"
-      },
-      "requirement": "Let it possess one of the appliances in the boxes there",
-      "location": "Lumiose City, Sycamore Pokemon Lab 2F",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "giratina",
-        "form": "giratina-origin"
-      },
-      "requirement": "While it holds the Griseous Orb, which lies in Terminus Cave",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "shaymin",
-        "form": "shaymin-sky"
-      },
-      "requirement": "Use the Gracidea on it, which the Snowbelle City Pokemon Center hands over for being shown a Shaymin; it turns back at night and in a box",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "unfezant",
-        "form": "unfezant-female"
-      },
-      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "deerling",
-        "form": "deerling-summer"
-      },
-      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "deerling",
-        "form": "deerling-autumn"
-      },
-      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "deerling",
-        "form": "deerling-winter"
-      },
-      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "sawsbuck",
-        "form": "sawsbuck-summer"
-      },
-      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "sawsbuck",
-        "form": "sawsbuck-autumn"
-      },
-      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "sawsbuck",
-        "form": "sawsbuck-winter"
-      },
-      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "frillish",
-        "form": "frillish-female"
+        "species": "hypno",
+        "form": "hypno-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -26904,11 +26278,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "tornadus",
-        "form": "tornadus-therian"
+        "species": "kadabra",
+        "form": "kadabra-female"
       },
-      "requirement": "Use the Reveal Glass on it, which a Scientist near the Shalour City exit hands over for being shown Tornadus, Thundurus and Landorus - none of which Kalos has",
-      "location": "Reflection Cave",
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26919,11 +26292,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "thundurus",
-        "form": "thundurus-therian"
+        "species": "keldeo",
+        "form": "keldeo-resolute"
       },
-      "requirement": "Use the Reveal Glass on it, which a Scientist near the Shalour City exit hands over for being shown Tornadus, Thundurus and Landorus - none of which Kalos has",
-      "location": "Reflection Cave",
+      "requirement": "While it knows Secret Sword, which the Swords of Justice teach it at the Pledge Grove in Unova and which it keeps wherever it goes afterwards",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26934,11 +26306,24 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "landorus",
-        "form": "landorus-therian"
+        "species": "kricketot",
+        "form": "kricketot-female"
       },
-      "requirement": "Use the Reveal Glass on it, which a Scientist near the Shalour City exit hands over for being shown Tornadus, Thundurus and Landorus - none of which Kalos has",
-      "location": "Reflection Cave",
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "kricketune",
+        "form": "kricketune-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26977,10 +26362,942 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "keldeo",
-        "form": "keldeo-resolute"
+        "species": "landorus",
+        "form": "landorus-therian"
       },
-      "requirement": "While it knows Secret Sword, which the Swords of Justice teach it at the Pledge Grove in Unova and which it keeps wherever it goes afterwards",
+      "requirement": "Use the Reveal Glass on it, which a Scientist near the Shalour City exit hands over for being shown Tornadus, Thundurus and Landorus - none of which Kalos has",
+      "location": "Reflection Cave",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "ledian",
+        "form": "ledian-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "ledyba",
+        "form": "ledyba-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "ludicolo",
+        "form": "ludicolo-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "lumineon",
+        "form": "lumineon-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "luxio",
+        "form": "luxio-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "luxray",
+        "form": "luxray-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "magikarp",
+        "form": "magikarp-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "mamoswine",
+        "form": "mamoswine-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "medicham",
+        "form": "medicham-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "meditite",
+        "form": "meditite-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "meganium",
+        "form": "meganium-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "meowstic",
+        "form": "meowstic-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "milotic",
+        "form": "milotic-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "murkrow",
+        "form": "murkrow-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "numel",
+        "form": "numel-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "nuzleaf",
+        "form": "nuzleaf-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "octillery",
+        "form": "octillery-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "pachirisu",
+        "form": "pachirisu-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "pikachu",
+        "form": "pikachu-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "piloswine",
+        "form": "piloswine-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "politoed",
+        "form": "politoed-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "pumpkaboo",
+        "form": "pumpkaboo-large"
+      },
+      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "pumpkaboo",
+        "form": "pumpkaboo-small"
+      },
+      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "pumpkaboo",
+        "form": "pumpkaboo-super"
+      },
+      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "pyroar",
+        "form": "pyroar-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "quagsire",
+        "form": "quagsire-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "raichu",
+        "form": "raichu-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "raticate",
+        "form": "raticate-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "rattata",
+        "form": "rattata-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "relicanth",
+        "form": "relicanth-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "rhydon",
+        "form": "rhydon-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "rhyhorn",
+        "form": "rhyhorn-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "rhyperior",
+        "form": "rhyperior-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "roselia",
+        "form": "roselia-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "roserade",
+        "form": "roserade-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "rotom",
+        "form": "rotom-fan"
+      },
+      "requirement": "Let it possess one of the appliances in the boxes there",
+      "location": "Lumiose City, Sycamore Pokemon Lab 2F",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "rotom",
+        "form": "rotom-frost"
+      },
+      "requirement": "Let it possess one of the appliances in the boxes there",
+      "location": "Lumiose City, Sycamore Pokemon Lab 2F",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "rotom",
+        "form": "rotom-heat"
+      },
+      "requirement": "Let it possess one of the appliances in the boxes there",
+      "location": "Lumiose City, Sycamore Pokemon Lab 2F",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "rotom",
+        "form": "rotom-mow"
+      },
+      "requirement": "Let it possess one of the appliances in the boxes there",
+      "location": "Lumiose City, Sycamore Pokemon Lab 2F",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "rotom",
+        "form": "rotom-wash"
+      },
+      "requirement": "Let it possess one of the appliances in the boxes there",
+      "location": "Lumiose City, Sycamore Pokemon Lab 2F",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "sawsbuck",
+        "form": "sawsbuck-autumn"
+      },
+      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "sawsbuck",
+        "form": "sawsbuck-summer"
+      },
+      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "sawsbuck",
+        "form": "sawsbuck-winter"
+      },
+      "requirement": "Kalos has no seasons: every wild one wears the spring coat, and the other three only hatch from a mother wearing one or come over from Generation 5",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "scizor",
+        "form": "scizor-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "scyther",
+        "form": "scyther-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "seaking",
+        "form": "seaking-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "shaymin",
+        "form": "shaymin-sky"
+      },
+      "requirement": "Use the Gracidea on it, which the Snowbelle City Pokemon Center hands over for being shown a Shaymin; it turns back at night and in a box",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "shiftry",
+        "form": "shiftry-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "shinx",
+        "form": "shinx-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "sneasel",
+        "form": "sneasel-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "snover",
+        "form": "snover-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "staraptor",
+        "form": "staraptor-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "staravia",
+        "form": "staravia-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "starly",
+        "form": "starly-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "steelix",
+        "form": "steelix-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "sudowoodo",
+        "form": "sudowoodo-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "swalot",
+        "form": "swalot-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "tangrowth",
+        "form": "tangrowth-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "thundurus",
+        "form": "thundurus-therian"
+      },
+      "requirement": "Use the Reveal Glass on it, which a Scientist near the Shalour City exit hands over for being shown Tornadus, Thundurus and Landorus - none of which Kalos has",
+      "location": "Reflection Cave",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "torchic",
+        "form": "torchic-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "tornadus",
+        "form": "tornadus-therian"
+      },
+      "requirement": "Use the Reveal Glass on it, which a Scientist near the Shalour City exit hands over for being shown Tornadus, Thundurus and Landorus - none of which Kalos has",
+      "location": "Reflection Cave",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "toxicroak",
+        "form": "toxicroak-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "unfezant",
+        "form": "unfezant-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "ursaring",
+        "form": "ursaring-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "venusaur",
+        "form": "venusaur-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "vileplume",
+        "form": "vileplume-female"
+      },
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26992,35 +27309,7 @@
       "game": "y",
       "target": {
         "species": "vivillon",
-        "form": "vivillon-icy-snow"
-      },
-      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "vivillon",
-        "form": "vivillon-polar"
-      },
-      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "vivillon",
-        "form": "vivillon-tundra"
+        "form": "vivillon-archipelago"
       },
       "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
       "source": {
@@ -27048,20 +27337,6 @@
       "game": "y",
       "target": {
         "species": "vivillon",
-        "form": "vivillon-garden"
-      },
-      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "vivillon",
         "form": "vivillon-elegant"
       },
       "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
@@ -27076,7 +27351,7 @@
       "game": "y",
       "target": {
         "species": "vivillon",
-        "form": "vivillon-modern"
+        "form": "vivillon-fancy"
       },
       "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
       "source": {
@@ -27090,21 +27365,7 @@
       "game": "y",
       "target": {
         "species": "vivillon",
-        "form": "vivillon-marine"
-      },
-      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "vivillon",
-        "form": "vivillon-archipelago"
+        "form": "vivillon-garden"
       },
       "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
       "source": {
@@ -27132,7 +27393,105 @@
       "game": "y",
       "target": {
         "species": "vivillon",
-        "form": "vivillon-sandstorm"
+        "form": "vivillon-icy-snow"
+      },
+      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "vivillon",
+        "form": "vivillon-jungle"
+      },
+      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "vivillon",
+        "form": "vivillon-marine"
+      },
+      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "vivillon",
+        "form": "vivillon-modern"
+      },
+      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "vivillon",
+        "form": "vivillon-monsoon"
+      },
+      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "vivillon",
+        "form": "vivillon-ocean"
+      },
+      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "vivillon",
+        "form": "vivillon-poke-ball"
+      },
+      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "y",
+      "target": {
+        "species": "vivillon",
+        "form": "vivillon-polar"
       },
       "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
       "source": {
@@ -27160,7 +27519,7 @@
       "game": "y",
       "target": {
         "species": "vivillon",
-        "form": "vivillon-monsoon"
+        "form": "vivillon-sandstorm"
       },
       "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
       "source": {
@@ -27202,7 +27561,7 @@
       "game": "y",
       "target": {
         "species": "vivillon",
-        "form": "vivillon-ocean"
+        "form": "vivillon-tundra"
       },
       "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
       "source": {
@@ -27215,50 +27574,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "vivillon",
-        "form": "vivillon-jungle"
-      },
-      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "vivillon",
-        "form": "vivillon-fancy"
-      },
-      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "vivillon",
-        "form": "vivillon-poke-ball"
-      },
-      "requirement": "Its pattern is the one the 3DS's own country and region give, settled when the Scatterbug is generated; one console reaches one of the eighteen and the rest come by trading. Fancy and Poke Ball were only ever handed out at events",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "pyroar",
-        "form": "pyroar-female"
+        "species": "weavile",
+        "form": "weavile-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -27271,311 +27588,8 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "flabebe",
-        "form": "flabebe-yellow"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "flabebe",
-        "form": "flabebe-orange"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "flabebe",
-        "form": "flabebe-blue"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "flabebe",
-        "form": "flabebe-white"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "floette",
-        "form": "floette-yellow"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "floette",
-        "form": "floette-orange"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "floette",
-        "form": "floette-blue"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "floette",
-        "form": "floette-white"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "florges",
-        "form": "florges-yellow"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "florges",
-        "form": "florges-orange"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "florges",
-        "form": "florges-blue"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "florges",
-        "form": "florges-white"
-      },
-      "requirement": "Catch one holding that colour of flower, or hatch one from a mother that holds it; the colour carries through both evolutions and cannot be changed",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "furfrou",
-        "form": "furfrou-heart"
-      },
-      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
-      "location": "Lumiose City",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "furfrou",
-        "form": "furfrou-star"
-      },
-      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
-      "location": "Lumiose City",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "furfrou",
-        "form": "furfrou-diamond"
-      },
-      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
-      "location": "Lumiose City",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "furfrou",
-        "form": "furfrou-debutante"
-      },
-      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
-      "location": "Lumiose City",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "furfrou",
-        "form": "furfrou-matron"
-      },
-      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
-      "location": "Lumiose City",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "furfrou",
-        "form": "furfrou-dandy"
-      },
-      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
-      "location": "Lumiose City",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "furfrou",
-        "form": "furfrou-la-reine"
-      },
-      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
-      "location": "Lumiose City",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "furfrou",
-        "form": "furfrou-kabuki"
-      },
-      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
-      "location": "Lumiose City",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "furfrou",
-        "form": "furfrou-pharaoh"
-      },
-      "requirement": "Have it groomed at Friseur Furfrou, which keeps the trim for five days and loses it the moment the Furfrou is put in a box - and in X and Y a trim is not a Pokedex entry of its own",
-      "location": "Lumiose City",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "meowstic",
-        "form": "meowstic-female"
+        "species": "wobbuffet",
+        "form": "wobbuffet-female"
       },
       "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
@@ -27588,10 +27602,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "pumpkaboo",
-        "form": "pumpkaboo-small"
+        "species": "wooper",
+        "form": "wooper-female"
       },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -27602,10 +27616,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "pumpkaboo",
-        "form": "pumpkaboo-large"
+        "species": "wormadam",
+        "form": "wormadam-sandy"
       },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "requirement": "Evolve a female Burmy wearing the Sandy Cloak; a Wormadam keeps that cloak",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -27616,10 +27630,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "pumpkaboo",
-        "form": "pumpkaboo-super"
+        "species": "wormadam",
+        "form": "wormadam-trash"
       },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "requirement": "Evolve a female Burmy wearing the Trash Cloak; a Wormadam keeps that cloak",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -27630,10 +27644,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "gourgeist",
-        "form": "gourgeist-small"
+        "species": "xatu",
+        "form": "xatu-female"
       },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -27644,24 +27658,10 @@
       "kind": "formChange",
       "game": "y",
       "target": {
-        "species": "gourgeist",
-        "form": "gourgeist-large"
+        "species": "zubat",
+        "form": "zubat-female"
       },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "y",
-      "target": {
-        "species": "gourgeist",
-        "form": "gourgeist-super"
-      },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "requirement": "Catch or hatch a female one; the sexes have been drawn apart since Generation 4",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",

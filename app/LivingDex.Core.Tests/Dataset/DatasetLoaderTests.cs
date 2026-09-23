@@ -36,7 +36,7 @@ public class DatasetLoaderTests
     public void Every_game_in_the_index_is_loaded()
     {
         Assert.Equal(
-            ["diamond", "emerald", "home", "pearl", "platinum", "shield", "sword"],
+            ["bank", "diamond", "emerald", "home", "pearl", "platinum", "shield", "sword"],
             Loaded.Reference.Games.Select(game => game.Id.Value).Order(StringComparer.Ordinal));
     }
 
@@ -55,7 +55,7 @@ public class DatasetLoaderTests
         Assert.Equal(4, Loaded.Reference.Species.Count);
         Assert.Equal(2, Loaded.Reference.Forms.Count);
         Assert.Equal(2, Loaded.Reference.EvolutionRules.Count);
-        Assert.Equal(3, Loaded.Reference.TransferEdges.Count);
+        Assert.Equal(7, Loaded.Reference.TransferEdges.Count);
     }
 
     [Fact]
@@ -80,9 +80,21 @@ public class DatasetLoaderTests
     {
         var graph = new TransferGraph(
             Loaded.Reference.TransferEdges,
-            new ReferenceFilterContext(Loaded.Reference.Species, Loaded.Reference.DexEntries));
+            new ReferenceFilterContext(
+                Loaded.Reference.Species,
+                Loaded.Reference.DexEntries,
+                Loaded.Reference.Games));
 
         Assert.True(graph.RoutesBetween(new GameId("emerald"), new GameId("platinum")).Any);
         Assert.False(graph.RoutesBetween(new GameId("platinum"), new GameId("emerald")).Any);
+
+        // The window the sample carries survives the loader, and the generations it is read
+        // against come out of the game files beside it.
+        var withdrawal = Loaded.Reference.TransferEdges
+            .Single(edge => edge.Mechanism == TransferMechanism.Bank);
+
+        Assert.Equal(new HistoryWindow(3, 6), withdrawal.History);
+        Assert.Equal(6, Loaded.Reference.FindGame(new GameId("bank"))!.Generation);
+        Assert.Contains(new GameId("bank"), graph.ReachableFrom(new GameId("platinum")));
     }
 }

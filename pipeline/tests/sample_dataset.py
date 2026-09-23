@@ -27,6 +27,7 @@ from livingdex_pipeline.models import (
     GameRelease,
     GiftAcquisition,
     GiftKind,
+    HistoryWindow,
     LevelRange,
     LocationCondition,
     MinimumLevelCondition,
@@ -144,12 +145,48 @@ def transfers() -> list[TransferEdge]:
             direction=TransferDirection.BOTH_WAYS,
             filter=AllSpeciesFilter(),
         ),
+        # Two one-way edges rather than one both-ways edge, which is what HOME really is and
+        # what it has to be: the filter asks whether the game being transferred *into* lists the
+        # species, and read backwards that question is asked of HOME, whose dex is empty.
+        TransferEdge(
+            **{"from": "sword"},
+            to="home",
+            mechanism=TransferMechanism.HOME,
+            direction=TransferDirection.ONE_WAY,
+            filter=AllSpeciesFilter(),
+        ),
         TransferEdge(
             **{"from": "home"},
             to="sword",
             mechanism=TransferMechanism.HOME,
-            direction=TransferDirection.BOTH_WAYS,
+            direction=TransferDirection.ONE_WAY,
             filter=PresentInTargetDexFilter(),
+        ),
+        TransferEdge(
+            **{"from": "bank"},
+            to="home",
+            mechanism=TransferMechanism.HOME,
+            direction=TransferDirection.ONE_WAY,
+            filter=AllSpeciesFilter(),
+        ),
+        # The two shapes a real Bank edge has, on the only game this sample has to hang them
+        # on. Bank never spoke to a DS game, and the pair is here because what the C# side has
+        # to be able to read is a deposit that takes everything beside a withdrawal that asks
+        # where a Pokemon has been - which is the one thing in the schema no record can answer.
+        TransferEdge(
+            **{"from": "platinum"},
+            to="bank",
+            mechanism=TransferMechanism.POKE_TRANSPORTER,
+            direction=TransferDirection.ONE_WAY,
+            filter=AllSpeciesFilter(),
+        ),
+        TransferEdge(
+            **{"from": "bank"},
+            to="platinum",
+            mechanism=TransferMechanism.BANK,
+            direction=TransferDirection.ONE_WAY,
+            filter=AllSpeciesFilter(),
+            history=HistoryWindow(**{"from": 3}, to=6),
         ),
     ]
 
@@ -411,6 +448,22 @@ def pearl() -> GameData:
     )
 
 
+def bank() -> GameData:
+    """The other transfer-only node, and the one an edge here reads a history window off."""
+    return GameData(
+        game=Game(
+            id="bank",
+            title="Pokemon Bank",
+            version="Bank",
+            released=date(2013, 12, 25),
+            generation=6,
+            region="",
+            release=GameRelease.SERVICE,
+            dex_source=DexSource.GAME_DEX,
+        )
+    )
+
+
 def home() -> GameData:
     """A transfer-only node: not a game, but the graph needs it to exist."""
     return GameData(
@@ -433,7 +486,16 @@ def write_sample_dataset(root: Path) -> DatasetWriter:
     writer.write_forms(forms())
     writer.write_evolution_rules(evolution_rules())
     writer.write_transfers(transfers())
-    for game in (platinum(), sword(), shield(), emerald(), diamond(), pearl(), home()):
+    for game in (
+        platinum(),
+        sword(),
+        shield(),
+        emerald(),
+        diamond(),
+        pearl(),
+        home(),
+        bank(),
+    ):
         writer.write_game(game)
 
     writer.write_index(stamp_for(VERSION, BUILT_ON), writer.known_games())

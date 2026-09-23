@@ -63,6 +63,25 @@ public sealed record NationalDexRangeFilter(int From, int To) : SpeciesFilter;
 public sealed record PresentInTargetDexFilter : SpeciesFilter;
 
 /// <summary>
+/// Which generations a Pokemon may have passed through for an edge to take it.
+/// </summary>
+/// <remarks>
+/// Not a <see cref="SpeciesFilter"/>, and the difference is the point. A filter is asked about
+/// the Pokemon making the trip; this is asked about the trip. The same Charizard is taken or
+/// refused depending on which cartridge it was caught on three transfers ago, so no record
+/// about a species can answer it and the route has to be read instead.
+///
+/// Pokémon Bank is why it exists: it hands a Pokemon back to X or Omega Ruby only if everything
+/// behind it is Generations 3 through 6. One that came out of a Virtual Console Red is refused,
+/// and so is one that has ever been in Sun — those games cannot read what either end writes.
+///
+/// Inclusive at both ends, like <see cref="NationalDexRangeFilter"/>.
+/// </remarks>
+/// <param name="From">The earliest generation anything on the route may come from.</param>
+/// <param name="To">The latest.</param>
+public sealed record HistoryWindow(int From, int To);
+
+/// <summary>
 /// One link in the transfer graph. Edges are data, never hardcoded, so adding a game does not
 /// mean changing the engine.
 /// </summary>
@@ -76,4 +95,16 @@ public sealed record TransferEdge(
     GameId To,
     TransferMechanism Mechanism,
     TransferDirection Direction,
-    SpeciesFilter Filter);
+    SpeciesFilter Filter)
+{
+    /// <summary>
+    /// Where this edge refuses to take something that has been, or null when it takes anything
+    /// whatever its history.
+    /// </summary>
+    /// <remarks>
+    /// Null on every edge but Bank's withdrawals, which is every edge in the dataset written
+    /// before Bank was. Not a constructor parameter for that reason: an edge without one is
+    /// still a perfectly good edge.
+    /// </remarks>
+    public HistoryWindow? History { get; init; }
+}

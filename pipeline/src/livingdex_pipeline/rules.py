@@ -12,13 +12,24 @@ from __future__ import annotations
 
 from collections.abc import Iterable, Iterator
 
-from .models import DexTarget
+from .models import DexTarget, GameRelease
 from .reach import parents_in, reachable_in
 from .validate import Dataset, Finding, GameCoverage, Severity
 
 
 def _target_key(target: DexTarget) -> tuple[str, str | None]:
     return (target.species, target.form)
+
+
+def _is_node(game) -> bool:
+    """Whether this entry in the dataset is a transfer node rather than a game.
+
+    Pokemon Bank and HOME are in the dataset because a route has to point at something, and
+    almost nothing below has a question to ask about them: there is no dex to fill, no cover to
+    put in a picker, and nothing was ever caught there. The checks that would otherwise report
+    an empty game every time ask this first.
+    """
+    return game.game.release is GameRelease.SERVICE
 
 
 def _counts(method) -> bool:
@@ -668,6 +679,10 @@ class EveryGameHasBoxArt:
             return
 
         for game in dataset.games:
+            # A node is never in the picker, so it has no cover to be missing.
+            if _is_node(game):
+                continue
+
             if game.game.id not in dataset.box_art:
                 yield Finding(
                     rule=self.name,
@@ -702,6 +717,11 @@ def coverage_for(dataset: Dataset) -> list[GameCoverage]:
     coverage: list[GameCoverage] = []
 
     for game in dataset.games:
+        # A transfer node asks a player to fill nothing, and four zeroes in this report read
+        # like a game nobody has started rather than like a thing with no dex.
+        if _is_node(game):
+            continue
+
         here = _obtainable_in(dataset, game.game.id)
         explained = _reasons_in(game)
         full = partial = missing = unobtainable = 0

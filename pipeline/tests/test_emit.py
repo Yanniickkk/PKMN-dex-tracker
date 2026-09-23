@@ -90,7 +90,16 @@ def test_the_index_lists_the_games_and_stamps_the_build(tmp_path: Path) -> None:
     write_sample_dataset(tmp_path)
     index = json.loads((tmp_path / "index.json").read_text(encoding="utf-8"))
 
-    assert index["games"] == ["diamond", "emerald", "home", "pearl", "platinum", "shield", "sword"]
+    assert index["games"] == [
+        "bank",
+        "diamond",
+        "emerald",
+        "home",
+        "pearl",
+        "platinum",
+        "shield",
+        "sword",
+    ]
     assert index["stamp"] == {"version": "0.1.0-sample", "builtOn": "2026-09-21"}
 
 
@@ -98,6 +107,7 @@ def test_known_games_finds_what_is_already_built(tmp_path: Path) -> None:
     write_sample_dataset(tmp_path)
 
     assert DatasetWriter(tmp_path).known_games() == [
+        "bank",
         "diamond",
         "emerald",
         "home",
@@ -115,6 +125,7 @@ def test_what_is_written_can_be_read_back(tmp_path: Path) -> None:
 
     assert [one.id for one in dataset.species] == ["vulpix", "chimchar", "monferno", "darkrai"]
     assert [one.game.id for one in dataset.games] == [
+        "bank",
         "diamond",
         "emerald",
         "home",
@@ -124,7 +135,13 @@ def test_what_is_written_can_be_read_back(tmp_path: Path) -> None:
         "sword",
     ]
     assert dataset.game("platinum").acquisition_methods[0].kind == "gift"
-    assert dataset.transfers[2].filter.filter == "presentInTargetDex"
+    # Looked up rather than indexed: the graph is written in a fixed order and that order is
+    # the edges', not this test's.
+    by_ends = {(one.from_, one.to): one for one in dataset.transfers}
+
+    assert by_ends[("home", "sword")].filter.filter == "presentInTargetDex"
+    assert by_ends[("bank", "platinum")].history.to == 6
+    assert by_ends[("platinum", "bank")].history is None
 
 
 def test_a_stamp_defaults_to_today() -> None:

@@ -1,0 +1,14 @@
+{
+  "game": {
+    "id": "home",
+    "title": "Pokémon HOME",
+    "version": "HOME",
+    "generation": 8,
+    "region": "",
+    "release": "service",
+    "released": "2020-02-12",
+    "dexSource": "gameDex"
+  },
+  "dexEntries": [],
+  "acquisitionMethods": []
+}

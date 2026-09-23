@@ -49,6 +49,7 @@ public class PipelineOutputContractTests
         Assert.Equal(new DateOnly(2026, 9, 21), index.Stamp.BuiltOn);
         Assert.Equal(
             [
+                new GameId("bank"),
                 new GameId("diamond"),
                 new GameId("emerald"),
                 new GameId("home"),
@@ -91,7 +92,8 @@ public class PipelineOutputContractTests
         var edges = Read<IReadOnlyList<TransferEdge>>(DatasetLayout.TransfersFile);
 
         Assert.IsType<AllSpeciesFilter>(edges.Single(edge => edge.Mechanism == TransferMechanism.Trade).Filter);
-        Assert.IsType<PresentInTargetDexFilter>(edges.Single(edge => edge.Mechanism == TransferMechanism.Home).Filter);
+        Assert.IsType<PresentInTargetDexFilter>(
+            edges.Single(edge => edge.Mechanism == TransferMechanism.Home && edge.To == new GameId("sword")).Filter);
 
         var palPark = edges.Single(edge => edge.Mechanism == TransferMechanism.PalPark);
         var range = Assert.IsType<NationalDexRangeFilter>(palPark.Filter);
@@ -100,6 +102,26 @@ public class PipelineOutputContractTests
         Assert.Equal(TransferDirection.OneWay, palPark.Direction);
         Assert.Equal(1, range.From);
         Assert.Equal(386, range.To);
+    }
+
+    [Fact]
+    public void A_withdrawal_carries_where_it_will_not_take_something_that_has_been()
+    {
+        var edges = Read<IReadOnlyList<TransferEdge>>(DatasetLayout.TransfersFile);
+
+        // The one thing in the schema that is not about a species. Bank takes anything a game
+        // holds and hands back only what has never been outside its window, so the deposit and
+        // the withdrawal cross the wire as two edges and only one of them carries it.
+        var withdrawal = edges.Single(edge => edge.Mechanism == TransferMechanism.Bank);
+        var deposit = edges.Single(edge => edge.Mechanism == TransferMechanism.PokeTransporter);
+
+        Assert.Equal(new HistoryWindow(3, 6), withdrawal.History);
+        Assert.Equal(TransferDirection.OneWay, withdrawal.Direction);
+        Assert.IsType<AllSpeciesFilter>(withdrawal.Filter);
+
+        // Absent rather than empty on everything else, which is every edge written before Bank.
+        Assert.Null(deposit.History);
+        Assert.All(edges.Where(edge => edge.Mechanism != TransferMechanism.Bank), edge => Assert.Null(edge.History));
     }
 
     [Fact]
@@ -245,11 +267,19 @@ public class PipelineOutputContractTests
     public void A_transfer_only_node_is_an_entity_like_any_other()
     {
         var home = Read<GameData>("games", "home.json");
+        var bank = Read<GameData>("games", "bank.json");
 
         // Not a cartridge and not Virtual Console: HOME is a service, and the graph needs it.
         Assert.Equal(GameRelease.Service, home.Game.Release);
         Assert.False(home.Game.HasNationalDex);
         Assert.Empty(home.DexEntries);
+
+        // Bank is the same shape and carries the generation a history window is read against,
+        // along with the empty region that says it is set nowhere.
+        Assert.Equal(GameRelease.Service, bank.Game.Release);
+        Assert.Equal(6, bank.Game.Generation);
+        Assert.Equal(string.Empty, bank.Game.Region);
+        Assert.Empty(bank.AcquisitionMethods);
     }
 
     [Fact]

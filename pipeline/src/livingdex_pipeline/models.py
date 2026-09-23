@@ -252,12 +252,38 @@ SpeciesFilter = Annotated[
 ]
 
 
+class HistoryWindow(Model):
+    """Which generations a Pokemon may have passed through for an edge to take it.
+
+    Every other thing an edge can refuse is a fact about the Pokemon: its National Dex number,
+    whether the game on the far side lists it. This one is about where it has been, and it is
+    the first question here that no single record can answer - the same Charizard is taken or
+    refused depending on which cartridge it was caught on three transfers ago.
+
+    Pokemon Bank is why it exists. Bank will hand a Pokemon to X or to Omega Ruby only if
+    everything behind it is Generation 3 through 6: one that came out of a Virtual Console Red
+    is refused, and so is one that has ever been in Sun. Bulbapedia writes those as two
+    sentences and they are one fact - the Generation 6 games cannot read what either end
+    writes - and both halves are a window on a route rather than anything about a species.
+
+    Inclusive at both ends, like :class:`NationalDexRangeFilter`. Read against every game on the
+    route so far, which is what makes it different from a filter: a filter is asked about the
+    Pokemon making the trip, this is asked about the trip.
+    """
+
+    from_: int = Field(alias="from")
+    to: int
+
+
 class TransferEdge(Model):
     from_: str = Field(alias="from")
     to: str
     mechanism: TransferMechanism
     direction: TransferDirection
     filter: SpeciesFilter
+    #: Where this edge refuses to take something that has been, when it refuses at all. Absent
+    #: on every edge but Bank's withdrawals, which is every edge written before Phase 3.
+    history: HistoryWindow | None = None
 
 
 # --- Evolution -------------------------------------------------------------------------------

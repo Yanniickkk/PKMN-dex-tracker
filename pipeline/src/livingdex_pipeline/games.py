@@ -110,6 +110,7 @@ class GameRegistry:
         self._builders: dict[str, GameBuilder] = {}
         self._edges: dict[str, list[TransferEdge]] = {}
         self._box_art: dict[str, str] = {}
+        self._nodes: set[str] = set()
 
     def register(
         self,
@@ -117,18 +118,27 @@ class GameRegistry:
         builder: GameBuilder,
         edges: Sequence[TransferEdge] = (),
         box_art: str | None = None,
+        node: bool = False,
     ) -> None:
         """A game and the transfer edges it brings with it.
 
         Edges arrive with a game because that is how Phase 2 step 1 is written, but they are
         written to the shared transfer file rather than the game file: a route is about two
         games, so it cannot belong to one of them.
+
+        ``node`` marks the entries nobody plays - Pokemon Bank, and HOME after it. They are
+        registered like anything else, because a route has to point at something the validator
+        counts as known, and the shared steps that ask a source about a game have to be told not
+        to ask about them.
         """
         if game_id in self._builders:
             raise ValueError(f"{game_id} is already registered")
 
         self._builders[game_id] = builder
         self._edges[game_id] = list(edges)
+
+        if node:
+            self._nodes.add(game_id)
 
         # The name of the cover's file on the Archives, spelled by the game that wants it.
         # There is no pattern across the series to derive it from.
@@ -140,7 +150,18 @@ class GameRegistry:
 
     @property
     def game_ids(self) -> list[str]:
+        """Everything registered, nodes included. What a full build builds."""
         return sorted(self._builders)
+
+    @property
+    def playable_ids(self) -> list[str]:
+        """The games among them, which is what a source knows anything about.
+
+        PokeAPI has a version group for Omega Ruby and none for Pokemon Bank, and the shared
+        forms table asks it about every game the registry holds - so the difference has to be
+        askable before any of them is built.
+        """
+        return [one for one in self.game_ids if one not in self._nodes]
 
     def box_art_of(self, game_id: str) -> str | None:
         """Which file on the Archives holds this game's cover, if it named one."""

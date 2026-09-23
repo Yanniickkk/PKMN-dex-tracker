@@ -10,6 +10,7 @@ from __future__ import annotations
 from ..games import GameRegistry
 from . import (
     alpha_sapphire,
+    bank,
     black,
     black2,
     blue,
@@ -19,6 +20,7 @@ from . import (
     firered,
     gold,
     heartgold,
+    home,
     leafgreen,
     omega_ruby,
     pearl,
@@ -42,6 +44,11 @@ from . import (
 # third version, and the only ones in the series - the pair that opens Generation 6, the first
 # the whole world got on the same day, and the remakes that close it, which are the Hoenn pair
 # again a year later and twelve years on.
+#
+# Then the two nodes, out of that order and at the end, because neither is a game. Bank came out
+# between the two Generation 6 pairs and HOME six years after it. They are here for the same
+# reason the games are: the registry is what puts a node in the dataset, and fifteen routes had
+# been waiting for one or the other.
 MODULES = [
     red,
     blue,
@@ -67,6 +74,8 @@ MODULES = [
     y,
     omega_ruby,
     alpha_sapphire,
+    bank,
+    home,
 ]
 
 

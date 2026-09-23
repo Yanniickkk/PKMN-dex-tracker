@@ -48,7 +48,10 @@ public partial class App : Application
         // The graph is data, so it is built here rather than anywhere it is used.
         services.AddSingleton(new TransferGraph(
             dataset.Reference.TransferEdges,
-            new ReferenceFilterContext(dataset.Reference.Species, dataset.Reference.DexEntries)));
+            new ReferenceFilterContext(
+                dataset.Reference.Species,
+                dataset.Reference.DexEntries,
+                dataset.Reference.Games)));
 
         // Registered, not resolved: on a first run this puts a picker on screen, and that has
         // to wait until there is a window to own it. MainWindow sets it going.

@@ -18,14 +18,49 @@ public sealed class TransferGraph
     /// <summary>How many routes to return before the search stops looking for more.</summary>
     public const int DefaultMaxRoutes = 25;
 
-    private sealed record DirectedEdge(GameId From, GameId To, TransferMechanism Mechanism, SpeciesFilter Filter)
+    private sealed record DirectedEdge(
+        GameId From,
+        GameId To,
+        TransferMechanism Mechanism,
+        SpeciesFilter Filter,
+        HistoryWindow? History)
     {
         public TransferHop ToHop() => new(From, To, Mechanism);
+    }
+
+    /// <summary>
+    /// The spread of generations a route has passed through so far, which is all a
+    /// <see cref="HistoryWindow"/> needs to know about it.
+    /// </summary>
+    /// <remarks>
+    /// Two numbers rather than the list of games, because a window only asks how far out the
+    /// route reaches in either direction. It makes the search state small enough to walk
+    /// exhaustively: the earliest only falls and the latest only rises, so a node is revisited
+    /// at most once per pair.
+    ///
+    /// <paramref name="Complete"/> is false once a node of unknown generation has been passed.
+    /// Such a route is refused by any window, the way a range filter refuses a species it cannot
+    /// number.
+    /// </remarks>
+    private readonly record struct RouteHistory(int Earliest, int Latest, bool Complete)
+    {
+        /// <summary>A route that has been nowhere yet.</summary>
+        public static RouteHistory Empty => new(int.MaxValue, int.MinValue, true);
+
+        /// <summary>The same route with one more node behind it.</summary>
+        public RouteHistory With(int? generation) => generation is { } one
+            ? new RouteHistory(Math.Min(Earliest, one), Math.Max(Latest, one), Complete)
+            : this with { Complete = false };
+
+        /// <summary>Whether everything behind the route falls inside the window.</summary>
+        public bool Inside(HistoryWindow window) =>
+            Complete && Earliest >= window.From && Latest <= window.To;
     }
 
     private readonly Dictionary<GameId, List<DirectedEdge>> _outgoing = [];
     private readonly Dictionary<GameId, List<DirectedEdge>> _incoming = [];
     private readonly HashSet<GameId> _games = [];
+    private readonly Dictionary<GameId, IReadOnlySet<GameId>> _reachable = [];
     private readonly ITransferFilterContext _context;
     private readonly int _maxHops;
     private readonly int _maxRoutes;
@@ -51,11 +86,11 @@ public sealed class TransferGraph
 
         foreach (var edge in edges)
         {
-            Add(new DirectedEdge(edge.From, edge.To, edge.Mechanism, edge.Filter));
+            Add(new DirectedEdge(edge.From, edge.To, edge.Mechanism, edge.Filter, edge.History));
 
             if (edge.Direction == TransferDirection.BothWays)
             {
-                Add(new DirectedEdge(edge.To, edge.From, edge.Mechanism, edge.Filter));
+                Add(new DirectedEdge(edge.To, edge.From, edge.Mechanism, edge.Filter, edge.History));
             }
         }
 
@@ -80,36 +115,69 @@ public sealed class TransferGraph
     /// Species filters are not applied: this answers "could this game ever feed that one", which
     /// is what the linked-game picker needs. Whether one particular species survives the trip is
     /// <see cref="RoutesBetween(GameId, GameId, DexTarget)"/>.
+    ///
+    /// History windows are applied, because they are not about a species at all. Nothing
+    /// whatever can be moved from a Virtual Console Red into X, so Red is not a game that could
+    /// ever feed X and saying otherwise would be a different kind of wrong from "not this
+    /// Pokemon". That is why this is a forward search from each candidate rather than one walk
+    /// backwards: where a route has been is only known going forwards.
+    ///
+    /// No hop limit, unlike the route search. Telling "too far to bother looking" apart from
+    /// "there is no way at all" is the whole reason this is asked.
     /// </remarks>
     public IReadOnlySet<GameId> ReachableFrom(GameId game)
     {
-        var found = new HashSet<GameId>();
-        if (!_games.Contains(game))
+        if (_reachable.TryGetValue(game, out var cached))
         {
-            return found;
+            return cached;
         }
 
-        var queue = new Queue<GameId>();
-        queue.Enqueue(game);
+        var found = new HashSet<GameId>();
+        if (_games.Contains(game))
+        {
+            foreach (var candidate in _games.Where(one => one != game && CanReach(one, game)))
+            {
+                found.Add(candidate);
+            }
+        }
+
+        _reachable[game] = found;
+
+        return found;
+    }
+
+    /// <summary>Whether anything at all could get from one node to another, however many hops.</summary>
+    private bool CanReach(GameId from, GameId destination)
+    {
+        var start = RouteHistory.Empty.With(_context.GenerationOf(from));
+        var seen = new HashSet<(GameId, RouteHistory)> { (from, start) };
+        var queue = new Queue<(GameId Node, RouteHistory History)>();
+        queue.Enqueue((from, start));
 
         while (queue.Count > 0)
         {
-            var current = queue.Dequeue();
-            if (!_incoming.TryGetValue(current, out var edges))
+            var (node, history) = queue.Dequeue();
+            if (!_outgoing.TryGetValue(node, out var edges))
             {
                 continue;
             }
 
-            foreach (var edge in edges)
+            foreach (var edge in edges.Where(edge => Takes(edge, history)))
             {
-                if (edge.From != game && found.Add(edge.From))
+                if (edge.To == destination)
                 {
-                    queue.Enqueue(edge.From);
+                    return true;
+                }
+
+                var next = (edge.To, history.With(_context.GenerationOf(edge.To)));
+                if (seen.Add(next))
+                {
+                    queue.Enqueue(next);
                 }
             }
         }
 
-        return found;
+        return false;
     }
 
     /// <summary>
@@ -232,16 +300,19 @@ public sealed class TransferGraph
 
         // Without this, enumerating simple paths across a generation's near-complete trade clique
         // is exponential: a red-to-scarlet lookup took the better part of a second. The distance
-        // map ignores filters, so it never over-estimates and never prunes a real route.
+        // map ignores filters and history windows, so it never over-estimates and never prunes a
+        // real route.
         var distanceToDestination = DistancesTo(to);
         if (!distanceToDestination.ContainsKey(from))
         {
             return routes;
         }
 
+        var history = RouteHistory.Empty.With(_context.GenerationOf(from));
+
         for (var depth = 1; depth <= _maxHops && routes.Count < _maxRoutes; depth++)
         {
-            Walk(from, to, target, applyFilters, depth, distanceToDestination, [from], [], routes);
+            Walk(from, to, target, applyFilters, depth, history, distanceToDestination, [from], [], routes);
         }
 
         return routes;
@@ -278,6 +349,7 @@ public sealed class TransferGraph
         DexTarget target,
         bool applyFilters,
         int remainingHops,
+        RouteHistory history,
         Dictionary<GameId, int> distanceToDestination,
         HashSet<GameId> visited,
         List<TransferHop> hops,
@@ -301,6 +373,14 @@ public sealed class TransferGraph
                 continue;
             }
 
+            // Checked whether or not filters are on, because a window is not about a species:
+            // nothing at all comes back out of Bank into X once it has been in a Virtual Console
+            // game, so this is not a route that carries some Pokemon and refuses others.
+            if (!Takes(edge, history))
+            {
+                continue;
+            }
+
             if (applyFilters && !Carries(edge, target))
             {
                 continue;
@@ -319,7 +399,17 @@ public sealed class TransferGraph
             else
             {
                 visited.Add(edge.To);
-                Walk(edge.To, destination, target, applyFilters, remainingHops - 1, distanceToDestination, visited, hops, routes);
+                Walk(
+                    edge.To,
+                    destination,
+                    target,
+                    applyFilters,
+                    remainingHops - 1,
+                    history.With(_context.GenerationOf(edge.To)),
+                    distanceToDestination,
+                    visited,
+                    hops,
+                    routes);
                 visited.Remove(edge.To);
             }
 
@@ -331,6 +421,10 @@ public sealed class TransferGraph
             }
         }
     }
+
+    /// <summary>Whether this edge will take a route that has been where this one has been.</summary>
+    private static bool Takes(DirectedEdge edge, RouteHistory history) =>
+        edge.History is not { } window || history.Inside(window);
 
     private bool Carries(DirectedEdge edge, DexTarget target) => edge.Filter switch
     {

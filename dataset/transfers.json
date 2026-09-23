@@ -1,6 +1,15 @@
 [
   {
     "from": "alpha-sapphire",
+    "to": "bank",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "alpha-sapphire",
     "to": "omega-ruby",
     "mechanism": "trade",
     "direction": "bothWays",
@@ -22,6 +31,76 @@
     "to": "y",
     "mechanism": "trade",
     "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "bank",
+    "to": "alpha-sapphire",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    },
+    "history": {
+      "from": 3,
+      "to": 6
+    }
+  },
+  {
+    "from": "bank",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "bank",
+    "to": "omega-ruby",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    },
+    "history": {
+      "from": 3,
+      "to": 6
+    }
+  },
+  {
+    "from": "bank",
+    "to": "x",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    },
+    "history": {
+      "from": 3,
+      "to": 6
+    }
+  },
+  {
+    "from": "bank",
+    "to": "y",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    },
+    "history": {
+      "from": 3,
+      "to": 6
+    }
+  },
+  {
+    "from": "black",
+    "to": "bank",
+    "mechanism": "pokeTransporter",
+    "direction": "oneWay",
     "filter": {
       "filter": "all"
     }
@@ -55,6 +134,15 @@
   },
   {
     "from": "black-2",
+    "to": "bank",
+    "mechanism": "pokeTransporter",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "black-2",
     "to": "white",
     "mechanism": "trade",
     "direction": "bothWays",
@@ -67,6 +155,15 @@
     "to": "white-2",
     "mechanism": "trade",
     "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "blue",
+    "to": "bank",
+    "mechanism": "pokeTransporter",
+    "direction": "oneWay",
     "filter": {
       "filter": "all"
     }
@@ -118,6 +215,15 @@
     "to": "yellow",
     "mechanism": "trade",
     "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "crystal",
+    "to": "bank",
+    "mechanism": "pokeTransporter",
+    "direction": "oneWay",
     "filter": {
       "filter": "all"
     }
@@ -395,6 +501,15 @@
   },
   {
     "from": "gold",
+    "to": "bank",
+    "mechanism": "pokeTransporter",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "gold",
     "to": "silver",
     "mechanism": "trade",
     "direction": "bothWays",
@@ -548,6 +663,15 @@
   },
   {
     "from": "omega-ruby",
+    "to": "bank",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "omega-ruby",
     "to": "x",
     "mechanism": "trade",
     "direction": "bothWays",
@@ -677,6 +801,15 @@
       "filter": "nationalDexRange",
       "from": 1,
       "to": 493
+    }
+  },
+  {
+    "from": "red",
+    "to": "bank",
+    "mechanism": "pokeTransporter",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
     }
   },
   {
@@ -841,6 +974,15 @@
     }
   },
   {
+    "from": "silver",
+    "to": "bank",
+    "mechanism": "pokeTransporter",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
     "from": "soulsilver",
     "to": "black",
     "mechanism": "pokeTransfer",
@@ -886,9 +1028,36 @@
   },
   {
     "from": "white",
+    "to": "bank",
+    "mechanism": "pokeTransporter",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "white",
     "to": "white-2",
     "mechanism": "trade",
     "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "white-2",
+    "to": "bank",
+    "mechanism": "pokeTransporter",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "x",
+    "to": "bank",
+    "mechanism": "bank",
+    "direction": "oneWay",
     "filter": {
       "filter": "all"
     }
@@ -898,6 +1067,24 @@
     "to": "y",
     "mechanism": "trade",
     "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "y",
+    "to": "bank",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "yellow",
+    "to": "bank",
+    "mechanism": "pokeTransporter",
+    "direction": "oneWay",
     "filter": {
       "filter": "all"
     }

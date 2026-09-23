@@ -409,3 +409,15 @@ def test_a_game_the_source_has_never_heard_of_fails_the_build() -> None:
 
     with pytest.raises(FormsError, match="version group"):
         form_table(api, species=[species("unown")], game_ids=["gold", "shining-pearl"])
+
+
+def test_the_table_comes_back_in_the_order_it_will_be_read_back_in() -> None:
+    # A game writes its form records in the order the table hands them over, and the table comes
+    # from memory on a full build and off disk on a single-game one. Those two orders were
+    # different for a while, so the same game built two ways wrote the same records twice in two
+    # orders and the committed dataset had a 352-line diff with nothing in it.
+    api = unown_api()
+
+    found = form_table(api, species=[species("unown")], game_ids=GAMES).forms
+
+    assert [one.id for one in found] == sorted(one.id for one in found)

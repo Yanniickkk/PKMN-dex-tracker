@@ -67,7 +67,16 @@ def test_a_single_game_build_keeps_the_index_whole(tmp_path: Path) -> None:
     build_for(tmp_path).run("platinum")
 
     index = json.loads((root / "index.json").read_text(encoding="utf-8"))
-    assert index["games"] == ["diamond", "emerald", "home", "pearl", "platinum", "shield", "sword"]
+    assert index["games"] == [
+        "bank",
+        "diamond",
+        "emerald",
+        "home",
+        "pearl",
+        "platinum",
+        "shield",
+        "sword",
+    ]
     assert index["stamp"]["builtOn"] == "2026-09-21"
 
 
@@ -159,6 +168,7 @@ def test_the_validator_reads_what_was_written_not_what_was_in_memory(tmp_path: P
 
     assert report.ok
     assert [one.game.id for one in seen[0].games] == [
+        "bank",
         "diamond",
         "emerald",
         "home",

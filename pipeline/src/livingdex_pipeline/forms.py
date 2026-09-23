@@ -234,7 +234,14 @@ def form_table(
     game_ids: Iterable[str],
     refresh: bool = False,
 ) -> FormTable:
-    """Every form of every species given, in the games that have it."""
+    """Every form of every species given, in the games that have it.
+
+    By form id, which is the order :meth:`~.emit.DatasetWriter.write_forms` writes them in and
+    therefore the order :func:`~.emit.read_forms` hands them back. Sorted here so that the table
+    a full build holds in memory and the table a single-game build reads off disk are the same
+    list: a game writes its form records in the order it is given them, and for a while the same
+    game built two ways produced the same records twice over in two different orders.
+    """
     groups = VersionGroupGames(api, frozenset(game_ids), refresh=refresh)
     found: list[Form] = []
     pictures: dict[str, tuple[str, ...]] = {}
@@ -242,7 +249,7 @@ def form_table(
     for one in species:
         found.extend(_forms_of(api, one, groups, pictures, refresh=refresh))
 
-    return FormTable(forms=found, pictures=pictures)
+    return FormTable(forms=sorted(found, key=lambda one: one.id), pictures=pictures)
 
 
 def form_pictures(

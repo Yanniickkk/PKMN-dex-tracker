@@ -16,7 +16,9 @@ generation.
 What is new here is the way out. Every generation so far ended at a cartridge - Pal Park, the
 Poke Transfer, Poke Transporter, each one way and each landing somewhere a player still had to
 own. These four talk to Pokemon Bank themselves, in both directions, and that is the first time
-in this dataset a living dex can be kept somewhere that is not a game.
+in this dataset a living dex can be kept somewhere that is not a game. Not symmetrically: Bank
+takes anything these games hold and hands back only what has never been outside Generations 3
+to 6, which is why the route out and the route back are two edges here.
 """
 
 from __future__ import annotations
@@ -109,10 +111,18 @@ def edges(game_id: str) -> list[TransferEdge]:
     Bank and withdrawn here - two routes, both already written, and neither of them between two
     cartridges.
 
-    Both together for the reason :mod:`gb` gives: a game that declares its routes in two places
-    grows one of them and not the other.
+    Bank is two edges rather than one, because the deposit and the withdrawal do not agree.
+    These four cartridges will take back anything whose history is Generations 3 to 6 and
+    nothing else, so a Pokemon out of a Virtual Console Gold reaches Bank and stops there as far
+    as this generation is concerned. The window is Bank's own fact and is written in its file.
+
+    Both kinds together for the reason :mod:`gb` gives: a game that declares its routes in two
+    places grows one of them and not the other.
     """
-    return [*link_trade_edges(game_id), bank.bank_edge(game_id)]
+    return [
+        *link_trade_edges(game_id),
+        *bank.bank_edges(game_id, withdrawal=bank.GENERATION_6_WITHDRAWAL),
+    ]
 
 
 def only_on(partner: str, event: str | None = None) -> str:

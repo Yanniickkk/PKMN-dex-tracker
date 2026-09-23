@@ -3045,7 +3045,131 @@ _Nothing yet._
 
 ### Transfer-only nodes
 
-_Nothing yet._
+- [x] **Pokémon Bank** (`bank`) - 2026-09-23
+  - The first thing in this registry nobody plays: an entity with an empty dex, a release of
+    `service`, no National Dex and no region at all, so that the routes through it have
+    something to point at. `transfer-edges-connect-known-games` counts a node as known only when
+    there is a game file for it, which is why a node needs an entity rather than a mention.
+  - **Fourteen edges lit up and no game file was touched.** Ten Poké Transporter trips - one
+    from each Virtual Console release and each Generation 5 cartridge - and the four Generation 6
+    cartridges talking to Bank themselves. Every one of them had been declared at that game's
+    step 1 and held back by the registry since, which is what holding them back was for. The
+    graph went from 92 routes to 110.
+  - **Bank hands back less than it takes, and that needed a shape the schema did not have.**
+    Bulbapedia is plain about it: anything that has ever been in a Generation 7 game, or that
+    came from a Generation 1 or 2 game, cannot be moved to the Generation 6 games. Both halves
+    are the same fact from either end - X and Omega Ruby cannot read what those games write -
+    and neither half is about a species. The same Charizard is taken or refused depending on
+    which cartridge it was caught on three transfers ago.
+  - So an edge now carries a `history` window beside its filter: the generations every game on
+    the route so far must fall inside. Bank's withdrawals into Generation 6 carry 3 to 6. It is
+    the first thing in this dataset that no record about a Pokémon could ever answer, and it is
+    read against the route rather than against the tile.
+  - Which made the deposit and the withdrawal two one-way edges rather than one both-ways edge.
+    A both-ways edge says one thing about both directions and these two do not agree: Bank takes
+    anything X holds and gives back only some of it.
+  - **What it costs is the point.** Without the window the dataset would say a Pokémon caught in
+    a Virtual Console Red reaches X in two moves. It does not, and that is exactly the route a
+    player would try. With it, the six Virtual Console releases gain a node and no new
+    destination at all - they are waiting for Generation 7, which is the only thing Bank will
+    hand them to.
+  - The window is checked even when no species was named. The linked-game picker deliberately
+    ignores species filters, because a game can be a good feeder and still refuse some of what
+    lives in it; this is not that kind of no. `ReachableFrom` had to become a forward search from
+    each candidate for the same reason - where a route has been is only knowable going forwards -
+    and the search state is two numbers, the earliest and latest generation behind it, which
+    keeps it small enough to walk exhaustively.
+  - A node of unknown generation is refused by a window rather than waved through, which is the
+    stance `nationalDexRange` already takes towards a species it cannot number.
+  - **Not in either picker.** Bank is not a main game - there is nothing to fill in it - and not
+    a linked one either: a linked game is somewhere a player can get something, and nothing was
+    ever caught in Bank. `NewCollection` lists games and leaves the services out. It still does
+    all its work, in the routes the games it hides are offered by: X's linked-game list now holds
+    every Generation 3, 4 and 5 game, "via Pal Park, then the Poké Transfer, then Poké
+    Transporter, then Pokémon Bank" and shorter.
+  - Two checks were taught what a node is rather than left to report an empty game. A node has no
+    cover to be missing, and four zeroes in the coverage report read like a game nobody has
+    started.
+  - The registry now knows which of its entries are not games, because it has to answer before
+    any of them is built: the shared forms table asks PokéAPI about every id it holds, and
+    PokéAPI has a version group for Omega Ruby and has never heard of Pokémon Bank. The first
+    full build after registering Bank failed exactly there.
+  - **One thing was wrong and is now fixed.** `form_table` handed its forms back in National Dex
+    order and `write_forms` wrote them sorted by id, so the table a full build held in memory and
+    the table a single-game build read off disk were the same list in two different orders - and
+    a game writes its form records in the order it is given them. Sixteen of the twenty-four game
+    files had form records at all, and which order each one was in recorded nothing but which
+    command had last been run on it. The table is sorted at the source now, to match what is
+    written, and the sixteen were normalised to it while HOME was built: 4018 lines moved and not
+    one changed.
+  - The way out is declared here and waiting: `bank -> home`, one way, and the last held-back
+    edge in the dataset. It is also the last door out of every 3DS game here - the service was
+    given an end date of 26 February 2027, announced in August 2026, and after that nothing moves
+    at all.
+  - Validation green on all 11 rules for the whole dataset.
+  - **Smoke test on the published exe**, on a collection called "Bank smoke" with X as the main
+    game. The main-game picker shows 24 cards over six generations and no Bank, which is the
+    dataset's 25 entries minus the node.
+  - The linked-game list is the thing to look at. It used to hold three cards, "via trading", and
+    it now holds seventeen and **begins at Generation 3**: five Generation 3 cartridges "via Pal
+    Park, then the Poké Transfer, then Poké Transporter, then Pokémon Bank", five Generation 4
+    "via the Poké Transfer, then Poké Transporter, then Pokémon Bank", four Generation 5 "via
+    Poké Transporter, then Pokémon Bank", and the three other Generation 6 games "via trading".
+    Generations 1 and 2 are not on it at all, which is the window doing exactly the work it was
+    written for: those six releases reach Bank and stop there.
+  - Two popups read closely, with Ruby and Black linked. **Reshiram** shows N's Castle at level
+    50 "During the last battle of the story" and under it "Then to X: Poké Transporter, then
+    Pokémon Bank", with three other ways that are that route with a trade on one end or both.
+    **Groudon** shows the Cave of Origin at level 45 and "Then to X: Pal Park, then the Poké
+    Transfer, then Poké Transporter, then Pokémon Bank" - four mechanisms, five games and a
+    service, twelve years of hardware, and none of it written anywhere but in the edges.
+  - Marking Groudon caught in X moved the counter to "1 of 746" and wrote the data file. The
+    user's settings were copied out first and restored byte for byte - same checksum as the
+    backup - and their data file was untouched: same checksum, timestamp and length afterwards as
+    before. The test ran against a data file in the scratchpad and only the instance it started
+    was stopped.
+
+- [x] **Pokémon HOME** (`home`) - 2026-09-23
+  - The second node and the last one, and the smallest entry in this file for the amount it
+    settles: the same shape Bank has - empty dex, `service`, no region - and registering it lit
+    `bank -> home`, which Bank declared at its own step and which had been the last held-back
+    route in the dataset. **Nothing is waiting now.** Every route any of the twenty-six entries
+    declares has both of its ends here, which has not been true since the dataset held one game.
+  - Released everywhere on one day, 12 February 2020, on phones and on the Switch at once. This
+    dataset keeps Japanese dates because nearly everything in it reached Japan months early;
+    HOME had no such date to be first.
+  - It declares no route of its own, because nothing leaves HOME that is not a game's own
+    business - the same division Bank uses, where the Generation 6 cartridges declare their side
+    and Bank only declares its way out. What it leaves for those games is `home_edges`: a deposit
+    that takes anything the game can hold, and a withdrawal that hands back only what that game's
+    own Pokedex lists.
+  - **And there the split into two one-way edges stopped being a preference and became the only
+    thing that works.** A both-ways edge carries one filter in both directions, and
+    `presentInTargetDex` asks whether the game being transferred *into* lists the species. Read
+    backwards it asks HOME, whose dex is empty by definition, so a single both-ways edge would
+    have refused every deposit ever made. Both fixtures in the repo had that edge as both-ways,
+    and the C# one hid it by giving HOME a dex of three species. Both are two edges now and a
+    test names the trap rather than leaving the next person to find it.
+  - **Three Switch pairs deliberately do not get `home_edges`**, written into the module so
+    nobody reaches for it out of habit. Let's Go only takes back a Pokemon that started in Let's
+    Go - and anything that came in from Bank or from GO was converted to Sword and Shield's
+    format on the way and can never enter it at all, which is a set no filter here can name, not
+    a species and not a generation. Legends: Z-A takes Pokemon in and returns nothing to anything
+    older. And Pokemon GO and the Switch releases of FireRed and LeafGreen send one way into HOME
+    and are not games this dataset holds; both now have a line in Phase 3.
+  - Pokemon Champions is not an edge at all. A Pokemon *visiting* Champions never leaves HOME -
+    it is greyed out in the boxes and cannot be moved, traded or released while it is away - so
+    there is nothing to draw.
+  - **What the two nodes mean together**, which is the sentence this phase existed for: Bank is
+    where the cartridge era ends and HOME is where it becomes unreachable. A Pokemon goes into
+    HOME from Bank one way, and Bank itself shuts on 26 February 2027. After that a living dex
+    kept on a Switch and a living dex kept on a 3DS are two collections with nothing between
+    them, and this graph says so without anyone writing the sentence into it.
+  - Validation green on all 11 rules for the whole dataset; 111 routes, 0 held back. 495
+    pipeline tests and 248 app tests.
+  - Checked on the published exe: the main-game picker still ends at Generation 6 with four
+    cards and 24 in all, so both nodes stay out of it although the dataset now holds 26 entries.
+    Settings restored byte for byte and the user's data file untouched, same as before.
 
 ### Virtual Console releases
 

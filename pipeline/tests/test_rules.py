@@ -83,7 +83,9 @@ def gift(game_id: str, species: str, form: str | None = None) -> GiftAcquisition
     )
 
 
-def dataset(games=(), forms=(), rules=(), transfers=(), species=(), sprites=()) -> Dataset:
+def dataset(
+    games=(), forms=(), rules=(), transfers=(), species=(), sprites=(), box_art=()
+) -> Dataset:
     return Dataset(
         index=DatasetIndex(
             stamp=DatasetStamp(version="0", built_on=date(2026, 9, 21)),
@@ -95,6 +97,24 @@ def dataset(games=(), forms=(), rules=(), transfers=(), species=(), sprites=()) 
         transfers=list(transfers),
         games=list(games),
         sprites=frozenset(sprites),
+        box_art=frozenset(box_art),
+    )
+
+
+def node(game_id: str) -> GameData:
+    """A transfer node: Bank and HOME, the two entries in this dataset nobody plays."""
+    return GameData(
+        game=Game(
+            id=game_id,
+            title=game_id,
+            version=game_id,
+            released=date(2013, 12, 25),
+            generation=6,
+            region="",
+            release=GameRelease.SERVICE,
+            national_dex_through=None,
+            dex_source=DexSource.GAME_DEX,
+        )
     )
 
 
@@ -1079,3 +1099,30 @@ def test_a_way_that_does_not_count_is_not_full_coverage_either() -> None:
     # The one it really produces is full; the Safari one is a hole rather than a tick.
     assert coverage.full == 1
     assert coverage.missing == 1
+
+
+# --- transfer nodes -----------------------------------------------------------------------
+
+
+def test_a_transfer_node_is_not_asked_for_a_cover_it_would_never_show() -> None:
+    # Bank is in the dataset so that routes have something to point at, and it is in no picker,
+    # so "no box art, the picker will draw a plain cover" is a warning about a screen that does
+    # not exist. The game beside it is still asked.
+    data = dataset(games=[game("platinum"), node("bank")], box_art=["bank-placeholder"])
+
+    report = validate(data)
+
+    assert messages(report, "every-game-has-box-art") == [
+        "no box art, so the game picker will draw a plain cover instead of showing the box"
+    ]
+    assert [one.game for one in report.findings if one.rule == "every-game-has-box-art"] == [
+        "platinum"
+    ]
+
+
+def test_a_transfer_node_is_left_out_of_the_coverage_report() -> None:
+    # Four zeroes in that report read like a game nobody has started. A node asks a player to
+    # fill nothing, which is not the same thing and not worth a row.
+    data = dataset(games=[game("platinum"), node("bank")])
+
+    assert [one.game for one in coverage_for(data)] == ["platinum"]

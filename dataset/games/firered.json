@@ -23064,6 +23064,20 @@
       "kind": "formChange",
       "game": "firered",
       "target": {
+        "species": "deoxys",
+        "form": "deoxys-attack"
+      },
+      "requirement": "Deoxys takes this shape in Firered and no other. Nothing in the game changes it; the cartridge decides",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "firered",
+      "target": {
         "species": "unown",
         "form": "unown-b"
       },
@@ -23111,6 +23125,21 @@
       "target": {
         "species": "unown",
         "form": "unown-e"
+      },
+      "requirement": "Its letter is fixed before you meet it; each of the seven chambers holds its own set, and the chambers open once the Ruin Valley writing has been read",
+      "location": "Tanoby Ruins",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "firered",
+      "target": {
+        "species": "unown",
+        "form": "unown-exclamation"
       },
       "requirement": "Its letter is fixed before you meet it; each of the seven chambers holds its own set, and the chambers open once the Ruin Valley writing has been read",
       "location": "Tanoby Ruins",
@@ -23305,6 +23334,21 @@
       "game": "firered",
       "target": {
         "species": "unown",
+        "form": "unown-question"
+      },
+      "requirement": "Its letter is fixed before you meet it; each of the seven chambers holds its own set, and the chambers open once the Ruin Valley writing has been read",
+      "location": "Tanoby Ruins",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "firered",
+      "target": {
+        "species": "unown",
         "form": "unown-r"
       },
       "requirement": "Its letter is fixed before you meet it; each of the seven chambers holds its own set, and the chambers open once the Ruin Valley writing has been read",
@@ -23429,50 +23473,6 @@
       },
       "requirement": "Its letter is fixed before you meet it; each of the seven chambers holds its own set, and the chambers open once the Ruin Valley writing has been read",
       "location": "Tanoby Ruins",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "firered",
-      "target": {
-        "species": "unown",
-        "form": "unown-exclamation"
-      },
-      "requirement": "Its letter is fixed before you meet it; each of the seven chambers holds its own set, and the chambers open once the Ruin Valley writing has been read",
-      "location": "Tanoby Ruins",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "firered",
-      "target": {
-        "species": "unown",
-        "form": "unown-question"
-      },
-      "requirement": "Its letter is fixed before you meet it; each of the seven chambers holds its own set, and the chambers open once the Ruin Valley writing has been read",
-      "location": "Tanoby Ruins",
-      "source": {
-        "source": "bulbapedia",
-        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
-        "retrievedOn": "2026-09-23"
-      }
-    },
-    {
-      "kind": "formChange",
-      "game": "firered",
-      "target": {
-        "species": "deoxys",
-        "form": "deoxys-attack"
-      },
-      "requirement": "Deoxys takes this shape in Firered and no other. Nothing in the game changes it; the cartridge decides",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",

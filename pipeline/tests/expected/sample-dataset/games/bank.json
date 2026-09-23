@@ -1,0 +1,14 @@
+{
+  "game": {
+    "id": "bank",
+    "title": "Pokemon Bank",
+    "version": "Bank",
+    "generation": 6,
+    "region": "",
+    "release": "service",
+    "released": "2013-12-25",
+    "dexSource": "gameDex"
+  },
+  "dexEntries": [],
+  "acquisitionMethods": []
+}

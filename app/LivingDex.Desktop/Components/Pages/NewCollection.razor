@@ -252,9 +252,16 @@ else
     /// year later, Emerald after that, and a player who grew up with them expects to read them
     /// that way. Title breaks a tie, which is what keeps the two halves of a pair - released on
     /// the same day - next to each other and always in the same order.
+    ///
+    /// Games, so the transfer nodes are left out of both pickers. Pokémon Bank is in the dataset
+    /// because the routes through it have to point at something, and it is not a main game -
+    /// there is nothing to fill in it - nor a linked one: a linked game is somewhere a player can
+    /// get something, and nothing was ever caught in Bank. It still does its work in the routes
+    /// the games below are offered by.
     /// </remarks>
     private IReadOnlyList<Game> Games =>
         [.. Dataset.Reference.Games
+            .Where(game => game.Release != GameRelease.Service)
             .OrderBy(game => game.Generation)
             .ThenBy(game => game.Released ?? DateOnly.MaxValue)
             .ThenBy(game => game.Title, StringComparer.Ordinal)];

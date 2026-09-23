@@ -1,5 +1,27 @@
 [
   {
+    "from": "bank",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "bank",
+    "to": "platinum",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    },
+    "history": {
+      "from": 3,
+      "to": 6
+    }
+  },
+  {
     "from": "diamond",
     "to": "platinum",
     "mechanism": "trade",
@@ -23,9 +45,27 @@
     "from": "home",
     "to": "sword",
     "mechanism": "home",
-    "direction": "bothWays",
+    "direction": "oneWay",
     "filter": {
       "filter": "presentInTargetDex"
+    }
+  },
+  {
+    "from": "platinum",
+    "to": "bank",
+    "mechanism": "pokeTransporter",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "sword",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
     }
   }
 ]

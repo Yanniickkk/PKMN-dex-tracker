@@ -28,6 +28,7 @@ from livingdex_pipeline.gamedefs import (
     gold,
     heartgold,
     hoenn,
+    home,
     johto,
     kalos,
     kanto,
@@ -62,6 +63,7 @@ from livingdex_pipeline.models import (
     GameRelease,
     GiftKind,
     PokemonType,
+    PresentInTargetDexFilter,
     Species,
     TransferDirection,
     TransferEdge,
@@ -1919,6 +1921,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
 
     assert registry.game_ids == [
         "alpha-sapphire",
+        "bank",
         "black",
         "black-2",
         "blue",
@@ -1928,6 +1931,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "firered",
         "gold",
         "heartgold",
+        "home",
         "leafgreen",
         "omega-ruby",
         "pearl",
@@ -1954,9 +1958,15 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # Poke Transfers, from each Generation 4 cartridge into each of the four. Then six between
     # the four Generation 6 cartridges, which is the whole of that generation's trading: the two
     # remakes arrived and the four routes X and Y had been declaring into an empty space became
-    # real without either of those files being touched. Nothing else - the route out of the
-    # generation is Bank, and Bank is not a game.
-    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6
+    # real without either of those files being touched.
+    #
+    # And then Bank, which is the eighteen that arrived with the node: ten Poke Transporter
+    # trips, one from each Virtual Console release and each Generation 5 cartridge, and for each
+    # of the four Generation 6 cartridges a deposit and a withdrawal. The deposit and the
+    # withdrawal are two routes rather than one because Bank hands back less than it takes. And
+    # one more with HOME: the way out of Bank, which goes nowhere else and comes back from
+    # nowhere.
+    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -1988,18 +1998,26 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     assert ("ruby", "omega-ruby") not in routes
     assert ("omega-ruby", "ruby") not in routes
 
-    # What is left waiting is one node, and for the first time since the Generation 5 sequels
-    # there is no game being waited on at all. Ten releases declare Poke Transporter into Bank
-    # and the four Generation 6 cartridges declare Bank itself, which is not a game and is not
-    # written: Phase 3's work.
-    waiting = {(edge.to, edge.mechanism) for _, edge in registry.held_back_edges}
+    # The fourteen that had been waiting for Bank are here, and no file that declared one was
+    # touched to light it: ten Transporter trips and the four Generation 6 deposits. The
+    # fifteenth is Bank's own way out, which waited for HOME.
+    assert ("red", "bank") in routes
+    assert ("black-2", "bank") in routes
+    assert ("x", "bank") in routes
+    assert ("bank", "x") in routes
+    assert ("bank", "home") in routes
+    # And the route the window refuses is refused by the graph rather than by the edge: Bank
+    # holds one edge back to each Generation 6 cartridge, and that edge says who may use it.
+    [withdrawal] = [
+        edge for edge in registry.edges if edge.from_ == "bank" and edge.to == "omega-ruby"
+    ]
 
-    assert waiting == {
-        ("bank", TransferMechanism.POKE_TRANSPORTER),
-        ("bank", TransferMechanism.BANK),
-    }
-    assert len(registry.held_back_edges) == 10 + 4
-    assert all(edge.to == "bank" for _, edge in registry.held_back_edges)
+    assert (withdrawal.history.from_, withdrawal.history.to) == (3, 6)
+    assert all(edge.history is None for edge in registry.edges if edge.to == "bank")
+
+    # And nothing at all is waiting, for the first time since the dataset held one game. Every
+    # route any of these twenty-six entries declares has both of its ends here.
+    assert registry.held_back_edges == []
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:
@@ -3768,18 +3786,126 @@ def test_nothing_carries_an_older_cartridge_into_generation_6() -> None:
         assert TransferMechanism.POKE_TRANSPORTER not in mechanisms
 
 
-def test_generation_6_talks_to_bank_itself_and_in_both_directions() -> None:
+def test_generation_6_talks_to_bank_itself_and_is_handed_back_less_than_it_gives() -> None:
     # The line between the cartridge era and what came after. Black reaches Bank through Poke
     # Transporter, one way and permanently; X deposits and withdraws, so a living dex can be
     # kept in Bank rather than only sent there.
     for module in (x, y):
-        [to_bank] = [edge for edge in module.edges() if edge.to == bank.NODE]
+        [deposit] = [edge for edge in module.edges() if edge.to == bank.NODE]
+        [withdrawal] = [edge for edge in module.edges() if edge.from_ == bank.NODE]
 
-        assert to_bank.mechanism is TransferMechanism.BANK
-        assert to_bank.direction is TransferDirection.BOTH_WAYS
-        assert isinstance(to_bank.filter, AllSpeciesFilter)
+        # Two one-way edges rather than one both-ways edge, which is the whole point: the two
+        # directions do not agree, and a both-ways edge can only say one thing about both.
+        assert deposit.mechanism is TransferMechanism.BANK
+        assert deposit.direction is TransferDirection.ONE_WAY
+        assert isinstance(deposit.filter, AllSpeciesFilter)
+        assert deposit.history is None
+
+        assert withdrawal.direction is TransferDirection.ONE_WAY
+        assert (withdrawal.history.from_, withdrawal.history.to) == (3, 6)
 
     assert bank.transporter_edge("black").direction is TransferDirection.ONE_WAY
+
+
+def test_the_registry_can_tell_a_node_from_a_game_before_either_is_built() -> None:
+    # The shared steps run before any game does and ask a source about every id the registry
+    # holds. PokeAPI has a version group for Omega Ruby and has never heard of Pokemon Bank, so
+    # the forms table has to be handed the games and not the nodes - and the first full build
+    # after Bank was registered failed exactly there.
+    registry = default_registry()
+
+    assert bank.NODE in registry.game_ids
+    assert home.NODE in registry.game_ids
+    assert bank.NODE not in registry.playable_ids
+    assert home.NODE not in registry.playable_ids
+    assert len(registry.playable_ids) == len(registry.game_ids) - 2
+
+
+def test_bank_is_a_node_rather_than_a_game() -> None:
+    # The first entry in this registry that nobody plays. It is here because a route has to
+    # point at something the validator counts as known, and everything that makes a game a game
+    # is absent: no dex to fill, no region, no National Dex, nothing ever caught in it.
+    data = bank.build(context(bank.NODE))
+
+    assert data.game.release is GameRelease.SERVICE
+    assert data.game.national_dex_through is None
+    assert data.game.region == ""
+    assert data.dex_entries == []
+    assert data.acquisition_methods == []
+
+
+def test_the_way_out_of_bank_is_declared_by_bank_and_waits_for_home() -> None:
+    # The same thing every game does about a route whose other end is not written yet, and the
+    # last one in the dataset: HOME is the only node left.
+    [out] = bank.edges()
+
+    assert (out.from_, out.to) == (bank.NODE, "home")
+    assert out.mechanism is TransferMechanism.HOME
+    assert out.direction is TransferDirection.ONE_WAY
+
+
+def test_bank_will_not_hand_a_virtual_console_pokemon_to_generation_6() -> None:
+    # The restriction that made a window necessary at all. Bank takes a Pokemon out of a
+    # Virtual Console Red as readily as out of Black, and the two do not come back out the same
+    # way: Generation 6 reads one and not the other. Nothing on the record says which it is, so
+    # the edge has to.
+    [withdrawal] = [edge for edge in x.edges() if edge.from_ == bank.NODE]
+
+    assert withdrawal.history == bank.GENERATION_6_WITHDRAWAL
+    assert (withdrawal.history.from_, withdrawal.history.to) == (3, 6)
+
+    # A Generation 3 Pokemon really can be in Bank, having come the long way round, and X takes
+    # it - so the floor is 3 rather than 5, which is where Transporter's own reach would put it.
+    assert withdrawal.history.from_ == 3
+
+
+def test_home_is_the_node_the_graph_ends_at() -> None:
+    # The second and last of them, and the one that closes the dataset's graph: HOME declares no
+    # route of its own, because nothing leaves it that is not a game's own business.
+    data = home.build(context(home.NODE))
+
+    assert data.game.release is GameRelease.SERVICE
+    assert data.game.national_dex_through is None
+    assert data.dex_entries == []
+    assert data.acquisition_methods == []
+
+
+def test_home_deposits_and_withdrawals_are_two_edges_because_one_would_refuse_everything() -> None:
+    # Not a tidiness argument like Bank's. A both-ways edge carries one filter in both
+    # directions, and this filter asks whether the game being transferred *into* lists the
+    # species - so read backwards it asks HOME, whose dex is empty, and every deposit ever made
+    # would have been refused.
+    deposit, withdrawal = home.home_edges("sword")
+
+    assert (deposit.from_, deposit.to) == ("sword", home.NODE)
+    assert isinstance(deposit.filter, AllSpeciesFilter)
+    assert deposit.direction is TransferDirection.ONE_WAY
+
+    assert (withdrawal.from_, withdrawal.to) == (home.NODE, "sword")
+    assert isinstance(withdrawal.filter, PresentInTargetDexFilter)
+    assert withdrawal.direction is TransferDirection.ONE_WAY
+
+    # Neither of them reads where a Pokemon has been. HOME's refusals are about lists, and the
+    # one route into it that cannot be undone is one way rather than filtered.
+    assert deposit.history is None
+    assert withdrawal.history is None
+
+
+def test_the_way_out_of_bank_is_lit_now_that_its_other_end_exists() -> None:
+    # The last held-back edge in the dataset, declared by Bank at its own step and waiting since.
+    # Nothing in bank.py was touched to light it.
+    [out] = bank.edges()
+
+    assert (out.from_, out.to) == (bank.NODE, home.NODE)
+    assert out.direction is TransferDirection.ONE_WAY
+
+    # One way, and the reason the 3DS era ends here: a Pokemon that has gone into HOME has no
+    # route back to anything with a cartridge slot.
+    reaching_bank = [
+        edge for edge in default_registry().edges if edge.from_ == home.NODE
+    ]
+
+    assert reaching_bank == []
 
 
 def kalos_slot(
@@ -4397,7 +4523,10 @@ def test_a_remake_cannot_trade_with_the_game_it_remakes() -> None:
     # The obvious route that does not exist. Ruby and Omega Ruby are the same region and the
     # same story, and no cable reaches a Game Boy Advance cartridge from a 3DS: what a Ruby has
     # to travel is Pal Park, the Poke Transfer, Poke Transporter and Bank.
-    reached = {edge.to for edge in omega_ruby.edges()}
+    # Bank's withdrawal is declared here too and starts at Bank, so the far end of each route
+    # is what is asked for rather than the `to` of each edge.
+    reached = {edge.to if edge.from_ == omega_ruby.GAME_ID else edge.from_ for edge in
+               omega_ruby.edges()}
 
     assert reached == {"x", "y", "alpha-sapphire", "bank"}
     assert "ruby" not in reached

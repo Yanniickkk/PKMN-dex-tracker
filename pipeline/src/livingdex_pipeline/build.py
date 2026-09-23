@@ -235,7 +235,8 @@ class Build:
         table = form_table(
             api,
             species=species,
-            game_ids=self.registry.game_ids,
+            # The games, not the nodes. A form lives in a version group and Bank is not one.
+            game_ids=self.registry.playable_ids,
             refresh=self.refresh,
         )
         forms: list[Form] = table.forms

@@ -16,6 +16,7 @@ public class TransferGraphTests
     private static readonly GameId Pearl = new("pearl");
     private static readonly GameId Platinum = new("platinum");
     private static readonly GameId Black = new("black");
+    private static readonly GameId X = new("x");
     private static readonly GameId Bank = new("bank");
     private static readonly GameId Home = new("home");
     private static readonly GameId Sword = new("sword");
@@ -49,10 +50,21 @@ public class TransferGraphTests
 
             new(Platinum, Black, TransferMechanism.PokeTransfer, TransferDirection.OneWay, new NationalDexRangeFilter(1, 493)),
             new(Black, Bank, TransferMechanism.PokeTransporter, TransferDirection.OneWay, new AllSpeciesFilter()),
+            new(Red, Bank, TransferMechanism.PokeTransporter, TransferDirection.OneWay, new AllSpeciesFilter()),
             new(Bank, Home, TransferMechanism.Home, TransferDirection.OneWay, new AllSpeciesFilter()),
 
-            // HOME will only put something into a game whose dex has room for it.
-            new(Home, Sword, TransferMechanism.Home, TransferDirection.BothWays, new PresentInTargetDexFilter()),
+            // Bank's two halves. It takes anything X holds and hands back only what has never
+            // been outside Generations 3 to 6, which is why they are two edges and not one.
+            new(X, Bank, TransferMechanism.Bank, TransferDirection.OneWay, new AllSpeciesFilter()),
+            new(Bank, X, TransferMechanism.Bank, TransferDirection.OneWay, new AllSpeciesFilter())
+            {
+                History = new HistoryWindow(3, 6),
+            },
+
+            // HOME will only put something into a game whose dex has room for it - and the
+            // deposit is a separate edge, because that filter read backwards asks HOME.
+            new(Sword, Home, TransferMechanism.Home, TransferDirection.OneWay, new AllSpeciesFilter()),
+            new(Home, Sword, TransferMechanism.Home, TransferDirection.OneWay, new PresentInTargetDexFilter()),
         ];
 
         Species[] species =
@@ -74,7 +86,36 @@ public class TransferGraphTests
             new(Home, DexTarget.ForSpecies(Decidueye), 724),
         ];
 
-        return new TransferGraph(edges, new ReferenceFilterContext(species, dexEntries), maxHops);
+        return new TransferGraph(edges, new ReferenceFilterContext(species, dexEntries, Games()), maxHops);
+    }
+
+    /// <summary>
+    /// Which generation each of these belongs to, which is all a history window reads.
+    /// </summary>
+    /// <remarks>
+    /// Bank is Generation 6, the generation it was built for. Nothing else about these entities
+    /// matters here, so they are made with the same few fields rather than described properly.
+    /// </remarks>
+    private static IEnumerable<Game> Games()
+    {
+        (GameId Id, int Generation)[] all =
+        [
+            (Red, 1), (Gold, 2), (Crystal, 2),
+            (Ruby, 3), (Sapphire, 3), (Emerald, 3), (FireRed, 3),
+            (Diamond, 4), (Pearl, 4), (Platinum, 4),
+            (Black, 5), (X, 6), (Bank, 6), (Home, 8), (Sword, 8),
+        ];
+
+        return all.Select(one => new Game(
+            one.Id,
+            one.Id.Value,
+            one.Id.Value,
+            one.Generation,
+            string.Empty,
+            GameRelease.Cartridge,
+            null,
+            DexSource.GameDex,
+            null));
     }
 
     [Fact]
@@ -349,7 +390,95 @@ public class TransferGraphTests
     {
         var graph = BuildGraph();
 
+        Assert.True(graph.RoutesBetween(Diamond, Pearl, Pikachu).Any);
+        Assert.True(graph.RoutesBetween(Pearl, Diamond, Pikachu).Any);
+    }
+
+    [Fact]
+    public void A_deposit_is_its_own_edge_because_the_target_dex_filter_read_backwards_asks_the_service()
+    {
+        // The trap this shape exists to avoid. A both-ways edge carries one filter in both
+        // directions, and PresentInTargetDexFilter asks whether the game being transferred into
+        // lists the species. Run backwards it asks HOME, which has no dex of its own, so a
+        // single both-ways edge would refuse every deposit ever made.
+        var graph = new TransferGraph(
+            [new(Home, Sword, TransferMechanism.Home, TransferDirection.BothWays, new PresentInTargetDexFilter())],
+            new ReferenceFilterContext(
+                [new(Zacian, 888, "Zacian", [PokemonType.Fairy], new EvolutionChainId("zacian"))],
+                [new(Sword, DexTarget.ForSpecies(Zacian), 888)],
+                Games()));
+
         Assert.True(graph.RoutesBetween(Home, Sword, Zacian).Any);
-        Assert.True(graph.RoutesBetween(Sword, Home, Zacian).Any);
+        Assert.False(graph.RoutesBetween(Sword, Home, Zacian).Any);
+
+        // Two one-way edges, which is what the pipeline writes, answer both questions.
+        Assert.True(BuildGraph().RoutesBetween(Sword, Home, Zacian).Any);
+    }
+
+    [Fact]
+    public void Bank_hands_back_what_it_took_from_generation_5_and_not_what_it_took_from_generation_1()
+    {
+        // The restriction that made a window necessary. Bank takes a Pokemon out of a Virtual
+        // Console Red as readily as out of Black, and X can read only one of the two - so the
+        // same two-hop shape is a route in one case and nothing at all in the other.
+        var graph = BuildGraph();
+
+        var fromBlack = graph.RoutesBetween(Black, X, DexTarget.ForSpecies(Treecko));
+        var fromRed = graph.RoutesBetween(Red, X, DexTarget.ForSpecies(Pikachu));
+
+        Assert.Equal([Black, Bank, X], fromBlack.Shortest!.Hops.Select(hop => hop.From).Append(X));
+        Assert.False(fromRed.Any);
+        Assert.Equal(NoRouteReason.NotConnected, fromRed.Reason);
+    }
+
+    [Fact]
+    public void A_window_is_read_against_the_whole_route_rather_than_the_step_taking_it()
+    {
+        // Nothing on the Bank-to-X edge knows where a Pokemon came from, and that is the point:
+        // the answer is in the three games behind it. Ruby reaches X the long way round - Pal
+        // Park, the Poke Transfer, Transporter, Bank - and every one of those is inside the
+        // window, so the route stands where Red's identical last two hops do not.
+        var graph = BuildGraph();
+
+        var route = graph.RoutesBetween(Ruby, X, DexTarget.ForSpecies(Treecko));
+
+        Assert.True(route.Any);
+        Assert.Equal([Ruby, Diamond, Pearl, Platinum, Black, Bank, X],
+            route.Shortest!.Hops.Select(hop => hop.From).Append(X));
+    }
+
+    [Fact]
+    public void A_window_refuses_a_route_even_when_no_species_was_named()
+    {
+        // The linked-game picker asks "could this game ever feed that one" and deliberately
+        // ignores species filters, because a game can be a good feeder and still refuse some of
+        // what lives in it. A window is not that kind of no: nothing whatever comes out of Bank
+        // into X once it has been in a Virtual Console game, so it has to bite here too.
+        var graph = BuildGraph();
+
+        Assert.True(graph.RoutesBetween(Black, X).Any);
+        Assert.False(graph.RoutesBetween(Red, X).Any);
+
+        Assert.Contains(Black, graph.ReachableFrom(X));
+        Assert.DoesNotContain(Red, graph.ReachableFrom(X));
+    }
+
+    [Fact]
+    public void A_node_of_unknown_generation_is_refused_by_a_window_rather_than_waved_through()
+    {
+        // The same stance a range filter takes towards a species it cannot number. A graph built
+        // without its games knows nothing about where anything has been, and a window that
+        // cannot be checked is not a window that passes.
+        var graph = new TransferGraph(
+            [
+                new(Black, Bank, TransferMechanism.PokeTransporter, TransferDirection.OneWay, new AllSpeciesFilter()),
+                new(Bank, X, TransferMechanism.Bank, TransferDirection.OneWay, new AllSpeciesFilter())
+                {
+                    History = new HistoryWindow(3, 6),
+                },
+            ],
+            new ReferenceFilterContext([], []));
+
+        Assert.False(graph.RoutesBetween(Black, X).Any);
     }
 }
