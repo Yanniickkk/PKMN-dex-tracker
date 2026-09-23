@@ -40192,6 +40192,381 @@
         "url": "https://bulbapedia.bulbagarden.net/wiki/In-game_trade",
         "retrievedOn": "2026-09-23"
       }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-b"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-c"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-d"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-e"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-f"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-g"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-h"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-i"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-j"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-k"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-l"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-m"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-n"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-o"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-p"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-q"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-r"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-s"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-t"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-u"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-v"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-w"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-x"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-y"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "crystal",
+      "target": {
+        "species": "unown",
+        "form": "unown-z"
+      },
+      "requirement": "Its letter is fixed before you meet it, and which letters are about depends on how many of the ruins' four puzzles have been solved",
+      "location": "Ruins of Alph",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
+        "retrievedOn": "2026-09-23"
+      }
     }
   ]
 }

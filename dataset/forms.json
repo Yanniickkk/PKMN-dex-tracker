@@ -1,1 +1,2725 @@
-[]
+[
+  {
+    "id": "abomasnow-female",
+    "species": "abomasnow",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "aipom-female",
+    "species": "aipom",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "alakazam-female",
+    "species": "alakazam",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "ambipom-female",
+    "species": "ambipom",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "basculin-blue-striped",
+    "species": "basculin",
+    "name": "Blue-Striped",
+    "kind": "functional",
+    "games": [
+      "black",
+      "black-2",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "beautifly-female",
+    "species": "beautifly",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "bibarel-female",
+    "species": "bibarel",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "bidoof-female",
+    "species": "bidoof",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "blaziken-female",
+    "species": "blaziken",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "buizel-female",
+    "species": "buizel",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "burmy-sandy",
+    "species": "burmy",
+    "name": "Sandy",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "burmy-trash",
+    "species": "burmy",
+    "name": "Trash",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "butterfree-female",
+    "species": "butterfree",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "cacturne-female",
+    "species": "cacturne",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "camerupt-female",
+    "species": "camerupt",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "combee-female",
+    "species": "combee",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "combusken-female",
+    "species": "combusken",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "croagunk-female",
+    "species": "croagunk",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "deerling-autumn",
+    "species": "deerling",
+    "name": "Autumn",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "deerling-summer",
+    "species": "deerling",
+    "name": "Summer",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "deerling-winter",
+    "species": "deerling",
+    "name": "Winter",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "deoxys-attack",
+    "species": "deoxys",
+    "name": "Attack",
+    "kind": "functional",
+    "games": [
+      "firered"
+    ]
+  },
+  {
+    "id": "deoxys-defense",
+    "species": "deoxys",
+    "name": "Defense",
+    "kind": "functional",
+    "games": [
+      "leafgreen"
+    ]
+  },
+  {
+    "id": "deoxys-speed",
+    "species": "deoxys",
+    "name": "Speed",
+    "kind": "functional",
+    "games": [
+      "emerald"
+    ]
+  },
+  {
+    "id": "dodrio-female",
+    "species": "dodrio",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "doduo-female",
+    "species": "doduo",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "donphan-female",
+    "species": "donphan",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "dustox-female",
+    "species": "dustox",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "eevee-female",
+    "species": "eevee",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "finneon-female",
+    "species": "finneon",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "floatzel-female",
+    "species": "floatzel",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "frillish-female",
+    "species": "frillish",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "gabite-female",
+    "species": "gabite",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "garchomp-female",
+    "species": "garchomp",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "gastrodon-east",
+    "species": "gastrodon",
+    "name": "East Sea",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "gible-female",
+    "species": "gible",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "girafarig-female",
+    "species": "girafarig",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "giratina-origin",
+    "species": "giratina",
+    "name": "Origin",
+    "kind": "functional",
+    "games": [
+      "black",
+      "black-2",
+      "heartgold",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "gligar-female",
+    "species": "gligar",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "gloom-female",
+    "species": "gloom",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "golbat-female",
+    "species": "golbat",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "goldeen-female",
+    "species": "goldeen",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "gulpin-female",
+    "species": "gulpin",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "gyarados-female",
+    "species": "gyarados",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "heracross-female",
+    "species": "heracross",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "hippopotas-female",
+    "species": "hippopotas",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "hippowdon-female",
+    "species": "hippowdon",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "houndoom-female",
+    "species": "houndoom",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "hypno-female",
+    "species": "hypno",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "jellicent-female",
+    "species": "jellicent",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "kadabra-female",
+    "species": "kadabra",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "keldeo-resolute",
+    "species": "keldeo",
+    "name": "Resolute",
+    "kind": "cosmetic",
+    "games": [
+      "black-2",
+      "white-2"
+    ]
+  },
+  {
+    "id": "kricketot-female",
+    "species": "kricketot",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "kricketune-female",
+    "species": "kricketune",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "kyurem-black",
+    "species": "kyurem",
+    "name": "Black",
+    "kind": "functional",
+    "games": [
+      "black-2",
+      "white-2"
+    ]
+  },
+  {
+    "id": "kyurem-white",
+    "species": "kyurem",
+    "name": "White",
+    "kind": "functional",
+    "games": [
+      "black-2",
+      "white-2"
+    ]
+  },
+  {
+    "id": "landorus-therian",
+    "species": "landorus",
+    "name": "Therian",
+    "kind": "functional",
+    "games": [
+      "black-2",
+      "white-2"
+    ]
+  },
+  {
+    "id": "ledian-female",
+    "species": "ledian",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "ledyba-female",
+    "species": "ledyba",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "ludicolo-female",
+    "species": "ludicolo",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "lumineon-female",
+    "species": "lumineon",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "luxio-female",
+    "species": "luxio",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "luxray-female",
+    "species": "luxray",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "magikarp-female",
+    "species": "magikarp",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "mamoswine-female",
+    "species": "mamoswine",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "medicham-female",
+    "species": "medicham",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "meditite-female",
+    "species": "meditite",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "meganium-female",
+    "species": "meganium",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "milotic-female",
+    "species": "milotic",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "murkrow-female",
+    "species": "murkrow",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "numel-female",
+    "species": "numel",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "nuzleaf-female",
+    "species": "nuzleaf",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "octillery-female",
+    "species": "octillery",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "pachirisu-female",
+    "species": "pachirisu",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "pichu-spiky-eared",
+    "species": "pichu",
+    "name": "Spiky-eared",
+    "kind": "cosmetic",
+    "games": [
+      "heartgold",
+      "soulsilver"
+    ]
+  },
+  {
+    "id": "pikachu-female",
+    "species": "pikachu",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "piloswine-female",
+    "species": "piloswine",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "politoed-female",
+    "species": "politoed",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "quagsire-female",
+    "species": "quagsire",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "raichu-female",
+    "species": "raichu",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "raticate-female",
+    "species": "raticate",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "rattata-female",
+    "species": "rattata",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "relicanth-female",
+    "species": "relicanth",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "rhydon-female",
+    "species": "rhydon",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "rhyhorn-female",
+    "species": "rhyhorn",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "rhyperior-female",
+    "species": "rhyperior",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "roselia-female",
+    "species": "roselia",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "roserade-female",
+    "species": "roserade",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "rotom-fan",
+    "species": "rotom",
+    "name": "Fan",
+    "kind": "functional",
+    "games": [
+      "black",
+      "black-2",
+      "heartgold",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ],
+    "types": [
+      "electric",
+      "flying"
+    ]
+  },
+  {
+    "id": "rotom-frost",
+    "species": "rotom",
+    "name": "Frost",
+    "kind": "functional",
+    "games": [
+      "black",
+      "black-2",
+      "heartgold",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ],
+    "types": [
+      "electric",
+      "ice"
+    ]
+  },
+  {
+    "id": "rotom-heat",
+    "species": "rotom",
+    "name": "Heat",
+    "kind": "functional",
+    "games": [
+      "black",
+      "black-2",
+      "heartgold",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ],
+    "types": [
+      "electric",
+      "fire"
+    ]
+  },
+  {
+    "id": "rotom-mow",
+    "species": "rotom",
+    "name": "Mow",
+    "kind": "functional",
+    "games": [
+      "black",
+      "black-2",
+      "heartgold",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ],
+    "types": [
+      "electric",
+      "grass"
+    ]
+  },
+  {
+    "id": "rotom-wash",
+    "species": "rotom",
+    "name": "Wash",
+    "kind": "functional",
+    "games": [
+      "black",
+      "black-2",
+      "heartgold",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ],
+    "types": [
+      "electric",
+      "water"
+    ]
+  },
+  {
+    "id": "sawsbuck-autumn",
+    "species": "sawsbuck",
+    "name": "Autumn",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "sawsbuck-summer",
+    "species": "sawsbuck",
+    "name": "Summer",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "sawsbuck-winter",
+    "species": "sawsbuck",
+    "name": "Winter",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "scizor-female",
+    "species": "scizor",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "scyther-female",
+    "species": "scyther",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "seaking-female",
+    "species": "seaking",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "shaymin-sky",
+    "species": "shaymin",
+    "name": "Sky",
+    "kind": "functional",
+    "games": [
+      "black",
+      "black-2",
+      "heartgold",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ],
+    "types": [
+      "grass",
+      "flying"
+    ]
+  },
+  {
+    "id": "shellos-east",
+    "species": "shellos",
+    "name": "East Sea",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "shiftry-female",
+    "species": "shiftry",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "shinx-female",
+    "species": "shinx",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "sneasel-female",
+    "species": "sneasel",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "snover-female",
+    "species": "snover",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "staraptor-female",
+    "species": "staraptor",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "staravia-female",
+    "species": "staravia",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "starly-female",
+    "species": "starly",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "steelix-female",
+    "species": "steelix",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "sudowoodo-female",
+    "species": "sudowoodo",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "swalot-female",
+    "species": "swalot",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "tangrowth-female",
+    "species": "tangrowth",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "thundurus-therian",
+    "species": "thundurus",
+    "name": "Therian",
+    "kind": "functional",
+    "games": [
+      "black-2",
+      "white-2"
+    ]
+  },
+  {
+    "id": "torchic-female",
+    "species": "torchic",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "tornadus-therian",
+    "species": "tornadus",
+    "name": "Therian",
+    "kind": "functional",
+    "games": [
+      "black-2",
+      "white-2"
+    ]
+  },
+  {
+    "id": "toxicroak-female",
+    "species": "toxicroak",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unfezant-female",
+    "species": "unfezant",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-b",
+    "species": "unown",
+    "name": "B",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-c",
+    "species": "unown",
+    "name": "C",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-d",
+    "species": "unown",
+    "name": "D",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-e",
+    "species": "unown",
+    "name": "E",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-exclamation",
+    "species": "unown",
+    "name": "!",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "emerald",
+      "firered",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-f",
+    "species": "unown",
+    "name": "F",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-g",
+    "species": "unown",
+    "name": "G",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-h",
+    "species": "unown",
+    "name": "H",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-i",
+    "species": "unown",
+    "name": "I",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-j",
+    "species": "unown",
+    "name": "J",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-k",
+    "species": "unown",
+    "name": "K",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-l",
+    "species": "unown",
+    "name": "L",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-m",
+    "species": "unown",
+    "name": "M",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-n",
+    "species": "unown",
+    "name": "N",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-o",
+    "species": "unown",
+    "name": "O",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-p",
+    "species": "unown",
+    "name": "P",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-q",
+    "species": "unown",
+    "name": "Q",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-question",
+    "species": "unown",
+    "name": "?",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "emerald",
+      "firered",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-r",
+    "species": "unown",
+    "name": "R",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-s",
+    "species": "unown",
+    "name": "S",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-t",
+    "species": "unown",
+    "name": "T",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-u",
+    "species": "unown",
+    "name": "U",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-v",
+    "species": "unown",
+    "name": "V",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-w",
+    "species": "unown",
+    "name": "W",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-x",
+    "species": "unown",
+    "name": "X",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-y",
+    "species": "unown",
+    "name": "Y",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "unown-z",
+    "species": "unown",
+    "name": "Z",
+    "kind": "cosmetic",
+    "games": [
+      "black",
+      "black-2",
+      "crystal",
+      "diamond",
+      "emerald",
+      "firered",
+      "gold",
+      "heartgold",
+      "leafgreen",
+      "pearl",
+      "platinum",
+      "ruby",
+      "sapphire",
+      "silver",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "ursaring-female",
+    "species": "ursaring",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "venusaur-female",
+    "species": "venusaur",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "vileplume-female",
+    "species": "vileplume",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "weavile-female",
+    "species": "weavile",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "wobbuffet-female",
+    "species": "wobbuffet",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "wooper-female",
+    "species": "wooper",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "wormadam-sandy",
+    "species": "wormadam",
+    "name": "Sandy",
+    "kind": "functional",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ],
+    "types": [
+      "bug",
+      "ground"
+    ]
+  },
+  {
+    "id": "wormadam-trash",
+    "species": "wormadam",
+    "name": "Trash",
+    "kind": "functional",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ],
+    "types": [
+      "bug",
+      "steel"
+    ]
+  },
+  {
+    "id": "xatu-female",
+    "species": "xatu",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  },
+  {
+    "id": "zubat-female",
+    "species": "zubat",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "black",
+      "black-2",
+      "diamond",
+      "heartgold",
+      "pearl",
+      "platinum",
+      "soulsilver",
+      "white",
+      "white-2"
+    ]
+  }
+]

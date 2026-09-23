@@ -10,9 +10,10 @@ TODO stays a list of what is still open rather than a growing archive.
 - **Tick the box on the way over.** `- [ ]` becomes `- [x]`.
 - **Date every move.** Append ` — YYYY-MM-DD` to the item. That is the day it was
   finished, not the day it was written.
-- **Keep the nesting.** A Phase 2 game moves with its 7 sub-steps intact, so the
-  record shows what "done" actually covered for that game.
-- **Partial work stays in the TODO.** A game with 4 of 7 steps ticked is not done;
+- **Keep the nesting.** A Phase 2 game moves with its sub-steps intact, so the
+  record shows what "done" actually covered for that game - including how many steps
+  there were at the time.
+- **Partial work stays in the TODO.** A game with four steps ticked is not done;
   leave it where it is. Only whole items cross over.
 - **Add a note when it is worth knowing.** Indent one line under the item for
   decisions taken, surprises found, or things deliberately left out.
@@ -806,7 +807,13 @@ Worth a validator rule if edges are ever written by hand.
 
 ## Phase 2 — Games
 
-A game lands here only once all 8 steps are ticked and its validation run is green.
+A game lands here only once every step is ticked and its validation run is green.
+
+The twenty games below were written against a checklist of 8 steps. It is 9 now: alternate forms
+went in between the events step and the validation one, and the games here did not have it. Their
+forms were filled in afterwards in one pass, which Phase 0.2 and 0.3 describe - twenty games had
+already been written by the time the shared table existed, and doing it per game would have meant
+going back through all of them. From Generation 6 on it is part of writing a game.
 
 ### A correction that touched all eight — 2026-09-22
 
