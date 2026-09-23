@@ -85,4 +85,36 @@ public sealed class SpritePathTests
         // what every-species-has-a-sprite already warns about, not something to handle twice.
         Assert.Equal("sprites/pikachu.png", Shipping().SpritePath(Pikachu, "generation-iii/emerald"));
     }
+
+    [Fact]
+    public void A_game_with_no_set_at_all_still_draws_the_right_form()
+    {
+        // Generation VII is why this exists: the source has no battle sprites for those games,
+        // and most of Alola's Kanto Pokémon are the regional form. Without a picture of the form
+        // in the shared set, an Alolan Rattata's tile would draw a Kantonian one.
+        var dataset = Shipping("rattata", "rattata-alola");
+
+        Assert.Equal(
+            "sprites/rattata-alola.png",
+            dataset.SpritePath(
+                DexTarget.ForForm(new SpeciesId("rattata"), new FormId("rattata-alola")),
+                null));
+    }
+
+    [Fact]
+    public void A_sheet_is_preferred_to_the_shared_set_even_for_a_form_it_never_drew()
+    {
+        // The sheet is what the game actually drew, so a Wash Rotom in Black keeps the
+        // Generation V Rotom it has always had rather than gaining today's artwork of the form.
+        var dataset = Shipping(
+            "rotom",
+            "rotom-wash",
+            "generation-v/black-white/rotom");
+
+        Assert.Equal(
+            "sprites/generation-v/black-white/rotom.png",
+            dataset.SpritePath(
+                DexTarget.ForForm(new SpeciesId("rotom"), new FormId("rotom-wash")),
+                "generation-v/black-white"));
+    }
 }

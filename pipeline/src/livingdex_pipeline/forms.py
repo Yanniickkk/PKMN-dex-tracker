@@ -44,7 +44,7 @@ import logging
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 
-from .models import Form, FormKind, PokemonType, Species
+from .models import DexTarget, Form, FormKind, PokemonType, Species
 from .pokeapi import PokeApiClient
 
 log = logging.getLogger(__name__)
@@ -93,7 +93,8 @@ HELD_ITEM_FORMS = frozenset({"arceus", "genesect"})
 #: it: a Deoxys is Normal in Ruby and Sapphire, Attack in FireRed, Defense in LeafGreen and
 #: Speed in Emerald, and trading it is the only way to see another. From Generation 4 on a
 #: meteorite cycles it through all four - outside in Veilstone City, on Route 3 in Johto, in the
-#: Nacrene Museum, in Ambrette Town's Fossil Lab, in Professor Cozmo's house in Fallarbor.
+#: Nacrene Museum, in Ambrette Town's Fossil Lab, in Professor Cozmo's house in Fallarbor, and
+#: beside Sophocles in the Hokulani Observatory on Mount Hokulani.
 #:
 #: Written out because the version group a form arrived in cannot say it. All three formes
 #: arrived with Generation 3 and were pinned to the one cartridge each of them came from, which
@@ -112,6 +113,8 @@ METEORITE: tuple[str, ...] = (
     "y",
     "omega-ruby",
     "alpha-sapphire",
+    "sun",
+    "moon",
 )
 
 ONLY_IN: Mapping[str, tuple[str, ...]] = {
@@ -225,6 +228,35 @@ class FormTable:
     forms: list[Form]
     #: Form id -> the names to try under a sprite set's folder, best first.
     pictures: Mapping[str, tuple[str, ...]]
+
+
+def targets_of(
+    api: PokeApiClient,
+    species: str,
+    known_forms: set[str],
+    *,
+    refresh: bool = False,
+) -> list[tuple[str, DexTarget]]:
+    """Every Pokemon of this species worth asking about, and what each one is in the dex.
+
+    An encounter, a gift and a static all hang off a Pokemon rather than a species, and a species
+    can be several of them: Rattata is ``rattata`` and ``rattata-alola``, Oricorio is four.
+
+    The default Pokemon is the species itself, which is how every game before Generation 7
+    reads: a Deerling caught in Unova is a Deerling, whichever coat the season gave it. Anything
+    else is a form, and only when the asking game's own table has it - the source knows a Dusk
+    Lycanroc and Sun does not, and inventing a target for it would put a tile in the grid that
+    nothing could ever fill.
+    """
+    found: list[tuple[str, DexTarget]] = []
+
+    for pokemon, is_default in api.varieties(species, refresh=refresh):
+        if is_default:
+            found.append((pokemon, DexTarget(species=species)))
+        elif pokemon in known_forms:
+            found.append((pokemon, DexTarget(species=species, form=pokemon)))
+
+    return found or [(species, DexTarget(species=species))]
 
 
 def form_table(

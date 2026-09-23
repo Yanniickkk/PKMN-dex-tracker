@@ -142,6 +142,13 @@ REQUIREMENTS: dict[str, str] = {
     "story-progress-defeat-mars": "After Mars is beaten at the Valley Windworks",
     "story-progress-beat-team-galactic-iron-island": "After Team Galactic is beaten on Iron Island",
     "other-talked-to-32-people-underground": "After talking to 32 people in the Underground",
+    # Alola's, and both halves of the same errand: Looker and Anabel hire the player to round up
+    # the Ultra Beasts that came through with Lusamine, and what is waiting at the end of it is
+    # the one that came through after them.
+    "other-captured-all-ultra-beasts": "After every Ultra Beast has been caught",
+    "story-progress-finished-looker-sidequest": (
+        "After the errand Looker and Anabel hire the player for is finished"
+    ),
     # The roaming legendaries of two generations, and the hoops each one waits behind. All of
     # these turned up the day the games started asking about their whole living dex instead of
     # their own Pokedex: every one of them is a National Dex entry that no regional list has.

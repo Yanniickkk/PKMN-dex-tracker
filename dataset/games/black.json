@@ -12359,6 +12359,713 @@
       "kind": "wild",
       "game": "black",
       "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Striaton City",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Striaton City",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 5,
+        "maximum": 20
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Pinwheel Forest",
+      "subArea": "Inside",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Pinwheel Forest",
+      "subArea": "Inside",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 5,
+        "maximum": 20
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Dragonspiral Tower",
+      "subArea": "Outside",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Dragonspiral Tower",
+      "subArea": "Outside",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 15,
+        "maximum": 40
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Victory Road",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Victory Road",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 20,
+        "maximum": 50
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Victory Road",
+      "subArea": "1F",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Victory Road",
+      "subArea": "1F",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 20,
+        "maximum": 50
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Giant Chasm",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Giant Chasm",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 25,
+        "maximum": 60
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Giant Chasm",
+      "subArea": "Forest Cave",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Giant Chasm",
+      "subArea": "Forest Cave",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 25,
+        "maximum": 60
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Village Bridge",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Village Bridge",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 25,
+        "maximum": 70
+      },
+      "ratePercent": 95.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 1",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 70
+      },
+      "ratePercent": 55.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 1",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 5,
+        "maximum": 20
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 3",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 3",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 5,
+        "maximum": 20
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Wellspring Cave",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Wellspring Cave",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 5,
+        "maximum": 20
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 6",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 6",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 10,
+        "maximum": 30
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Challenger's Cave",
+      "subArea": "B2F",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Challenger's Cave",
+      "subArea": "B2F",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 25,
+        "maximum": 70
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 11",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 11",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 25,
+        "maximum": 60
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 14",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 14",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 25,
+        "maximum": 60
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Abundant Shrine",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Abundant Shrine",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 25,
+        "maximum": 60
+      },
+      "ratePercent": 30.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Lostlorn Forest",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Cast into rippling water",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Lostlorn Forest",
+      "method": "ripplingWater",
+      "levels": {
+        "minimum": 5,
+        "maximum": 20
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "black",
+      "target": {
         "species": "sandile"
       },
       "location": "Desert Resort",
@@ -21809,7 +22516,7 @@
         "species": "basculin",
         "form": "basculin-blue-striped"
       },
-      "requirement": "The stripe follows the game: Black and Black 2 fill their water with the red one and White and White 2 with the blue, and the other is the rarer of the two",
+      "requirement": "Both stripes are in both games and the water tells them apart: Black and Black 2 hold the red one in ordinary water and White and White 2 the blue, and each game keeps its other stripe in the rippling water instead",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",

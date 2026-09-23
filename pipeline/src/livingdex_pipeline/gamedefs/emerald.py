@@ -241,6 +241,7 @@ def acquisition_methods(context: BuildContext, entries: list[DexEntry]) -> list[
             game_id=GAME_ID,
             version=POKEAPI_VERSION,
             species=species,
+            forms=context.forms_here(),
             refresh=context.refresh,
             places=places,
         ),

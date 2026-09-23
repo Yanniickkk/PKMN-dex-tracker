@@ -401,6 +401,10 @@ def test_a_form_the_version_group_cannot_place_is_written_out_by_hand() -> None:
     assert "ruby" not in module.METEORITE
     assert module.ONLY_IN["pichu-spiky-eared"] == ("heartgold", "soulsilver")
 
+    # And every generation since keeps putting one somewhere. Alola's is beside Sophocles in the
+    # Hokulani Observatory, which is the sort of thing a version group can never say.
+    assert {"sun", "moon"} <= set(module.METEORITE)
+
 
 def test_a_game_the_source_has_never_heard_of_fails_the_build() -> None:
     # A game id that is not also PokeAPI's name for that version would otherwise lose every

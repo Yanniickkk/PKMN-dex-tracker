@@ -66,11 +66,30 @@ class LocationNames:
 
 
 def english(names: list[dict], *, fallback: str) -> str:
+    """The English of a source's name list, with its apostrophes made uniform.
+
+    Asked for an item's name as well as a place's: :mod:`evolutions` needs the King's Rock and
+    the Razor Claw spelled the way a player would search for them, and the shape of the answer is
+    the same either way.
+    """
     for entry in names:
         if entry.get("language", {}).get("name") == "en":
-            return entry["name"]
+            return _apostrophes(entry["name"])
 
-    return fallback
+    return _apostrophes(fallback)
+
+
+def _apostrophes(name: str) -> str:
+    """One apostrophe, the typewriter one, wherever a name has one.
+
+    The source uses both and not by any rule: Hau'oli City is written with a straight apostrophe
+    and Hau'oli Cemetery, in the same game and on the same island, with a curly one. Five places
+    were the odd ones out, four of them in Alola and one in Kalos, and so was the King's Rock -
+    :mod:`evolutions` asks :func:`english` for an item's name as well as a place's. Whichever is
+    typographically nicer, a player searching for one of them should not have to guess which key
+    it was typed with.
+    """
+    return name.replace(chr(0x2019), "'")
 
 
 def sub_area(area_slug: str, location_slug: str) -> str | None:

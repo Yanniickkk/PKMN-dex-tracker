@@ -20269,6 +20269,1038 @@
       "kind": "wild",
       "game": "white-2",
       "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Striaton City",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Striaton City",
+      "method": "surf",
+      "levels": {
+        "minimum": 45,
+        "maximum": 60
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Pinwheel Forest",
+      "subArea": "Inside",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Pinwheel Forest",
+      "subArea": "Inside",
+      "method": "surf",
+      "levels": {
+        "minimum": 45,
+        "maximum": 60
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Dragonspiral Tower",
+      "subArea": "Outside",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Dragonspiral Tower",
+      "subArea": "Outside",
+      "method": "surf",
+      "levels": {
+        "minimum": 45,
+        "maximum": 60
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Giant Chasm",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Giant Chasm",
+      "method": "surf",
+      "levels": {
+        "minimum": 35,
+        "maximum": 50
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Village Bridge",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Village Bridge",
+      "method": "surf",
+      "levels": {
+        "minimum": 25,
+        "maximum": 40
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 1",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 70
+      },
+      "ratePercent": 95.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 1",
+      "method": "surf",
+      "levels": {
+        "minimum": 45,
+        "maximum": 60
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 3",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 3",
+      "method": "surf",
+      "levels": {
+        "minimum": 45,
+        "maximum": 60
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Wellspring Cave",
+      "method": "superRod",
+      "levels": {
+        "minimum": 50,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Wellspring Cave",
+      "method": "surf",
+      "levels": {
+        "minimum": 45,
+        "maximum": 60
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 6",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 6",
+      "method": "surf",
+      "levels": {
+        "minimum": 10,
+        "maximum": 30
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 11",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 11",
+      "method": "surf",
+      "levels": {
+        "minimum": 25,
+        "maximum": 40
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 13",
+      "method": "surf",
+      "levels": {
+        "minimum": 30,
+        "maximum": 40
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 14",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 14",
+      "method": "surf",
+      "levels": {
+        "minimum": 25,
+        "maximum": 40
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Abundant Shrine",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Abundant Shrine",
+      "method": "surf",
+      "levels": {
+        "minimum": 25,
+        "maximum": 40
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Lostlorn Forest",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Lostlorn Forest",
+      "method": "surf",
+      "levels": {
+        "minimum": 10,
+        "maximum": 25
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Undella Town",
+      "method": "surf",
+      "levels": {
+        "minimum": 30,
+        "maximum": 40
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Aspertia City",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Aspertia City",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 15
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Humilau City",
+      "method": "surf",
+      "levels": {
+        "minimum": 35,
+        "maximum": 45
+      },
+      "ratePercent": 5.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Victory Road",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Victory Road",
+      "method": "surf",
+      "levels": {
+        "minimum": 35,
+        "maximum": 50
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Floccesy Ranch",
+      "subArea": "Outer",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Floccesy Ranch",
+      "subArea": "Outer",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 15
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Floccesy Ranch",
+      "subArea": "Inner",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Floccesy Ranch",
+      "subArea": "Inner",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 15
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Relic Passage",
+      "subArea": "Relic Castle Entrance",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Relic Passage",
+      "subArea": "Relic Castle Entrance",
+      "method": "surf",
+      "levels": {
+        "minimum": 10,
+        "maximum": 30
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Clay Tunnel",
+      "method": "superRod",
+      "levels": {
+        "minimum": 50,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Clay Tunnel",
+      "method": "surf",
+      "levels": {
+        "minimum": 45,
+        "maximum": 60
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Nature Preserve",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "requirement": "Only by plane from Mistralton City, with the Permit Professor Juniper hands over for seeing all 297 entries in the sequels' dex that are not Mythical",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Nature Preserve",
+      "method": "surf",
+      "levels": {
+        "minimum": 45,
+        "maximum": 60
+      },
+      "ratePercent": 70.0,
+      "requirement": "Only by plane from Mistralton City, with the Permit Professor Juniper hands over for seeing all 297 entries in the sequels' dex that are not Mythical",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 19",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 19",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 15
+      },
+      "ratePercent": 100.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 20",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 20",
+      "method": "surf",
+      "levels": {
+        "minimum": 5,
+        "maximum": 15
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 22",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 22",
+      "method": "surf",
+      "levels": {
+        "minimum": 15,
+        "maximum": 40
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 23",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 60
+      },
+      "ratePercent": 40.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 23",
+      "method": "surf",
+      "levels": {
+        "minimum": 40,
+        "maximum": 55
+      },
+      "ratePercent": 70.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "white-2",
+      "target": {
         "species": "sandile"
       },
       "location": "Desert Resort",
@@ -32965,7 +33997,7 @@
         "species": "basculin",
         "form": "basculin-blue-striped"
       },
-      "requirement": "The stripe follows the game: Black and Black 2 fill their water with the red one and White and White 2 with the blue, and the other is the rarer of the two",
+      "requirement": "Both stripes are in both games and the water tells them apart: Black and Black 2 hold the red one in ordinary water and White and White 2 the blue, and each game keeps its other stripe in the rippling water instead",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",

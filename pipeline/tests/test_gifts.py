@@ -11,7 +11,7 @@ import logging
 from datetime import date
 
 from livingdex_pipeline.gifts import GiftDetail, gift_encounters
-from livingdex_pipeline.models import GiftKind
+from livingdex_pipeline.models import Form, FormKind, GiftKind
 
 TODAY = date(2026, 9, 21)
 
@@ -37,6 +37,8 @@ class FakeApi:
     def __init__(self, encounters: dict[str, list], locations: dict[str, tuple[str, str]]) -> None:
         self._encounters = encounters
         self._locations = locations
+        #: species -> extra (pokemon, is_default=False) pairs, for the tests that need one.
+        self.extra_varieties: dict[str, list[tuple[str, bool]]] = {}
 
     def retrieved_on(self, url: str) -> date:
         """The day the cache says this url was fetched, which a citation carries."""
@@ -44,6 +46,10 @@ class FakeApi:
 
     def default_pokemon(self, species: str, *, refresh: bool = False) -> str:
         return f"{species}-normal" if species == "deoxys" else species
+
+    def varieties(self, species: str, *, refresh: bool = False) -> list[tuple[str, bool]]:
+        """Every Pokemon of a species. The fakes hold one each unless a test says otherwise."""
+        return [(self.default_pokemon(species), True), *self.extra_varieties.get(species, [])]
 
     def encounters(self, pokemon: str, *, refresh: bool = False) -> list:
         return self._encounters.get(pokemon, [])
@@ -340,3 +346,48 @@ def test_a_description_that_fits_nowhere_is_said_out_loud(caplog) -> None:
 
     assert found[0].npc is None
     assert "which its gift table does not describe" in caplog.text
+
+
+def test_a_gift_can_belong_to_a_form_rather_than_to_the_species() -> None:
+    # What stands on Exeggutor Island is the Alolan Exeggutor, and the Kantonian one is trade-only
+    # in these games. A record saying "Exeggutor" would name the wrong tree.
+    api = FakeApi(
+        {
+            "exeggutor-alola": [
+                area("exeggutor-island-area", "sun", [row("static", 40)]),
+            ]
+        },
+        {"exeggutor-island-area": ("exeggutor-island", "Exeggutor Island")},
+    )
+    api.extra_varieties["exeggutor"] = [("exeggutor-alola", False)]
+
+    found = gift_encounters(
+        api,
+        game_id="sun",
+        version="sun",
+        species=["exeggutor"],
+        forms=[
+            Form(
+                id="exeggutor-alola",
+                species="exeggutor",
+                name="Alola",
+                kind=FormKind.REGIONAL,
+                games=["sun"],
+            )
+        ],
+    )
+
+    assert len(found) == 1
+    assert found[0].target.species == "exeggutor"
+    assert found[0].target.form == "exeggutor-alola"
+
+
+def test_a_game_that_passes_no_forms_is_handed_only_the_default() -> None:
+    # Which is every game written before Alola, and none of them loses a record by it.
+    api = FakeApi(
+        {"exeggutor-alola": [area("exeggutor-island-area", "sun", [row("static", 40)])]},
+        {"exeggutor-island-area": ("exeggutor-island", "Exeggutor Island")},
+    )
+    api.extra_varieties["exeggutor"] = [("exeggutor-alola", False)]
+
+    assert gift_encounters(api, game_id="sun", version="sun", species=["exeggutor"]) == []

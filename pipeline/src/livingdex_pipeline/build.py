@@ -246,6 +246,9 @@ class Build:
         self._form_pictures = table.pictures
         rules: list[EvolutionRule] = self._fetch_evolution_rules(api, species)
         self._rules = rules
+
+        if self.sprites:
+            sprite_paths.extend(self._fetch_form_faces(api, client, forms, writer))
         edges: list[TransferEdge] = self.registry.edges
 
         for game_id, held in self.registry.held_back_edges:
@@ -313,6 +316,38 @@ class Build:
                 continue
 
             written.append(writer.write_sprite(f"{one.id}.png", body))
+
+        return written
+
+    def _fetch_form_faces(
+        self,
+        api: PokeApiClient,
+        client: PoliteClient,
+        forms: list[Form],
+        writer: DatasetWriter,
+    ) -> list[Path]:
+        """One picture per form in the shared set, for every game that has no sheet of its own.
+
+        Without these a form has nothing but its species to fall back on, and the tile for an
+        Alolan Rattata draws a Kantonian one. That was tolerable while a form was a rare thing
+        a few sheets drew; Generation 7 made it the ordinary case, because most of Alola's Kanto
+        Pokemon *are* the regional form and the source has no battle sprites for those games at
+        all.
+
+        A game with a sheet still prefers it: the app tries the sheet's form, then the sheet's
+        species, then these, then the shared species. So a Wash Rotom in Black keeps the
+        Generation 5 Rotom it has always had, and gains the right picture only where the sheet
+        had none.
+        """
+        pictures = self._form_pictures or form_pictures(api, forms, refresh=self.refresh)
+        written: list[Path] = []
+
+        for form in (one.id for one in forms if one.id in pictures):
+            body = self._first_picture(client, None, pictures[form])
+            if body is not None:
+                written.append(writer.write_sprite(f"{form}.png", body))
+
+        log.info("form pictures in the shared set: %s of %s", len(written), len(forms))
 
         return written
 
@@ -434,11 +469,13 @@ class Build:
     def _first_picture(
         self,
         client: PoliteClient,
-        sprite_set: str,
+        sprite_set: str | None,
         candidates: tuple[str, ...],
     ) -> bytes | None:
+        """The first of these that the repository actually has, under one set or the shared one."""
         for name in candidates:
-            url = f"{SPRITES}/versions/{sprite_set}/{name}"
+            under = f"versions/{sprite_set}/" if sprite_set else ""
+            url = f"{SPRITES}/{under}{name}"
             try:
                 return client.fetch(url, refresh=self.refresh).body
             except (httpx.HTTPError, RobotsDisallowed):

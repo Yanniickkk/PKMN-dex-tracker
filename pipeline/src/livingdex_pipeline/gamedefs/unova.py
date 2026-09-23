@@ -889,8 +889,9 @@ BW_VERSION_GROUP = "black-white"
 #: Nobody is named by the game as a trader; the name is the original trainer stamped on what
 #: they hand over, which is the same name a player sees in the summary screen forever after.
 BW_SHARED_TRADES = (
-    # The stripe a player gets depends on which half they own, and this dataset has no form
-    # table yet to hold that - so both halves record a Basculin and the difference waits.
+    # The stripe a player gets depends on which half they own. A trade can carry a form now,
+    # so what is missing is no longer the schema but the fact: Bulbapedia lists both stripes
+    # against this one trade and does not say which cartridge gets which.
     InGameTrade(gets="basculin", wants="minccino", location="Driftveil City", npc="Kyle"),
     InGameTrade(gets="emolga", wants="boldore", location="Route 7", npc="Manny"),
     InGameTrade(gets="rotom", wants="ditto", location="Route 15", npc="Lillian"),
@@ -1148,12 +1149,15 @@ BW_FORM_CHANGES: dict[str, FormChange] = {
         "sawsbuck-autumn",
         "sawsbuck-winter",
     ),
-    # And the one that is not a change either: the stripe is the cartridge. Both are in both
-    # games, in different water, which is why this is not a version exclusive.
+    # And the one that is not a change either: the stripe is the water. Both are in both games,
+    # which is why this is not a version exclusive - and until these games were given their own
+    # forms to ask about, the sentence below was all the dataset had, and it read as though a
+    # Black player could not catch a blue one at all.
     "basculin-blue-striped": FormChange(
         requirement=(
-            "The stripe follows the game: Black and Black 2 fill their water with the red one "
-            "and White and White 2 with the blue, and the other is the rarer of the two"
+            "Both stripes are in both games and the water tells them apart: Black and Black 2 "
+            "hold the red one in ordinary water and White and White 2 the blue, and each game "
+            "keeps its other stripe in the rippling water instead"
         )
     ),
     # Rotom's appliances moved with the player. Sinnoh keeps them behind the Secret Key and
@@ -1313,6 +1317,7 @@ def acquisition_methods(
             game_id=game_id,
             version=version,
             species=species,
+            forms=context.forms_here(),
             refresh=context.refresh,
             places=places,
             gates=PLACE_GATES,

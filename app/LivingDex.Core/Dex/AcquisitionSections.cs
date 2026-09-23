@@ -115,6 +115,8 @@ public static class AcquisitionNames
         EncounterMethod.Ambush => "an ambush",
         EncounterMethod.Dive => "diving",
         EncounterMethod.Soaring => "soaring",
+        EncounterMethod.Sos => "SOS calls",
+        EncounterMethod.MovingSpot => "moving spots",
         _ => "another way",
     };
 

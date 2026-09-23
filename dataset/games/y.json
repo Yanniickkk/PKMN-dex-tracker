@@ -15294,6 +15294,167 @@
       "kind": "wild",
       "game": "y",
       "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Couriway Town",
+      "method": "superRod",
+      "levels": {
+        "minimum": 45,
+        "maximum": 45
+      },
+      "ratePercent": 35.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "y",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Laverre City",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 35
+      },
+      "ratePercent": 35.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "y",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 15",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 35
+      },
+      "ratePercent": 35.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "y",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Route 16",
+      "method": "superRod",
+      "levels": {
+        "minimum": 35,
+        "maximum": 35
+      },
+      "ratePercent": 35.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "y",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Frost Cavern",
+      "method": "superRod",
+      "levels": {
+        "minimum": 40,
+        "maximum": 40
+      },
+      "ratePercent": 35.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "y",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Pokémon Village",
+      "method": "superRod",
+      "levels": {
+        "minimum": 50,
+        "maximum": 50
+      },
+      "ratePercent": 35.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "y",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Victory Road",
+      "method": "superRod",
+      "levels": {
+        "minimum": 55,
+        "maximum": 55
+      },
+      "ratePercent": 35.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "y",
+      "target": {
+        "species": "basculin",
+        "form": "basculin-blue-striped"
+      },
+      "location": "Victory Road",
+      "subArea": "Outside",
+      "method": "superRod",
+      "levels": {
+        "minimum": 55,
+        "maximum": 55
+      },
+      "ratePercent": 35.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/basculin-blue-striped/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "y",
+      "target": {
         "species": "sandile"
       },
       "location": "Route 9",
@@ -19457,6 +19618,66 @@
       "kind": "wild",
       "game": "y",
       "target": {
+        "species": "pumpkaboo",
+        "form": "pumpkaboo-small"
+      },
+      "location": "Route 16",
+      "method": "walk",
+      "levels": {
+        "minimum": 35,
+        "maximum": 36
+      },
+      "ratePercent": 20.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/pumpkaboo-small/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "y",
+      "target": {
+        "species": "pumpkaboo",
+        "form": "pumpkaboo-large"
+      },
+      "location": "Route 16",
+      "method": "walk",
+      "levels": {
+        "minimum": 36,
+        "maximum": 36
+      },
+      "ratePercent": 10.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/pumpkaboo-large/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "y",
+      "target": {
+        "species": "pumpkaboo",
+        "form": "pumpkaboo-super"
+      },
+      "location": "Route 16",
+      "method": "walk",
+      "levels": {
+        "minimum": 36,
+        "maximum": 36
+      },
+      "ratePercent": 1.0,
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/pumpkaboo-super/encounters",
+        "retrievedOn": "2026-09-23"
+      }
+    },
+    {
+      "kind": "wild",
+      "game": "y",
+      "target": {
         "species": "bergmite"
       },
       "location": "Frost Cavern",
@@ -19730,7 +19951,7 @@
         "species": "articuno"
       },
       "giftKind": "staticEncounter",
-      "location": "Sea Spirit’s Den",
+      "location": "Sea Spirit's Den",
       "level": 70,
       "requirement": "Only in a save that started with Chespin and only once it has been met eleven times while roaming, which is when it stops fleeing and waits here",
       "source": {
@@ -19762,7 +19983,7 @@
         "species": "zapdos"
       },
       "giftKind": "staticEncounter",
-      "location": "Sea Spirit’s Den",
+      "location": "Sea Spirit's Den",
       "level": 70,
       "requirement": "Only in a save that started with Fennekin and only once it has been met eleven times while roaming, which is when it stops fleeing and waits here",
       "source": {
@@ -19794,7 +20015,7 @@
         "species": "moltres"
       },
       "giftKind": "staticEncounter",
-      "location": "Sea Spirit’s Den",
+      "location": "Sea Spirit's Den",
       "level": 70,
       "requirement": "Only in a save that started with Froakie and only once it has been met eleven times while roaming, which is when it stops fleeing and waits here",
       "source": {
@@ -26127,7 +26348,7 @@
         "species": "gourgeist",
         "form": "gourgeist-large"
       },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "requirement": "Catch one that size on Route 16, which holds all four, or hatch one from a mother of it; the size carries through the trade it evolves by",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26141,7 +26362,7 @@
         "species": "gourgeist",
         "form": "gourgeist-small"
       },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "requirement": "Catch one that size on Route 16, which holds all four, or hatch one from a mother of it; the size carries through the trade it evolves by",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26155,7 +26376,7 @@
         "species": "gourgeist",
         "form": "gourgeist-super"
       },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "requirement": "Catch one that size on Route 16, which holds all four, or hatch one from a mother of it; the size carries through the trade it evolves by",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26674,7 +26895,7 @@
         "species": "pumpkaboo",
         "form": "pumpkaboo-large"
       },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "requirement": "Catch one that size on Route 16, which holds all four, or hatch one from a mother of it; the size carries through the trade it evolves by",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26688,7 +26909,7 @@
         "species": "pumpkaboo",
         "form": "pumpkaboo-small"
       },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "requirement": "Catch one that size on Route 16, which holds all four, or hatch one from a mother of it; the size carries through the trade it evolves by",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
@@ -26702,7 +26923,7 @@
         "species": "pumpkaboo",
         "form": "pumpkaboo-super"
       },
-      "requirement": "Catch one that size, which gets rarer the bigger it is, or hatch one from a mother of it; the size carries through the trade it evolves by",
+      "requirement": "Catch one that size on Route 16, which holds all four, or hatch one from a mother of it; the size carries through the trade it evolves by",
       "source": {
         "source": "bulbapedia",
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",

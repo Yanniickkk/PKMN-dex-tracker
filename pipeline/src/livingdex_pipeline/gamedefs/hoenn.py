@@ -968,6 +968,7 @@ def gen6_acquisition_methods(
             game_id=game_id,
             version=version,
             species=species,
+            forms=context.forms_here(),
             refresh=context.refresh,
             places=places,
         )
@@ -1123,6 +1124,7 @@ def gba_pair_acquisition_methods(
             game_id=game_id,
             version=version,
             species=species,
+            forms=context.forms_here(),
             refresh=context.refresh,
             places=places,
         ),

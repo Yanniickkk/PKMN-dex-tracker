@@ -423,7 +423,7 @@ XY_FORM_CHANGES_BY_SPECIES: dict[str, FormChange] = {
     **spread(
         FormChange(
             requirement=(
-                "Catch one that size, which gets rarer the bigger it is, or hatch one from a "
+                "Catch one that size on Route 16, which holds all four, or hatch one from a "
                 "mother of it; the size carries through the trade it evolves by"
             ),
         ),
@@ -601,6 +601,7 @@ def gen6_acquisition_methods(
             game_id=game_id,
             version=version,
             species=species,
+            forms=context.forms_here(),
             refresh=context.refresh,
             places=places,
             gates=PLACE_GATES,

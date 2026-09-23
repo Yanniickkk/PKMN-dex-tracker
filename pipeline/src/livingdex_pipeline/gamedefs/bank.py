@@ -39,6 +39,7 @@ from ..models import (
     GameData,
     GameRelease,
     HistoryWindow,
+    SpeciesFilter,
     TransferDirection,
     TransferEdge,
     TransferMechanism,
@@ -130,17 +131,27 @@ def transporter_edge(game_id: str) -> TransferEdge:
     )
 
 
-def bank_edges(game_id: str, *, withdrawal: HistoryWindow | None = None) -> list[TransferEdge]:
+def bank_edges(
+    game_id: str,
+    *,
+    withdrawal: HistoryWindow | None = None,
+    carries: SpeciesFilter | None = None,
+) -> list[TransferEdge]:
     """A game that talks to Bank itself: the deposit, and the withdrawal beside it.
 
     Two one-way edges rather than one both-ways edge, and the difference is not bookkeeping.
-    Bank takes anything a game can hold; what it gives back depends on where that Pokemon has
-    been, which is ``withdrawal``. A both-ways edge says one thing about both directions, and
-    for the Generation 6 games the two directions do not agree.
+    Bank takes anything a game can hold; what it gives back is narrower, in two ways that have
+    nothing to do with each other. ``withdrawal`` is where a Pokemon may have *been* - the
+    Generation 6 games refuse anything from outside their own stretch of the series. ``carries``
+    is what it may *be*: Sun and Moon will not take the five species Ultra Sun and Ultra Moon
+    introduced, whatever route they came by.
+
+    A both-ways edge says one thing about both directions, and in every case so far the two
+    directions disagree.
 
     This is the first place in this dataset where a living dex can be kept somewhere that is not
-    a game, and the asymmetry is what that costs: a Generation 6 player can put anything on the
-    shelf and cannot take all of it back off.
+    a game, and the asymmetry is what that costs: a player can put anything on the shelf and
+    cannot take all of it back off.
     """
     return [
         TransferEdge(
@@ -155,7 +166,7 @@ def bank_edges(game_id: str, *, withdrawal: HistoryWindow | None = None) -> list
             to=game_id,
             mechanism=TransferMechanism.BANK,
             direction=TransferDirection.ONE_WAY,
-            filter=AllSpeciesFilter(),
+            filter=carries or AllSpeciesFilter(),
             history=withdrawal,
         ),
     ]

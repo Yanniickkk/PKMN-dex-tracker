@@ -59,6 +59,17 @@
   },
   {
     "from": "bank",
+    "to": "moon",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 802
+    }
+  },
+  {
+    "from": "bank",
     "to": "omega-ruby",
     "mechanism": "bank",
     "direction": "oneWay",
@@ -68,6 +79,17 @@
     "history": {
       "from": 3,
       "to": 6
+    }
+  },
+  {
+    "from": "bank",
+    "to": "sun",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 802
     }
   },
   {
@@ -662,6 +684,24 @@
     }
   },
   {
+    "from": "moon",
+    "to": "bank",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "moon",
+    "to": "sun",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
     "from": "omega-ruby",
     "to": "bank",
     "mechanism": "bank",
@@ -1024,6 +1064,15 @@
       "filter": "nationalDexRange",
       "from": 1,
       "to": 493
+    }
+  },
+  {
+    "from": "sun",
+    "to": "bank",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
     }
   },
   {

@@ -62,6 +62,14 @@ METHOD_ICONS: dict[str, str] = {
     # Flute is the whole of Soaring: play it and a Latios or Latias comes for you.
     "dive": "hm07",
     "soaring": "eon-flute",
+    # Alola's. An Adrenaline Orb is the item made for SOS battles - it makes a Pokemon call for
+    # help sooner - so it is a picture of the thing itself rather than of half of it.
+    #
+    # A moving spot is three things at once - rustling grass, a sand cloud, bubbles on the sea -
+    # and the Smoke Ball is a true picture of one of them, which :data:`METHOD_ICONS` above
+    # already decided is better than a stand-in invented for all three.
+    "sos": "adrenaline-orb",
+    "moving-spot": "smoke-ball",
     "other": "poke-ball",
     # Gifts and statics.
     "starter": "poke-ball",

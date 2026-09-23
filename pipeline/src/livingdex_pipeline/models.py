@@ -135,6 +135,19 @@ class EncounterMethod(StrEnum):
     FLOWER_PATCH = "flowerPatch"
     BERRY_TREE = "berryTree"
     AMBUSH = "ambush"
+    # Alola's own two, and the first is the generation's signature: a wild Pokemon at low
+    # health calls for help and another comes. Whole species are in these games only as the ally
+    # somebody else calls - a hundred and forty-six slots in Sun alone - so "you cannot meet this
+    # one, only be introduced to it" is a way of starting an encounter rather than a note on one.
+    #
+    # The other is Unova's four moving spots come back as one. Something stirs and a table of
+    # its own is under it: grass that rustles on a route, a cloud of sand in Haina Desert, a
+    # patch of bubbles on the sea. The source gives all three as one method whose English names
+    # only the water - "fishing at bubbling spots" - which is why this is named for what the
+    # three have in common instead. What a player is actually looking at is the ground they are
+    # standing on, and a record says where it is.
+    SOS = "sos"
+    MOVING_SPOT = "movingSpot"
     # And the two the Hoenn remakes brought, which are the two halves of Hoenn nobody could
     # reach before: under the sea and over it. Diving is an HM taught in Mossdeep and a table of
     # its own beneath the water a player is surfing on; Soaring is the Eon Flute, a Latias or

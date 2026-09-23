@@ -28,6 +28,13 @@ class InGameTrade:
     #: What the player has to hand over. The NPC will not take anything else - unless this is
     #: left out, which is the trader who will take whatever is in the party.
     wants: str | None = None
+    #: Which form of :attr:`gets`, when the trader hands over a particular one.
+    #:
+    #: Alola is the first region where one does: the trader in Tapu Village wants a Haunter and
+    #: gives an Alolan Graveler, and "Graveler" would name the wrong rock. Unova has the other
+    #: case and still cannot use it - Kyle's Basculin in Driftveil City is one stripe in Black
+    #: and the other in White, and which is which is not written anywhere this dataset has read.
+    form: str | None = None
     #: Who trades. The games record the trader as the original trainer of what they hand over,
     #: which is where this name comes from.
     npc: str | None = None
@@ -45,7 +52,7 @@ def trade_encounters(
     return [
         TradeAcquisition(
             game=game_id,
-            target=DexTarget(species=trade.gets),
+            target=DexTarget(species=trade.gets, form=trade.form),
             location=trade.location,
             npc=trade.npc,
             wants=DexTarget(species=trade.wants) if trade.wants else None,

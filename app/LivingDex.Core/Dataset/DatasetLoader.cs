@@ -70,30 +70,40 @@ public sealed record LoadedDataset(
     /// The set the game being played uses, or null to go straight to the shared one.
     /// </param>
     /// <remarks>
-    /// A form falls back to its species before the species falls back to the shared set, so
-    /// there are three things to try rather than two. Most sheets have pictures of very few
-    /// forms - the Generation 5 one drew Deerling's seasons and has nothing for Wash Rotom,
-    /// which the games themselves did draw - and a tile with the species' picture and the
-    /// form's name is better than a hole.
+    /// Four things to try, most particular first: this sheet's picture of the form, this
+    /// sheet's picture of the species, the shared picture of the form, the shared picture of
+    /// the species.
+    ///
+    /// The sheet comes first all the way down because a sheet is what the game drew. Most
+    /// sheets have pictures of very few forms - the Generation 5 one drew Deerling's seasons
+    /// and has nothing for Wash Rotom, which the games themselves did draw - so a Wash Rotom in
+    /// Black keeps the Generation 5 Rotom it has always had.
+    ///
+    /// The shared form picture is what Generation 7 needed. Those games have no sheet in the
+    /// source at all, and most of Alola's Kanto Pokémon are the regional form, so without it
+    /// the tile for an Alolan Rattata would draw a Kantonian one.
     /// </remarks>
     public string SpritePath(DexTarget target, string? spriteSet)
     {
         var shared = $"{DatasetLayout.SpritesDirectory}/{target.Species.Value}.png";
+        var form = target.Form;
 
-        if (spriteSet is null)
+        if (spriteSet is not null)
         {
-            return shared;
+            if (form is { } inSet && Sprites.Contains($"{spriteSet}/{inSet.Value}"))
+            {
+                return $"{DatasetLayout.SpritesDirectory}/{spriteSet}/{inSet.Value}.png";
+            }
+
+            var own = $"{spriteSet}/{target.Species.Value}";
+            if (Sprites.Contains(own))
+            {
+                return $"{DatasetLayout.SpritesDirectory}/{own}.png";
+            }
         }
 
-        if (target.Form is { } form && Sprites.Contains($"{spriteSet}/{form.Value}"))
-        {
-            return $"{DatasetLayout.SpritesDirectory}/{spriteSet}/{form.Value}.png";
-        }
-
-        var own = $"{spriteSet}/{target.Species.Value}";
-
-        return Sprites.Contains(own)
-            ? $"{DatasetLayout.SpritesDirectory}/{own}.png"
+        return form is { } alone && Sprites.Contains(alone.Value)
+            ? $"{DatasetLayout.SpritesDirectory}/{alone.Value}.png"
             : shared;
     }
 

@@ -12,6 +12,7 @@ import pytest
 
 from livingdex_pipeline.build import default_registry
 from livingdex_pipeline.gamedefs import (
+    alola,
     alpha_sapphire,
     bank,
     black,
@@ -33,6 +34,7 @@ from livingdex_pipeline.gamedefs import (
     kalos,
     kanto,
     leafgreen,
+    moon,
     omega_ruby,
     pearl,
     platinum,
@@ -42,6 +44,7 @@ from livingdex_pipeline.gamedefs import (
     silver,
     sinnoh,
     soulsilver,
+    sun,
     unova,
     white,
     white2,
@@ -105,6 +108,7 @@ VERSION_GROUP_ORDER = {
     "black-2-white-2": 12,
     "x-y": 13,
     "omega-ruby-alpha-sapphire": 14,
+    "sun-moon": 15,
 }
 
 
@@ -119,6 +123,8 @@ class FakeApi:
         self.asked_for: list[str] = []
         self._entries = entries if entries is not None else [(1, "treecko"), (2, "grovyle")]
         self._encounters = encounters or {}
+        #: species -> extra (pokemon, is_default=False) pairs, for the tests that need one.
+        self.extra_varieties: dict[str, list[tuple[str, bool]]] = {}
 
     def entries(self) -> list[tuple[int, str]]:
         """The fake dex, without recording that anybody asked for it."""
@@ -134,6 +140,10 @@ class FakeApi:
 
     def default_pokemon(self, species: str, *, refresh: bool = False) -> str:
         return species
+
+    def varieties(self, species: str, *, refresh: bool = False) -> list[tuple[str, bool]]:
+        """Every Pokemon of a species. The fakes hold one each unless a test says otherwise."""
+        return [(self.default_pokemon(species), True), *self.extra_varieties.get(species, [])]
 
     def encounters(self, pokemon: str, *, refresh: bool = False) -> list:
         return self._encounters.get(pokemon, [])
@@ -1933,6 +1943,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "heartgold",
         "home",
         "leafgreen",
+        "moon",
         "omega-ruby",
         "pearl",
         "platinum",
@@ -1941,6 +1952,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "sapphire",
         "silver",
         "soulsilver",
+        "sun",
         "white",
         "white-2",
         "x",
@@ -1966,7 +1978,11 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # withdrawal are two routes rather than one because Bank hands back less than it takes. And
     # one more with HOME: the way out of Bank, which goes nowhere else and comes back from
     # nowhere.
-    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1
+    #
+    # Generation 7 opens with one trade between its two halves and four more Bank edges, a
+    # deposit and a withdrawal each. The four routes Sun and Moon declare to Ultra Sun and Ultra
+    # Moon are waiting, as X and Y's to the remakes once were.
+    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 1 + 4
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -2015,9 +2031,16 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     assert (withdrawal.history.from_, withdrawal.history.to) == (3, 6)
     assert all(edge.history is None for edge in registry.edges if edge.to == "bank")
 
-    # And nothing at all is waiting, for the first time since the dataset held one game. Every
-    # route any of these twenty-six entries declares has both of its ends here.
-    assert registry.held_back_edges == []
+    # What waits now is Generation 7's other half: two trades from each of Sun and Moon into
+    # each of Ultra Sun and Ultra Moon, declared at this step and held until those two exist.
+    waiting = {(edge.from_, edge.to) for _, edge in registry.held_back_edges}
+
+    assert waiting == {
+        ("sun", "ultra-sun"),
+        ("sun", "ultra-moon"),
+        ("moon", "ultra-sun"),
+        ("moon", "ultra-moon"),
+    }
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:
@@ -4875,3 +4898,205 @@ def test_a_held_back_edge_names_the_game_that_declared_it() -> None:
     registry.register("emerald", lambda _: stub("emerald"), [trade("emerald", "rubby")])
 
     assert [(who, edge.to) for who, edge in registry.held_back_edges] == [("emerald", "rubby")]
+
+
+# --- Generation 7: Alola ------------------------------------------------------------------
+
+
+def test_the_alola_pair_says_what_it_is() -> None:
+    # Step 1 and nothing more: a name, a partner, a day and a number.
+    game = sun.build(context(sun.GAME_ID)).game
+
+    assert (game.generation, game.region) == (7, "Alola")
+    assert game.release is GameRelease.CARTRIDGE
+    assert game.released == date(2016, 11, 18)
+    assert game.pair_partner == "moon"
+    assert moon.build(context(moon.GAME_ID)).game.pair_partner == "sun"
+
+    # The decision this region forced. These are the first games since Generation 2 with no
+    # National Pokedex - the Rotom Dex shows Alola's 302 and the National list moved to Bank -
+    # and the number is filled in anyway, because what a living dex here asks for is everything
+    # the boxes can hold rather than everything the dex app will name.
+    assert game.national_dex_through == 802
+    assert game.dex_source is DexSource.NATIONAL_DEX
+
+
+def test_the_two_alola_dexes_are_two_lists_rather_than_one_longer_one() -> None:
+    # The thing to know about this region. Platinum's Sinnoh dex was Diamond's with more after
+    # it; the hundred and one Ultra Sun and Ultra Moon add are scattered through theirs, so the
+    # numbering parts company at #024 and most of what follows disagrees.
+    assert alola.SM_DEX != alola.USUM_DEX
+    assert (alola.SM_DEX_TOTAL, alola.USUM_DEX_TOTAL) == (302, 403)
+    assert alola.USUM_DEX_TOTAL - alola.SM_DEX_TOTAL == 101
+
+
+def test_a_cable_between_the_two_alola_pairs_refuses_the_five_the_newer_one_added() -> None:
+    # The Time Capsule's shape again, twenty years on: a both-ways route that carries everything
+    # in one direction and stops short in the other. Poipole, Naganadel, Stakataka, Blacephalon
+    # and Zeraora cannot be traded into Sun or Moon, which cannot read them.
+    within = [edge for edge in sun.edges() if edge.to == "moon"]
+    across = [edge for edge in sun.edges() if edge.to in alola.ULTRA]
+
+    [inside] = within
+    assert isinstance(inside.filter, AllSpeciesFilter)
+
+    assert len(across) == 2
+    for edge in across:
+        assert edge.direction is TransferDirection.BOTH_WAYS
+        assert (edge.filter.from_, edge.filter.to) == (1, 802)
+
+    # Written once, in the region's own file, rather than at each end: a filter is not part of
+    # what makes two declarations the same edge, so two games declaring this route differently
+    # would collapse into whichever was seen first.
+    assert isinstance(alola.carried_between("ultra-sun", "ultra-moon"), AllSpeciesFilter)
+
+
+def test_bank_hands_alola_what_generation_6_could_not_have() -> None:
+    # The payoff the Bank step predicted. Bank refuses a Generation 6 game anything that came
+    # out of a Virtual Console Red or Gold; these it does not refuse, and that route is the whole
+    # reason Generations 1 and 2 are in this dataset as their 3DS releases.
+    [withdrawal] = [edge for edge in sun.edges() if edge.from_ == bank.NODE]
+    [deposit] = [edge for edge in sun.edges() if edge.to == bank.NODE]
+
+    assert withdrawal.history is None
+    assert isinstance(deposit.filter, AllSpeciesFilter)
+
+    # But the same five species are refused whatever route they came by, so the withdrawal is
+    # capped where the cable is.
+    assert (withdrawal.filter.from_, withdrawal.filter.to) == (1, 802)
+    assert isinstance(alola.bank_carries("ultra-sun"), AllSpeciesFilter)
+
+
+def test_no_cartridge_of_generation_6_trades_with_one_of_generation_7() -> None:
+    # Both sit in the same 3DS and neither can see the other. What stands between them is Bank,
+    # which is not a game, and the route is two steps rather than one cable.
+    reached = {edge.to for edge in sun.edges()} | {edge.from_ for edge in sun.edges()}
+
+    assert reached & {"x", "y", "omega-ruby", "alpha-sapphire"} == set()
+    assert bank.NODE in reached
+
+
+def test_both_halves_of_alola_show_the_same_302_entries_in_the_same_order() -> None:
+    # One list for the pair, and one list per pair rather than per region: Ultra Sun and Ultra
+    # Moon show a different one, which is why the constant is named for the pair.
+    api = FakeApi([(1, "rowlet"), (302, "marshadow")])
+
+    for module in (sun, moon):
+        data = module.build(context(module.GAME_ID, api))
+
+        assert [(entry.number, entry.target.species) for entry in data.dex_entries] == [
+            (1, "rowlet"),
+            (302, "marshadow"),
+        ]
+        assert all(entry.game == module.GAME_ID for entry in data.dex_entries)
+        # One list, so no name on the entries. X and Y carry three and a player picks between
+        # them; Alola's four islands are a way of reading one list rather than four lists.
+        assert all(entry.dex is None for entry in data.dex_entries)
+
+    assert api.asked_for == [alola.SM_DEX] * 2
+    assert alola.SM_DEX == "original-alola"
+
+
+def test_the_four_island_dexes_are_left_out_on_purpose() -> None:
+    # The source has all four, numbered from 1. Those numbers are the guidebooks': in the game a
+    # Pokemon keeps its overall Alola number wherever it is listed, so writing them would print
+    # numbers no player was ever shown. They are named so the next person knows they were looked
+    # at rather than missed.
+    assert len(alola.ISLAND_DEXES) == 4
+    assert alola.SM_DEX not in alola.ISLAND_DEXES
+
+    api = FakeApi([(1, "rowlet")])
+    sun.build(context(sun.GAME_ID, api))
+
+    assert not set(api.asked_for) & set(alola.ISLAND_DEXES)
+
+
+def test_the_alola_dex_is_not_the_living_dex_these_games_ask_for() -> None:
+    # The decision this region forced, and the one place both halves of it are visible at once:
+    # the list the game displays is 302 long and the grid is 802, because the boxes here hold
+    # everything Bank will hand over and only the Pokedex stops early.
+    data = sun.build(context(sun.GAME_ID, FakeApi([(1, "rowlet"), (302, "marshadow")])))
+
+    assert len(data.dex_entries) == 2
+    assert data.game.national_dex_through == 802
+
+
+def test_a_place_is_turned_into_the_page_its_encounter_table_is_on() -> None:
+    # A rule and two exceptions rather than a table of fifty-seven, because Alola's names carry
+    # across almost unchanged. Six generations have had a Route 2, so a route is disambiguated by
+    # its region; and the source writes some of the Hawaiian names with a curly apostrophe.
+    assert alola.page_of("Route 2") == "Alola_Route_2"
+    assert alola.page_of("Brooklet Hill") == "Brooklet_Hill"
+    assert alola.page_of(f"Kala{chr(0x2019)}e Bay") == "Kala'e_Bay"
+
+    # And the two the rule cannot reach: the wiki has no region in the Berry fields' title, and
+    # every wild slot the source files under Royal Avenue is in the abandoned Thrifty Megamart,
+    # which has a page of its own and stands on another island.
+    assert alola.page_of("Alola Berry Fields") == "Berry_fields"
+    assert alola.page_of("Royal Avenue") == "Thrifty_Megamart"
+
+
+def test_the_two_fossils_a_half_sells_are_the_two_the_other_half_does_not() -> None:
+    # Olivia's shop stocks two of the four and which two is the cartridge's. PokeAPI files all
+    # four under both halves, which is the same fault it has about Sinnoh's two - so the rows
+    # are refused with a reason rather than quietly kept.
+    assert set(alola.alola_excluded("sun")) == {"shieldon", "archen"}
+    assert set(alola.alola_excluded("moon")) == {"cranidos", "tirtouga"}
+
+    # Each of the four is still described, because each is handed over in one of the two.
+    for species in ("cranidos", "shieldon", "tirtouga", "archen"):
+        assert alola.ALOLA_GIFTS[species].kind is GiftKind.FOSSIL
+
+    assert "Skull Fossil" in alola.ALOLA_GIFTS["cranidos"].requirement
+    assert "Moon" in alola.alola_excluded("sun")["shieldon"]
+
+
+def test_the_cosmog_a_half_hands_over_is_handed_over_by_its_own_legendary() -> None:
+    # The giver is the Pokemon on the box, so it cannot be shared between the two halves - and
+    # the legendary itself is a static in one game and nowhere in the other.
+    sun_gifts = alola.alola_gifts("sun")
+    moon_gifts = alola.alola_gifts("moon")
+
+    assert sun_gifts["cosmog"].npc == "Solgaleo"
+    assert moon_gifts["cosmog"].npc == "Lunala"
+    assert "solgaleo" in sun_gifts and "solgaleo" not in moon_gifts
+    assert "lunala" in moon_gifts and "lunala" not in sun_gifts
+
+
+def test_hala_hands_over_all_three_and_the_nursery_hands_over_an_egg() -> None:
+    # PokeAPI has one word, "gift", for a starter, a fossil and a present alike, so which of the
+    # three a row is comes from the game's own table.
+    for species in ("rowlet", "litten", "popplio"):
+        assert alola.ALOLA_GIFTS[species].kind is GiftKind.STARTER
+        assert alola.ALOLA_GIFTS[species].npc == "Hala"
+
+    # And the one gift in these games that is not a Pokemon when it is handed over.
+    assert alola.ALOLA_GIFTS["eevee"].kind is GiftKind.EGG
+
+
+def test_the_trader_in_tapu_village_hands_over_a_form() -> None:
+    # The first trade in this dataset that does. The trader wants a Haunter and gives an Alolan
+    # Graveler, which turns into an Alolan Golem the moment it arrives - and "Graveler" on its
+    # own would name the wrong rock.
+    [rock] = [one for one in alola.ALOLA_TRADES if one.gets == "graveler"]
+
+    assert rock.form == "graveler-alola"
+    assert (rock.wants, rock.location, rock.npc) == ("haunter", "Tapu Village", "Sill")
+
+    # The other five hand over a plain species, and the name on each is the original trainer the
+    # game stamps on what they give - not the nickname, which a player can change.
+    assert [one.gets for one in alola.ALOLA_TRADES if one.form is None] == [
+        "machop",
+        "bounsweet",
+        "happiny",
+        "steenee",
+        "talonflame",
+    ]
+    assert all(one.npc for one in alola.ALOLA_TRADES)
+
+
+def test_both_halves_of_the_alola_pair_show_the_cover_the_picker_will_draw() -> None:
+    registry = default_registry()
+
+    assert registry.box_art_of("sun") == "Sun EN boxart.png"
+    assert registry.box_art_of("moon") == "Moon EN boxart.png"

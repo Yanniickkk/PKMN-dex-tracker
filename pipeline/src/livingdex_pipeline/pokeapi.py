@@ -76,6 +76,22 @@ class PokeApiClient:
 
         return default["pokemon"]["name"] if default else species
 
+    def varieties(self, species: str, *, refresh: bool = False) -> list[tuple[str, bool]]:
+        """Every Pokemon this species has, and which of them is the default one.
+
+        The same resource :meth:`default_pokemon` reads, asked the whole question. A species can
+        be more than one Pokemon in the source - Rattata is ``rattata`` and ``rattata-alola``,
+        Oricorio is four - and each of them carries its own encounter table. Asking only for the
+        default is what leaves a game whose grass holds nothing but the regional form with no
+        answer at all to "where do I catch one".
+        """
+        raw = self.resource(f"pokemon-species/{species}", refresh=refresh)
+
+        return [
+            (one["pokemon"]["name"], bool(one.get("is_default")))
+            for one in raw.get("varieties", [])
+        ]
+
     def evolution_chain(self, species: str, *, refresh: bool = False) -> str:
         """The id of the chain a species belongs to.
 

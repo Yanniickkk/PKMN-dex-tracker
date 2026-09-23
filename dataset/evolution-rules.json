@@ -5917,7 +5917,7 @@
     "conditions": [
       {
         "condition": "heldItem",
-        "item": "King’s Rock"
+        "item": "King's Rock"
       }
     ]
   },
@@ -7307,7 +7307,7 @@
     "conditions": [
       {
         "condition": "heldItem",
-        "item": "King’s Rock"
+        "item": "King's Rock"
       }
     ]
   },

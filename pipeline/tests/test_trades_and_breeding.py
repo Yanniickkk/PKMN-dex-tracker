@@ -12,6 +12,30 @@ RETRIEVED_ON = date(2026, 9, 21)
 CITATION = bulbapedia("In-game_trade", retrieved_on=RETRIEVED_ON)
 
 
+def test_a_trader_can_hand_over_a_form() -> None:
+    # Alola is the first region where one does: a Haunter for an Alolan Graveler, which becomes
+    # an Alolan Golem the moment it arrives. What is recorded is what is handed over, as
+    # Sinnoh's Haunter-into-Gengar already is.
+    [method] = trade_encounters(
+        game_id="sun",
+        trades=[
+            InGameTrade(
+                gets="graveler",
+                form="graveler-alola",
+                wants="haunter",
+                location="Tapu Village",
+                npc="Sill",
+            )
+        ],
+        citation=CITATION,
+    )
+
+    assert method.target.species == "graveler"
+    assert method.target.form == "graveler-alola"
+    # And what the trader wants is still a species: nobody in these games asks for a form.
+    assert method.wants.form is None
+
+
 def test_a_trade_records_both_sides_of_it() -> None:
     methods = trade_encounters(
         game_id="emerald",

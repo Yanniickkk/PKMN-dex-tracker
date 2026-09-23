@@ -22,6 +22,7 @@ from . import (
     heartgold,
     home,
     leafgreen,
+    moon,
     omega_ruby,
     pearl,
     platinum,
@@ -30,6 +31,7 @@ from . import (
     sapphire,
     silver,
     soulsilver,
+    sun,
     white,
     white2,
     x,
@@ -43,7 +45,8 @@ from . import (
 # pair that opens Generation 5, the sequels to it - which are a second pair rather than a
 # third version, and the only ones in the series - the pair that opens Generation 6, the first
 # the whole world got on the same day, and the remakes that close it, which are the Hoenn pair
-# again a year later and twelve years on.
+# again a year later and twelve years on, and the pair that opens Generation 7 - the first
+# games since Generation 2 with no National Pokedex.
 #
 # Then the two nodes, out of that order and at the end, because neither is a game. Bank came out
 # between the two Generation 6 pairs and HOME six years after it. They are here for the same
@@ -74,6 +77,8 @@ MODULES = [
     y,
     omega_ruby,
     alpha_sapphire,
+    sun,
+    moon,
     bank,
     home,
 ]

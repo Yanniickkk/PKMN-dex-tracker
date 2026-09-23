@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from datetime import date
 
-from livingdex_pipeline.models import EncounterMethod, SourceCitation
+from livingdex_pipeline.models import EncounterMethod, Form, FormKind, SourceCitation
 from livingdex_pipeline.places import LocationNames
 from livingdex_pipeline.wild import RecordedSlot, recorded_encounters, wild_encounters
 
@@ -42,6 +42,8 @@ class FakeApi:
         #: area slug -> (location slug, location's English name)
         self._locations = locations
         self.asked: list[str] = []
+        #: species -> extra (pokemon, is_default=False) pairs, for the tests that need one.
+        self.extra_varieties: dict[str, list[tuple[str, bool]]] = {}
 
     def retrieved_on(self, url: str) -> date:
         """The day the cache says this url was fetched, which a citation carries."""
@@ -49,6 +51,10 @@ class FakeApi:
 
     def default_pokemon(self, species: str, *, refresh: bool = False) -> str:
         return species
+
+    def varieties(self, species: str, *, refresh: bool = False) -> list[tuple[str, bool]]:
+        """Every Pokemon of a species. The fakes hold one each unless a test says otherwise."""
+        return [(self.default_pokemon(species), True), *self.extra_varieties.get(species, [])]
 
     def encounters(self, pokemon: str, *, refresh: bool = False) -> list:
         return self._encounters.get(pokemon, [])
@@ -714,3 +720,114 @@ def test_the_first_two_friend_safari_slots_add_nothing_to_what_the_place_already
     assert third.requirement is not None
     assert third.requirement.startswith(gate)
     assert "April 2024" in third.requirement
+
+# --- a slot whose target is a form -----------------------------------------------------------
+
+
+def form(form_id: str, species: str) -> Form:
+    return Form(id=form_id, species=species, name=form_id, kind=FormKind.REGIONAL, games=["sun"])
+
+
+def test_a_slot_can_belong_to_a_form_rather_than_to_the_species() -> None:
+    # Alola is the first region where this matters and it matters everywhere in it: every
+    # Rattata on Route 1 is the Alolan one and the Kantonian is nowhere in the game. A record
+    # saying "Rattata" would be wrong about the only Rattata there.
+    api = FakeApi(
+        {"rattata-alola": [area("alola-route-1-east", "sun", [slot("walk", 2, 3, 30)])]},
+        {"alola-route-1-east": ("alola-route-1", "Route 1")},
+    )
+    api.extra_varieties["rattata"] = [("rattata-alola", False)]
+
+    found = wild_encounters(
+        api,
+        game_id="sun",
+        version="sun",
+        species=["rattata"],
+        forms=[form("rattata-alola", "rattata")],
+    )
+
+    assert len(found) == 1
+    assert found[0].target.species == "rattata"
+    assert found[0].target.form == "rattata-alola"
+
+
+def test_a_form_this_game_does_not_have_is_not_given_a_slot() -> None:
+    # The source knows a Dusk Lycanroc and Sun does not. Inventing a target for it would put a
+    # tile in the grid that nothing could ever fill, and `forms-referenced-exist` would say so.
+    api = FakeApi(
+        {"rattata-alola": [area("alola-route-1-east", "sun", [slot("walk", 2, 3, 30)])]},
+        {"alola-route-1-east": ("alola-route-1", "Route 1")},
+    )
+    api.extra_varieties["rattata"] = [("rattata-alola", False)]
+
+    found = wild_encounters(api, game_id="sun", version="sun", species=["rattata"])
+
+    assert found == []
+
+
+def test_a_game_that_passes_no_forms_asks_only_about_the_default() -> None:
+    # Which is every game before Generation 7: a Deerling caught in Unova is a Deerling,
+    # whichever coat the season gave it.
+    api = FakeApi(
+        {"deerling": [area("unova-route-6-area", "black", [slot("walk", 20, 22, 20)])]},
+        {"unova-route-6-area": ("unova-route-6", "Route 6")},
+    )
+    api.extra_varieties["deerling"] = [("deerling-summer", False)]
+
+    found = wild_encounters(api, game_id="black", version="black", species=["deerling"])
+
+    assert len(found) == 1
+    assert found[0].target.form is None
+
+
+def test_alolas_two_ways_of_starting_a_fight_are_methods_of_their_own() -> None:
+    # An SOS ally is not a rarer kind of walking: whole species in these games are only ever
+    # somebody else's ally. A moving spot is Unova's four come back as one, and the source names
+    # it after the only one of the three that is in water.
+    found = build(
+        {
+            "seaking": [
+                area(
+                    "brooklet-hill-north",
+                    "sun",
+                    [
+                        slot("sos", 10, 15, 10),
+                        slot("bubbling-spots", 10, 15, 45),
+                    ],
+                )
+            ]
+        },
+        {"brooklet-hill-north": ("brooklet-hill", "Brooklet Hill")},
+        version="sun",
+    )
+
+    by_method = {one.method: one for one in found}
+
+    assert set(by_method) == {EncounterMethod.SOS, EncounterMethod.MOVING_SPOT}
+    assert by_method[EncounterMethod.MOVING_SPOT].rate_percent == 45
+
+
+def test_the_compound_sos_slot_says_where_the_caller_was_met() -> None:
+    # An ally called by something met in a bubbling spot stays an SOS slot - the ally is what
+    # produces this species - and where it was called is said in the requirement, the way
+    # fishing in a ripple already was.
+    #
+    # Only where it is the one way, though. Where the same place hands the same species over by
+    # an ordinary SOS call as well, the narrower row is dropped: a player who can already get it
+    # there has nothing to do with "and also from a bubbling spot".
+    found = build(
+        {
+            "seaking": [
+                area(
+                    "brooklet-hill-north",
+                    "sun",
+                    [slot("sos-from-bubbling-spot", 10, 15, 5)],
+                )
+            ]
+        },
+        {"brooklet-hill-north": ("brooklet-hill", "Brooklet Hill")},
+        version="sun",
+    )
+
+    assert [one.method for one in found] == [EncounterMethod.SOS]
+    assert found[0].requirement == "Called by something met in a bubbling spot"

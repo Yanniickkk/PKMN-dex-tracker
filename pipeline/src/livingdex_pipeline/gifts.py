@@ -24,7 +24,14 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 from . import conditions
-from .models import DexTarget, GiftAcquisition, GiftKind, SourceCitation
+from .forms import targets_of
+from .models import (
+    DexTarget,
+    Form,
+    GiftAcquisition,
+    GiftKind,
+    SourceCitation,
+)
 from .places import LocationNames
 from .pokeapi import BASE_URL, PokeApiClient
 
@@ -118,6 +125,7 @@ def gift_encounters(
     details: Mapping[str, GiftDetails] | None = None,
     excluded: Mapping[str, Exclusion] | None = None,
     refresh: bool = False,
+    forms: Sequence[Form] = (),
     places: LocationNames | None = None,
 ) -> list[GiftAcquisition]:
     """Every gift and static in one game, as one record per place a Pokemon is given or waits.
@@ -134,6 +142,10 @@ def gift_encounters(
 
     A reason can also be given per place rather than for the species, for the case where only
     one of its rows is wrong - see :data:`Exclusion`.
+
+    ``forms`` is this game's own form table, and it is here for the reason it is in :mod:`wild`:
+    what stands on Exeggutor Island is the Alolan Exeggutor and not the Kantonian one, and the
+    10% Zygarde comes off the same Reassembly Unit as the 50%.
     """
     known = details or {}
     skip = excluded or {}
@@ -142,6 +154,7 @@ def gift_encounters(
     #: nobody has written up yet, and the number is the size of that job.
     undescribed: set[str] = set()
     where = places or LocationNames(api, refresh=refresh)
+    known_forms = {one.id for one in forms}
     found: list[GiftAcquisition] = []
     seen: set[tuple] = set()
 
@@ -151,73 +164,76 @@ def gift_encounters(
             log.info("%s is not one of %s's gifts: %s", name, game_id, whole_species)
             continue
 
-        # Encounters hang off a Pokemon rather than a species, as they do for wild slots.
-        pokemon = api.default_pokemon(name, refresh=refresh)
-        url = f"{BASE_URL}/pokemon/{pokemon}/encounters"
-        citation = SourceCitation(source="pokeapi", url=url, retrieved_on=api.retrieved_on(url))
+        # A gift hangs off a Pokemon rather than a species, and a species can be several.
+        for pokemon, target in targets_of(api, name, known_forms, refresh=refresh):
+            url = f"{BASE_URL}/pokemon/{pokemon}/encounters"
+            citation = SourceCitation(
+                source="pokeapi", url=url, retrieved_on=api.retrieved_on(url)
+            )
 
-        for area in api.encounters(pokemon, refresh=refresh):
-            area_slug = area["location_area"]["name"]
+            for area in api.encounters(pokemon, refresh=refresh):
+                area_slug = area["location_area"]["name"]
 
-            for version_details in area.get("version_details", []):
-                if version_details["version"]["name"] != version:
-                    continue
+                for version_details in area.get("version_details", []):
+                    if version_details["version"]["name"] != version:
+                        continue
 
-                for detail in version_details.get("encounter_details", []):
-                    method = detail["method"]["name"]
+                    for detail in version_details.get("encounter_details", []):
+                        method = detail["method"]["name"]
 
-                    if method in EVENT_METHODS:
-                        log.info(
-                            "%s in %s comes from a distribution event (%s), not from the game",
-                            name,
-                            game_id,
-                            method,
+                        if method in EVENT_METHODS:
+                            log.info(
+                                "%s in %s comes from a distribution event (%s), not from the game",
+                                name,
+                                game_id,
+                                method,
+                            )
+                            continue
+
+                        if method in OTHER_GAME_METHODS:
+                            log.info(
+                                "%s in %s comes across from another game (%s), not from this one",
+                                name,
+                                game_id,
+                                method,
+                            )
+                            continue
+
+                        if method not in GIFT_METHODS:
+                            continue
+
+                        place = where.of(area_slug)
+                        not_here = _not_here(skip.get(name), _as_written(place))
+                        if not_here is not None:
+                            log.info(
+                                "%s is not handed over in %s in %s: %s",
+                                name,
+                                _as_written(place),
+                                game_id,
+                                not_here,
+                            )
+                            continue
+
+                        record = _record(
+                            game_id=game_id,
+                            target=target,
+                            species=name,
+                            place=place,
+                            method=method,
+                            detail=detail,
+                            known=_detail_for(known.get(name), _as_written(place), species=name),
+                            citation=citation,
                         )
-                        continue
 
-                    if method in OTHER_GAME_METHODS:
-                        log.info(
-                            "%s in %s comes across from another game (%s), not from this one",
-                            name,
-                            game_id,
-                            method,
-                        )
-                        continue
+                        key = _identity(record)
+                        if key in seen:
+                            continue
 
-                    if method not in GIFT_METHODS:
-                        continue
+                        if name not in known:
+                            undescribed.add(name)
 
-                    place = where.of(area_slug)
-                    not_here = _not_here(skip.get(name), _as_written(place))
-                    if not_here is not None:
-                        log.info(
-                            "%s is not handed over in %s in %s: %s",
-                            name,
-                            _as_written(place),
-                            game_id,
-                            not_here,
-                        )
-                        continue
-
-                    record = _record(
-                        game_id=game_id,
-                        species=name,
-                        place=place,
-                        method=method,
-                        detail=detail,
-                        known=_detail_for(known.get(name), _as_written(place), species=name),
-                        citation=citation,
-                    )
-
-                    key = _identity(record)
-                    if key in seen:
-                        continue
-
-                    if name not in known:
-                        undescribed.add(name)
-
-                    seen.add(key)
-                    found.append(record)
+                        seen.add(key)
+                        found.append(record)
 
     if undescribed:
         log.info(
@@ -233,6 +249,7 @@ def gift_encounters(
 def _record(
     *,
     game_id: str,
+    target: DexTarget,
     species: str,
     place: tuple[str, str | None],
     method: str,
@@ -244,7 +261,7 @@ def _record(
 
     return GiftAcquisition(
         game=game_id,
-        target=DexTarget(species=species),
+        target=target,
         gift_kind=known.kind or GIFT_METHODS[method],
         location=_as_written(place),
         npc=known.npc,

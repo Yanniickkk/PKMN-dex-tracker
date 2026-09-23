@@ -23,9 +23,11 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 from . import conditions
+from .forms import targets_of
 from .models import (
     DexTarget,
     EncounterMethod,
+    Form,
     LevelRange,
     SourceCitation,
     WildAcquisition,
@@ -72,6 +74,17 @@ WILD_METHODS: dict[str, EncounterMethod] = {
     "sky-ambush": EncounterMethod.AMBUSH,
     "rustling-bush-ambush": EncounterMethod.AMBUSH,
     "trash-can-ambush": EncounterMethod.AMBUSH,
+    # Alola's two. An SOS ally is the method rather than the thing it was called by: what a
+    # player has to do is bring a wild Pokemon low and wait, wherever they are standing. The
+    # compound - an ally called by something met in a bubbling spot - stays an SOS slot for the
+    # reason the Super Rod one does: the ally is the part that produces this species, and where
+    # it was called is said in the requirement.
+    "sos": EncounterMethod.SOS,
+    "sos-from-bubbling-spot": EncounterMethod.SOS,
+    # And Alola's moving spots, which the source gives as one method and calls after the only
+    # one of them that is in water. Haina Desert's sand clouds and Route 2's rustling grass
+    # arrive under the same name, so the name this project uses is the family's.
+    "bubbling-spots": EncounterMethod.MOVING_SPOT,
     # Still a wild encounter, but not one of the named ways of starting one.
     "seaweed": EncounterMethod.OTHER,
     "feebas-tile-fishing": EncounterMethod.OTHER,
@@ -97,6 +110,8 @@ METHOD_REQUIREMENTS: dict[str, str] = {
     "sky-ambush": "Swooping down out of the sky",
     "rustling-bush-ambush": "Out of a rustling bush",
     "trash-can-ambush": "Out of a bin",
+    # Where the Pokemon that calls for help was met, which an SOS slot does not say by itself.
+    "sos-from-bubbling-spot": "Called by something met in a bubbling spot",
 }
 
 
@@ -125,6 +140,7 @@ def wild_encounters(
     version: str,
     species: list[str],
     refresh: bool = False,
+    forms: Sequence[Form] = (),
     places: LocationNames | None = None,
     gates: Mapping[str, str] | None = None,
     not_counted: Mapping[str, str] | None = None,
@@ -150,6 +166,13 @@ def wild_encounters(
     an ordinary forest full of ordinary tables, and it is behind a plane ride nobody is offered
     until the regional dex is filled. A player told to walk into a place they cannot enter has
     been told nothing.
+
+    ``forms`` is this game's own form table, and passing it is how a game says that some of what
+    its grass holds is a form rather than a species. Alola is the first that needs it and needs
+    it badly: every Rattata on Route 1 is the Alolan one, the Kantonian is nowhere in the game,
+    and a record saying "Rattata, Route 1" would be wrong about the only Rattata there. A game
+    that leaves it out asks about each species' default Pokemon and nothing else, which is what
+    every game before Generation 7 does.
     """
     places = places or LocationNames(api, refresh=refresh)
     gates = gates or {}
@@ -157,47 +180,50 @@ def wild_encounters(
     found: list[WildAcquisition] = []
     seen: set[tuple] = set()
 
+    known_forms = {one.id for one in forms}
+
     for name in species:
-        # Encounters hang off a Pokemon rather than a species, and for anything with forms the
-        # two are spelled differently.
-        pokemon = api.default_pokemon(name, refresh=refresh)
-        url = f"{BASE_URL}/pokemon/{pokemon}/encounters"
-        citation = SourceCitation(source="pokeapi", url=url, retrieved_on=api.retrieved_on(url))
+        # Encounters hang off a Pokemon rather than a species, and a species can be several.
+        for pokemon, target in targets_of(api, name, known_forms, refresh=refresh):
+            url = f"{BASE_URL}/pokemon/{pokemon}/encounters"
+            citation = SourceCitation(
+                source="pokeapi", url=url, retrieved_on=api.retrieved_on(url)
+            )
 
-        for area in api.encounters(pokemon, refresh=refresh):
-            area_slug = area["location_area"]["name"]
+            for area in api.encounters(pokemon, refresh=refresh):
+                area_slug = area["location_area"]["name"]
 
-            for version_details in area.get("version_details", []):
-                if version_details["version"]["name"] != version:
-                    continue
-
-                slots = _add_up(version_details.get("encounter_details", []), species=name)
-
-                for (method, state), slot in slots.items():
-                    location, sub_area = places.of(area_slug)
-                    record = _record(
-                        game_id=game_id,
-                        species=name,
-                        location=location,
-                        sub_area=sub_area,
-                        method=method,
-                        state=state,
-                        slot=slot,
-                        citation=citation,
-                        gate=gates.get(location),
-                        does_not_count=uncounted.get(location),
-                    )
-
-                    # Two of PokeAPI's methods can land on one of ours - a roamer is listed
-                    # once for grass and once for water - and two records a player cannot tell
-                    # apart are one record. Their chances are not added: they are two ways of
-                    # meeting the same thing, not two slots in one table.
-                    key = _identity(record)
-                    if key in seen:
+                for version_details in area.get("version_details", []):
+                    if version_details["version"]["name"] != version:
                         continue
 
-                    seen.add(key)
-                    found.append(record)
+                    slots = _add_up(version_details.get("encounter_details", []), species=name)
+
+                    for (method, state), slot in slots.items():
+                        location, sub_area = places.of(area_slug)
+                        record = _record(
+                            game_id=game_id,
+                            target=target,
+                            location=location,
+                            sub_area=sub_area,
+                            method=method,
+                            state=state,
+                            slot=slot,
+                            citation=citation,
+                            gate=gates.get(location),
+                            does_not_count=uncounted.get(location),
+                        )
+
+                        # Two of PokeAPI's methods can land on one of ours - a roamer is listed
+                        # once for grass and once for water - and two records a player cannot
+                        # tell apart are one record. Their chances are not added: they are two
+                        # ways of meeting the same thing, not two slots in one table.
+                        key = _identity(record)
+                        if key in seen:
+                            continue
+
+                        seen.add(key)
+                        found.append(record)
 
     return _merged(_without_redundant_conditions(_without_unconditional_twins(found)))
 
@@ -248,7 +274,7 @@ def _state(values: list[str], *, species: str, method: str) -> _State:
 def _record(
     *,
     game_id: str,
-    species: str,
+    target: DexTarget,
     location: str,
     sub_area: str | None,
     method: str,
@@ -260,7 +286,7 @@ def _record(
 ) -> WildAcquisition:
     return WildAcquisition(
         game=game_id,
-        target=DexTarget(species=species),
+        target=target,
         location=location,
         sub_area=sub_area,
         method=WILD_METHODS[method],

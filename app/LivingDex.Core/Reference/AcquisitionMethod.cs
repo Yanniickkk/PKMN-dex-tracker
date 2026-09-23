@@ -157,6 +157,27 @@ public enum EncounterMethod
     /// <summary>A flock met in mid-air, while Soaring over Hoenn on a Latios or Latias.</summary>
     Soaring,
 
+    /// <summary>
+    /// An ally a wild Pokémon called for help, which is Generation 7's own way of meeting one.
+    /// </summary>
+    /// <remarks>
+    /// Whole species are in the Alola games only as somebody else's ally, so this is a way of
+    /// starting an encounter rather than a note on one.
+    /// </remarks>
+    Sos,
+
+    /// <summary>
+    /// Something stirring in Alola with its own table under it: grass that rustles, a cloud of
+    /// sand, a patch of bubbles on the sea.
+    /// </summary>
+    /// <remarks>
+    /// Unova's four moving spots come back as one. The dataset's source gives all three of
+    /// Alola's under a single method and names it after the only one in water, so this is named
+    /// for what they have in common; which of the three a player is looking at follows from
+    /// where the record says they are standing.
+    /// </remarks>
+    MovingSpot,
+
     Other,
 }
 
