@@ -26,6 +26,12 @@ namespace LivingDex.Core.Dex;
 /// as the dataset - which is why it belongs to a screen and is rebuilt when the records change.
 /// Owning the Bulbasaur does not make Bulbasaur itself available: you cannot obtain one in
 /// Platinum, you brought it.
+///
+/// One thing it still cannot see, and it is worth knowing about rather than guessing at. A form
+/// change carries what it needs as a sentence - "fuse it with Lunala using the N-Lunarizer" -
+/// and nothing in the schema says that the Lunala is a second Pokemon to be had first. So Ultra
+/// Sun counts Dawn Wings Necrozma, whose Necrozma it can catch and whose Lunala it cannot. The
+/// species the form belongs to is checked; a second ingredient named only in prose is not.
 /// </remarks>
 public sealed class Availability
 {
@@ -88,6 +94,14 @@ public sealed class Availability
         // Any one parent at the day care lays the egg.
         BreedingAcquisition breeding =>
             breeding.Parents.Any(parent => CanBeHad(game, parent, visiting)),
+
+        // A form is not caught, it is changed into - so what it is changed *from* has to be
+        // gettable, exactly as an evolution's earlier stage does. Ultra Sun knows how to touch
+        // the meteorite beside Sophocles and has no way at all of producing a Deoxys, so
+        // "available in Ultra Sun" listed three Deoxys formes that no Ultra Sun player can have.
+        // Same shape as the Ivysaur this class was written for, one record kind further on.
+        FormChangeAcquisition change =>
+            CanBeHad(game, DexTarget.ForSpecies(change.Target.Species), visiting),
 
         // Caught, handed over or traded for: the game produces it outright.
         _ => true,

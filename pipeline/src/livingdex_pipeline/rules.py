@@ -119,6 +119,32 @@ def _not_covered_yet(rule_name: str, game_id: str, kind: str, species: list[str]
     )
 
 
+def _no_way_to_the_form(rule_name: str, game_id: str, kind: str, forms: list[str]) -> Finding:
+    """One warning for a dead end that is a form rather than a generation nobody has built.
+
+    Split off because the sentence above was telling a lie about these. A form is never a dex
+    entry - dex entries are species - so a form's earlier stage is never "listed in a dex", and
+    it fell into the bucket meant for a species from a generation that has not been written.
+    Ultra Sun said "the generation they come from has not been built" about its own generation.
+
+    What is actually true is narrower and worth saying: a Dusk Lycanroc comes from a Rockruff
+    with Own Tempo, that Rockruff was a serial code handed to buyers over the winter of 2017,
+    and **a form has nowhere to say so**. An ``unobtainable_reason`` lives on a dex entry, and
+    the form table has no field for one. Until it does, this is the report.
+    """
+    named = ", ".join(sorted(forms))
+
+    return Finding(
+        rule=rule_name,
+        severity=Severity.WARNING,
+        game=game_id,
+        message=(
+            f"{len(forms)} thing(s) here are only obtainable by {kind} a form nothing in the "
+            f"dataset produces, and a form has no dex entry to carry a reason on: {named}"
+        ),
+    )
+
+
 def _explained_in(game) -> set[tuple[str, str | None]]:
     """Every entry this game's dex says cannot be filled here, and why.
 
@@ -216,6 +242,7 @@ class NoEvolutionDeadEnds:
         for game in dataset.games:
             explained = _explained_in(game)
             outside: list[str] = []
+            formless: list[str] = []
 
             for method in game.acquisition_methods:
                 if method.kind != "evolution":
@@ -241,7 +268,12 @@ class NoEvolutionDeadEnds:
                 # evolutions whose earlier stage belongs to a generation that is not built yet.
                 # That is the dataset being unfinished rather than this game being wrong.
                 if previous not in listed:
-                    outside.append(str(rule.from_))
+                    # Unless it is a form, which is never in any dex and so can never be
+                    # "listed" - a different thing that needs a different sentence.
+                    if rule.from_.form is not None:
+                        formless.append(str(rule.from_))
+                    else:
+                        outside.append(str(rule.from_))
                     continue
 
                 yield Finding(
@@ -256,6 +288,9 @@ class NoEvolutionDeadEnds:
 
             if outside:
                 yield _not_covered_yet(self.name, game.game.id, "evolving", outside)
+
+            if formless:
+                yield _no_way_to_the_form(self.name, game.game.id, "evolving", formless)
 
 
 class UnreachableEntriesSaySo:

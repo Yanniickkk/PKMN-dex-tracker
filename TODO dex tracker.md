@@ -156,21 +156,13 @@ and Moon and 403 in Ultra Sun and Ultra Moon, and the 101 added are scattered th
 rather than appended: the numbering parts company at #024 and most of what follows disagrees.
 `alola.py` keeps `SM_DEX` and `USUM_DEX` apart so neither can quietly become "the" dex.
 
-_Done: Sun and Moon, and everything they reach is in `DONE dex tracker.md`. Ultra Sun, Ultra
-Moon and the two Let's Go games are still to come._
+_Done: Sun, Moon, Ultra Sun and Ultra Moon - all four Alola cartridges, and everything they
+reach is in `DONE dex tracker.md`. The two Let's Go games are what is left of this generation._
 
 _What Alola shares is in `alola.py`, which is the region module and the generation's both - for
-the reason that file gives about Let's Go. **The four edges Sun and Moon declared into an empty
-space all point at Ultra Sun and Ultra Moon**, and they light up the moment those two exist._
+the reason that file gives about Let's Go. **Every route the four cartridges declare now has
+both of its ends**, and the graph is closed until Let's Go opens it again._
 
-- [ ] **Ultra Sun** (`ultra-sun`, gen 7, pair partner: Ultra Moon)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
-- [ ] **Ultra Moon** (`ultra-moon`, gen 7, pair partner: Ultra Sun)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
 - [ ] **Let's Go, Pikachu!** (`lets-go-pikachu`, gen 7, pair partner: Let's Go, Eevee!)
   - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
@@ -313,6 +305,37 @@ from the one it looked like._
   - Whatever is picked, nothing about how a picture is chosen has to change: `SpritePath` already
     tries a sheet's form, a sheet's species, the shared form and the shared species in that
     order, so a Generation 7 sheet is a constant in `alola.py` and a fetch, and the tiles follow.
+
+- [ ] Scrape Generation 7's sprites from the Bulbagarden Archives
+  - The work the item above leaves open, now that the source has been read properly rather than
+    estimated. Three things came out of it and two of them change the plan.
+  - **The file names are not a rule.** The guess was `Spr_7s_<number>.png`, and that is not what
+    is there: a Generation 7 sprite carries a sex suffix, so Pikachu is `Spr_7s_025_m.png` and
+    `Spr_7s_025_f.png` and there is no plain `Spr_7s_025.png` to fetch. Alolan forms take a
+    letter instead - `Spr_7s_019A.png` for Alolan Rattata - shinies take `_s`, back sprites take
+    a `Spr_b_` prefix, and the Partner Cap Pikachu is `Spr_7p_025P_m.png`. Guessing a name costs
+    five seconds per miss, so the names have to be **read** rather than constructed: each
+    species' own page lists every sprite it has, for both sheets and all forms, in one request.
+  - **There are two sheets and they are not the same pictures.** `7s` is Sun and Moon, `7p` is
+    Ultra Sun and Ultra Moon, and the same Pokemon differs by a factor of ten in size:
+    `Spr_7s_019A.png` is 5 KB and `Spr_7p_019A.png` is 52 KB. So "one Generation 7 sheet" is not
+    on offer, and which of the two to use - or whether to take both - is the first decision.
+  - **What it would cost**, at the five seconds a request the Archives ask for:
+    - ~800 species pages to read the names from: about 70 minutes.
+    - 1075 pictures for the first pair's sheet and 1126 for the second: about 90 minutes each.
+    - So roughly **four hours for both sheets**, or two and a half for one.
+    - On disk: the `7s` sheet is about 5 MB and the `7p` sheet about **60 MB**, against the 11 MB
+      the whole sprite set weighs today. The cheap sheet is the one for the games that came
+      first.
+  - The MD5 path rule holds and saves the other half of the fetching: a file at
+    `/media/upload/<md5[0]>/<md5[0:2]>/<name>` needs no description page read first. Verified on
+    four names.
+  - Yannick asked for this to be a separate item, and it should be run as a background job that
+    only warms the HTTP cache and writes nothing into `dataset/` - which makes it restartable,
+    keeps it off the dataset's writer, and lets the sheet be wired in afterwards with one
+    ordinary build. It must not run while a build that touches the Archives is running: the
+    five-second budget is per process, so two of them would halve the interval the site asked
+    for.
 
 - [ ] Multiple collections: list, switch, rename, delete
 - [ ] Editing a collection's settings after creation, records preserved

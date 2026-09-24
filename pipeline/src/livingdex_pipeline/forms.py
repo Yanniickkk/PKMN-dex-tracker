@@ -29,13 +29,16 @@ everything from Generation 6 onward falls outside this dataset and drops out by 
 the version group cannot say is a form that arrived and then went no further, which is what
 :data:`ONLY_IN` is for.
 
-Two kinds of form are left out on purpose, because neither is a second Pokemon to catch:
+Three kinds of form are left out on purpose, because none of them is a second Pokemon to catch:
 
 * **Battle-only**, which the source does flag: Castform's weather, Cherrim's sunshine,
   Darmanitan's Zen Mode, Meloetta's Pirouette. They last until the battle ends.
 * **Held-item**, which it does not: Arceus's seventeen plates and Genesect's four drives. Take
   the item off and the Pokemon is the same Pokemon again, so counting them would ask a player
   to catch one Arceus eighteen times.
+* **Invisible**, which it does not either: Scatterbug's and Spewpa's twenty patterns and
+  Mothim's three cloaks are internal values carried forward to decide what something evolves
+  into. A player holding all twenty Scatterbug could not tell them apart.
 """
 
 from __future__ import annotations
@@ -76,6 +79,25 @@ GENDER_FROM = "diamond-pearl"
 #: the fact: it is Arceus's plates and Genesect's drives, not a list of twenty-one accidents.
 HELD_ITEM_FORMS = frozenset({"arceus", "genesect"})
 
+#: Forms that are an internal value and nothing anybody can see.
+#:
+#: The third kind left out on purpose, and the one that is hardest to notice, because the source
+#: models these exactly as it models a Shellos's two seas. Bulbapedia settles all three in its
+#: own words: Scatterbug and Spewpa "each have 20 visually indistinct forms" whose only job is
+#: to decide which Vivillon they become, and a Mothim keeps the cloak of the Burmy it evolved
+#: from "though this is only shown in its internal data".
+#:
+#: So forty entries, none of which a player could tell apart if they had all of them in a box,
+#: and every one of which would have been a tile in the grid asking to be filled. They arrived
+#: the day Ultra Sun and Ultra Moon were registered, because that is the version group the
+#: source stamps them with - which is the other reason they are easy to miss: they look like
+#: something the new games brought.
+#:
+#: The line this draws is the same one :data:`HELD_ITEM_FORMS` draws, put another way. A form
+#: earns an entry when having it is different from not having it. A Vivillon's pattern earns
+#: one; the Scatterbug that was always going to become it does not.
+INVISIBLE_FORMS = frozenset({"scatterbug", "spewpa", "mothim"})
+
 #: Where a form is, when the version group it arrived in says more than the truth.
 #:
 #: The default is that a form reaches every game from its own version group onward, which is
@@ -99,6 +121,11 @@ HELD_ITEM_FORMS = frozenset({"arceus", "genesect"})
 #: Written out because the version group a form arrived in cannot say it. All three formes
 #: arrived with Generation 3 and were pinned to the one cartridge each of them came from, which
 #: was right while this dataset held nothing later and wrong from Diamond on.
+#:
+#: **And it has to be extended by hand every time**, which is the cost of writing it out: Omega
+#: Ruby found it missing, Sun and Moon found it missing again, and Ultra Sun and Ultra Moon
+#: found it a third time. The meteorite beside Sophocles is one meteorite and all four Alola
+#: cartridges walk past it.
 METEORITE: tuple[str, ...] = (
     "diamond",
     "pearl",
@@ -115,6 +142,8 @@ METEORITE: tuple[str, ...] = (
     "alpha-sapphire",
     "sun",
     "moon",
+    "ultra-sun",
+    "ultra-moon",
 )
 
 #: The six Cosplay Pikachu, which never leave the game they were dressed in.
@@ -424,7 +453,12 @@ def _form(
     if raw["is_default"] and pokemon["name"] == default["name"]:
         return None
 
-    if raw["is_battle_only"] or raw["is_mega"] or species.id in HELD_ITEM_FORMS:
+    if (
+        raw["is_battle_only"]
+        or raw["is_mega"]
+        or species.id in HELD_ITEM_FORMS
+        or species.id in INVISIBLE_FORMS
+    ):
         return None
 
     group = raw["version_group"]["name"]

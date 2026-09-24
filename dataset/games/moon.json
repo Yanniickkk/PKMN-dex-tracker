@@ -21392,7 +21392,7 @@
       "target": {
         "species": "lycanroc"
       },
-      "rule": "rockruff-to-lycanroc-sun-moon",
+      "rule": "rockruff-to-lycanroc",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/383",

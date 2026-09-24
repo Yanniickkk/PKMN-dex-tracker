@@ -93,6 +93,15 @@ class GiftDetail:
     #: maxed EVs - which PokeAPI does not know - and which of the three legendaries is standing
     #: in it depends on the day, which PokeAPI does know and says better than a person would.
     gate: str | None = None
+    #: What is handed over, where it is a form and the source says only the species.
+    #:
+    #: The forms step already teaches the wild and gift readers to ask for a species' whole set
+    #: of Pokemon, which is how an Alolan Rattata gets a record of its own. It only works where
+    #: the source gives the form a Pokemon to hang an encounter on, and sometimes it does not:
+    #: Samson Oak hands out Totem-sized Pokemon for Totem Stickers and every one of those is
+    #: filed under the ordinary species, which is the one thing it certainly is not. A plain
+    #: Gumshoos is caught in the grass on Route 1; what he is holding is three feet taller.
+    form: str | None = None
     #: Which of this species' gifts this describes, as the record spells the place: "Goldenrod
     #: City, Bills House". Left out when the species is only handed over once, which is the
     #: usual case.
@@ -261,7 +270,9 @@ def _record(
 
     return GiftAcquisition(
         game=game_id,
-        target=target,
+        # The game's own table wins here too, and for the same reason it wins about the giver:
+        # the source has one row and no way of saying which of a species it is about.
+        target=DexTarget(species=target.species, form=known.form) if known.form else target,
         gift_kind=known.kind or GIFT_METHODS[method],
         location=_as_written(place),
         npc=known.npc,

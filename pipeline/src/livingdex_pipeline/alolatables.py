@@ -41,7 +41,12 @@ log = logging.getLogger(__name__)
 MIN_INTERVAL = 5.0
 
 #: Which games a row belongs to, as the table's own column spells it.
+#:
+#: Both pairs are on the same page and the column is the only thing that tells them apart, so
+#: which one is wanted has to be asked for. They are not the same tables with a few rows added:
+#: Route 2 alone has eighteen Sun and Moon rows and thirty-one Ultra ones.
 SUN_AND_MOON = ("S", "M")
+ULTRA_SUN_AND_MOON = ("US", "UM")
 
 #: What the Location column calls a table, and which of this project's methods it is.
 #:
@@ -132,14 +137,18 @@ def read_times(
     *,
     pages: Mapping[str, str],
     normaliser: Normaliser,
+    games: tuple[str, str] = SUN_AND_MOON,
     refresh: bool = False,
 ) -> list[Reading]:
-    """Every Sun and Moon row of every page given, as far as it can be read.
+    """Every row of every page given that belongs to ``games``, as far as it can be read.
 
     ``pages`` is location name to page title, because only the game's own files know which of
     the source's places the wiki calls what. A page that cannot be fetched is logged and skipped:
     this layers a second opinion on records that already stand on their own, so a hole in it
     costs a condition rather than a record.
+
+    ``games`` is the pair whose rows are wanted, spelled as the table's own column spells it.
+    One page holds both pairs' tables and nothing but that column separates them.
     """
     found: list[Reading] = []
 
@@ -154,12 +163,20 @@ def read_times(
         if body is None:
             continue
 
-        found.extend(_readings(body, location=location, normaliser=normaliser))
+        found.extend(
+            _readings(body, location=location, normaliser=normaliser, games=games)
+        )
 
     return found
 
 
-def _readings(body: Node, *, location: str, normaliser: Normaliser) -> Iterator[Reading]:
+def _readings(
+    body: Node,
+    *,
+    location: str,
+    normaliser: Normaliser,
+    games: tuple[str, str],
+) -> Iterator[Reading]:
     for table in body.css("table"):
         rows = table.css("tr")
         if not rows or "Allies" not in _text(rows[0]):
@@ -174,7 +191,7 @@ def _readings(body: Node, *, location: str, normaliser: Normaliser) -> Iterator[
                 continue
 
             reading = _reading(
-                row, location=location, heading=heading, normaliser=normaliser
+                row, location=location, heading=heading, normaliser=normaliser, games=games
             )
             if reading is not None:
                 yield reading
@@ -186,6 +203,7 @@ def _reading(
     location: str,
     heading: str,
     normaliser: Normaliser,
+    games: tuple[str, str],
 ) -> Reading | None:
     """One data row, or None when it is another pair's or not a wild slot."""
     cells = row.css("th, td")
@@ -193,7 +211,7 @@ def _reading(
         return None
 
     text = [_text(one) for one in cells]
-    if (text[1], text[2]) != SUN_AND_MOON:
+    if (text[1], text[2]) != games:
         return None
 
     # The last cell spans both hours when they agree, and is the Night column when they do not.

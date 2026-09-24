@@ -127,7 +127,18 @@ def acquisition_methods(
     pipeline reads has a row for: the Magearna a QR Code unlocks.
     """
     return alola.acquisition_methods(
-        context, game_id=GAME_ID, version=POKEAPI_VERSION, entries=entries
+        context,
+        game_id=GAME_ID,
+        version=POKEAPI_VERSION,
+        entries=entries,
+        reach=alola.SM_NATIONAL_DEX_THROUGH,
+        gifts=alola.alola_gifts(GAME_ID),
+        excluded=alola.alola_excluded(GAME_ID),
+        recorded=alola.QR_MAGEARNA,
+        version_group=alola.ALOLA_VERSION_GROUP,
+        trades=alola.ALOLA_TRADES,
+        form_changes=alola.alola_form_changes(context.forms_here()),
+        eggs=True,
     )
 
 

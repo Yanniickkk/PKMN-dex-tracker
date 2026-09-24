@@ -19,6 +19,8 @@ public class AvailabilityTests
     private static readonly SpeciesId Venusaur = new("venusaur");
     private static readonly SpeciesId Electabuzz = new("electabuzz");
     private static readonly SpeciesId Elekid = new("elekid");
+    private static readonly SpeciesId Deoxys = new("deoxys");
+    private static readonly FormId DeoxysAttack = new("deoxys-attack");
 
     private static readonly SourceCitation Citation =
         new("pokeapi", null, new DateOnly(2026, 9, 22));
@@ -51,6 +53,15 @@ public class AvailabilityTests
             Rule = new EvolutionRuleId($"{from.Value}-to-{to.Value}"),
         };
 
+    private static FormChangeAcquisition Changes(GameId game, SpeciesId species, FormId form) =>
+        new FormChangeAcquisition
+        {
+            Game = game,
+            Target = DexTarget.ForForm(species, form),
+            Source = Citation,
+            Requirement = "Touch the meteorite",
+        };
+
     private static BreedingAcquisition Hatches(GameId game, SpeciesId baby, SpeciesId parent) =>
         new BreedingAcquisition
         {
@@ -79,6 +90,11 @@ public class AvailabilityTests
                 Wild(Platinum, Electabuzz),
                 Hatches(Platinum, Elekid, Electabuzz),
                 Wild(Emerald, Bulbasaur),
+                // Platinum can cycle a Deoxys through its formes and cannot produce a Deoxys.
+                Changes(Platinum, Deoxys, DeoxysAttack),
+                // Emerald can do both.
+                Wild(Emerald, Deoxys),
+                Changes(Emerald, Deoxys, DeoxysAttack),
             ]);
 
     private static CaptureIndex Holding(SpeciesId species, GameId game) =>
@@ -225,5 +241,28 @@ public class AvailabilityTests
         var availability = new Availability(reference, CaptureIndex.Empty);
 
         Assert.False(availability.In(Platinum, Of(Ivysaur)));
+    }
+
+    [Fact]
+    public void A_form_of_something_the_game_cannot_produce_is_not_available()
+    {
+        var availability = new Availability(Reference(), CaptureIndex.Empty);
+
+        // The same bug as Ivysaur's, one record kind further on. Platinum knows how to touch
+        // the meteorite and has no way at all of producing a Deoxys to touch it with.
+        Assert.False(availability.In(Platinum, DexTarget.ForForm(Deoxys, DeoxysAttack)));
+
+        // Emerald catches one, so its formes really are available there.
+        Assert.True(availability.In(Emerald, DexTarget.ForForm(Deoxys, DeoxysAttack)));
+    }
+
+    [Fact]
+    public void Bringing_the_species_in_makes_its_forms_available()
+    {
+        var availability = new Availability(Reference(), Holding(Deoxys, Platinum));
+
+        // Which is the whole point of an item that changes something: the Deoxys was carried
+        // in, and the meteorite is waiting.
+        Assert.True(availability.In(Platinum, DexTarget.ForForm(Deoxys, DeoxysAttack)));
     }
 }

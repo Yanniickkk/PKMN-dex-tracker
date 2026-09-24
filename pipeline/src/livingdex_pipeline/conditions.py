@@ -207,6 +207,22 @@ REQUIREMENTS: dict[str, str] = {
     "other-castform-in-party": "With a Castform in the party",
     "other-tornadus-thundurus-in-party": "With Tornadus and Thundurus in the party",
     "other-reshiram-zekrom-in-party": "With Reshiram and Zekrom in the party",
+    # And Ultra Space asks the same three times over. Two of a trio have to be caught and in the
+    # party before the third will appear at the end of a wormhole, which is the oldest habit in
+    # the series - the Regis did it in Hoenn - made into the shape of a whole postgame.
+    "other-raikou-entei-in-party": "With Raikou and Entei in the party",
+    "other-groudon-kyogre-in-party": "With Groudon and Kyogre in the party",
+    "other-dialga-palkia-in-party": "With Dialga and Palkia in the party",
+    # The Magearna a QR Code unlocks, which Sun and Moon needed written by hand because the
+    # source had no row for it at all. It has one for these two, with the condition attached.
+    # Worded as a state rather than an instruction, because it is never the only condition on
+    # the row: "After entering the Hall of Fame and scan the QR Code" is two sentences that
+    # collided, which is the thing :func:`requirement` lowers the second phrase to avoid.
+    "other-scan-qr-code": (
+        "once this cartridge's region's Magearna QR Code has been scanned with the QR Scanner, "
+        "which is region-locked and never Shiny"
+    ),
+    "story-progress-beat-olivias-trial": "After Olivia's grand trial",
     "other-level-100-pokemon-in-party": "With a Pokemon at level 100 in the party",
     # PokeAPI's slug for this one is mangled, and what it means is the three Regis together.
     "other-nicknamed-cold-item-regice-regirock-registeel3": (

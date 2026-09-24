@@ -32,6 +32,8 @@ from . import (
     silver,
     soulsilver,
     sun,
+    ultra_moon,
+    ultra_sun,
     white,
     white2,
     x,
@@ -79,6 +81,8 @@ MODULES = [
     alpha_sapphire,
     sun,
     moon,
+    ultra_sun,
+    ultra_moon,
     bank,
     home,
 ]

@@ -3357,6 +3357,287 @@ anywhere but Omega Ruby and Alpha Sapphire's Jirachi, which is their step 7.
     Cemetery the other, in the same game. Four were Alola's and one Kalos's. Normalised in
     `places.py`, where the English name is taken.
 
+- [x] **Ultra Sun** (`ultra-sun`, gen 7, pair partner: Ultra Moon) - 2026-09-24
+  - [x] 1 Entity + edges - 2026-09-24
+  - [x] 2 Dex list - 2026-09-24
+  - [x] 3 Wild - 2026-09-24
+  - [x] 4 Gifts & statics - 2026-09-24
+  - [x] 5 Trades & evolutions - 2026-09-24
+  - [x] 6 Sprites - 2026-09-24
+  - [x] 7 Events - 2026-09-24
+  - [x] 8 Alternate forms - 2026-09-24
+  - [x] 9 Validate + smoke test - 2026-09-24
+- [x] **Ultra Moon** (`ultra-moon`, gen 7, pair partner: Ultra Sun) - 2026-09-24
+  - [x] 1 Entity + edges - 2026-09-24
+  - [x] 2 Dex list - 2026-09-24
+  - [x] 3 Wild - 2026-09-24
+  - [x] 4 Gifts & statics - 2026-09-24
+  - [x] 5 Trades & evolutions - 2026-09-24
+  - [x] 6 Sprites - 2026-09-24
+  - [x] 7 Events - 2026-09-24
+  - [x] 8 Alternate forms - 2026-09-24
+  - [x] 9 Validate + smoke test - 2026-09-24
+  - Step 9 for Ultra Sun and Ultra Moon: **validation at 11 rules, 0 errors**, and the two
+    warnings about the Own Tempo Rockruff that step 7 explained. `ValidationReport.ok` is
+    `not self.errors`, so that is green by the build's own definition.
+  - Coverage: **613 full, 165 partial, 10 missing, 19 unobtainable** per half, out of 807. The
+    613 is the highest any game in this dataset reaches by itself.
+  - Smoke test on a collection with Ultra Sun as main game and Ultra Moon linked, all four form
+    kinds on: 1089 tiles in the National Dex view, 546 in the Alola Dex view. Everything the
+    last six steps were about read correctly - **Ho-Oh available off a wormhole**, Lugia not and
+    "in ultra-moon: 1 way, then trade it over" under it, Poipole from Soliera, Naganadel by
+    evolving it, both Necrozma fusions with Colress's items, the Partner Cap Pikachu off its QR
+    Code, a Totem Gumshoos from Samson Oak, Zeraora and Marshadow unobtainable with their
+    distributions named.
+  - **And it found a real bug, which is what a smoke test is for.** Deoxys (Attack) said
+    *available in Ultra Sun*. It is not: Ultra Sun knows how to touch the meteorite beside
+    Sophocles and has no way at all of producing a Deoxys to touch it with. `Availability`
+    checked an evolution's earlier stage and a breeding parent and let a **form change** through
+    unasked - the same bug Yannick reported about Ivysaur in Platinum, one record kind further
+    on and missed when that one was fixed.
+  - A form is not caught, it is changed into, so what it is changed *from* has to be gettable.
+    Fixed, with three tests. **It moves 64 tiles in Ultra Sun alone** - 618 available became 554
+    - and much more elsewhere: Emerald went from 28 available form tiles to 1, Ruby and Sapphire
+    from 27 to 0, because neither catches an Unown or a Deoxys. And it keeps the half of the
+    rule that makes it useful: bring a Deoxys in and its three formes become available, which is
+    the whole point of an item that changes something.
+  - One thing it still cannot see, written into the class rather than left to be rediscovered: a
+    form change carries what it needs as a sentence - "fuse it with Lunala using the
+    N-Lunarizer" - and nothing in the schema says the Lunala is a second Pokemon to be had
+    first. So Ultra Sun counts Dawn Wings Necrozma, whose Necrozma it can catch and whose Lunala
+    it cannot.
+  - The published exe starts on the new dataset and stays up, no crash log. The data file was
+    copied before the test and is byte-identical after it; every backup the app wrote during the
+    run was removed and the four that were there before were left alone.
+  - Step 8 for Ultra Sun and Ultra Moon: **282 forms each, 196 with a record**, and 151 form
+    changes against the first pair's 148. The three that are new are the three these games are
+    about.
+  - **Necrozma is the reason this pair exists.** Colress hands over both fusion items on Mount
+    Lanakila once Necrozma is caught, and which one a cartridge can use is decided by the box it
+    came in: Dusk Mane needs a Solgaleo and Dawn Wings needs a Lunala, so each half can make one
+    of them and has to trade for the other. Ultra Necrozma is not here and should not be - it
+    lasts until the battle ends, and `is_battle_only` has kept that kind out since the table was
+    written.
+  - **The Partner Cap Pikachu is the second QR Code these games shipped with**, and it is
+    Magearna's shape exactly: a picture published for each region, scanned on the 3DS's own
+    camera, nothing at the other end to switch off. It is the only one of Ash's seven caps
+    anybody can still get - the other six were serial codes in 2017 and are over.
+  - The rest of the table is the first pair's, because the items did not move: the Griseous Orb
+    and the Gracidea are still sold in the Hau'oli City mall, the DNA Splicers and the Prison
+    Bottle still come from the same employee in Secret Lab A, Rotom's appliances are still in
+    Kukui's basement. Only Silvally's memories moved, with Gladion: Wicke hands over all
+    seventeen at Ancient Poni Path.
+  - **Forty forms were removed from the dataset, and none of them should ever have been there.**
+    Scatterbug and Spewpa each carry twenty patterns and Mothim carries three cloaks, and
+    Bulbapedia settles all three in its own words: Scatterbug and Spewpa "each have 20 visually
+    indistinct forms" whose only job is to decide which Vivillon they become, and a Mothim keeps
+    the cloak of the Burmy it evolved from "though this is only shown in its internal data". A
+    player with all twenty Scatterbug in a box could not tell them apart, and every one of them
+    was a tile asking to be filled. `forms.py` now leaves out a third kind on purpose, beside
+    the battle-only and held-item ones: **invisible**.
+  - They were easy to miss because they arrived the day these two were registered - that is the
+    version group the source stamps them with - so they looked like something the new games
+    brought. The form table went from 329 to 289.
+  - **The meteorite was missing for the third time.** `METEORITE` in `forms.py` is written out
+    by hand because a version group cannot say it, and every pair since Omega Ruby has found it
+    short: Omega Ruby, then Sun and Moon, now these two. Deoxys's three formes were absent from
+    both halves. It is one meteorite, beside Sophocles in the Hokulani Observatory, and all four
+    Alola cartridges walk past it.
+  - Step 7 for Ultra Sun and Ultra Moon: **thirteen reasons per half - eleven exclusives and
+    two nobody can produce** - and nineteen entries once `spread_unobtainable` has handed each
+    line's reason down. Validation is at **0 errors**.
+  - **Only three of the twenty-four were ever handed out, and that is the finding.** It is the
+    exact opposite of what the first pair found. Sun and Moon's eighteen exclusives were covered
+    six times over - a basket of Easter Eggs at Pokemon Centers, a Korean giveaway a month
+    later, Lillie's own Alolan Vulpix, Kiawe's Turtonator - and **every one of those
+    distributions says "S M" in its games column and means it**. By the time these two shipped a
+    year on, the giveaways had moved on: a Drampa or an Alolan Sandshrew missing here stays
+    missing. The one exception is a Pokemon Bank Hidden Ability giveaway in 2019 that covered
+    all four cartridges, and it is why Oranguru and Passimian have a sentence and nine others do
+    not.
+  - The split itself is not the first pair's either. **The fossils are not on this list at all** -
+    all four are revived at the Restoration Center on Route 8 in both halves, where Olivia
+    stocked two per cartridge - and three pairs are exclusives these two invented: Electrike and
+    Houndour, Baltoy and Golett, Skrelp and Clauncher.
+  - **Marshadow and Zeraora were both given away to these two specifically.** Sun and Moon's
+    Marshadow codes ran out in February 2018 and these two got their own, starting on the day
+    they came out; Zeraora was **never offered to any other game at all** until Pokemon HOME
+    handed out a Shiny one for a million victories, two generations later. The Fula City Zeraora
+    is the only distribution in this dataset whose games column names one pair and nothing else.
+  - **Two warnings are left, and they are the honest kind.** Dusk Lycanroc can only be got from
+    a Rockruff with Own Tempo, and that Rockruff was a serial code handed to buyers between the
+    launch day and 10 January 2018. The distribution is over, so there is no record to write -
+    and **a form has nowhere to say so**: an `unobtainable_reason` lives on a dex entry, dex
+    entries are species, and the form table has no field for one.
+  - So the rule was taught to tell the two cases apart rather than to go quiet. It used to say
+    "the generation they come from has not been built", which was written for a species from an
+    unbuilt generation and was a plain lie about a form - a form is never in any dex, so it can
+    never be "listed", and it fell into that bucket by accident. Ultra Sun was reporting that
+    Generation 7 had not been built. It now says what is true: *only obtainable by evolving a
+    form nothing in the dataset produces, and a form has no dex entry to carry a reason on*.
+    Giving the form table that field is Phase 3's to weigh.
+  - Coverage: **613 full, 165 partial, 10 missing, 19 unobtainable** per half.
+  - Step 6 for Ultra Sun and Ultra Moon: **there is no sheet, and this time the source names
+    these two by name.** `versions/generation-vii/ultra-sun-ultra-moon/25.png` is the url
+    PokeAPI publishes for a Generation 7 Pikachu and it is still a 404; there is no `sun-moon`
+    folder to 404 on at all. So both entities carry `sprite_set=None` explicitly rather than by
+    omission, and the app draws the shared set - the documented fallback, as for the first pair.
+  - Scraping the Archives instead turned out to be a bigger and stranger job than the Phase 3
+    item guessed, so it now has one of its own: *Scrape Generation 7's sprites from the
+    Bulbagarden Archives*.
+  - Step 5 for Ultra Sun and Ultra Moon: **1471 ways to get something and 1470** - 868 wild
+    slots, 407 evolutions, 166 gifts and statics, seven trades and 23 eggs. Coverage went from
+    331 full to **618 of 807**, which is the most any game in this dataset fills by itself:
+    Sun manages 510 of 802 and Omega Ruby 575 of 721.
+  - **Not one of the traders is offering what they offered before.** Hila still stands on Route 2
+    and still wants a Spearow, and hands over a Hawlucha where it was a Machop; Kihei still wants
+    a Lillipup on Route 5 and gives a Noibat rather than a Bounsweet. Two of the first pair's
+    places have no trader and three new ones do, and there are seven trades against six - which
+    is why the four cartridges cannot share one table however alike the names look.
+  - Two are worth reading twice. **Sill's Phantump becomes a Trevenant the moment it arrives**,
+    which is what a traded Phantump does - recorded as what is handed over, the way Sinnoh's
+    Haunter-into-Gengar and this region's own Alolan Graveler-into-Golem already were. And
+    **Kumu's Shellos is the West Sea one**, where everything in Alola's water is East Sea: that
+    trade is not a shortcut to something in the grass, it is the only West Sea Shellos these
+    games have. It is the far side of a finding step 8 made about Sun and Moon and could not act
+    on.
+  - `USUM_VERSION_GROUP` is its own constant beside `ALOLA_VERSION_GROUP`, because a rule is
+    stamped with the group it started in and a game is only allowed the groups at or before its
+    own. Handing these two Sun and Moon's group would have quietly refused them every rule that
+    arrived with their own - which is two: Poipole into Naganadel, and Rockruff into a Dusk
+    Lycanroc.
+  - **Naganadel dropped off the error list on its own**, which is what step 5 was for: Poipole
+    is Soliera's or Dulse's gift and Naganadel is what it becomes. Marshadow and Zeraora are
+    all that is left, and both are step 7's.
+  - **One new warning, and it is right**: Dusk Lycanroc can only be got from a Rockruff with Own
+    Tempo, and nothing in the dataset produces one. That Rockruff was a serial code handed to
+    early buyers over the winter of 2017, so it is step 7's answer - though the warning's own
+    wording does not fit the case, since it says "the generation they come from has not been
+    built" and the generation is built. Worth revisiting when step 7 writes the reason.
+  - Step 4 for Ultra Sun and Ultra Moon: **166 gifts and statics each**, against the first
+    pair's 90. Nineteen of Ultra Sun's and twenty of Ultra Moon's are the other half's, which is
+    a version exclusive on a scale nothing in this dataset has tried before - **nine of them are
+    pairs of legendaries**: Ho-Oh and Lugia, Dialga and Palkia, Groudon and Kyogre, Reshiram and
+    Zekrom, Xerneas and Yveltal, Raikou and Entei, Latios and Latias, Tornadus and Thundurus,
+    Heatran and Regigigas.
+  - **The Ultra Warp Ride is the single largest thing any game here does for a living dex.**
+    Ride Solgaleo or Lunala through Ultra Space and dive into a warp hole: there are four tiers
+    of them, the farthest flights find the rarest, and one with a flower-shaped aura is
+    guaranteed to hold a legendary. Nearly every legendary of the six generations before Alola
+    is at the end of one, and most of them had been reachable only by carrying one across five
+    transfers from the cartridge it was caught on.
+  - Five of them want company first - Giratina wants Dialga and Palkia in the party, Rayquaza
+    wants Groudon and Kyogre, Suicune wants Raikou and Entei, Kyurem wants Reshiram and Zekrom,
+    Landorus wants Tornadus and Thundurus - which is the oldest habit in the series, the one the
+    Regis had in Hoenn, turned into the shape of a whole postgame.
+  - **The source files the Ultra Space Wilds twice and the two copies are not equal.** Once as
+    their own place, holding the legendaries *and* the twenty ordinary species that live there,
+    with no conditions; and once under Ultra Space, holding only the legendaries but carrying
+    the in-party conditions. Keeping either one alone loses something, so the fuller place is
+    kept and those five conditions are written out by hand. It is Unova's Friday Musharna again,
+    in the Dreamyard and in the Dreamyard basement.
+  - **A gift can name a form now**, and Samson Oak is why. He hands out Totem-sized Pokemon on
+    Heahea Beach for Totem Stickers, and the source files every one of them under the ordinary
+    species - which is the one thing a Totem-sized Gumshoos is not, since a plain one is caught
+    in the grass on Route 1. `GiftDetail` gained a `form`, and the six per half land on
+    `gumshoos-totem`, `raticate-totem-alola` and the rest.
+  - That also answers something step 8 for Sun and Moon had to leave open. Those two have Totem
+    Pokemon at their trial sites, a Totem is a battle rather than a catch, and all seven of
+    their Totem forms were left with no way at all. **This is where they come from**, and the
+    first pair can only be handed one over the link. Mimikyu is in both halves here, the sole
+    exception among the twelve.
+  - Nearly every ordinary gift moved. Kukui hands the starters over on Route 1 where Hala did it
+    at the festival in Iki Town; Wicke hands over the Type: Null at Ancient Poni Path because
+    Gladion has left Alola for the whole of this story; the fossils are revived at a Restoration
+    Center on Route 8 instead of bought from Olivia, **and all four are in both halves**, which
+    is the one place these two are kinder than the first pair. Necrozma waits in Mount
+    Lanakila's crater rather than in Ten Carat Hill. Poipole is handed over in the Ultra
+    Megalopolis by Soliera in one half and Dulse in the other.
+  - Six conditions had no wording and have one now: the three in-party trios, Olivia's grand
+    trial, and the Magearna QR Code - which **the source has a row for in these two and had none
+    at all for Sun and Moon**, where it had to be written by hand at step 7. Its phrase is
+    worded as a state rather than an instruction, because it is never the only condition on the
+    row and "After entering the Hall of Fame and scan the QR Code" is two sentences colliding.
+  - Validation is down to six errors from eight: Naganadel, which is step 5's, and Marshadow and
+    Zeraora, which are step 7's. Poipole dropped off on its own. Coverage is 331 full, 463
+    partial, 13 missing for each half.
+  - Step 3 for Ultra Sun and Ultra Moon: **868 wild slots and 866**, against the first pair's
+    708. These are not Sun and Moon's tables with a few rows added - Route 2 alone has eighteen
+    rows for the older pair and thirty-one for this one - and SOS calls went from 133 to 197,
+    which is the generation's own mechanic being leaned on harder the second time round.
+  - **Three places the first pair's grass never had**: Dividing Peak Tunnel, Sandy Cave and
+    Ula'ula Beach. 59 places against Sun's 59, but not the same 59.
+  - **Blacephalon in Ultra Sun and Stakataka in Ultra Moon**, both standing in Poni Grove at
+    level 60 - a version exclusive, and the first Ultra Beasts in this dataset that are walked
+    into rather than hunted. Sun and Moon's four were statics on Looker's errand.
+  - 94 records carry an hour, 47 by day and 47 by night, and 103 of the 117 ambushes say which
+    of the seven terrains they are. Both come from `alolatables.py`, which needed one change:
+    **both pairs' tables are on the same page and a two-letter column is all that separates
+    them.** It read `("S", "M")` and now takes which pair to read - worked out from the
+    cartridge rather than passed in, because there is exactly one right answer per game and
+    reading the wrong one would quietly give a game the other pair's hours.
+  - `alola.acquisition_methods` became `sinnoh.acquisition_methods`'s shape: the four cartridges
+    share every piece of machinery and not one of the tables behind it, so a game brings what it
+    knows and **a table left out is a step that has not been gathered yet**. That is what lets
+    these two arrive with encounters and nothing else, the way the first pair did. `reach` is a
+    required argument rather than a constant now, because this is the first region whose two
+    pairs disagree about how far a living dex goes: 802 against 807.
+  - Sun and Moon came out of that refactor byte-identical - 1362 records and 1361, the same
+    counts entry for entry - which was checked rather than assumed.
+  - **Validation is at eight errors, four per half, and every one of them is named**: Poipole
+    and Naganadel, which are step 4's and step 5's, and Marshadow and Zeraora, which are step
+    7's. The blanket "encounters have not been gathered yet" is gone, which is the thing step 3
+    was for. Stakataka and Blacephalon dropped off the list on their own, because each half
+    covers the other's.
+  - Step 2 for Ultra Sun and Ultra Moon: **403 entries each, Rowlet to Zeraora**, and the same
+    list for both halves as every pair in this dataset shows.
+  - **Only 23 of Sun and Moon's 302 numbers still mean the same thing.** The hundred and one new
+    entries were not added to the end, they were slotted in where they belong and nothing was
+    taken away, so the two lists part company at #024 - Pichu in the older, Buneary in this one
+    - and 279 of the older numbers point at something else here. That is Johto's situation
+    rather than Platinum's, which kept Diamond's 151 and put four after them so every shared
+    number went on meaning what it always had. It is why `SM_DEX` and `USUM_DEX` have always
+    been separate constants and why neither is ever called "the Alola dex".
+  - The five the sequels introduced sit at Alola #261 and #262 for Poipole and Naganadel, #392
+    and #393 for Stakataka and Blacephalon, and #403 for Zeraora - scattered through, not piled
+    at the end, which is the same fact seen from the other side.
+  - **Validation is red on purpose after this step, and clears at step 3.** A game with a dex
+    and no way to fill any of it now trips `every-entry-has-a-method`, which is exactly what
+    that rule was written for: its docstring says a game like that "is unfinished whatever else
+    covers its species, and step 9 reads validation green as proof that it is finished". Step 1
+    did not trip it because a game with no dex has nothing to fail; step 2 gives it 403 entries
+    and no encounters, which is the state the rule names. Two errors, one per half, and nothing
+    else.
+  - Step 1 for Ultra Sun and Ultra Moon: **the transfer graph is closed again.** 125 routes and
+    nothing held back - the four Sun and Moon spent a whole pair's worth of steps declaring into
+    an empty space are real, and neither of those two files was edited to light them. It has
+    been true once before, when Bank and HOME arrived, and it stopped being true the moment
+    Generation 7 opened. Let's Go will break it again.
+  - Fourteen new routes: six trades between the four Alola cartridges where there had been one,
+    and eight Bank edges where there had been four. **Four of the six carry 1 to 802 and two
+    carry everything**, which is the cap `carried_between` was written for a pair ago: a cable
+    that crosses between the pairs cannot hand over the five species the second pair introduced,
+    and it refuses them in both directions because the older side holds none of them anyway.
+  - **These two are the first second pair in the series to move the National Dex on.** A third
+    version has never done it and nor have sequels: Emerald added nothing to Ruby and Sapphire's
+    386, Platinum nothing to Diamond and Pearl's 493, Black 2 and White 2 nothing to Black and
+    White's 649. Poipole, Naganadel, Stakataka, Blacephalon and Zeraora make this 807 against
+    Sun and Moon's 802, and that gap is the whole reason the cap above exists.
+  - **And the first release in the series that was one day everywhere.** X and Y managed one day
+    in four regions, which this dataset called the end of the months a game used to spend out in
+    Japan alone - and then Sun and Moon slipped back, with Europe five days behind. These two
+    went out in eight regions on 17 November 2017, mainland China, Hong Kong and Taiwan among
+    them, which none of the twenty-eight games before them here can say: Generation 7 is where
+    the series gained Chinese at all. It is the first entity in this dataset with no "the
+    Japanese date" to prefer.
+  - Both entities carry an empty dex and no ways of getting anything, which is what step 1 is:
+    coverage reads 0 full, 791 partial, 16 missing for each. The sixteen are the ten Mythicals
+    nothing in this dataset produces, Marshadow, and the five these two introduced - and every
+    one of the five is waiting for step 3 or step 4 rather than being a hole.
+  - `alola.py` needed no changes at all. It was written for four cartridges when only two
+    existed - `CARTRIDGES`, `ULTRA`, `carried_between`, `bank_carries` - and this step is the
+    first test of whether that was foresight or decoration. Nothing in it had to move.
+
 ### Generation 8
 
 _Nothing yet._

@@ -94,6 +94,24 @@
   },
   {
     "from": "bank",
+    "to": "ultra-moon",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "bank",
+    "to": "ultra-sun",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "bank",
     "to": "x",
     "mechanism": "bank",
     "direction": "oneWay",
@@ -702,6 +720,28 @@
     }
   },
   {
+    "from": "moon",
+    "to": "ultra-moon",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 802
+    }
+  },
+  {
+    "from": "moon",
+    "to": "ultra-sun",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 802
+    }
+  },
+  {
     "from": "omega-ruby",
     "to": "bank",
     "mechanism": "bank",
@@ -1068,6 +1108,55 @@
   },
   {
     "from": "sun",
+    "to": "bank",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "sun",
+    "to": "ultra-moon",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 802
+    }
+  },
+  {
+    "from": "sun",
+    "to": "ultra-sun",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "nationalDexRange",
+      "from": 1,
+      "to": 802
+    }
+  },
+  {
+    "from": "ultra-moon",
+    "to": "bank",
+    "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "ultra-moon",
+    "to": "ultra-sun",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "ultra-sun",
     "to": "bank",
     "mechanism": "bank",
     "direction": "oneWay",

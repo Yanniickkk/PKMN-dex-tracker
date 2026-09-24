@@ -1953,6 +1953,8 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "silver",
         "soulsilver",
         "sun",
+        "ultra-moon",
+        "ultra-sun",
         "white",
         "white-2",
         "x",
@@ -1979,10 +1981,12 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # one more with HOME: the way out of Bank, which goes nowhere else and comes back from
     # nowhere.
     #
-    # Generation 7 opens with one trade between its two halves and four more Bank edges, a
-    # deposit and a withdrawal each. The four routes Sun and Moon declare to Ultra Sun and Ultra
-    # Moon are waiting, as X and Y's to the remakes once were.
-    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 1 + 4
+    # Generation 7 is six trades between its four cartridges, as Generations 5 and 6 each were,
+    # and eight more Bank edges - a deposit and a withdrawal for each of the four. The four
+    # routes Sun and Moon spent a pair's worth of steps declaring into an empty space are real
+    # now, and neither of those two files was touched to do it.
+    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8
+    assert len(routes) == 125
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -2008,6 +2012,20 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # end existed.
     assert ("omega-ruby", "x") in routes
     assert ("alpha-sapphire", "omega-ruby") in routes
+
+    # And a third time, in Generation 7. Both halves of each Alola pair reach both halves of the
+    # other, and a cable between the pairs is the one that has to refuse something.
+    assert ("sun", "ultra-sun") in routes
+    assert ("moon", "ultra-sun") in routes
+    assert ("ultra-moon", "ultra-sun") in routes
+    [across] = [
+        edge for edge in registry.edges if edge.from_ == "sun" and edge.to == "ultra-sun"
+    ]
+    assert across.filter.to == 802
+    [within] = [
+        edge for edge in registry.edges if edge.from_ == "ultra-moon" and edge.to == "ultra-sun"
+    ]
+    assert within.filter.filter == "all"
     # What is not here, and will never be: a remake and the game it remakes. No cable reaches a
     # Game Boy Advance cartridge from a 3DS, and the five-game route between them runs through
     # Bank rather than between the two of them.
@@ -2031,16 +2049,14 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     assert (withdrawal.history.from_, withdrawal.history.to) == (3, 6)
     assert all(edge.history is None for edge in registry.edges if edge.to == "bank")
 
-    # What waits now is Generation 7's other half: two trades from each of Sun and Moon into
-    # each of Ultra Sun and Ultra Moon, declared at this step and held until those two exist.
-    waiting = {(edge.from_, edge.to) for _, edge in registry.held_back_edges}
-
-    assert waiting == {
-        ("sun", "ultra-sun"),
-        ("sun", "ultra-moon"),
-        ("moon", "ultra-sun"),
-        ("moon", "ultra-moon"),
-    }
+    # And nothing at all is waiting. Every route any of the thirty entries declares has both of
+    # its ends in the dataset - the four Sun and Moon declared into an empty space were the last
+    # of them, and registering Ultra Sun and Ultra Moon lit all four without either of those
+    # files being touched.
+    #
+    # It has been true once before, when Bank and HOME closed the graph, and it stopped being
+    # true the moment Generation 7 opened. It will stop being true again with Let's Go.
+    assert registry.held_back_edges == []
 
 
 def test_a_both_ways_route_is_one_route_however_many_ends_declare_it() -> None:

@@ -6733,28 +6733,7 @@
     ]
   },
   {
-    "id": "rockruff-to-lycanroc-midnight",
-    "from": {
-      "species": "rockruff"
-    },
-    "to": {
-      "species": "lycanroc",
-      "form": "lycanroc-midnight"
-    },
-    "trigger": "levelUp",
-    "conditions": [
-      {
-        "condition": "minimumLevel",
-        "level": 25
-      },
-      {
-        "condition": "timeOfDay",
-        "timeOfDay": "night"
-      }
-    ]
-  },
-  {
-    "id": "rockruff-to-lycanroc-sun-moon",
+    "id": "rockruff-to-lycanroc",
     "from": {
       "species": "rockruff"
     },
@@ -6774,12 +6753,14 @@
     ]
   },
   {
-    "id": "rockruff-to-lycanroc-sun-moon-2",
+    "id": "rockruff-to-lycanroc-dusk",
     "from": {
-      "species": "rockruff"
+      "species": "rockruff",
+      "form": "rockruff-own-tempo"
     },
     "to": {
-      "species": "lycanroc"
+      "species": "lycanroc",
+      "form": "lycanroc-dusk"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -6790,6 +6771,27 @@
       {
         "condition": "timeOfDay",
         "timeOfDay": "dusk"
+      }
+    ]
+  },
+  {
+    "id": "rockruff-to-lycanroc-midnight",
+    "from": {
+      "species": "rockruff"
+    },
+    "to": {
+      "species": "lycanroc",
+      "form": "lycanroc-midnight"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
       }
     ]
   },
