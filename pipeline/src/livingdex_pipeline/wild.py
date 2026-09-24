@@ -20,7 +20,7 @@ goes stale without saying so.
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from . import conditions
 from .forms import targets_of
@@ -94,6 +94,21 @@ WILD_METHODS: dict[str, EncounterMethod] = {
     "overworld-water-special": EncounterMethod.OVERWORLD_WATER,
     "overworld-flying": EncounterMethod.OVERWORLD_FLYING,
     "overworld-flying-special": EncounterMethod.OVERWORLD_FLYING,
+    # Galar's six, and four of them are an overworld spawn with something said beside it. The
+    # Wild Area is Let's Go's idea grown up: what is standing there is visible, and the source
+    # separates the ones that wander a fixed patch, the ones that come up out of the ground or
+    # the swamp, and the ones that chase a player who steps into their water. Three places to
+    # look is a method; how the thing behaves once it is looked at is a sentence.
+    "wanderer": EncounterMethod.OVERWORLD,
+    "wanderer-water": EncounterMethod.OVERWORLD_WATER,
+    "overworld-dirt": EncounterMethod.OVERWORLD,
+    "chase-water": EncounterMethod.OVERWORLD_WATER,
+    # And the two that are neither a table nor a place: a Max Raid is a beam of light over a den
+    # and four trainers against one Dynamax Pokemon, with one throw at the end of it, and a
+    # Dynamax Adventure is the Crown Tundra's cave run that ends in a choice of legendary. Both
+    # produce species that are nowhere else in these games, which is why neither is `other`.
+    "max-raid": EncounterMethod.MAX_RAID,
+    "dynamax-adventure": EncounterMethod.DYNAMAX_ADVENTURE,
     # Still a wild encounter, but not one of the named ways of starting one.
     "seaweed": EncounterMethod.OTHER,
     "feebas-tile-fishing": EncounterMethod.OTHER,
@@ -132,6 +147,12 @@ METHOD_REQUIREMENTS: dict[str, str] = {
     "overworld-flying-special": (
         "A rare spawn: it appears far less often than the rest of the table"
     ),
+    # Galar's four, which are what its overworld methods carry that the three enum values do
+    # not. The source's own descriptions, in a player's words.
+    "wanderer": "Standing in one fixed spot rather than anywhere in the area",
+    "wanderer-water": "Floating in one fixed spot rather than anywhere on the water",
+    "overworld-dirt": "Coming up out of the ground or out of the swamp",
+    "chase-water": "It gives chase as soon as the water is entered",
 }
 
 
@@ -141,7 +162,12 @@ class _State:
 
     time_of_day: str | None
     season: str | None
+    #: Galar's, and the first generation whose weather decides what is standing there.
+    weather: str | None
     requirement: str | None
+    #: The Max Raid difficulty this row is for, before :func:`_folded_stars` turns a run of them
+    #: into one sentence. Not part of what makes two records different to a player.
+    stars: int | None = None
 
 
 @dataclass
@@ -157,7 +183,7 @@ def wild_encounters(
     api: PokeApiClient,
     *,
     game_id: str,
-    version: str,
+    version: str | Sequence[str],
     species: list[str],
     refresh: bool = False,
     forms: Sequence[Form] = (),
@@ -187,6 +213,11 @@ def wild_encounters(
     until the regional dex is filled. A player told to walk into a place they cannot enter has
     been told nothing.
 
+    ``version`` is usually one name and may be several, which Galar is the first to need: the
+    source files the Isle of Armor and the Crown Tundra as versions of their own, so a Sword
+    player's grass is ``sword``, ``the-isle-of-armor-sword`` and ``the-crown-tundra-sword``
+    together. Reading only the first would lose two thirds of the game and nothing would say so.
+
     ``forms`` is this game's own form table, and passing it is how a game says that some of what
     its grass holds is a form rather than a species. Alola is the first that needs it and needs
     it badly: every Rattata on Route 1 is the Alolan one, the Kantonian is nowhere in the game,
@@ -195,6 +226,7 @@ def wild_encounters(
     every game before Generation 7 does.
     """
     places = places or LocationNames(api, refresh=refresh)
+    wanted_versions = (version,) if isinstance(version, str) else tuple(version)
     gates = gates or {}
     uncounted = not_counted or {}
     found: list[WildAcquisition] = []
@@ -214,10 +246,12 @@ def wild_encounters(
                 area_slug = area["location_area"]["name"]
 
                 for version_details in area.get("version_details", []):
-                    if version_details["version"]["name"] != version:
+                    if version_details["version"]["name"] not in wanted_versions:
                         continue
 
-                    slots = _add_up(version_details.get("encounter_details", []), species=name)
+                    slots = _folded_stars(
+                        _add_up(version_details.get("encounter_details", []), species=name)
+                    )
 
                     for (method, state), slot in slots.items():
                         location, sub_area = places.of(area_slug)
@@ -245,7 +279,11 @@ def wild_encounters(
                         seen.add(key)
                         found.append(record)
 
-    return _merged(_without_redundant_conditions(_without_unconditional_twins(found)))
+    return _merged(
+        _without_pointless_weather(
+            _without_redundant_conditions(_without_unconditional_twins(found))
+        )
+    )
 
 
 def _add_up(details: list[dict], *, species: str) -> dict[tuple[str, _State], _Slot]:
@@ -280,7 +318,11 @@ def _state(values: list[str], *, species: str, method: str) -> _State:
     The method can say something too, where PokeAPI's is narrower than ours: fishing in a
     ripple is a Super Rod slot here, and where the rod is cast would be lost otherwise.
     """
-    said = conditions.requirement(values, subject=species)
+    said = conditions.requirement(
+        values,
+        subject=species,
+        skip=(conditions.TIME, conditions.SEASON, conditions.WEATHER, conditions.RATING),
+    )
     by_method = METHOD_REQUIREMENTS.get(method)
     # Through the same joiner a list of conditions goes through, so that a method's sentence
     # and a condition's do not collide: "A rare spawn ... and Only once the Articuno" reads as
@@ -290,7 +332,9 @@ def _state(values: list[str], *, species: str, method: str) -> _State:
     return _State(
         time_of_day=conditions.of(values, conditions.TIME),
         season=conditions.of(values, conditions.SEASON),
+        weather=conditions.of(values, conditions.WEATHER),
         requirement=requirement,
+        stars=conditions.stars(values),
     )
 
 
@@ -320,11 +364,126 @@ def _record(
         rate_percent=min(slot.chance, 100) or None,
         time_of_day=state.time_of_day,
         season=state.season,
+        weather=conditions.WEATHER_NAMES.get(state.weather, state.weather),
         # The way in comes first: it is the thing a player cannot do anything about, and what
         # the row itself asks for only matters once they are standing there.
         requirement=conditions.joined(gate, state.requirement),
         does_not_count=does_not_count,
         source=citation,
+    )
+
+
+def _folded_stars(slots: dict[tuple[str, _State], _Slot]) -> dict[tuple[str, _State], _Slot]:
+    """A run of Max Raid difficulties on otherwise identical rows, as one sentence.
+
+    The source gives a den's table one row per star rating, so a species that can be raided at
+    three, four and five stars arrives as three rows differing in nothing else. Five records
+    apiece would bury a den under its own difficulty settings; what a player wants to read is
+    "at 3 to 5 stars", which is what the rating is - a number, and this is the range of it.
+
+    The odds are the best of the run rather than their sum, for the reason :func:`_merged` gives
+    about rooms: a raid is one den at one rating, so meeting it is as likely as the rating being
+    played makes it.
+    """
+    runs: dict[tuple[str, _State], tuple[_Slot, int, int]] = {}
+
+    for (method, state), slot in slots.items():
+        if state.stars is None:
+            runs[(method, state)] = (slot, 0, 0)
+            continue
+
+        key = (method, replace(state, stars=None))
+        found = runs.get(key)
+
+        if found is None:
+            runs[key] = (slot, state.stars, state.stars)
+            continue
+
+        already, lowest, highest = found
+        runs[key] = (
+            _Slot(
+                lowest=min(already.lowest, slot.lowest),
+                highest=max(already.highest, slot.highest),
+                chance=max(already.chance, slot.chance),
+            ),
+            min(lowest, state.stars),
+            max(highest, state.stars),
+        )
+
+    folded: dict[tuple[str, _State], _Slot] = {}
+    for (method, state), (slot, lowest, highest) in runs.items():
+        if not highest:
+            folded[(method, state)] = slot
+            continue
+
+        said = conditions.star_range(lowest, highest)
+        folded[(method, replace(state, requirement=conditions.joined(state.requirement, said)))] = (
+            slot
+        )
+
+    return folded
+
+
+def _without_pointless_weather(records: list[WildAcquisition]) -> list[WildAcquisition]:
+    """Drop the weather from a slot that is there whatever the weather.
+
+    Galar is the first region whose weather decides what is standing in front of a player, and
+    the source writes a row per state of the sky - so a Rookidee that flies over Rolling Fields
+    in all nine arrives as nine records that differ in one word. Nine rows saying "and also when
+    it is foggy" tell a player nothing to act on.
+
+    The nine are not the same nine everywhere: a place the sun never leaves has no snow table,
+    and demanding all nine would leave a species there marked as weather-dependent forever. So
+    what counts as "whatever the weather" is measured per place and method, from every weather
+    this game lists there at all.
+    """
+    everywhere: dict[tuple, set[str]] = {}
+    for record in records:
+        if record.weather is not None:
+            everywhere.setdefault(_weather_key(record), set()).add(record.weather)
+
+    by_slot: dict[tuple, list[WildAcquisition]] = {}
+    for record in records:
+        by_slot.setdefault(_but_the_weather(record), []).append(record)
+
+    kept: list[WildAcquisition] = []
+    for group in by_slot.values():
+        weathers = {one.weather for one in group if one.weather is not None}
+        possible = everywhere.get(_weather_key(group[0]), set())
+
+        if not weathers or weathers < possible:
+            kept.extend(group)
+            continue
+
+        kept.append(
+            group[0].model_copy(
+                update={
+                    "weather": None,
+                    "levels": LevelRange(
+                        minimum=min(one.levels.minimum for one in group),
+                        maximum=max(one.levels.maximum for one in group),
+                    ),
+                    "rate_percent": _best_of(one.rate_percent for one in group),
+                }
+            )
+        )
+
+    return kept
+
+
+def _weather_key(record: WildAcquisition) -> tuple:
+    """The place and the way in, which is what a set of weathers belongs to."""
+    return (record.location, record.sub_area, record.method)
+
+
+def _but_the_weather(record: WildAcquisition) -> tuple:
+    """Everything a player would use to tell two slots apart except the state of the sky."""
+    return (
+        *_where(record),
+        record.time_of_day,
+        record.season,
+        record.requirement,
+        record.does_not_count,
     )
 
 
@@ -379,7 +538,13 @@ def _merged(records: list[WildAcquisition]) -> list[WildAcquisition]:
     merged: dict[tuple, WildAcquisition] = {}
 
     for record in records:
-        key = (*_where(record), record.time_of_day, record.season, record.requirement)
+        key = (
+            *_where(record),
+            record.time_of_day,
+            record.season,
+            record.weather,
+            record.requirement,
+        )
         already = merged.get(key)
 
         if already is None:
@@ -405,6 +570,12 @@ def _best(left: float | None, right: float | None) -> float | None:
     return max(known) if known else None
 
 
+def _best_of(rates) -> float | None:
+    known = [one for one in rates if one is not None]
+
+    return max(known) if known else None
+
+
 def _twin(record: WildAcquisition) -> tuple:
     """Everything about a slot except what has to be true for it."""
     return (
@@ -414,6 +585,7 @@ def _twin(record: WildAcquisition) -> tuple:
         record.rate_percent,
         record.time_of_day,
         record.season,
+        record.weather,
     )
 
 

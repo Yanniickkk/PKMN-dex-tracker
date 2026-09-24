@@ -174,6 +174,18 @@ class EncounterMethod(StrEnum):
     OVERWORLD = "overworld"
     OVERWORLD_WATER = "overworldWater"
     OVERWORLD_FLYING = "overworldFlying"
+    # And Galar's two, which are the first ways of getting a Pokemon in this dataset that are
+    # not a place at all. A Max Raid is a beam of light over a den, four trainers against one
+    # Dynamax Pokemon and a single throw at the end of it; a Dynamax Adventure is the Crown
+    # Tundra's run through a cave with three strangers, ending at a legendary that one of the
+    # four gets to keep. Both are the only way to get some species in these games - most of the
+    # legendaries of the six generations before this one come out of the Max Lair and nowhere
+    # else - so neither can be `other`, which is where a method goes to stop being an answer.
+    #
+    # Wild all the same: what is caught was not handed over, hatched, traded or evolved, and it
+    # is standing in a place a player can walk to.
+    MAX_RAID = "maxRaid"
+    DYNAMAX_ADVENTURE = "dynamaxAdventure"
     OTHER = "other"
 
 

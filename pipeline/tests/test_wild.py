@@ -936,3 +936,218 @@ def test_what_belongs_to_a_later_step_is_still_left_alone() -> None:
     )
 
     assert found == []
+
+
+# --- Galar --------------------------------------------------------------------------------------
+
+#: The two beams of light over a Max Raid den, which is the rarity of the table under it.
+COMMON = "max-den-rarity-common"
+RARE = "max-den-rarity-rare"
+
+#: The nine states of the Wild Area's sky, as the source spells them.
+WEATHERS = [
+    "weather-normal",
+    "weather-overcast",
+    "weather-raining",
+    "weather-thunderstorm",
+    "weather-intense-sun",
+    "weather-sandstorm",
+    "weather-snowing",
+    "weather-snowstorm",
+    "weather-fog",
+]
+
+
+def galar_area(name: str, rows: dict[str, list[dict]]) -> dict:
+    """One area whose table is split over several of the six Sword and Shield versions."""
+    return {
+        "location_area": {"name": name},
+        "version_details": [
+            {"version": {"name": version}, "encounter_details": details}
+            for version, details in rows.items()
+        ],
+    }
+
+
+def test_the_three_versions_a_galar_half_is_spread_over_are_read_together() -> None:
+    # The source files each expansion as a version group of its own, so a Sword player's grass
+    # is three versions rather than one. Reading only the first would lose the two islands and
+    # nothing in the data would say so.
+    encounters = {
+        "wooloo": [
+            galar_area(
+                "rolling-fields-main",
+                {
+                    "sword": [slot("walk", 4, 6, 20)],
+                    "the-isle-of-armor-sword": [slot("walk", 12, 14, 30)],
+                    "the-crown-tundra-sword": [slot("walk", 60, 60, 40)],
+                    "shield": [slot("walk", 4, 6, 99)],
+                },
+            )
+        ]
+    }
+    locations = {"rolling-fields-main": ("rolling-fields", "Rolling Fields")}
+
+    found = build(
+        encounters,
+        locations,
+        version=("sword", "the-isle-of-armor-sword", "the-crown-tundra-sword"),
+    )
+
+    # Three rows in one place, one method and no conditions: one record, widest levels, best odds.
+    assert len(found) == 1
+    assert (found[0].levels.minimum, found[0].levels.maximum) == (4, 60)
+    # Shield's row is not this game's and never reaches the arithmetic.
+    assert found[0].rate_percent == 40
+
+
+def test_a_version_given_as_one_name_still_works() -> None:
+    # Every game before Galar passes a string, and none of them should have to change.
+    encounters = {"zigzagoon": [area("route-101-area", "emerald", [slot("walk", 2, 3, 40)])]}
+
+    found = build(encounters, {"route-101-area": ("route-101", "Route 101")})
+
+    assert [one.location for one in found] == ["Route 101"]
+
+
+def test_galars_weather_lands_in_the_field_that_has_been_waiting_for_it() -> None:
+    # The first generation whose weather decides what is standing there, and the first record in
+    # this dataset to fill a column the model has carried since it was written.
+    encounters = {
+        "snorunt": [
+            galar_area(
+                "east-lake-axewell-main",
+                {
+                    "sword": [
+                        slot("overworld", 10, 15, 5, ["weather-snowing"]),
+                        slot("overworld", 10, 15, 60, ["weather-snowstorm"]),
+                    ]
+                },
+            )
+        ],
+        # A second resident, so the place is known to have more skies than Snorunt turns up in.
+        "magikarp": [
+            galar_area(
+                "east-lake-axewell-main",
+                {"sword": [slot("overworld", 8, 9, 30, [one]) for one in WEATHERS]},
+            )
+        ],
+    }
+    locations = {"east-lake-axewell-main": ("east-lake-axewell", "East Lake Axewell")}
+
+    found = sorted(
+        (one for one in build(encounters, locations, version="sword") if one.weather),
+        key=lambda one: one.weather,
+    )
+
+    assert [one.weather for one in found] == ["snowing", "snowstorm"]
+    assert [one.rate_percent for one in found] == [5, 60]
+    # The sky is not a requirement: it has a column, so it is not said twice.
+    assert all(one.requirement is None for one in found)
+
+
+def test_a_slot_that_is_there_in_every_weather_the_place_has_says_nothing_about_weather() -> None:
+    # Nine records differing in one word tell a player nothing to act on. What counts as "every
+    # weather" is measured from the place rather than assumed to be nine, because a place the
+    # sun never leaves has no snow table and a species there is not weather-dependent.
+    encounters = {
+        "rookidee": [
+            galar_area(
+                "rolling-fields-main",
+                {"sword": [slot("overworld", 4, 6, 20, [one]) for one in WEATHERS]},
+            )
+        ],
+        "snorunt": [
+            galar_area(
+                "rolling-fields-main",
+                {"sword": [slot("overworld", 10, 12, 5, ["weather-snowing"])]},
+            )
+        ],
+    }
+    locations = {"rolling-fields-main": ("rolling-fields", "Rolling Fields")}
+
+    found = build(encounters, locations, version="sword")
+    by_species = {one.target.species: one for one in found}
+
+    assert len(found) == 2
+    assert by_species["rookidee"].weather is None
+    assert by_species["snorunt"].weather == "snowing"
+
+
+def test_a_run_of_max_raid_difficulties_is_one_record_saying_the_range() -> None:
+    # A den's table is written a row per star, so five records apiece would bury the den under
+    # its own difficulty settings. The rating is a number and this is the range of it.
+    encounters = {
+        "dreepy": [
+            galar_area(
+                "axews-eye-max-den-a",
+                {
+                    "sword": [
+                        slot("max-raid", 25, 30, 20, [RARE, "max-den-rating-2-star"]),
+                        slot("max-raid", 30, 40, 15, [RARE, "max-den-rating-3-star"]),
+                        slot("max-raid", 15, 25, 10, [COMMON, "max-den-rating-1-star"]),
+                    ]
+                },
+            )
+        ]
+    }
+    locations = {"axews-eye-max-den-a": ("axews-eye", "Axew's Eye")}
+
+    found = build(encounters, locations, version="sword")
+    by_requirement = {one.requirement: one for one in found}
+
+    assert len(found) == 2
+    assert sorted(by_requirement) == [
+        "In a den under a strong purple beam of light and at 2 to 3 stars",
+        "In a den under an ordinary red beam of light and at 1 star",
+    ]
+
+    # The purple run keeps the whole level range and the best of its odds rather than their sum:
+    # a raid is one den at one rating, and adding the ratings up would promise a chance the game
+    # never offers.
+    purple = by_requirement["In a den under a strong purple beam of light and at 2 to 3 stars"]
+    assert (purple.levels.minimum, purple.levels.maximum) == (25, 40)
+    assert purple.rate_percent == 20
+    assert {one.method for one in found} == {EncounterMethod.MAX_RAID}
+
+
+def test_galars_six_new_ways_of_meeting_something_each_land_somewhere_true() -> None:
+    # Four of them are an overworld spawn with something said beside it - three places to look
+    # is a method, how the thing behaves once looked at is a sentence - and two are neither a
+    # table nor a place.
+    encounters = {
+        "wooloo": [
+            galar_area(
+                "giants-cap-main",
+                {
+                    "sword": [
+                        slot("wanderer", 20, 22, 10),
+                        slot("wanderer-water", 20, 22, 10),
+                        slot("overworld-dirt", 20, 22, 10),
+                        slot("chase-water", 20, 22, 10),
+                        slot("dynamax-adventure", 65, 65, 100),
+                    ]
+                },
+            )
+        ]
+    }
+    locations = {"giants-cap-main": ("giants-cap", "Giant's Cap")}
+
+    found = {one.method: one for one in build(encounters, locations, version="sword")}
+
+    assert set(found) == {
+        EncounterMethod.OVERWORLD,
+        EncounterMethod.OVERWORLD_WATER,
+        EncounterMethod.DYNAMAX_ADVENTURE,
+    }
+    # Two PokeAPI methods land on one of ours and each keeps its own sentence, so the records
+    # are told apart by what they ask rather than folded into each other.
+    assert sorted(
+        one.requirement or ""
+        for one in build(encounters, locations, version="sword")
+        if one.method is EncounterMethod.OVERWORLD_WATER
+    ) == [
+        "Floating in one fixed spot rather than anywhere on the water",
+        "It gives chase as soon as the water is entered",
+    ]
+    assert found[EncounterMethod.DYNAMAX_ADVENTURE].requirement is None

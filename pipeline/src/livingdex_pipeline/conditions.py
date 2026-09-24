@@ -23,6 +23,41 @@ log = logging.getLogger(__name__)
 TIME = "time-"
 SEASON = "season-"
 
+#: Galar's, and the first use of a field that has been on the record since it was written.
+#:
+#: Every game before Sword and Shield has weather and none of them lets it change what is
+#: standing there. The Wild Area has nine states - clear, overcast, raining, a thunderstorm,
+#: intense sun, a sandstorm, snow, a snowstorm and fog - and each one is its own table.
+#:
+#: PokeAPI files these under its ``max-den-rating`` condition rather than a weather one, which
+#: is a mistake in the source and not one worth working around: the values are named
+#: ``weather-*`` and that is what is read here.
+WEATHER = "weather-"
+
+#: What the nine states of Galar's sky are called on a record.
+#:
+#: The field is free text and the fields beside it carry one word - "night", "spring" - so these
+#: are the names Bulbapedia prints, lowered to match. "Normal" is the source's word for a sky
+#: with nothing happening in it, and a player looking at it would say clear.
+WEATHER_NAMES: dict[str, str] = {
+    "normal": "clear skies",
+    "overcast": "overcast",
+    "raining": "raining",
+    "thunderstorm": "thunderstorm",
+    "intense-sun": "intense sun",
+    "sandstorm": "sandstorm",
+    "snowing": "snowing",
+    "snowstorm": "snowstorm",
+    "fog": "fog",
+}
+
+#: Galar's Max Raid difficulty, which is a number and is read as one.
+#:
+#: One to five stars, and a row carries exactly one of them - so a species in a den at three,
+#: four and five stars arrives as three rows that differ in nothing else. :mod:`wild` folds
+#: them back into a range rather than writing a record per star.
+RATING = "max-den-rating-"
+
 #: Conditions that restrict nothing: the ordinary state of the world.
 #:
 #: Generation 4 marks every row with the state it is filled in, so the slots a player walks into
@@ -110,10 +145,26 @@ REQUIREMENTS: dict[str, str] = {
     "honey-tree-group-b": "On a honey tree of the second group",
     "honey-tree-group-c": "On a honey tree of the third group",
     "backlot-mentioned": "Only on days Mr. Backlot mentions it in the Trophy Garden",
+    # Galar's dens. The beam of light over a Max Raid den says how good the raid is before a
+    # player commits to it: an ordinary red pillar, or a purple one that holds the rarer table.
+    # The third is the source's own wording and it is about a distribution rather than a den -
+    # see `galar` for where it turns up and why it costs nothing.
+    "max-den-rarity-common": "In a den under an ordinary red beam of light",
+    "max-den-rarity-rare": "In a den under a strong purple beam of light",
+    "max-den-rarity-special": "Only while the Wild Area News has put it there",
     # Generation 3 has exactly three conditioned wild slots, and all three are the roaming eon
     # duo: neither one is loose in Hoenn until the Elite Four are beaten, and in Emerald which
     # of the two it is depends on the colour picked when the television asks.
     "story-progress-hall-of-fame": "After entering the Hall of Fame",
+    "story-progress-before-hall-of-fame": "Before entering the Hall of Fame",
+    # The Isle of Armor's three trials, which are the spine of that island's story and gate
+    # four of the things handed over on it.
+    "story-progress-master-dojo-complete-first-trial": (
+        "After Mustard's first trial at the Master Dojo"
+    ),
+    "story-progress-master-dojo-complete-third-trial": (
+        "After all three of Mustard's trials at the Master Dojo"
+    ),
     "tv-option-red": "Only if the red Pokemon was picked in the television broadcast",
     "tv-option-blue": "Only if the blue Pokemon was picked in the television broadcast",
     "story-progress-before-national-dex": "Before the National Dex opens",
@@ -374,6 +425,23 @@ def phrase(value: str, *, subject: str) -> str:
     log.warning("%s has a condition with no wording yet: %s", subject, value)
 
     return value.replace("-", " ").capitalize()
+
+
+def stars(values: list[str]) -> int | None:
+    """The Max Raid difficulty on one row, as a number, or None if the row is not a raid."""
+    found = next((one for one in values if one.startswith(RATING)), None)
+    if found is None:
+        return None
+
+    return int(found.removeprefix(RATING).removesuffix("-star").removesuffix("-stars"))
+
+
+def star_range(lowest: int, highest: int) -> str:
+    """What a folded run of star ratings reads as on a record."""
+    if lowest == highest:
+        return f"At {lowest} star" if lowest == 1 else f"At {lowest} stars"
+
+    return f"At {lowest} to {highest} stars"
 
 
 def of(values: list[str], prefix: str) -> str | None:

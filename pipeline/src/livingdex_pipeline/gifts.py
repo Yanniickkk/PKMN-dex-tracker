@@ -141,7 +141,7 @@ def gift_encounters(
     api: PokeApiClient,
     *,
     game_id: str,
-    version: str,
+    version: str | Sequence[str],
     species: list[str],
     details: Mapping[str, GiftDetails] | None = None,
     excluded: Mapping[str, Exclusion] | None = None,
@@ -164,6 +164,10 @@ def gift_encounters(
     A reason can also be given per place rather than for the species, for the case where only
     one of its rows is wrong - see :data:`Exclusion`.
 
+    ``version`` is usually one name and may be several, for the reason :func:`wild.wild_encounters`
+    gives: the source files Galar's two expansions as versions of their own, so half the gifts in
+    Sword are under ``the-isle-of-armor-sword`` and ``the-crown-tundra-sword``.
+
     ``forms`` is this game's own form table, and it is here for the reason it is in :mod:`wild`:
     what stands on Exeggutor Island is the Alolan Exeggutor and not the Kantonian one, and the
     10% Zygarde comes off the same Reassembly Unit as the 50%.
@@ -174,6 +178,7 @@ def gift_encounters(
     #: rather than per row: a game whose living dex reaches past its own Pokedex meets gifts
     #: nobody has written up yet, and the number is the size of that job.
     undescribed: set[str] = set()
+    wanted_versions = (version,) if isinstance(version, str) else tuple(version)
     where = places or LocationNames(api, refresh=refresh)
     known_forms = {one.id for one in forms}
     found: list[GiftAcquisition] = []
@@ -196,7 +201,7 @@ def gift_encounters(
                 area_slug = area["location_area"]["name"]
 
                 for version_details in area.get("version_details", []):
-                    if version_details["version"]["name"] != version:
+                    if version_details["version"]["name"] not in wanted_versions:
                         continue
 
                     for detail in version_details.get("encounter_details", []):

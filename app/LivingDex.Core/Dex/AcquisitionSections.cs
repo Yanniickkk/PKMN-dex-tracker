@@ -120,6 +120,8 @@ public static class AcquisitionNames
         EncounterMethod.Overworld => "walking up to it",
         EncounterMethod.OverworldWater => "walking up to it on the water",
         EncounterMethod.OverworldFlying => "catching one passing overhead",
+        EncounterMethod.MaxRaid => "a Max Raid Battle",
+        EncounterMethod.DynamaxAdventure => "a Dynamax Adventure",
         _ => "another way",
     };
 

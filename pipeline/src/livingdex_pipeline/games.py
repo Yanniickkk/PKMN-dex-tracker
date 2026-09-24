@@ -83,11 +83,13 @@ class BuildContext:
         and sixty-seven others with nothing recorded against them - not marked unobtainable,
         not marked missing, simply never asked about, in a game that hands them over.
 
-        ``through`` is how far the game's National Dex reaches. A game without one - none yet -
-        asks a player for its own dex and nothing else, so ``entries`` answers instead.
+        ``through`` is how far the game's National Dex reaches. A game without one asks a player
+        for its own dex and nothing else, so ``entries`` answers instead - deduplicated, because
+        Galar's three Pokedexes list 584 species between them across 821 entries and asking the
+        source about Magikarp three times would be three times the work for one answer.
         """
         if through is None:
-            return [entry.target.species for entry in entries]
+            return list(dict.fromkeys(entry.target.species for entry in entries))
 
         if not self.species:
             raise RuntimeError(

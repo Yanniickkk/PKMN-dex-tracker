@@ -198,6 +198,22 @@ public enum EncounterMethod
     /// </remarks>
     OverworldFlying,
 
+    /// <summary>A Max Raid Battle: a beam of light over a den in Galar.</summary>
+    /// <remarks>
+    /// Four trainers against one Dynamax Pokémon, and a single throw at the end of it. Not a
+    /// rarer kind of walking and not "another way": whole species in Sword and Shield are in a
+    /// den and nowhere else, so a den is where a player is told to go.
+    /// </remarks>
+    MaxRaid,
+
+    /// <summary>A Dynamax Adventure: the Crown Tundra's run through the Max Lair.</summary>
+    /// <remarks>
+    /// Four trainers, a cave of raids, and a legendary at the end that one of the four keeps.
+    /// It is the only place in these games most of the legendaries of the six generations before
+    /// them can be caught at all.
+    /// </remarks>
+    DynamaxAdventure,
+
     Other,
 }
 
