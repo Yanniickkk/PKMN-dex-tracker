@@ -11,6 +11,7 @@ from datetime import date
 import pytest
 
 from livingdex_pipeline.build import default_registry
+from livingdex_pipeline.forms import FORMS_NAMED_BY_THE_GAME
 from livingdex_pipeline.gamedefs import (
     alola,
     alpha_sapphire,
@@ -23,6 +24,7 @@ from livingdex_pipeline.gamedefs import (
     ds,
     emerald,
     firered,
+    galar,
     gba,
     gbc,
     gen6,
@@ -44,10 +46,12 @@ from livingdex_pipeline.gamedefs import (
     red,
     ruby,
     sapphire,
+    shield,
     silver,
     sinnoh,
     soulsilver,
     sun,
+    sword,
     unova,
     white,
     white2,
@@ -114,6 +118,7 @@ VERSION_GROUP_ORDER = {
     "sun-moon": 15,
     "ultra-sun-ultra-moon": 16,
     "lets-go-pikachu-lets-go-eevee": 17,
+    "sword-shield": 18,
 }
 
 
@@ -1957,9 +1962,11 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "red",
         "ruby",
         "sapphire",
+        "shield",
         "silver",
         "soulsilver",
         "sun",
+        "sword",
         "ultra-moon",
         "ultra-sun",
         "white",
@@ -1997,8 +2004,14 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # halves, and for each half a deposit into HOME and a withdrawal back out. They declare six
     # between them and two of those are the one trade. Nothing else in the dataset reaches them
     # and they reach nothing else - no Bank, no cartridge, not even the generation they are in.
-    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5
-    assert len(routes) == 130
+    #
+    # And five more for Sword and Shield, which is the same count with a different third route:
+    # the cable between the halves, and for each half a deposit into HOME and an ordinary
+    # withdrawal back out. Registering them lights nothing that was waiting, and that is the
+    # finding rather than the gap - HOME is the only door Generation 8 has, and every older game
+    # that can reach these two was already reaching HOME.
+    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5 + 5
+    assert len(routes) == 135
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -3951,16 +3964,30 @@ def test_the_way_out_of_bank_is_lit_now_that_its_other_end_exists() -> None:
     assert out.direction is TransferDirection.ONE_WAY
 
     # One way, and the reason the 3DS era ends here: a Pokemon that has gone into HOME has no
-    # route back to anything with a cartridge slot. The two routes that do leave HOME go to the
-    # Let's Go pair and hand back only what those two produced themselves, so they take nothing
-    # away from the sentence above: anything that reached HOME through Bank was converted to
-    # Sword and Shield's format on the way in and can never enter them.
+    # route back to anything with a cartridge slot. What leaves HOME now goes to four Switch
+    # games and takes nothing away from that sentence.
     leaving_home = [
         edge for edge in default_registry().edges if edge.from_ == home.NODE
     ]
 
-    assert [edge.to for edge in leaving_home] == ["lets-go-eevee", "lets-go-pikachu"]
-    assert all(edge.origin.games == list(lets_go.PAIR) for edge in leaving_home)
+    assert [edge.to for edge in leaving_home] == [
+        "lets-go-eevee",
+        "lets-go-pikachu",
+        "shield",
+        "sword",
+    ]
+
+    # Two of the four hand back only what they made themselves, which is the Let's Go rule:
+    # anything that reached HOME through Bank was converted to Sword and Shield's format on the
+    # way in and can never enter them.
+    to_lets_go = [edge for edge in leaving_home if edge.to in lets_go.PAIR]
+    assert all(edge.origin.games == list(lets_go.PAIR) for edge in to_lets_go)
+
+    # And the other two read the target's own Pokedex instead, which is a door rather than a
+    # mirror: a Pokemon caught in Red can be standing in Galar, if Galar has a page for it.
+    to_galar = [edge for edge in leaving_home if edge.to in galar.PAIR]
+    assert all(edge.origin is None for edge in to_galar)
+    assert all(isinstance(edge.filter, PresentInTargetDexFilter) for edge in to_galar)
 
 
 # --- Let's Go, Pikachu! and Let's Go, Eevee! --------------------------------------------------
@@ -5432,3 +5459,297 @@ def test_both_halves_of_the_alola_pair_show_the_cover_the_picker_will_draw() -> 
 
     assert registry.box_art_of("sun") == "Sun EN boxart.png"
     assert registry.box_art_of("moon") == "Moon EN boxart.png"
+
+
+# --- Sword and Shield -------------------------------------------------------------------------
+
+
+def galar_entity(module):
+    # No api worth the name: at step 1 a build of these two asks the source nothing at all.
+    return module.build(context(module.GAME_ID)).game
+
+
+def test_the_galar_pair_is_generation_8_in_a_region_only_they_have() -> None:
+    sword_game = galar_entity(sword)
+    shield_game = galar_entity(shield)
+
+    # Generation 8 on the console Let's Go had to be argued off. What decides it here is the
+    # ordinary thing: a new region and eighty-nine new species.
+    assert (sword_game.generation, shield_game.generation) == (8, 8)
+    assert (sword_game.region, shield_game.region) == ("Galar", "Galar")
+
+    # One day, everywhere, which by now is the third time in this dataset rather than a first.
+    assert sword_game.released == date(2019, 11, 15)
+    assert shield_game.released == sword_game.released
+
+    # No National Pokedex, and here that is the point rather than an omission: these boxes hold
+    # a list, so there is no number for the field to carry. Step 2 fills the list in.
+    assert (sword_game.national_dex_through, shield_game.national_dex_through) == (None, None)
+    assert sword_game.dex_source is DexSource.GAME_DEX
+    assert shield_game.dex_source is DexSource.GAME_DEX
+
+    assert sword_game.pair_partner == shield_game.id
+    assert shield_game.pair_partner == sword_game.id
+
+    # Step 6's field, left open on purpose: these games draw no battle sprite at all.
+    assert (sword_game.sprite_set, shield_game.sprite_set) == (None, None)
+
+
+def test_the_galar_pair_show_three_pokedexes_and_every_entry_says_which() -> None:
+    # The second game in the series to need a dex name on its entries, and the first where the
+    # three lists overlap: in Kalos a species is in one of the three, here Magikarp is #144 in
+    # Galar, #42 on the Isle of Armor and #62 in the Crown Tundra. Three entries, three numbers,
+    # one save file.
+    api = FakeApi([(1, "grookey"), (2, "thwackey")])
+    entries = sword.build(context("sword", api)).dex_entries
+
+    assert api.asked_for == ["galar", "isle-of-armor", "crown-tundra"]
+    assert [one.dex for one in entries] == [
+        "Galar",
+        "Galar",
+        "Isle of Armor",
+        "Isle of Armor",
+        "Crown Tundra",
+        "Crown Tundra",
+    ]
+    assert [one.number for one in entries] == [1, 2, 1, 2, 1, 2]
+    assert all(one.game == "sword" for one in entries)
+
+    # Nothing is unobtainable yet, and that is a statement about how much has been looked at
+    # rather than about the game: steps 3 to 7 fill that table in.
+    assert all(one.unobtainable_reason is None for one in entries)
+
+
+def test_both_halves_of_the_galar_pair_show_the_same_three_lists() -> None:
+    # A version pair splits what can be caught, never what is listed, and that has held since
+    # Red and Blue. What Sword and Shield disagree about is steps 3 to 5.
+    api = FakeApi([(1, "grookey")])
+    both = {
+        module.GAME_ID: module.build(context(module.GAME_ID, api)).dex_entries
+        for module in (sword, shield)
+    }
+
+    assert [(one.dex, one.number) for one in both["sword"]] == [
+        (one.dex, one.number) for one in both["shield"]
+    ]
+    assert api.asked_for == [dex for dex, _ in galar.DEXES] * 2
+
+
+def test_the_three_galar_lists_are_in_the_order_a_player_is_handed_them() -> None:
+    # The base game, then the Isle of Armor, then the Crown Tundra: release order, and the order
+    # the Pokedex app shows its tabs in. The file's order is what the switch in the app offers.
+    assert [name for _, name in galar.DEXES] == ["Galar", "Isle of Armor", "Crown Tundra"]
+
+    # 821 entries against 584 species, which is the difference from Kalos: there the three add up
+    # to what the games ask for, here 237 entries are a species' second or third listing.
+    assert galar.DEX_TOTAL == 821
+
+
+def test_the_eighty_these_games_hold_without_listing_get_no_entry() -> None:
+    # Step 2's decision, and it costs something: Bulbapedia counts eighty species that Sword and
+    # Shield can hold and name in none of their three Pokedexes, and a dex entry is a number in a
+    # list. There is no number to give them - the twenty-six that have a Pokedex entry have one
+    # that can only be read in Pokemon HOME - so the dataset says these games hold 584 species
+    # and is eighty short of the truth.
+    assert galar.FOREIGN_TO_EVERY_DEX == 80
+
+
+def test_the_galar_cable_runs_between_the_halves_and_nowhere_else() -> None:
+    # Bulbapedia in one line: as with other games on the Switch, these are not compatible with
+    # other games in the same generation outside of their pairing. So the cable reaches the
+    # other half, and Brilliant Diamond, Legends: Arceus and the two Let's Go games that share
+    # the console are all reached the same way anything else is - by way of HOME.
+    [cable] = galar.trade_edges("sword")
+
+    assert (cable.from_, cable.to) == ("sword", "shield")
+    assert cable.mechanism is TransferMechanism.TRADE
+    assert cable.direction is TransferDirection.BOTH_WAYS
+    assert isinstance(cable.filter, AllSpeciesFilter)
+
+    assert [one.to for one in galar.trade_edges("shield")] == ["sword"]
+
+
+def test_home_hands_these_two_back_whatever_their_own_list_names() -> None:
+    # The difference between this pair and the Let's Go one, which is the whole of why
+    # home.home_edges existed before either had been written. Let's Go gets a withdrawal that
+    # asks where a Pokemon started; these get one that reads the target's Pokedex, and Dexit is
+    # the reason that filter was invented: Sword has no entry for Chikorita and HOME will not
+    # put one there.
+    deposit, withdrawal = [one for one in galar.edges("sword") if one.mechanism is
+                           TransferMechanism.HOME]
+
+    assert (deposit.from_, deposit.to) == ("sword", home.NODE)
+    assert isinstance(deposit.filter, AllSpeciesFilter)
+
+    assert (withdrawal.from_, withdrawal.to) == (home.NODE, "sword")
+    assert isinstance(withdrawal.filter, PresentInTargetDexFilter)
+    assert withdrawal.origin is None
+
+    # And the contrast with the pair that came before, spelled out rather than implied.
+    [out_of_home] = [
+        one for one in lets_go.edges("lets-go-pikachu") if one.from_ == home.NODE
+    ]
+    assert out_of_home.origin is not None
+    assert not isinstance(out_of_home.filter, PresentInTargetDexFilter)
+
+
+def test_registering_generation_8_lights_nothing_that_was_waiting() -> None:
+    # Every pair since Generation 5 has arrived to find routes already pointing at it, declared
+    # by games written years earlier. These two arrive to find none, and that is the finding
+    # rather than a gap: HOME is the only door Generation 8 has, so a Pokemon caught in Red
+    # reaches Sword by Poke Transporter, Bank, HOME and then Sword, and not one edge on that
+    # route had to be told these games exist.
+    registry = default_registry()
+    routes = [(edge.from_, edge.to) for edge in registry.edges]
+    declared_here = {
+        (edge.from_, edge.to) for module in (sword, shield) for edge in module.edges()
+    }
+
+    reaching = [one for one in routes if "sword" in one or "shield" in one]
+
+    assert sorted(reaching) == [
+        ("home", "shield"),
+        ("home", "sword"),
+        ("shield", "home"),
+        ("shield", "sword"),
+        ("sword", "home"),
+    ]
+    # Five routes off six declarations: the cable is one route that both halves declare.
+    assert len(declared_here) == 6
+    assert len(reaching) == 5
+
+    # Nothing older reaches them directly, and they reach nothing older directly either.
+    assert not [one for one in reaching if "bank" in one]
+    assert not [one for one in reaching if "lets-go-pikachu" in one or "lets-go-eevee" in one]
+
+
+def test_the_version_group_rule_is_switched_off_for_the_galar_pair_too() -> None:
+    # The same trap Let's Go sprang, and this time it is permanent: a form arriving in a version
+    # group is in every game after it, which holds only while a game can hold everything up to
+    # its own National Dex number. Left alone the rule hands these two 373 forms - every
+    # Vivillon pattern, every Unown letter, every Burmy cloak - and step 8 names what they
+    # really have.
+    assert {"sword", "shield"} <= FORMS_NAMED_BY_THE_GAME
+    assert {"lets-go-pikachu", "lets-go-eevee"} <= FORMS_NAMED_BY_THE_GAME
+
+
+def test_both_halves_of_the_galar_pair_show_the_cover_the_picker_will_draw() -> None:
+    registry = default_registry()
+
+    assert registry.box_art_of("sword") == "Sword EN boxart.png"
+    assert registry.box_art_of("shield") == "Shield EN boxart.png"
+
+
+def galar_slot(
+    species: str,
+    method: str,
+    level: int,
+    *,
+    area: str = "postwick-area",
+    version: str = "sword",
+):
+    return {
+        species: [
+            {
+                "location_area": {"name": area},
+                "version_details": [
+                    {
+                        "version": {"name": version},
+                        "encounter_details": [
+                            {
+                                "min_level": level,
+                                "max_level": level,
+                                "chance": 100,
+                                "method": {"name": method},
+                                "condition_values": [],
+                            }
+                        ],
+                    }
+                ],
+            }
+        ]
+    }
+
+
+def galar_gifts(module, api: FakeApi) -> list:
+    return [
+        one
+        for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+        if one.kind == "gift"
+    ]
+
+
+def test_galars_three_first_partners_are_starters_and_the_fourth_one_is_not() -> None:
+    # Leon presents three in Postwick and a player picks one, which is what STARTER has meant
+    # since Red. He leaves a fourth in his room once he has stopped being Champion, and a
+    # Charmander nobody has to choose between is a present rather than a first partner.
+    for species in ("grookey", "scorbunny", "sobble"):
+        assert galar.GIFTS[species].kind is GiftKind.STARTER
+        assert galar.GIFTS[species].npc == "Leon"
+
+    assert galar.GIFTS["charmander"].kind is GiftKind.NPC_GIFT
+    assert galar.GIFTS["charmander"].npc.startswith("Leon")
+
+
+def test_a_galar_fossil_is_made_of_two_halves_which_is_new_to_the_series() -> None:
+    # Every fossil from the Helix to the Sail is one item revived into one Pokemon. Galar's four
+    # are two apiece out of a set of four halves, and which two go in decides what comes out.
+    assert {
+        species: galar.GIFTS[species].kind
+        for species in ("dracovish", "dracozolt", "arctovish", "arctozolt")
+    } == dict.fromkeys(("dracovish", "dracozolt", "arctovish", "arctozolt"), GiftKind.FOSSIL)
+
+    said = galar.GIFTS["dracovish"].requirement
+    assert "Fossilized Drake" in said and "Fossilized Fish" in said
+    assert galar.GIFTS["dracovish"].npc == "Cara Liss"
+
+    # And the other three take the other pairs, so no two of the four ask for the same two.
+    halves = {
+        species: {word for word in galar.GIFTS[species].requirement.split() if word[0].isupper()}
+        for species in ("dracovish", "dracozolt", "arctovish", "arctozolt")
+    }
+    assert len({frozenset(one) for one in halves.values()}) == 4
+
+
+def test_a_lets_go_save_on_the_same_console_is_a_way_of_getting_a_pokemon_here() -> None:
+    # The only thing in this dataset where another game hands something over without anything
+    # being transferred: nothing moves, somebody at the Wild Area Station looks at the console
+    # and gives one. Which of the two depends on which Let's Go.
+    assert "Let's Go, Pikachu!" in galar.GIFTS["pikachu"].requirement
+    assert "Let's Go, Eevee!" in galar.GIFTS["eevee"].requirement
+    assert galar.GIFTS["pikachu"].kind is GiftKind.NPC_GIFT
+
+    # Not an edge. home.py and lets_go.py both say the Let's Go pair reaches these two through
+    # nothing at all, and this does not change that.
+    assert not [
+        edge
+        for edge in default_registry().edges
+        if edge.from_ in lets_go.PAIR and edge.to in galar.PAIR
+    ]
+
+
+def test_the_crown_tundras_giants_ask_for_things_the_source_has_never_heard_of() -> None:
+    # PokeAPI carries no condition at all on the first three: what opens each temple is an item
+    # in the party, a Pokemon walking behind the player, and a whistle. Those three sentences
+    # are the wiki's, and without them a player is told to walk into a door that will not open.
+    assert "Everstone" in galar.GIFTS["regirock"].requirement
+    assert "Cryogonal" in galar.GIFTS["regice"].requirement
+    assert "whistles" in galar.GIFTS["registeel"].requirement
+
+    # And the two behind them are a choice rather than a pair, the same way Calyrex's steeds are:
+    # each one's sentence names the one it costs you.
+    for species, other in (("regieleki", "Regidrago"), ("regidrago", "Regieleki")):
+        assert f"{other} cannot be caught in the same save" in galar.GIFTS[species].requirement
+
+    assert "Glastrier" in galar.GIFTS["spectrier"].requirement
+    assert "Spectrier" in galar.GIFTS["glastrier"].requirement
+
+
+def test_the_box_legendary_is_a_static_in_its_own_half_and_says_why_it_is_caught() -> None:
+    api = FakeApi([(398, "zacian")], galar_slot("zacian", "static", 70, area="energy-plant-area"))
+
+    [hero] = galar_gifts(sword, api)
+
+    assert hero.gift_kind is GiftKind.STATIC_ENCOUNTER
+    assert hero.level == 70
+    assert "Sordward and Shielbert" in hero.requirement

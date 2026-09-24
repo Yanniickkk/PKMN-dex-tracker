@@ -659,6 +659,24 @@
     }
   },
   {
+    "from": "home",
+    "to": "shield",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "presentInTargetDex"
+    }
+  },
+  {
+    "from": "home",
+    "to": "sword",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "presentInTargetDex"
+    }
+  },
+  {
     "from": "leafgreen",
     "to": "diamond",
     "mechanism": "palPark",
@@ -1111,6 +1129,24 @@
     }
   },
   {
+    "from": "shield",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "shield",
+    "to": "sword",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
     "from": "silver",
     "to": "bank",
     "mechanism": "pokeTransporter",
@@ -1192,6 +1228,15 @@
       "filter": "nationalDexRange",
       "from": 1,
       "to": 802
+    }
+  },
+  {
+    "from": "sword",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
     }
   },
   {

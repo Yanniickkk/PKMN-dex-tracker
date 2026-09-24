@@ -120,7 +120,21 @@ INVISIBLE_FORMS = frozenset({"scatterbug", "spewpa", "mothim"})
 #: partner Pikachu and Eevee are forms nothing else has - but it is the harmless direction to
 #: be wrong in: a form the table leaves out is a tile that is not drawn, and a form it invents
 #: is a tile asking a player to fill something their game cannot produce.
-FORMS_NAMED_BY_THE_GAME = frozenset({"lets-go-pikachu", "lets-go-eevee"})
+#:
+#: **Sword and Shield break it the same way, and from here on it stays broken.** Let's Go looked
+#: like an oddity - a pair of remakes on a console the generation did not belong to - and
+#: Generation 8's own first pair does the same thing deliberately: their boxes hold the Galar,
+#: Isle of Armor and Crown Tundra Pokedexes and a short list of strangers, which is the change
+#: fans named Dexit. Left to the rule they would be handed 373 forms across 746 lines, 92 of
+#: them rows this table does not hold at all - every Vivillon pattern, every Unown letter, every
+#: Burmy cloak, none of whose species these games have ever met.
+#:
+#: Nineteen Alolan forms are in that 373 and they are the part step 8 will have to look at
+#: hardest, because the rule is closer to right about them than about anything else: Bulbapedia
+#: says every regional form of a species these games are compatible with is compatible too, and
+#: Raichu, Vulpix, Meowth, Marowak and Sandshrew are all in a Galar list. Closer to right is not
+#: right, and which of the nineteen survives is that step's answer rather than this one's.
+FORMS_NAMED_BY_THE_GAME = frozenset({"lets-go-pikachu", "lets-go-eevee", "sword", "shield"})
 
 #: The two halves, spelled here so the table below can say "both" in one word.
 LETS_GO = ("lets-go-pikachu", "lets-go-eevee")

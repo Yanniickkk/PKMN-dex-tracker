@@ -31,9 +31,11 @@ from . import (
     red,
     ruby,
     sapphire,
+    shield,
     silver,
     soulsilver,
     sun,
+    sword,
     ultra_moon,
     ultra_sun,
     white,
@@ -52,7 +54,9 @@ from . import (
 # again a year later and twelve years on, and the pair that opens Generation 7 - the first
 # games since Generation 2 with no National Pokedex - the second pair of that generation, and
 # then the two that close it on a different console in a different region: Kanto for the fifth
-# time, Yellow remade and a game that never existed remade beside it.
+# time, Yellow remade and a game that never existed remade beside it. Then the pair that opens
+# Generation 8 on the same console, which is the first in the series whose boxes hold a list
+# rather than everything up to a number.
 #
 # Then the two nodes, out of that order and at the end, because neither is a game. Bank came out
 # between the two Generation 6 pairs and HOME six years after it. They are here for the same
@@ -89,6 +93,8 @@ MODULES = [
     ultra_moon,
     lets_go_pikachu,
     lets_go_eevee,
+    sword,
+    shield,
     bank,
     home,
 ]

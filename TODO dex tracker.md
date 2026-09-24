@@ -172,13 +172,191 @@ No National Dex either, and unlike Generation 7 these games cannot hold what is 
 list — step 2 uses the game's own dex, DLC included, and `nationalDexThrough` stays empty.
 
 - [ ] **Sword** (`sword`, gen 8, pair partner: Shield) — base + Isle of Armor + Crown Tundra
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
+  - [x] 1 Entity + edges  - [x] 2 Dex list  - [x] 3 Wild  - [x] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
   - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
 - [ ] **Shield** (`shield`, gen 8, pair partner: Sword) — base + Isle of Armor + Crown Tundra
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
+  - [x] 1 Entity + edges  - [x] 2 Dex list  - [x] 3 Wild  - [x] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
   - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
+  - Step 4 for both: **45 records each - 3 first partners, 4 fossils, 10 presents and 28 things
+    standing in one spot.** Coverage is **745 full, 68 partial and 8 missing** of Sword's 821
+    entries, up from 723/78/20. 614 pipeline tests and 257 app tests. One table for the pair,
+    because the two halves hand over the same things apart from which hero is on the box.
+  - **Galar's fossils are the first in the series made of two halves**, and it is the sharpest
+    thing in the step. Every fossil from the Helix to the Sail is one item revived into one
+    Pokemon; Cara Liss on Route 6 takes two out of a set of four - a bird, a fish, a drake and a
+    dino - and which two go in decides which of the four comes out. The source says so without
+    being asked: two `item-fossilized-` conditions on one row, which no row in this dataset has
+    ever carried.
+  - **A Let's Go save file on the same console is a way of getting a Pokemon**, and it is the
+    only one of its kind here. Two people at the Wild Area Station look at what else is on the
+    Switch and hand over the Gigantamax Pikachu or Eevee accordingly. Nothing is transferred and
+    no edge exists: `home.py` and `lets_go.py` both say those two games reach these two through
+    nothing at all, and this does not change it.
+  - **The Crown Tundra's giants ask for things the source has never heard of.** PokeAPI carries
+    no condition at all on Regirock, Regice and Registeel - what opens each temple is an
+    Everstone in the party, a Cryogonal walking behind the player, and a whistle at the door -
+    so those three sentences are read off the wiki. Without them a player is sent to a door that
+    will not open.
+  - **Four Pokemon in these games cost another Pokemon**, which is a shape the dataset has seen
+    once before in a fossil shop: the dots lit in the Split-Decision Ruins bring Regieleki *or*
+    Regidrago, and the carrot grown in Freezington calls Glastrier *or* Spectrier. Each one's
+    sentence names the one it costs, so a player reads the price before paying it.
+  - Two conditions joined the shared table rather than a game's: Mustard's first trial and all
+    three of them, which between them gate Bulbasaur, Squirtle, Kubfu and Porygon. The rest are
+    written in Galar's own table because they are about one game - fifty footprints, ten hidden
+    Alolan Diglett, thirty-two players talked to at a tombstone.
+  - Thirteen statics are left undescribed on purpose and the build says so: Chewtle on Route 2,
+    the Lapras in its lake, the Obstagoon by the road. A place and a level is the whole of what
+    there is to say about them, and the table is for what the source cannot say.
+  - **The 8 left are exactly steps 5 and 7's**, the same in both halves: the six that only
+    evolve - Thwackey, Rillaboom, Raboot, Cinderace, Drizzile, Inteleon - plus Urshifu, which
+    Kubfu becomes at one of two towers, and Zarude, which no copy of these games has ever
+    produced.
+  - One ordering note for step 8, found here rather than there: **the Diglett Trainer's seven
+    rewards are six Alolan forms and a Kantonian Slowpoke**, and only the Slowpoke is visible
+    now. A form has to be in the game's form table before the gift reader will ask about it, and
+    these two have no forms until step 8 - so six gifts, the Galarian birds and the Slowpoke at
+    Wedgehurst Station are all waiting on that step rather than missing from this one.
+  - Step 3 for both: **12,363 slots in Sword and 12,264 in Shield, over 358 places**, covering
+    507 of the 584 species each half lists. The biggest wild step in the dataset by some way -
+    SoulSilver held the record at 2,725 - and the two game files are 6.5 MB apiece. Coverage is
+    **723 full, 78 partial, 20 missing** of Sword's 821 entries. 609 pipeline tests and 257 app
+    tests.
+  - **PokeAPI has all of it, which was worth checking before assuming a scrape.** 45,381 rows
+    across six version names, structured and conditioned the same way every generation before
+    has been. What it needed was reading properly, and that is the step: **three PokeAPI versions
+    per half.** The source files each expansion as a version group of its own - a Sword player's
+    grass is `sword`, `the-isle-of-armor-sword` and `the-crown-tundra-sword` - so reading the one
+    name the way every game before this did would have quietly dropped two thirds of the game.
+    `wild_encounters` takes a name or several now, and nothing else had to change.
+  - **The weather field is filled in for the first time since it was written.** Nine states of
+    the Wild Area's sky, each its own table, and 5,517 of Sword's slots carry one. The other side
+    of that is the fold: a species standing there in every sky the place has is not
+    weather-dependent, and nine records differing in one word tell a player nothing. What counts
+    as "every sky" is measured per place from what the game lists there rather than assumed to be
+    nine, because a place the sun never leaves has no snow table.
+  - **Two ways of getting a Pokemon that are not a place at all**, and they are the first in the
+    dataset: a **Max Raid** - a beam of light over a den, four trainers against one Dynamax
+    Pokemon and a single throw at the end - and a **Dynamax Adventure**, the Crown Tundra's run
+    through the Max Lair. 5,336 raid records over 276 dens in Sword, and 212 species in the Max
+    Lair. Neither could be `other`, which is where a method goes to stop being an answer.
+  - **A den's star rating is a number, so it is read as one.** The source writes a row per star,
+    which would have put five records under every species in every den; folded into a range they
+    read "In a den under a strong purple beam of light and at 2 to 3 stars". 22,461 raid rows
+    became 5,336 records that way.
+  - Four more overworld methods where Let's Go had three, and all four land on the existing
+    three with a sentence beside them: what **wanders a fixed patch**, what **comes up out of the
+    ground or the swamp**, and what **gives chase the moment the water is entered**. Three places
+    to look is a method; how the thing behaves once it is looked at is a sentence - the same call
+    Let's Go's rare spawns and Kalos' flower patches got.
+  - **The 20 entries still missing are exactly steps 4 and 5's list**, and the same 20 in both
+    halves: the three starter lines, Zacian, Zamazenta, Eternatus, Kubfu and Urshifu, Zarude,
+    Regieleki and Regidrago, and Calyrex with Glastrier and Spectrier. Their conditions are
+    already visible in the source and were left alone on purpose - the fossils, the Master Dojo's
+    two trials, the Regis' fifty footprints, the two carrots, and the Pokemon a Let's Go save on
+    the same console hands over.
+  - **Step 2's decision showed up exactly where it was predicted to.** Most of the legendaries a
+    Dynamax Adventure produces - Mewtwo, the Kanto birds, the Tapus - are among the eighty these
+    games hold without listing, so the dataset never asks about them and the Max Lair records
+    them for the 212 species that do have an entry. Nothing is wrong; the grid is 584 species and
+    this is what that costs.
+  - Step 2 for both: **821 entries each across three lists, and 584 species under them.** Galar
+    #001 Grookey to #400 Eternatus, the Isle of Armor #001 Slowpoke to #211 Zarude, the Crown
+    Tundra #001 Snom to #210 Calyrex. Both halves show the same three with the same numbers,
+    which is what a version pair has always meant: they split what can be caught, never what is
+    listed. 603 pipeline tests and 257 app tests.
+  - **The three overlap, which Kalos' three did not, and that is the whole difference.** X and
+    Y's 153 + 153 + 151 add up to the 457 the games ask for; 400 + 211 + 210 here is 821 entries
+    and 584 species, because 101 species are in both Galar's list and the Isle of Armor's, 135
+    in Galar's and the Crown Tundra's, 13 on both islands and 12 in all three. **Magikarp is
+    #144, #42 and #62 in one save file** - one Pokemon wearing three numbers, which no game
+    before this pair has done.
+  - **Decision: the three are kept apart and there is no combined list.** That is X and Y's
+    ruling applied to a harder case, and `every-dex-number-means-one-thing` is the rule that has
+    been guarding it since: a number spanning the three is a number no player has been shown,
+    and the only one available - the National Dex number - would make the grid say #129 where
+    the game says #144. **What it costs is written down rather than left to be found:** a
+    collection built on Sword opens on Galar's 400 of the 584 these games hold, and the other
+    184 are behind the dex switch. Seeing everything one of these games holds in one grid is not
+    something this dataset can express, and that is not a gap in Galar - it is the first time a
+    game's Pokedex and a game's boxes have been different lists.
+  - **And the eighty get no entry at all.** Bulbapedia counts eighty species Sword and Shield can
+    hold while naming them in none of their three Pokedexes - Mewtwo, Celebi, the three Alola
+    starters, every Ultra Beast - and twenty-six of those have a Sword and Shield Pokedex entry
+    that can only be read in Pokemon HOME. A dex entry is a number in a list and there is no
+    number to give them. So the dataset says these games hold 584 where the truth is 664, in the
+    safe direction: a tile the grid does not draw asks nothing of a player, while a tile it
+    invents asks for something they may not be able to get.
+  - **That found a sentence in `home.py` that was wrong.** It named Decidueye as the Pokemon
+    Sword has no entry for and HOME will not put there. Decidueye is one of the eighty: the
+    example was true about this dataset and false about the game. Changed to Chikorita, which is
+    in neither list, and the real consequence is now written down where the filter lives - the
+    withdrawal out of HOME is **eighty species stricter than the service it describes**, and no
+    tile turns on any of them.
+  - **146 of the 821 entries have no source anywhere in the dataset, and they are exactly the 89
+    species these games invented.** Not one older species in the three lists is unaccounted for:
+    every one of the other 495 is already produced by something written months ago. That is the
+    graph checking its own work, and step 3 is what closes it.
+  - Validation is **2 errors on purpose**, one per half, which is the same state Let's Go's step
+    2 left behind: `every-entry-has-a-method` reports a game with a dex and no encounters as not
+    worked on yet rather than as full of holes. They go away when step 3 does.
+  - Checked through the app's own dex builder: Sword builds **400 tiles** by default - the Galar
+    list - with no forms, since step 8 has not named any yet, and every picture falling back to
+    the shared set because step 6 has not run. No tile points at a file that is not there.
+  - Step 1 for both: **five routes, which is every route these two have** - the cable between
+    the halves, and for each half a deposit into HOME and a withdrawal back out. The dataset is
+    at 34 games and 135 routes, nothing held back. 600 pipeline tests and 257 app tests, and
+    validation green on all 11 rules with the same two Rockruff warnings as before.
+  - **Registering them lights nothing that was waiting, and that is the finding rather than a
+    gap.** Every pair since Generation 5 has arrived to find routes already pointing at it,
+    declared by files written years earlier; these arrive to find none, because HOME is the only
+    door Generation 8 has and every older game that can reach them was already reaching HOME. A
+    Pokemon caught in Red still gets to Galar - Poke Transporter, Bank, HOME, Sword - and not one
+    edge on that route had to be told these games exist. Checked through the app's own graph with
+    Sword as main game: the linked-games step offers all thirty-one other playable games, where
+    Let's Go offered one.
+  - **The withdrawal out of HOME is the edge `home.home_edges` was written for**, back when the
+    node was built and before either of these games was registered, and this is the first time
+    that function has had anything to describe: Bank and the four Generation 6 cartridges got their own pair, Let's Go got a
+    withdrawal that asks where a Pokemon started, and these get the ordinary one that reads the
+    target's own Pokedex. `home.py` even named the example - Sword has no entry for Decidueye and
+    HOME will not put one there - and step 1 did not have to invent a thing.
+  - `galar.py` is the pair's module and the region's both, which is the `kalos.py` shape rather
+    than `alola.py`'s. **There is nothing for a `gen8.py` to hold**: Generation 8 is these two in
+    Galar, Brilliant Diamond and Shining Pearl in Sinnoh and Legends: Arceus in Hisui, and what
+    those five share is Pokemon HOME, which `home.py` has held since before any of them existed.
+  - **Dexit, measured.** The three Pokedexes PokeAPI counts 400, 211 and 210 in overlap heavily:
+    584 distinct species, plus the eighty Bulbapedia lists as compatible with these games while
+    being in none of the three, is 664 out of the 898 that existed when the Crown Tundra shipped.
+    Twenty-six of those eighty have a Sword and Shield Pokedex entry that can only be read in
+    HOME. **Whether the eighty belong in the list is step 2's, not this step's** - they are
+    written down in `galar.FOREIGN_TO_EVERY_DEX` so that step does not have to find them again -
+    and the filter on the way out of HOME is right either way the question goes, because an entry
+    no list holds is a tile nobody is shown.
+  - **And the same trap Let's Go sprang, this time for good.** `from_group_on` gives a form every
+    game from its own version group onward, which holds only while a game can hold everything up
+    to its own National Dex number. Left alone it hands this pair **373 forms across 746 lines,
+    92 of them rows the table does not hold at all** - every Vivillon pattern, every Unown letter,
+    every Burmy cloak. Switched off for them as it is for Let's Go, and `forms.json` stayed at
+    291 to prove it. Nineteen Alolan forms are in that 373 and are the part step 8 will have to
+    look at hardest: Bulbapedia says a regional form of a species these games are compatible with
+    is compatible too, and Raichu, Vulpix, Meowth, Marowak and Sandshrew are all in a Galar list.
+  - Three Pokedexes means `DexEntry.dex` gets its second user after X and Y, and not the same
+    shape: Kalos' three are one region cut in thirds and share nothing, while the Isle of Armor's
+    and the Crown Tundra's each start at #001 and each repeat much of the Galar list. Step 2's.
+  - **These games changed after they shipped**, which nothing in the series had done - 400 entries
+    on 15 November 2019, the Isle of Armor's 211 with version 1.2.0 on 16 June 2020 and the Crown
+    Tundra's 210 with 1.3.0 on 22 October 2020, and both times for every player rather than only
+    for the ones who bought the pass. So the dataset holds version 1.3.x, the game as it can be
+    bought and played today, while `released` stays the day it first went on sale. Same decision
+    the Virtual Console releases got, in a different shape.
+  - One thing left standing on purpose at the time: **the picker offered Sword and Shield and a
+    collection made with either was an empty grid.** That is what a game between step 1 and step
+    2 looks like, and the validator was quiet about it by design - `every-entry-has-a-method`
+    reports a game with a dex and no encounters, and a game with neither has not been claimed
+    about yet. Step 2 filled it.
 - [ ] **Brilliant Diamond** (`brilliant-diamond`, gen 8, pair partner: Shining Pearl)
   - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events

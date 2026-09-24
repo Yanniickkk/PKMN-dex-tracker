@@ -113,9 +113,15 @@ def home_edges(game_id: str) -> list[TransferEdge]:
     dex is empty, so a both-ways edge would have refused every deposit ever made.
 
     The deposit takes anything the game can hold, because HOME holds everything. The withdrawal
-    is the whole point of the filter: Sword has no entry for Decidueye and HOME will not put one
+    is the whole point of the filter: Sword has no entry for Chikorita and HOME will not put one
     there, which is the first time in the series that where a Pokemon may go depends on a list
     rather than on a number or a generation.
+
+    The example was Decidueye until Galar's dex list step looked it up. Bulbapedia lists eighty
+    species that Sword and Shield can hold without naming in any of their three Pokedexes, and
+    the three Alola starters are among them - so HOME does put a Decidueye there, and this
+    dataset's filter is eighty species stricter than the service. :data:`galar.
+    FOREIGN_TO_EVERY_DEX` is where that is written down. Chikorita is in neither list.
 
     Not for every Switch game. The pairs this does not describe are in this module's own
     docstring, and each of them has a reason of its own.
