@@ -113,6 +113,26 @@ Build the dataset. This writes `dataset/`, including sprites:
 ./.venv/Scripts/livingdex-pipeline.exe build
 ```
 
+**A full build with a warm cache takes about 45 seconds and asks the network for nothing.** It
+prints where the time went and how the fetching was answered, which is the first thing to look
+at when it does not:
+
+```
+wrote 92 file(s) to ...\dataset, 8211 already current
+fetched 0, 15518 off disk, 81462 from memory (192 MB held), 5 refusals remembered
+took 45s: tables 5s, games 35s, game sprites 4s, box art 0s, validation 1s
+```
+
+`fetched` above zero on a build that changed nothing means something is being asked for that
+should have been remembered. The three things that keep it at zero are the disk cache, which
+has no expiry; a memory cache on top of it, because a build reads the same document dozens of
+times and every one of those used to be a file read; and remembering a 404, because a sprite
+sheet only draws what its generation drew and asking for the rest again every build is a cost
+with no answer at the end of it.
+
+Nothing is written that is already correct: a sprite is compared before it is replaced, so a
+rebuild that changes no data leaves 8211 files and their timestamps alone.
+
 A quick smoke build, without waiting for a thousand species:
 
 ```bash

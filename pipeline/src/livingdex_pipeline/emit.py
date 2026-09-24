@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -55,6 +55,11 @@ class DatasetWriter:
     """Writes into one dataset directory."""
 
     root: Path
+    #: How many pictures were already exactly right and so were not written again.
+    #:
+    #: A counter rather than nothing at all, because "wrote 8303 files" when 8211 of them were
+    #: untouched is a summary that describes the intent instead of the act.
+    unchanged: list[Path] = field(default_factory=list, compare=False, repr=False)
 
     def game_file(self, game_id: str) -> Path:
         return self.root / GAMES_DIRECTORY / f"{game_id}.json"
@@ -122,8 +127,25 @@ class DatasetWriter:
         return path
 
     def write_sprite(self, name: str, body: bytes) -> Path:
+        """One picture into the dataset, written only if it is not already there.
+
+        A full build hands this the same eight thousand pictures it handed it last time, and a
+        sprite does not change: the bytes come out of a cache that has no expiry. Writing them
+        anyway costs eight thousand file writes and, worse, moves eight thousand timestamps -
+        which makes every tool that watches this directory believe the whole dataset is new.
+        Comparing first is one read against one write, and the read is the cheaper of the two on
+        every machine this has been run on.
+        """
         path = self.sprite_path(name)
         path.parent.mkdir(parents=True, exist_ok=True)
+
+        try:
+            if path.read_bytes() == body:
+                self.unchanged.append(path)
+                return path
+        except OSError:
+            pass
+
         path.write_bytes(body)
         return path
 

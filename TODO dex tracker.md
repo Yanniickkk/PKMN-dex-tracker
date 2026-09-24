@@ -242,6 +242,38 @@ the dataset at all._
 
 ## Phase 3 — Polish
 
+### Build time — 2026-09-24
+
+_Done. A full build went from the best part of an hour to **45 seconds**, and a single-game
+build from minutes to six seconds._
+
+_The cache was never the problem: of the 8415 sprite requests a build makes, 8410 were already
+on disk. What cost the time was touching the same files over and over. A build asked for the
+same document dozens of times - five separate readers want `pokemon-species/shellos` while one
+game is being written, and all 28 games want it again - and each of those was a file read and a
+JSON parse. Over three games, 12484 reads were 2644 distinct documents._
+
+_An LRU was simulated before it was written, which changed the design: the re-reads are not
+close together in time, so holding 256 entries saved 1% and only holding the whole working set
+saved 79%. So `MemoryCache` is sized in bytes rather than entries - a location is a few hundred
+bytes and a Pokemon with its moveset is forty kilobytes - with a 192 MB budget against a 375 MB
+cache. A full build now reads each URL off disk exactly once: 15518 disk reads against 15543
+distinct urls, and 81462 reads served from memory._
+
+_Two smaller things. A 404 is now remembered, because a sheet only draws what its generation
+drew and `_first_picture` finds a form by asking for several names until one answers - so a
+build asks for pictures that are not there, and used to ask again every time. Only 404 and 410:
+a 500 or a timeout is about the moment rather than the url, and writing one down as "no" would
+put a permanent hole in the dataset over a blip. And a sprite is compared before it is written,
+so a rebuild that changes nothing leaves 8211 files and their timestamps alone - the summary
+says "wrote 92 file(s), 8211 already current" rather than claiming credit for all of them._
+
+_The build now prints its own timings, which is how any of this was found: every phase turned
+out to be seconds with a warm cache and minutes with a cold one, which is a different problem
+from the one it looked like._
+
+
+
 - [ ] A hand-written table's citation should carry the day a human read the page
   - The fetched half is done: a PokeAPI citation now takes its date from the cache entry the
     answer came out of, so a rebuild from unchanged pages no longer re-dates 27,000 records

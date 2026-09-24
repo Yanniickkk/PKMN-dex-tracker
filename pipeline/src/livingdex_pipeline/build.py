@@ -6,7 +6,9 @@ Split from the CLI so a build can be run and tested without going through argume
 from __future__ import annotations
 
 import logging
-from collections.abc import Mapping
+import time
+from collections.abc import Iterator, Mapping
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -66,13 +68,26 @@ class BuildResult:
     merge: MergeResult | None = None
     #: Edges a game declared whose other end is not in the dataset yet, as (declared by, edge).
     held_back_edges: list[tuple[str, TransferEdge]] = field(default_factory=list)
+    #: How long each phase took, in the order they ran.
+    #:
+    #: Printed because a build that takes an hour and reports one line at the end gives nobody
+    #: anything to act on. The first time these were measured, every phase turned out to be
+    #: seconds with a warm cache and minutes with a cold one, which is a different problem from
+    #: the one it looked like.
+    timings: list[tuple[str, float]] = field(default_factory=list)
+    #: How the fetching went: what came off disk, what was held in memory, what was asked for.
+    traffic: str | None = None
+    #: Pictures that were already exactly right, so nothing was written for them.
+    unchanged: int = 0
 
     @property
     def ok(self) -> bool:
         return self.validation is None or self.validation.ok
 
     def summary(self) -> str:
-        lines = [f"wrote {len(self.written)} file(s) to {self.dataset_root}"]
+        wrote = len(self.written) - self.unchanged
+        already = f", {self.unchanged} already current" if self.unchanged else ""
+        lines = [f"wrote {wrote} file(s) to {self.dataset_root}{already}"]
 
         if self.held_back_edges:
             # Named rather than counted: a game id that will never exist because it is misspelt
@@ -87,10 +102,29 @@ class BuildResult:
         if self.merge is not None and self.merge.conflicts:
             lines.append(f"{len(self.merge.conflicts)} source conflict(s); see {CONFLICT_LOG}")
 
+        if self.traffic is not None:
+            lines.append(self.traffic)
+
+        if self.timings:
+            spent = ", ".join(f"{name} {seconds:.0f}s" for name, seconds in self.timings)
+            lines.append(f"took {sum(one for _, one in self.timings):.0f}s: {spent}")
+
         if self.validation is not None:
             lines.append(self.validation.summary())
 
         return "\n".join(lines)
+
+
+@contextmanager
+def _phase(result: BuildResult, name: str) -> Iterator[None]:
+    """Time one phase of a build and log it as it finishes."""
+    start = time.perf_counter()
+    try:
+        yield
+    finally:
+        took = time.perf_counter() - start
+        result.timings.append((name, took))
+        log.info("%s took %.1fs", name, took)
 
 
 @dataclass
@@ -142,7 +176,8 @@ class Build:
         api: PokeApiClient,
     ) -> BuildResult:
         if game_id is None:
-            result.written.extend(self._build_shared(writer, client, api))
+            with _phase(result, "tables"):
+                result.written.extend(self._build_shared(writer, client, api))
         elif not (self.dataset_root / "species.json").exists():
             raise BuildError(
                 f"cannot build {game_id} on its own: the shared tables are missing. "
@@ -172,10 +207,14 @@ class Build:
         # A second client for the games that read a wiki page. Its own, because Bulbapedia is
         # not a site to visit at the pace PokeAPI is fetched at, and the floor belongs to the
         # slower host rather than to whichever step happens to be running.
-        with PoliteClient(
-            self.cache_root / "http",
-            min_interval_seconds=GROTTO_MIN_INTERVAL,
-        ) as wiki:
+        with (
+            _phase(result, "games"),
+            PoliteClient(
+                self.cache_root / "http",
+                min_interval_seconds=GROTTO_MIN_INTERVAL,
+                memory=client.memory,
+            ) as wiki,
+        ):
             for wanted_id in wanted:
                 try:
                     data = self.registry.build(
@@ -201,10 +240,12 @@ class Build:
                 result.written.append(writer.write_game(data))
 
         if self.sprites:
-            result.written.extend(self._fetch_game_sprites(api, client, built, writer))
+            with _phase(result, "game sprites"):
+                result.written.extend(self._fetch_game_sprites(api, client, built, writer))
 
         if self.box_art:
-            result.written.extend(self._fetch_box_art(wanted, writer))
+            with _phase(result, "box art"):
+                result.written.extend(self._fetch_box_art(wanted, writer))
 
         built_games = writer.known_games()
 
@@ -212,7 +253,11 @@ class Build:
         result.written.append(writer.write_index(stamp, built_games))
 
         result.held_back_edges = self.registry.held_back_edges
-        result.validation = self._validate()
+        result.traffic = client.traffic()
+        result.unchanged = len(writer.unchanged)
+
+        with _phase(result, "validation"):
+            result.validation = self._validate()
         result.validation.write(self.dataset_root / VALIDATION_REPORT)
         result.written.append(self.dataset_root / VALIDATION_REPORT)
 
@@ -249,6 +294,7 @@ class Build:
 
         if self.sprites:
             sprite_paths.extend(self._fetch_form_faces(api, client, forms, writer))
+
         edges: list[TransferEdge] = self.registry.edges
 
         for game_id, held in self.registry.held_back_edges:

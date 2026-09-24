@@ -11,7 +11,7 @@ from pathlib import Path
 import httpx
 import pytest
 
-from livingdex_pipeline.http import DiskCache, PoliteClient, RobotsDisallowed
+from livingdex_pipeline.http import DiskCache, MemoryCache, PoliteClient, RobotsDisallowed
 
 ROBOTS_ALLOW_ALL = "User-agent: *\nDisallow:\n"
 ROBOTS_DISALLOW_WIKI = "User-agent: *\nDisallow: /wiki/\n"
@@ -20,9 +20,17 @@ ROBOTS_DISALLOW_WIKI = "User-agent: *\nDisallow: /wiki/\n"
 class Recorder:
     """A transport that answers from a script and remembers what was asked."""
 
-    def __init__(self, routes: dict[str, str], robots: str = ROBOTS_ALLOW_ALL) -> None:
+    def __init__(
+        self,
+        routes: dict[str, str],
+        robots: str = ROBOTS_ALLOW_ALL,
+        status: int = 404,
+    ) -> None:
         self.routes = routes
         self.robots = robots
+        #: What an unknown url answers. 404 unless a test is about a server having a bad
+        #: minute, which is a different kind of no.
+        self.status = status
         self.requests: list[str] = []
 
     def transport(self) -> httpx.MockTransport:
@@ -36,7 +44,7 @@ class Recorder:
             if url in self.routes:
                 return httpx.Response(200, text=self.routes[url])
 
-            return httpx.Response(404, text="not here")
+            return httpx.Response(self.status, text="not here")
 
         return httpx.MockTransport(handle)
 
@@ -138,17 +146,111 @@ def test_requests_to_one_host_are_spaced_out(tmp_path: Path) -> None:
     assert all(delay <= 2.0 for delay in slept)
 
 
-def test_a_failed_request_is_not_cached(tmp_path: Path) -> None:
+def test_a_missing_thing_is_only_asked_for_once(tmp_path: Path) -> None:
+    """A 404 is an answer, and it does not change.
+
+    The sprite steps live on this. A sheet only draws what its generation drew, and a form's
+    file is found by asking for several names until one answers - so a build asks for hundreds
+    of pictures that are not there. Asking again on every build for ever costs a request and a
+    wait each time, for an answer nobody expects to change.
+    """
     recorder = Recorder({})
 
     with client_for(recorder, tmp_path) as client:
-        with pytest.raises(httpx.HTTPStatusError):
-            client.fetch("https://example.test/missing")
+        for _ in range(2):
+            with pytest.raises(httpx.HTTPStatusError):
+                client.fetch("https://example.test/missing")
 
-        with pytest.raises(httpx.HTTPStatusError):
-            client.fetch("https://example.test/missing")
+    assert recorder.requests.count("https://example.test/missing") == 1
 
-    assert recorder.requests.count("https://example.test/missing") == 2
+
+def test_a_server_having_a_bad_minute_is_asked_again(tmp_path: Path) -> None:
+    """The other half of the rule, and the one that keeps it safe.
+
+    A 500 or a 429 is about the server or the moment rather than about the url. Writing one down
+    as "not there" would turn a blip into a permanent hole in the dataset that only --refresh
+    could ever fill.
+    """
+    recorder = Recorder({}, status=503)
+
+    with client_for(recorder, tmp_path) as client:
+        for _ in range(2):
+            with pytest.raises(httpx.HTTPStatusError):
+                client.fetch("https://example.test/wobbly")
+
+    assert recorder.requests.count("https://example.test/wobbly") == 2
+
+
+def test_what_has_been_read_is_not_read_again(tmp_path: Path) -> None:
+    """The second ask does not touch the disk at all."""
+    recorder = Recorder({"https://example.test/a.json": '{"name": "rowlet"}'})
+
+    with client_for(recorder, tmp_path) as client:
+        client.fetch("https://example.test/a.json")
+        assert client.from_disk == 0  # it was fetched, not read back
+        assert client.memory.hits == 0
+
+        client.fetch("https://example.test/a.json")
+        assert client.memory.hits == 1
+        assert client.from_disk == 0
+
+
+def test_a_shared_memory_is_shared(tmp_path: Path) -> None:
+    """Two clients over one cache directory, which is what a build runs.
+
+    One is paced for an API and one for a wiki, and what either has read the other should not
+    read again.
+    """
+    recorder = Recorder({"https://example.test/a.json": '{"name": "litten"}'})
+    shared = MemoryCache()
+
+    with client_for(recorder, tmp_path, memory=shared) as one:
+        one.fetch("https://example.test/a.json")
+
+    with client_for(recorder, tmp_path, memory=shared) as two:
+        two.fetch("https://example.test/a.json")
+        assert two.memory.hits == 1
+        assert two.from_disk == 0
+
+    assert recorder.requests.count("https://example.test/a.json") == 1
+
+
+def test_memory_gives_up_its_coldest_when_it_is_full() -> None:
+    memory = MemoryCache(limit=20)
+
+    memory.put("a", b"0123456789")
+    memory.put("b", b"0123456789")
+    assert memory.get("a") == b"0123456789"
+
+    # "b" is the colder of the two now, so it is the one that goes.
+    memory.put("c", b"0123456789")
+
+    assert memory.get("b") is None
+    assert memory.get("a") == b"0123456789"
+    assert memory.get("c") == b"0123456789"
+
+
+def test_one_thing_too_big_for_the_budget_does_not_empty_it() -> None:
+    memory = MemoryCache(limit=20)
+    memory.put("small", b"0123456789")
+    memory.put("huge", b"x" * 100)
+
+    assert memory.get("small") == b"0123456789"
+    assert memory.get("huge") is None
+
+
+def test_the_date_is_only_read_when_it_is_wanted(tmp_path: Path) -> None:
+    """Reading it opens a second file, and the sprite steps never want it."""
+    recorder = Recorder({"https://example.test/a.png": "x"})
+
+    with client_for(recorder, tmp_path) as client:
+        client.fetch("https://example.test/a.png")
+        entry = client.fetch("https://example.test/a.png")
+
+        # Nothing has been read off disk: the body came from memory and the date was not asked
+        # for, so the metadata file beside it was never opened.
+        assert client.from_disk == 0
+        assert entry.retrieved_on == date.today()
 
 
 def test_json_comes_back_parsed(tmp_path: Path) -> None:
