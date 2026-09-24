@@ -659,7 +659,14 @@ class TransferEdgesConnectKnownGames:
         known = {game.game.id for game in dataset.games}
 
         for edge in dataset.transfers:
-            for end, role in ((edge.from_, "from"), (edge.to, "to")):
+            # The two ends, and then the games an origin names: a misspelt origin is the same
+            # unexplainable route as a misspelt end, and it is quieter, because an edge with
+            # one still connects two games that are really there.
+            named = [(edge.from_, "from"), (edge.to, "to")]
+            if edge.origin is not None:
+                named += [(game_id, "origin") for game_id in edge.origin.games]
+
+            for end, role in named:
                 if end not in known:
                     yield Finding(
                         rule=self.name,

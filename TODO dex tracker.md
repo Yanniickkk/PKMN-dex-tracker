@@ -164,13 +164,85 @@ the reason that file gives about Let's Go. **Every route the four cartridges dec
 both of its ends**, and the graph is closed until Let's Go opens it again._
 
 - [ ] **Let's Go, Pikachu!** (`lets-go-pikachu`, gen 7, pair partner: Let's Go, Eevee!)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
+  - [x] 1 Entity + edges  - [x] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
   - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
 - [ ] **Let's Go, Eevee!** (`lets-go-eevee`, gen 7, pair partner: Let's Go, Pikachu!)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
+  - [x] 1 Entity + edges  - [x] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
   - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
+  - Step 2 for both: **153 entries each, and the first 151 of them are Kanto's, unchanged.**
+    Bulbasaur #001 to Mew #151 in the order they have been in since 1996, with Meltan at #152
+    and Melmetal at #153. Platinum's situation rather than Johto's - every number these games
+    share with Red or FireRed means exactly what it always meant - and the opposite of what
+    Ultra Sun did to Sun, which parted company at #024.
+  - **The two at the end are the strangest entries in the dataset so far.** Meltan is the only
+    species a Generation 7 game introduced that is in no Alola dex, and it sits in a Pokedex
+    that is otherwise Generation 1 from end to end. Neither of the two can be caught in Kanto:
+    Meltan comes out of a Mystery Box in Pokemon GO and arrives through the GO Park, and
+    Melmetal is what 400 Meltan Candy makes of one - in GO, not here. Step 4 has to answer
+    what that means for these two lines.
+  - And the validator noticed before anybody asked it to: **2 of the 153 have no source
+    anywhere in the dataset**, which has not been true of any entry since Red was written. The
+    other 151 are all covered by other games, so the coverage reads 0 full, 151 partial, 2
+    missing per half - the 0 being step 3, which has not run.
+  - Validation is **2 errors on purpose**, one per half: `every-entry-has-a-method` reports that
+    a game with a dex and no encounters has not been worked on yet rather than that it has
+    gaps. That rule was written for exactly this state - see what it says about Red - and the
+    errors go away when step 3 does.
+  - No forms on any entry, which is an answer rather than a gap: the Pokedex here has 153 lines
+    and an Alolan Rattata does not get one of its own, exactly as in Sun and Moon. Which forms
+    these two actually hold is step 8's, and until then `FORMS_NAMED_BY_THE_GAME` keeps the
+    table quiet about them.
+  - Step 1 for both, built as a pair: **five routes, and that is every route these two have.**
+    The cable between the halves, and for each half a deposit into HOME and a withdrawal back
+    out. No Bank, no cartridge, not even the generation they belong to - Bulbapedia calls them
+    the first core games "to not be compatible with previous core series titles in any way
+    since Pokemon Ruby and Sapphire, and as such, the first to be unable to trade with other
+    core series games in their generation". The dataset is at 32 games and 130 routes, and
+    nothing is held back.
+  - `lets_go.py` is new and is the pair's module. Not `kanto.py`, which holds what is true of
+    the place across the generations that have visited it - the overlap is real and steps 2 and
+    3 will find it, and whatever turns out to be about Kanto moves there named `switch_`, the
+    way FireRed's is named `gba_`. And not a `switch.py` either: Sword and Shield are on the
+    same console and share none of this, so it would have to say "except in Let's Go" about
+    every line, which is the sentence a `gen7.py` would have had to say about Alola.
+  - **The withdrawal out of HOME is the first edge in this dataset that asks where a Pokemon
+    started.** `home.py` wrote this down when it was built, before either game existed: only a
+    Pokemon originally from Let's Go may be moved into Let's Go, and anything that reached HOME
+    from Bank or the GO Transporter was converted to Sword and Shield's format on the way in
+    and can never enter them. No filter could name that set - not a species, not a generation -
+    so `OriginRequirement` is new beside `SpeciesFilter` and `HistoryWindow`, in the pipeline
+    and in the app, with the pair as one origin: a Pokemon caught in Eevee may be withdrawn
+    into Pikachu.
+  - `TransferGraph` honours it, which is the half that matters. Without it, Red -> Bank -> HOME
+    -> Let's Go would have been a real route and every tile in a Let's Go grid would have said
+    "obtainable elsewhere, transfer it in". A route that begins at HOME is refused, because a
+    Pokemon in a HOME box started somewhere and nothing here records where - the same answer a
+    history window gives when it cannot see the whole route. Four tests.
+  - **And registering two games put 578 wrong lines into the form table.** `from_group_on` has
+    one rule - a form is in the games of the version group it arrived in and in every game
+    after them - and it has held for twenty-eight games because all of them hold everything up
+    to their own National Dex number. These two came out after Ultra Sun and hold 153 species,
+    so every Deerling season, every Totem Pokemon and a Therian Landorus were listed as theirs.
+    The rule is switched off for the pair, and step 8 will name their forms by hand: the table
+    now says they have none, which is also untrue - an Alolan Rattata out of the GO Park is the
+    point of the park - but it is the harmless direction, because a form left out is a tile
+    that is not drawn and a form invented is a tile nobody can fill.
+  - Two things found while reading that belong to later steps, written down so they are not
+    found twice. **These are the first core games with no mutually exclusive Pokemon**: every
+    version exclusive can also be had from an NPC in the other half, over and over, which is
+    step 4's and step 5's to confirm and may leave `only_on` empty for the first time. And
+    **there is no breeding at all** - the first core games since Gold and Silver without it -
+    so step 5 has no day care to ask about.
+  - The GO Park is deliberately not an edge. Pokemon GO sends Kanto's 151, their Alolan forms
+    and Meltan one way into twenty parks where the Safari Zone used to be, and it is the only
+    way anybody gets a Meltan; but GO is not a game this dataset holds, for the reasons
+    `home.py` already gives, so what arrives through the park is step 4's answer about *these*
+    games rather than a route between two entities - the same shape as an egg from an NPC.
+  - The partner Pikachu and Eevee cannot be traded or put into HOME, which no starter before
+    them could say. It is a fact about a form, so it waits for step 8 and is written down in
+    both places that would otherwise have to rediscover it.
 
 ### Generation 8
 

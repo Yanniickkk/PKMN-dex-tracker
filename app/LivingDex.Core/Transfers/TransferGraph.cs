@@ -23,7 +23,8 @@ public sealed class TransferGraph
         GameId To,
         TransferMechanism Mechanism,
         SpeciesFilter Filter,
-        HistoryWindow? History)
+        HistoryWindow? History,
+        OriginRequirement? Origin)
     {
         public TransferHop ToHop() => new(From, To, Mechanism);
     }
@@ -86,11 +87,15 @@ public sealed class TransferGraph
 
         foreach (var edge in edges)
         {
-            Add(new DirectedEdge(edge.From, edge.To, edge.Mechanism, edge.Filter, edge.History));
+            Add(new DirectedEdge(edge.From, edge.To, edge.Mechanism, edge.Filter, edge.History, edge.Origin));
 
             if (edge.Direction == TransferDirection.BothWays)
             {
-                Add(new DirectedEdge(edge.To, edge.From, edge.Mechanism, edge.Filter, edge.History));
+                // The reversed half carries the same conditions, which is only meaningful
+                // because no both-ways edge has an origin: "only what started in Let's Go may
+                // enter" does not describe a route read backwards, and the dataset's two are
+                // one way each.
+                Add(new DirectedEdge(edge.To, edge.From, edge.Mechanism, edge.Filter, edge.History, edge.Origin));
             }
         }
 
@@ -121,6 +126,10 @@ public sealed class TransferGraph
     /// ever feed X and saying otherwise would be a different kind of wrong from "not this
     /// Pokemon". That is why this is a forward search from each candidate rather than one walk
     /// backwards: where a route has been is only known going forwards.
+    ///
+    /// Origin requirements are applied for the same reason and read the same way round: nothing
+    /// at all can be moved from Red into Let's Go, Pikachu!, whatever it is, because only a
+    /// Pokemon that started in one of the two Let's Go games may enter them.
     ///
     /// No hop limit, unlike the route search. Telling "too far to bother looking" apart from
     /// "there is no way at all" is the whole reason this is asked.
@@ -162,7 +171,7 @@ public sealed class TransferGraph
                 continue;
             }
 
-            foreach (var edge in edges.Where(edge => Takes(edge, history)))
+            foreach (var edge in edges.Where(edge => Takes(edge, history) && Started(edge, from)))
             {
                 if (edge.To == destination)
                 {
@@ -312,7 +321,7 @@ public sealed class TransferGraph
 
         for (var depth = 1; depth <= _maxHops && routes.Count < _maxRoutes; depth++)
         {
-            Walk(from, to, target, applyFilters, depth, history, distanceToDestination, [from], [], routes);
+            Walk(from, to, from, target, applyFilters, depth, history, distanceToDestination, [from], [], routes);
         }
 
         return routes;
@@ -346,6 +355,7 @@ public sealed class TransferGraph
     private void Walk(
         GameId current,
         GameId destination,
+        GameId origin,
         DexTarget target,
         bool applyFilters,
         int remainingHops,
@@ -381,6 +391,13 @@ public sealed class TransferGraph
                 continue;
             }
 
+            // And the same for where the route began, which is the one thing an edge can ask
+            // that no amount of looking at the Pokemon would answer.
+            if (!Started(edge, origin))
+            {
+                continue;
+            }
+
             if (applyFilters && !Carries(edge, target))
             {
                 continue;
@@ -402,6 +419,7 @@ public sealed class TransferGraph
                 Walk(
                     edge.To,
                     destination,
+                    origin,
                     target,
                     applyFilters,
                     remainingHops - 1,
@@ -425,6 +443,19 @@ public sealed class TransferGraph
     /// <summary>Whether this edge will take a route that has been where this one has been.</summary>
     private static bool Takes(DirectedEdge edge, RouteHistory history) =>
         edge.History is not { } window || history.Inside(window);
+
+    /// <summary>Whether this edge will take something that started where this route started.</summary>
+    /// <remarks>
+    /// Only HOME's two withdrawals into the Let's Go pair ask, and what they ask is where the
+    /// Pokemon was caught. The game a route starts at is the closest this graph can come to
+    /// that: a walk that begins at HOME has an origin nothing here knows, so it is refused, the
+    /// same way a route through a node of unknown generation is refused by any window. The cost
+    /// of that is small and worth naming — a Pokemon sitting in a HOME box really did start
+    /// somewhere, and if it started in Let's Go it can go back. What it cannot do is arrive
+    /// there from anywhere else, which is the question this is asked to answer.
+    /// </remarks>
+    private static bool Started(DirectedEdge edge, GameId origin) =>
+        edge.Origin is not { } required || required.Games.Contains(origin);
 
     private bool Carries(DirectedEdge edge, DexTarget target) => edge.Filter switch
     {

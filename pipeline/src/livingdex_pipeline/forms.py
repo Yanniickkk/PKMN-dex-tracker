@@ -98,6 +98,30 @@ HELD_ITEM_FORMS = frozenset({"arceus", "genesect"})
 #: one; the Scatterbug that was always going to become it does not.
 INVISIBLE_FORMS = frozenset({"scatterbug", "spewpa", "mothim"})
 
+#: Games no version group can speak for, because their boxes hold a list rather than a series.
+#:
+#: :meth:`VersionGroupGames.from_group_on` works on one rule - a form arriving in a version
+#: group is in that group's games and in every game after them, as long as the species is old
+#: enough for the game to have it. That rule has held for twenty-eight games because every one
+#: of them can hold anything up to its own National Dex number, so "old enough" is the whole
+#: question.
+#:
+#: Let's Go, Pikachu! and Let's Go, Eevee! break it. They came out after Ultra Sun and Ultra
+#: Moon and they hold 153 species: Kanto's 151, Meltan and Melmetal. Left to the rule, every
+#: form of every Pokemon in the dataset would be listed as theirs - Deerling's four seasons,
+#: the Totem Pokemon of an island they have never heard of, a Therian Landorus - because each
+#: of those arrived in an earlier group and Let's Go is later than all of them. The first build
+#: that registered these two added 578 lines to the form table, and almost none of them were
+#: true.
+#:
+#: So the rule is switched off for them and the answer will be written out by hand, which is
+#: what step 8 is for. Until then the table says these two have no forms at all. That is also
+#: not true - a Let's Go player's Alolan Rattata is the whole point of the GO Park, and the
+#: partner Pikachu and Eevee are forms nothing else has - but it is the harmless direction to
+#: be wrong in: a form the table leaves out is a tile that is not drawn, and a form it invents
+#: is a tile asking a player to fill something their game cannot produce.
+FORMS_NAMED_BY_THE_GAME = frozenset({"lets-go-pikachu", "lets-go-eevee"})
+
 #: Where a form is, when the version group it arrived in says more than the truth.
 #:
 #: The default is that a form reaches every game from its own version group onward, which is
@@ -248,6 +272,9 @@ class VersionGroupGames:
         species those games have. Pyroar's sexes look nothing alike and Pyroar is two
         generations away from the newest game here, so the answer for it is no games at all
         rather than nine.
+
+        Three, in fact, and the third is a whole game rather than a species:
+        :data:`FORMS_NAMED_BY_THE_GAME` is the games this reasoning does not describe at all.
         """
         here = self.order_of(group)
 
@@ -256,7 +283,7 @@ class VersionGroupGames:
             for name, games in self._games.items()
             if self._order[name] >= here
             for game in games
-            if self._generation[game] >= generation
+            if self._generation[game] >= generation and game not in FORMS_NAMED_BY_THE_GAME
         )
 
 

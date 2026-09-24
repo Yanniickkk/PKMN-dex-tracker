@@ -1,0 +1,1087 @@
+{
+  "game": {
+    "id": "lets-go-pikachu",
+    "title": "Pokémon: Let's Go, Pikachu!",
+    "version": "Let's Go, Pikachu!",
+    "generation": 7,
+    "region": "Kanto",
+    "release": "cartridge",
+    "released": "2018-11-16",
+    "dexSource": "gameDex",
+    "pairPartner": "lets-go-eevee"
+  },
+  "dexEntries": [
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "bulbasaur"
+      },
+      "number": 1
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "ivysaur"
+      },
+      "number": 2
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "venusaur"
+      },
+      "number": 3
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "charmander"
+      },
+      "number": 4
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "charmeleon"
+      },
+      "number": 5
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "charizard"
+      },
+      "number": 6
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "squirtle"
+      },
+      "number": 7
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "wartortle"
+      },
+      "number": 8
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "blastoise"
+      },
+      "number": 9
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "caterpie"
+      },
+      "number": 10
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "metapod"
+      },
+      "number": 11
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "butterfree"
+      },
+      "number": 12
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "weedle"
+      },
+      "number": 13
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "kakuna"
+      },
+      "number": 14
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "beedrill"
+      },
+      "number": 15
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "pidgey"
+      },
+      "number": 16
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "pidgeotto"
+      },
+      "number": 17
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "pidgeot"
+      },
+      "number": 18
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "rattata"
+      },
+      "number": 19
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "raticate"
+      },
+      "number": 20
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "spearow"
+      },
+      "number": 21
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "fearow"
+      },
+      "number": 22
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "ekans"
+      },
+      "number": 23
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "arbok"
+      },
+      "number": 24
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "pikachu"
+      },
+      "number": 25
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "raichu"
+      },
+      "number": 26
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "sandshrew"
+      },
+      "number": 27
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "sandslash"
+      },
+      "number": 28
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "nidoran-f"
+      },
+      "number": 29
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "nidorina"
+      },
+      "number": 30
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "nidoqueen"
+      },
+      "number": 31
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "nidoran-m"
+      },
+      "number": 32
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "nidorino"
+      },
+      "number": 33
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "nidoking"
+      },
+      "number": 34
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "clefairy"
+      },
+      "number": 35
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "clefable"
+      },
+      "number": 36
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "vulpix"
+      },
+      "number": 37
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "ninetales"
+      },
+      "number": 38
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "jigglypuff"
+      },
+      "number": 39
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "wigglytuff"
+      },
+      "number": 40
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "zubat"
+      },
+      "number": 41
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "golbat"
+      },
+      "number": 42
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "oddish"
+      },
+      "number": 43
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "gloom"
+      },
+      "number": 44
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "vileplume"
+      },
+      "number": 45
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "paras"
+      },
+      "number": 46
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "parasect"
+      },
+      "number": 47
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "venonat"
+      },
+      "number": 48
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "venomoth"
+      },
+      "number": 49
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "diglett"
+      },
+      "number": 50
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dugtrio"
+      },
+      "number": 51
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "meowth"
+      },
+      "number": 52
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "persian"
+      },
+      "number": 53
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "psyduck"
+      },
+      "number": 54
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "golduck"
+      },
+      "number": 55
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "mankey"
+      },
+      "number": 56
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "primeape"
+      },
+      "number": 57
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "growlithe"
+      },
+      "number": 58
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "arcanine"
+      },
+      "number": 59
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "poliwag"
+      },
+      "number": 60
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "poliwhirl"
+      },
+      "number": 61
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "poliwrath"
+      },
+      "number": 62
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "abra"
+      },
+      "number": 63
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "kadabra"
+      },
+      "number": 64
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "alakazam"
+      },
+      "number": 65
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "machop"
+      },
+      "number": 66
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "machoke"
+      },
+      "number": 67
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "machamp"
+      },
+      "number": 68
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "bellsprout"
+      },
+      "number": 69
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "weepinbell"
+      },
+      "number": 70
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "victreebel"
+      },
+      "number": 71
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "tentacool"
+      },
+      "number": 72
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "tentacruel"
+      },
+      "number": 73
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "geodude"
+      },
+      "number": 74
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "graveler"
+      },
+      "number": 75
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "golem"
+      },
+      "number": 76
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "ponyta"
+      },
+      "number": 77
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "rapidash"
+      },
+      "number": 78
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "slowpoke"
+      },
+      "number": 79
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "slowbro"
+      },
+      "number": 80
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "magnemite"
+      },
+      "number": 81
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "magneton"
+      },
+      "number": 82
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "farfetchd"
+      },
+      "number": 83
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "doduo"
+      },
+      "number": 84
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dodrio"
+      },
+      "number": 85
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "seel"
+      },
+      "number": 86
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dewgong"
+      },
+      "number": 87
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "grimer"
+      },
+      "number": 88
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "muk"
+      },
+      "number": 89
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "shellder"
+      },
+      "number": 90
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "cloyster"
+      },
+      "number": 91
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "gastly"
+      },
+      "number": 92
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "haunter"
+      },
+      "number": 93
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "gengar"
+      },
+      "number": 94
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "onix"
+      },
+      "number": 95
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "drowzee"
+      },
+      "number": 96
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "hypno"
+      },
+      "number": 97
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "krabby"
+      },
+      "number": 98
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "kingler"
+      },
+      "number": 99
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "voltorb"
+      },
+      "number": 100
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "electrode"
+      },
+      "number": 101
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "exeggcute"
+      },
+      "number": 102
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "exeggutor"
+      },
+      "number": 103
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "cubone"
+      },
+      "number": 104
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "marowak"
+      },
+      "number": 105
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "hitmonlee"
+      },
+      "number": 106
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "hitmonchan"
+      },
+      "number": 107
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "lickitung"
+      },
+      "number": 108
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "koffing"
+      },
+      "number": 109
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "weezing"
+      },
+      "number": 110
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "rhyhorn"
+      },
+      "number": 111
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "rhydon"
+      },
+      "number": 112
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "chansey"
+      },
+      "number": 113
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "tangela"
+      },
+      "number": 114
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "kangaskhan"
+      },
+      "number": 115
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "horsea"
+      },
+      "number": 116
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "seadra"
+      },
+      "number": 117
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "goldeen"
+      },
+      "number": 118
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "seaking"
+      },
+      "number": 119
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "staryu"
+      },
+      "number": 120
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "starmie"
+      },
+      "number": 121
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "mr-mime"
+      },
+      "number": 122
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "scyther"
+      },
+      "number": 123
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "jynx"
+      },
+      "number": 124
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "electabuzz"
+      },
+      "number": 125
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "magmar"
+      },
+      "number": 126
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "pinsir"
+      },
+      "number": 127
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "tauros"
+      },
+      "number": 128
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "magikarp"
+      },
+      "number": 129
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "gyarados"
+      },
+      "number": 130
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "lapras"
+      },
+      "number": 131
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "ditto"
+      },
+      "number": 132
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "eevee"
+      },
+      "number": 133
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "vaporeon"
+      },
+      "number": 134
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "jolteon"
+      },
+      "number": 135
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "flareon"
+      },
+      "number": 136
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "porygon"
+      },
+      "number": 137
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "omanyte"
+      },
+      "number": 138
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "omastar"
+      },
+      "number": 139
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "kabuto"
+      },
+      "number": 140
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "kabutops"
+      },
+      "number": 141
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "aerodactyl"
+      },
+      "number": 142
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "snorlax"
+      },
+      "number": 143
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "articuno"
+      },
+      "number": 144
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "zapdos"
+      },
+      "number": 145
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "moltres"
+      },
+      "number": 146
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dratini"
+      },
+      "number": 147
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dragonair"
+      },
+      "number": 148
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dragonite"
+      },
+      "number": 149
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "mewtwo"
+      },
+      "number": 150
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "mew"
+      },
+      "number": 151
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "meltan"
+      },
+      "number": 152
+    },
+    {
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "melmetal"
+      },
+      "number": 153
+    }
+  ],
+  "acquisitionMethods": []
+}

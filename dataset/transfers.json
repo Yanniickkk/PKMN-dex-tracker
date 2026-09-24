@@ -629,6 +629,36 @@
     }
   },
   {
+    "from": "home",
+    "to": "lets-go-eevee",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    },
+    "origin": {
+      "games": [
+        "lets-go-pikachu",
+        "lets-go-eevee"
+      ]
+    }
+  },
+  {
+    "from": "home",
+    "to": "lets-go-pikachu",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    },
+    "origin": {
+      "games": [
+        "lets-go-pikachu",
+        "lets-go-eevee"
+      ]
+    }
+  },
+  {
     "from": "leafgreen",
     "to": "diamond",
     "mechanism": "palPark",
@@ -699,6 +729,33 @@
       "filter": "nationalDexRange",
       "from": 1,
       "to": 386
+    }
+  },
+  {
+    "from": "lets-go-eevee",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "lets-go-eevee",
+    "to": "lets-go-pikachu",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "lets-go-pikachu",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
     }
   },
   {

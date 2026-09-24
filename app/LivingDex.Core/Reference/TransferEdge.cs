@@ -82,6 +82,25 @@ public sealed record PresentInTargetDexFilter : SpeciesFilter;
 public sealed record HistoryWindow(int From, int To);
 
 /// <summary>
+/// Where a Pokemon has to have started out for an edge to take it.
+/// </summary>
+/// <remarks>
+/// The third question an edge can ask, after "what is it" and "where has it been", and the only
+/// games that ask it are Let's Go, Pikachu! and Let's Go, Eevee!: only a Pokemon originally from
+/// one of those two may be moved into them. A Charmander caught in Let's Go may leave for HOME
+/// and come home again; one caught in Red and carried to the same HOME box may not.
+///
+/// Neither a <see cref="SpeciesFilter"/> nor a <see cref="HistoryWindow"/>. Every species it
+/// refuses is in the game's own dex already, so it is not about the species; and a window is a
+/// stretch of generations, which would have to admit a Pokemon from Sun.
+///
+/// The pair counts as one origin, which is why this is a list: a Pokemon caught in Let's Go,
+/// Eevee! may be withdrawn into Let's Go, Pikachu!.
+/// </remarks>
+/// <param name="Games">The games a Pokemon may have started in for this edge to take it.</param>
+public sealed record OriginRequirement(IReadOnlyList<GameId> Games);
+
+/// <summary>
 /// One link in the transfer graph. Edges are data, never hardcoded, so adding a game does not
 /// mean changing the engine.
 /// </summary>
@@ -107,4 +126,14 @@ public sealed record TransferEdge(
     /// still a perfectly good edge.
     /// </remarks>
     public HistoryWindow? History { get; init; }
+
+    /// <summary>
+    /// Where a Pokemon has to have come from for this edge to take it, or null when it takes
+    /// anything whatever its origin.
+    /// </summary>
+    /// <remarks>
+    /// Null on every edge but HOME's two withdrawals into the Let's Go pair, and an init
+    /// property for the same reason <see cref="History"/> is.
+    /// </remarks>
+    public OriginRequirement? Origin { get; init; }
 }

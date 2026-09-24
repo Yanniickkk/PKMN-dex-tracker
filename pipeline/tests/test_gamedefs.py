@@ -34,6 +34,9 @@ from livingdex_pipeline.gamedefs import (
     kalos,
     kanto,
     leafgreen,
+    lets_go,
+    lets_go_eevee,
+    lets_go_pikachu,
     moon,
     omega_ruby,
     pearl,
@@ -1943,6 +1946,8 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "heartgold",
         "home",
         "leafgreen",
+        "lets-go-eevee",
+        "lets-go-pikachu",
         "moon",
         "omega-ruby",
         "pearl",
@@ -1985,8 +1990,13 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # and eight more Bank edges - a deposit and a withdrawal for each of the four. The four
     # routes Sun and Moon spent a pair's worth of steps declaring into an empty space are real
     # now, and neither of those two files was touched to do it.
-    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8
-    assert len(routes) == 125
+    #
+    # And five for the Let's Go pair, which is every route those two have: the cable between the
+    # halves, and for each half a deposit into HOME and a withdrawal back out. They declare six
+    # between them and two of those are the one trade. Nothing else in the dataset reaches them
+    # and they reach nothing else - no Bank, no cartridge, not even the generation they are in.
+    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5
+    assert len(routes) == 130
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -3939,12 +3949,106 @@ def test_the_way_out_of_bank_is_lit_now_that_its_other_end_exists() -> None:
     assert out.direction is TransferDirection.ONE_WAY
 
     # One way, and the reason the 3DS era ends here: a Pokemon that has gone into HOME has no
-    # route back to anything with a cartridge slot.
-    reaching_bank = [
+    # route back to anything with a cartridge slot. The two routes that do leave HOME go to the
+    # Let's Go pair and hand back only what those two produced themselves, so they take nothing
+    # away from the sentence above: anything that reached HOME through Bank was converted to
+    # Sword and Shield's format on the way in and can never enter them.
+    leaving_home = [
         edge for edge in default_registry().edges if edge.from_ == home.NODE
     ]
 
-    assert reaching_bank == []
+    assert [edge.to for edge in leaving_home] == ["lets-go-eevee", "lets-go-pikachu"]
+    assert all(edge.origin.games == list(lets_go.PAIR) for edge in leaving_home)
+
+
+# --- Let's Go, Pikachu! and Let's Go, Eevee! --------------------------------------------------
+
+
+def lets_go_entity(module):
+    # No api worth the name: at step 1 a build of these two asks the source nothing at all.
+    return module.build(context(module.GAME_ID)).game
+
+
+def test_the_lets_go_pair_is_generation_7_in_kanto_on_a_home_console() -> None:
+    pikachu = lets_go_entity(lets_go_pikachu)
+    eevee = lets_go_entity(lets_go_eevee)
+
+    # Generation 7 on the console Generation 8 belongs to. What decides it is the species the
+    # game knows, and these know Kanto's 151 with one Mythical Pokemon added.
+    assert (pikachu.generation, eevee.generation) == (7, 7)
+    assert (pikachu.region, eevee.region) == (kanto.REGION, kanto.REGION)
+
+    # One day, everywhere, which only Ultra Sun and Ultra Moon had managed before them.
+    assert pikachu.released == date(2018, 11, 16)
+    assert eevee.released == pikachu.released
+
+    # No National Pokedex, like the four Alola cartridges before them - and unlike those four,
+    # no boxes that hold what the list does not. Step 2 fills the list in.
+    assert (pikachu.national_dex_through, eevee.national_dex_through) == (None, None)
+    assert pikachu.dex_source is DexSource.GAME_DEX
+
+    assert pikachu.pair_partner == eevee.id
+    assert eevee.pair_partner == pikachu.id
+
+
+def test_both_halves_show_the_same_list_and_it_is_not_kanto_s() -> None:
+    api = FakeApi([(1, "bulbasaur"), (151, "mew"), (152, "meltan"), (153, "melmetal")])
+
+    for module in (lets_go_pikachu, lets_go_eevee):
+        data = module.build(context(module.GAME_ID, api))
+
+        assert [(entry.number, entry.target.species) for entry in data.dex_entries] == [
+            (1, "bulbasaur"),
+            (151, "mew"),
+            (152, "meltan"),
+            (153, "melmetal"),
+        ]
+        assert all(entry.game == module.GAME_ID for entry in data.dex_entries)
+        # One list, so a number can only belong to one: the dex name is X and Y's alone.
+        assert all(entry.dex is None for entry in data.dex_entries)
+
+    # Not "kanto", which is the 151 the other four games set here show. This one contains that
+    # list exactly and puts two species at the end of it that Kanto never had.
+    assert api.asked_for == [lets_go.DEX] * 2
+    assert lets_go.DEX == "letsgo-kanto"
+    assert lets_go.DEX != kanto.DEX
+
+
+def test_the_lets_go_pair_reaches_its_other_half_and_home_and_nothing_else() -> None:
+    edges = lets_go_pikachu.edges()
+
+    # The first core games since Ruby and Sapphire that no other core game can reach. There is
+    # no route to Ultra Sun, which came out a year earlier, and none to Bank at all.
+    assert [(edge.from_, edge.to) for edge in edges] == [
+        ("lets-go-pikachu", "lets-go-eevee"),
+        ("lets-go-pikachu", "home"),
+        ("home", "lets-go-pikachu"),
+    ]
+
+    [trade] = [edge for edge in edges if edge.to == "lets-go-eevee"]
+    assert trade.direction is TransferDirection.BOTH_WAYS
+    assert trade.mechanism is TransferMechanism.TRADE
+
+
+def test_home_hands_these_two_back_only_what_started_in_them() -> None:
+    edges = lets_go_eevee.edges()
+    [deposit] = [edge for edge in edges if edge.to == home.NODE]
+    [withdrawal] = [edge for edge in edges if edge.from_ == home.NODE]
+
+    # The deposit is the ordinary one: HOME holds everything, so it takes everything.
+    assert deposit.filter.filter == "all"
+    assert deposit.origin is None
+
+    # The withdrawal is the reason OriginRequirement exists, and the pair counts as one origin:
+    # a Pokemon caught in Let's Go, Pikachu! may be withdrawn into Let's Go, Eevee!.
+    assert withdrawal.filter.filter == "all"
+    assert withdrawal.origin.games == ["lets-go-pikachu", "lets-go-eevee"]
+
+    # Not home.home_edges, which is what the Generation 8 and 9 games get: that withdrawal asks
+    # whether the target's dex lists the species, and every species this one refuses is listed.
+    [_, generation_8] = home.home_edges("sword")
+    assert generation_8.filter.filter == "presentInTargetDex"
+    assert generation_8.origin is None
 
 
 def kalos_slot(

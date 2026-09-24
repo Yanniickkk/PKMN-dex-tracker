@@ -22,6 +22,8 @@ from . import (
     heartgold,
     home,
     leafgreen,
+    lets_go_eevee,
+    lets_go_pikachu,
     moon,
     omega_ruby,
     pearl,
@@ -48,7 +50,9 @@ from . import (
 # third version, and the only ones in the series - the pair that opens Generation 6, the first
 # the whole world got on the same day, and the remakes that close it, which are the Hoenn pair
 # again a year later and twelve years on, and the pair that opens Generation 7 - the first
-# games since Generation 2 with no National Pokedex.
+# games since Generation 2 with no National Pokedex - the second pair of that generation, and
+# then the two that close it on a different console in a different region: Kanto for the fifth
+# time, Yellow remade and a game that never existed remade beside it.
 #
 # Then the two nodes, out of that order and at the end, because neither is a game. Bank came out
 # between the two Generation 6 pairs and HOME six years after it. They are here for the same
@@ -83,6 +87,8 @@ MODULES = [
     moon,
     ultra_sun,
     ultra_moon,
+    lets_go_pikachu,
+    lets_go_eevee,
     bank,
     home,
 ]

@@ -20,6 +20,8 @@ public class TransferGraphTests
     private static readonly GameId Bank = new("bank");
     private static readonly GameId Home = new("home");
     private static readonly GameId Sword = new("sword");
+    private static readonly GameId LetsGoPikachu = new("lets-go-pikachu");
+    private static readonly GameId LetsGoEevee = new("lets-go-eevee");
 
     private static readonly SpeciesId Pikachu = new("pikachu");
     private static readonly SpeciesId Treecko = new("treecko");
@@ -65,6 +67,20 @@ public class TransferGraphTests
             // deposit is a separate edge, because that filter read backwards asks HOME.
             new(Sword, Home, TransferMechanism.Home, TransferDirection.OneWay, new AllSpeciesFilter()),
             new(Home, Sword, TransferMechanism.Home, TransferDirection.OneWay, new PresentInTargetDexFilter()),
+
+            // The Let's Go pair: a cable between the halves, and HOME which takes anything and
+            // hands back only what started in one of the two.
+            Trade(LetsGoPikachu, LetsGoEevee),
+            new(LetsGoPikachu, Home, TransferMechanism.Home, TransferDirection.OneWay, new AllSpeciesFilter()),
+            new(Home, LetsGoPikachu, TransferMechanism.Home, TransferDirection.OneWay, new AllSpeciesFilter())
+            {
+                Origin = new OriginRequirement([LetsGoPikachu, LetsGoEevee]),
+            },
+            new(LetsGoEevee, Home, TransferMechanism.Home, TransferDirection.OneWay, new AllSpeciesFilter()),
+            new(Home, LetsGoEevee, TransferMechanism.Home, TransferDirection.OneWay, new AllSpeciesFilter())
+            {
+                Origin = new OriginRequirement([LetsGoPikachu, LetsGoEevee]),
+            },
         ];
 
         Species[] species =
@@ -104,6 +120,7 @@ public class TransferGraphTests
             (Ruby, 3), (Sapphire, 3), (Emerald, 3), (FireRed, 3),
             (Diamond, 4), (Pearl, 4), (Platinum, 4),
             (Black, 5), (X, 6), (Bank, 6), (Home, 8), (Sword, 8),
+            (LetsGoPikachu, 7), (LetsGoEevee, 7),
         ];
 
         return all.Select(one => new Game(
@@ -480,5 +497,57 @@ public class TransferGraphTests
             new ReferenceFilterContext([], []));
 
         Assert.False(graph.RoutesBetween(Black, X).Any);
+    }
+
+    // --- where a Pokemon started, which only the Let's Go pair asks ---------------------------
+
+    [Fact]
+    public void Nothing_reaches_Lets_Go_from_a_game_it_did_not_start_in()
+    {
+        var graph = BuildGraph();
+
+        // Red -> Bank -> HOME is a real route and HOME really does send into Let's Go. What it
+        // sends is only what came out of Let's Go in the first place, so this Pikachu - which
+        // HOME converted to Sword and Shield's format on the way in - has nowhere to go.
+        var routes = graph.RoutesBetween(Red, LetsGoPikachu, Pikachu);
+
+        Assert.False(routes.Any);
+        Assert.Equal(NoRouteReason.NotConnected, routes.Reason);
+        Assert.DoesNotContain(Red, graph.ReachableFrom(LetsGoPikachu));
+    }
+
+    [Fact]
+    public void A_Pokemon_that_started_in_the_other_half_comes_back_through_HOME()
+    {
+        var graph = BuildGraph();
+
+        // The pair counts as one origin, so this is a real route - and so is the cable, which
+        // is the shorter of the two and comes first.
+        var routes = graph.RoutesBetween(LetsGoEevee, LetsGoPikachu, Pikachu);
+
+        Assert.True(routes.Any);
+        Assert.Contains(
+            routes.Routes,
+            route => route.Hops.Any(hop => hop.To == Home));
+    }
+
+    [Fact]
+    public void HOME_itself_is_not_an_origin_the_graph_can_vouch_for()
+    {
+        var graph = BuildGraph();
+
+        // A Pokemon in a HOME box started somewhere, and nothing in this dataset records where.
+        // Refusing is the same answer a history window gives when it cannot see the whole route.
+        Assert.False(graph.RoutesBetween(Home, LetsGoPikachu, Pikachu).Any);
+    }
+
+    [Fact]
+    public void An_origin_does_not_touch_the_edges_that_do_not_have_one()
+    {
+        var graph = BuildGraph();
+
+        // The same HOME the Let's Go edges hang off still feeds Sword the way it always did.
+        Assert.True(graph.RoutesBetween(Black, Sword, Pikachu).Any);
+        Assert.Contains(Black, graph.ReachableFrom(Sword));
     }
 }

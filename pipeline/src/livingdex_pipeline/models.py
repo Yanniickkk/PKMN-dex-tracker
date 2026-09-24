@@ -288,6 +288,36 @@ class HistoryWindow(Model):
     to: int
 
 
+class OriginRequirement(Model):
+    """Where a Pokemon has to have started out for an edge to take it.
+
+    The third question an edge can ask and the last one left, after "what is it" and "where has
+    it been". Let's Go, Pikachu! and Let's Go, Eevee! are the only games that ask it, and
+    Bulbapedia puts it in one sentence: only a Pokemon originally from one of those two may be
+    moved into them. A Charmander caught in Let's Go may leave for HOME and come home again; a
+    Charmander caught in Red, carried through four services and thirty years to the same HOME
+    box, may not.
+
+    Not a :class:`SpeciesFilter`, because it is not about the species - every species this asks
+    about is in the game's own dex already. Not a :class:`HistoryWindow` either, though it is
+    the same kind of fact: a window is a stretch of generations and this is a set of games, and
+    a Pokemon from Sun is refused by a window that would have to admit it.
+
+    ``games`` is a list because the pair counts as one origin: a Pokemon caught in Let's Go,
+    Eevee! may be withdrawn into Let's Go, Pikachu!, which is the same thing a link cable
+    between the two does.
+
+    **What this does not say**, because nothing in the schema can: Bulbapedia's sentence has a
+    second half - once such a Pokemon has been moved on into a newer game, or has visited
+    Pokemon Champions, it may never go back. That is a fact about a journey this dataset does
+    not record, and a tracker that shows where a Pokemon can be obtained does not need it: the
+    only thing this edge can hand back is something that was caught there to begin with, and
+    that entry is filled either way.
+    """
+
+    games: list[str]
+
+
 class TransferEdge(Model):
     from_: str = Field(alias="from")
     to: str
@@ -297,6 +327,9 @@ class TransferEdge(Model):
     #: Where this edge refuses to take something that has been, when it refuses at all. Absent
     #: on every edge but Bank's withdrawals, which is every edge written before Phase 3.
     history: HistoryWindow | None = None
+    #: Where a Pokemon has to have come from, when the edge asks at all. Absent on every edge
+    #: but HOME's two withdrawals into the Let's Go pair.
+    origin: OriginRequirement | None = None
 
 
 # --- Evolution -------------------------------------------------------------------------------

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from livingdex_pipeline.forms import FormsError, form_table
+from livingdex_pipeline.forms import FORMS_NAMED_BY_THE_GAME, FormsError, form_table
 from livingdex_pipeline.models import FormKind, PokemonType, Species
 
 #: Three version groups is enough to show every rule: one before the form arrives, the one it
@@ -15,6 +15,8 @@ GROUPS = {
     "diamond-pearl": (8, ["diamond", "pearl"], 4),
     "platinum": (9, ["platinum"], 4),
     "sword-shield": (20, ["sword"], 8),
+    # After all of them, and holding 153 species: the pair no version group can speak for.
+    "lets-go-pikachu-lets-go-eevee": (19, ["lets-go-pikachu", "lets-go-eevee"], 7),
 }
 
 
@@ -339,6 +341,40 @@ def test_the_two_species_that_do_have_a_gender_form_are_not_given_a_second_one()
 
     assert [one.kind for one in found] == [FormKind.GENDER]
     assert [one.id for one in found] == ["wormadam-trash"]
+
+
+def test_the_lets_go_pair_is_left_out_of_a_table_that_cannot_speak_for_it() -> None:
+    # Wormadam's cloaks arrive in Diamond and Pearl, so every later game has them - which is
+    # true of Sword and false of Let's Go, whose boxes hold Kanto's 151 and two more. The first
+    # build that registered those two put 578 lines into the form table this way, and almost
+    # none of them were true.
+    [trash] = form_table(
+        wormadam_api(),
+        species=[species("wormadam", types=("bug", "grass"))],
+        game_ids=[*GAMES, "sword", "lets-go-pikachu", "lets-go-eevee"],
+    ).forms
+
+    assert "sword" in trash.games
+    assert "lets-go-pikachu" not in trash.games
+    assert "lets-go-eevee" not in trash.games
+
+
+def test_a_form_that_belongs_to_nothing_but_that_pair_is_left_out_altogether() -> None:
+    # Which is the partner Pikachu's shape: it arrived in that version group and exists
+    # nowhere else, so until step 8 names it by hand the table has no room for it.
+    api = wormadam_api()
+    api._forms_raw["wormadam-trash"] = form(
+        name="trash", default=True, group="lets-go-pikachu-lets-go-eevee"
+    )
+
+    found = form_table(
+        api,
+        species=[species("wormadam", types=("bug", "grass"))],
+        game_ids=[*GAMES, "lets-go-pikachu"],
+    ).forms
+
+    assert found == []
+    assert set(FORMS_NAMED_BY_THE_GAME) == {"lets-go-pikachu", "lets-go-eevee"}
 
 
 # --- what the source cannot say -----------------------------------------------------------------
