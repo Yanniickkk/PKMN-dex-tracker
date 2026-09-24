@@ -336,6 +336,18 @@ from the one it looked like._
     ordinary build. It must not run while a build that touches the Archives is running: the
     five-second budget is per process, so two of them would halve the interval the site asked
     for.
+  - **The four hours are paid once, by whoever runs it, and never again by anybody.** Yannick
+    asked how often this would have to happen, and the honest first answer was "once, unless
+    someone builds on a machine with a cold cache" - because the pipeline asked the source for
+    every picture on every build and it was the HTTP cache under `pipeline/.cache` that made
+    that free. That cache is gitignored and 559 MB; `dataset/sprites` is committed and 11 MB.
+    The cheap one was the one that did not travel.
+  - Fixed before the scrape rather than after it, because it is the scrape that makes it matter:
+    a build now skips the fetch entirely when the picture is already in the dataset, and
+    `--refresh` is the only thing that overrides it. A full build reports **8248 pictures
+    already in the dataset and never asked for**, its sprite phase takes a second and its box
+    art phase none, and the dataset comes out byte-identical. So a fresh clone costs nothing for
+    pictures, and the Generation 7 sheet costs four hours exactly once.
 
 - [ ] Multiple collections: list, switch, rename, delete
 - [ ] Editing a collection's settings after creation, records preserved

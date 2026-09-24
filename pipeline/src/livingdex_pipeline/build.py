@@ -79,15 +79,21 @@ class BuildResult:
     traffic: str | None = None
     #: Pictures that were already exactly right, so nothing was written for them.
     unchanged: int = 0
+    #: Pictures the dataset already held, so the source was never asked about them at all.
+    kept: int = 0
 
     @property
     def ok(self) -> bool:
         return self.validation is None or self.validation.ok
 
     def summary(self) -> str:
-        wrote = len(self.written) - self.unchanged
-        already = f", {self.unchanged} already current" if self.unchanged else ""
-        lines = [f"wrote {wrote} file(s) to {self.dataset_root}{already}"]
+        wrote = len(self.written) - self.unchanged - self.kept
+        notes = ""
+        if self.unchanged:
+            notes += f", {self.unchanged} already current"
+        if self.kept:
+            notes += f", {self.kept} already in the dataset and never asked for"
+        lines = [f"wrote {wrote} file(s) to {self.dataset_root}{notes}"]
 
         if self.held_back_edges:
             # Named rather than counted: a game id that will never exist because it is misspelt
@@ -255,6 +261,7 @@ class Build:
         result.held_back_edges = self.registry.held_back_edges
         result.traffic = client.traffic()
         result.unchanged = len(writer.unchanged)
+        result.kept = len(writer.kept)
 
         with _phase(result, "validation"):
             result.validation = self._validate()
@@ -347,6 +354,22 @@ class Build:
 
         return evolution_rules(api, chains=chains, forms=forms, refresh=self.refresh)
 
+    def _already_here(self, writer: DatasetWriter, name: str) -> Path | None:
+        """The picture this build is about to fetch, if the dataset already has it.
+
+        The cheapest request is the one that is never made, and the dataset is committed:
+        whatever an earlier build wrote is on every clone, while the HTTP cache that makes a
+        rebuild take forty-five seconds is on exactly one machine. Without this, the cost of a
+        picture is paid again by every machine that ever builds the dataset; with it, it is
+        paid once by whoever fetched it first and then carried in git like everything else.
+
+        ``--refresh`` is what turns it off, and it is the only thing that does.
+        """
+        if self.refresh:
+            return None
+
+        return writer.kept_sprite(name)
+
     def _fetch_sprites(
         self,
         api: PokeApiClient,
@@ -358,6 +381,10 @@ class Build:
         written: list[Path] = []
 
         for one in species:
+            if (here := self._already_here(writer, f"{one.id}.png")) is not None:
+                written.append(here)
+                continue
+
             url = api.sprite_url(one.national_dex_number)
             try:
                 body = client.fetch(url, refresh=self.refresh).body
@@ -390,13 +417,25 @@ class Build:
         Generation 5 Rotom it has always had, and gains the right picture only where the sheet
         had none.
         """
-        pictures = self._form_pictures or form_pictures(api, forms, refresh=self.refresh)
         written: list[Path] = []
+        outstanding: list[Form] = []
 
-        for form in (one.id for one in forms if one.id in pictures):
-            body = self._first_picture(client, None, pictures[form])
-            if body is not None:
-                written.append(writer.write_sprite(f"{form}.png", body))
+        for one in forms:
+            here = self._already_here(writer, f"{one.id}.png")
+            if here is None:
+                outstanding.append(one)
+            else:
+                written.append(here)
+
+        # Before asking where the pictures live rather than after: that answer costs a request
+        # per species, and a build whose forms are all already drawn should ask nothing at all.
+        if outstanding:
+            pictures = self._form_pictures or form_pictures(api, outstanding, refresh=self.refresh)
+
+            for form in (one.id for one in outstanding if one.id in pictures):
+                body = self._first_picture(client, None, pictures[form])
+                if body is not None:
+                    written.append(writer.write_sprite(f"{form}.png", body))
 
         log.info("form pictures in the shared set: %s of %s", len(written), len(forms))
 
@@ -464,6 +503,10 @@ class Build:
         missing = 0
 
         for one in wanted:
+            if (here := self._already_here(writer, f"{sprite_set}/{one.id}.png")) is not None:
+                written.append(here)
+                continue
+
             url = api.sprite_url(one.national_dex_number, sprite_set)
             try:
                 body = client.fetch(url, refresh=self.refresh).body
@@ -502,16 +545,27 @@ class Build:
         if not forms:
             return []
 
-        # Asked for here rather than when the table was built, and only about these: a build
-        # that fetches no sprites should ask the source nothing, and a single-game build should
-        # ask about one game's forms instead of every species in the dataset.
-        pictures = self._form_pictures or form_pictures(api, forms, refresh=self.refresh)
         written: list[Path] = []
+        outstanding: list[Form] = []
 
-        for form in (one.id for one in forms if one.id in pictures):
-            body = self._first_picture(client, sprite_set, pictures[form])
-            if body is not None:
-                written.append(writer.write_sprite(f"{sprite_set}/{form}.png", body))
+        for one in forms:
+            here = self._already_here(writer, f"{sprite_set}/{one.id}.png")
+            if here is None:
+                outstanding.append(one)
+            else:
+                written.append(here)
+
+        # Asked for here rather than when the table was built, and only about the ones still
+        # missing: a build that fetches no sprites should ask the source nothing, a single-game
+        # build should ask about one game's forms instead of every species in the dataset, and
+        # a sheet that is already drawn should not be asked where its pictures are kept.
+        if outstanding:
+            pictures = self._form_pictures or form_pictures(api, outstanding, refresh=self.refresh)
+
+            for form in (one.id for one in outstanding if one.id in pictures):
+                body = self._first_picture(client, sprite_set, pictures[form])
+                if body is not None:
+                    written.append(writer.write_sprite(f"{sprite_set}/{form}.png", body))
 
         log.info("form sprites: %s of %s in %s", len(written), len(forms), sprite_set)
 
@@ -564,6 +618,22 @@ class Build:
             return []
 
         written: list[Path] = []
+        outstanding: list[tuple[str, str]] = []
+
+        for game_id, title in wanted:
+            here = None if self.refresh else writer.kept_box_art(game_id)
+            if here is None:
+                outstanding.append((game_id, title))
+            else:
+                written.append(here)
+
+        # The covers are the one thing a full build already fetched from the Archives, at two
+        # requests a game and five seconds a request. On a machine whose HTTP cache is cold
+        # that is five minutes for twenty-eight pictures that are committed three directories
+        # away, so the client below is not opened unless something is actually missing.
+        if not outstanding:
+            log.info("box art: all %s covers are already in the dataset", len(wanted))
+            return written
 
         # Its own client: the Archives ask for five seconds between requests in their
         # robots.txt, and that is not a pace to hold the PokeAPI fetches to.
@@ -571,7 +641,7 @@ class Build:
             self.cache_root / "http",
             min_interval_seconds=ARCHIVES_MIN_INTERVAL,
         ) as client:
-            for game_id, title in wanted:
+            for game_id, title in outstanding:
                 try:
                     art = fetch_box_art(client, game_id, title, refresh=self.refresh)
                 except (BoxArtError, httpx.HTTPError, OSError) as error:

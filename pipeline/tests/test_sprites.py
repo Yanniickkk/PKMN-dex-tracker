@@ -5,6 +5,8 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 
+import httpx
+
 from livingdex_pipeline.build import Build
 from livingdex_pipeline.emit import DatasetWriter, read_species
 from livingdex_pipeline.http import PoliteClient
@@ -12,6 +14,8 @@ from livingdex_pipeline.models import (
     DexEntry,
     DexSource,
     DexTarget,
+    Form,
+    FormKind,
     Game,
     GameData,
     GameRelease,
@@ -19,6 +23,21 @@ from livingdex_pipeline.models import (
     Species,
 )
 from livingdex_pipeline.pokeapi import PokeApiClient
+
+
+class Counting:
+    """A client that remembers what it was asked for and has nothing to hand back.
+
+    Every miss is logged and skipped by the caller, so a build survives it - which is what
+    makes this usable for counting requests rather than serving them.
+    """
+
+    def __init__(self) -> None:
+        self.asked: list[str] = []
+
+    def fetch(self, url: str, *, refresh: bool = False) -> None:
+        self.asked.append(url)
+        raise httpx.HTTPError("nothing here")
 
 
 def api() -> PokeApiClient:
@@ -116,6 +135,85 @@ def test_the_species_table_reads_back_from_disk(tmp_path: Path) -> None:
     DatasetWriter(tmp_path).write_species(species((25, "pikachu")))
 
     assert [one.id for one in read_species(tmp_path)] == ["pikachu"]
+
+
+# --- what is already in the dataset is not asked for again ------------------------------------
+
+
+def test_a_sprite_already_in_the_dataset_is_not_fetched(tmp_path: Path) -> None:
+    writer = DatasetWriter(tmp_path)
+    writer.write_sprite("pikachu.png", b"drawn earlier")
+    build = Build(dataset_root=tmp_path, cache_root=tmp_path / "cache")
+    client = Counting()
+
+    written = build._fetch_sprites(api(), client, species((25, "pikachu")), writer)
+
+    # The committed dataset is the only cache that travels with the repository, so a clone
+    # with a cold HTTP cache must not go back out for eight thousand pictures it already has.
+    assert client.asked == []
+    assert written == [tmp_path / "sprites" / "pikachu.png"]
+    assert writer.kept == written
+    # And not counted as unchanged: nothing came back to compare it against.
+    assert writer.unchanged == []
+
+
+def test_refresh_fetches_it_anyway(tmp_path: Path) -> None:
+    writer = DatasetWriter(tmp_path)
+    writer.write_sprite("pikachu.png", b"drawn earlier")
+    build = Build(dataset_root=tmp_path, cache_root=tmp_path / "cache", refresh=True)
+    client = Counting()
+
+    # A picture that was wrong when it was written is the one thing having the file cannot
+    # notice, and this flag is the only way past it.
+    assert build._fetch_sprites(api(), client, species((25, "pikachu")), writer) == []
+    assert client.asked == [api().sprite_url(25)]
+    assert writer.kept == []
+
+
+def test_a_sheet_asks_only_for_what_it_is_missing(tmp_path: Path) -> None:
+    writer = DatasetWriter(tmp_path)
+    writer.write_sprite("generation-iii/emerald/pikachu.png", b"drawn earlier")
+    build = Build(dataset_root=tmp_path, cache_root=tmp_path / "cache")
+    client = Counting()
+    table = species((25, "pikachu"), (26, "raichu"))
+
+    build._fetch_sprite_set(api(), client, "generation-iii/emerald", game(), [], table, writer)
+
+    assert client.asked == [api().sprite_url(26, "generation-iii/emerald")]
+
+
+def test_a_form_already_drawn_costs_nothing_at_all(tmp_path: Path) -> None:
+    writer = DatasetWriter(tmp_path)
+    writer.write_sprite("vulpix-alola.png", b"drawn earlier")
+    build = Build(dataset_root=tmp_path, cache_root=tmp_path / "cache")
+    forms = [
+        Form(
+            id="vulpix-alola",
+            species="vulpix",
+            name="Alolan",
+            kind=FormKind.REGIONAL,
+            games=["emerald"],
+        )
+    ]
+
+    # Both clients are None: where a form's picture lives costs a request per species to work
+    # out, and a build whose forms are all drawn should not even ask that.
+    written = build._fetch_form_faces(None, None, forms, writer)
+
+    assert written == [tmp_path / "sprites" / "vulpix-alola.png"]
+
+
+def test_a_cover_already_in_the_dataset_opens_no_client(tmp_path: Path) -> None:
+    writer = DatasetWriter(tmp_path)
+    writer.write_box_art("emerald.png", b"drawn earlier")
+    build = Build(dataset_root=tmp_path, cache_root=tmp_path / "cache")
+
+    written = build._fetch_box_art(["emerald"], writer)
+
+    assert written == [tmp_path / "boxart" / "emerald.png"]
+    # The Archives are the five-second host, and two requests a game is five minutes for the
+    # twenty-eight covers. Nothing was opened, so nothing was cached.
+    assert not (tmp_path / "cache" / "http").exists()
 
 
 def test_a_build_with_no_sprite_set_fetches_nothing(tmp_path: Path) -> None:

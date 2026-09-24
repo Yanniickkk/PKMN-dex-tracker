@@ -60,6 +60,11 @@ class DatasetWriter:
     #: A counter rather than nothing at all, because "wrote 8303 files" when 8211 of them were
     #: untouched is a summary that describes the intent instead of the act.
     unchanged: list[Path] = field(default_factory=list, compare=False, repr=False)
+    #: Pictures that were already in the dataset, so the source was never asked about them.
+    #:
+    #: A different fact from :attr:`unchanged`, and the difference is the whole point of it:
+    #: unchanged means the bytes came back and matched, kept means nothing was fetched at all.
+    kept: list[Path] = field(default_factory=list, compare=False, repr=False)
 
     def game_file(self, game_id: str) -> Path:
         return self.root / GAMES_DIRECTORY / f"{game_id}.json"
@@ -115,18 +120,15 @@ class DatasetWriter:
         return self.root / ICONS_DIRECTORY / name
 
     def write_icon(self, name: str, body: bytes) -> Path:
-        path = self.icon_path(name)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(body)
-        return path
+        return self._write_picture(self.icon_path(name), body)
 
     def write_box_art(self, name: str, body: bytes) -> Path:
-        path = self.box_art_path(name)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(body)
-        return path
+        return self._write_picture(self.box_art_path(name), body)
 
     def write_sprite(self, name: str, body: bytes) -> Path:
+        return self._write_picture(self.sprite_path(name), body)
+
+    def _write_picture(self, path: Path, body: bytes) -> Path:
         """One picture into the dataset, written only if it is not already there.
 
         A full build hands this the same eight thousand pictures it handed it last time, and a
@@ -136,7 +138,6 @@ class DatasetWriter:
         Comparing first is one read against one write, and the read is the cheaper of the two on
         every machine this has been run on.
         """
-        path = self.sprite_path(name)
         path.parent.mkdir(parents=True, exist_ok=True)
 
         try:
@@ -147,6 +148,47 @@ class DatasetWriter:
             pass
 
         path.write_bytes(body)
+        return path
+
+    def kept_sprite(self, name: str) -> Path | None:
+        """The picture the dataset already holds, if it holds it.
+
+        ``dataset/sprites`` is committed, which makes it the only cache this project has that
+        travels with the repository. The HTTP cache under ``pipeline/.cache`` is gitignored and
+        over half a gigabyte, so a fresh clone starts with nothing and would fetch eight
+        thousand pictures that are already sitting in its own working tree. Against a host that
+        asks five seconds between requests - the Archives, where Generation 7's sprites have to
+        come from - that is not a slow build, it is a build nobody will run.
+
+        A sprite does not change, so having the file is the whole answer. What this cannot
+        notice is a picture that was wrong when it was written, or a better one appearing
+        upstream. Both are what ``--refresh`` is for, and the caller checks that flag before
+        asking.
+        """
+        return self._kept(self.sprite_path(name))
+
+    def kept_box_art(self, game_id: str) -> Path | None:
+        """The cover this game already has, whichever extension it was saved under.
+
+        Asked by game rather than by file name because the name is not known until the
+        Archives' description page has been read, and reading that page is half of what this
+        is here to avoid: two requests a game at five seconds each, thirty times over, for
+        covers that are committed.
+        """
+        directory = self.root / BOXART_DIRECTORY
+        if not directory.is_dir():
+            return None
+
+        for path in sorted(directory.glob(f"{game_id}.*")):
+            return self._kept(path)
+
+        return None
+
+    def _kept(self, path: Path) -> Path | None:
+        if not path.is_file():
+            return None
+
+        self.kept.append(path)
         return path
 
 
