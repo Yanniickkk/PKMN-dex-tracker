@@ -395,73 +395,58 @@ from the one it looked like._
     cache for free. That only works where the page is uniform enough to parse, which is not most
     of the 209 - but a table that is worth parsing never joins the queue in the first place.
 
-- [ ] Generation 7's pictures from a source that has them
-  - Step 6 for Sun and Moon found that PokeAPI's sprite repository has a folder of battle
-    sprites for every generation from the first to the sixth and none for the seventh - not for
-    these two and not for Ultra Sun and Ultra Moon, whose URL it publishes and whose file it does
-    not have. So all four carry no `sprite_set` and draw the shared set. That is the right
-    fallback and a poor ending: they would be the only games in the dataset never shown in a
-    picture of their own.
-  - Three candidates, and the cheapest is already refused. The same repository has
-    `versions/generation-vii/icons`, which is box icons - a different kind of picture from the
-    battle sprites every other game shows, and one grid holding both would look like a fault.
-  - The second is `other/home`, in that same repository and so needing no new host, no robots.txt
-    and no politeness budget: renders of the very models Generation 7 used, one per species and
-    per form, Alolan Rattata included. Two honest costs. They are Pokemon HOME's renders rather
-    than these games' own, so a sheet built from them would be a *style* that suits Generation 7
-    rather than a picture Sun took; and they are 512x512 and 80-90 KB each against the 96x96 and
-    under a kilobyte of everything the dataset holds now, so roughly 800 of them is some 70 MB
-    against today's 1311 files. Whether they go in the repository at that size, or are scaled on
-    the way in, is the first thing to settle.
-  - The third is Bulbapedia's Archives, which the pipeline can already read politely and which
-    has the games' own artwork. At five seconds a request that is over an hour for one sheet,
-    and it is the only one of the three that would actually be Sun and Moon's picture.
-  - Whatever is picked, nothing about how a picture is chosen has to change: `SpritePath` already
-    tries a sheet's form, a sheet's species, the shared form and the shared species in that
-    order, so a Generation 7 sheet is a constant in `alola.py` and a fetch, and the tiles follow.
+### Generation 7's pictures - 2026-09-24
 
-- [ ] Scrape Generation 7's sprites from the Bulbagarden Archives
-  - The work the item above leaves open, now that the source has been read properly rather than
-    estimated. Three things came out of it and two of them change the plan.
-  - **The file names are not a rule.** The guess was `Spr_7s_<number>.png`, and that is not what
-    is there: a Generation 7 sprite carries a sex suffix, so Pikachu is `Spr_7s_025_m.png` and
-    `Spr_7s_025_f.png` and there is no plain `Spr_7s_025.png` to fetch. Alolan forms take a
-    letter instead - `Spr_7s_019A.png` for Alolan Rattata - shinies take `_s`, back sprites take
-    a `Spr_b_` prefix, and the Partner Cap Pikachu is `Spr_7p_025P_m.png`. Guessing a name costs
-    five seconds per miss, so the names have to be **read** rather than constructed: each
-    species' own page lists every sprite it has, for both sheets and all forms, in one request.
-  - **There are two sheets and they are not the same pictures.** `7s` is Sun and Moon, `7p` is
-    Ultra Sun and Ultra Moon, and the same Pokemon differs by a factor of ten in size:
-    `Spr_7s_019A.png` is 5 KB and `Spr_7p_019A.png` is 52 KB. So "one Generation 7 sheet" is not
-    on offer, and which of the two to use - or whether to take both - is the first decision.
-  - **What it would cost**, at the five seconds a request the Archives ask for:
-    - ~800 species pages to read the names from: about 70 minutes.
-    - 1075 pictures for the first pair's sheet and 1126 for the second: about 90 minutes each.
-    - So roughly **four hours for both sheets**, or two and a half for one.
-    - On disk: the `7s` sheet is about 5 MB and the `7p` sheet about **60 MB**, against the 11 MB
-      the whole sprite set weighs today. The cheap sheet is the one for the games that came
-      first.
-  - The MD5 path rule holds and saves the other half of the fetching: a file at
-    `/media/upload/<md5[0]>/<md5[0:2]>/<name>` needs no description page read first. Verified on
-    four names.
-  - Yannick asked for this to be a separate item, and it should be run as a background job that
-    only warms the HTTP cache and writes nothing into `dataset/` - which makes it restartable,
-    keeps it off the dataset's writer, and lets the sheet be wired in afterwards with one
-    ordinary build. It must not run while a build that touches the Archives is running: the
-    five-second budget is per process, so two of them would halve the interval the site asked
-    for.
-  - **The four hours are paid once, by whoever runs it, and never again by anybody.** Yannick
-    asked how often this would have to happen, and the honest first answer was "once, unless
-    someone builds on a machine with a cold cache" - because the pipeline asked the source for
-    every picture on every build and it was the HTTP cache under `pipeline/.cache` that made
-    that free. That cache is gitignored and 559 MB; `dataset/sprites` is committed and 11 MB.
-    The cheap one was the one that did not travel.
-  - Fixed before the scrape rather than after it, because it is the scrape that makes it matter:
-    a build now skips the fetch entirely when the picture is already in the dataset, and
-    `--refresh` is the only thing that overrides it. A full build reports **8248 pictures
-    already in the dataset and never asked for**, its sprite phase takes a second and its box
-    art phase none, and the dataset comes out byte-identical. So a fresh clone costs nothing for
-    pictures, and the Generation 7 sheet costs four hours exactly once.
+_Done, and it cost a quarter of what the two items it replaces budgeted. The four Alola
+cartridges draw from `generation-vii/alola`: **927 pictures, 8.4 MB, 240 pixels square**, off
+the Bulbagarden Archives._
+
+_**The plan was wrong about which sheet was which, and reading the source first is what caught
+it.** Both items said `7p` was Ultra Sun and Ultra Moon. It is not: the description page for
+`Spr_7p_019A.png` files it under *Let's Go, Pikachu! and Let's Go, Eevee! models*, and that is
+where the 800-pixel, 52-kilobyte pictures came from. Ultra Sun and Ultra Moon are `7u`. A
+scrape that had trusted the number would have given Alola a sheet drawn from the wrong games,
+ten times the size, and nothing about the result would have looked wrong._
+
+_**Ultra Sun and Ultra Moon have no sheet of their own**, which is the other half of why four
+hours became one. Their category holds 409 files against Sun and Moon's 1949, and what is in it
+is what those two added: Dusk Mane, Dawn Wings and Ultra Necrozma, Dusk Form Lycanroc, the
+Partner Cap Pikachu. Everything else in Ultra Sun is the picture Sun already had. So `7u` is
+laid over `7s` in one folder rather than standing beside it as a second sheet, and four games
+share what is nearly one._
+
+_**A name is a rule, not a list, for all but a hundred and thirty of them.** The number is three
+digits; a species drawn differently by sex has `_m` and `_f` and no plain name, and one drawn
+once has nothing else. Which of those two to ask for first is not a guess - a species drawn
+twice is exactly one this dataset already holds a `-female` form for. Every one of the 802
+answered on the first name tried. Unown's letters, Vivillon's patterns and Arceus's types have
+codes that follow nothing and would each have to be read; those keep the shared set's picture of
+the form, which is the right Pokemon in another generation's style._
+
+_Two things the fetching found rather than the planning. **The five past 802** - Poipole,
+Naganadel, Stakataka, Blacephalon and Zeraora - answered to nothing until they were asked for
+under `7u`, which is right: Sun and Moon never drew them. And **Eevee has a female in PokeAPI
+and one picture on this sheet**, so offering both spellings turned a disagreement between two
+sources into one wasted request instead of a hole._
+
+_**Totem forms and Own Tempo Rockruff have no file at all**, checked rather than assumed._
+
+_**And they arrived padded, which is the one thing that had to be undone.** These are the only
+sprites in the dataset that come in a fixed frame: every Generation 7 Pokemon is centred in 240
+pixels at its true size against the others, so a Wailord fills three fifths of it and a Pikachu a
+quarter. The drawing inside is the same 60 pixels across as the Generation 6 Pikachu, which comes
+with no padding at all - so in a 56 pixel tile, `object-fit: contain` drew Alola's Pikachu at
+fourteen pixels beside Kalos's at fifty-six, and the whole generation looked shrunken. The
+relative sizing is real information and no other sheet here carries it, so it comes off at build
+time: Pillow, one call, cropped to what is drawn. The sheet went from 8.4 MB to 6.8, and every
+picture now fills its own frame the way the other twenty-eight sheets do._
+
+_The md5 path rule holds, so no description page is read and the fetching is halved. The
+category pages are not the shortcut they look like: their next 200 is a `/w/` url, which the
+Archives' robots.txt disallows. 77 minutes of fetching, paid once - a build that already has the
+pictures opens no client at all, and the app needed no change, because the dataset cannot tell
+where a folder of pictures came from._
+
 
 - [ ] Multiple collections: list, switch, rename, delete
 - [ ] Editing a collection's settings after creation, records preserved

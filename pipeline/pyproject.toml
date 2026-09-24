@@ -5,6 +5,9 @@ description = "Builds the Living Dex Tracker dataset from PokeAPI and scraped so
 requires-python = ">=3.12"
 dependencies = [
     "httpx>=0.27",
+    # Only for one job, and only on one sheet: the Archives pad every Generation 7 sprite into
+    # a fixed 240 pixel frame, and the padding has to come off before the picture is written.
+    "pillow>=10",
     "pydantic>=2.7",
     "selectolax>=0.3.21",
 ]

@@ -79,7 +79,6 @@ def build(context: BuildContext) -> GameData:
             released=RELEASED,
             national_dex_through=alola.USUM_NATIONAL_DEX_THROUGH,
             pair_partner=PAIR_PARTNER,
-            sprite_set=alola.SPRITE_SET,
         ),
         dex_entries=entries,
         acquisition_methods=acquisition_methods(context, entries),

@@ -27,6 +27,7 @@ from .emit import (
 from .evolutions import evolution_rules
 from .forms import form_pictures, form_table
 from .games import BuildContext, GameRegistry, UnknownGameError
+from .gen7sprites import ALOLA_SET, cropped, first_picture, form_names, species_names
 from .grottoes import MIN_INTERVAL as GROTTO_MIN_INTERVAL
 from .http import PoliteClient, RobotsDisallowed
 from .icons import fetch_icons
@@ -496,6 +497,9 @@ class Build:
         species: list[Species],
         writer: DatasetWriter,
     ) -> list[Path]:
+        if sprite_set == ALOLA_SET:
+            return self._fetch_alola_set(sprite_set, sharing, species, writer)
+
         wanted = self._species_of(data, species)
         log.info("%s sprites: %s species from %s", data.game.id, len(wanted), sprite_set)
 
@@ -524,6 +528,114 @@ class Build:
             )
 
         return written + self._fetch_form_sprites(api, client, sprite_set, sharing, writer)
+
+    def _alola_names(
+        self,
+        sharing: list[GameData],
+        species: list[Species],
+        writer: DatasetWriter,
+    ) -> tuple[list[Path], list[tuple[str, tuple[str, ...]]]]:
+        """What this sheet already has, and what each of the rest might be called there.
+
+        Worked out before a client is opened, because the answer decides whether one is opened
+        at all: the Archives ask five seconds a request, and a dataset that already holds every
+        picture must cost nothing.
+
+        The reach is the widest of the games sharing the sheet rather than the first one's. Sun
+        stops at 802 and Ultra Sun goes to 807 and they draw from the same folder, so taking the
+        first would leave the five Ultra Sun added undrawn.
+        """
+        wanted: dict[str, Species] = {}
+        for data in sharing:
+            wanted.update({one.id: one for one in self._species_of(data, species)})
+
+        games = {one.game.id for one in sharing}
+        forms = [one for one in self._forms if games & set(one.games)]
+        numbers = {one.id: one.national_dex_number for one in species}
+        # A species drawn differently by sex is exactly one this dataset holds a female form
+        # for, which is what tells the namer which spelling to ask for first.
+        sexed = {one.species for one in forms if one.name == "Female"}
+
+        written: list[Path] = []
+        outstanding: list[tuple[str, tuple[str, ...]]] = []
+
+        for one in wanted.values():
+            if (here := self._already_here(writer, f"{ALOLA_SET}/{one.id}.png")) is not None:
+                written.append(here)
+                continue
+
+            outstanding.append(
+                (one.id, species_names(one.national_dex_number, sexed=one.id in sexed))
+            )
+
+        for one in forms:
+            if (here := self._already_here(writer, f"{ALOLA_SET}/{one.id}.png")) is not None:
+                written.append(here)
+                continue
+
+            number = numbers.get(one.species)
+            if number is None:
+                continue
+
+            if names := form_names(number, form_id=one.id, form_name=one.name):
+                outstanding.append((one.id, names))
+
+        return written, outstanding
+
+    def _fetch_alola_set(
+        self,
+        sprite_set: str,
+        sharing: list[GameData],
+        species: list[Species],
+        writer: DatasetWriter,
+    ) -> list[Path]:
+        """The one sheet in this dataset that PokeAPI does not have.
+
+        Generation 7 has no folder in the sprite repository, so these pictures come off the
+        Bulbagarden Archives instead - a different host, a different naming scheme and five
+        seconds between requests rather than none. :mod:`gen7sprites` holds the naming; what is
+        here is the same shape every other set is fetched in, so the dataset cannot tell the
+        difference afterwards.
+
+        Two things differ from :meth:`_fetch_sprite_set`. The reach is the widest of the games
+        sharing the sheet rather than the first one's, because Sun stops at 802 and Ultra Sun
+        goes to 807 and they draw from the same folder. And the client is not opened at all
+        unless something is missing: at five seconds a request, a warm dataset must cost nothing
+        or nobody will build this.
+        """
+        written, outstanding = self._alola_names(sharing, species, writer)
+
+        if not outstanding:
+            log.info("%s: all %s pictures are already in the dataset", sprite_set, len(written))
+            return written
+
+        log.info(
+            "%s: %s pictures to fetch from the Archives, %s already in the dataset",
+            sprite_set,
+            len(outstanding),
+            len(written),
+        )
+
+        missing = 0
+
+        with PoliteClient(
+            self.cache_root / "http",
+            min_interval_seconds=ARCHIVES_MIN_INTERVAL,
+        ) as archives:
+            for name, candidates in outstanding:
+                body = first_picture(archives, candidates, refresh=self.refresh)
+                if body is None:
+                    # Expected rather than exceptional, and it is how a form with no code and a
+                    # species the sheet never drew both end up drawn from the shared set.
+                    missing += 1
+                    continue
+
+                written.append(writer.write_sprite(f"{sprite_set}/{name}.png", cropped(body)))
+
+        if missing:
+            log.info("%s of them are not there; those fall back to the shared set", missing)
+
+        return written
 
     def _fetch_form_sprites(
         self,

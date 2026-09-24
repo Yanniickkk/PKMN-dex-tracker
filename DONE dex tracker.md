@@ -3267,8 +3267,10 @@ anywhere but Omega Ruby and Alpha Sapphire's Jirachi, which is their step 7.
   - What Generation 7 does have there is a folder of box icons. They are a different kind of
     picture from the battle sprites every other game shows, so they are not used: the entities
     carry no sprite set and the app draws the shared one, as every sheetless game already does. That
-    is a fallback rather than an answer, so finding these four a sheet of their own is queued in
-    Phase 3 as *Generation 7's pictures from a source that has them*.
+    was a fallback rather than an answer, and it was answered on 2026-09-24: the four now draw
+    from `generation-vii/alola`, off the Bulbagarden Archives. Phase 3 has what that found,
+    including the two things this note could not have known - that Ultra Sun and Ultra Moon have
+    no sheet of their own, and that the 800-pixel pictures which look like theirs are Let's Go's.
   - **That would have been a bad answer on its own, and the fix reaches the whole dataset.** A
     form used to have nothing but its species to fall back on, so in a region where most of the
     Kanto Pokemon *are* the regional form, an Alolan Rattata's tile drew a Kantonian one. The

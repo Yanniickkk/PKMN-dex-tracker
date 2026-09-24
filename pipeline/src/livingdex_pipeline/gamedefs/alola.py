@@ -155,27 +155,29 @@ RENAMED_PLACES: dict[str, str] = {}
 #: was never read by anybody.
 RENAMED_SUB_AREAS: dict[str, str] = {}
 
-#: These two have no sprite sheet, which is step 6's whole answer for them.
+#: The one sheet in this dataset that does not come from PokeAPI.
 #:
 #: Every generation from the first to the sixth has a folder of battle sprites in the sprite
 #: repository and Generation 7 has none - not for Sun and Moon and not for Ultra Sun and Ultra
-#: Moon either. PokeAPI publishes a URL for the second of those, ``versions/generation-vii/
-#: ultra-sun-ultra-moon/25.png``, and the repository does not have the file: the source promises
-#: a picture it cannot hand over. What Generation 7 does have there is a folder of box icons,
-#: which is a different kind of picture from the battle sprites every other game in this dataset
-#: shows, and putting them in one grid beside each other would look like a fault.
+#: Moon either. PokeAPI publishes a url for the second of those, ``versions/generation-vii/
+#: ultra-sun-ultra-moon/25.png``, and the repository does not have the file; there is no
+#: ``sun-moon`` folder to 404 on at all. What it does have is a folder of box icons, which is a
+#: different kind of picture from the battle sprites every other game here shows.
 #:
-#: Checked again when the second pair was written, because the source names *those two* and not
-#: the first: ``versions/generation-vii/ultra-sun-ultra-moon/25.png`` is the url PokeAPI
-#: publishes for a Generation 7 Pikachu, and it is still a 404. There is no ``sun-moon`` folder
-#: to 404 on at all.
+#: So these four drew the shared set until the Bulbagarden Archives were read instead, which is
+#: what :mod:`~livingdex_pipeline.gen7sprites` is. Two things that source settled and this one
+#: could not:
 #:
-#: So the entities carry no ``sprite_set`` and the app draws the shared set, which is what every
-#: game without a sheet of its own already does. What that cost until this step is the reason
-#: :meth:`~.build.Build._fetch_form_faces` now exists: a form used to have nothing but its
-#: species to fall back on, and in a region where most of the Kanto Pokemon *are* the regional
-#: form, the tile for an Alolan Rattata drew a Kantonian one.
-SPRITE_SET: str | None = None
+#: * **Ultra Sun and Ultra Moon have no sheet of their own.** Their category on the Archives
+#:   holds 409 files against Sun and Moon's 1949, and what is in it is what those two *added* -
+#:   Dusk Mane, Dawn Wings and Ultra Necrozma, Dusk Form Lycanroc, the Partner Cap Pikachu.
+#:   Everything else in Ultra Sun is the picture Sun already had. Hence one folder for four
+#:   games rather than a pair each, and hence the name: the region rather than a version group.
+#: * **The 800-pixel pictures that look like theirs are Let's Go's.** The wiki prefixes a sprite
+#:   with the games it came from, and ``7p`` is Let's Go while ``7u`` is Ultra Sun and Ultra
+#:   Moon. A reader who matched on the number alone would have given Alola a sheet ten times the
+#:   size, drawn from the wrong games.
+SPRITE_SET = "generation-vii/alola"
 
 #: PokeAPI's name for the version group each pair shares, which its evolution rules hang off.
 #:
@@ -1139,13 +1141,16 @@ def cartridge(
     released: date,
     national_dex_through: int,
     pair_partner: str,
-    sprite_set: str | None = None,
+    sprite_set: str | None = SPRITE_SET,
 ) -> Game:
     """One Alola cartridge, with the facts all four of them share filled in.
 
     ``national_dex_through`` is a parameter rather than a constant because this is the first
     region whose two pairs do not agree about it. ``pair_partner`` is required: Alola has two
     pairs and no third version, so every one of these four has another half.
+
+    The sheet is filled in rather than asked for, because all four draw from the same folder -
+    Ultra Sun and Ultra Moon have no pictures of their own beyond what they added.
     """
     return Game(
         id=game_id,
