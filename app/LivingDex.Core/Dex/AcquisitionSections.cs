@@ -117,6 +117,9 @@ public static class AcquisitionNames
         EncounterMethod.Soaring => "soaring",
         EncounterMethod.Sos => "SOS calls",
         EncounterMethod.MovingSpot => "moving spots",
+        EncounterMethod.Overworld => "walking up to it",
+        EncounterMethod.OverworldWater => "walking up to it on the water",
+        EncounterMethod.OverworldFlying => "catching one passing overhead",
         _ => "another way",
     };
 

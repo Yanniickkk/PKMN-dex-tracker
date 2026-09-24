@@ -831,3 +831,108 @@ def test_the_compound_sos_slot_says_where_the_caller_was_met() -> None:
 
     assert [one.method for one in found] == [EncounterMethod.SOS]
     assert found[0].requirement == "Called by something met in a bubbling spot"
+
+
+# --- Let's Go, where there is no table to walk into -------------------------------------------
+
+
+def test_lets_go_has_three_places_to_look_and_none_of_them_is_grass() -> None:
+    # The ground, the water a Lapras is carrying you over, and the sky. Mapping these onto walk
+    # and surf would say a player pushes into grass and hopes, which is the one thing these two
+    # games never ask: every wild Pokemon is standing there to be touched.
+    found = build(
+        {
+            "pidgey": [
+                area(
+                    "kanto-route-1-area",
+                    "lets-go-pikachu",
+                    [
+                        slot("overworld", 2, 4, 100),
+                        slot("overworld-flying", 3, 56, 100),
+                        slot("overworld-water", 5, 9, 100),
+                    ],
+                )
+            ]
+        },
+        {"kanto-route-1-area": ("kanto-route-1", "Route 1")},
+        version="lets-go-pikachu",
+    )
+
+    assert {one.method for one in found} == {
+        EncounterMethod.OVERWORLD,
+        EncounterMethod.OVERWORLD_FLYING,
+        EncounterMethod.OVERWORLD_WATER,
+    }
+
+
+def test_a_rare_spawn_is_the_same_method_with_a_sentence_on_it() -> None:
+    # Rarity is not a way of meeting something. Every slot in these games is listed at a
+    # hundred percent - what a player meets is decided when the overworld is populated rather
+    # than when a battle starts - so the chance column cannot carry this and the sentence has
+    # to. It is the difference between the Pidgey on Route 1 and the Chansey on Route 1.
+    found = build(
+        {
+            "chansey": [
+                area(
+                    "kanto-route-1-area",
+                    "lets-go-pikachu",
+                    [slot("overworld-special", 11, 16, 100)],
+                )
+            ]
+        },
+        {"kanto-route-1-area": ("kanto-route-1", "Route 1")},
+        version="lets-go-pikachu",
+    )
+
+    [one] = found
+    assert one.method is EncounterMethod.OVERWORLD
+    assert one.requirement is not None
+    assert one.requirement.startswith("A rare spawn")
+
+
+def test_a_bird_that_has_been_caught_says_so_in_one_sentence_with_its_rarity() -> None:
+    # The only place in this dataset where catching a Legendary Pokemon puts it back in the
+    # wild: once the Articuno in the Seafoam Islands is caught, the same bird starts flying
+    # over twenty-four routes. Both halves of that end up in one requirement, joined the way a
+    # list of conditions is - not "... and Only once ...", which is two sentences colliding.
+    found = build(
+        {
+            "articuno": [
+                area(
+                    "kanto-route-1-area",
+                    "lets-go-pikachu",
+                    [slot("overworld-flying-special", 3, 56, 100, ["other-caught-articuno"])],
+                )
+            ]
+        },
+        {"kanto-route-1-area": ("kanto-route-1", "Route 1")},
+        version="lets-go-pikachu",
+    )
+
+    [one] = found
+    assert one.method is EncounterMethod.OVERWORLD_FLYING
+    assert one.requirement == (
+        "A rare spawn: it appears far less often than the rest of the table "
+        "and only once the Articuno in the Seafoam Islands has been caught"
+    )
+
+
+def test_what_belongs_to_a_later_step_is_still_left_alone() -> None:
+    # Snorlax asleep on Route 12 is woken with the Poke Flute, the birds and Mewtwo are statics
+    # and twelve species are handed over. All of those are step 4's, and the wild step leaves
+    # them where they are rather than calling them slots.
+    found = build(
+        {
+            "snorlax": [
+                area(
+                    "kanto-route-12-area",
+                    "lets-go-pikachu",
+                    [slot("pokeflute", 34, 34, 100), slot("static", 34, 34, 100)],
+                )
+            ]
+        },
+        {"kanto-route-12-area": ("kanto-route-12", "Route 12")},
+        version="lets-go-pikachu",
+    )
+
+    assert found == []

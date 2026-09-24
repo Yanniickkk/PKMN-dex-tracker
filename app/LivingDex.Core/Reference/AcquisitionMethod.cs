@@ -178,6 +178,26 @@ public enum EncounterMethod
     /// </remarks>
     MovingSpot,
 
+    /// <summary>A wild Pokémon standing on the ground in Let's Go, walked up to and touched.</summary>
+    /// <remarks>
+    /// There is no encounter table to walk into in those two games and no random battle at all:
+    /// what a player meets is decided when the overworld is populated, and they choose which of
+    /// the visible ones to touch. Calling that walking would describe the one thing these games
+    /// never ask. Rarity is not a method here either — the rarer table beside each of these is
+    /// said in the record's requirement, the way a flower patch's colour is.
+    /// </remarks>
+    Overworld,
+
+    /// <summary>The same, on the water a Lapras is carrying the player over.</summary>
+    OverworldWater,
+
+    /// <summary>The same, in the sky: a Pokémon passing overhead.</summary>
+    /// <remarks>
+    /// Not a rarer kind of ground. A wild Charizard or Dragonite exists nowhere else in Let's
+    /// Go, and so does a second Articuno, Zapdos or Moltres once the first has been caught.
+    /// </remarks>
+    OverworldFlying,
+
     Other,
 }
 

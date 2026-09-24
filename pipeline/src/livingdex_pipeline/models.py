@@ -154,6 +154,26 @@ class EncounterMethod(StrEnum):
     # Latios underfoot, and flocks met in mid-air. Neither is a rarer kind of surfing or walking.
     DIVE = "dive"
     SOARING = "soaring"
+    # And Let's Go's three, which are one idea: **there is no encounter table to walk into.**
+    # Every wild Pokemon in those two games is standing, swimming or flying where the player
+    # can see it, and an encounter starts by touching that one. No tall grass, no random
+    # battle, no rod, no Repel - the whole vocabulary the twenty-eight games before them share
+    # is gone, so mapping this onto `walk` and `surf` would say a player pushes into grass and
+    # hopes, which is the one thing these games never ask.
+    #
+    # Three and not one, because they are three places to look rather than three names for
+    # looking: on the ground, on the water a Lapras is carrying you over, and in the sky. The
+    # sky is not a rarer kind of ground - a Charizard passes overhead and is gone, and it is
+    # the only place a wild Charizard or Dragonite exists at all.
+    #
+    # What is *not* a method here is rarity. The source keeps a second table beside each of
+    # these for the ones that turn up far less often - Chansey on every route, Lapras on two
+    # sea routes - and that is the same slot in the same place met less often, so it is a
+    # sentence on the record rather than a fourth, fifth and sixth name. The same call Kalos's
+    # flower patches got.
+    OVERWORLD = "overworld"
+    OVERWORLD_WATER = "overworldWater"
+    OVERWORLD_FLYING = "overworldFlying"
     OTHER = "other"
 
 

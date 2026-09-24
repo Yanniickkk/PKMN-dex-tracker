@@ -1,6 +1,6 @@
 """Pokemon: Let's Go, Eevee!: what it is, and the three routes it brings.
 
-Phase 2 steps 1 and 2 for this game and nothing after them yet. What it says about itself is
+Phase 2 steps 1 to 3 for this game and nothing after them yet. What it says about itself is
 here; what is true of both halves is in :mod:`lets_go`.
 
 **The half with no game behind it.** Its other half remakes Yellow, and this one remakes a game
@@ -38,6 +38,8 @@ def build(context: BuildContext) -> GameData:
     cable, not into HOME. Its eight evolutions are a separate matter and step 5's - the partner
     cannot evolve at all, which is a fact about the form rather than about the family.
     """
+    entries = dex_entries(context)
+
     return GameData(
         game=lets_go.cartridge(
             game_id=GAME_ID,
@@ -45,7 +47,10 @@ def build(context: BuildContext) -> GameData:
             version="Let's Go, Eevee!",
             pair_partner=PAIR_PARTNER,
         ),
-        dex_entries=dex_entries(context),
+        dex_entries=entries,
+        acquisition_methods=lets_go.acquisition_methods(
+            context, game_id=GAME_ID, version=POKEAPI_VERSION, entries=entries
+        ),
     )
 
 

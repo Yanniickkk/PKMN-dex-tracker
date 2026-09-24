@@ -12529,7 +12529,7 @@
         "maximum": 50
       },
       "ratePercent": 100.0,
-      "requirement": "Out of a bin and In a bin, on a Thursday",
+      "requirement": "Out of a bin and in a bin, on a Thursday",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/banette/encounters",
@@ -14424,7 +14424,7 @@
         "maximum": 38
       },
       "ratePercent": 75.0,
-      "requirement": "Out of a bin and In a bin, on a Tuesday",
+      "requirement": "Out of a bin and in a bin, on a Tuesday",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/rotom/encounters",
@@ -15762,7 +15762,7 @@
         "maximum": 35
       },
       "ratePercent": 80.0,
-      "requirement": "Out of a bin and In a bin that is worth checking any day",
+      "requirement": "Out of a bin and in a bin that is worth checking any day",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/trubbish/encounters",
@@ -15782,7 +15782,7 @@
         "maximum": 50
       },
       "ratePercent": 100.0,
-      "requirement": "Out of a bin and In a bin that is worth checking any day",
+      "requirement": "Out of a bin and in a bin that is worth checking any day",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/garbodor/encounters",
@@ -15802,7 +15802,7 @@
         "maximum": 38
       },
       "ratePercent": 20.0,
-      "requirement": "Out of a bin and In a bin that is worth checking any day",
+      "requirement": "Out of a bin and in a bin that is worth checking any day",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/garbodor/encounters",

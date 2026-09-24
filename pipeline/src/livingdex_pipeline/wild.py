@@ -85,6 +85,15 @@ WILD_METHODS: dict[str, EncounterMethod] = {
     # one of them that is in water. Haina Desert's sand clouds and Route 2's rustling grass
     # arrive under the same name, so the name this project uses is the family's.
     "bubbling-spots": EncounterMethod.MOVING_SPOT,
+    # Let's Go's three, each with the rarer table beside it that the source spells
+    # ``-special``. The rarity is said in :data:`METHOD_REQUIREMENTS` rather than in the name:
+    # it is the same place and the same way of meeting something, met less often.
+    "overworld": EncounterMethod.OVERWORLD,
+    "overworld-special": EncounterMethod.OVERWORLD,
+    "overworld-water": EncounterMethod.OVERWORLD_WATER,
+    "overworld-water-special": EncounterMethod.OVERWORLD_WATER,
+    "overworld-flying": EncounterMethod.OVERWORLD_FLYING,
+    "overworld-flying-special": EncounterMethod.OVERWORLD_FLYING,
     # Still a wild encounter, but not one of the named ways of starting one.
     "seaweed": EncounterMethod.OTHER,
     "feebas-tile-fishing": EncounterMethod.OTHER,
@@ -112,6 +121,17 @@ METHOD_REQUIREMENTS: dict[str, str] = {
     "trash-can-ambush": "Out of a bin",
     # Where the Pokemon that calls for help was met, which an SOS slot does not say by itself.
     "sos-from-bubbling-spot": "Called by something met in a bubbling spot",
+    # And how often, for Let's Go's second table. Every slot in those games is listed at a
+    # hundred percent because what a player meets is decided when the overworld is populated
+    # rather than when a battle starts, so the chance column cannot carry this and the sentence
+    # has to. It is the difference between the Pidgey on Route 1 and the Chansey on Route 1.
+    "overworld-special": "A rare spawn: it appears far less often than the rest of the table",
+    "overworld-water-special": (
+        "A rare spawn: it appears far less often than the rest of the table"
+    ),
+    "overworld-flying-special": (
+        "A rare spawn: it appears far less often than the rest of the table"
+    ),
 }
 
 
@@ -262,7 +282,10 @@ def _state(values: list[str], *, species: str, method: str) -> _State:
     """
     said = conditions.requirement(values, subject=species)
     by_method = METHOD_REQUIREMENTS.get(method)
-    requirement = " and ".join(one for one in (by_method, said) if one) or None
+    # Through the same joiner a list of conditions goes through, so that a method's sentence
+    # and a condition's do not collide: "A rare spawn ... and Only once the Articuno" reads as
+    # two sentences that ran into each other, which is the thing that function is for.
+    requirement = conditions.joined(by_method, said)
 
     return _State(
         time_of_day=conditions.of(values, conditions.TIME),

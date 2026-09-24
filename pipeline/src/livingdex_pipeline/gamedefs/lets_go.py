@@ -33,11 +33,12 @@ question no edge in this dataset had ever asked.
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from datetime import date
 
 from ..games import BuildContext
 from ..models import (
+    AcquisitionMethod,
     AllSpeciesFilter,
     DexEntry,
     DexSource,
@@ -49,6 +50,7 @@ from ..models import (
     TransferEdge,
     TransferMechanism,
 )
+from ..wild import wild_encounters
 from . import home, kanto
 
 #: Kanto again, and the fifth pair of games to be set there.
@@ -159,6 +161,39 @@ def dex_entries(
         )
         for number, species in api.pokedex(DEX, refresh=context.refresh)
     ]
+
+
+def acquisition_methods(
+    context: BuildContext,
+    *,
+    game_id: str,
+    version: str,
+    entries: Sequence[DexEntry],
+) -> list[AcquisitionMethod]:
+    """Every way to get something in one half of the pair.
+
+    One table so far, which is step 3's. A table left out is a step that has not been gathered
+    yet rather than a game with nothing to declare - :mod:`alola` says the same thing about the
+    same shape, and the gifts, the trades and the evolutions arrive as their steps run.
+
+    The species asked about are the game's own 153 and not a National Dex slice, which is what
+    :meth:`BuildContext.living_dex` does when a game has no National Dex to slice: these boxes
+    hold what the Pokedex lists and nothing else, so the living dex and the Pokedex are the
+    same list for the first time since Yellow.
+    """
+    api = context.require_api()
+    species = context.living_dex(through=None, entries=entries)
+
+    return list(
+        wild_encounters(
+            api,
+            game_id=game_id,
+            version=version,
+            species=species,
+            forms=context.forms_here(),
+            refresh=context.refresh,
+        )
+    )
 
 
 def trade_edges(game_id: str) -> list[TransferEdge]:

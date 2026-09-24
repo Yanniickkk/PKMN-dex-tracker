@@ -508,4 +508,35 @@ public class SchemaRoundTripTests
     {
         Assert.Equal("games/platinum.json", DatasetLayout.GameFile(new GameId("platinum")));
     }
+
+    [Fact]
+    public void Lets_Gos_three_overworld_methods_are_spelled_the_way_the_pipeline_writes_them()
+    {
+        // The two halves of this project share no code, only these strings. A wild slot in
+        // Let's Go is the one place the app would silently lose a whole game's encounters if
+        // the two spellings drifted, because there is nothing else in those games to fall back
+        // on - no grass, no rod, no random battle at all.
+        var flying = Serialize<AcquisitionMethod>(new WildAcquisition
+        {
+            Game = new GameId("lets-go-pikachu"),
+            Target = DexTarget.ForSpecies(new SpeciesId("charizard")),
+            Source = Citation,
+            Location = "Route 1",
+            Method = EncounterMethod.OverworldFlying,
+            Levels = new LevelRange(3, 56),
+            RatePercent = 100,
+            Requirement = "A rare spawn: it appears far less often than the rest of the table",
+        });
+
+        Assert.Equal("overworldFlying", flying.GetProperty("method").GetString());
+        Assert.Equal(
+            EncounterMethod.OverworldFlying,
+            JsonSerializer.Deserialize<EncounterMethod>("\"overworldFlying\"", DatasetJson.Options));
+        Assert.Equal(
+            EncounterMethod.Overworld,
+            JsonSerializer.Deserialize<EncounterMethod>("\"overworld\"", DatasetJson.Options));
+        Assert.Equal(
+            EncounterMethod.OverworldWater,
+            JsonSerializer.Deserialize<EncounterMethod>("\"overworldWater\"", DatasetJson.Options));
+    }
 }

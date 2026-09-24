@@ -1,6 +1,6 @@
 """Pokemon: Let's Go, Pikachu!: what it is, and the three routes it brings.
 
-Phase 2 steps 1 and 2 for this game and nothing after them yet. What it says about itself is
+Phase 2 steps 1 to 3 for this game and nothing after them yet. What it says about itself is
 here; what is true of both halves is in :mod:`lets_go`, and what turns out to be true of Kanto
 rather than of these two will move to :mod:`kanto` as the steps that find it run.
 
@@ -42,6 +42,8 @@ def build(context: BuildContext) -> GameData:
     twice here and in :func:`lets_go.trade_edges` so that whoever reaches either does not have
     to rediscover it.
     """
+    entries = dex_entries(context)
+
     return GameData(
         game=lets_go.cartridge(
             game_id=GAME_ID,
@@ -49,7 +51,10 @@ def build(context: BuildContext) -> GameData:
             version="Let's Go, Pikachu!",
             pair_partner=PAIR_PARTNER,
         ),
-        dex_entries=dex_entries(context),
+        dex_entries=entries,
+        acquisition_methods=lets_go.acquisition_methods(
+            context, game_id=GAME_ID, version=POKEAPI_VERSION, entries=entries
+        ),
     )
 
 

@@ -82,6 +82,15 @@ REQUIREMENTS: dict[str, str] = {
         "Dual-slot mode, with a Pokemon LeafGreen cartridge in the Game Boy Advance slot"
     ),
     "radar-on": "With the Poke Radar running",
+    # Let's Go, and the only place in this dataset where catching a Legendary Pokemon is what
+    # puts it back in the wild. Each of the three birds has one static encounter - the source
+    # puts Articuno on Seafoam Islands B4F, Zapdos in the Power Plant and Moltres on Victory
+    # Road 2F, which is not where FireRed kept them - and once that one has been caught the
+    # same bird starts flying over Kanto as a rare spawn, twenty-four routes' worth of it. That
+    # is how a player gets a second one; every other game in the series has exactly one.
+    "other-caught-articuno": "Only once the Articuno in the Seafoam Islands has been caught",
+    "other-caught-zapdos": "Only once the Zapdos in the Power Plant has been caught",
+    "other-caught-moltres": "Only once the Moltres in Victory Road has been caught",
     "swarm-yes": "Only while it is swarming",
     # The Pokegear radio in Johto does what the Game Boy Advance slot does in Sinnoh: it puts
     # Pokemon from another region into grass that otherwise has none of them. Two cards rather

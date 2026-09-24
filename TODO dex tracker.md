@@ -164,13 +164,55 @@ the reason that file gives about Let's Go. **Every route the four cartridges dec
 both of its ends**, and the graph is closed until Let's Go opens it again._
 
 - [ ] **Let's Go, Pikachu!** (`lets-go-pikachu`, gen 7, pair partner: Let's Go, Eevee!)
-  - [x] 1 Entity + edges  - [x] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
+  - [x] 1 Entity + edges  - [x] 2 Dex list  - [x] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
   - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
 - [ ] **Let's Go, Eevee!** (`lets-go-eevee`, gen 7, pair partner: Let's Go, Pikachu!)
-  - [x] 1 Entity + edges  - [x] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
+  - [x] 1 Entity + edges  - [x] 2 Dex list  - [x] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
   - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
+  - Step 3 for both: **666 wild slots each, 112 species, 35 places, and not one of them is
+    grass.** These two have no encounter table to walk into and no random battle at all: every
+    wild Pokemon is standing, swimming or flying where the player can see it, and an encounter
+    starts by touching that one. The whole vocabulary the twenty-eight games before them share
+    - tall grass, a rod, a Repel, a roll when the battle starts - is gone.
+  - So `EncounterMethod` gains three, and three rather than one because they are three places
+    to look: **`overworld`, `overworldWater` and `overworldFlying`**. The sky is not a rarer
+    kind of ground - a Charizard passes overhead and is gone, and it is the only place a wild
+    Charizard or Dragonite exists at all. Mapping these onto `walk` and `surf` would have said
+    a player pushes into grass and hopes, which is the one thing these games never ask.
+  - **Rarity is not a method, and here it could not be a number either.** The source keeps a
+    second table beside each of the three for what turns up far less often - Chansey on
+    seventeen routes, Lapras on two sea routes, Snorlax in Cerulean Cave - and every slot in
+    these games is listed at 100%, because what a player meets is decided when the overworld is
+    populated rather than when a battle starts. So the chance column cannot carry it and the
+    requirement does: 174 of the 666 say "a rare spawn". Kalos's flower patches got the same
+    call.
+  - **The only place in this dataset where catching a Legendary Pokemon puts it back in the
+    wild.** Each of the three birds has one static - the source puts Articuno on Seafoam
+    Islands B4F, Zapdos in the Power Plant and Moltres on Victory Road 2F, which is not where
+    FireRed kept them - and once that one is caught the same bird starts flying over twenty-four
+    routes as a rare spawn. That is how a player gets a second; every other game in the series
+    has exactly one. Three new condition wordings for it.
+  - **Not one slot in either game carries a time of day**, and that is right rather than
+    missing: Bulbapedia lists these as the first core games without a day-and-night cycle since
+    Diamond and Pearl re-introduced it. 111 of Sun's 708 slots carry one.
+  - The halves split 11 species each way in their grass - Oddish, Growlithe, Sandshrew, Scyther
+    and seven more against Bellsprout, Vulpix, Meowth, Pinsir and seven more - which is the
+    ordinary shape and is about to stop being it: step 5 has to check whether every one of them
+    is also handed over by an NPC in the other half, which is what "the first core games with no
+    mutually exclusive Pokemon" would mean.
+  - Fixed while here: a method's sentence and a condition's were joined with a bare "and", so
+    Kalos has been reading "Out of a bin and In a bin, on a Thursday" since it was built. They
+    go through the same joiner a list of conditions does now, which lowers the second one in.
+    Ten lines in X and ten in Y.
+  - Coverage is **112 full, 39 partial, 2 missing** per half, and validation is down to the two
+    errors that are the point: Meltan and Melmetal are in the dex at #152 and #153 and no game
+    in this dataset can produce either. That is step 4's GO Park to answer.
+  - One thing left open by the site rather than by the work: Bulbapedia started returning 403 to
+    this pipeline partway through the step, so the wording of the rare-spawn sentence and the
+    birds' was written from PokeAPI's own tables and the place names in them. Worth a second
+    look when the wiki lets us in again.
   - Step 2 for both: **153 entries each, and the first 151 of them are Kanto's, unchanged.**
     Bulbasaur #001 to Mew #151 in the order they have been in since 1996, with Meltan at #152
     and Melmetal at #153. Platinum's situation rather than Johto's - every number these games
