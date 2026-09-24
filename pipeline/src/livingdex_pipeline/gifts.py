@@ -85,6 +85,18 @@ class GiftDetail:
     npc: str | None = None
     #: What has to be true first. Replaces the item read off the encounter's conditions.
     requirement: str | None = None
+    #: What level it is handed over at, where the source's own row has it wrong.
+    #:
+    #: The last field to be needed and the one that says the least, because until the Let's Go
+    #: pair the wording was what a game had to correct and never the number. PokeAPI has four of
+    #: that pair's rows at a level two other sources agree with each other it is not - and its
+    #: Electrode is 43, which is exactly what the Electrode in the same room of the same Power
+    #: Plant was in Red and Blue. A number carried down twenty-two years of remakes of that room
+    #: is not a number to keep.
+    #:
+    #: Nothing else in the dataset sets it. A game that leaves it out keeps what the row says,
+    #: which is what every game before this pair does.
+    level: int | None = None
     #: What the place itself asks before anything in it can be reached.
     #:
     #: Written *beside* what the conditions say rather than instead of them, which is the whole
@@ -276,8 +288,10 @@ def _record(
         gift_kind=known.kind or GIFT_METHODS[method],
         location=_as_written(place),
         npc=known.npc,
-        # A gift comes at one level, so PokeAPI's range is a range of one.
-        level=detail.get("min_level"),
+        # A gift comes at one level, so PokeAPI's range is a range of one - and the game's
+        # own table wins here too, for the four rows in Let's Go where the range of one is
+        # wrong. See :attr:`GiftDetail.level`.
+        level=known.level if known.level is not None else detail.get("min_level"),
         # The game's own table wins: it can say "Odd Keystone in the Hallowed Tower, after
         # talking to 32 people in the Underground" where the conditions say two bare facts.
         # What the conditions say is the fallback, so that a game which has not been written

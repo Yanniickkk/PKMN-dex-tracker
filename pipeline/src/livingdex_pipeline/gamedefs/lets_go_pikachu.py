@@ -22,11 +22,16 @@ from . import lets_go
 
 GAME_ID = "lets-go-pikachu"
 
-#: The other half. Unlike every pair since Red and Blue, what the two halves split is not the
-#: question step 4 usually answers: Bulbapedia lists these as the first core games "to not
-#: feature mutually exclusive Pokemon", because every version exclusive here can also be had
-#: from an NPC in the other half, over and over. Whether that holds for all of them is step 5's
-#: to check; all that is claimed here is that the two halves exist and know about each other.
+#: The other half, and the only thing this game can reach by cable.
+#:
+#: What the two halves split is six lines each way - :data:`lets_go.ONLY_ON` - which is the
+#: smallest split a Kanto pair has had and an ordinary one. Step 1 guessed otherwise, from
+#: Bulbapedia's line about these being the first core games "to not feature mutually exclusive
+#: Pokemon": it read that as every version exclusive being available from an NPC in the other
+#: half, and step 5 found that the traders hand over Alolan forms and nothing else. Mutually
+#: exclusive is about one save file rather than two cartridges, and what earns these two the
+#: line is that both Hitmons are rare spawns on Victory Road and both fossils turn up again in
+#: Cerulean Cave. The choices went; the version exclusives did not.
 PAIR_PARTNER = "lets-go-eevee"
 
 #: What PokeAPI calls this game when it lists which version an encounter belongs to.
@@ -61,14 +66,15 @@ def build(context: BuildContext) -> GameData:
 def dex_entries(context: BuildContext) -> list[DexEntry]:
     """Kanto's 151 in the order they have been in since 1996, and two that are not Kanto's.
 
-    No ``unobtainable`` table yet. What this half cannot produce is step 4's question and step
-    7's answer, and there is reason to think the list will be short in a way no pair before it
-    managed: Bulbapedia calls these the first core games with no mutually exclusive Pokemon,
-    because every version exclusive can also be had from an NPC in the other half over and over.
-    Passing an empty table here rather than guessing is the same choice :mod:`alola` makes about
-    a step that has not run.
+    The ``unobtainable`` table is :data:`lets_go.UNOBTAINABLE`, shared with the other half, and
+    step 4 found it as short as this game's own file guessed it would be - three of 153, and not
+    one of them a version exclusive. Bulbapedia calls these the first core games with no
+    mutually exclusive Pokemon and the gifts keep to it; what is left is a Mew behind a
+    controller and the two species only the GO Park can bring.
     """
-    return lets_go.dex_entries(context, game_id=GAME_ID)
+    return lets_go.dex_entries(
+        context, game_id=GAME_ID, unobtainable=lets_go.unobtainable_in(GAME_ID)
+    )
 
 
 def edges() -> list[TransferEdge]:

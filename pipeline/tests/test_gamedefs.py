@@ -112,6 +112,8 @@ VERSION_GROUP_ORDER = {
     "x-y": 13,
     "omega-ruby-alpha-sapphire": 14,
     "sun-moon": 15,
+    "ultra-sun-ultra-moon": 16,
+    "lets-go-pikachu-lets-go-eevee": 17,
 }
 
 
@@ -4012,6 +4014,216 @@ def test_both_halves_show_the_same_list_and_it_is_not_kanto_s() -> None:
     assert api.asked_for == [lets_go.DEX] * 2
     assert lets_go.DEX == "letsgo-kanto"
     assert lets_go.DEX != kanto.DEX
+
+
+def lets_go_slot(species: str, method: str, level: int, *, area: str = "vermilion-city-area"):
+    return {
+        species: [
+            {
+                "location_area": {"name": area},
+                "version_details": [
+                    {
+                        "version": {"name": version},
+                        "encounter_details": [
+                            {
+                                "min_level": level,
+                                "max_level": level,
+                                "chance": 100,
+                                "method": {"name": method},
+                                "condition_values": [],
+                            }
+                        ],
+                    }
+                    for version in ("lets-go-pikachu", "lets-go-eevee")
+                ],
+            }
+        ]
+    }
+
+
+def lets_go_gifts(module, api: FakeApi) -> list:
+    return [
+        one
+        for one in module.build(context(module.GAME_ID, api)).acquisition_methods
+        if one.kind == "gift"
+    ]
+
+
+def test_kantos_three_starters_are_not_starters_in_these_two() -> None:
+    # The sharpest thing step 4 found. Bulbasaur, Charmander and Squirtle are not lined up in
+    # Oak's laboratory to be chosen between: they are three presents from three strangers in
+    # three towns, each asking how many species have been caught, and all three can be had in
+    # one save. Every other Kanto in this dataset marks them STARTER and says "pick one of the
+    # three; the other two take a trade".
+    api = FakeApi([(1, "bulbasaur")], lets_go_slot("bulbasaur", "gift", 12))
+
+    [bulbasaur] = lets_go_gifts(lets_go_pikachu, api)
+
+    assert bulbasaur.gift_kind is GiftKind.NPC_GIFT
+    assert bulbasaur.requirement == "After 30 or more Pokemon have been caught"
+    assert kanto.SHARED_GIFTS["bulbasaur"].kind is GiftKind.STARTER
+
+    # The partner is the starter here, and it is the one Pokemon in either half that leaves by
+    # no route at all - not the cable, not HOME.
+    assert lets_go.GIFTS["pikachu"].kind is GiftKind.STARTER
+    assert lets_go.GIFTS["eevee"].kind is GiftKind.STARTER
+
+
+def test_the_gift_table_is_one_table_because_these_two_split_nothing() -> None:
+    # The first core games with no mutually exclusive Pokemon, and the gifts keep to it: the
+    # only two rows that are not in both halves are the Persian and the Arcanine, which are one
+    # errand outside one building with a different animal at the end of it. Every pair before
+    # this one hands its halves a table each.
+    assert lets_go.GIFTS["persian"].npc == "A Black Belt outside the Pokemon Fan Club"
+    assert lets_go.GIFTS["arcanine"].npc == "A Beauty outside the Pokemon Fan Club"
+
+    for module in (lets_go_pikachu, lets_go_eevee):
+        api = FakeApi([(53, "persian")], lets_go_slot("persian", "gift", 32))
+        [persian] = lets_go_gifts(module, api)
+
+        # A species the other half never hands over simply has no row there to describe, so one
+        # table can answer for both without either of them claiming the other's gift.
+        assert persian.npc == "A Black Belt outside the Pokemon Fan Club"
+
+
+def test_four_levels_are_the_games_word_against_the_sources() -> None:
+    # PokeAPI has the Persian and the Arcanine at 32, the Porygon at 36 and this Electrode at
+    # 43; Bulbapedia's event list and Serebii's gift page agree with each other against it. 43
+    # is what the Electrode in the same room of the same Power Plant was in Red and Blue, which
+    # is where a number copied down thirty years of remakes would have come from.
+    api = FakeApi([(101, "electrode")], lets_go_slot("electrode", "static", 43))
+
+    [electrode] = lets_go_gifts(lets_go_eevee, api)
+
+    assert electrode.level == 42
+    assert electrode.gift_kind is GiftKind.STATIC_ENCOUNTER
+
+
+def test_the_lapras_pokeapi_has_no_row_for_is_written_down() -> None:
+    # Kanto has handed a Lapras over in Silph Co. since Red and PokeAPI has no encounter for it
+    # in either half of this pair. It closes no hole - step 3 found Lapras swimming off two sea
+    # routes - and leaving it out would have said this Kanto stopped doing something it has
+    # done for twenty-two years.
+    api = FakeApi([(131, "lapras")])
+
+    [lapras] = lets_go_gifts(lets_go_pikachu, api)
+
+    assert lapras.location == "Saffron City, Silph Co"
+    assert lapras.level == 34
+    assert lapras.source.source == "bulbapedia"
+
+
+def test_every_trade_in_this_pair_hands_over_an_alolan_form() -> None:
+    # Eight traders, six of them in both halves, and the two that differ are the Camper in
+    # Celadon City and the Punk Guy on Cinnabar Island. Each wants the Kantonian form of the
+    # very species they hand back Alolan, which is the whole shape of the bargain.
+    for game_id, own in (
+        ("lets-go-pikachu", {"sandshrew-alola", "grimer-alola"}),
+        ("lets-go-eevee", {"vulpix-alola", "meowth-alola"}),
+    ):
+        trades = lets_go.traders(game_id)
+
+        assert len(trades) == 8
+        assert all(one.form is not None and one.form.endswith("-alola") for one in trades)
+        assert all(one.wants == one.gets for one in trades)
+        assert {one.form for one in trades} - {one.form for one in lets_go.SHARED_TRADERS} == own
+
+
+def test_the_three_evolutions_that_depend_on_where_you_are_standing() -> None:
+    # Fifteen of the eighteen Alolan forms evolve out of an Alolan form and the source says so,
+    # so both ways survive and a Kantonian Graveler still becomes a Kantonian Golem. These three
+    # require no Alolan form at all - a Pikachu, a Cubone and an Exeggcute are one Pokemon each -
+    # so the region decides, and this region is Kanto.
+    assert set(lets_go.NOT_AN_EVOLUTION_HERE) == {
+        "melmetal",
+        "raichu-alola",
+        "marowak-alola",
+        "exeggutor-alola",
+    }
+    assert "Saffron City" in lets_go.NOT_AN_EVOLUTION_HERE["raichu-alola"]
+
+
+def test_each_half_keeps_six_lines_from_the_other_and_that_is_the_whole_split() -> None:
+    pikachu = lets_go.unobtainable_in("lets-go-pikachu")
+    eevee = lets_go.unobtainable_in("lets-go-eevee")
+
+    # Six lines apiece - eleven species once the evolutions are counted, which is what step 3
+    # found in the grass. Red and Blue divide eleven lines; this is the smallest split a Kanto
+    # pair has had, and the bases are nearly the whole of it because either half can evolve what
+    # it is handed. The Arbok is the exception and step 7 is why: it has a distribution of its
+    # own and the Ekans it evolves from has none, so it is listed rather than left to inherit.
+    assert len(lets_go.ONLY_ON["lets-go-pikachu"]) == 6
+    assert set(lets_go.ONLY_ON["lets-go-eevee"]) - {"arbok"} == {
+        "ekans",
+        "vulpix",
+        "meowth",
+        "bellsprout",
+        "koffing",
+        "pinsir",
+    }
+    assert lets_go.ONLY_ON["lets-go-eevee"]["arbok"] is not None
+    assert set(pikachu) - set(lets_go.UNOBTAINABLE) == set(lets_go.ONLY_ON["lets-go-eevee"])
+    assert set(eevee) - set(lets_go.UNOBTAINABLE) == set(lets_go.ONLY_ON["lets-go-pikachu"])
+
+    # Not "only in Generation 7", which is what every pair before them says: Ekans is in Alola
+    # too, and no Alola cartridge can reach these two anyway. The cable between the halves is
+    # the whole of what a player can be told to do.
+    assert pikachu["ekans"].startswith("Let's Go, Eevee! only")
+    assert "cable" in pikachu["ekans"]
+    assert "Generation" not in pikachu["ekans"]
+
+    # And the Vermilion errand, from the other end: each half is paid in the evolved form of a
+    # line it does not hold, so the base is listed here and its evolution is not.
+    assert "meowth" in pikachu and "persian" not in pikachu
+    assert "growlithe" in eevee and "arcanine" not in eevee
+
+
+def test_the_only_distributions_these_two_ever_had_were_for_another_release() -> None:
+    pikachu = lets_go.unobtainable_in("lets-go-pikachu")
+
+    # Three in seven years, all of them six years late and all of them for the mainland Chinese
+    # cartridges on the Tencent Switch, which this dataset does not hold. Every other pair in
+    # the dataset has a list of distributions; these two have a list of somebody else's.
+    assert set(lets_go.CHINESE_EVENTS) == {"arbok", "meltan", "melmetal"}
+    assert "mainland Chinese cartridges" in pikachu["arbok"]
+
+    # The Ekans it evolves from got nothing, which is why the Arbok is written out rather than
+    # left to inherit its line's reason: the two entries do not say the same thing.
+    assert "Shiny Arbok" in pikachu["arbok"]
+    assert "Shiny Arbok" not in pikachu["ekans"]
+
+    # And what the international cartridges did get, which is one thing and is still open: the
+    # serial code in a Poke Ball Plus. Not a distribution that ended, which is the distinction
+    # this step exists to draw.
+    assert "Poke Ball Plus" in pikachu["mew"]
+    assert "never closed" in pikachu["mew"]
+
+
+def test_the_go_park_is_a_reason_rather_than_a_record() -> None:
+    # What step 1 guessed would be "the same shape as an egg from an NPC" is the Dream Radar's
+    # problem instead: a source that is not a game, sending one way into two cartridges and
+    # nowhere else. A Phase 3 item exists to give such a thing a shape and asks for GO and the
+    # Radar to be decided together, so nothing here invents a GO Park shaped acquisition for
+    # two species - the reason carries the whole truth and says what to do.
+    api = FakeApi([(151, "mew"), (152, "meltan"), (153, "melmetal")])
+
+    for module in (lets_go_pikachu, lets_go_eevee):
+        data = module.build(context(module.GAME_ID, api))
+        reasons = {
+            entry.target.species: entry.unobtainable_reason
+            for entry in data.dex_entries
+            if entry.unobtainable_reason is not None
+        }
+
+        # Three of 153, one table for the pair, and not one of them a version exclusive.
+        assert set(reasons) == {"mew", "meltan", "melmetal"}
+        assert "GO Park" in reasons["meltan"]
+        assert "GO Park" in reasons["melmetal"]
+        assert "Poke Ball Plus" in reasons["mew"]
+
+        # Nothing in the dataset claims Kanto contains a Meltan.
+        produced = {one.target.species for one in data.acquisition_methods}
+        assert not produced & {"meltan", "melmetal", "mew"}
 
 
 def test_the_lets_go_pair_reaches_its_other_half_and_home_and_nothing_else() -> None:

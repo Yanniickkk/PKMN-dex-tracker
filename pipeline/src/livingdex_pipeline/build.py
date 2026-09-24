@@ -27,7 +27,7 @@ from .emit import (
 from .evolutions import evolution_rules
 from .forms import form_pictures, form_table
 from .games import BuildContext, GameRegistry, UnknownGameError
-from .gen7sprites import ALOLA_SET, cropped, first_picture, form_names, species_names
+from .gen7sprites import ARCHIVES_SHEETS, cropped, first_picture, form_names, species_names
 from .grottoes import MIN_INTERVAL as GROTTO_MIN_INTERVAL
 from .http import PoliteClient, RobotsDisallowed
 from .icons import fetch_icons
@@ -497,8 +497,8 @@ class Build:
         species: list[Species],
         writer: DatasetWriter,
     ) -> list[Path]:
-        if sprite_set == ALOLA_SET:
-            return self._fetch_alola_set(sprite_set, sharing, species, writer)
+        if sprite_set in ARCHIVES_SHEETS:
+            return self._fetch_archives_set(sprite_set, sharing, species, writer)
 
         wanted = self._species_of(data, species)
         log.info("%s sprites: %s species from %s", data.game.id, len(wanted), sprite_set)
@@ -529,8 +529,9 @@ class Build:
 
         return written + self._fetch_form_sprites(api, client, sprite_set, sharing, writer)
 
-    def _alola_names(
+    def _archives_names(
         self,
+        sprite_set: str,
         sharing: list[GameData],
         species: list[Species],
         writer: DatasetWriter,
@@ -543,8 +544,10 @@ class Build:
 
         The reach is the widest of the games sharing the sheet rather than the first one's. Sun
         stops at 802 and Ultra Sun goes to 807 and they draw from the same folder, so taking the
-        first would leave the five Ultra Sun added undrawn.
+        first would leave the five Ultra Sun added undrawn. The Let's Go halves agree about
+        every one of their 153, which is the same rule costing nothing.
         """
+        sheet = ARCHIVES_SHEETS[sprite_set]
         wanted: dict[str, Species] = {}
         for data in sharing:
             wanted.update({one.id: one for one in self._species_of(data, species)})
@@ -560,16 +563,21 @@ class Build:
         outstanding: list[tuple[str, tuple[str, ...]]] = []
 
         for one in wanted.values():
-            if (here := self._already_here(writer, f"{ALOLA_SET}/{one.id}.png")) is not None:
+            if (here := self._already_here(writer, f"{sprite_set}/{one.id}.png")) is not None:
                 written.append(here)
                 continue
 
             outstanding.append(
-                (one.id, species_names(one.national_dex_number, sexed=one.id in sexed))
+                (
+                    one.id,
+                    species_names(
+                        one.national_dex_number, sheet=sheet, sexed=one.id in sexed
+                    ),
+                )
             )
 
         for one in forms:
-            if (here := self._already_here(writer, f"{ALOLA_SET}/{one.id}.png")) is not None:
+            if (here := self._already_here(writer, f"{sprite_set}/{one.id}.png")) is not None:
                 written.append(here)
                 continue
 
@@ -577,25 +585,26 @@ class Build:
             if number is None:
                 continue
 
-            if names := form_names(number, form_id=one.id, form_name=one.name):
+            if names := form_names(number, form_id=one.id, form_name=one.name, sheet=sheet):
                 outstanding.append((one.id, names))
 
         return written, outstanding
 
-    def _fetch_alola_set(
+    def _fetch_archives_set(
         self,
         sprite_set: str,
         sharing: list[GameData],
         species: list[Species],
         writer: DatasetWriter,
     ) -> list[Path]:
-        """The one sheet in this dataset that PokeAPI does not have.
+        """The two sheets in this dataset that PokeAPI does not usably have.
 
-        Generation 7 has no folder in the sprite repository, so these pictures come off the
-        Bulbagarden Archives instead - a different host, a different naming scheme and five
-        seconds between requests rather than none. :mod:`gen7sprites` holds the naming; what is
-        here is the same shape every other set is fetched in, so the dataset cannot tell the
-        difference afterwards.
+        Generation 7 has no battle sprites in the sprite repository - and for Let's Go what it
+        does have is animated GIFs a megabyte and a half apiece - so both of that generation's
+        folders come off the Bulbagarden Archives instead: a different host, a different naming
+        scheme and five seconds between requests rather than none. :mod:`gen7sprites` holds the
+        naming; what is here is the same shape every other set is fetched in, so the dataset
+        cannot tell the difference afterwards.
 
         Two things differ from :meth:`_fetch_sprite_set`. The reach is the widest of the games
         sharing the sheet rather than the first one's, because Sun stops at 802 and Ultra Sun
@@ -603,7 +612,7 @@ class Build:
         unless something is missing: at five seconds a request, a warm dataset must cost nothing
         or nobody will build this.
         """
-        written, outstanding = self._alola_names(sharing, species, writer)
+        written, outstanding = self._archives_names(sprite_set, sharing, species, writer)
 
         if not outstanding:
             log.info("%s: all %s pictures are already in the dataset", sprite_set, len(written))

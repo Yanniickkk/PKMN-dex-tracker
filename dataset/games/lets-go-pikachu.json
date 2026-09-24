@@ -8,7 +8,8 @@
     "release": "cartridge",
     "released": "2018-11-16",
     "dexSource": "gameDex",
-    "pairPartner": "lets-go-eevee"
+    "pairPartner": "lets-go-eevee",
+    "spriteSet": "generation-vii/lets-go"
   },
   "dexEntries": [
     {
@@ -170,14 +171,16 @@
       "target": {
         "species": "ekans"
       },
-      "number": 23
+      "number": 23,
+      "unobtainableReason": "Let's Go, Eevee! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-pikachu",
       "target": {
         "species": "arbok"
       },
-      "number": 24
+      "number": 24,
+      "unobtainableReason": "Let's Go, Eevee! only; trade one in over the cable between the halves, which is the only route either of these games has. The Year of the Snake Shiny Arbok of January 2025 handed one out, and it was for the mainland Chinese cartridges rather than these: one of those Pokemon reaches an international copy only by a local trade with somebody who has that release"
     },
     {
       "game": "lets-go-pikachu",
@@ -268,14 +271,16 @@
       "target": {
         "species": "vulpix"
       },
-      "number": 37
+      "number": 37,
+      "unobtainableReason": "Let's Go, Eevee! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-pikachu",
       "target": {
         "species": "ninetales"
       },
-      "number": 38
+      "number": 38,
+      "unobtainableReason": "Let's Go, Eevee! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-pikachu",
@@ -373,7 +378,8 @@
       "target": {
         "species": "meowth"
       },
-      "number": 52
+      "number": 52,
+      "unobtainableReason": "Let's Go, Eevee! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-pikachu",
@@ -492,21 +498,24 @@
       "target": {
         "species": "bellsprout"
       },
-      "number": 69
+      "number": 69,
+      "unobtainableReason": "Let's Go, Eevee! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-pikachu",
       "target": {
         "species": "weepinbell"
       },
-      "number": 70
+      "number": 70,
+      "unobtainableReason": "Let's Go, Eevee! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-pikachu",
       "target": {
         "species": "victreebel"
       },
-      "number": 71
+      "number": 71,
+      "unobtainableReason": "Let's Go, Eevee! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-pikachu",
@@ -772,14 +781,16 @@
       "target": {
         "species": "koffing"
       },
-      "number": 109
+      "number": 109,
+      "unobtainableReason": "Let's Go, Eevee! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-pikachu",
       "target": {
         "species": "weezing"
       },
-      "number": 110
+      "number": 110,
+      "unobtainableReason": "Let's Go, Eevee! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-pikachu",
@@ -898,7 +909,8 @@
       "target": {
         "species": "pinsir"
       },
-      "number": 127
+      "number": 127,
+      "unobtainableReason": "Let's Go, Eevee! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-pikachu",
@@ -1066,21 +1078,24 @@
       "target": {
         "species": "mew"
       },
-      "number": 151
+      "number": 151,
+      "unobtainableReason": "Nothing in Kanto produces one: the only Mew here is the Mystery Gift redeemed with the serial code inside a Poke Ball Plus, one per accessory ever made, open since the day the games went on sale and never closed - and step 7 found it is the only Mystery Gift these cartridges have ever been sent"
     },
     {
       "game": "lets-go-pikachu",
       "target": {
         "species": "meltan"
       },
-      "number": 152
+      "number": 152,
+      "unobtainableReason": "Only through the GO Park: Pokemon GO sends into these two one way and into nothing else, and GO is not a game in this dataset - it has no Pokedex to fill and nothing in it is caught in the sense this tracker means. Doable today rather than closed, and it closes its own circle: the Mystery Box that makes Meltan appear in GO is unlocked by sending something to the GO Park in the first place. The Chinese Release Commemoration Meltan of October 2024 handed one out, and it was for the mainland Chinese cartridges rather than these: one of those Pokemon reaches an international copy only by a local trade with somebody who has that release"
     },
     {
       "game": "lets-go-pikachu",
       "target": {
         "species": "melmetal"
       },
-      "number": 153
+      "number": 153,
+      "unobtainableReason": "Only through the GO Park, and it arrives already evolved: 400 Meltan Candy makes one in Pokemon GO, where the Meltan has to be caught anyway, and nothing in Kanto can evolve the Meltan that comes out of the park. Doable today rather than closed - the park takes Kanto's 151, their Alolan forms, and these two. The Pokemon Day Melmetal of February 2025 handed one out, and it was for the mainland Chinese cartridges rather than these: one of those Pokemon reaches an international copy only by a local trade with somebody who has that release"
     }
   ],
   "acquisitionMethods": [
@@ -14146,6 +14161,1504 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/dragonite/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "bulbasaur"
+      },
+      "giftKind": "npcGift",
+      "location": "Cerulean City",
+      "npc": "A woman in Cerulean City",
+      "level": 12,
+      "requirement": "After 30 or more Pokemon have been caught",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/bulbasaur/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "charmander"
+      },
+      "giftKind": "npcGift",
+      "location": "Route 24",
+      "npc": "A man north of Route 24",
+      "level": 14,
+      "requirement": "After 50 or more Pokemon have been caught",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/charmander/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "squirtle"
+      },
+      "giftKind": "npcGift",
+      "location": "Vermilion City",
+      "npc": "Officer Jenny in Vermilion City",
+      "level": 16,
+      "requirement": "After 60 or more Pokemon have been caught",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/squirtle/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "pikachu",
+        "form": "pikachu-starter"
+      },
+      "giftKind": "starter",
+      "location": "Pallet Town",
+      "npc": "Professor Oak",
+      "level": 5,
+      "requirement": "The partner, which cannot be traded away, put into HOME or evolved",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/pikachu/encounters",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "persian"
+      },
+      "giftKind": "npcGift",
+      "location": "Vermilion City",
+      "npc": "A Black Belt outside the Pokemon Fan Club",
+      "level": 16,
+      "requirement": "Catch five Growlithe and show them to him",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/persian/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "electrode"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Kanto Power Plant",
+      "level": 42,
+      "requirement": "One of the four fake item balls in the Power Plant, and five minutes to beat what comes out of it",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/electrode/encounters",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "hitmonlee"
+      },
+      "giftKind": "npcGift",
+      "location": "Saffron City, Fighting Dojo",
+      "npc": "Koichi, the Fighting Dojo master",
+      "level": 30,
+      "requirement": "Beat him, then pick one of the two; the other stays behind",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/hitmonlee/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "hitmonchan"
+      },
+      "giftKind": "npcGift",
+      "location": "Saffron City, Fighting Dojo",
+      "npc": "Koichi, the Fighting Dojo master",
+      "level": 30,
+      "requirement": "Beat him, then pick one of the two; the other stays behind",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/hitmonchan/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "magikarp"
+      },
+      "giftKind": "npcGift",
+      "location": "Route 4",
+      "npc": "The Magikarp salesman",
+      "level": 5,
+      "requirement": "Bought for 500 Pokedollars",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "porygon"
+      },
+      "giftKind": "npcGift",
+      "location": "Saffron City, Silph Co",
+      "npc": "A Silph Co. scientist",
+      "level": 34,
+      "requirement": "After Team Rocket is driven out of the building",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/porygon/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "omanyte"
+      },
+      "giftKind": "fossil",
+      "location": "Cinnabar Island, Cinnabar Lab",
+      "npc": "The Cinnabar Lab scientist",
+      "level": 44,
+      "requirement": "Helix Fossil, offered by Super Nerd Miguel at the end of Mt. Moon - and the one turned down there is hidden in Cerulean Cave later, which no Kanto before this one allowed",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/omanyte/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "kabuto"
+      },
+      "giftKind": "fossil",
+      "location": "Cinnabar Island, Cinnabar Lab",
+      "npc": "The Cinnabar Lab scientist",
+      "level": 44,
+      "requirement": "Dome Fossil, offered by Super Nerd Miguel at the end of Mt. Moon - and the one turned down there is hidden in Cerulean Cave later, which no Kanto before this one allowed",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/kabuto/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "aerodactyl"
+      },
+      "giftKind": "fossil",
+      "location": "Cinnabar Island, Cinnabar Lab",
+      "npc": "The Cinnabar Lab scientist",
+      "level": 44,
+      "requirement": "Old Amber, from the back of the Pewter Museum of Science, which takes Chop Down to reach",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/aerodactyl/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "snorlax"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Route 12",
+      "level": 34,
+      "requirement": "Poke Flute to wake the one asleep across the road, and five minutes to beat it; this one starts with its Attack raised",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/snorlax/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "snorlax"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Route 16",
+      "level": 34,
+      "requirement": "Poke Flute to wake the one asleep across the road, and five minutes to beat it; this one starts with its Defense raised",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/snorlax/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "articuno"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Seafoam Islands, B4F",
+      "level": 50,
+      "requirement": "Five minutes to beat it, with every stat raised, before it can be caught; once one is caught the same bird starts turning up over Kanto as a rare spawn",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/articuno/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "zapdos"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Kanto Power Plant",
+      "level": 50,
+      "requirement": "Five minutes to beat it, with every stat raised, before it can be caught; once one is caught the same bird starts turning up over Kanto as a rare spawn",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/zapdos/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "moltres"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Victory Road, 2F",
+      "level": 50,
+      "requirement": "Five minutes to beat it, with every stat raised, before it can be caught; once one is caught the same bird starts turning up over Kanto as a rare spawn",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/moltres/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "mewtwo"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Cerulean Cave, B1F",
+      "level": 70,
+      "requirement": "Cerulean Cave, which opens after the Hall of Fame, and five minutes to beat it with every stat raised before it can be caught",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/mewtwo/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "lapras"
+      },
+      "giftKind": "npcGift",
+      "location": "Saffron City, Silph Co",
+      "npc": "A Silph Co. employee",
+      "level": 34,
+      "requirement": "While Team Rocket still holds the building",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_event_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "rattata",
+        "form": "rattata-alola"
+      },
+      "location": "Cerulean City, Pokemon Center",
+      "npc": "Tatianna",
+      "wants": {
+        "species": "rattata"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "geodude",
+        "form": "geodude-alola"
+      },
+      "location": "Vermilion City, Pokemon Center",
+      "npc": "Higeo",
+      "wants": {
+        "species": "geodude"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "diglett",
+        "form": "diglett-alola"
+      },
+      "location": "Lavender Town, Pokemon Center",
+      "npc": "Diggette",
+      "wants": {
+        "species": "diglett"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "raichu",
+        "form": "raichu-alola"
+      },
+      "location": "Saffron City, Pokemon Center",
+      "npc": "Psytrice",
+      "wants": {
+        "species": "raichu"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "marowak",
+        "form": "marowak-alola"
+      },
+      "location": "Fuchsia City, Pokemon Center",
+      "npc": "Genmar",
+      "wants": {
+        "species": "marowak"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "exeggutor",
+        "form": "exeggutor-alola"
+      },
+      "location": "Indigo Plateau, Pokemon League",
+      "npc": "Exemann",
+      "wants": {
+        "species": "exeggutor"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "sandshrew",
+        "form": "sandshrew-alola"
+      },
+      "location": "Celadon City, Pokemon Center",
+      "npc": "Nicholice",
+      "wants": {
+        "species": "sandshrew"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "grimer",
+        "form": "grimer-alola"
+      },
+      "location": "Cinnabar Island, Pokemon Center",
+      "npc": "Darko",
+      "wants": {
+        "species": "grimer"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "kadabra"
+      },
+      "rule": "abra-to-kadabra",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/27",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "weepinbell"
+      },
+      "rule": "bellsprout-to-weepinbell",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/29",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "ivysaur"
+      },
+      "rule": "bulbasaur-to-ivysaur",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/1",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "metapod"
+      },
+      "rule": "caterpie-to-metapod",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/4",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "charmeleon"
+      },
+      "rule": "charmander-to-charmeleon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/2",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "charizard"
+      },
+      "rule": "charmeleon-to-charizard",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/2",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "clefable"
+      },
+      "rule": "clefairy-to-clefable",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/14",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "marowak"
+      },
+      "rule": "cubone-to-marowak",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/46",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dugtrio"
+      },
+      "rule": "diglett-to-dugtrio",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/21",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dugtrio",
+        "form": "dugtrio-alola"
+      },
+      "rule": "diglett-to-dugtrio-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/21",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dodrio"
+      },
+      "rule": "doduo-to-dodrio",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/36",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dragonite"
+      },
+      "rule": "dragonair-to-dragonite",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/76",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dragonair"
+      },
+      "rule": "dratini-to-dragonair",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/76",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "hypno"
+      },
+      "rule": "drowzee-to-hypno",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/42",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "flareon"
+      },
+      "rule": "eevee-to-flareon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/67",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "jolteon"
+      },
+      "rule": "eevee-to-jolteon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/67",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "vaporeon"
+      },
+      "rule": "eevee-to-vaporeon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/67",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "arbok"
+      },
+      "rule": "ekans-to-arbok",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/9",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "exeggutor"
+      },
+      "rule": "exeggcute-to-exeggutor",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/45",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "haunter"
+      },
+      "rule": "gastly-to-haunter",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/40",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "graveler"
+      },
+      "rule": "geodude-to-graveler",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/31",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "graveler",
+        "form": "graveler-alola"
+      },
+      "rule": "geodude-to-graveler-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/31",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "vileplume"
+      },
+      "rule": "gloom-to-vileplume",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/18",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "seaking"
+      },
+      "rule": "goldeen-to-seaking",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/55",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "golem"
+      },
+      "rule": "graveler-to-golem",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/31",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "golem",
+        "form": "golem-alola"
+      },
+      "rule": "graveler-to-golem-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/31",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "muk"
+      },
+      "rule": "grimer-to-muk",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/38",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "muk",
+        "form": "muk-alola"
+      },
+      "rule": "grimer-to-muk-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/38",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "arcanine"
+      },
+      "rule": "growlithe-to-arcanine-red-blue",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/25",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "gengar"
+      },
+      "rule": "haunter-to-gengar",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/40",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "seadra"
+      },
+      "rule": "horsea-to-seadra",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/54",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "venusaur"
+      },
+      "rule": "ivysaur-to-venusaur",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/1",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "wigglytuff"
+      },
+      "rule": "jigglypuff-to-wigglytuff",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/16",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "kabutops"
+      },
+      "rule": "kabuto-to-kabutops",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/70",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "alakazam"
+      },
+      "rule": "kadabra-to-alakazam",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/27",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "beedrill"
+      },
+      "rule": "kakuna-to-beedrill",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/5",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "weezing"
+      },
+      "rule": "koffing-to-weezing-red-blue",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/49",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "kingler"
+      },
+      "rule": "krabby-to-kingler",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/43",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "machamp"
+      },
+      "rule": "machoke-to-machamp",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/28",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "machoke"
+      },
+      "rule": "machop-to-machoke",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/28",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "gyarados"
+      },
+      "rule": "magikarp-to-gyarados",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/64",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "magneton"
+      },
+      "rule": "magnemite-to-magneton",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/34",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "primeape"
+      },
+      "rule": "mankey-to-primeape",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/24",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "persian"
+      },
+      "rule": "meowth-to-persian",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/22",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "butterfree"
+      },
+      "rule": "metapod-to-butterfree",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/4",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "nidorina"
+      },
+      "rule": "nidoran-f-to-nidorina",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/12",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "nidorino"
+      },
+      "rule": "nidoran-m-to-nidorino",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/13",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "nidoqueen"
+      },
+      "rule": "nidorina-to-nidoqueen",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/12",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "nidoking"
+      },
+      "rule": "nidorino-to-nidoking",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/13",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "gloom"
+      },
+      "rule": "oddish-to-gloom",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/18",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "omastar"
+      },
+      "rule": "omanyte-to-omastar",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/69",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "parasect"
+      },
+      "rule": "paras-to-parasect",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/19",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "pidgeot"
+      },
+      "rule": "pidgeotto-to-pidgeot",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/6",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "pidgeotto"
+      },
+      "rule": "pidgey-to-pidgeotto",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/6",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "raichu"
+      },
+      "rule": "pikachu-to-raichu",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/10",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "poliwhirl"
+      },
+      "rule": "poliwag-to-poliwhirl",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/26",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "poliwrath"
+      },
+      "rule": "poliwhirl-to-poliwrath",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/26",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "rapidash"
+      },
+      "rule": "ponyta-to-rapidash-red-blue",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/32",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "golduck"
+      },
+      "rule": "psyduck-to-golduck",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/23",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "raticate"
+      },
+      "rule": "rattata-to-raticate",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/7",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "raticate",
+        "form": "raticate-alola"
+      },
+      "rule": "rattata-to-raticate-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/7",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "rhydon"
+      },
+      "rule": "rhyhorn-to-rhydon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/50",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "sandslash"
+      },
+      "rule": "sandshrew-to-sandslash",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/11",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "sandslash",
+        "form": "sandslash-alola"
+      },
+      "rule": "sandshrew-to-sandslash-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/11",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "dewgong"
+      },
+      "rule": "seel-to-dewgong",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/37",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "cloyster"
+      },
+      "rule": "shellder-to-cloyster",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/39",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "slowbro"
+      },
+      "rule": "slowpoke-to-slowbro-red-blue",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/33",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "fearow"
+      },
+      "rule": "spearow-to-fearow",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/8",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "wartortle"
+      },
+      "rule": "squirtle-to-wartortle",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/3",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "starmie"
+      },
+      "rule": "staryu-to-starmie",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/56",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "tentacruel"
+      },
+      "rule": "tentacool-to-tentacruel",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/30",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "venomoth"
+      },
+      "rule": "venonat-to-venomoth",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/20",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "electrode"
+      },
+      "rule": "voltorb-to-electrode-red-blue",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/44",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "ninetales"
+      },
+      "rule": "vulpix-to-ninetales",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/15",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "blastoise"
+      },
+      "rule": "wartortle-to-blastoise",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/3",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "kakuna"
+      },
+      "rule": "weedle-to-kakuna",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/5",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "victreebel"
+      },
+      "rule": "weepinbell-to-victreebel",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/29",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "golbat"
+      },
+      "rule": "zubat-to-golbat",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/17",
         "retrievedOn": "2026-09-22"
       }
     }

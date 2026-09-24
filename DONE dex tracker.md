@@ -3776,6 +3776,380 @@ _Nothing yet._
     cards and 24 in all, so both nodes stay out of it although the dataset now holds 26 entries.
     Settings restored byte for byte and the user's data file untouched, same as before.
 
+- [x] **Let's Go, Pikachu!** (`lets-go-pikachu`, gen 7, pair partner: Let's Go, Eevee!) - 2026-09-24
+  - [x] 1 Entity + edges - 2026-09-24
+  - [x] 2 Dex list - 2026-09-24
+  - [x] 3 Wild - 2026-09-24
+  - [x] 4 Gifts & statics - 2026-09-24
+  - [x] 5 Trades & evolutions - 2026-09-24
+  - [x] 6 Sprites - 2026-09-24
+  - [x] 7 Events - 2026-09-24
+  - [x] 8 Alternate forms - 2026-09-24
+  - [x] 9 Validate + smoke test - 2026-09-24
+- [x] **Let's Go, Eevee!** (`lets-go-eevee`, gen 7, pair partner: Let's Go, Pikachu!) - 2026-09-24
+  - [x] 1 Entity + edges - 2026-09-24
+  - [x] 2 Dex list - 2026-09-24
+  - [x] 3 Wild - 2026-09-24
+  - [x] 4 Gifts & statics - 2026-09-24
+  - [x] 5 Trades & evolutions - 2026-09-24
+  - [x] 6 Sprites - 2026-09-24
+  - [x] 7 Events - 2026-09-24
+  - [x] 8 Alternate forms - 2026-09-24
+  - [x] 9 Validate + smoke test - 2026-09-24
+  - Step 9 for both: **validation green on all 11 rules, and a collection made through the
+    wizard on the published exe.** 139 full, 0 partial, 0 missing and 14 explained per half; the
+    two warnings left in the report are Ultra Sun's and Ultra Moon's Own Tempo Rockruff, which
+    belong to the four cartridges rather than to these two. 593 pipeline tests and 257 app tests.
+  - **"Kanto on the Switch": Let's Go, Pikachu! as main game, and the linked-games step offered
+    exactly one card - Let's Go, Eevee!, "via trading".** That is the graph answering for itself:
+    no Bank, no Alola cartridge, nothing that reaches HOME can send into these two, and step 1's
+    three routes are visible to a player as one choice.
+  - The grid draws **0 of 191** with regional, functional and gender forms switched on: 153
+    species, 14 Alolan forms, 23 female halves and the partner, every tile off
+    `generation-vii/lets-go` and not one of them falling back to another generation's picture.
+    The tiles read `#019 Rattata`, `#019 Rattata (Alola)`, `#019 Rattata (Female)`, and `#025
+    Pikachu (Partner)` sits beside the ordinary one.
+  - Detail popups: the Alolan Rattata shows **Dark / Normal** - the form's own typing - and two
+    in-game trades, Tatianna in the Cerulean City Pokemon Center in each half, the Eevee one
+    followed by "Then to Let's Go, Pikachu!: trading". Meltan shows no ways at all and the GO
+    Park reason underneath, ending in the Chinese distribution step 7 found.
+  - The write path was exercised: marking the Alolan Rattata caught greened the tile and moved
+    the counter to **1 of 191**, and the record landed in the data file with today's date. The
+    user's settings were copied out first and restored byte for byte - same sha256 - and their
+    own data file was never opened: the test pointed the app at a scratch file, which is where
+    the collection and the record are.
+  - Run twice over, once per half, through the app's own wizard, dex builder, sprite chain and
+    store rather than only through the window: both halves build the same 191 lines and offer
+    each other and nothing else.
+  - Step 8 for both: **38 forms each, written out by hand, and the eight traders step 5 had to
+    leave.** 23 gender forms, 14 Alolan and one partner per half; 42 more pictures off the same
+    `7p` sheet, which takes that folder to 195 files and 13 MB.
+  - **The fourteen Alolan forms each half has are the eight traders' doing**, and the four that
+    differ are the two traders who ask for a different Pokemon per cartridge - the Camper in
+    Celadon City and the Punk Guy on Cinnabar Island. What those eight hand over, and whatever
+    it evolves into, is the whole of what either half can produce. Everything else Alolan comes
+    through the GO Park or from another player, and a form has no dex entry to carry a reason
+    on, so it is left out: a form the table leaves out is a tile that is not drawn, and a form
+    it invents is a tile nobody can fill.
+  - **Mega Evolution is not step 8's problem, and that was already decided.** These games have
+    it, and in their own way: thirteen of the 153 Mega Evolve into fifteen Megas, and because
+    there are no held items here the player only needs the stone in the bag. No Mega is in this
+    dataset at all - `forms.py` refuses `is_mega` and `is_battle_only` along with it, because a
+    Mega reverts when the battle ends and a living dex is about what a box can hold. The same
+    sentence `gen7sprites.py` writes about Ultra Necrozma.
+  - **Two ways that start from different forms are two ways**, which is the reader's rule that
+    was missing and the sharpest thing in the step. Generation 7 added a second Rattata rather
+    than changing the first, and the source says so: the newer detail *requires*
+    `rattata-alola` and produces `raticate-alola`, where the older requires nothing. Reading
+    every Alolan detail as a replacement left the Let's Go pair unable to evolve a Kantonian
+    Graveler into a Kantonian Golem - a hole that only appeared once this pair had the Alolan
+    forms to be confused by. Fixed in `evolution_encounters`, which now groups ways by what goes
+    in as well as what comes out, and **the same fix gave Sun, Moon, Ultra Sun and Ultra Moon
+    seven records each they never had**: a Kantonian Rattata sent in through Bank has always
+    become a Kantonian Raticate in Alola, and the dataset said it became an Alolan one.
+  - **And three evolutions that depend on where you are standing**, named by hand because
+    nothing in the data can say it: a Pikachu, a Cubone and an Exeggcute are one Pokemon each,
+    their details require no Alolan form, and what the Thunder Stone, the level and the Leaf
+    Stone make of them is decided by the region. In Kanto that is the Kantonian Raichu, Marowak
+    and Exeggutor; the Alolan three are Psytrice's, Genmar's and Exemann's to trade. Bulbapedia
+    agrees entry for entry - all three read "Trade" in their Alolan row for these games.
+  - **The partner is a form now**, which it always was: PokeAPI calls them `pikachu-starter` and
+    `eevee-starter`, stamps both with this pair's version group, and nothing in the dataset is
+    newer - so the ordinary rule gave them no games at all and dropped them. The starter gift
+    points at the form rather than at the species, because the wild Pikachu of Viridian Forest
+    and the wild Eevee of Route 17 are ordinary ones and this is not. The table measures it as
+    *functional* rather than cosmetic without being told to: a partner has higher base stats.
+  - Eevee is drawn once on the Let's Go sheet and once on Alola's, so its female form falls back
+    to the shared set in both - the same disagreement with PokeAPI that the Generation 7 scrape
+    turned up, arriving a second time. The other twenty-two are drawn twice.
+  - Step 7 for both: **three distributions in seven years, and not one of them was for these
+    cartridges.** Every unobtainable entry in either half was checked against its own *In
+    events* table - 22 version exclusives, Mew, Meltan and Melmetal - and exactly four rows came
+    back marked `PE`.
+  - **The international Let's Go games have had one Mystery Gift in their life, and it is not a
+    distribution.** The Poke Ball Plus Mew: a serial code in an accessory, redeemable once per
+    accessory ever manufactured, open since the day the games went on sale and never closed.
+    Every other pair in this dataset has a list of events behind its unobtainable entries; these
+    two have none at all. Step 7 usually turns "nothing can produce this" into "nothing you can
+    play can, and here is what once did" - here it turned it into "and nothing ever did".
+  - **The three that do exist belong to the mainland Chinese release**, which came out in
+    September 2024 on the Tencent Switch, six years after these cartridges: the Chinese Release
+    Commemoration Meltan, the Pokemon Day Melmetal, and - the odd one - a **Shiny Arbok for the
+    Year of the Snake**, level 50 with an eight in every IV, handed out over a fortnight in
+    January 2025. All three were passwords rather than serial codes, all three are once per save
+    file, and all three are refused unless the save's origin language is Simplified Chinese.
+  - **The Arbok is the only entry in either half whose reason is not its line's.** A reason
+    normally spreads down an evolution line from the base that carries it, which is how Ekans
+    answers for Arbok, Weepinbell and Victreebel. Here the distribution is for the Arbok and
+    there has never been one for the Ekans, so the Arbok is written out and the spread leaves it
+    alone - the first time in the dataset that step 7 has found an event for something other
+    than the base of its line.
+  - **And a correction to step 1, made by the same page.** `lets_go.py` said the mainland
+    Chinese release "trades only with itself". It does not: Bulbapedia notes that an event
+    Pokemon from those games shows its real met location once it is traded locally to an
+    international copy, which describes a trade between the two releases in passing. That is
+    what keeps these three reasons from being useless - there is a way across, and it runs
+    through somebody else's Switch.
+  - One more thing that release is worth: the Poke Ball Plus Mew stopped being redeemable there
+    on 15 May 2026, when Nintendo Switch online services in mainland China shut down. On the
+    cartridges this dataset holds it is still open, which is the difference the reason turns on.
+  - Step 6 for both: **153 pictures, 9.1 MB, `generation-vii/lets-go`, and not one miss.** Off
+    the Bulbagarden Archives' `7p` sheet in fourteen minutes, cropped at build time like Alola's.
+    The app needed no change and the second half's build fetched nothing: the two share the
+    folder, so Eevee's came free.
+  - **PokeAPI does have a Let's Go folder, and it is the reason to look before assuming.** It
+    holds animated GIFs of the models - 384 pixels square, thirty to seventy-five frames, three
+    quarters of a megabyte to two megabytes each - and they are named `.gif` where every other
+    set in that repository is `.png`, so the ordinary fetcher would have taken 153 404s and
+    called the generation undrawn. A quarter of a gigabyte for a picture shown at 56 pixels.
+    Taking frame 0 of each would work and would still be a pose out of an idle animation rather
+    than the front-facing render the wiki keeps, so the Archives won the same argument twice.
+  - **The third sheet stopped being a warning and became a folder.** `gen7sprites.py` has
+    carried `7p` since the Alola scrape - written down only so nobody would mistake it for `7u`
+    - and the whole of step 6 was letting a sheet be named instead of worked out from the
+    number. One namer, two folders, and `ARCHIVES_SHEETS` says which sheet fills which: Alola's
+    four cartridges split across two sheets at 802, and these two are one sheet from Bulbasaur
+    to Melmetal - which matters, because Melmetal is 809 and the number rule would have asked
+    Ultra Sun's sheet for it.
+  - **Fourteen species answered only to `_m`** - Venusaur, Butterfree, Rattata, Raticate,
+    Raichu, Zubat, Golbat, Gloom, Vileplume, Kadabra, Alakazam, Doduo, Dodrio and Hypno, the
+    ones the sheet draws twice. The form table for these two deliberately says they have no
+    forms until step 8, so nothing could say in advance which spelling to try; offering both
+    turned that into fourteen wasted requests rather than fourteen holes. That is the design
+    from the Alola scrape paying for itself in the case it was written for.
+  - **These are the largest pictures in the dataset and they are still a tenth of what arrived.**
+    The 800 pixel frame is nearly all air: cropped, a Meltan is 148 by 192 and a Moltres - the
+    biggest of the 153 - is 730 across. Capping them at 256 pixels was measured and dropped: it
+    saves a fifth of the folder and resamples every picture to do it, and PNG size here is
+    detail rather than dimensions.
+  - No change in the app, and the reason is a line written for Generation 6: the grid asks
+    whether the main game's set starts with `generation-vi` to decide between nearest-neighbour
+    and smooth scaling, and `generation-vii` starts with it too. A render of a model gets
+    smoothed, which is what it wants.
+  - Found while searching and left for step 8: the partner Pikachu is `Spr_7p_025P`, and `P` on
+    the `7u` sheet is the Partner Cap Pikachu. The same code, two sheets, two different Pokemon.
+  - Step 5 for both: **72 evolutions each, six version-exclusive lines apiece, and not one
+    trade.** Coverage is **139 full, 0 partial, 0 missing, 14 explained** per half: every entry
+    in this Pokedex is now either fillable here or carries a reason, which is the state step 9
+    asks for.
+  - **The newest way to evolve something is the newest way *this game* has**, and finding that
+    out is most of the step. `evolution_encounters` took the newest version group a game is old
+    enough for and stopped. That is right for Alola - a Thunder Stone there makes an Alolan
+    Raichu and no longer a Kantonian one - and these two came out a year *after* Alola and are
+    Kanto. So the pair was handed Alola's rule, the rule names a form their table has not got,
+    the form reader refused it, and the answer was nothing at all: **no Raichu, Ninetales,
+    Persian, Sandslash, Dugtrio, Raticate, Golem, Muk, Marowak or Exeggutor**, which is exactly
+    the list of species Alola drew a second time. The reader now steps down an order whenever a
+    whole one is refused for wanting a form the game lacks. Nothing else in the dataset moves:
+    every game old enough to be refused a form's rule is already too old to be offered it, and
+    fourteen games rebuilt to check said so.
+  - **A game whose boxes hold a list can evolve something into what it cannot hold.** Every game
+    before this pair holds everything up to its own National Dex number, so whatever a species
+    in the living dex evolves into was in the living dex too. These two hold 153 and nothing
+    else, and their Eevee was quietly recorded as producing an Espeon - along with nineteen more
+    that no box here can take, Crobat and Blissey and Magnezone among them. Twenty records that
+    the rest of the dataset would have read as "obtainable somewhere".
+  - **And one the chain says and the game cannot do**: Meltan becomes Melmetal on 400 Meltan
+    Candy, and that happens in Pokemon GO. Named and refused in the game's own file, the way a
+    gift the source files under the wrong version is. Nothing was broken by it, which is the
+    part worth keeping: Meltan is unobtainable here, so the Melmetal that evolved from it was
+    unreachable and `no-evolution-dead-ends` had nothing to say. A record can be wrong without
+    failing anything.
+  - **Six lines each way, which is the smallest split a Kanto pair has had** - Red and Blue
+    divide eleven. Sandshrew, Oddish, Mankey, Growlithe, Grimer and Scyther are Pikachu's;
+    Ekans, Vulpix, Meowth, Bellsprout, Koffing and Pinsir are Eevee's. Eleven species apiece
+    once the evolutions are counted, and only the six bases are written down: the pipeline
+    already spreads a reason down a line.
+  - The reason is this pair's own rather than `exclusives.only_on`, which would have said "only
+    in Generation 7" twice wrongly: Ekans is in Alola as well, and no Alola cartridge can reach
+    these two anyway. **The cable between the halves is the whole of what a player can be told
+    to do** - which is the same sentence `lets_go.py` has been making about the graph since step
+    1, arriving now on 132 dex entries.
+  - **The step-1 guess about what "no mutually exclusive Pokemon" meant was wrong, and the real
+    answer is better.** That note said it was because every version exclusive can be had from an
+    NPC in the other half. It cannot - the traders hand over Alolan forms and nothing else.
+    Bulbapedia's mutually-exclusive list simply has no Let's Go section, and what earns that is
+    two things these games undid: **both Hitmons walk around on Victory Road as rare spawns**
+    (step 3) and **both fossils are hidden in Cerulean Cave** (step 4). Mutually exclusive is
+    about one save file, not about two cartridges. Version exclusives are alive and well here;
+    the choices are what went.
+  - **Not one trade, and that is step 5's answer rather than a table not gathered yet.** There
+    are eight traders - seven Pokemon Centers and the Pokemon League lobby - and every one of
+    them hands over an Alolan form; Bulbapedia calls them the only way to an Alolan form outside
+    the GO Park or another player. A record whose target is a form cannot be written before the
+    form table says which forms this game has, and `FORMS_NAMED_BY_THE_GAME` deliberately says
+    these two have none until step 8 writes it out. So the eight are listed in `lets_go.py` and
+    wait there. The cost is nothing a player can see: all eight targets are species this half
+    already fills another way, making these the first in-game trades in the dataset that add no
+    species to a living dex at all. They are also the first that can be repeated forever.
+  - Step 4 for both: **20 gifts and statics each, one table for the two of them, and three
+    entries neither half can produce.** Validation is green for the first time since this pair
+    was written, and coverage is **117 full, 33 partial, 0 missing, 3 explained** per half - the
+    33 are step 5's evolutions and trades.
+  - **Kanto's three starters are not starters here**, which is the sharpest thing in the table.
+    Bulbasaur, Charmander and Squirtle are not lined up in Oak's laboratory to be chosen
+    between: they are three separate presents from three strangers in three towns, and what
+    each one asks is how many species have been caught - 30, 50 and 60. All three can be had in
+    one save, so the choice Red made in 1996 is gone along with the grass. Every other Kanto in
+    this dataset marks them `STARTER` and says "pick one of the three; the other two take a
+    trade". The partner is the starter here, and it is the one Pokemon in either half that
+    leaves by no route at all.
+  - **One gift table for both halves, which no pair before them could have had.** The only two
+    rows that are not in both are the Persian and the Arcanine, and those are one errand
+    outside one building with a different animal at the end of it: catch five Growlithe in
+    Pikachu, five Meowth in Eevee. That is what "the first core games with no mutually exclusive
+    Pokemon" turns out to mean once it reaches the data, and the same answer came back for the
+    unobtainable table - three entries, shared, and not a version exclusive among them.
+  - **Four levels are the games' word against the source's, which is a first.** PokeAPI puts
+    the Persian and the Arcanine at 32, the Porygon at 36 and the fake-item-ball Electrode at
+    43; Bulbapedia's list of these games' event Pokemon and Serebii's gift page agree with each
+    other against it at 16, 16, 34 and 42. The Electrode says where those numbers likely came
+    from: 43 is what the Electrode in the same room of the same Power Plant was in Red and Blue,
+    and Bulbapedia's Power Plant page prints the two side by side. A game's own table has always
+    been able to correct the wording of a row; `GiftDetail.level` is new, and nothing else in
+    the dataset sets it.
+  - **The Lapras PokeAPI has no row for**, in either half: the Silph Co. employee has handed one
+    over in that room since Red, and PokeAPI's tables simply stop at this version. Written down
+    and cited like Crystal's Tyrogue. It closes no hole - step 3 found Lapras swimming off two
+    sea routes - and leaving it out would have said this Kanto stopped doing something it has
+    done for twenty-two years.
+  - **The first Kanto where the fossil turned down is not lost for good.** Red, Blue, Yellow,
+    FireRed and LeafGreen all keep the one left behind at the end of Mt. Moon; this pair hides
+    more of both, and more Old Amber, in Cerulean Cave as ordinary ground items. Both halves of
+    a choice that was permanent for twenty-two years now fill a living dex.
+  - **The GO Park is a reason rather than a record, which is the opposite of what step 1
+    guessed.** `lets_go.py` said the park would be "the same shape as an egg from an NPC"
+    because Pokemon GO is not a game in this dataset. It is not that shape: it is the Pokemon
+    Dream Radar's problem - a source that is not a game, sending one way into two cartridges and
+    nowhere else - and Black 2 and White 2 state that as a reason on the entry while the Phase 3
+    item below works out what shape such a thing should have. That item asks in as many words
+    for GO and the Radar to be decided together rather than one at a time, and a GO Park shaped
+    acquisition invented here would have decided it alone, for two species, in a schema the app
+    draws pictures from. So Meltan and Melmetal carry a reason that says exactly what to do, and
+    nothing in the dataset claims Kanto contains a Meltan.
+  - **And a third entry nothing here produces: Mew, which is behind hardware rather than behind
+    a date.** The only one in these games is the Mystery Gift redeemed with the serial code
+    inside a Poke Ball Plus - one per accessory ever manufactured, still sold, open since the
+    day the games went on sale. Not a distribution that ended, which is the distinction step 7
+    exists to draw, so step 7 looks at this wording again beside the rest of the events.
+  - No eggs, and that is one of the five things step 4 goes looking for answered with nothing:
+    these are the first core games since Gold and Silver with no breeding at all, so there is no
+    egg table to leave out and nothing in this Pokedex hatches.
+  - Step 3 for both: **666 wild slots each, 112 species, 35 places, and not one of them is
+    grass.** These two have no encounter table to walk into and no random battle at all: every
+    wild Pokemon is standing, swimming or flying where the player can see it, and an encounter
+    starts by touching that one. The whole vocabulary the twenty-eight games before them share
+    - tall grass, a rod, a Repel, a roll when the battle starts - is gone.
+  - So `EncounterMethod` gains three, and three rather than one because they are three places
+    to look: **`overworld`, `overworldWater` and `overworldFlying`**. The sky is not a rarer
+    kind of ground - a Charizard passes overhead and is gone, and it is the only place a wild
+    Charizard or Dragonite exists at all. Mapping these onto `walk` and `surf` would have said
+    a player pushes into grass and hopes, which is the one thing these games never ask.
+  - **Rarity is not a method, and here it could not be a number either.** The source keeps a
+    second table beside each of the three for what turns up far less often - Chansey on
+    seventeen routes, Lapras on two sea routes, Snorlax in Cerulean Cave - and every slot in
+    these games is listed at 100%, because what a player meets is decided when the overworld is
+    populated rather than when a battle starts. So the chance column cannot carry it and the
+    requirement does: 174 of the 666 say "a rare spawn". Kalos's flower patches got the same
+    call.
+  - **The only place in this dataset where catching a Legendary Pokemon puts it back in the
+    wild.** Each of the three birds has one static - the source puts Articuno on Seafoam
+    Islands B4F, Zapdos in the Power Plant and Moltres on Victory Road 2F, which is not where
+    FireRed kept them - and once that one is caught the same bird starts flying over twenty-four
+    routes as a rare spawn. That is how a player gets a second; every other game in the series
+    has exactly one. Three new condition wordings for it.
+  - **Not one slot in either game carries a time of day**, and that is right rather than
+    missing: Bulbapedia lists these as the first core games without a day-and-night cycle since
+    Diamond and Pearl re-introduced it. 111 of Sun's 708 slots carry one.
+  - The halves split 11 species each way in their grass - Oddish, Growlithe, Sandshrew, Scyther
+    and seven more against Bellsprout, Vulpix, Meowth, Pinsir and seven more - which is the
+    ordinary shape and is about to stop being it: step 5 has to check whether every one of them
+    is also handed over by an NPC in the other half, which is what "the first core games with no
+    mutually exclusive Pokemon" would mean.
+  - Fixed while here: a method's sentence and a condition's were joined with a bare "and", so
+    Kalos has been reading "Out of a bin and In a bin, on a Thursday" since it was built. They
+    go through the same joiner a list of conditions does now, which lowers the second one in.
+    Ten lines in X and ten in Y.
+  - Coverage is **112 full, 39 partial, 2 missing** per half, and validation is down to the two
+    errors that are the point: Meltan and Melmetal are in the dex at #152 and #153 and no game
+    in this dataset can produce either. That is step 4's GO Park to answer.
+  - One thing left open by the site rather than by the work: Bulbapedia started returning 403 to
+    this pipeline partway through the step, so the wording of the rare-spawn sentence and the
+    birds' was written from PokeAPI's own tables and the place names in them. Worth a second
+    look when the wiki lets us in again.
+  - Step 2 for both: **153 entries each, and the first 151 of them are Kanto's, unchanged.**
+    Bulbasaur #001 to Mew #151 in the order they have been in since 1996, with Meltan at #152
+    and Melmetal at #153. Platinum's situation rather than Johto's - every number these games
+    share with Red or FireRed means exactly what it always meant - and the opposite of what
+    Ultra Sun did to Sun, which parted company at #024.
+  - **The two at the end are the strangest entries in the dataset so far.** Meltan is the only
+    species a Generation 7 game introduced that is in no Alola dex, and it sits in a Pokedex
+    that is otherwise Generation 1 from end to end. Neither of the two can be caught in Kanto:
+    Meltan comes out of a Mystery Box in Pokemon GO and arrives through the GO Park, and
+    Melmetal is what 400 Meltan Candy makes of one - in GO, not here. Step 4 has to answer
+    what that means for these two lines.
+  - And the validator noticed before anybody asked it to: **2 of the 153 have no source
+    anywhere in the dataset**, which has not been true of any entry since Red was written. The
+    other 151 are all covered by other games, so the coverage reads 0 full, 151 partial, 2
+    missing per half - the 0 being step 3, which has not run.
+  - Validation is **2 errors on purpose**, one per half: `every-entry-has-a-method` reports that
+    a game with a dex and no encounters has not been worked on yet rather than that it has
+    gaps. That rule was written for exactly this state - see what it says about Red - and the
+    errors go away when step 3 does.
+  - No forms on any entry, which is an answer rather than a gap: the Pokedex here has 153 lines
+    and an Alolan Rattata does not get one of its own, exactly as in Sun and Moon. Which forms
+    these two actually hold is step 8's, and until then `FORMS_NAMED_BY_THE_GAME` keeps the
+    table quiet about them.
+  - Step 1 for both, built as a pair: **five routes, and that is every route these two have.**
+    The cable between the halves, and for each half a deposit into HOME and a withdrawal back
+    out. No Bank, no cartridge, not even the generation they belong to - Bulbapedia calls them
+    the first core games "to not be compatible with previous core series titles in any way
+    since Pokemon Ruby and Sapphire, and as such, the first to be unable to trade with other
+    core series games in their generation". The dataset is at 32 games and 130 routes, and
+    nothing is held back.
+  - `lets_go.py` is new and is the pair's module. Not `kanto.py`, which holds what is true of
+    the place across the generations that have visited it - the overlap is real and steps 2 and
+    3 will find it, and whatever turns out to be about Kanto moves there named `switch_`, the
+    way FireRed's is named `gba_`. And not a `switch.py` either: Sword and Shield are on the
+    same console and share none of this, so it would have to say "except in Let's Go" about
+    every line, which is the sentence a `gen7.py` would have had to say about Alola.
+  - **The withdrawal out of HOME is the first edge in this dataset that asks where a Pokemon
+    started.** `home.py` wrote this down when it was built, before either game existed: only a
+    Pokemon originally from Let's Go may be moved into Let's Go, and anything that reached HOME
+    from Bank or the GO Transporter was converted to Sword and Shield's format on the way in
+    and can never enter them. No filter could name that set - not a species, not a generation -
+    so `OriginRequirement` is new beside `SpeciesFilter` and `HistoryWindow`, in the pipeline
+    and in the app, with the pair as one origin: a Pokemon caught in Eevee may be withdrawn
+    into Pikachu.
+  - `TransferGraph` honours it, which is the half that matters. Without it, Red -> Bank -> HOME
+    -> Let's Go would have been a real route and every tile in a Let's Go grid would have said
+    "obtainable elsewhere, transfer it in". A route that begins at HOME is refused, because a
+    Pokemon in a HOME box started somewhere and nothing here records where - the same answer a
+    history window gives when it cannot see the whole route. Four tests.
+  - **And registering two games put 578 wrong lines into the form table.** `from_group_on` has
+    one rule - a form is in the games of the version group it arrived in and in every game
+    after them - and it has held for twenty-eight games because all of them hold everything up
+    to their own National Dex number. These two came out after Ultra Sun and hold 153 species,
+    so every Deerling season, every Totem Pokemon and a Therian Landorus were listed as theirs.
+    The rule is switched off for the pair, and step 8 will name their forms by hand: the table
+    now says they have none, which is also untrue - an Alolan Rattata out of the GO Park is the
+    point of the park - but it is the harmless direction, because a form left out is a tile
+    that is not drawn and a form invented is a tile nobody can fill.
+  - Two things found while reading that belong to later steps, written down so they are not
+    found twice. **These are the first core games with no mutually exclusive Pokemon**: every
+    version exclusive can also be had from an NPC in the other half, over and over, which is
+    step 4's and step 5's to confirm and may leave `only_on` empty for the first time. And
+    **there is no breeding at all** - the first core games since Gold and Silver without it -
+    so step 5 has no day care to ask about.
+  - The GO Park is deliberately not an edge. Pokemon GO sends Kanto's 151, their Alolan forms
+    and Meltan one way into twenty parks where the Safari Zone used to be, and it is the only
+    way anybody gets a Meltan; but GO is not a game this dataset holds, for the reasons
+    `home.py` already gives, so what arrives through the park is step 4's answer about *these*
+    games rather than a route between two entities - the same shape as an egg from an NPC.
+  - The partner Pikachu and Eevee cannot be traded or put into HOME, which no starter before
+    them could say. It is a fact about a form, so it waits for step 8 and is written down in
+    both places that would otherwise have to rediscover it.
+
 ### Virtual Console releases
 
 _Nothing yet._

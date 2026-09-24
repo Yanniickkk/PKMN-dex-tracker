@@ -8,7 +8,8 @@
     "release": "cartridge",
     "released": "2018-11-16",
     "dexSource": "gameDex",
-    "pairPartner": "lets-go-pikachu"
+    "pairPartner": "lets-go-pikachu",
+    "spriteSet": "generation-vii/lets-go"
   },
   "dexEntries": [
     {
@@ -198,14 +199,16 @@
       "target": {
         "species": "sandshrew"
       },
-      "number": 27
+      "number": 27,
+      "unobtainableReason": "Let's Go, Pikachu! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-eevee",
       "target": {
         "species": "sandslash"
       },
-      "number": 28
+      "number": 28,
+      "unobtainableReason": "Let's Go, Pikachu! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-eevee",
@@ -310,21 +313,24 @@
       "target": {
         "species": "oddish"
       },
-      "number": 43
+      "number": 43,
+      "unobtainableReason": "Let's Go, Pikachu! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-eevee",
       "target": {
         "species": "gloom"
       },
-      "number": 44
+      "number": 44,
+      "unobtainableReason": "Let's Go, Pikachu! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-eevee",
       "target": {
         "species": "vileplume"
       },
-      "number": 45
+      "number": 45,
+      "unobtainableReason": "Let's Go, Pikachu! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-eevee",
@@ -401,21 +407,24 @@
       "target": {
         "species": "mankey"
       },
-      "number": 56
+      "number": 56,
+      "unobtainableReason": "Let's Go, Pikachu! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-eevee",
       "target": {
         "species": "primeape"
       },
-      "number": 57
+      "number": 57,
+      "unobtainableReason": "Let's Go, Pikachu! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-eevee",
       "target": {
         "species": "growlithe"
       },
-      "number": 58
+      "number": 58,
+      "unobtainableReason": "Let's Go, Pikachu! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-eevee",
@@ -625,14 +634,16 @@
       "target": {
         "species": "grimer"
       },
-      "number": 88
+      "number": 88,
+      "unobtainableReason": "Let's Go, Pikachu! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-eevee",
       "target": {
         "species": "muk"
       },
-      "number": 89
+      "number": 89,
+      "unobtainableReason": "Let's Go, Pikachu! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-eevee",
@@ -870,7 +881,8 @@
       "target": {
         "species": "scyther"
       },
-      "number": 123
+      "number": 123,
+      "unobtainableReason": "Let's Go, Pikachu! only; trade one in over the cable between the halves, which is the only route either of these games has"
     },
     {
       "game": "lets-go-eevee",
@@ -1066,21 +1078,24 @@
       "target": {
         "species": "mew"
       },
-      "number": 151
+      "number": 151,
+      "unobtainableReason": "Nothing in Kanto produces one: the only Mew here is the Mystery Gift redeemed with the serial code inside a Poke Ball Plus, one per accessory ever made, open since the day the games went on sale and never closed - and step 7 found it is the only Mystery Gift these cartridges have ever been sent"
     },
     {
       "game": "lets-go-eevee",
       "target": {
         "species": "meltan"
       },
-      "number": 152
+      "number": 152,
+      "unobtainableReason": "Only through the GO Park: Pokemon GO sends into these two one way and into nothing else, and GO is not a game in this dataset - it has no Pokedex to fill and nothing in it is caught in the sense this tracker means. Doable today rather than closed, and it closes its own circle: the Mystery Box that makes Meltan appear in GO is unlocked by sending something to the GO Park in the first place. The Chinese Release Commemoration Meltan of October 2024 handed one out, and it was for the mainland Chinese cartridges rather than these: one of those Pokemon reaches an international copy only by a local trade with somebody who has that release"
     },
     {
       "game": "lets-go-eevee",
       "target": {
         "species": "melmetal"
       },
-      "number": 153
+      "number": 153,
+      "unobtainableReason": "Only through the GO Park, and it arrives already evolved: 400 Meltan Candy makes one in Pokemon GO, where the Meltan has to be caught anyway, and nothing in Kanto can evolve the Meltan that comes out of the park. Doable today rather than closed - the park takes Kanto's 151, their Alolan forms, and these two. The Pokemon Day Melmetal of February 2025 handed one out, and it was for the mainland Chinese cartridges rather than these: one of those Pokemon reaches an international copy only by a local trade with somebody who has that release"
     }
   ],
   "acquisitionMethods": [
@@ -14146,6 +14161,1504 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/pokemon/dragonite/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "bulbasaur"
+      },
+      "giftKind": "npcGift",
+      "location": "Cerulean City",
+      "npc": "A woman in Cerulean City",
+      "level": 12,
+      "requirement": "After 30 or more Pokemon have been caught",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/bulbasaur/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "charmander"
+      },
+      "giftKind": "npcGift",
+      "location": "Route 24",
+      "npc": "A man north of Route 24",
+      "level": 14,
+      "requirement": "After 50 or more Pokemon have been caught",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/charmander/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "squirtle"
+      },
+      "giftKind": "npcGift",
+      "location": "Vermilion City",
+      "npc": "Officer Jenny in Vermilion City",
+      "level": 16,
+      "requirement": "After 60 or more Pokemon have been caught",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/squirtle/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "arcanine"
+      },
+      "giftKind": "npcGift",
+      "location": "Vermilion City",
+      "npc": "A Beauty outside the Pokemon Fan Club",
+      "level": 16,
+      "requirement": "Catch five Meowth and show them to her",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/arcanine/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "electrode"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Kanto Power Plant",
+      "level": 42,
+      "requirement": "One of the four fake item balls in the Power Plant, and five minutes to beat what comes out of it",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/electrode/encounters",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "hitmonlee"
+      },
+      "giftKind": "npcGift",
+      "location": "Saffron City, Fighting Dojo",
+      "npc": "Koichi, the Fighting Dojo master",
+      "level": 30,
+      "requirement": "Beat him, then pick one of the two; the other stays behind",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/hitmonlee/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "hitmonchan"
+      },
+      "giftKind": "npcGift",
+      "location": "Saffron City, Fighting Dojo",
+      "npc": "Koichi, the Fighting Dojo master",
+      "level": 30,
+      "requirement": "Beat him, then pick one of the two; the other stays behind",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/hitmonchan/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "magikarp"
+      },
+      "giftKind": "npcGift",
+      "location": "Route 4",
+      "npc": "The Magikarp salesman",
+      "level": 5,
+      "requirement": "Bought for 500 Pokedollars",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/magikarp/encounters",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "eevee",
+        "form": "eevee-starter"
+      },
+      "giftKind": "starter",
+      "location": "Pallet Town",
+      "npc": "Professor Oak",
+      "level": 5,
+      "requirement": "The partner, which cannot be traded away, put into HOME or evolved",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/eevee/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "porygon"
+      },
+      "giftKind": "npcGift",
+      "location": "Saffron City, Silph Co",
+      "npc": "A Silph Co. scientist",
+      "level": 34,
+      "requirement": "After Team Rocket is driven out of the building",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/porygon/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "omanyte"
+      },
+      "giftKind": "fossil",
+      "location": "Cinnabar Island, Cinnabar Lab",
+      "npc": "The Cinnabar Lab scientist",
+      "level": 44,
+      "requirement": "Helix Fossil, offered by Super Nerd Miguel at the end of Mt. Moon - and the one turned down there is hidden in Cerulean Cave later, which no Kanto before this one allowed",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/omanyte/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "kabuto"
+      },
+      "giftKind": "fossil",
+      "location": "Cinnabar Island, Cinnabar Lab",
+      "npc": "The Cinnabar Lab scientist",
+      "level": 44,
+      "requirement": "Dome Fossil, offered by Super Nerd Miguel at the end of Mt. Moon - and the one turned down there is hidden in Cerulean Cave later, which no Kanto before this one allowed",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/kabuto/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "aerodactyl"
+      },
+      "giftKind": "fossil",
+      "location": "Cinnabar Island, Cinnabar Lab",
+      "npc": "The Cinnabar Lab scientist",
+      "level": 44,
+      "requirement": "Old Amber, from the back of the Pewter Museum of Science, which takes Chop Down to reach",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/aerodactyl/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "snorlax"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Route 12",
+      "level": 34,
+      "requirement": "Poke Flute to wake the one asleep across the road, and five minutes to beat it; this one starts with its Attack raised",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/snorlax/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "snorlax"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Route 16",
+      "level": 34,
+      "requirement": "Poke Flute to wake the one asleep across the road, and five minutes to beat it; this one starts with its Defense raised",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/snorlax/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "articuno"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Seafoam Islands, B4F",
+      "level": 50,
+      "requirement": "Five minutes to beat it, with every stat raised, before it can be caught; once one is caught the same bird starts turning up over Kanto as a rare spawn",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/articuno/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "zapdos"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Kanto Power Plant",
+      "level": 50,
+      "requirement": "Five minutes to beat it, with every stat raised, before it can be caught; once one is caught the same bird starts turning up over Kanto as a rare spawn",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/zapdos/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "moltres"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Victory Road, 2F",
+      "level": 50,
+      "requirement": "Five minutes to beat it, with every stat raised, before it can be caught; once one is caught the same bird starts turning up over Kanto as a rare spawn",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/moltres/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "mewtwo"
+      },
+      "giftKind": "staticEncounter",
+      "location": "Cerulean Cave, B1F",
+      "level": 70,
+      "requirement": "Cerulean Cave, which opens after the Hall of Fame, and five minutes to beat it with every stat raised before it can be caught",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/pokemon/mewtwo/encounters",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "gift",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "lapras"
+      },
+      "giftKind": "npcGift",
+      "location": "Saffron City, Silph Co",
+      "npc": "A Silph Co. employee",
+      "level": 34,
+      "requirement": "While Team Rocket still holds the building",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_event_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "rattata",
+        "form": "rattata-alola"
+      },
+      "location": "Cerulean City, Pokemon Center",
+      "npc": "Tatianna",
+      "wants": {
+        "species": "rattata"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "geodude",
+        "form": "geodude-alola"
+      },
+      "location": "Vermilion City, Pokemon Center",
+      "npc": "Higeo",
+      "wants": {
+        "species": "geodude"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "diglett",
+        "form": "diglett-alola"
+      },
+      "location": "Lavender Town, Pokemon Center",
+      "npc": "Diggette",
+      "wants": {
+        "species": "diglett"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "raichu",
+        "form": "raichu-alola"
+      },
+      "location": "Saffron City, Pokemon Center",
+      "npc": "Psytrice",
+      "wants": {
+        "species": "raichu"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "marowak",
+        "form": "marowak-alola"
+      },
+      "location": "Fuchsia City, Pokemon Center",
+      "npc": "Genmar",
+      "wants": {
+        "species": "marowak"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "exeggutor",
+        "form": "exeggutor-alola"
+      },
+      "location": "Indigo Plateau, Pokemon League",
+      "npc": "Exemann",
+      "wants": {
+        "species": "exeggutor"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "vulpix",
+        "form": "vulpix-alola"
+      },
+      "location": "Celadon City, Pokemon Center",
+      "npc": "Nicholice",
+      "wants": {
+        "species": "vulpix"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "trade",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "meowth",
+        "form": "meowth-alola"
+      },
+      "location": "Cinnabar Island, Pokemon Center",
+      "npc": "Darko",
+      "wants": {
+        "species": "meowth"
+      },
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!",
+        "retrievedOn": "2026-09-24"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "kadabra"
+      },
+      "rule": "abra-to-kadabra",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/27",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "weepinbell"
+      },
+      "rule": "bellsprout-to-weepinbell",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/29",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "ivysaur"
+      },
+      "rule": "bulbasaur-to-ivysaur",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/1",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "metapod"
+      },
+      "rule": "caterpie-to-metapod",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/4",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "charmeleon"
+      },
+      "rule": "charmander-to-charmeleon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/2",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "charizard"
+      },
+      "rule": "charmeleon-to-charizard",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/2",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "clefable"
+      },
+      "rule": "clefairy-to-clefable",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/14",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "marowak"
+      },
+      "rule": "cubone-to-marowak",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/46",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "dugtrio"
+      },
+      "rule": "diglett-to-dugtrio",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/21",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "dugtrio",
+        "form": "dugtrio-alola"
+      },
+      "rule": "diglett-to-dugtrio-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/21",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "dodrio"
+      },
+      "rule": "doduo-to-dodrio",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/36",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "dragonite"
+      },
+      "rule": "dragonair-to-dragonite",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/76",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "dragonair"
+      },
+      "rule": "dratini-to-dragonair",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/76",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "hypno"
+      },
+      "rule": "drowzee-to-hypno",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/42",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "flareon"
+      },
+      "rule": "eevee-to-flareon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/67",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "jolteon"
+      },
+      "rule": "eevee-to-jolteon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/67",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "vaporeon"
+      },
+      "rule": "eevee-to-vaporeon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/67",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "arbok"
+      },
+      "rule": "ekans-to-arbok",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/9",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "exeggutor"
+      },
+      "rule": "exeggcute-to-exeggutor",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/45",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "haunter"
+      },
+      "rule": "gastly-to-haunter",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/40",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "graveler"
+      },
+      "rule": "geodude-to-graveler",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/31",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "graveler",
+        "form": "graveler-alola"
+      },
+      "rule": "geodude-to-graveler-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/31",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "vileplume"
+      },
+      "rule": "gloom-to-vileplume",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/18",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "seaking"
+      },
+      "rule": "goldeen-to-seaking",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/55",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "golem"
+      },
+      "rule": "graveler-to-golem",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/31",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "golem",
+        "form": "golem-alola"
+      },
+      "rule": "graveler-to-golem-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/31",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "muk"
+      },
+      "rule": "grimer-to-muk",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/38",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "arcanine"
+      },
+      "rule": "growlithe-to-arcanine-red-blue",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/25",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "gengar"
+      },
+      "rule": "haunter-to-gengar",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/40",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "seadra"
+      },
+      "rule": "horsea-to-seadra",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/54",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "venusaur"
+      },
+      "rule": "ivysaur-to-venusaur",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/1",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "wigglytuff"
+      },
+      "rule": "jigglypuff-to-wigglytuff",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/16",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "kabutops"
+      },
+      "rule": "kabuto-to-kabutops",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/70",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "alakazam"
+      },
+      "rule": "kadabra-to-alakazam",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/27",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "beedrill"
+      },
+      "rule": "kakuna-to-beedrill",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/5",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "weezing"
+      },
+      "rule": "koffing-to-weezing-red-blue",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/49",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "kingler"
+      },
+      "rule": "krabby-to-kingler",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/43",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "machamp"
+      },
+      "rule": "machoke-to-machamp",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/28",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "machoke"
+      },
+      "rule": "machop-to-machoke",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/28",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "gyarados"
+      },
+      "rule": "magikarp-to-gyarados",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/64",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "magneton"
+      },
+      "rule": "magnemite-to-magneton",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/34",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "primeape"
+      },
+      "rule": "mankey-to-primeape",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/24",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "persian"
+      },
+      "rule": "meowth-to-persian",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/22",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "persian",
+        "form": "persian-alola"
+      },
+      "rule": "meowth-to-persian-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/22",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "butterfree"
+      },
+      "rule": "metapod-to-butterfree",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/4",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "nidorina"
+      },
+      "rule": "nidoran-f-to-nidorina",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/12",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "nidorino"
+      },
+      "rule": "nidoran-m-to-nidorino",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/13",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "nidoqueen"
+      },
+      "rule": "nidorina-to-nidoqueen",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/12",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "nidoking"
+      },
+      "rule": "nidorino-to-nidoking",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/13",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "gloom"
+      },
+      "rule": "oddish-to-gloom",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/18",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "omastar"
+      },
+      "rule": "omanyte-to-omastar",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/69",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "parasect"
+      },
+      "rule": "paras-to-parasect",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/19",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "pidgeot"
+      },
+      "rule": "pidgeotto-to-pidgeot",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/6",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "pidgeotto"
+      },
+      "rule": "pidgey-to-pidgeotto",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/6",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "raichu"
+      },
+      "rule": "pikachu-to-raichu",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/10",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "poliwhirl"
+      },
+      "rule": "poliwag-to-poliwhirl",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/26",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "poliwrath"
+      },
+      "rule": "poliwhirl-to-poliwrath",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/26",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "rapidash"
+      },
+      "rule": "ponyta-to-rapidash-red-blue",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/32",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "golduck"
+      },
+      "rule": "psyduck-to-golduck",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/23",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "raticate"
+      },
+      "rule": "rattata-to-raticate",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/7",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "raticate",
+        "form": "raticate-alola"
+      },
+      "rule": "rattata-to-raticate-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/7",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "rhydon"
+      },
+      "rule": "rhyhorn-to-rhydon",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/50",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "sandslash"
+      },
+      "rule": "sandshrew-to-sandslash",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/11",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "dewgong"
+      },
+      "rule": "seel-to-dewgong",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/37",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "cloyster"
+      },
+      "rule": "shellder-to-cloyster",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/39",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "slowbro"
+      },
+      "rule": "slowpoke-to-slowbro-red-blue",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/33",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "fearow"
+      },
+      "rule": "spearow-to-fearow",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/8",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "wartortle"
+      },
+      "rule": "squirtle-to-wartortle",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/3",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "starmie"
+      },
+      "rule": "staryu-to-starmie",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/56",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "tentacruel"
+      },
+      "rule": "tentacool-to-tentacruel",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/30",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "venomoth"
+      },
+      "rule": "venonat-to-venomoth",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/20",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "electrode"
+      },
+      "rule": "voltorb-to-electrode-red-blue",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/44",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "ninetales"
+      },
+      "rule": "vulpix-to-ninetales",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/15",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "ninetales",
+        "form": "ninetales-alola"
+      },
+      "rule": "vulpix-to-ninetales-alola",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/15",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "blastoise"
+      },
+      "rule": "wartortle-to-blastoise",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/3",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "kakuna"
+      },
+      "rule": "weedle-to-kakuna",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/5",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "victreebel"
+      },
+      "rule": "weepinbell-to-victreebel",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/29",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "lets-go-eevee",
+      "target": {
+        "species": "golbat"
+      },
+      "rule": "zubat-to-golbat",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/17",
         "retrievedOn": "2026-09-22"
       }
     }

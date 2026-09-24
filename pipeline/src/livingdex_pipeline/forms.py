@@ -122,6 +122,93 @@ INVISIBLE_FORMS = frozenset({"scatterbug", "spewpa", "mothim"})
 #: is a tile asking a player to fill something their game cannot produce.
 FORMS_NAMED_BY_THE_GAME = frozenset({"lets-go-pikachu", "lets-go-eevee"})
 
+#: The two halves, spelled here so the table below can say "both" in one word.
+LETS_GO = ("lets-go-pikachu", "lets-go-eevee")
+
+#: What the Let's Go pair holds, which is step 8's answer to the question this file cannot ask.
+#:
+#: :data:`FORMS_NAMED_BY_THE_GAME` switches the version-group rule off for those two and says
+#: the answer would be written out by hand. This is it: 53 entries, added to whatever the rule
+#: worked out rather than replacing it, which is the difference between this and :data:`ONLY_IN`.
+#:
+#: **The fourteen Alolan forms each half has, and the four that differ, are the eight traders'
+#: doing.** Every in-game trade in this pair hands over an Alolan form and nothing else: six of
+#: the eight stand in both halves, and two of them - the Camper in Celadon City and the Punk Guy
+#: on Cinnabar Island - hand over a different Pokemon depending on which cartridge is in the
+#: Switch. What those six and two hand over, and whatever it evolves into, is the whole of what
+#: either half can produce. Everything else Alolan comes through the GO Park or from another
+#: player, and a form has no dex entry to carry a reason on, so it is left out: a form the table
+#: leaves out is a tile that is not drawn, and a form it invents is a tile nobody can fill.
+#:
+#: **The partner is a form and it belongs to one half each.** PokeAPI calls them
+#: ``pikachu-starter`` and ``eevee-starter``, stamps both with this pair's version group, and
+#: nothing in the dataset is newer - so the rule would have given them no games at all and
+#: dropped them. They are the reason both these games exist.
+#:
+#: **And both sexes of twenty-three species**, which is what the Generation 4 rule would have
+#: said anyway if it had been allowed to speak for these two. Twenty-two of the twenty-three are
+#: drawn twice on the wiki's Let's Go sheet; the twenty-third is Eevee, which is drawn once
+#: there and once on the Alola sheet as well - the same disagreement with PokeAPI that the
+#: Generation 7 scrape turned up, arriving a second time.
+LETS_GO_FORMS: Mapping[str, tuple[str, ...]] = {
+    "pikachu-starter": ("lets-go-pikachu",),
+    "eevee-starter": ("lets-go-eevee",),
+    # The six traders both halves have, and what their Pokemon evolve into.
+    **dict.fromkeys(
+        (
+            "rattata-alola",
+            "raticate-alola",
+            "diglett-alola",
+            "dugtrio-alola",
+            "geodude-alola",
+            "graveler-alola",
+            "golem-alola",
+            "raichu-alola",
+            "marowak-alola",
+            "exeggutor-alola",
+        ),
+        LETS_GO,
+    ),
+    # The Camper wants a Sandshrew here and the Punk Guy a Grimer.
+    **dict.fromkeys(
+        ("sandshrew-alola", "sandslash-alola", "grimer-alola", "muk-alola"),
+        ("lets-go-pikachu",),
+    ),
+    # And a Vulpix and a Meowth there.
+    **dict.fromkeys(
+        ("vulpix-alola", "ninetales-alola", "meowth-alola", "persian-alola"),
+        ("lets-go-eevee",),
+    ),
+    **dict.fromkeys(
+        (
+            "alakazam-female",
+            "butterfree-female",
+            "dodrio-female",
+            "doduo-female",
+            "eevee-female",
+            "gloom-female",
+            "golbat-female",
+            "goldeen-female",
+            "gyarados-female",
+            "hypno-female",
+            "kadabra-female",
+            "magikarp-female",
+            "pikachu-female",
+            "raichu-female",
+            "raticate-female",
+            "rattata-female",
+            "rhydon-female",
+            "rhyhorn-female",
+            "scyther-female",
+            "seaking-female",
+            "venusaur-female",
+            "vileplume-female",
+            "zubat-female",
+        ),
+        LETS_GO,
+    ),
+}
+
 #: Where a form is, when the version group it arrived in says more than the truth.
 #:
 #: The default is that a form reaches every game from its own version group onward, which is
@@ -211,6 +298,9 @@ ONLY_IN: Mapping[str, tuple[str, ...]] = {
 #: name. Everything not named here is its form name with the words capitalised, which is right
 #: for Heat, Therian, Summer and eighty others.
 LABELS: Mapping[str, str] = {
+    # What the Let's Go pair calls the Pikachu and the Eevee it starts a player with. The source
+    # spells it "starter", and every other game in the dataset means by that a choice of three.
+    "starter": "Partner",
     "exclamation": "!",
     "question": "?",
     "east": "East Sea",
@@ -260,6 +350,15 @@ class VersionGroupGames:
 
     def knows(self, group: str) -> bool:
         return group in self._order
+
+    def named_by_hand(self, slug: str) -> list[str]:
+        """The games a hand-written table gives this form, filtered to the ones being built.
+
+        Filtered because a build of one game is still a build: :data:`LETS_GO_FORMS` names two
+        games and a ``--game red`` build has neither, and a form that claimed them would write a
+        table the rest of the dataset disagrees with.
+        """
+        return [game for game in LETS_GO_FORMS.get(slug, ()) if game in self._generation]
 
     def order_of(self, group: str) -> int:
         return self._order[group]
@@ -492,7 +591,10 @@ def _form(
     if not groups.knows(group):
         raise FormsError(f"{slug} names a version group nothing knows: {group}")
 
-    games = ONLY_IN.get(slug) or groups.from_group_on(group, generation=generation)
+    games = [
+        *(ONLY_IN.get(slug) or groups.from_group_on(group, generation=generation)),
+        *groups.named_by_hand(slug),
+    ]
     if not games:
         # Introduced after the last game this dataset holds, which every Mega, Gmax and
         # regional form of these species is. Expected rather than exceptional.
@@ -551,7 +653,12 @@ def _gender_form(species: Species, groups: VersionGroupGames, *, generation: int
         species=species.id,
         name="Female",
         kind=FormKind.GENDER,
-        games=sorted(groups.from_group_on(GENDER_FROM, generation=generation)),
+        games=sorted(
+            [
+                *groups.from_group_on(GENDER_FROM, generation=generation),
+                *groups.named_by_hand(f"{species.id}-female"),
+            ]
+        ),
     )
 
 

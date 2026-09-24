@@ -22,9 +22,11 @@ from . import lets_go
 
 GAME_ID = "lets-go-eevee"
 
-#: The other half. What the two of them split is step 4's and step 5's answer, and the answer
-#: may well be "nothing that cannot also be traded for": these are the first core games
-#: Bulbapedia calls free of mutually exclusive Pokemon.
+#: The other half. What the two of them split is six lines each way, which step 5 answered and
+#: :data:`lets_go.ONLY_ON` holds: Ekans, Vulpix, Meowth, Bellsprout, Koffing and Pinsir are this
+#: half's, and Sandshrew, Oddish, Mankey, Growlithe, Grimer and Scyther are its other half's.
+#: Being free of *mutually* exclusive Pokemon is a different claim, and the other half's file
+#: says what it turned out to rest on.
 PAIR_PARTNER = "lets-go-pikachu"
 
 #: What PokeAPI calls this game when it lists which version an encounter belongs to.
@@ -57,11 +59,15 @@ def build(context: BuildContext) -> GameData:
 def dex_entries(context: BuildContext) -> list[DexEntry]:
     """The same 153 its other half shows, which is the whole of what the two agree about.
 
-    Both halves number the list identically, so this is :func:`lets_go.dex_entries` with a game
-    id and nothing else. What will eventually differ is the ``unobtainable`` table, and steps 4
-    and 7 are what fill it.
+    Both halves number the list identically, and step 4 answered the one thing that was
+    expected to differ: the ``unobtainable`` table does not. :data:`lets_go.UNOBTAINABLE` is one
+    table for the pair, because the three entries neither half can produce are the same three -
+    which is what "the first core games with no mutually exclusive Pokemon" turns out to mean
+    when it reaches the data.
     """
-    return lets_go.dex_entries(context, game_id=GAME_ID)
+    return lets_go.dex_entries(
+        context, game_id=GAME_ID, unobtainable=lets_go.unobtainable_in(GAME_ID)
+    )
 
 
 def edges() -> list[TransferEdge]:

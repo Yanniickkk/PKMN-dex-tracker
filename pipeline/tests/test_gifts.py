@@ -97,6 +97,25 @@ def test_a_gift_carries_its_place_and_the_one_level_it_comes_at() -> None:
     assert found[0].target.species == "treecko"
 
 
+def test_a_game_that_knows_the_level_better_than_the_source_says_so() -> None:
+    # The last thing a game was given the right to correct, and the Let's Go pair is why: two
+    # other sources agree with each other against PokeAPI about four of that pair's gifts, and
+    # one of the four is an Electrode at exactly the level the Electrode in the same room was
+    # in Red and Blue. Every other game leaves this out and keeps what the row says.
+    kept = build(
+        {"electrode": [area("hoenn-route-101-area", "emerald", [row("static", 43)])]},
+        ROUTE_101,
+    )
+    corrected = build(
+        {"electrode": [area("hoenn-route-101-area", "emerald", [row("static", 43)])]},
+        ROUTE_101,
+        {"electrode": GiftDetail(level=42)},
+    )
+
+    assert kept[0].level == 43
+    assert corrected[0].level == 42
+
+
 def test_a_gift_is_a_present_from_a_stranger_until_the_game_says_otherwise() -> None:
     # PokeAPI has one word for three things, so the general one is the default.
     plain = build(

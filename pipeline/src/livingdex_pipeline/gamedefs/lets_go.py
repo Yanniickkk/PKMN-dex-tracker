@@ -36,7 +36,9 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from datetime import date
 
+from ..evolutions import evolution_encounters
 from ..games import BuildContext
+from ..gifts import GiftDetail, GiftDetails, RecordedGift, gift_encounters, recorded_gifts
 from ..models import (
     AcquisitionMethod,
     AllSpeciesFilter,
@@ -45,13 +47,17 @@ from ..models import (
     DexTarget,
     Game,
     GameRelease,
+    GiftKind,
     OriginRequirement,
     TransferDirection,
     TransferEdge,
     TransferMechanism,
 )
+from ..places import LocationNames
+from ..sources import bulbapedia
+from ..trades import InGameTrade, trade_encounters
 from ..wild import wild_encounters
-from . import home, kanto
+from . import exclusives, home, kanto
 
 #: Kanto again, and the fifth pair of games to be set there.
 REGION = kanto.REGION
@@ -69,8 +75,13 @@ GENERATION = 7
 #: The second release in this dataset with no Japanese date to prefer - Ultra Sun and Ultra Moon
 #: were the first - and it went further than they did: these two shipped in Simplified and
 #: Traditional Chinese on day one. Mainland China got its own release six years later, in
-#: September 2024, which is a separate set of cartridges that trades only with itself; this
-#: dataset holds the international one.
+#: September 2024, on the Tencent Switch; this dataset holds the international one.
+#:
+#: Step 7 corrected what this note used to say about that release - that it "trades only with
+#: itself". It does not: Bulbapedia says an event Pokemon from those games shows its real met
+#: location once it is traded locally to an international copy, which is a trade between the two
+#: releases described in passing. It matters because all three distributions these games have
+#: ever had were for that release; see :data:`CHINESE_EVENTS`.
 RELEASED = date(2018, 11, 16)
 
 #: PokeAPI's name for the 153-entry list both halves show.
@@ -96,6 +107,499 @@ DEX = "letsgo-kanto"
 #: from *either* half is one answer.
 PAIR = ("lets-go-pikachu", "lets-go-eevee")
 
+#: PokeAPI's name for the version group the two halves share, which their evolution rules hang
+#: off. One for the pair, where Alola needs two: nothing about evolving changed between these.
+VERSION_GROUP = "lets-go-pikachu-lets-go-eevee"
+
+#: The folder both halves draw their pictures from, which is theirs alone.
+#:
+#: Not :data:`alola.SPRITE_SET`, though both are Generation 7 and both come off the Bulbagarden
+#: Archives: these games are the series' first with no battle sprite at all. What the wiki keeps
+#: under ``7p`` is a render of the model that walks around the overworld, and putting Alola's
+#: flat 240 pixel drawing on a Let's Go tile would show a Pokemon from a game whose whole point
+#: is that you can see it standing there.
+#:
+#: PokeAPI does have a Let's Go folder and it cannot be used; :mod:`gen7sprites` says why.
+SPRITE_SET = "generation-vii/lets-go"
+
+#: What the three birds ask, which is the same of all three and is step 3's finding from the
+#: other end: the static is where the *first* one comes from, and the second is a rare spawn.
+BIRD = (
+    "Five minutes to beat it, with every stat raised, before it can be caught; once one is "
+    "caught the same bird starts turning up over Kanto as a rare spawn"
+)
+
+#: What only the game knows about each thing these two hand over or leave standing in one spot.
+#:
+#: PokeAPI carries the method, the place and the level, and calls a starter, a fossil, a
+#: purchase and a present from a stranger by one word. Who hands it over and what has to be
+#: true first are read off Bulbapedia's list of these games' event Pokemon.
+#:
+#: **One table for both halves, which no pair before them could have had.** Bulbapedia calls
+#: these the first core games with no mutually exclusive Pokemon, and the gifts keep to it: the
+#: only two rows that are not in both are the Persian and the Arcanine, and those are one gift
+#: with a different animal in it. A species the other half does not hand over has no row there
+#: for this table to describe, so nothing has to be said twice.
+#:
+#: **Four rows carry a level, which no game before this pair has had to do.** PokeAPI puts the
+#: Persian and the Arcanine at 32, the Porygon at 36 and the Electrode at 43, and Bulbapedia's
+#: list of these games' event Pokemon and Serebii's gift page agree with each other against it
+#: at 16, 16, 34 and 42. The Electrode says where those numbers probably come from: 43 is what
+#: the Electrode in the same room of the same Power Plant was in Red and Blue, and Bulbapedia's
+#: Power Plant page prints the two side by side - 43 in Generation I, 42 in this one. The
+#: wording has been corrected in every game file in this dataset; this is the first time the
+#: number has been.
+#:
+#: **Kanto's three starters are not starters here**, which is the sharpest thing in the table.
+#: Bulbasaur, Charmander and Squirtle are not lined up in Oak's laboratory to be chosen between:
+#: they are three separate presents from three strangers in three towns, and what each one asks
+#: is how many species have been caught. All three can be had in one save, so the choice Red
+#: made in 1996 is gone along with the grass - which is why none of them carries
+#: :attr:`GiftKind.STARTER` here and all three do in every other Kanto.
+GIFTS: dict[str, GiftDetails] = {
+    # The partner, which is the premise of both games and the one Pokemon in either that goes
+    # nowhere afterwards. Step 8 gave it the form it always was: the wild Pikachu of Viridian
+    # Forest and the wild Eevee of Route 17 are ordinary ones, and this is not either.
+    "pikachu": GiftDetail(
+        kind=GiftKind.STARTER,
+        form="pikachu-starter",
+        npc="Professor Oak",
+        requirement="The partner, which cannot be traded away, put into HOME or evolved",
+    ),
+    "eevee": GiftDetail(
+        kind=GiftKind.STARTER,
+        form="eevee-starter",
+        npc="Professor Oak",
+        requirement="The partner, which cannot be traded away, put into HOME or evolved",
+    ),
+    "bulbasaur": GiftDetail(
+        npc="A woman in Cerulean City",
+        requirement="After 30 or more Pokemon have been caught",
+    ),
+    "charmander": GiftDetail(
+        npc="A man north of Route 24",
+        requirement="After 50 or more Pokemon have been caught",
+    ),
+    "squirtle": GiftDetail(
+        npc="Officer Jenny in Vermilion City",
+        requirement="After 60 or more Pokemon have been caught",
+    ),
+    # The one gift the halves disagree about, and they disagree about the animal rather than
+    # about whether there is one: the same errand outside the same building, and it is paid in
+    # the line this half's own grass does not hold. Catch five of the Growlithe only Let's Go,
+    # Pikachu! has and the Black Belt hands over a Persian, whose Meowth is Eevee's alone.
+    "persian": GiftDetail(
+        level=16,
+        npc="A Black Belt outside the Pokemon Fan Club",
+        requirement="Catch five Growlithe and show them to him",
+    ),
+    "arcanine": GiftDetail(
+        level=16,
+        npc="A Beauty outside the Pokemon Fan Club",
+        requirement="Catch five Meowth and show them to her",
+    ),
+    "hitmonlee": GiftDetail(
+        npc="Koichi, the Fighting Dojo master",
+        requirement="Beat him, then pick one of the two; the other stays behind",
+    ),
+    "hitmonchan": GiftDetail(
+        npc="Koichi, the Fighting Dojo master",
+        requirement="Beat him, then pick one of the two; the other stays behind",
+    ),
+    # PokeAPI files this one inside Silph Co. and Bulbapedia has the scientist waiting outside
+    # by the Pokemon Center. Both are Saffron City and the errand is the same one, so the place
+    # stays as the source spells it and the sentence says what actually has to be done.
+    "porygon": GiftDetail(
+        level=34,
+        npc="A Silph Co. scientist",
+        requirement="After Team Rocket is driven out of the building",
+    ),
+    # He has asked 500 for a Magikarp in every Kanto there has ever been, and in this one he has
+    # moved from the Pokemon Center near Mt. Moon to the one on Route 4.
+    "magikarp": GiftDetail(
+        npc="The Magikarp salesman",
+        requirement="Bought for 500 Pokedollars",
+    ),
+    # **The first Kanto where the fossil passed over is not lost for good.** Red, Blue, Yellow,
+    # FireRed and LeafGreen all keep the one left behind at the end of Mt. Moon, and
+    # :data:`kanto.SHARED_GIFTS` says so in those words. This pair hides more of both in
+    # Cerulean Cave as ordinary ground items, so a living dex here gets both halves of a choice
+    # that was permanent for twenty-two years.
+    "omanyte": GiftDetail(
+        kind=GiftKind.FOSSIL,
+        npc="The Cinnabar Lab scientist",
+        requirement=(
+            "Helix Fossil, offered by Super Nerd Miguel at the end of Mt. Moon - and the one "
+            "turned down there is hidden in Cerulean Cave later, which no Kanto before this "
+            "one allowed"
+        ),
+    ),
+    "kabuto": GiftDetail(
+        kind=GiftKind.FOSSIL,
+        npc="The Cinnabar Lab scientist",
+        requirement=(
+            "Dome Fossil, offered by Super Nerd Miguel at the end of Mt. Moon - and the one "
+            "turned down there is hidden in Cerulean Cave later, which no Kanto before this "
+            "one allowed"
+        ),
+    ),
+    "aerodactyl": GiftDetail(
+        kind=GiftKind.FOSSIL,
+        npc="The Cinnabar Lab scientist",
+        requirement=(
+            "Old Amber, from the back of the Pewter Museum of Science, which takes Chop Down "
+            "to reach"
+        ),
+    ),
+    # Two of them, one per road out of Lavender Town, and they are why a gift table can be keyed
+    # by place: the same species at the same level woken the same way, and the only thing
+    # telling them apart is which stat the one in front of you starts with.
+    "snorlax": (
+        GiftDetail(
+            where="Route 12",
+            requirement=(
+                "Poke Flute to wake the one asleep across the road, and five minutes to beat "
+                "it; this one starts with its Attack raised"
+            ),
+        ),
+        GiftDetail(
+            where="Route 16",
+            requirement=(
+                "Poke Flute to wake the one asleep across the road, and five minutes to beat "
+                "it; this one starts with its Defense raised"
+            ),
+        ),
+    ),
+    "electrode": GiftDetail(
+        level=42,
+        requirement=(
+            "One of the four fake item balls in the Power Plant, and five minutes to beat what "
+            "comes out of it"
+        ),
+    ),
+    "articuno": GiftDetail(requirement=BIRD),
+    "zapdos": GiftDetail(requirement=BIRD),
+    "moltres": GiftDetail(requirement=BIRD),
+    "mewtwo": GiftDetail(
+        requirement=(
+            "Cerulean Cave, which opens after the Hall of Fame, and five minutes to beat it "
+            "with every stat raised before it can be caught"
+        ),
+    ),
+}
+
+#: The one gift PokeAPI does not carry for these two.
+#:
+#: A Silph Co. employee hands over a Lapras while Team Rocket still holds the building, in both
+#: halves, and PokeAPI has no encounter for it in either. Kanto has handed a Lapras over in that
+#: room since Red - :data:`kanto.SHARED_GIFTS` describes it there, off a row PokeAPI does have -
+#: so this is the same gift in the same place, missing from one version's tables.
+#:
+#: It closes no hole in the dex: step 3 found Lapras swimming off two sea routes as a rare
+#: spawn, which is new in this pair. It is written down because leaving it out would say this
+#: Kanto had stopped doing something it has done for twenty-two years.
+#: Where that Lapras was read, spelled the way the article's own url spells it.
+SILPH_LAPRAS_PAGE = (
+    "List_of_in-game_event_Pok%C3%A9mon_in_Pok%C3%A9mon:"
+    "_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!"
+)
+
+HANDED_OVER: tuple[RecordedGift, ...] = (
+    RecordedGift(
+        species="lapras",
+        location="Saffron City, Silph Co",
+        level=34,
+        npc="A Silph Co. employee",
+        requirement="While Team Rocket still holds the building",
+    ),
+)
+
+#: Where a trader was read, spelled the way the article's own url spells it.
+TRADERS_PAGE = (
+    "List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:"
+    "_Let%27s_Go,_Pikachu!_and_Let%27s_Go,_Eevee!"
+)
+
+#: What each trader asks and hands back, which is the same bargain eight times over.
+#:
+#: **Every in-game trade in this pair hands over an Alolan form**, and Bulbapedia says why it
+#: matters: they are "the only way to obtain Alolan forms outside of GO Park or trading with
+#: other players". Each trader wants the Kantonian form of the very species they are handing
+#: back Alolan - a Rattata for a Rattata, a Geodude for a Geodude - which is the whole shape of
+#: the bargain and is why no ``wants`` here is a surprise.
+#:
+#: They are step 8's rather than step 5's for that reason: a record whose target is a form
+#: cannot be written before the form table says which forms this game has, and that table is
+#: :data:`forms.LETS_GO_FORMS`, two doors up.
+#:
+#: Six of the eight stand in both halves. The Camper in Celadon City and the Punk Guy on
+#: Cinnabar Island ask for a different Pokemon depending on the cartridge, which is how the two
+#: halves end up with fourteen Alolan forms each and four of them different - see
+#: :func:`traders` and :data:`ONLY_ON`.
+#:
+#: **And every one of them can be traded with again, as often as a player likes.** No trader
+#: before these has offered a second one of anything: Bill's Eevee, Hila's Machop and the rest
+#: are each one Pokemon and then a closed conversation.
+SHARED_TRADERS: tuple[InGameTrade, ...] = (
+    InGameTrade(
+        gets="rattata",
+        form="rattata-alola",
+        wants="rattata",
+        location="Cerulean City, Pokemon Center",
+        npc="Tatianna",
+    ),
+    InGameTrade(
+        gets="geodude",
+        form="geodude-alola",
+        wants="geodude",
+        location="Vermilion City, Pokemon Center",
+        npc="Higeo",
+    ),
+    InGameTrade(
+        gets="diglett",
+        form="diglett-alola",
+        wants="diglett",
+        location="Lavender Town, Pokemon Center",
+        npc="Diggette",
+    ),
+    InGameTrade(
+        gets="raichu",
+        form="raichu-alola",
+        wants="raichu",
+        location="Saffron City, Pokemon Center",
+        npc="Psytrice",
+    ),
+    InGameTrade(
+        gets="marowak",
+        form="marowak-alola",
+        wants="marowak",
+        location="Fuchsia City, Pokemon Center",
+        npc="Genmar",
+    ),
+    InGameTrade(
+        gets="exeggutor",
+        form="exeggutor-alola",
+        wants="exeggutor",
+        location="Indigo Plateau, Pokemon League",
+        npc="Exemann",
+    ),
+)
+
+#: The two who want a different Pokemon in each half, and the whole of what the halves' form
+#: tables disagree about.
+TRADERS_BY_HALF: dict[str, tuple[InGameTrade, ...]] = {
+    "lets-go-pikachu": (
+        InGameTrade(
+            gets="sandshrew",
+            form="sandshrew-alola",
+            wants="sandshrew",
+            location="Celadon City, Pokemon Center",
+            npc="Nicholice",
+        ),
+        InGameTrade(
+            gets="grimer",
+            form="grimer-alola",
+            wants="grimer",
+            location="Cinnabar Island, Pokemon Center",
+            npc="Darko",
+        ),
+    ),
+    "lets-go-eevee": (
+        InGameTrade(
+            gets="vulpix",
+            form="vulpix-alola",
+            wants="vulpix",
+            location="Celadon City, Pokemon Center",
+            npc="Nicholice",
+        ),
+        InGameTrade(
+            gets="meowth",
+            form="meowth-alola",
+            wants="meowth",
+            location="Cinnabar Island, Pokemon Center",
+            npc="Darko",
+        ),
+    ),
+}
+
+
+def traders(game_id: str) -> tuple[InGameTrade, ...]:
+    """The eight this half has: the six both stand in, and its own two."""
+    return (*SHARED_TRADERS, *TRADERS_BY_HALF[game_id])
+
+
+#: The three distributions these two games have ever had, and the one thing they share.
+#:
+#: **Every one of them was for the mainland Chinese release**, which came out in September 2024
+#: on the Tencent Switch, six years after the cartridges this dataset holds. Each was a password
+#: rather than a serial code, each may be redeemed once per save file, and each is refused
+#: unless the save's origin language is Simplified Chinese. The Arbok is the strangest of the
+#: three: Shiny, level 50, eight in every IV, handed out over a fortnight for the Year of the
+#: Snake.
+#:
+#: They are named because step 7's question is what a player can be told, and the honest answer
+#: has two halves: nothing you can play produces one, and the event that once did was for a
+#: different set of cartridges. Bulbapedia adds the part that keeps that from being useless - an
+#: event Pokemon from those games shows its real met location when it is traded locally to an
+#: international copy, so there is a way across and it runs through somebody else's Switch.
+CHINESE_EVENTS: dict[str, str] = {
+    "arbok": "the Year of the Snake Shiny Arbok of January 2025",
+    "meltan": "the Chinese Release Commemoration Meltan of October 2024",
+    "melmetal": "the Pokemon Day Melmetal of February 2025",
+}
+
+
+def only_in_china(species: str) -> str:
+    """What step 7 found for one species, and who it was really for."""
+    return (
+        f"{exclusives.handed_out(CHINESE_EVENTS[species])}, and it was for the mainland Chinese "
+        "cartridges rather than these: one of those Pokemon reaches an international copy only "
+        "by a local trade with somebody who has that release"
+    )
+
+
+#: What each half's grass holds that the other half's does not: six lines apiece.
+#:
+#: Eleven species each way once the evolutions are counted, which is the number step 3 found in
+#: the grass - and after step 5 the bases are the whole of it, because either half can evolve
+#: what it is handed. Ordinary version exclusives, then, and the smallest split a Kanto pair has
+#: had: Red and Blue divide eleven *lines*.
+#:
+#: **What is not ordinary is where the other half's two show up.** The Black Belt outside the
+#: Vermilion Fan Club wants five Growlithe - which only Let's Go, Pikachu! has - and pays in a
+#: Persian, whose Meowth only Let's Go, Eevee! has. The Beauty in the same spot wants five
+#: Meowth and pays in an Arcanine. So each half hands over the evolved form of a line it does
+#: not hold, for five of a line it does, and neither of those two lines is listed here as a
+#: whole: Persian is obtainable in Pikachu and Meowth is not.
+ONLY_ON: dict[str, dict[str, str | None]] = {
+    "lets-go-pikachu": dict.fromkeys(
+        ("sandshrew", "oddish", "mankey", "growlithe", "grimer", "scyther")
+    ),
+    "lets-go-eevee": {
+        "ekans": None,
+        # The one entry in either half that is listed beside its own base rather than left to
+        # inherit from it: step 7 found a distribution for the Arbok and none for the Ekans it
+        # evolves from, and a reason written out is a reason `reach.spread_unobtainable` leaves
+        # alone.
+        "arbok": only_in_china("arbok"),
+        "vulpix": None,
+        "meowth": None,
+        "bellsprout": None,
+        "koffing": None,
+        "pinsir": None,
+    },
+}
+
+#: What each half is called in a sentence a player reads.
+TITLE: dict[str, str] = {
+    "lets-go-pikachu": "Let's Go, Pikachu!",
+    "lets-go-eevee": "Let's Go, Eevee!",
+}
+
+
+def only_on(partner: str, event: str | None = None) -> str:
+    """Why an entry in this dex is not in this half, and the one route to it.
+
+    Not :func:`exclusives.only_on`, which says "only in Generation 7" and would be wrong twice
+    over here. Ekans is in Alola as well, so the other half is not the only Generation 7 game
+    with one; and no Generation 7 game but the other half can reach these two anyway. The cable
+    between the halves is the whole of what a player can be told to do.
+    """
+    return exclusives.with_event(
+        f"{partner} only; trade one in over the cable between the halves, which is the only "
+        "route either of these games has",
+        event,
+    )
+
+
+#: The one thing PokeAPI's chain says about this pair that is not true of it.
+#:
+#: Meltan becomes Melmetal on 400 Meltan Candy, and that happens in Pokemon GO: Bulbapedia's
+#: game-locations table lists "Evolve Meltan" under GO and gives these two "Transfer from
+#: Pokemon GO to GO Park" instead. A chain has no column for where its rule can be used, so the
+#: reader is told here - the same shape, and the same argument, as a gift the source files under
+#: the wrong version.
+#:
+#: Nothing was broken by it, which is the interesting part: Meltan is unobtainable here, so the
+#: Melmetal that evolves from it was unreachable and ``no-evolution-dead-ends`` had nothing to
+#: report. A record can be wrong without failing anything, and that is what a reader has to be
+#: protected from.
+NOT_AN_EVOLUTION_HERE: dict[str, str] = {
+    "melmetal": (
+        "400 Meltan Candy in Pokemon GO makes one, and nothing in Kanto can evolve the Meltan "
+        "that comes out of the GO Park"
+    ),
+    # **The three evolutions that depend on where you are standing**, which is step 8's other
+    # finding. Fifteen of the eighteen Alolan forms evolve out of an Alolan form and the source
+    # says so - a detail that requires `rattata-alola` is a second way rather than a replacement,
+    # and both halves keep the Kantonian way beside it. These three require no form at all,
+    # because a Pikachu, a Cubone and an Exeggcute are one Pokemon each: what the stone or the
+    # level makes of them is decided by the region, and this region is Kanto. Bulbapedia agrees
+    # entry for entry - every one of the three reads "Trade" in its Alolan row here.
+    "raichu-alola": (
+        "A Thunder Stone in Kanto makes the Kantonian Raichu; the Alolan one is what Psytrice "
+        "in the Saffron City Pokemon Center hands over"
+    ),
+    "marowak-alola": (
+        "A Cubone raised in Kanto becomes the Kantonian Marowak; the Alolan one is Genmar's, in "
+        "the Fuchsia City Pokemon Center"
+    ),
+    "exeggutor-alola": (
+        "A Leaf Stone in Kanto makes the Kantonian Exeggutor; the Alolan one is what Exemann "
+        "trades for at the Pokemon League"
+    ),
+}
+
+#: The three entries in this Pokedex that neither half can produce, and why.
+#:
+#: One table for both, like the gifts and for the same reason: these two split nothing. Three of
+#: 153, and not one of them is the usual kind of answer - no distribution that closed, no
+#: species the other half kept back. Two of them are behind a phone and the third is behind a
+#: controller.
+#:
+#: **The GO Park is the question step 1 left here, and the answer is a reason rather than a
+#: record.** :func:`edges` sets out why it is not a route: Pokemon GO is not a game in this
+#: dataset, it has no Pokedex to fill and nothing in it is caught in the sense this tracker
+#: means. What that function went on to guess was that the park must therefore be an
+#: acquisition, "the same shape as an egg from an NPC". It is not, and the Pokemon Dream Radar
+#: is the precedent that settles it: a source that is not a game, sending one way into two
+#: cartridges and nowhere else, which :data:`unova.B2W2_UNOBTAINABLE` states as a reason while a
+#: Phase 3 item works out what shape such a thing should have. That item says in as many words
+#: that GO and the Radar want deciding together rather than one at a time. A GO Park shaped
+#: acquisition invented here would have decided it alone, for two species, in a schema the app
+#: draws pictures from.
+#:
+#: So the reason carries the whole truth instead, which is what a reason is for: a player is
+#: told exactly what to do, and nothing in the dataset claims Kanto contains a Meltan.
+UNOBTAINABLE: dict[str, str] = {
+    # Never in these games, and the one Mythical Pokemon here whose route is hardware. Not a
+    # distribution that ended: the code inside a Poke Ball Plus has been good since the day
+    # these games went on sale, the accessory is still sold, and there is one Mew in each one
+    # ever made. Step 7 looks at this wording again beside the rest of the events.
+    "mew": (
+        "Nothing in Kanto produces one: the only Mew here is the Mystery Gift redeemed with "
+        "the serial code inside a Poke Ball Plus, one per accessory ever made, open since the "
+        "day the games went on sale and never closed - and step 7 found it is the only Mystery "
+        "Gift these cartridges have ever been sent"
+    ),
+    "meltan": exclusives.with_event(
+        "Only through the GO Park: Pokemon GO sends into these two one way and into nothing "
+        "else, and GO is not a game in this dataset - it has no Pokedex to fill and nothing in "
+        "it is caught in the sense this tracker means. Doable today rather than closed, and it "
+        "closes its own circle: the Mystery Box that makes Meltan appear in GO is unlocked by "
+        "sending something to the GO Park in the first place",
+        only_in_china("meltan"),
+    ),
+    "melmetal": exclusives.with_event(
+        "Only through the GO Park, and it arrives already evolved: 400 Meltan Candy makes one "
+        "in Pokemon GO, where the Meltan has to be caught anyway, and nothing in Kanto can "
+        "evolve the Meltan that comes out of the park. Doable today rather than closed - the "
+        "park takes Kanto's 151, their Alolan forms, and these two",
+        only_in_china("melmetal"),
+    ),
+}
+
+
 
 def cartridge(
     *,
@@ -103,7 +607,7 @@ def cartridge(
     title: str,
     version: str,
     pair_partner: str,
-    sprite_set: str | None = None,
+    sprite_set: str | None = SPRITE_SET,
 ) -> Game:
     """One half of the pair, with everything the two of them agree about filled in.
 
@@ -125,6 +629,22 @@ def cartridge(
         pair_partner=pair_partner,
         sprite_set=sprite_set,
     )
+
+
+def unobtainable_in(game_id: str) -> dict[str, str]:
+    """Everything one half cannot produce: the three neither can, and the other half's six.
+
+    One function rather than a table per game, because the two halves disagree about nothing
+    else. :data:`UNOBTAINABLE` is the same three lines in both and :data:`ONLY_ON` is the same
+    six the other way round, so a table written out per half would be the same file twice with
+    two words swapped.
+    """
+    other = next(one for one in PAIR if one != game_id)
+
+    return {
+        **UNOBTAINABLE,
+        **{species: only_on(TITLE[other], event) for species, event in ONLY_ON[other].items()},
+    }
 
 
 def dex_entries(
@@ -172,9 +692,39 @@ def acquisition_methods(
 ) -> list[AcquisitionMethod]:
     """Every way to get something in one half of the pair.
 
-    One table so far, which is step 3's. A table left out is a step that has not been gathered
-    yet rather than a game with nothing to declare - :mod:`alola` says the same thing about the
-    same shape, and the gifts, the trades and the evolutions arrive as their steps run.
+    Two tables now, which are steps 3 and 4. A table left out is a step that has not been
+    gathered yet rather than a game with nothing to declare - :mod:`alola` says the same thing
+    about the same shape, and the trades and the evolutions arrive as their steps run.
+
+    Both halves pass the same gift table, which no pair before them could have done; see
+    :data:`GIFTS` for why, and for what these games did to the three starters.
+
+    **No eggs, and that is one of step 4's five things answered with nothing.** Every game from
+    Gold and Silver on has had a day care and something only it produces; these two are the
+    first core games since breeding was invented that have neither, which the module docstring
+    quotes Bulbapedia's list of firsts for. So there is no egg table to leave out and no baby
+    to be short of: nothing in this Pokedex hatches.
+
+    **And no trades, which is step 5's answer rather than a table not gathered yet.** There are
+    eight of them, one in each of seven Pokemon Centers and one in the Pokemon League lobby, and
+    Bulbapedia's in-game trade list for these two says what they are in a line: every one hands
+    over an Alolan form, and they are "the only way to obtain Alolan forms outside of GO Park or
+    trading with other players". Tatianna wants a Rattata for an Alolan Rattata in Cerulean City,
+    Higeo a Geodude in Vermilion, Diggette a Diglett in Lavender, Nicholice a Sandshrew in
+    Celadon, Psytrice a Raichu in Saffron, Genmar a Marowak in Fuchsia, Darko a Grimer in
+    Cinnabar - a Meowth in the other half - and Exemann an Exeggutor at the League. All eight can
+    be done over and over, which no trader in this dataset has ever allowed.
+
+    So they are step 8's, and that is the workflow's own answer rather than a dodge: a record
+    whose target is a form cannot be written before the game's form table says which forms it
+    has, :data:`forms.FORMS_NAMED_BY_THE_GAME` deliberately says these two have none until that
+    table is written out by hand, and "how each one is come by" is step 8's second bullet.
+    Writing them now would mean either naming forms nothing records - which the form reader
+    refuses, and rightly - or saying a Lass in Cerulean City swaps a Rattata for a Rattata.
+
+    **The cost of waiting is nothing a player can see.** All eight targets are species this half
+    already fills some other way, so not one of the 153 tiles depends on them. These are the
+    first in-game trades in the dataset that add no species to a living dex at all.
 
     The species asked about are the game's own 153 and not a National Dex slice, which is what
     :meth:`BuildContext.living_dex` does when a game has no National Dex to slice: these boxes
@@ -183,17 +733,50 @@ def acquisition_methods(
     """
     api = context.require_api()
     species = context.living_dex(through=None, entries=entries)
+    places = LocationNames(api, refresh=context.refresh)
 
-    return list(
-        wild_encounters(
+    return [
+        *wild_encounters(
             api,
             game_id=game_id,
             version=version,
             species=species,
             forms=context.forms_here(),
             refresh=context.refresh,
-        )
-    )
+            places=places,
+        ),
+        *gift_encounters(
+            api,
+            game_id=game_id,
+            version=version,
+            species=species,
+            details=GIFTS,
+            forms=context.forms_here(),
+            refresh=context.refresh,
+            places=places,
+        ),
+        *recorded_gifts(
+            game_id=game_id,
+            gifts=HANDED_OVER,
+            species=species,
+            citation=bulbapedia(SILPH_LAPRAS_PAGE, retrieved_on=date.today()),
+        ),
+        *trade_encounters(
+            game_id=game_id,
+            trades=traders(game_id),
+            citation=bulbapedia(TRADERS_PAGE, retrieved_on=date.today()),
+        ),
+        *evolution_encounters(
+            api,
+            game_id=game_id,
+            version_group=VERSION_GROUP,
+            species=species,
+            forms=context.forms_here(),
+            all_forms=context.forms,
+            excluded=NOT_AN_EVOLUTION_HERE,
+            refresh=context.refresh,
+        ),
+    ]
 
 
 def trade_edges(game_id: str) -> list[TransferEdge]:
@@ -267,12 +850,17 @@ def edges(game_id: str) -> list[TransferEdge]:
     Three, where an Alola cartridge brings five and a Generation 4 one brings eleven.
 
     **And one route that is deliberately not here: the GO Park.** Pokemon GO sends Kanto's 151,
-    their Alolan forms and Meltan into these games one way, into a complex of twenty parks that
-    replaced the Safari Zone in Fuchsia City, and it is the only way a player gets an Alolan
-    Rattata or a Meltan at all. It is not an edge because GO is not a game in this dataset and
-    should not be: it has no Pokedex to fill, nothing in it is caught in the sense this tracker
-    means, and :mod:`home` already writes down that decision for the same reason. What arrives
-    through the park is a way of obtaining a species in *these* games, which makes it step 4's
-    answer rather than a route between two entities - the same shape as an egg from an NPC.
+    their Alolan forms, Meltan and Melmetal into these games one way, into a complex of twenty
+    parks that replaced the Safari Zone in Fuchsia City, and it is the only way a player gets an
+    Alolan Rattata or a Meltan at all. It is not an edge because GO is not a game in this
+    dataset and should not be: it has no Pokedex to fill, nothing in it is caught in the sense
+    this tracker means, and :mod:`home` already writes down that decision for the same reason.
+
+    What this paragraph said next, before step 4 ran, was that the park must therefore be a way
+    of obtaining a species here - "the same shape as an egg from an NPC". It is not, and
+    :data:`UNOBTAINABLE` is where the working is: the Dream Radar is the same thing in Unova and
+    is written down as a reason, a Phase 3 item exists to give sources-that-are-not-games a
+    shape, and that item asks for GO and the Radar to be decided together. So the two species
+    only the park can bring carry a reason that says exactly how it is done.
     """
     return [*trade_edges(game_id), *home_edges(game_id)]

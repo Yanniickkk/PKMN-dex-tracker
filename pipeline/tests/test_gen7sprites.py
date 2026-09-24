@@ -14,7 +14,9 @@ from livingdex_pipeline.emit import DatasetWriter
 from livingdex_pipeline.gen7sprites import (
     ALOLA_SET,
     ARCHIVES,
+    ARCHIVES_SHEETS,
     LETS_GO,
+    LETS_GO_SET,
     SM,
     USUM,
     cropped,
@@ -172,6 +174,40 @@ def test_the_three_sheets_are_told_apart() -> None:
     assert (SM, USUM, LETS_GO) == ("7s", "7u", "7p")
 
 
+# --- and the second folder, which is the same rules with the sheet said out loud -----------------
+
+
+def test_lets_go_names_its_own_sheet_instead_of_letting_the_number_choose() -> None:
+    # Alola's four cartridges split across two sheets at SM_THROUGH, so there the number picks
+    # one. These two are one sheet from Bulbasaur to Melmetal - and Melmetal is 809, which is
+    # past the split and would otherwise have been asked for on Ultra Sun's.
+    assert species_names(1, sheet=LETS_GO)[0] == "Spr_7p_001.png"
+    assert species_names(809, sheet=LETS_GO)[0] == "Spr_7p_809.png"
+    assert species_names(809)[0] == "Spr_7u_809.png"
+
+
+def test_a_form_code_is_the_same_code_on_either_sheet() -> None:
+    # An Alolan Rattata is 019A wherever it is drawn, which is what makes one namer enough for
+    # both folders - and the reason a search that trusts the number finds the wrong picture.
+    assert form_names(19, form_id="rattata-alola", form_name="Alola", sheet=LETS_GO)[0] == (
+        "Spr_7p_019A.png"
+    )
+
+
+def test_what_ultra_sun_added_is_not_read_onto_another_sheet() -> None:
+    # USUM_FORMS is the four pictures those two added to Sun and Moon's sheet and says nothing
+    # about any other, so naming a sheet skips it rather than asking 7u for a Let's Go picture.
+    assert form_names(800, form_id="necrozma-dusk", form_name="Dusk") == ("Spr_7u_800DM.png",)
+    assert form_names(800, form_id="necrozma-dusk", form_name="Dusk", sheet=LETS_GO) == ()
+
+
+def test_the_two_folders_know_which_sheet_fills_them() -> None:
+    assert ARCHIVES_SHEETS[LETS_GO_SET] == LETS_GO
+    # Alola's is the one that works it out from the number, and nothing else does.
+    assert ARCHIVES_SHEETS[ALOLA_SET] is None
+    assert LETS_GO_SET != ALOLA_SET
+
+
 # --- asking for one ---------------------------------------------------------------------------
 
 
@@ -238,7 +274,7 @@ def test_a_sheet_already_in_the_dataset_opens_no_client(tmp_path: Path) -> None:
     build = Build(dataset_root=tmp_path, cache_root=tmp_path / "cache")
     build._forms = []
 
-    written = build._fetch_alola_set(ALOLA_SET, [alola_game()], species((19, "rattata")), writer)
+    written = build._fetch_archives_set(ALOLA_SET, [alola_game()], species((19, "rattata")), writer)
 
     assert written == [tmp_path / "sprites" / ALOLA_SET / "rattata.png"]
     # The Archives are the five-second host. A warm dataset must cost nothing, or nobody will
@@ -252,7 +288,8 @@ def test_the_sheet_reaches_as_far_as_the_widest_game_sharing_it(tmp_path: Path) 
     build._forms = []
     table = species((19, "rattata"), (805, "stakataka"), (810, "grookey"))
 
-    kept, outstanding = build._alola_names(
+    kept, outstanding = build._archives_names(
+        ALOLA_SET,
         [alola_game("sun", reach=802), alola_game("ultra-sun", reach=807)],
         table,
         writer,
@@ -277,7 +314,9 @@ def test_which_spelling_to_try_first_comes_out_of_the_form_table(tmp_path: Path)
         )
     ]
 
-    _, outstanding = build._alola_names([alola_game()], species((19, "rattata")), writer)
+    _, outstanding = build._archives_names(
+        ALOLA_SET, [alola_game()], species((19, "rattata")), writer
+    )
     planned = dict(outstanding)
 
     # A species drawn differently by sex is exactly one this dataset holds a female form for,

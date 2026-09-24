@@ -5,11 +5,21 @@ to the sixth and none for the seventh, so the four Alola cartridges have been dr
 set since they were written. The Archives have what is missing, under their own names and their
 own rules, and this module is those rules.
 
-**Three sheets, not two.** The wiki prefixes a Generation 7 sprite with the games it came from,
-and the three are ``7s`` for Sun and Moon, ``7u`` for Ultra Sun and Ultra Moon, and ``7p`` for
-Let's Go. That last one matters here only because it is easy to mistake for the second: a search
-that trusts the number finds ``Spr_7p_019A.png`` for an Alolan Rattata, which is a Let's Go
-picture at 800 pixels square, where the Alola cartridges' own is 240.
+**Three sheets, and now two folders.** The wiki prefixes a Generation 7 sprite with the games
+it came from, and the three are ``7s`` for Sun and Moon, ``7u`` for Ultra Sun and Ultra Moon,
+and ``7p`` for Let's Go. The last one was written down here before it was wanted, because it is
+easy to mistake for the second - a search that trusts the number finds ``Spr_7p_019A.png`` for
+an Alolan Rattata, which is a Let's Go picture at 800 pixels square where the Alola cartridges'
+own is 240. Step 6 of the Let's Go pair is when it stopped being a warning and became
+:data:`LETS_GO_SET`.
+
+**PokeAPI does have a Let's Go folder, and it is not usable.** It holds animated GIFs of the
+models - 384 pixels square, thirty to seventy-five frames, three quarters of a megabyte to two
+megabytes each, and named ``.gif`` where every other set in the repository is ``.png``. A
+hundred and fifty-three of those is a quarter of a gigabyte for a picture drawn at 56 pixels in
+a grid. Taking the first frame of each would work and would still be a pose out of an idle
+animation rather than the front-facing render the wiki keeps, so the Archives win the same
+argument twice.
 
 **Ultra Sun and Ultra Moon have no sheet of their own**, and that is a finding rather than a
 gap. Their category on the Archives holds 409 files against Sun and Moon's 1949, and what is in
@@ -64,6 +74,19 @@ LETS_GO = "7p"
 #: The folder under ``dataset/sprites`` that all four Alola cartridges draw from.
 ALOLA_SET = "generation-vii/alola"
 
+#: And the one the two Let's Go games draw from, which shares nothing with it but a generation.
+LETS_GO_SET = "generation-vii/lets-go"
+
+#: Which sheet a folder is filled from, for the sets that come off the Archives.
+#:
+#: ``None`` means "work it out from the number", which is Alola's rule and nobody else's: its
+#: four cartridges split across two sheets at :data:`SM_THROUGH`. Let's Go is one sheet from
+#: Bulbasaur to Melmetal.
+ARCHIVES_SHEETS: dict[str, str | None] = {
+    ALOLA_SET: None,
+    LETS_GO_SET: LETS_GO,
+}
+
 #: How far Sun and Moon's National Dex goes, and so how far their sheet does.
 #:
 #: Past this the second sheet is the only one there is: Poipole, Naganadel, Stakataka,
@@ -83,6 +106,11 @@ SM_THROUGH = 802
 FORM_CODES: dict[str, str] = {
     "Female": "_f",
     "Alola": "A",
+    # The Let's Go partner, which is drawn twice and has no plain name at all: the wiki keeps
+    # `Spr_7p_025P_m.png` and `Spr_7p_025P_f.png` and nothing between them. The same letter on
+    # the `7u` sheet is the Partner Cap Pikachu, which is a hat rather than a partner and is
+    # keyed by form id in :data:`USUM_FORMS` - one sheet apart, and they never meet.
+    "Partner": "P",
 }
 
 #: Everything Ultra Sun and Ultra Moon drew that Sun and Moon did not.
@@ -117,11 +145,13 @@ def media_url(file_name: str) -> str:
     return f"{ARCHIVES}/media/upload/{digest[0]}/{digest[:2]}/{file_name}"
 
 
-def species_names(number: int, *, sexed: bool = False) -> tuple[str, ...]:
+def species_names(number: int, *, sheet: str | None = None, sexed: bool = False) -> tuple[str, ...]:
     """What this species' front sprite might be called, likeliest first.
 
-    The sheet follows the number: everything through :data:`SM_THROUGH` is Sun and Moon's, and
-    the five past it are on Ultra Sun and Ultra Moon's because they are what those two added.
+    Without a ``sheet`` the number picks one, which is Alola's rule: everything through
+    :data:`SM_THROUGH` is Sun and Moon's, and the five past it are on Ultra Sun and Ultra Moon's
+    because they are what those two added. Let's Go passes its own and the number decides
+    nothing - ``7p`` drew all 153 of that Pokedex, Meltan and Melmetal included.
 
     ``sexed`` is what the form table already knows: a species drawn differently by sex has a
     ``-female`` form here, and on the wiki it has ``_m`` and ``_f`` and no plain name at all.
@@ -129,15 +159,27 @@ def species_names(number: int, *, sexed: bool = False) -> tuple[str, ...]:
     request rather than a picture - which is what saved Eevee, whose female PokeAPI records and
     whose Generation 7 sheet draws only once.
     """
-    sheet = SM if number <= SM_THROUGH else USUM
+    sheet = sheet or (SM if number <= SM_THROUGH else USUM)
     plain = f"Spr_{sheet}_{number:03d}.png"
     male = f"Spr_{sheet}_{number:03d}_m.png"
 
     return (male, plain) if sexed else (plain, male)
 
 
-def form_names(number: int, *, form_id: str, form_name: str) -> tuple[str, ...]:
+def form_names(
+    number: int,
+    *,
+    form_id: str,
+    form_name: str,
+    sheet: str | None = None,
+) -> tuple[str, ...]:
     """What this form's front sprite might be called. Empty when there is no picture to ask for.
+
+    A ``sheet`` given is a sheet used, and :data:`USUM_FORMS` is skipped along with it: that
+    table is the four pictures Ultra Sun and Ultra Moon added to Sun and Moon's sheet, and it
+    has nothing to say about any other. The codes themselves carry over - an Alolan Rattata is
+    ``019A`` on the Let's Go sheet as it is on Alola's - which is what makes one namer enough
+    for both.
 
     Empty covers two different things and neither is a fault. A Totem Pokemon and an Own Tempo
     Rockruff are drawn as the ordinary form and have no file of their own - checked on the wiki
@@ -146,31 +188,36 @@ def form_names(number: int, *, form_id: str, form_name: str) -> tuple[str, ...]:
     Both fall back to the shared set's picture of that form, which is the right Pokemon in
     another generation's style rather than a hole.
     """
-    if (usum := USUM_FORMS.get(form_id)) is not None:
+    if sheet is None and (usum := USUM_FORMS.get(form_id)) is not None:
         return (f"Spr_{USUM}_{number:03d}{usum}.png",)
 
     code = FORM_CODES.get(form_name)
     if code is None:
         return ()
 
+    on = sheet or SM
+
     if code.startswith("_"):
-        return (f"Spr_{SM}_{number:03d}{code}.png",)
+        return (f"Spr_{on}_{number:03d}{code}.png",)
 
     # A lettered form can itself be drawn twice - an Alolan Meowth is not, but nothing says a
     # later one could not be - so the plain spelling is tried first and the male second.
     return (
-        f"Spr_{SM}_{number:03d}{code}.png",
-        f"Spr_{SM}_{number:03d}{code}_m.png",
+        f"Spr_{on}_{number:03d}{code}.png",
+        f"Spr_{on}_{number:03d}{code}_m.png",
     )
 
 
 def cropped(body: bytes) -> bytes:
     """The same picture with the empty air around it taken off.
 
-    These are the only sprites in the dataset that arrive padded. The Archives put every
-    Generation 7 Pokemon in the same 240 pixel frame, at its true size relative to the others,
-    so a Wailord fills three fifths of it and a Pikachu a quarter - and the drawing inside is
-    the same 60 pixels across as the Generation 6 one, which comes with no padding at all.
+    These are the only sprites in the dataset that arrive padded, and both Generation 7 sheets
+    do it. The Archives put every Pokemon on a sheet in the same frame at its true size relative
+    to the others - 240 pixels square for Alola, 800 for Let's Go - so a Wailord fills three
+    fifths of it and a Pikachu a quarter. Alola's drawing inside is the same 60 pixels across as
+    the Generation 6 one, which comes with no padding at all; Let's Go's is a render of a model
+    and comes out between 150 and 500 pixels, which is the largest thing in this dataset and
+    still a tenth of what the frame claimed.
 
     In a grid that is one 56 pixel tile per Pokemon, ``object-fit: contain`` then draws that
     Pikachu at fourteen pixels beside a Kalos Pikachu at fifty-six. The relative sizing is real
