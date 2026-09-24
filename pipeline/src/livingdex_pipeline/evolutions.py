@@ -20,7 +20,7 @@ for a Shiny Stone that is four years away.
 from __future__ import annotations
 
 import logging
-from collections.abc import Container, Sequence
+from collections.abc import Container, Mapping, Sequence
 from dataclasses import dataclass, field
 
 import httpx
@@ -281,6 +281,7 @@ def evolution_encounters(
     species: Sequence[str],
     forms: Sequence[Form] = (),
     all_forms: Sequence[Form] = (),
+    excluded: Mapping[str, str] | None = None,
     refresh: bool = False,
 ) -> list[EvolutionAcquisition]:
     """Every evolution the given species can go through in one game.
@@ -297,16 +298,46 @@ def evolution_encounters(
     three cloaks since Diamond and Pearl. Taking one of those and dropping the rest is what this
     did until the forms table could tell them apart, and it cost every one of them a record.
 
+    **And "replaces" means what starts from the same form.** Ways are grouped by what is put in
+    as well as what comes out, because Generation 7 added a second Rattata rather than changing
+    the first: a Kantonian one still becomes a Kantonian Raticate and an Alolan one becomes an
+    Alolan Raticate, and the source says so in as many words - the newer detail names
+    ``rattata-alola`` as the form it requires. Three of the eighteen name no Alolan form at all,
+    and those three really are replacements: a Pikachu, a Cubone and an Exeggcute are one
+    Pokemon each and what the stone makes of them depends on where you are standing. Reading
+    every Alolan detail as a replacement is what left the Let's Go pair unable to evolve a
+    Kantonian Graveler, and Sun unable to evolve the Kantonian Rattata that Bank sends it.
+
+    **The newest way this game actually has**, which is not always the newest way. If every
+    variant at the top order is refused because it produces a form this game has not got, the
+    order below it is tried, and so on down. The Let's Go pair is why: a Thunder Stone in Alola
+    makes an Alolan Raichu, those two games are later than Alola and are Kanto, and taking the
+    newest rule and stopping left them unable to evolve a Pikachu at all. Ten of Kanto's lines
+    were missing the same way - Raichu, Ninetales, Persian, Sandslash, Dugtrio, Raticate, Golem,
+    Muk, Marowak and Exeggutor, which is exactly the list of species Alola drew a second time.
+    Nothing else in the dataset changes: a game old enough to be refused a form's rule is
+    already too old for it to be usable.
+
     ``forms`` is this game's own table and ``all_forms`` the whole one, and the difference
     between them is what is refused: a detail naming a form some other game has is a way this
     game does not have, while one naming a form nobody records is PokeAPI spelling out a
     default. Rockruff's Dusk Lycanroc is the first and Gastrodon's West Sea is the second.
+
+    ``species`` is asked of both ends. Every game before the Let's Go pair holds everything up
+    to its own National Dex number, so anything a species in the list evolves into is in the
+    list too; these two hold a fixed 153 and nothing else, and their Eevee would otherwise have
+    been recorded as producing an Espeon their boxes cannot hold.
+
+    ``excluded`` names a species this source says can be evolved into here and which cannot be,
+    with the reason - the same shape, and the same argument, as the one in :mod:`gifts`. A
+    Melmetal is 400 Meltan Candy in Pokemon GO and the chain does not say where that happens.
 
     Whether the thing that evolves is itself obtainable is not asked here. That is the
     ``no-evolution-dead-ends`` check's job, and it can see the whole dataset where this can only
     see one game.
     """
     wanted = set(species)
+    skip = excluded or {}
     here_forms = {one.id for one in forms}
     every_form = {one.id for one in all_forms} or here_forms
     chain_of = {name: api.evolution_chain(name, refresh=refresh) for name in species}
@@ -317,8 +348,27 @@ def evolution_encounters(
 
     found: list[EvolutionAcquisition] = []
 
-    for pair, choices in _by_pair(variants).items():
+    for (pair, _source), choices in _by_way(variants, every_form).items():
         if pair[0] not in wanted:
+            continue
+
+        # And what it becomes. A game whose boxes hold a list rather than everything up to a
+        # number can evolve something into what it cannot hold: the Let's Go pair's Eevee has
+        # five stones' worth of evolutions and three of them are in its Pokedex.
+        if pair[1] not in wanted:
+            log.info(
+                "%s does not evolve into %s in %s: that is not one of the species it holds",
+                pair[0],
+                pair[1],
+                game_id,
+            )
+            continue
+
+        not_here = skip.get(pair[1])
+        if not_here is not None:
+            log.info(
+                "%s does not evolve into %s in %s: %s", pair[0], pair[1], game_id, not_here
+            )
             continue
 
         usable = [variant for variant in choices if variant.order <= here]
@@ -331,40 +381,95 @@ def evolution_encounters(
             )
             continue
 
-        newest = max(one.order for one in usable)
-        told_apart: set[str | None] = set()
-
-        for variant in (one for one in usable if one.order == newest):
-            target = _target_here(variant, here_forms, every_form, game_id=game_id)
-            if target is None:
-                continue
-
-            # Two ways this game cannot tell apart are one way. It happens where a fork is real
-            # and nothing in this dataset records it yet: Rockruff becomes a Dusk Lycanroc only
-            # in Ultra Sun and Ultra Moon, and until those are built there is no
-            # ``lycanroc-dusk`` to refuse it by - so it lands on the plain Lycanroc that Sun's
-            # daytime evolution already produces. Keeping both would tell a Sun player to find
-            # a Rockruff with Own Tempo and wait for dusk, which Sun cannot do at all.
-            if target.form in told_apart:
-                log.info(
-                    "%s evolves into %s in %s more than one way, and this game cannot tell them "
-                    "apart",
-                    variant.from_species,
-                    target.species,
-                    game_id,
-                )
-                continue
-
-            told_apart.add(target.form)
-
-            found.append(
-                EvolutionAcquisition(
-                    game=game_id,
-                    target=target,
-                    rule=names[variant],
-                    source=_cited(api, f"{BASE_URL}/evolution-chain/{chain_of[pair[0]]}"),
-                )
+        # Newest first, and down a step whenever the whole of an order is refused for wanting a
+        # form this game has not got. See the docstring: the Let's Go pair is the only game in
+        # the dataset this reaches, and without it those two cannot evolve a Pikachu.
+        for order in sorted({one.order for one in usable}, reverse=True):
+            ways = _ways_at(
+                [one for one in usable if one.order == order],
+                api,
+                game_id=game_id,
+                here_forms=here_forms,
+                every_form=every_form,
+                names=names,
+                chain=chain_of[pair[0]],
+                skip=skip,
             )
+
+            if ways:
+                found.extend(ways)
+                break
+
+            log.info(
+                "%s does not evolve into %s the newest way in %s; trying an older one",
+                pair[0],
+                pair[1],
+                game_id,
+            )
+
+    return found
+
+
+def _ways_at(
+    variants: Sequence[_Variant],
+    api: PokeApiClient,
+    *,
+    game_id: str,
+    here_forms: Container[str],
+    every_form: Container[str],
+    names: Mapping[_Variant, str],
+    chain: str,
+    skip: Mapping[str, str],
+) -> list[EvolutionAcquisition]:
+    """Every way this game has at one version group's worth of rules, which is often none."""
+    told_apart: set[str | None] = set()
+    found: list[EvolutionAcquisition] = []
+
+    for variant in variants:
+        target = _target_here(variant, here_forms, every_form, game_id=game_id)
+        if target is None:
+            continue
+
+        # A form the game says it cannot make this way. Refusing it here rather than before the
+        # loop is what lets the order below be tried: a Thunder Stone in Kanto still makes a
+        # Raichu, and what it makes is the one the Kanto games have always made.
+        not_here = skip.get(target.form) if target.form else None
+        if not_here is not None:
+            log.info(
+                "%s does not evolve into %s in %s: %s",
+                variant.from_species,
+                target.form,
+                game_id,
+                not_here,
+            )
+            continue
+
+        # Two ways this game cannot tell apart are one way. It happens where a fork is real
+        # and nothing in this dataset records it yet: Rockruff becomes a Dusk Lycanroc only
+        # in Ultra Sun and Ultra Moon, and until those are built there is no
+        # ``lycanroc-dusk`` to refuse it by - so it lands on the plain Lycanroc that Sun's
+        # daytime evolution already produces. Keeping both would tell a Sun player to find
+        # a Rockruff with Own Tempo and wait for dusk, which Sun cannot do at all.
+        if target.form in told_apart:
+            log.info(
+                "%s evolves into %s in %s more than one way, and this game cannot tell them "
+                "apart",
+                variant.from_species,
+                target.species,
+                game_id,
+            )
+            continue
+
+        told_apart.add(target.form)
+
+        found.append(
+            EvolutionAcquisition(
+                game=game_id,
+                target=target,
+                rule=names[variant],
+                source=_cited(api, f"{BASE_URL}/evolution-chain/{chain}"),
+            )
+        )
 
     return found
 
@@ -684,9 +789,31 @@ def _other_trigger(slug: str, what: str) -> str:
 
 
 def _by_pair(variants: Sequence[_Variant]) -> dict[tuple[str, str], list[_Variant]]:
+    """Every variant of one pair of species together, which is what an id is unique within."""
     grouped: dict[tuple[str, str], list[_Variant]] = {}
     for variant in variants:
         grouped.setdefault(variant.pair, []).append(variant)
+
+    return grouped
+
+
+def _by_way(
+    variants: Sequence[_Variant],
+    every_form: Container[str],
+) -> dict[tuple[tuple[str, str], str | object | None], list[_Variant]]:
+    """The variants grouped by what a way starts from as well as what it ends at.
+
+    The source form is read the way :func:`_target_here` reads it, so that PokeAPI spelling a
+    default out - ``pikachu`` as the form a Pikachu must be in - groups with saying nothing.
+    What separates a group is a form something records: ``rattata-alola`` is one and the plain
+    Rattata is not, which is the whole of the difference between a second Pokemon and a rule
+    that changed.
+    """
+    grouped: dict[tuple[tuple[str, str], str | object | None], list[_Variant]] = {}
+
+    for variant in variants:
+        source = _form_in(variant.from_form, variant.from_fork, every_form)
+        grouped.setdefault((variant.pair, source), []).append(variant)
 
     return grouped
 

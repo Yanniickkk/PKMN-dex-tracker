@@ -23679,6 +23679,19 @@
       "kind": "evolution",
       "game": "ultra-sun",
       "target": {
+        "species": "dugtrio"
+      },
+      "rule": "diglett-to-dugtrio",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/21",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "ultra-sun",
+      "target": {
         "species": "dugtrio",
         "form": "dugtrio-alola"
       },
@@ -24405,6 +24418,19 @@
       "kind": "evolution",
       "game": "ultra-sun",
       "target": {
+        "species": "graveler"
+      },
+      "rule": "geodude-to-graveler",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/31",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "ultra-sun",
+      "target": {
         "species": "graveler",
         "form": "graveler-alola"
       },
@@ -24562,6 +24588,19 @@
       "kind": "evolution",
       "game": "ultra-sun",
       "target": {
+        "species": "golem"
+      },
+      "rule": "graveler-to-golem",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/31",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "ultra-sun",
+      "target": {
         "species": "golem",
         "form": "golem-alola"
       },
@@ -24569,6 +24608,19 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/31",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "ultra-sun",
+      "target": {
+        "species": "muk"
+      },
+      "rule": "grimer-to-muk",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/38",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -25428,6 +25480,19 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/152",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "ultra-sun",
+      "target": {
+        "species": "persian"
+      },
+      "rule": "meowth-to-persian",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/22",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -26350,6 +26415,19 @@
       "kind": "evolution",
       "game": "ultra-sun",
       "target": {
+        "species": "raticate"
+      },
+      "rule": "rattata-to-raticate",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/7",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "ultra-sun",
+      "target": {
         "species": "raticate",
         "form": "raticate-alola"
       },
@@ -26528,6 +26606,19 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/281",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "ultra-sun",
+      "target": {
+        "species": "sandslash"
+      },
+      "rule": "sandshrew-to-sandslash",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/11",
         "retrievedOn": "2026-09-22"
       }
     },
@@ -27726,6 +27817,19 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/320",
+        "retrievedOn": "2026-09-22"
+      }
+    },
+    {
+      "kind": "evolution",
+      "game": "ultra-sun",
+      "target": {
+        "species": "ninetales"
+      },
+      "rule": "vulpix-to-ninetales",
+      "source": {
+        "source": "pokeapi",
+        "url": "https://pokeapi.co/api/v2/evolution-chain/15",
         "retrievedOn": "2026-09-22"
       }
     },

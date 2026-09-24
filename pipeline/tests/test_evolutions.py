@@ -18,6 +18,7 @@ ORDER = {
     "diamond-pearl": 8,
     "black-white": 11,
     "sun-moon": 17,
+    "lets-go-pikachu-lets-go-eevee": 21,
 }
 
 
@@ -246,7 +247,9 @@ def test_an_evolution_from_a_later_generation_is_not_offered() -> None:
             api,
             game_id="emerald",
             version_group="emerald",
-            species=["roselia"],
+            # Roserade is asked about too, or this would be refused for not being one of the
+            # species this game holds and the version group would never be reached.
+            species=["roselia", "roserade"],
         )
         == []
     )
@@ -273,6 +276,218 @@ def test_a_species_the_game_does_not_have_evolves_into_nothing_here() -> None:
         )
         == []
     )
+
+
+def test_what_this_game_cannot_hold_is_no_way_to_get_anything_here() -> None:
+    # Eevee is in the Let's Go pair's 153 and Espeon is not, and those boxes hold the list and
+    # nothing else. Every game before them holds everything up to a number, so what a species
+    # in the living dex evolves into was always in it too.
+    api = FakeApi(
+        {
+            "eevee": {
+                "species": {"name": "eevee"},
+                "evolves_to": [
+                    link("espeon", [detail("level-up", "gold-silver", min_happiness=160)])
+                ],
+            }
+        },
+        species={"eevee": "eevee", "espeon": "eevee"},
+    )
+
+    assert (
+        evolution_encounters(
+            api,
+            game_id="lets-go-eevee",
+            version_group="lets-go-pikachu-lets-go-eevee",
+            species=["eevee"],
+        )
+        == []
+    )
+
+
+def test_a_game_can_name_an_evolution_the_chain_credits_it_with_and_it_has_not() -> None:
+    # A chain has no column for where its rule can be used. Meltan becomes Melmetal on 400
+    # Meltan Candy and that happens in Pokemon GO; the Let's Go pair receives the result through
+    # the GO Park and cannot do it. The same shape as a gift the source files under the wrong
+    # version, and named by the game rather than guessed at here.
+    api = FakeApi(
+        {
+            "meltan": {
+                "species": {"name": "meltan"},
+                "evolves_to": [link("melmetal", [detail("use-item", "sun-moon")])],
+            }
+        },
+        species={"meltan": "meltan", "melmetal": "meltan"},
+    )
+
+    def built(excluded: dict[str, str] | None) -> list:
+        return evolution_encounters(
+            api,
+            game_id="lets-go-pikachu",
+            version_group="lets-go-pikachu-lets-go-eevee",
+            species=["meltan", "melmetal"],
+            excluded=excluded,
+        )
+
+    assert [one.target.species for one in built(None)] == ["melmetal"]
+    assert built({"melmetal": "400 Meltan Candy in Pokemon GO"}) == []
+
+
+def raichu_api() -> FakeApi:
+    """One Thunder Stone, two things it has made of a Pikachu, twenty-two years apart."""
+    return FakeApi(
+        {
+            "pikachu": {
+                "species": {"name": "pikachu"},
+                "evolves_to": [
+                    link(
+                        "raichu",
+                        [
+                            detail("use-item", "red-blue", item={"name": "thunder-stone"}),
+                            detail(
+                                "use-item",
+                                "sun-moon",
+                                item={"name": "thunder-stone"},
+                                evolved_pokemon_form={"name": "raichu-alola"},
+                            ),
+                        ],
+                    )
+                ],
+            }
+        },
+        species={"pikachu": "pikachu", "raichu": "pikachu"},
+        varieties={"raichu": [("raichu", True), ("raichu-alola", False)]},
+    )
+
+
+def rattata_api() -> FakeApi:
+    """Generation 7 added a second Rattata rather than changing the first.
+
+    The source says so: the newer detail requires ``rattata-alola`` and produces
+    ``raticate-alola``, where the older requires nothing and produces the species.
+    """
+    return FakeApi(
+        {
+            "rattata": {
+                "species": {"name": "rattata"},
+                "evolves_to": [
+                    link(
+                        "raticate",
+                        [
+                            detail("level-up", "red-blue", min_level=20),
+                            detail(
+                                "level-up",
+                                "sun-moon",
+                                min_level=20,
+                                required_pokemon_form={"name": "rattata-alola"},
+                                evolved_pokemon_form={"name": "raticate-alola"},
+                            ),
+                        ],
+                    )
+                ],
+            }
+        },
+        species={"rattata": "rattata", "raticate": "rattata"},
+        varieties={
+            "rattata": [("rattata", True), ("rattata-alola", False)],
+            "raticate": [("raticate", True), ("raticate-alola", False)],
+        },
+    )
+
+
+def test_two_ways_that_start_from_different_forms_are_two_ways() -> None:
+    # A Kantonian Rattata still becomes a Kantonian Raticate and an Alolan one becomes an Alolan
+    # Raticate, and a game holding both holds both ways. Reading the newer detail as a
+    # replacement is what left the Let's Go pair unable to evolve a Kantonian Graveler.
+    forms = [
+        form("rattata-alola", "rattata", "lets-go-pikachu"),
+        form("raticate-alola", "raticate", "lets-go-pikachu"),
+    ]
+
+    methods = evolution_encounters(
+        rattata_api(),
+        game_id="lets-go-pikachu",
+        version_group="lets-go-pikachu-lets-go-eevee",
+        species=["rattata", "raticate"],
+        forms=forms,
+        all_forms=forms,
+    )
+
+    assert sorted(one.target.form or "-" for one in methods) == ["-", "raticate-alola"]
+
+
+def test_a_way_that_starts_from_the_same_form_is_still_replaced() -> None:
+    # The other side of it, and the reason this is not simply "keep everything": a Pikachu is
+    # one Pokemon, both details ask for that one Pokemon, and what a Thunder Stone makes of it
+    # in Alola is an Alolan Raichu and nothing else.
+    forms = [form("raichu-alola", "raichu", "sun")]
+
+    methods = evolution_encounters(
+        raichu_api(),
+        game_id="sun",
+        version_group="sun-moon",
+        species=["pikachu", "raichu"],
+        forms=forms,
+        all_forms=forms,
+    )
+
+    assert [one.target.form for one in methods] == ["raichu-alola"]
+
+
+def test_a_form_a_game_says_it_cannot_make_lets_the_older_way_through() -> None:
+    # Kanto is not Alola. The Let's Go pair holds the Alolan Raichu - a trader hands one over -
+    # so nothing about the form table refuses that rule, and only the game's own word does.
+    # What it falls back to is the Raichu a Thunder Stone has made since 1996.
+    forms = [form("raichu-alola", "raichu", "lets-go-pikachu")]
+
+    methods = evolution_encounters(
+        raichu_api(),
+        game_id="lets-go-pikachu",
+        version_group="lets-go-pikachu-lets-go-eevee",
+        species=["pikachu", "raichu"],
+        forms=forms,
+        all_forms=forms,
+        excluded={"raichu-alola": "a Thunder Stone in Kanto makes the Kantonian one"},
+    )
+
+    assert [one.target.form for one in methods] == [None]
+
+
+def test_the_newest_way_is_the_newest_way_this_game_has() -> None:
+    # The Let's Go pair is later than Alola and is Kanto: a Thunder Stone there makes the Raichu
+    # it made in 1996. Taking the newest rule and stopping left those two unable to evolve a
+    # Pikachu at all, and nine more of Kanto's lines with it - every species Alola drew twice.
+    methods = evolution_encounters(
+        raichu_api(),
+        game_id="lets-go-pikachu",
+        version_group="lets-go-pikachu-lets-go-eevee",
+        species=["pikachu", "raichu"],
+        # Step 8 has not written this pair's forms, and when it does an Alolan Raichu will not
+        # be among the ones a Thunder Stone makes here.
+        forms=[],
+        all_forms=[form("raichu-alola", "raichu", "sun")],
+    )
+
+    assert len(methods) == 1
+    assert methods[0].target.species == "raichu"
+    assert methods[0].target.form is None
+
+
+def test_a_game_that_does_have_the_newest_ways_form_still_gets_it() -> None:
+    # The other side of the same rule: Alola has the Alolan Raichu, so nothing falls back and a
+    # Thunder Stone there makes no Kantonian one.
+    forms = [form("raichu-alola", "raichu", "sun")]
+
+    methods = evolution_encounters(
+        raichu_api(),
+        game_id="sun",
+        version_group="sun-moon",
+        species=["pikachu", "raichu"],
+        forms=forms,
+        all_forms=forms,
+    )
+
+    assert [one.target.form for one in methods] == ["raichu-alola"]
 
 
 # --- forms: which Pokemon a way of evolving produces ------------------------------------------
