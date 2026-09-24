@@ -20,7 +20,7 @@ for a Shiny Stone that is four years away.
 from __future__ import annotations
 
 import logging
-from collections.abc import Sequence
+from collections.abc import Container, Sequence
 from dataclasses import dataclass, field
 
 import httpx
@@ -31,6 +31,7 @@ from .models import (
     EvolutionCondition,
     EvolutionRule,
     EvolutionTrigger,
+    Form,
     FriendshipCondition,
     GenderCondition,
     HeldItemCondition,
@@ -91,9 +92,12 @@ PHYSICAL_STATS: dict[int, str] = {
 #: PokeAPI's gender numbers.
 GENDERS: dict[int, str] = {1: "female", 2: "male"}
 
-#: Details about forms, which the forms table does not carry yet, and internals a player has no
-#: way to act on. Skipped without a word, because logging "eevee must be an eevee" eight times
-#: per chain buries the details that do matter.
+#: Internals a player has no way to act on. Skipped without a word.
+#:
+#: The two form fields used to be here, with a note that the forms table did not carry them
+#: yet. It does now, and they turned out to be carrying most of Generation 7: it is
+#: ``evolved_pokemon_form`` that says a Thunder Stone in Alola makes an *Alolan* Raichu, and
+#: ``required_pokemon_form`` that says only an Alolan Vulpix takes the Ice Stone.
 IGNORED_DETAILS = frozenset(
     {
         "trigger",
@@ -128,6 +132,41 @@ class VersionGroups:
 
 
 @dataclass
+class Varieties:
+    """Species -> the Pokemon of it that are not the default, remembering what it has been asked.
+
+    The whole of telling PokeAPI's two kinds of form name apart. ``evolved_pokemon_form`` points
+    at a *form* resource, and the source has a form for the default as readily as for anything
+    else: the ordinary Lycanroc is ``lycanroc-midday``, the ordinary Gastrodon is
+    ``gastrodon-west``, the ordinary Burmy is ``burmy-plant``. None of those is a second
+    Pokemon, and none of them is a form this project records.
+
+    A name that is also one of the species' non-default Pokemon is the other kind, and that one
+    is a real fork in the chain: ``lycanroc-midnight``, ``gastrodon-east``, ``raichu-alola``.
+    The distinction cannot be made by looking at the name - ``lycanroc-midday`` and
+    ``lycanroc-midnight`` are spelled the same way - which is why this asks the source.
+    """
+
+    api: PokeApiClient
+    refresh: bool = False
+    _cache: dict[str, frozenset[str]] = field(default_factory=dict)
+
+    def has(self, species: str, name: str | None) -> bool:
+        """Whether this name is one of the species' other Pokemon rather than a form of its one."""
+        return name is not None and name in self.of(species)
+
+    def of(self, species: str) -> frozenset[str]:
+        if species not in self._cache:
+            self._cache[species] = frozenset(
+                name
+                for name, is_default in self.api.varieties(species, refresh=self.refresh)
+                if not is_default
+            )
+
+        return self._cache[species]
+
+
+@dataclass
 class EnglishNames:
     """Slug -> the name a player would read, for whatever resource it belongs to."""
 
@@ -146,7 +185,21 @@ class EnglishNames:
 
 @dataclass(frozen=True)
 class _Variant:
-    """One way of evolving, and the version group it started in."""
+    """One way of evolving, and the version group it started in.
+
+    ``from_form`` and ``to_form`` are what PokeAPI's two form fields said, raw: a *form* name,
+    which is not the same thing as a Pokemon name. ``from_fork`` and ``to_fork`` say whether
+    that name is also one of the species' other Pokemon, which is the source's own line between
+    two quite different things wearing the same spelling.
+
+    Both are needed, and one without the other gets it wrong. ``gastrodon-east`` is a form of
+    the only Gastrodon there is, so the fork flag is false and it is still a form worth naming.
+    ``lycanroc-midday`` is a form of the only default Lycanroc, the flag is false too, and it is
+    *not* worth naming - it is the species. What separates them is whether anything in this
+    project records the form. And ``lycanroc-dusk`` is a second Pokemon that this project may
+    record nowhere at all, which is neither of the first two cases and must not quietly become
+    the plain Lycanroc.
+    """
 
     from_species: str
     to_species: str
@@ -154,6 +207,10 @@ class _Variant:
     order: int
     trigger: EvolutionTrigger
     conditions: tuple[EvolutionCondition, ...]
+    from_form: str | None = None
+    to_form: str | None = None
+    from_fork: bool = False
+    to_fork: bool = False
 
     @property
     def pair(self) -> tuple[str, str]:
@@ -164,6 +221,7 @@ def evolution_rules(
     api: PokeApiClient,
     *,
     chains: Sequence[str],
+    forms: Sequence[Form] = (),
     refresh: bool = False,
 ) -> list[EvolutionRule]:
     """Every rule in the chains given, across every generation.
@@ -172,20 +230,42 @@ def evolution_rules(
     points at the variant it can use, and the two Feebas rules sitting side by side are what
     makes "trade holding a Prism Scale" visible as something later games do rather than as
     something Emerald forgot.
+
+    ``forms`` is the whole form table, not one game's. A rule is a fact about the series - the
+    Ice Stone turns an Alolan Vulpix into an Alolan Ninetales whoever is asking - so what is
+    filtered here is only PokeAPI's habit of naming a default form, and never which game has it.
     """
+    known = {one.id for one in forms}
     variants = _all_variants(api, chains=chains, refresh=refresh)
-    names = _name_of(variants)
+    names = _name_of(variants, known)
 
     return [
         EvolutionRule(
             id=names[variant],
-            **{"from": DexTarget(species=variant.from_species)},
-            to=DexTarget(species=variant.to_species),
+            **{
+                "from": _target(
+                    variant.from_species, variant.from_form, variant.from_fork, known
+                )
+            },
+            to=_target(variant.to_species, variant.to_form, variant.to_fork, known),
             trigger=variant.trigger,
             conditions=list(variant.conditions),
         )
         for variant in variants
     ]
+
+
+def _target(species: str, form: str | None, fork: bool, known: Container[str]) -> DexTarget:
+    """One end of a rule, named as a form only where the form is one this project records.
+
+    A real fork this project has no form for - a Generation 9 one, say, while the table stops
+    earlier - leaves the rule about the species. That is the same answer the rule had before
+    forms were read at all, which is what makes this safe to add underneath games already
+    written. Which games may *use* such a rule is :func:`_target_here`'s stricter question.
+    """
+    found = _form_in(form, fork, known)
+
+    return DexTarget(species=species, form=found if isinstance(found, str) else None)
 
 
 def _cited(api: PokeApiClient, url: str) -> SourceCitation:
@@ -199,22 +279,39 @@ def evolution_encounters(
     game_id: str,
     version_group: str,
     species: Sequence[str],
+    forms: Sequence[Form] = (),
+    all_forms: Sequence[Form] = (),
     refresh: bool = False,
 ) -> list[EvolutionAcquisition]:
     """Every evolution the given species can go through in one game.
 
     One record per evolution that works here, pointing at the rule it uses. A pair with several
-    variants contributes the newest one this game is old enough for, and nothing at all when
+    variants contributes the newest ones this game is old enough for, and nothing at all when
     every variant came later.
+
+    **The newest, plural.** A later generation changing how something evolves replaces the older
+    way - a Thunder Stone in Alola makes an Alolan Raichu and no longer a Kantonian one - so
+    only the newest version group counts. But several ways can start *together*, and then they
+    are different evolutions rather than one superseding another: a Rockruff becomes a Midday
+    Lycanroc by day and a Midnight one by night, both in Sun and Moon, and Wormadam has worn
+    three cloaks since Diamond and Pearl. Taking one of those and dropping the rest is what this
+    did until the forms table could tell them apart, and it cost every one of them a record.
+
+    ``forms`` is this game's own table and ``all_forms`` the whole one, and the difference
+    between them is what is refused: a detail naming a form some other game has is a way this
+    game does not have, while one naming a form nobody records is PokeAPI spelling out a
+    default. Rockruff's Dusk Lycanroc is the first and Gastrodon's West Sea is the second.
 
     Whether the thing that evolves is itself obtainable is not asked here. That is the
     ``no-evolution-dead-ends`` check's job, and it can see the whole dataset where this can only
     see one game.
     """
     wanted = set(species)
+    here_forms = {one.id for one in forms}
+    every_form = {one.id for one in all_forms} or here_forms
     chain_of = {name: api.evolution_chain(name, refresh=refresh) for name in species}
     variants = _all_variants(api, chains=sorted(set(chain_of.values())), refresh=refresh)
-    names = _name_of(variants)
+    names = _name_of(variants, every_form)
     groups = VersionGroups(api, refresh=refresh)
     here = groups.order_of(version_group)
 
@@ -234,20 +331,85 @@ def evolution_encounters(
             )
             continue
 
-        # The newest way that exists yet. A later generation changing how something evolves
-        # replaces the older way rather than adding to it.
-        variant = max(usable, key=lambda one: one.order)
+        newest = max(one.order for one in usable)
+        told_apart: set[str | None] = set()
 
-        found.append(
-            EvolutionAcquisition(
-                game=game_id,
-                target=DexTarget(species=variant.to_species),
-                rule=names[variant],
-                source=_cited(api, f"{BASE_URL}/evolution-chain/{chain_of[pair[0]]}"),
+        for variant in (one for one in usable if one.order == newest):
+            target = _target_here(variant, here_forms, every_form, game_id=game_id)
+            if target is None:
+                continue
+
+            # Two ways this game cannot tell apart are one way. It happens where a fork is real
+            # and nothing in this dataset records it yet: Rockruff becomes a Dusk Lycanroc only
+            # in Ultra Sun and Ultra Moon, and until those are built there is no
+            # ``lycanroc-dusk`` to refuse it by - so it lands on the plain Lycanroc that Sun's
+            # daytime evolution already produces. Keeping both would tell a Sun player to find
+            # a Rockruff with Own Tempo and wait for dusk, which Sun cannot do at all.
+            if target.form in told_apart:
+                log.info(
+                    "%s evolves into %s in %s more than one way, and this game cannot tell them "
+                    "apart",
+                    variant.from_species,
+                    target.species,
+                    game_id,
+                )
+                continue
+
+            told_apart.add(target.form)
+
+            found.append(
+                EvolutionAcquisition(
+                    game=game_id,
+                    target=target,
+                    rule=names[variant],
+                    source=_cited(api, f"{BASE_URL}/evolution-chain/{chain_of[pair[0]]}"),
+                )
             )
-        )
 
     return found
+
+
+def _target_here(
+    variant: _Variant,
+    here: Container[str],
+    every: Container[str],
+    *,
+    game_id: str,
+) -> DexTarget | None:
+    """What this evolution produces in this game, or nothing when it does not happen here.
+
+    Both ends are asked. What it turns into has to be something this game holds, and so does
+    what it turns *from*: only an Alolan Vulpix takes the Ice Stone, and a game with no Alolan
+    Vulpix has no use for the rule however much it may like the stone.
+    """
+    ends = (
+        (variant.from_form, variant.from_fork, "from"),
+        (variant.to_form, variant.to_fork, "into"),
+    )
+
+    for name, fork, which in ends:
+        found = _form_in(name, fork, every)
+
+        if found is None:
+            # The species, under whatever name the source spells it. Nothing to refuse.
+            continue
+
+        if found is _UNRECORDED or name not in here:
+            log.info(
+                "%s does not evolve %s %s in %s: that form is not in this game",
+                variant.from_species,
+                which,
+                name,
+                game_id,
+            )
+            return None
+
+    produced = _form_in(variant.to_form, variant.to_fork, here)
+
+    return DexTarget(
+        species=variant.to_species,
+        form=produced if isinstance(produced, str) else None,
+    )
 
 
 def _all_variants(
@@ -259,6 +421,7 @@ def _all_variants(
     """Every variant in every chain given, in a fixed order so ids do not move between builds."""
     groups = VersionGroups(api, refresh=refresh)
     names = EnglishNames(api, refresh=refresh)
+    varieties = Varieties(api, refresh=refresh)
     variants: list[_Variant] = []
 
     for chain_id in sorted(set(chains)):
@@ -270,7 +433,13 @@ def _all_variants(
             log.warning("no evolution chain %s: %s", chain_id, error)
             continue
 
-        _walk(chain.get("chain"), groups=groups, names=names, into=variants)
+        _walk(
+            chain.get("chain"),
+            groups=groups,
+            names=names,
+            varieties=varieties,
+            into=variants,
+        )
 
     # Two details a player could not tell apart are one way of evolving, however many times the
     # source lists them. Left in, they would each want the same id.
@@ -279,7 +448,14 @@ def _all_variants(
     return sorted(seen, key=lambda one: (one.from_species, one.to_species, one.order))
 
 
-def _walk(node: dict | None, *, groups: VersionGroups, names: EnglishNames, into: list) -> None:
+def _walk(
+    node: dict | None,
+    *,
+    groups: VersionGroups,
+    names: EnglishNames,
+    varieties: Varieties,
+    into: list,
+) -> None:
     if not node:
         return
 
@@ -294,10 +470,46 @@ def _walk(node: dict | None, *, groups: VersionGroups, names: EnglishNames, into
                     detail=detail,
                     groups=groups,
                     names=names,
+                    varieties=varieties,
                 )
             )
 
-        _walk(child, groups=groups, names=names, into=into)
+        _walk(child, groups=groups, names=names, varieties=varieties, into=into)
+
+
+def _named(field_value: dict | None) -> str | None:
+    """What one of PokeAPI's two form fields said, if it said anything."""
+    return (field_value or {}).get("name")
+
+
+#: A real fork in the chain that nothing in this project records, which is not a way to get
+#: anything here and is not the species either.
+_UNRECORDED = object()
+
+
+def _form_in(name: str | None, fork: bool, known: Container[str]) -> str | object | None:
+    """Which form a detail names, as far as ``known`` is concerned. Three answers.
+
+    ``None`` is the species: either the detail said nothing, or it named what PokeAPI calls the
+    default form of the only Pokemon there is - ``gastrodon-west``, ``lycanroc-midday``,
+    ``burmy-plant``, ``flabebe-red``. Those are spellings, not choices.
+
+    A form id is one this project records, whether it is a second Pokemon (``lycanroc-midnight``)
+    or a form of the one (``gastrodon-east``). PokeAPI keeps those two in different places and
+    the difference does not matter here.
+
+    :data:`_UNRECORDED` is the third, and it only happens to a real second Pokemon: a fork this
+    project has no form for. Rockruff becomes a Dusk Lycanroc off a Rockruff with Own Tempo,
+    both of which belong to games this dataset has not built - and neither one may be silently
+    read as "a Rockruff becomes a Lycanroc", which is a thing Sun can do and this is not.
+    """
+    if name is None:
+        return None
+
+    if name in known:
+        return name
+
+    return _UNRECORDED if fork else None
 
 
 def _variant(
@@ -307,6 +519,7 @@ def _variant(
     detail: dict,
     groups: VersionGroups,
     names: EnglishNames,
+    varieties: Varieties,
 ) -> _Variant:
     trigger_slug = detail.get("trigger", {}).get("name", "other")
     group = (detail.get("version_group") or {}).get("name")
@@ -314,6 +527,10 @@ def _variant(
     return _Variant(
         from_species=from_species,
         to_species=to_species,
+        from_form=_named(detail.get("required_pokemon_form")),
+        to_form=_named(detail.get("evolved_pokemon_form")),
+        from_fork=varieties.has(from_species, _named(detail.get("required_pokemon_form"))),
+        to_fork=varieties.has(to_species, _named(detail.get("evolved_pokemon_form"))),
         # A detail with no version group is one PokeAPI cannot place; treating it as the
         # oldest keeps it usable everywhere rather than nowhere.
         version_group=group or "unknown",
@@ -474,7 +691,9 @@ def _by_pair(variants: Sequence[_Variant]) -> dict[tuple[str, str], list[_Varian
     return grouped
 
 
-def _name_of(variants: Sequence[_Variant]) -> dict[_Variant, str]:
+def _name_of(variants: Sequence[_Variant], known: Container[str] = frozenset()) -> dict[
+    _Variant, str
+]:
     """A stable id per variant.
 
     ``kadabra-to-alakazam`` while there is one way to do it, which is nearly always. A pair with
@@ -482,23 +701,36 @@ def _name_of(variants: Sequence[_Variant]) -> dict[_Variant, str]:
     sapphire`` beside ``feebas-to-milotic-black-white`` - rather than one of them holding the
     plain id and the rest looking like afterthoughts.
 
-    Two variants that started in the same version group would collide, so the second and any
-    after it are numbered. An id has to be unique before it has to be pretty: it is what a game
-    file points at.
+    Where the variants differ by what they produce rather than by when, the form is what tells
+    them apart: ``rockruff-to-lycanroc-midnight`` beside ``rockruff-to-lycanroc``. Both started
+    in the same version group, so naming them after it would have collided and numbered one of
+    them, and a numbered id says nothing about which way of evolving it is.
+
+    Two variants that still collide are numbered. An id has to be unique before it has to be
+    pretty: it is what a game file points at.
     """
     grouped = _by_pair(variants)
     names: dict[_Variant, str] = {}
     taken: set[str] = set()
 
     for (from_species, to_species), choices in grouped.items():
-        base = f"{from_species}-to-{to_species}"
-
         for variant in choices:
-            wanted = base if len(choices) == 1 else f"{base}-{variant.version_group}"
+            named = _named_as(variant, known, to_species)
+            base = f"{from_species}-to-{named}"
+            same = [one for one in choices if _named_as(one, known, to_species) == named]
+
+            wanted = base if len(same) == 1 else f"{base}-{variant.version_group}"
             names[variant] = _free(wanted, taken)
             taken.add(names[variant])
 
     return names
+
+
+def _named_as(variant: _Variant, known: Container[str], to_species: str) -> str:
+    """What an id calls the thing this variant produces: its form, or else its species."""
+    found = _form_in(variant.to_form, variant.to_fork, known)
+
+    return found if isinstance(found, str) else to_species
 
 
 def _free(wanted: str, taken: set[str]) -> str:

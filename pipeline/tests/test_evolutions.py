@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import date
 
 from livingdex_pipeline.evolutions import evolution_encounters, evolution_rules
-from livingdex_pipeline.models import EvolutionTrigger
+from livingdex_pipeline.models import EvolutionTrigger, Form, FormKind
 
 RETRIEVED_ON = date(2026, 9, 21)
 
@@ -17,6 +17,7 @@ ORDER = {
     "emerald": 6,
     "diamond-pearl": 8,
     "black-white": 11,
+    "sun-moon": 17,
 }
 
 
@@ -35,13 +36,28 @@ def detail(trigger: str, version_group: str, **rest) -> dict:
 class FakeApi:
     """Answers chain, version-group and name lookups out of a dict."""
 
-    def __init__(self, chains: dict[str, dict], species: dict[str, str] | None = None) -> None:
+    def __init__(
+        self,
+        chains: dict[str, dict],
+        species: dict[str, str] | None = None,
+        varieties: dict[str, list[tuple[str, bool]]] | None = None,
+    ) -> None:
         self._chains = chains
         self._species = species or {}
+        self._varieties = varieties or {}
 
     def retrieved_on(self, url: str) -> date:
         """The day the cache says this url was fetched, which a citation carries."""
         return RETRIEVED_ON
+
+    def varieties(self, species: str, *, refresh: bool = False) -> list[tuple[str, bool]]:
+        """Which Pokemon a species is. One, and it is the default, unless a test says otherwise.
+
+        The default matters here rather than being scenery: it is how a form name that is really
+        PokeAPI spelling out a default - ``lycanroc-midday`` - is told from one that is a second
+        Pokemon, and a species with no second Pokemon can have neither.
+        """
+        return self._varieties.get(species, [(species, True)])
 
     def evolution_chain(self, species: str, *, refresh: bool = False) -> str:
         return self._species.get(species, next(iter(self._chains)))
@@ -257,3 +273,203 @@ def test_a_species_the_game_does_not_have_evolves_into_nothing_here() -> None:
         )
         == []
     )
+
+
+# --- forms: which Pokemon a way of evolving produces ------------------------------------------
+
+
+def form(form_id: str, species: str, *games: str) -> Form:
+    return Form(id=form_id, species=species, name=form_id, kind=FormKind.REGIONAL, games=games)
+
+
+def lycanroc_api() -> FakeApi:
+    """Rockruff's three Lycanroc, which all start in the same version group.
+
+    The shape that made this worth writing: they are not one way replacing another, they are
+    three ways that arrived together, and picking the newest picks all three.
+    """
+    return FakeApi(
+        {
+            "rockruff": {
+                "species": {"name": "rockruff"},
+                "evolves_to": [
+                    link(
+                        "lycanroc",
+                        [
+                            detail(
+                                "level-up",
+                                "sun-moon",
+                                min_level=25,
+                                time_of_day="day",
+                                evolved_pokemon_form={"name": "lycanroc-midday"},
+                            ),
+                            detail(
+                                "level-up",
+                                "sun-moon",
+                                min_level=25,
+                                time_of_day="night",
+                                evolved_pokemon_form={"name": "lycanroc-midnight"},
+                            ),
+                            detail(
+                                "level-up",
+                                "sun-moon",
+                                min_level=25,
+                                required_pokemon_form={"name": "rockruff-own-tempo"},
+                                evolved_pokemon_form={"name": "lycanroc-dusk"},
+                            ),
+                        ],
+                    )
+                ],
+            }
+        },
+        varieties={
+            "lycanroc": [
+                ("lycanroc", True),
+                ("lycanroc-midnight", False),
+                ("lycanroc-dusk", False),
+            ],
+            "rockruff": [("rockruff", True), ("rockruff-own-tempo", False)],
+        },
+    )
+
+
+def test_ways_that_start_together_are_all_kept() -> None:
+    """One replaces another only when it is newer. Three at once are three evolutions."""
+    methods = evolution_encounters(
+        lycanroc_api(),
+        game_id="ultra-sun",
+        version_group="sun-moon",
+        species=["rockruff", "lycanroc"],
+        forms=[
+            form("lycanroc-midnight", "lycanroc", "ultra-sun"),
+            form("lycanroc-dusk", "lycanroc", "ultra-sun"),
+            form("rockruff-own-tempo", "rockruff", "ultra-sun"),
+        ],
+        all_forms=[
+            form("lycanroc-midnight", "lycanroc", "ultra-sun"),
+            form("lycanroc-dusk", "lycanroc", "ultra-sun"),
+            form("rockruff-own-tempo", "rockruff", "ultra-sun"),
+        ],
+    )
+
+    assert [one.target.form for one in methods] == [
+        None,
+        "lycanroc-midnight",
+        "lycanroc-dusk",
+    ]
+
+
+def test_a_form_another_game_has_is_not_a_way_here() -> None:
+    """Sun reads Ultra Sun's chain and must not be told to do what only Ultra Sun can."""
+    forms = [
+        form("lycanroc-midnight", "lycanroc", "sun", "ultra-sun"),
+        form("lycanroc-dusk", "lycanroc", "ultra-sun"),
+        form("rockruff-own-tempo", "rockruff", "ultra-sun"),
+    ]
+
+    methods = evolution_encounters(
+        lycanroc_api(),
+        game_id="sun",
+        version_group="sun-moon",
+        species=["rockruff", "lycanroc"],
+        forms=[one for one in forms if "sun" in one.games],
+        all_forms=forms,
+    )
+
+    assert [one.target.form for one in methods] == [None, "lycanroc-midnight"]
+
+
+def test_a_game_with_no_form_table_reads_as_it_always_did() -> None:
+    """Every fork lands on the species, and the three of them are one record rather than three.
+
+    The case a game written before any of this has to keep working in: no forms passed, so
+    nothing can be told apart, and what comes out is the single Lycanroc record that came out
+    before. ``lycanroc-midday`` does not become a form on its own account either - it is
+    PokeAPI's name for the default, which is the species.
+    """
+    methods = evolution_encounters(
+        lycanroc_api(),
+        game_id="sun",
+        version_group="sun-moon",
+        species=["rockruff", "lycanroc"],
+    )
+
+    assert len(methods) == 1
+    assert methods[0].target.species == "lycanroc"
+    assert methods[0].target.form is None
+
+
+def test_a_rule_names_the_form_it_produces() -> None:
+    rules = evolution_rules(
+        lycanroc_api(),
+        chains=["rockruff"],
+        forms=[
+            form("lycanroc-midnight", "lycanroc", "sun"),
+            form("lycanroc-dusk", "lycanroc", "ultra-sun"),
+            form("rockruff-own-tempo", "rockruff", "ultra-sun"),
+        ],
+    )
+
+    by_id = {one.id: one for one in rules}
+
+    assert by_id["rockruff-to-lycanroc-midnight"].to.form == "lycanroc-midnight"
+    assert by_id["rockruff-to-lycanroc-dusk"].from_.form == "rockruff-own-tempo"
+    # The one whose form is PokeAPI spelling out a default keeps the plain id and no form.
+    assert by_id["rockruff-to-lycanroc"].to.form is None
+
+
+def shellos_api() -> FakeApi:
+    """Shellos's two seas, which are one Pokemon wearing two forms.
+
+    The other shape, and the one that made the first attempt at this wrong. A Midnight Lycanroc
+    is a second Pokemon; an East Sea Shellos is not, and PokeAPI gives the ordinary one a form
+    name too - ``shellos-west``. So "is it another Pokemon" cannot be the whole test, and
+    neither can "does the name look like a form".
+    """
+    return FakeApi(
+        {
+            "shellos": {
+                "species": {"name": "shellos"},
+                "evolves_to": [
+                    link(
+                        "gastrodon",
+                        [
+                            detail(
+                                "level-up",
+                                "diamond-pearl",
+                                min_level=30,
+                                required_pokemon_form={"name": "shellos-west"},
+                                evolved_pokemon_form={"name": "gastrodon-west"},
+                            ),
+                            detail(
+                                "level-up",
+                                "diamond-pearl",
+                                min_level=30,
+                                required_pokemon_form={"name": "shellos-east"},
+                                evolved_pokemon_form={"name": "gastrodon-east"},
+                            ),
+                        ],
+                    )
+                ],
+            }
+        }
+    )
+
+
+def test_a_form_with_no_pokemon_of_its_own_is_still_a_form() -> None:
+    """Both seas, and the West one under the species it is the default of."""
+    forms = [
+        form("shellos-east", "shellos", "diamond"),
+        form("gastrodon-east", "gastrodon", "diamond"),
+    ]
+
+    methods = evolution_encounters(
+        shellos_api(),
+        game_id="diamond",
+        version_group="diamond-pearl",
+        species=["shellos", "gastrodon"],
+        forms=forms,
+        all_forms=forms,
+    )
+
+    assert [one.target.form for one in methods] == [None, "gastrodon-east"]

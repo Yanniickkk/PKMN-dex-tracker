@@ -1083,6 +1083,8 @@ def acquisition_methods(
                 game_id=game_id,
                 version_group=version_group,
                 species=species,
+                forms=context.forms_here(),
+                all_forms=context.forms,
                 refresh=context.refresh,
             )
         )

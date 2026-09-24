@@ -255,16 +255,10 @@ def only_on(partner: str, event: str | None = None) -> str:
 def fossil_only_on(partner: str, fossil: str, event: str | None = None) -> str:
     """Why the fossil Pokemon of the other half is not in this one.
 
-    Not quite a plain exclusive. The Underground of one half holds the Skull Fossil and the
-    other the Armor Fossil, and a fossil is an item: it can come across held by a traded
-    Pokemon, and be revived here. So there are two ways over the link rather than one, and a
-    player who cannot find anyone with a spare Cranidos still has the other.
+    The sentence is :func:`exclusives.fossil_only_on`'s, with this generation filled in. It was
+    written here about the Underground's two and moved out when Alola's shop sold four.
     """
-    return exclusives.with_event(
-        f"{partner} only in Generation {GENERATION}; trade one in, or trade for a Pokemon "
-        f"holding the {fossil} and revive that",
-        event,
-    )
+    return exclusives.fossil_only_on(partner, fossil, generation=GENERATION, event=event)
 
 
 #: What step 7 found about Manaphy for the pair: nine distributions between 2006 and 2011.
@@ -531,6 +525,8 @@ def acquisition_methods(
                 game_id=game_id,
                 version_group=version_group,
                 species=species,
+                forms=context.forms_here(),
+                all_forms=context.forms,
                 refresh=context.refresh,
             )
         )

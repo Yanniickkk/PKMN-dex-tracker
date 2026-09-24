@@ -244,7 +244,7 @@ class Build:
         # which file each form's picture would be in.
         self._forms = forms
         self._form_pictures = table.pictures
-        rules: list[EvolutionRule] = self._fetch_evolution_rules(api, species)
+        rules: list[EvolutionRule] = self._fetch_evolution_rules(api, species, forms)
         self._rules = rules
 
         if self.sprites:
@@ -284,17 +284,22 @@ class Build:
         self,
         api: PokeApiClient,
         species: list[Species],
+        forms: list[Form],
     ) -> list[EvolutionRule]:
         """Every rule in the chains the species table reaches.
 
         Chains rather than species: everything in one chain shares it, so the 1025 species of a
         full build are a few hundred fetches. A ``--limit`` build asks for fewer species and so
         for fewer chains, which is what keeps a smoke build quick.
+
+        The form table is built first and handed over, because a rule's two ends can be forms -
+        the Ice Stone turns an Alolan Vulpix into an Alolan Ninetales - and a rule written
+        before the forms are known could only say "Vulpix".
         """
         chains = sorted({one.evolution_chain for one in species})
         log.info("evolution rules from %s chain(s)", len(chains))
 
-        return evolution_rules(api, chains=chains, refresh=self.refresh)
+        return evolution_rules(api, chains=chains, forms=forms, refresh=self.refresh)
 
     def _fetch_sprites(
         self,

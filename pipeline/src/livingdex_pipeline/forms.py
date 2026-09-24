@@ -117,11 +117,39 @@ METEORITE: tuple[str, ...] = (
     "moon",
 )
 
+#: The six Cosplay Pikachu, which never leave the game they were dressed in.
+#:
+#: Pokemon Bank refuses them and so does a trade. That is not a rule about what Omega Ruby and
+#: Alpha Sapphire can produce - they produce all six, at the Contest Halls - but about where one
+#: can ever be afterwards, and the answer is nowhere else. A Generation 7 box cannot hold one,
+#: so a Generation 7 grid should not have a tile for one.
+#:
+#: The version group says the opposite, which is what :data:`ONLY_IN` is for. The spiky-eared
+#: Pichu was the first of these and looked like a curiosity; with these six it is a kind. A form
+#: that cannot be transferred is stuck in its own generation however long the series runs, and a
+#: living dex kept anywhere later can never hold one.
+COSPLAY_PIKACHU: tuple[str, ...] = (
+    "pikachu-cosplay",
+    "pikachu-rock-star",
+    "pikachu-belle",
+    "pikachu-pop-star",
+    "pikachu-phd",
+    "pikachu-libre",
+)
+
+#: The games a form is in, where the version group it arrived in is not the answer.
+#:
+#: Two kinds of exception, and they pull opposite ways. Deoxys and the meteorite is a form that
+#: reaches *further* than its version group suggests: the three formes were pinned to one
+#: Generation 3 cartridge each and every game from Diamond on can cycle through all four.
+#: :data:`COSPLAY_PIKACHU` and the spiky-eared Pichu are forms that reach *less* far, because
+#: nothing will carry them out of the games that made them.
 ONLY_IN: Mapping[str, tuple[str, ...]] = {
     "deoxys-attack": ("firered", *METEORITE),
     "deoxys-defense": ("leafgreen", *METEORITE),
     "deoxys-speed": ("emerald", *METEORITE),
     "pichu-spiky-eared": ("heartgold", "soulsilver"),
+    **dict.fromkeys(COSPLAY_PIKACHU, ("omega-ruby", "alpha-sapphire")),
 }
 
 #: What to call a form on screen, where the slug does not say it well.

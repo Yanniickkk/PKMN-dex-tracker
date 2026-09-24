@@ -30,8 +30,54 @@ POKEAPI_VERSION = "moon"
 RELEASED = date(2016, 11, 18)
 
 
-#: Dex entries no amount of playing this release will fill, and why. Steps 4 to 7 fill it.
-UNOBTAINABLE: dict[str, str] = {}
+#: In the Alola dex and never in this cartridge, and what step 7 found about each.
+#:
+#: Seven, and two fossils below them, mirroring the other half exactly - and worked out the same
+#: way: after the evolutions and eggs of step 5, so that nothing arrives here merely because it
+#: is caught nowhere.
+#:
+#: Three of the seven were covered by a distribution, as three of Sun's were, and two of those
+#: three by the same two baskets of Eggs. The third is the one this half is best known for
+#: lacking, and it was covered four times over.
+ONLY_ON_SUN: dict[str, str | None] = {
+    # The other two of the Egg basket.
+    "passimian": alola.handed_out(alola.EASTER_EGGS, alola.KOREAN_EGGS, alola.BANK_HIDDEN_ABILITY),
+    # And the one with a fourth giveaway of its own: Kiawe's, from the animation, which went out
+    # in Japan twice and in South Korea once over the summer of 2017.
+    "turtonator": alola.handed_out(
+        alola.EASTER_EGGS, alola.KOREAN_EGGS, "Kiawe's Turtonator in the summer of 2017"
+    ),
+    # Not the Vulpix of Kanto, which Bank will hand over: the Alolan one on Mount Lanakila, in
+    # Sun. It is the most given-away entry in either half's table - a Pokemon Center in Sapporo
+    # in the snow of 2016, a Korean giveaway in the spring, and Lillie's own over the summer.
+    "vulpix": alola.handed_out(
+        "the Pokemon Center Sapporo Alolan Vulpix over the winter of 2016",
+        "the Pokemon Sun & Moon Alolan Vulpix in South Korea in the spring",
+        "Lillie's Alolan Vulpix in Japan and South Korea that summer",
+    ),
+    # This half's two Ultra Beasts, and nothing ever handed either out.
+    "buzzwole": None,
+    "kartana": None,
+    # Unova's two again, the other way round.
+    "rufflet": None,
+    "cottonee": None,
+}
+
+#: Dex entries no amount of playing this release will fill, and why.
+#:
+#: Ten, the same count as the other half: the nine Sun keeps, two of them fossils, and Marshadow.
+#:
+#: Cranidos and Tirtouga are the fossils Olivia does not stock here, and the Skull and Cover can
+#: still come across held by a traded Pokemon. Like Sun's pair, the only distribution either has
+#: ever had was the Pokemon Adventure Camp in Japan in 2012, for Black and White.
+UNOBTAINABLE: dict[str, str] = {
+    **alola.SM_UNOBTAINABLE,
+    **{
+        species: alola.fossil_only_on("Sun", fossil)
+        for species, fossil in (("cranidos", "Skull Fossil"), ("tirtouga", "Cover Fossil"))
+    },
+    **{species: alola.only_on("Sun", event) for species, event in ONLY_ON_SUN.items()},
+}
 
 
 def build(context: BuildContext) -> GameData:
@@ -62,6 +108,9 @@ def dex_entries(context: BuildContext) -> list[DexEntry]:
     Not the National Dex either, which these games do not have. The grid is still 802 tiles,
     because that is what the boxes here can hold; this list is what the game itself displays,
     and the grid can be switched to it.
+
+    The unobtainable table is what step 7 added: the nine Sun keeps, the two fossils Olivia
+    does not stock in this half, and the one entry neither half of the pair produces.
     """
     return alola.dex_entries(
         context, game_id=GAME_ID, dex=alola.SM_DEX, unobtainable=UNOBTAINABLE
@@ -72,7 +121,11 @@ def acquisition_methods(
     context: BuildContext,
     entries: list[DexEntry],
 ) -> list[AcquisitionMethod]:
-    """Every way to get something here. Wild slots so far, and most of them are forms."""
+    """Every way to get something here: caught, handed over, traded for, evolved or hatched.
+
+    Step 7 added the last of them, and it is the only record in this game that no source this
+    pipeline reads has a row for: the Magearna a QR Code unlocks.
+    """
     return alola.acquisition_methods(
         context, game_id=GAME_ID, version=POKEAPI_VERSION, entries=entries
     )

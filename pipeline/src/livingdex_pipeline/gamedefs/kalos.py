@@ -621,6 +621,8 @@ def gen6_acquisition_methods(
             game_id=game_id,
             version_group=XY_VERSION_GROUP,
             species=species,
+            forms=context.forms_here(),
+            all_forms=context.forms,
             refresh=context.refresh,
         ),
         *recorded_gifts(

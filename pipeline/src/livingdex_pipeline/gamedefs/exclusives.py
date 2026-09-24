@@ -25,6 +25,24 @@ def only_on(partner: str, *, generation: int, event: str | None = None) -> str:
     return with_event(f"{partner} only in Generation {generation}; trade one in", event)
 
 
+def fossil_only_on(partner: str, fossil: str, *, generation: int, event: str | None = None) -> str:
+    """Why the fossil Pokemon of the other half is not in this one.
+
+    Not quite a plain exclusive, and the difference is that a fossil is an item. One half stocks
+    or buries the Skull Fossil and the other the Armor Fossil, but either can come across the
+    link held by a traded Pokemon and be revived here - so there are two ways over rather than
+    one, and a player who cannot find anyone with a spare Cranidos still has the other.
+
+    Sinnoh wrote this first, about two fossils in the Underground. Alola needed the same
+    sentence about four in a shop ten years later, which is why it is here and not there.
+    """
+    return with_event(
+        f"{partner} only in Generation {generation}; trade one in, or trade for a Pokemon "
+        f"holding the {fossil} and revive that",
+        event,
+    )
+
+
 def with_event(reason: str, event: str | None) -> str:
     """One reason, with what step 7 found about it added as a second sentence."""
     return f"{reason}. {event[0].upper()}{event[1:]}" if event else reason

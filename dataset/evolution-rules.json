@@ -690,6 +690,50 @@
     ]
   },
   {
+    "id": "burmy-to-wormadam-sandy",
+    "from": {
+      "species": "burmy",
+      "form": "burmy-sandy"
+    },
+    "to": {
+      "species": "wormadam",
+      "form": "wormadam-sandy"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      },
+      {
+        "condition": "gender",
+        "gender": "female"
+      }
+    ]
+  },
+  {
+    "id": "burmy-to-wormadam-trash",
+    "from": {
+      "species": "burmy",
+      "form": "burmy-trash"
+    },
+    "to": {
+      "species": "wormadam",
+      "form": "wormadam-trash"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 20
+      },
+      {
+        "condition": "gender",
+        "gender": "female"
+      }
+    ]
+  },
+  {
     "id": "cacnea-to-cacturne",
     "from": {
       "species": "cacnea"
@@ -1402,7 +1446,7 @@
     ]
   },
   {
-    "id": "cubone-to-marowak-red-blue",
+    "id": "cubone-to-marowak",
     "from": {
       "species": "cubone"
     },
@@ -1418,12 +1462,13 @@
     ]
   },
   {
-    "id": "cubone-to-marowak-sun-moon",
+    "id": "cubone-to-marowak-alola",
     "from": {
       "species": "cubone"
     },
     "to": {
-      "species": "marowak"
+      "species": "marowak",
+      "form": "marowak-alola"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -1594,6 +1639,60 @@
     ]
   },
   {
+    "id": "deerling-to-sawsbuck-autumn",
+    "from": {
+      "species": "deerling",
+      "form": "deerling-autumn"
+    },
+    "to": {
+      "species": "sawsbuck",
+      "form": "sawsbuck-autumn"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "deerling-to-sawsbuck-summer",
+    "from": {
+      "species": "deerling",
+      "form": "deerling-summer"
+    },
+    "to": {
+      "species": "sawsbuck",
+      "form": "sawsbuck-summer"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
+    "id": "deerling-to-sawsbuck-winter",
+    "from": {
+      "species": "deerling",
+      "form": "deerling-winter"
+    },
+    "to": {
+      "species": "sawsbuck",
+      "form": "sawsbuck-winter"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 34
+      }
+    ]
+  },
+  {
     "id": "deino-to-zweilous",
     "from": {
       "species": "deino"
@@ -1662,7 +1761,7 @@
     ]
   },
   {
-    "id": "diglett-to-dugtrio-red-blue",
+    "id": "diglett-to-dugtrio",
     "from": {
       "species": "diglett"
     },
@@ -1678,12 +1777,14 @@
     ]
   },
   {
-    "id": "diglett-to-dugtrio-sun-moon",
+    "id": "diglett-to-dugtrio-alola",
     "from": {
-      "species": "diglett"
+      "species": "diglett",
+      "form": "diglett-alola"
     },
     "to": {
-      "species": "dugtrio"
+      "species": "dugtrio",
+      "form": "dugtrio-alola"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -2494,7 +2595,7 @@
     ]
   },
   {
-    "id": "espurr-to-meowstic-x-y",
+    "id": "espurr-to-meowstic",
     "from": {
       "species": "espurr"
     },
@@ -2514,12 +2615,13 @@
     ]
   },
   {
-    "id": "espurr-to-meowstic-x-y-2",
+    "id": "espurr-to-meowstic-female",
     "from": {
       "species": "espurr"
     },
     "to": {
-      "species": "meowstic"
+      "species": "meowstic",
+      "form": "meowstic-female"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -2534,7 +2636,7 @@
     ]
   },
   {
-    "id": "exeggcute-to-exeggutor-red-blue",
+    "id": "exeggcute-to-exeggutor",
     "from": {
       "species": "exeggcute"
     },
@@ -2550,12 +2652,13 @@
     ]
   },
   {
-    "id": "exeggcute-to-exeggutor-sun-moon",
+    "id": "exeggcute-to-exeggutor-alola",
     "from": {
       "species": "exeggcute"
     },
     "to": {
-      "species": "exeggutor"
+      "species": "exeggutor",
+      "form": "exeggutor-alola"
     },
     "trigger": "useItem",
     "conditions": [
@@ -2750,6 +2853,78 @@
     ]
   },
   {
+    "id": "flabebe-to-floette-blue",
+    "from": {
+      "species": "flabebe",
+      "form": "flabebe-blue"
+    },
+    "to": {
+      "species": "floette",
+      "form": "floette-blue"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 19
+      }
+    ]
+  },
+  {
+    "id": "flabebe-to-floette-orange",
+    "from": {
+      "species": "flabebe",
+      "form": "flabebe-orange"
+    },
+    "to": {
+      "species": "floette",
+      "form": "floette-orange"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 19
+      }
+    ]
+  },
+  {
+    "id": "flabebe-to-floette-white",
+    "from": {
+      "species": "flabebe",
+      "form": "flabebe-white"
+    },
+    "to": {
+      "species": "floette",
+      "form": "floette-white"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 19
+      }
+    ]
+  },
+  {
+    "id": "flabebe-to-floette-yellow",
+    "from": {
+      "species": "flabebe",
+      "form": "flabebe-yellow"
+    },
+    "to": {
+      "species": "floette",
+      "form": "floette-yellow"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 19
+      }
+    ]
+  },
+  {
     "id": "fletchinder-to-talonflame",
     "from": {
       "species": "fletchinder"
@@ -2804,6 +2979,78 @@
     },
     "to": {
       "species": "florges"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Shiny Stone"
+      }
+    ]
+  },
+  {
+    "id": "floette-to-florges-blue",
+    "from": {
+      "species": "floette",
+      "form": "floette-blue"
+    },
+    "to": {
+      "species": "florges",
+      "form": "florges-blue"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Shiny Stone"
+      }
+    ]
+  },
+  {
+    "id": "floette-to-florges-orange",
+    "from": {
+      "species": "floette",
+      "form": "floette-orange"
+    },
+    "to": {
+      "species": "florges",
+      "form": "florges-orange"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Shiny Stone"
+      }
+    ]
+  },
+  {
+    "id": "floette-to-florges-white",
+    "from": {
+      "species": "floette",
+      "form": "floette-white"
+    },
+    "to": {
+      "species": "florges",
+      "form": "florges-white"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Shiny Stone"
+      }
+    ]
+  },
+  {
+    "id": "floette-to-florges-yellow",
+    "from": {
+      "species": "floette",
+      "form": "floette-yellow"
+    },
+    "to": {
+      "species": "florges",
+      "form": "florges-yellow"
     },
     "trigger": "useItem",
     "conditions": [
@@ -2994,7 +3241,7 @@
     ]
   },
   {
-    "id": "geodude-to-graveler-red-blue",
+    "id": "geodude-to-graveler",
     "from": {
       "species": "geodude"
     },
@@ -3010,12 +3257,14 @@
     ]
   },
   {
-    "id": "geodude-to-graveler-sun-moon",
+    "id": "geodude-to-graveler-alola",
     "from": {
-      "species": "geodude"
+      "species": "geodude",
+      "form": "geodude-alola"
     },
     "to": {
-      "species": "graveler"
+      "species": "graveler",
+      "form": "graveler-alola"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -3290,7 +3539,7 @@
     ]
   },
   {
-    "id": "graveler-to-golem-red-blue",
+    "id": "graveler-to-golem",
     "from": {
       "species": "graveler"
     },
@@ -3301,12 +3550,14 @@
     "conditions": []
   },
   {
-    "id": "graveler-to-golem-sun-moon",
+    "id": "graveler-to-golem-alola",
     "from": {
-      "species": "graveler"
+      "species": "graveler",
+      "form": "graveler-alola"
     },
     "to": {
-      "species": "golem"
+      "species": "golem",
+      "form": "golem-alola"
     },
     "trigger": "trade",
     "conditions": []
@@ -3332,7 +3583,7 @@
     ]
   },
   {
-    "id": "grimer-to-muk-red-blue",
+    "id": "grimer-to-muk",
     "from": {
       "species": "grimer"
     },
@@ -3348,12 +3599,14 @@
     ]
   },
   {
-    "id": "grimer-to-muk-sun-moon",
+    "id": "grimer-to-muk-alola",
     "from": {
-      "species": "grimer"
+      "species": "grimer",
+      "form": "grimer-alola"
     },
     "to": {
-      "species": "muk"
+      "species": "muk",
+      "form": "muk-alola"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -4764,7 +5017,7 @@
     ]
   },
   {
-    "id": "meowth-to-persian-red-blue",
+    "id": "meowth-to-persian",
     "from": {
       "species": "meowth"
     },
@@ -4780,12 +5033,14 @@
     ]
   },
   {
-    "id": "meowth-to-persian-sun-moon",
+    "id": "meowth-to-persian-alola",
     "from": {
-      "species": "meowth"
+      "species": "meowth",
+      "form": "meowth-alola"
     },
     "to": {
-      "species": "persian"
+      "species": "persian",
+      "form": "persian-alola"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -5774,7 +6029,7 @@
     ]
   },
   {
-    "id": "pikachu-to-raichu-red-blue",
+    "id": "pikachu-to-raichu",
     "from": {
       "species": "pikachu"
     },
@@ -5790,12 +6045,13 @@
     ]
   },
   {
-    "id": "pikachu-to-raichu-sun-moon",
+    "id": "pikachu-to-raichu-alola",
     "from": {
       "species": "pikachu"
     },
     "to": {
-      "species": "raichu"
+      "species": "raichu",
+      "form": "raichu-alola"
     },
     "trigger": "useItem",
     "conditions": [
@@ -6125,6 +6381,45 @@
     "conditions": []
   },
   {
+    "id": "pumpkaboo-to-gourgeist-large",
+    "from": {
+      "species": "pumpkaboo",
+      "form": "pumpkaboo-large"
+    },
+    "to": {
+      "species": "gourgeist",
+      "form": "gourgeist-large"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "pumpkaboo-to-gourgeist-small",
+    "from": {
+      "species": "pumpkaboo",
+      "form": "pumpkaboo-small"
+    },
+    "to": {
+      "species": "gourgeist",
+      "form": "gourgeist-small"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "pumpkaboo-to-gourgeist-super",
+    "from": {
+      "species": "pumpkaboo",
+      "form": "pumpkaboo-super"
+    },
+    "to": {
+      "species": "gourgeist",
+      "form": "gourgeist-super"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
     "id": "pupitar-to-tyranitar",
     "from": {
       "species": "pupitar"
@@ -6321,7 +6616,7 @@
     ]
   },
   {
-    "id": "rattata-to-raticate-red-blue",
+    "id": "rattata-to-raticate",
     "from": {
       "species": "rattata"
     },
@@ -6337,12 +6632,14 @@
     ]
   },
   {
-    "id": "rattata-to-raticate-sun-moon",
+    "id": "rattata-to-raticate-alola",
     "from": {
-      "species": "rattata"
+      "species": "rattata",
+      "form": "rattata-alola"
     },
     "to": {
-      "species": "raticate"
+      "species": "raticate",
+      "form": "raticate-alola"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -6436,6 +6733,27 @@
     ]
   },
   {
+    "id": "rockruff-to-lycanroc-midnight",
+    "from": {
+      "species": "rockruff"
+    },
+    "to": {
+      "species": "lycanroc",
+      "form": "lycanroc-midnight"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 25
+      },
+      {
+        "condition": "timeOfDay",
+        "timeOfDay": "night"
+      }
+    ]
+  },
+  {
     "id": "rockruff-to-lycanroc-sun-moon",
     "from": {
       "species": "rockruff"
@@ -6457,26 +6775,6 @@
   },
   {
     "id": "rockruff-to-lycanroc-sun-moon-2",
-    "from": {
-      "species": "rockruff"
-    },
-    "to": {
-      "species": "lycanroc"
-    },
-    "trigger": "levelUp",
-    "conditions": [
-      {
-        "condition": "minimumLevel",
-        "level": 25
-      },
-      {
-        "condition": "timeOfDay",
-        "timeOfDay": "night"
-      }
-    ]
-  },
-  {
-    "id": "rockruff-to-lycanroc-sun-moon-3",
     "from": {
       "species": "rockruff"
     },
@@ -6648,7 +6946,7 @@
     ]
   },
   {
-    "id": "sandshrew-to-sandslash-red-blue",
+    "id": "sandshrew-to-sandslash",
     "from": {
       "species": "sandshrew"
     },
@@ -6664,12 +6962,14 @@
     ]
   },
   {
-    "id": "sandshrew-to-sandslash-sun-moon",
+    "id": "sandshrew-to-sandslash-alola",
     "from": {
-      "species": "sandshrew"
+      "species": "sandshrew",
+      "form": "sandshrew-alola"
     },
     "to": {
-      "species": "sandslash"
+      "species": "sandslash",
+      "form": "sandslash-alola"
     },
     "trigger": "useItem",
     "conditions": [
@@ -6926,6 +7226,24 @@
     },
     "to": {
       "species": "gastrodon"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "shellos-to-gastrodon-east",
+    "from": {
+      "species": "shellos",
+      "form": "shellos-east"
+    },
+    "to": {
+      "species": "gastrodon",
+      "form": "gastrodon-east"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -8224,7 +8542,23 @@
     ]
   },
   {
-    "id": "toxel-to-toxtricity",
+    "id": "toxel-to-toxtricity-sword-shield",
+    "from": {
+      "species": "toxel"
+    },
+    "to": {
+      "species": "toxtricity"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 30
+      }
+    ]
+  },
+  {
+    "id": "toxel-to-toxtricity-sword-shield-2",
     "from": {
       "species": "toxel"
     },
@@ -8644,7 +8978,7 @@
     ]
   },
   {
-    "id": "vulpix-to-ninetales-red-blue",
+    "id": "vulpix-to-ninetales",
     "from": {
       "species": "vulpix"
     },
@@ -8660,12 +8994,14 @@
     ]
   },
   {
-    "id": "vulpix-to-ninetales-sun-moon",
+    "id": "vulpix-to-ninetales-alola",
     "from": {
-      "species": "vulpix"
+      "species": "vulpix",
+      "form": "vulpix-alola"
     },
     "to": {
-      "species": "ninetales"
+      "species": "ninetales",
+      "form": "ninetales-alola"
     },
     "trigger": "useItem",
     "conditions": [

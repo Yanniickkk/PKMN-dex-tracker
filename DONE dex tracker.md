@@ -3033,7 +3033,329 @@ anywhere but Omega Ruby and Alpha Sapphire's Jirachi, which is their step 7.
 
 ### Generation 7
 
-_Nothing yet._
+- [x] **Sun** (`sun`, gen 7, pair partner: Moon) - 2026-09-24
+  - [x] 1 Entity + edges - 2026-09-23
+  - [x] 2 Dex list - 2026-09-23
+  - [x] 3 Wild - 2026-09-23
+  - [x] 4 Gifts & statics - 2026-09-23
+  - [x] 5 Trades & evolutions - 2026-09-23
+  - [x] 6 Sprites - 2026-09-23
+  - [x] 7 Events - 2026-09-24
+  - [x] 8 Alternate forms - 2026-09-24
+  - [x] 9 Validate + smoke test - 2026-09-24
+- [x] **Moon** (`moon`, gen 7, pair partner: Sun) - 2026-09-24
+  - [x] 1 Entity + edges - 2026-09-23
+  - [x] 2 Dex list - 2026-09-23
+  - [x] 3 Wild - 2026-09-23
+  - [x] 4 Gifts & statics - 2026-09-23
+  - [x] 5 Trades & evolutions - 2026-09-23
+  - [x] 6 Sprites - 2026-09-23
+  - [x] 7 Events - 2026-09-24
+  - [x] 8 Alternate forms - 2026-09-24
+  - [x] 9 Validate + smoke test - 2026-09-24
+  - Step 1 for Sun and Moon: 5 new routes, and the graph is at 116. One trade between the halves
+    and four Bank edges, a deposit and a withdrawal each. Four more wait for Ultra Sun and Ultra
+    Moon, which is the first thing held back since Bank was written.
+  - `alola.py` is new and is the region module *and* the generation's, the way `unova.py` is -
+    but for the opposite reason. Unova had one region and one console with nothing on either
+    side of the seam; Alola has four cartridges on a 3DS and Let's Go has two games on a Switch,
+    and those six share no trade set, no dex and no way out. A file called `gen7` would have to
+    say "except in Let's Go" about every line in it. Let's Go belongs in `kanto.py`, which has
+    served that region for two generations already.
+  - **The Virtual Console releases finally have somewhere to go.** Bank refuses a Generation 6
+    game anything that came out of a Virtual Console Red or Gold; these four it does not refuse.
+    Six games that have had a node and no destination since Bank was built now reach one, which
+    is the whole reason Generations 1 and 2 are in this dataset as their 3DS releases.
+  - **A cable between the two pairs is capped at 802**, which is the Time Capsule's shape twenty
+    years on: a both-ways route carrying everything one way and stopping short the other. The
+    five species Ultra Sun and Ultra Moon introduced cannot be read by Sun or Moon, by cable or
+    by Bank - so `bank_edges` now takes a species filter for the withdrawal beside the history
+    window it already took. The cap is written once, in `alola.py`, because a filter is not part
+    of what makes two declarations the same edge: two games declaring the same route differently
+    would silently collapse into whichever was seen first.
+  - Alola has a meteorite too, beside Sophocles in the Hokulani Observatory, and the shared form
+    table did not know it - so Deoxys's three formes were missing from both games the moment
+    they were registered. Same shape as the correction Omega Ruby found, caught this time before
+    it was committed. `METEORITE` now runs from Diamond to Moon.
+  - The shared form table gained 70 forms with these two: the Alolan forms, the Totem ones, and
+    Ash-Greninja. 279 of the 280 it holds are in Sun; the one that is not is the spiky-eared
+    Pichu, which never leaves HeartGold and SoulSilver.
+  - Step 4 for Sun and Moon: 90 and 89 records - three starters, an Egg, two fossils each,
+    twelve statics, and seventy Poke Pelago arrivals. The unexplained entries fell from 33 to 21,
+    and the twenty-one left are the evolutions of step 5, the one in-game trade that fills
+    Steenee, and the two events of step 7.
+  - **The fossils are a version exclusive the source does not know.** Olivia's shop in Konikoni
+    City stocks two of the four and which two is the cartridge's - the Skull and Cover Fossils in
+    Sun, the Armor and Plume in Moon - and PokeAPI files all four under both halves, exactly as
+    it does Sinnoh's two. Refused with a reason rather than quietly kept, which is what
+    `excluded` is for.
+  - **A gift can be a form now too**, which the wild step had already needed: what stands on
+    Exeggutor Island is the Alolan Exeggutor and not the Kantonian one, and the 10% Zygarde comes
+    off the same Reassembly Unit as the 50%. Both steps ask `forms.targets_of` the same question
+    now, and a game that passes no forms reads exactly as it did.
+  - The giver is the box art, so Cosmog cannot be one record for the pair: Solgaleo hands it over
+    at the Lake of the Sunne and Lunala at the Lake of the Moone, and each of the two is a static
+    in its own half and nowhere in the other.
+  - Necrozma's two conditions had no wording and now have one. Both are halves of the same
+    errand - Looker and Anabel hire the player to round up the Ultra Beasts that came through
+    with Lusamine, and what waits at the end of it is the one that came through after them.
+  - Step 5 for Sun and Moon: **1194 and 1193 ways to get something** - 708 wild slots, 386
+    evolutions, 90 gifts and statics, six trades and four eggs. Two entries are left unexplained
+    in each, Magearna and Marshadow, and both are step 7's.
+  - **A trader can hand over a form now.** The one in Tapu Village wants a Haunter and gives an
+    Alolan Graveler, which turns into an Alolan Golem the moment it arrives - and "Graveler"
+    would name the wrong rock. What is recorded is what is handed over, as Sinnoh's
+    Haunter-into-Gengar already was.
+  - That is the third record kind this region has taught to carry a form, after the wild slots
+    and the gifts. It also moved Unova's note on: Kyle's Basculin in Driftveil City is one stripe
+    in Black and the other in White, and what was missing is no longer the schema but the fact -
+    Bulbapedia lists both against the one trade and does not say which cartridge gets which.
+  - The name on each trade is the original trainer the game stamps on what is handed over - Hila,
+    Kihei, Momoe, Sill, Kumu, Anga - rather than the nickname, which all six come with and which
+    a player can change.
+  - Four eggs, which is few and right: the nursery is only asked for what nothing else in the
+    game produces, and by this step almost nothing is left.
+  - Step 9 for Sun and Moon: **validation green at 11 rules, 0 errors, 0 warnings**, over the
+    whole dataset rather than these two - the evolution change of step 8 touched every game, so
+    every game was rebuilt and every game was checked.
+  - Coverage over the living dex: Sun **510 full, 267 partial, 10 missing, 15 unobtainable**;
+    Moon 509, 268, 10, 15. The ten are the Mythicals no game in this dataset produces - Jirachi,
+    Phione, Manaphy, Victini, Keldeo, Meloetta, Genesect, Diancie, Hoopa, Volcanion - and they
+    are `missing` here rather than `unobtainable` for a structural reason worth writing down:
+    **a reason lives on a dex entry, and these games have no dex entry to put one on.** The
+    Alola Pokedex is 302 names and none of the ten is among them, so Sun has nowhere to say
+    what Kalos says about Diancie. Every generation has some of these and the count grows as
+    the Mythicals pile up - Omega Ruby has 9, X has 7, Black has 3 - so it is a shape rather
+    than a Generation 7 fault.
+  - Smoke test on a collection with **Sun as main game and Moon linked**, all four form kinds
+    on. 1075 tiles in the National Dex view, 273 of them forms; 404 in the Alola Dex view, 102
+    of them forms; 444 tiles available in Sun without anything transferred in.
+  - The two tiles this pair's last three steps were about both read correctly. **Magearna is
+    available**, with the QR Scanner sentence and the delivery man in Hau'oli City - step 7's
+    finding, all the way through to the screen. **Marshadow is not**, with the Mount Tensei
+    distributions and the February 2018 cut-off. Sandshrew, Oranguru and Shieldon each show
+    their exclusive reason with the event that covered it, and Oranguru and Shieldon also show
+    Moon's ways underneath with "then trade it over".
+  - And the four kinds of form answer read the way step 8 meant them to: **Alolan Raichu** by
+    evolving (`pikachu-to-raichu-alola`, which did not exist this morning), **Silvally (Fire)**
+    from Gladion's memories at Aether Paradise, **Minior (Blue)** as a core settled when it
+    appears on Mount Hokulani, **Giratina (Origin)** off the Griseous Orb sold at Antiquities of
+    the Ages. **Gumshoos (Totem)** is not available and says nothing, which is right.
+  - One thing the smoke test showed that is true and not obviously helpful: a Sun player reading
+    Sandshrew's reason gets no "in Moon" trail under it, because what Moon has is the *Alolan*
+    Sandshrew and the trail is looked up per species. The same goes for Vulpix the other way
+    round. Nothing is wrong in the data - the Kantonian Sandshrew really is unobtainable in both
+    halves - but a regional form is the first case where "the other half has one" and "the other
+    half has this exact tile" come apart.
+  - The published exe starts on the new dataset and stays up, with no crash log. The data file
+    was copied before the test and is byte-identical after it; the two backups the app wrote
+    during the run were removed, and the four that were there before it were left alone.
+  - Step 8 for Sun and Moon: **273 forms each, 187 of them now with a record**, where 15 had
+    one before. 148 form changes per game, and 12 more evolutions - and those twelve cost more
+    work than the 148, because they were a hole in the pipeline rather than a table nobody had
+    written.
+  - **PokeAPI knew which Raichu a Thunder Stone makes in Alola, and this pipeline was throwing
+    it away.** Every evolution detail can carry `required_pokemon_form` and `evolved_pokemon_form`,
+    and `IGNORED_DETAILS` skipped both with a note saying the forms table did not carry them
+    yet. It does now, and they turned out to be most of what makes Generation 7 different: it
+    is `evolved_pokemon_form` that says a Thunder Stone here makes an *Alolan* Raichu, and
+    `required_pokemon_form` that says only an Alolan Vulpix takes the Ice Stone.
+  - Seven Alolan forms had no way to get them at all before this - Raichu, Ninetales, Sandslash,
+    Persian, Golem, Muk and Marowak - because their evolution records named the species and the
+    species' plain form is the Kantonian one, which is not in these games. Seven tiles in the
+    Alola dex that nothing filled.
+  - **A second bug underneath it, and this one was not Alola's.** `evolution_encounters` picked
+    `max(usable, key=order)` - one variant per pair - which is right when a later generation
+    replaces a way of evolving and wrong when several ways *start together*. Wormadam has worn
+    three cloaks since Diamond and Pearl and only one was recorded; the same for Gastrodon's two
+    seas, Deerling's four coats in Black and White, Flabebe's five colours and Pumpkaboo's four
+    sizes in X and Y, Meowstic's two sexes, and Rockruff's two Lycanroc here. The newest version
+    group still wins; what changed is that a tie at that version group is now several answers
+    rather than one picked arbitrarily. **18 rules across the dataset became 30, and every game
+    from Diamond on gained records it should always have had.**
+  - **Telling a form from a spelling took two signals, not one, and the first attempt used only
+    one of them.** PokeAPI's form fields point at a *form* resource, and it has one for a default
+    as readily as for anything else: the ordinary Lycanroc is `lycanroc-midday`, the ordinary
+    Gastrodon is `gastrodon-west`, the ordinary Burmy is `burmy-plant`. Asking "is this also one
+    of the species' other Pokemon" sorts out Lycanroc and got Gastrodon wrong, because the East
+    Sea is a form of the only Gastrodon there is. Asking "does this project record that form"
+    sorts out Gastrodon and got Lycanroc wrong, because the Dusk one belongs to games not built
+    yet and quietly became a plain Lycanroc - which would have told a Sun player to find a
+    Rockruff with Own Tempo and wait for dusk, in a game that cannot do it. Both questions, and
+    a third answer: the species, a form, or a fork this dataset refuses to guess at.
+  - **Alola buys what Kalos had to earn.** The items that change an older legendary are all here,
+    and not one of them asks to be shown anything: the Griseous Orb and the Gracidea are for sale
+    in the Hau'oli City mall, the DNA Splicers and the Prison Bottle come from the same Aether
+    Foundation employee in the same back room, and the Reveal Glass is Professor Burnet's reward
+    for beating Olivia. In Kalos a Scientist wanted to see all three forces of nature first.
+  - **Cosplay Pikachu never leaves Omega Ruby and Alpha Sapphire.** Bank refuses all six and so
+    does a trade, so no Generation 7 box can hold one - and the version group said otherwise,
+    which put six tiles in Sun's grid that nothing could ever fill. `forms.py` now says so, the
+    way it already did for the spiky-eared Pichu. Sun's form table went from 279 to 273. It is a
+    *kind* rather than a curiosity now: a form that cannot be transferred is stuck in its own
+    generation however long the series runs.
+  - **Omega Ruby's own smoke test saw this coming.** Its note reads: "A form that cannot leave
+    its cartridge is new in this dataset and nothing above the graph knows it yet." Something
+    does now - the form table itself - which is why no Generation 7 grid has a tile for one. The
+    footer that note was actually complaining about is still there, because that is the transfer
+    graph talking about the game rather than about the form, and it is Phase 3's to answer.
+  - **The Totem Pokemon are Ultra Sun and Ultra Moon's, not these two.** A Totem at a trial site
+    is a battle, not a catch. What can be kept is a Totem-*like* one, handed out by Samson Oak at
+    Heahea Beach for Totem Stickers - in the second pair only. They trade back to Sun and Moon,
+    which is why the form is theirs to hold and not theirs to produce.
+  - Of the 86 forms still without a record in each half, the great majority are families simply
+    not caught in Alola - Unown's letters, Vivillon's patterns, Furfrou's trims, Deerling's
+    coats - which is the honest answer rather than a gap. Four are named in `ALOLA_NO_WAY_HERE`
+    because a family sentence would otherwise have reached them: the Eternal Flower Floette,
+    Basculin's blue stripe, the Original Color Magearna that belongs to HOME, and Ash-Greninja,
+    which came out of the Special Demo Version and left with the eShop in March 2023.
+  - **What step 8 did not finish: the pictures.** The third of its three parts is a sprite of
+    each form from this game's own sheet, and Generation 7 has no sheet - which is the Phase 3
+    item already queued. Every form here falls back to the Generation 6 drawing or to its
+    species, and an Alolan Raichu currently shows a Kantonian one.
+  - One more thing left alone deliberately: **PokeAPI files Alola's wild Gastrodon under the
+    plain species**, and Bulbapedia is clear that the one in Alola's grass is the East Sea. The
+    evolution now names both seas correctly; the *wild* record still says "Gastrodon". Saying
+    which form a game's default wild catch really is needs a mechanism this dataset does not
+    have yet, and it is the same shape for Alola's Shellos.
+  - Step 7 for Sun and Moon: **eighteen version exclusives and one Mythical**, and the
+    twentieth entry turned out not to belong on the list at all. Ten reasons written per half,
+    fifteen in the file once `spread_unobtainable` has handed each line's reason down to the
+    evolutions - the same shape Diamond's five produced eight of.
+  - **Magearna is not an event, and step 7 is what found that out.** It was one of the two
+    entries left unexplained after step 5, and it looked exactly like the other one. It is not:
+    Bulbapedia files it under *Game locations* beside the grass and the fishing spots -
+    "Hau'oli City (QR Scanner)" - and keeps the word *Event* for Marshadow one line below. The
+    QR Code is a picture published for each region in 2016 and still published, the scanner is
+    the 3DS's own camera, and there is nothing at the other end to switch off. Bulbapedia's
+    distribution row has no closing date because there is nothing to close. So a Sun cartridge
+    bought today can still fill that tile, and calling it unobtainable would have been a lie.
+  - It is also the only record in either game that no source this pipeline reads has a row for.
+    PokeAPI has no encounter for Magearna in any version - not a gift, not a static, not even
+    the `event` method it does use for distributions it knows about - so `QR_MAGEARNA` is
+    hand-written and cited to the QR Scanner page, the way Hoenn's mirage fossils are.
+  - **One basket of Eggs covered all four exclusives nobody could trade for.** Six Eggs went
+    out at Pokemon Centers in Japan over Easter 2017 and the same six in South Korea a month
+    later: Goomy, Mareanie, and then Oranguru, Passimian, Turtonator and Drampa - two from each
+    half, handed to *both* halves. It is the Kalos trick of covering a version exclusive on
+    purpose, done tidily: one distribution, four gaps. Kalos took three at a Korean tournament.
+  - Three of each half's seven non-fossil exclusives were covered and four never were. What was
+    never covered is worth as much as what was: **all four Ultra Beasts of the pair have no
+    distribution anywhere**, and neither do Unova's four - Rufflet, Vullaby, Cottonee, Petilil.
+    Cottonee's only giveaway ever was Sword and Shield's Wild Area News, thirteen years later.
+  - The four fossils are the one split that is **only** Sun and Moon's. Olivia stocks two of the
+    four per cartridge; Ultra Sun and Ultra Moon sell all four in both halves. Their reasons
+    take `fossil_only_on`, which moved from `sinnoh.py` into `exclusives.py` to be said twice -
+    a fossil is an item, so it can cross the link held by a traded Pokemon and be revived here.
+  - Not one of the four fossil Pokemon has ever been handed out for these games. Shieldon,
+    Archen, Cranidos and Tirtouga have exactly one distribution between them in the whole
+    series - the Pokemon Adventure Camp in Japan in 2012, for Black and White - which is the
+    same emptiness Diamond and Pearl found and reported as a finding rather than a gap.
+  - `only_on` here names the pair partner and nothing else, deliberately. Sixteen of the
+    eighteen splits hold in Ultra Sun and Ultra Moon too and those two will belong in the
+    sentence when they are built; the fossils are the two that will not, so the sentence cannot
+    be written ahead of time. A game this dataset does not have is not a trade to send anyone
+    after.
+  - **The whole dataset is green for the first time since Generation 7 was started**: 11 rules,
+    0 errors, 0 warnings, across 28 games.
+  - **Step 6 for Sun and Moon: they have no sprite sheet, and nor does anything else in
+    Generation 7.** Every generation from the first to the sixth has a folder of battle sprites
+    in the sprite repository; the seventh has none, not for these two and not for Ultra Sun and
+    Ultra Moon either. PokeAPI publishes a URL for the second of those and the repository does
+    not have the file - the source promises a picture it cannot hand over, which is worth
+    writing down because a build that trusted it would have fetched 404s in silence.
+  - What Generation 7 does have there is a folder of box icons. They are a different kind of
+    picture from the battle sprites every other game shows, so they are not used: the entities
+    carry no sprite set and the app draws the shared one, as every sheetless game already does. That
+    is a fallback rather than an answer, so finding these four a sheet of their own is queued in
+    Phase 3 as *Generation 7's pictures from a source that has them*.
+  - **That would have been a bad answer on its own, and the fix reaches the whole dataset.** A
+    form used to have nothing but its species to fall back on, so in a region where most of the
+    Kanto Pokemon *are* the regional form, an Alolan Rattata's tile drew a Kantonian one. The
+    shared set now carries a picture per form as well as per species, and `SpritePath` tries
+    four things instead of three: the sheet's form, the sheet's species, the shared form, the
+    shared species.
+  - The sheet still wins all the way down, so nothing already drawn changes: a Wash Rotom in
+    Black keeps the Generation 5 Rotom it has always had, and gains a picture of the form only
+    where its sheet had none.
+  - Checked on the published exe: Generation 7 shows two covers in the picker, and a Sun
+    collection's linked-game list holds **every other game in the dataset** - Generations 1 and
+    2 "via Poke Transporter, then Pokemon Bank", Generation 3 with Pal Park and the Poke Transfer
+    ahead of it, Generation 6 simply "via Pokemon Bank", which is one hop in and one hop out with
+    no cable between the two generations at all.
+  - Validation green on all 11 rules; 501 pipeline tests and 248 app tests.
+  - Step 2 for Sun and Moon: 302 entries each, Rowlet to Marshadow, and the same list for both
+    halves - a version pair has never disagreed about its own dex.
+  - **No `dex` name on the entries.** X and Y needed one because they show three lists and a
+    player picks between them; Alola shows one. The source has the four island dexes too -
+    Melemele, Akala, Ula'ula, Poni, numbered from 1 - and they are deliberately not written:
+    those numbers are the official guidebooks', and in the game a Pokemon keeps its overall
+    Alola number wherever it is listed, so Pikipek is #010 on all four islands although it is
+    first on three of them. Writing them would print numbers no player was ever shown. Thirty-
+    nine entries are on no island at all, so the four are not even a partition of the list.
+    `ISLAND_DEXES` names them so the next person knows they were looked at and left.
+  - PokeAPI calls this one `original-alola`, as it does Unova's and Sinnoh's first lists. The
+    other is `updated-alola`: 403 entries, first disagreeing at **#024 - Pichu here, Buneary
+    there** - which is exactly what Bulbapedia says and what makes the two lists two lists.
+  - Validation is red until step 3, on purpose and with a useful number in it: 81 of the 302
+    have no source anywhere in the dataset, which is precisely the 81 species these games
+    introduced, and the other 221 are covered by games already built.
+  - Step 3 for Sun and Moon: **708 wild slots each**, and the unexplained entries fell from 302
+    to 33. Unlike the Hoenn remakes, the source has these tables - places, methods, levels and
+    slot chances, all of it - so no wiki had to be read for them.
+  - **A wild slot can be a form now, and in Alola most of them are.** Encounters hang off a
+    Pokemon and a species can be several: every Rattata on Route 1 is `rattata-alola`, every
+    Diglett on Route 2, every Grimer in Hau'oli City, and the Kantonian ones are nowhere in the
+    game. `wild_encounters` takes the game's own form table and asks the source for each
+    species' whole set of Pokemon rather than only its default; a form this game does not have
+    is skipped, so the source's Dusk Lycanroc does not become a tile Sun could never fill.
+    59 of Sun's records target a form, over 14 of them - ten Alolan, Oricorio's three other
+    styles, and Midnight Lycanroc.
+  - **And six games built before this one gained the slots they had been missing.** Every game
+    passes its forms now, not only the ones written after Alola: Blue-Striped Basculin has
+    encounters in Black, White, Black 2, White 2, X and Y, and Pumpkaboo's Small, Large and Super
+    sizes have them in X and Y, and none of the six had recorded one. 192 records in all.
+  - That turned up a sentence that was wrong rather than merely thin. Basculin's form change said
+    "the stripe follows the game", which reads as though a Black player cannot catch a blue one -
+    and in Black the blue stripe is not absent, it is in the rippling water, 60% surfing and 40%
+    on the Super Rod, exactly as the red one is in White's. Both games hold both stripes and the
+    water tells them apart. Reworded. Pumpkaboo's said the sizes get rarer the bigger they are,
+    which Route 16's own numbers do not bear out; reworded to what the slots now say themselves.
+  - **Two new encounter methods**, which is what Alola has of its own. An SOS ally is the
+    generation's signature - a wild Pokemon at low health calls for help - and whole species are
+    in these games only as somebody else's ally, so it is a way of starting an encounter rather
+    than a note on one: 133 slots in Sun, three species that have no other route. The compound
+    the source gives beside it, an ally called by something met in a bubbling spot, stays an SOS
+    slot and says where in its requirement, the way fishing in a ripple already did.
+  - The other took reading the source twice. Its method 34 is called "Fishing at bubbling spots
+    in the water" and it turns up in **Haina Desert**, which has no water at all. Bulbapedia
+    settles it: the desert's table is *sand clouds* and Route 2's is *rustling grass*. It is
+    Unova's four moving spots come back as one, and the source named the family after the only
+    member of it that is wet. So the method here is `movingSpot`, named for what the three have
+    in common, and which one a player is looking at follows from where the record puts them.
+  - The version split the source does have: 21 records differ between the two halves - Cottonee
+    and Petilil, Braviary and Mandibuzz, Buzzwole and Pheromosa - which is what step 4 will read.
+  - **And the one thing it does not: when a slot is there.** Alola's wiki tables have two rate
+    columns and they are Day and Night, not Sun and Moon - Yungoos stands in Route 2's grass by
+    day and Alolan Rattata by night, in both games - and PokeAPI carries no time-of-day
+    condition for a single Alola slot. `alolatables.py` reads it: 56 pages, one question, and
+    **111 records a game now say which hour**, 56 by day and 55 by night.
+  - It is a layer rather than a source. The places, the levels and the odds stay PokeAPI's; a
+    page that cannot be fetched, a row whose Pokemon will not resolve and a slot the wiki files
+    elsewhere each cost a condition and no record, which is why nothing in it raises. Two of the
+    fifty-seven places needed a page named by hand: the wiki's Berry fields carry no region in
+    their title, and every slot the source files under Royal Avenue is in the abandoned Thrifty
+    Megamart, which has a page of its own and stands on another island.
+  - The same rows answered the other half of the moving-spot question for free. Their **Location**
+    column names the terrain - rustling grass, a rustling bush, a rustling tree, a cloud of sand,
+    a cloud of dirt, a shadow on the water, water that splashes - and the heading above them
+    names the seventh, a bubbling spot, because those rows are labelled "Fishing" like any other
+    water. **77 of Sun's 81 moving-spot records now say which of the seven they are**, which is
+    what the source flattened into one method and called after the wet one.
+  - A blemish fixed while the names were being read: five places in the dataset were spelled with
+    a curly apostrophe and everything else with a straight one - Hau'oli City one way and Hau'oli
+    Cemetery the other, in the same game. Four were Alola's and one Kalos's. Normalised in
+    `places.py`, where the English name is taken.
 
 ### Generation 8
 
