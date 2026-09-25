@@ -380,10 +380,25 @@ class RecordedGift:
 
     species: str
     location: str
+    #: Which form of it, when the game hands over one in particular.
+    #:
+    #: Hisui is the first to need it and needs it once: Request 83 hands over an **Alolan**
+    #: Vulpix, where the Pokedex's own Vulpix is the Kantonian one. Without it the record says a
+    #: Vulpix is handed over and the Alolan Ninetales it evolves into starts from a form nothing
+    #: in the game produces.
+    form: str | None = None
     level: int | None = None
     kind: GiftKind = GiftKind.NPC_GIFT
     npc: str | None = None
     requirement: str | None = None
+    #: The page this one was read from, when it is not the page the rest of the table came from.
+    #:
+    #: A table read off one page needs no such thing and every table before Hisui's was. That
+    #: game's statics are not on one page at all: the list of them is on ``Request``, which says
+    #: which mission hands each over, and where each one stands is on the species' own article
+    #: and nowhere else. Citing the list for a place it does not mention would be a footnote
+    #: pointing at the wrong paragraph.
+    source: SourceCitation | None = None
 
 
 def recorded_gifts(
@@ -397,20 +412,21 @@ def recorded_gifts(
 
     One record per gift, filtered to what this game's living dex asks for. The citation is the
     game file's to give and it is not a PokeAPI url, which is what makes these records tellable
-    from the rest.
+    from the rest - and a gift that names its own page uses that instead, for the reason
+    :attr:`RecordedGift.source` gives.
     """
     wanted = set(species)
 
     return [
         GiftAcquisition(
             game=game_id,
-            target=DexTarget(species=gift.species),
+            target=DexTarget(species=gift.species, form=gift.form),
             gift_kind=gift.kind,
             location=gift.location,
             npc=gift.npc,
             level=gift.level,
             requirement=gift.requirement,
-            source=citation,
+            source=gift.source or citation,
         )
         for gift in gifts
         if gift.species in wanted

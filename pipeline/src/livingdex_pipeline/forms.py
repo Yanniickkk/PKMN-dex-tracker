@@ -155,6 +155,7 @@ FORMS_NAMED_BY_THE_GAME = frozenset(
         "shield",
         "brilliant-diamond",
         "shining-pearl",
+        "legends-arceus",
     }
 )
 
@@ -559,6 +560,161 @@ BDSP_FORMS: dict[str, tuple[str, ...]] = {
     "zubat-female": BDSP,
 }
 
+
+#: The one game in Hisui, spelled so the table below can say it in one word.
+HISUI = ("legends-arceus",)
+
+#: What Legends: Arceus holds, which is step 8's answer to the question this file cannot ask.
+#:
+#: **The rule gave this game 393 forms and it has 117.** Every Alcremie sweet, nineteen Alolan
+#: forms, eighteen Galarian ones - because all the rule reads is *when* a form arrived, and this
+#: game came out after all of them. It is the fourth game in a row the rule is wrong about and
+#: the reason is the same one Sword and Shield wrote down: what a game holds is a fact about the
+#: game, and a date is no substitute for it.
+#:
+#: **Read off the sheet rather than argued about.** The Archives keep 367 files under "Legends:
+#: Arceus models", one per thing the game draws, and the category pages out on a url the
+#: Archives' robots.txt allows - which the reading before these six games had written off. Every
+#: number in it is one of the Hisui Pokedex's 242 and every letter code in it is a form. So the
+#: list below is what the game's own models say, not what a version group implies:
+#:
+#: * **eighteen regional forms** - the sixteen Hisuian ones, and the Alolan Vulpix and Ninetales
+#:   that Request 83 hands over. Nothing else Alolan or Galarian is drawn at all, which is the
+#:   third source to say so after the request and HOME's transfer rule;
+#: * **eleven functional** - three Origin Formes, four Therian Formes, Sky Shaymin, the
+#:   White-Striped Basculin and Wormadam's two other cloaks;
+#: * **twenty-seven Unown** and four cosmetic - Burmy's two other cloaks, and the east sea
+#:   Shellos and Gastrodon;
+#: * **fifty-seven sexes**, which is what the sheet draws twice.
+#:
+#: **What is left out, and it is the one thing the sheet does not settle: Rotom's five
+#: appliances.** The models are there - ``Spr_8a_479F``, ``L``, ``O``, ``R``, ``W`` - and each
+#: has a Pokedex entry written for this game, a cauldron and a bureau and a cupboard instead of
+#: a microwave and a washing machine, and Bulbapedia says the forms were documented in the Hisui
+#: Pokedex by Professor Laventon. What nothing found says is how a player changes one, and this
+#: game has no Rotom Room and no appliances to possess. A form whose sentence cannot be written
+#: is a tile nobody can fill, which is the call :data:`LETS_GO_FORMS` already made, so the five
+#: are out until somebody reads the mechanism. One line to add them the day it is read.
+HISUI_FORMS: dict[str, tuple[str, ...]] = {
+    "abomasnow-female": HISUI,
+    "aipom-female": HISUI,
+    "alakazam-female": HISUI,
+    "ambipom-female": HISUI,
+    "arcanine-hisui": HISUI,
+    "avalugg-hisui": HISUI,
+    "basculegion-female": HISUI,
+    "basculin-white-striped": HISUI,
+    "beautifly-female": HISUI,
+    "bibarel-female": HISUI,
+    "bidoof-female": HISUI,
+    "braviary-hisui": HISUI,
+    "burmy-sandy": HISUI,
+    "burmy-trash": HISUI,
+    "combee-female": HISUI,
+    "croagunk-female": HISUI,
+    "decidueye-hisui": HISUI,
+    "dialga-origin": HISUI,
+    "dustox-female": HISUI,
+    "eevee-female": HISUI,
+    "electrode-hisui": HISUI,
+    "enamorus-therian": HISUI,
+    "finneon-female": HISUI,
+    "floatzel-female": HISUI,
+    "gabite-female": HISUI,
+    "garchomp-female": HISUI,
+    "gastrodon-east": HISUI,
+    "gible-female": HISUI,
+    "giratina-origin": HISUI,
+    "gligar-female": HISUI,
+    "golbat-female": HISUI,
+    "goodra-hisui": HISUI,
+    "growlithe-hisui": HISUI,
+    "gyarados-female": HISUI,
+    "heracross-female": HISUI,
+    "hippopotas-female": HISUI,
+    "hippowdon-female": HISUI,
+    "kadabra-female": HISUI,
+    "kricketot-female": HISUI,
+    "kricketune-female": HISUI,
+    "landorus-therian": HISUI,
+    "lilligant-hisui": HISUI,
+    "lumineon-female": HISUI,
+    "luxio-female": HISUI,
+    "luxray-female": HISUI,
+    "magikarp-female": HISUI,
+    "mamoswine-female": HISUI,
+    "murkrow-female": HISUI,
+    "ninetales-alola": HISUI,
+    "octillery-female": HISUI,
+    "pachirisu-female": HISUI,
+    "palkia-origin": HISUI,
+    "pikachu-female": HISUI,
+    "piloswine-female": HISUI,
+    "qwilfish-hisui": HISUI,
+    "raichu-female": HISUI,
+    "rhydon-female": HISUI,
+    "rhyhorn-female": HISUI,
+    "rhyperior-female": HISUI,
+    "roselia-female": HISUI,
+    "roserade-female": HISUI,
+    "samurott-hisui": HISUI,
+    "scizor-female": HISUI,
+    "scyther-female": HISUI,
+    "shaymin-sky": HISUI,
+    "shellos-east": HISUI,
+    "shinx-female": HISUI,
+    "sliggoo-hisui": HISUI,
+    "sneasel-female": HISUI,
+    "sneasel-hisui": HISUI,
+    "snover-female": HISUI,
+    "staraptor-female": HISUI,
+    "staravia-female": HISUI,
+    "starly-female": HISUI,
+    "steelix-female": HISUI,
+    "sudowoodo-female": HISUI,
+    "tangrowth-female": HISUI,
+    "thundurus-therian": HISUI,
+    "tornadus-therian": HISUI,
+    "toxicroak-female": HISUI,
+    "typhlosion-hisui": HISUI,
+    "unown-b": HISUI,
+    "unown-c": HISUI,
+    "unown-d": HISUI,
+    "unown-e": HISUI,
+    "unown-exclamation": HISUI,
+    "unown-f": HISUI,
+    "unown-g": HISUI,
+    "unown-h": HISUI,
+    "unown-i": HISUI,
+    "unown-j": HISUI,
+    "unown-k": HISUI,
+    "unown-l": HISUI,
+    "unown-m": HISUI,
+    "unown-n": HISUI,
+    "unown-o": HISUI,
+    "unown-p": HISUI,
+    "unown-q": HISUI,
+    "unown-question": HISUI,
+    "unown-r": HISUI,
+    "unown-s": HISUI,
+    "unown-t": HISUI,
+    "unown-u": HISUI,
+    "unown-v": HISUI,
+    "unown-w": HISUI,
+    "unown-x": HISUI,
+    "unown-y": HISUI,
+    "unown-z": HISUI,
+    "ursaring-female": HISUI,
+    "voltorb-hisui": HISUI,
+    "vulpix-alola": HISUI,
+    "weavile-female": HISUI,
+    "wormadam-sandy": HISUI,
+    "wormadam-trash": HISUI,
+    "zoroark-hisui": HISUI,
+    "zorua-hisui": HISUI,
+    "zubat-female": HISUI,
+}
+
 NAMED_BY_HAND: Mapping[str, tuple[str, ...]] = {
     slug: tuple(
         sorted(
@@ -566,10 +722,11 @@ NAMED_BY_HAND: Mapping[str, tuple[str, ...]] = {
                 *LETS_GO_FORMS.get(slug, ()),
                 *GALAR_FORMS.get(slug, ()),
                 *BDSP_FORMS.get(slug, ()),
+                *HISUI_FORMS.get(slug, ()),
             }
         )
     )
-    for slug in {*LETS_GO_FORMS, *GALAR_FORMS, *BDSP_FORMS}
+    for slug in {*LETS_GO_FORMS, *GALAR_FORMS, *BDSP_FORMS, *HISUI_FORMS}
 }
 
 #: Where a form is, when the version group it arrived in says more than the truth.
@@ -717,7 +874,7 @@ class VersionGroupGames:
     def named_by_hand(self, slug: str) -> list[str]:
         """The games a hand-written table gives this form, filtered to the ones being built.
 
-        Filtered because a build of one game is still a build: :data:`NAMED_BY_HAND` names six
+        Filtered because a build of one game is still a build: :data:`NAMED_BY_HAND` names seven
         games and a ``--game red`` build has none of them, and a form that claimed them would
         write a table the rest of the dataset disagrees with.
         """

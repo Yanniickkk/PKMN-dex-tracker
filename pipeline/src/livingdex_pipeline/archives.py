@@ -93,6 +93,13 @@ LETS_GO_SET = "generation-vii/lets-go"
 #: Sword and Shield's own folder, which is the first Generation 8 set in the dataset.
 GALAR_SET = "generation-viii/sword-shield"
 
+#: Legends: Arceus, which has a sheet of its own where the other four modern games have none.
+#:
+#: **And it only draws its own 242.** ``Spr_8a_001.png`` is a 404 because Bulbasaur is not in
+#: Hisui, which is the first sheet here that is not a whole National Dex - the Generation 7 ones
+#: draw everything up to their own number whether the game holds it or not.
+HISUI = "8a"
+
 #: Pokemon HOME's artwork, which is what the games with no sheet of their own show.
 #:
 #: **The first set here that is not a generation's**, and it is named for what it is rather than
@@ -106,6 +113,10 @@ GALAR_SET = "generation-viii/sword-shield"
 #: photograph: a HOME render is the picture a player of them sees when they open a box.
 HOME_SET = "home"
 
+#: Hisui's own folder, which is the second Generation 8 set and the only one of the last five
+#: games in the series with a sheet behind it.
+HISUI_SET = "generation-viii/legends-arceus"
+
 #: And the marker that says a name is built HOME's way rather than a sheet's.
 HOME = "home"
 
@@ -118,6 +129,7 @@ ARCHIVES_SHEETS: dict[str, str | None] = {
     ALOLA_SET: None,
     LETS_GO_SET: LETS_GO,
     GALAR_SET: GALAR,
+    HISUI_SET: HISUI,
     HOME_SET: HOME,
 }
 
@@ -149,7 +161,41 @@ FORM_CODES: dict[str, str] = {
     # what wants it, and it is written here beside the Alolan one because the two sheets spell
     # a regional form the same way and there is nothing to choose between them.
     "Galar": "G",
+    # And Hisui's, which is the same letter a third time: ``Spr_8a_058H.png`` is the Hisuian
+    # Growlithe. Unlike the other two it is not only step 8's, because of what
+    # :func:`species_names` has to do with it.
+    "Hisui": "H",
+    # Basculin's third stripe, which is a form of the same shape and not a regional one: the
+    # White-Striped Basculin is the only one in Hisui and the only one that becomes a
+    # Basculegion. ``Spr_8a_550W.png``, and there is no plain 550 on that sheet at all.
+    "White-Striped": "W",
+    # And six more that the Legends: Arceus category turned out to spell as rules rather than as
+    # a list. They were guessed at by nobody: the whole of that category is 367 file names, and
+    # every code in it belongs to exactly one kind of form.
+    "Origin": "O",
+    "Therian": "T",
+    "Sky": "S",
+    "Sandy": "S",
+    "Trash": "G",
+    "East Sea": "E",
 }
+
+#: Unown's letters, which are a rule after all.
+#:
+#: This module said for three generations that they are "a hundred and thirty separate codes
+#: that would have to be read one at a time", and put them in the same bucket as Vivillon's
+#: patterns and Arceus's types. Reading a whole category rather than probing showed the rule:
+#: the code is the letter, with ``EX`` for the exclamation mark and ``QU`` for the question
+#: mark. ``Spr_8a_201B.png`` is the B.
+UNOWN_CODES: dict[str, str] = {"!": "EX", "?": "QU"}
+
+#: The codes a species on Hisui's sheet may be drawn under when it has no plain name.
+#:
+#: Sixteen species are in Legends: Arceus as one form and no other, so the sheet draws that form
+#: and nothing else: fifteen Hisuian ones and the White-Striped Basculin. Both are read in
+#: :func:`species_names` rather than left to the form table, because a tile showing the species
+#: has to show the one the game has.
+HISUI_ONLY: tuple[str, ...] = ("H", "W")
 
 #: Everything Ultra Sun and Ultra Moon drew that Sun and Moon did not.
 #:
@@ -202,6 +248,24 @@ def species_names(number: int, *, sheet: str | None = None, sexed: bool = False)
     marked, with ``_f``, so unlike a sheet there is no ``_m`` to try and the plain name is
     always right. Shiny renders sit beside them under ``_s`` and this dataset has no use for
     one.
+
+    **Hisui's sheet needs two more names, and they are a form code where every other sheet's
+    species name has none.** Fifteen species are in Legends: Arceus only as their Hisuian form,
+    so the sheet draws no plain one at all: ``Spr_8a_058.png`` does not exist and
+    ``Spr_8a_058H.png`` is the Growlithe that game has. Falling back to the shared set for those
+    fifteen would put a Kantonian Growlithe on a Hisui tile, which is a different Pokemon rather
+    than another generation's drawing of the same one.
+
+    They go last, so a species drawn both ways still gets the plain one: Vulpix has
+    ``Spr_8a_037.png`` and ``Spr_8a_037A.png``, and the Pokedex entry is the Kantonian one.
+    Sneasel is drawn four times - ``215_m``, ``215_f``, ``215H_m`` and ``215H_f`` - which is why
+    the sexed spelling of the coded name is here too.
+
+    **And a female last of all, for one species.** Floatzel is drawn on this sheet exactly once,
+    as ``Spr_8a_419_f.png``: there is no plain 419 and no ``_m``, which is the wiki being short
+    of an upload rather than the game being short of a Floatzel. Asked for last, so it can only
+    ever be the picture when nothing else is - and this game's own drawing of the right species
+    beats the shared set's, which is what falling back would otherwise give.
     """
     if sheet == HOME:
         return (f"HOME{number:04d}.png",)
@@ -209,8 +273,18 @@ def species_names(number: int, *, sheet: str | None = None, sexed: bool = False)
     sheet = sheet or (SM if number <= SM_THROUGH else USUM)
     plain = f"Spr_{sheet}_{number:03d}.png"
     male = f"Spr_{sheet}_{number:03d}_m.png"
+    first = (male, plain) if sexed else (plain, male)
 
-    return (male, plain) if sexed else (plain, male)
+    if sheet != HISUI:
+        return first
+
+    coded: list[str] = []
+    for code in HISUI_ONLY:
+        one = f"Spr_{HISUI}_{number:03d}{code}.png"
+        male_one = f"Spr_{HISUI}_{number:03d}{code}_m.png"
+        coded.extend((male_one, one) if sexed else (one, male_one))
+
+    return (*first, *coded, f"Spr_{HISUI}_{number:03d}_f.png")
 
 
 def form_names(
@@ -230,10 +304,13 @@ def form_names(
 
     Empty covers two different things and neither is a fault. A Totem Pokemon and an Own Tempo
     Rockruff are drawn as the ordinary form and have no file of their own - checked on the wiki
-    rather than assumed - and Unown's letters, Vivillon's patterns and Arceus's types have files
-    under a hundred and thirty separate codes that would each have to be read one at a time.
-    Both fall back to the shared set's picture of that form, which is the right Pokemon in
-    another generation's style rather than a hole.
+    rather than assumed - and Vivillon's patterns and Arceus's types have files under codes that
+    would each have to be read one at a time. Both fall back to the shared set's picture of that
+    form, which is the right Pokemon in another generation's style rather than a hole.
+
+    **Unown used to be in that second list and is not any more.** Reading a whole category
+    instead of probing one name at a time showed that its letters are a rule: see
+    :data:`UNOWN_CODES`.
     """
     if sheet == HOME:
         # HOME's own way of spelling a form is not read here yet, and nothing wants it: the two
@@ -244,6 +321,10 @@ def form_names(
 
     if sheet is None and (usum := USUM_FORMS.get(form_id)) is not None:
         return (f"Spr_{USUM}_{number:03d}{usum}.png",)
+
+    if form_id.startswith("unown-"):
+        code = UNOWN_CODES.get(form_name, form_name.upper())
+        return (f"Spr_{sheet or SM}_{number:03d}{code}.png",)
 
     code = FORM_CODES.get(form_name)
     if code is None:

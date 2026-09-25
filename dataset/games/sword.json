@@ -273786,7 +273786,7 @@
       "target": {
         "species": "avalugg"
       },
-      "rule": "bergmite-to-avalugg-x-y",
+      "rule": "bergmite-to-avalugg",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/366",
@@ -274438,7 +274438,7 @@
       "target": {
         "species": "dusknoir"
       },
-      "rule": "dusclops-to-dusknoir",
+      "rule": "dusclops-to-dusknoir-diamond-pearl",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/182",
@@ -274581,7 +274581,7 @@
       "target": {
         "species": "electivire"
       },
-      "rule": "electabuzz-to-electivire",
+      "rule": "electabuzz-to-electivire-diamond-pearl",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/60",
@@ -274894,7 +274894,7 @@
       "target": {
         "species": "sliggoo"
       },
-      "rule": "goomy-to-sliggoo-x-y",
+      "rule": "goomy-to-sliggoo",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/362",
@@ -274959,7 +274959,7 @@
       "target": {
         "species": "arcanine"
       },
-      "rule": "growlithe-to-arcanine-red-blue",
+      "rule": "growlithe-to-arcanine",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/25",
@@ -275050,7 +275050,7 @@
       "target": {
         "species": "gengar"
       },
-      "rule": "haunter-to-gengar",
+      "rule": "haunter-to-gengar-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/40",
@@ -275245,7 +275245,7 @@
       "target": {
         "species": "alakazam"
       },
-      "rule": "kadabra-to-alakazam",
+      "rule": "kadabra-to-alakazam-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/27",
@@ -275559,7 +275559,7 @@
       "target": {
         "species": "machamp"
       },
-      "rule": "machoke-to-machamp",
+      "rule": "machoke-to-machamp-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/28",
@@ -275611,7 +275611,7 @@
       "target": {
         "species": "magmortar"
       },
-      "rule": "magmar-to-magmortar",
+      "rule": "magmar-to-magmortar-diamond-pearl",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/61",
@@ -276042,7 +276042,7 @@
       "target": {
         "species": "steelix"
       },
-      "rule": "onix-to-steelix",
+      "rule": "onix-to-steelix-gold-silver",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/41",
@@ -276094,7 +276094,7 @@
       "target": {
         "species": "lilligant"
       },
-      "rule": "petilil-to-lilligant-black-white",
+      "rule": "petilil-to-lilligant",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/279",
@@ -276224,7 +276224,7 @@
       "target": {
         "species": "porygon2"
       },
-      "rule": "porygon-to-porygon2",
+      "rule": "porygon-to-porygon2-gold-silver",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/68",
@@ -276237,7 +276237,7 @@
       "target": {
         "species": "porygon-z"
       },
-      "rule": "porygon2-to-porygon-z",
+      "rule": "porygon2-to-porygon-z-diamond-pearl",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/68",
@@ -276383,7 +276383,7 @@
       "target": {
         "species": "rhyperior"
       },
-      "rule": "rhydon-to-rhyperior",
+      "rule": "rhydon-to-rhyperior-diamond-pearl",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/50",
@@ -276515,7 +276515,7 @@
       "target": {
         "species": "braviary"
       },
-      "rule": "rufflet-to-braviary-black-white",
+      "rule": "rufflet-to-braviary",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/319",
@@ -276620,7 +276620,7 @@
       "target": {
         "species": "scizor"
       },
-      "rule": "scyther-to-scizor",
+      "rule": "scyther-to-scizor-gold-silver",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/58",
@@ -276829,7 +276829,7 @@
       "target": {
         "species": "goodra"
       },
-      "rule": "sliggoo-to-goodra-x-y",
+      "rule": "sliggoo-to-goodra",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/362",
@@ -277653,7 +277653,7 @@
       "target": {
         "species": "zoroark"
       },
-      "rule": "zorua-to-zoroark-black-white",
+      "rule": "zorua-to-zoroark",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/291",

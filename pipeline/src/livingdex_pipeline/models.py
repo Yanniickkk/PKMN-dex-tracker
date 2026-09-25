@@ -186,6 +186,25 @@ class EncounterMethod(StrEnum):
     # is standing in a place a player can walk to.
     MAX_RAID = "maxRaid"
     DYNAMAX_ADVENTURE = "dynamaxAdventure"
+    # And Hisui's two, in a game where the whole vocabulary above is gone: no grass, no rod, no
+    # random battle, and nothing rolled when a player walks. What is standing in the world is
+    # what is there, which is Let's Go's answer - so `overworld`, `overworldWater` and
+    # `overworldFlying` do most of the work here, and these two are what those three cannot say.
+    #
+    # A space-time distortion is a patch of the map that goes purple for a few minutes and fills
+    # with Pokemon that are not in Hisui at all. Measured before it was named: **of the 69
+    # species that appear in one, 30 appear in nothing else in the game** - every Johto and
+    # Unova starter, the whole Eevee family, Porygon's line, Gengar, Scizor, Magmortar. Calling
+    # that `other` would tell a player that a third of what the game holds has no answer.
+    #
+    # The other is three pieces of scenery with something inside: a tree that shakes, an ore
+    # deposit that shakes, and the wooden boxes in the Celestica ruins. A ball is thrown at it
+    # and what falls out can be caught. One method with the scenery said beside it rather than
+    # three, which is the call Kalos's five ambushes got - a tree and a crate are the same event
+    # with different furniture. It is Johto's headbutt trees three hundred years earlier, and it
+    # is not `headbutt`, because there is no move and two of the three are not trees.
+    SPACE_TIME_DISTORTION = "spaceTimeDistortion"
+    SHAKEN_LOOSE = "shakenLoose"
     OTHER = "other"
 
 

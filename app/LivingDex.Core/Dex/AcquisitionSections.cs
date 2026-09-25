@@ -122,6 +122,8 @@ public static class AcquisitionNames
         EncounterMethod.OverworldFlying => "catching one passing overhead",
         EncounterMethod.MaxRaid => "a Max Raid Battle",
         EncounterMethod.DynamaxAdventure => "a Dynamax Adventure",
+        EncounterMethod.SpaceTimeDistortion => "a space-time distortion",
+        EncounterMethod.ShakenLoose => "shaking it loose",
         _ => "another way",
     };
 

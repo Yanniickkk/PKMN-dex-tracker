@@ -11103,7 +11103,7 @@
       "target": {
         "species": "golem"
       },
-      "rule": "graveler-to-golem",
+      "rule": "graveler-to-golem-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/31",
@@ -11129,7 +11129,7 @@
       "target": {
         "species": "arcanine"
       },
-      "rule": "growlithe-to-arcanine-red-blue",
+      "rule": "growlithe-to-arcanine",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/25",
@@ -11142,7 +11142,7 @@
       "target": {
         "species": "gengar"
       },
-      "rule": "haunter-to-gengar",
+      "rule": "haunter-to-gengar-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/40",
@@ -11207,7 +11207,7 @@
       "target": {
         "species": "alakazam"
       },
-      "rule": "kadabra-to-alakazam",
+      "rule": "kadabra-to-alakazam-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/27",
@@ -11259,7 +11259,7 @@
       "target": {
         "species": "machamp"
       },
-      "rule": "machoke-to-machamp",
+      "rule": "machoke-to-machamp-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/28",
@@ -11675,7 +11675,7 @@
       "target": {
         "species": "electrode"
       },
-      "rule": "voltorb-to-electrode-red-blue",
+      "rule": "voltorb-to-electrode",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/44",

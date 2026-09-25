@@ -260,9 +260,10 @@
     ]
   },
   {
-    "id": "basculin-to-basculegion-legends-arceus",
+    "id": "basculin-to-basculegion",
     "from": {
-      "species": "basculin"
+      "species": "basculin",
+      "form": "basculin-white-striped"
     },
     "to": {
       "species": "basculegion"
@@ -280,12 +281,14 @@
     ]
   },
   {
-    "id": "basculin-to-basculegion-legends-arceus-2",
+    "id": "basculin-to-basculegion-female",
     "from": {
-      "species": "basculin"
+      "species": "basculin",
+      "form": "basculin-white-striped"
     },
     "to": {
-      "species": "basculegion"
+      "species": "basculegion",
+      "form": "basculegion-female"
     },
     "trigger": "other",
     "conditions": [
@@ -348,12 +351,29 @@
     ]
   },
   {
-    "id": "bergmite-to-avalugg-legends-arceus",
+    "id": "bergmite-to-avalugg",
     "from": {
       "species": "bergmite"
     },
     "to": {
       "species": "avalugg"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 37
+      }
+    ]
+  },
+  {
+    "id": "bergmite-to-avalugg-hisui",
+    "from": {
+      "species": "bergmite"
+    },
+    "to": {
+      "species": "avalugg",
+      "form": "avalugg-hisui"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -364,22 +384,6 @@
       {
         "condition": "other",
         "description": "in Hisui"
-      }
-    ]
-  },
-  {
-    "id": "bergmite-to-avalugg-x-y",
-    "from": {
-      "species": "bergmite"
-    },
-    "to": {
-      "species": "avalugg"
-    },
-    "trigger": "levelUp",
-    "conditions": [
-      {
-        "condition": "minimumLevel",
-        "level": 37
       }
     ]
   },
@@ -1556,27 +1560,7 @@
     ]
   },
   {
-    "id": "dartrix-to-decidueye-legends-arceus",
-    "from": {
-      "species": "dartrix"
-    },
-    "to": {
-      "species": "decidueye"
-    },
-    "trigger": "levelUp",
-    "conditions": [
-      {
-        "condition": "minimumLevel",
-        "level": 36
-      },
-      {
-        "condition": "other",
-        "description": "in Hisui"
-      }
-    ]
-  },
-  {
-    "id": "dartrix-to-decidueye-sun-moon",
+    "id": "dartrix-to-decidueye",
     "from": {
       "species": "dartrix"
     },
@@ -1588,6 +1572,27 @@
       {
         "condition": "minimumLevel",
         "level": 34
+      }
+    ]
+  },
+  {
+    "id": "dartrix-to-decidueye-hisui",
+    "from": {
+      "species": "dartrix"
+    },
+    "to": {
+      "species": "decidueye",
+      "form": "decidueye-hisui"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 36
+      },
+      {
+        "condition": "other",
+        "description": "in Hisui"
       }
     ]
   },
@@ -1712,7 +1717,7 @@
     ]
   },
   {
-    "id": "dewott-to-samurott-black-white",
+    "id": "dewott-to-samurott",
     "from": {
       "species": "dewott"
     },
@@ -1728,12 +1733,13 @@
     ]
   },
   {
-    "id": "dewott-to-samurott-legends-arceus",
+    "id": "dewott-to-samurott-hisui",
     "from": {
       "species": "dewott"
     },
     "to": {
-      "species": "samurott"
+      "species": "samurott",
+      "form": "samurott-hisui"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -2094,7 +2100,7 @@
     ]
   },
   {
-    "id": "dusclops-to-dusknoir",
+    "id": "dusclops-to-dusknoir-diamond-pearl",
     "from": {
       "species": "dusclops"
     },
@@ -2105,6 +2111,22 @@
     "conditions": [
       {
         "condition": "heldItem",
+        "item": "Reaper Cloth"
+      }
+    ]
+  },
+  {
+    "id": "dusclops-to-dusknoir-legends-arceus",
+    "from": {
+      "species": "dusclops"
+    },
+    "to": {
+      "species": "dusknoir"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
         "item": "Reaper Cloth"
       }
     ]
@@ -2534,7 +2556,7 @@
     ]
   },
   {
-    "id": "electabuzz-to-electivire",
+    "id": "electabuzz-to-electivire-diamond-pearl",
     "from": {
       "species": "electabuzz"
     },
@@ -2545,6 +2567,22 @@
     "conditions": [
       {
         "condition": "heldItem",
+        "item": "Electirizer"
+      }
+    ]
+  },
+  {
+    "id": "electabuzz-to-electivire-legends-arceus",
+    "from": {
+      "species": "electabuzz"
+    },
+    "to": {
+      "species": "electivire"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
         "item": "Electirizer"
       }
     ]
@@ -3459,12 +3497,29 @@
     ]
   },
   {
-    "id": "goomy-to-sliggoo-legends-arceus",
+    "id": "goomy-to-sliggoo",
     "from": {
       "species": "goomy"
     },
     "to": {
       "species": "sliggoo"
+    },
+    "trigger": "levelUp",
+    "conditions": [
+      {
+        "condition": "minimumLevel",
+        "level": 40
+      }
+    ]
+  },
+  {
+    "id": "goomy-to-sliggoo-hisui",
+    "from": {
+      "species": "goomy"
+    },
+    "to": {
+      "species": "sliggoo",
+      "form": "sliggoo-hisui"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -3475,22 +3530,6 @@
       {
         "condition": "other",
         "description": "in Hisui"
-      }
-    ]
-  },
-  {
-    "id": "goomy-to-sliggoo-x-y",
-    "from": {
-      "species": "goomy"
-    },
-    "to": {
-      "species": "sliggoo"
-    },
-    "trigger": "levelUp",
-    "conditions": [
-      {
-        "condition": "minimumLevel",
-        "level": 40
       }
     ]
   },
@@ -3543,17 +3582,6 @@
     ]
   },
   {
-    "id": "graveler-to-golem",
-    "from": {
-      "species": "graveler"
-    },
-    "to": {
-      "species": "golem"
-    },
-    "trigger": "trade",
-    "conditions": []
-  },
-  {
     "id": "graveler-to-golem-alola",
     "from": {
       "species": "graveler",
@@ -3562,6 +3590,33 @@
     "to": {
       "species": "golem",
       "form": "golem-alola"
+    },
+    "trigger": "trade",
+    "conditions": []
+  },
+  {
+    "id": "graveler-to-golem-legends-arceus",
+    "from": {
+      "species": "graveler"
+    },
+    "to": {
+      "species": "golem"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Linking Cord"
+      }
+    ]
+  },
+  {
+    "id": "graveler-to-golem-red-blue",
+    "from": {
+      "species": "graveler"
+    },
+    "to": {
+      "species": "golem"
     },
     "trigger": "trade",
     "conditions": []
@@ -3669,7 +3724,7 @@
     ]
   },
   {
-    "id": "growlithe-to-arcanine-legends-arceus",
+    "id": "growlithe-to-arcanine",
     "from": {
       "species": "growlithe"
     },
@@ -3685,12 +3740,14 @@
     ]
   },
   {
-    "id": "growlithe-to-arcanine-red-blue",
+    "id": "growlithe-to-arcanine-hisui",
     "from": {
-      "species": "growlithe"
+      "species": "growlithe",
+      "form": "growlithe-hisui"
     },
     "to": {
-      "species": "arcanine"
+      "species": "arcanine",
+      "form": "arcanine-hisui"
     },
     "trigger": "useItem",
     "conditions": [
@@ -3812,7 +3869,23 @@
     ]
   },
   {
-    "id": "haunter-to-gengar",
+    "id": "haunter-to-gengar-legends-arceus",
+    "from": {
+      "species": "haunter"
+    },
+    "to": {
+      "species": "gengar"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Linking Cord"
+      }
+    ]
+  },
+  {
+    "id": "haunter-to-gengar-red-blue",
     "from": {
       "species": "haunter"
     },
@@ -4083,7 +4156,23 @@
     ]
   },
   {
-    "id": "kadabra-to-alakazam",
+    "id": "kadabra-to-alakazam-legends-arceus",
+    "from": {
+      "species": "kadabra"
+    },
+    "to": {
+      "species": "alakazam"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Linking Cord"
+      }
+    ]
+  },
+  {
+    "id": "kadabra-to-alakazam-red-blue",
     "from": {
       "species": "kadabra"
     },
@@ -4646,7 +4735,23 @@
     ]
   },
   {
-    "id": "machoke-to-machamp",
+    "id": "machoke-to-machamp-legends-arceus",
+    "from": {
+      "species": "machoke"
+    },
+    "to": {
+      "species": "machamp"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Linking Cord"
+      }
+    ]
+  },
+  {
+    "id": "machoke-to-machamp-red-blue",
     "from": {
       "species": "machoke"
     },
@@ -4705,7 +4810,7 @@
     ]
   },
   {
-    "id": "magmar-to-magmortar",
+    "id": "magmar-to-magmortar-diamond-pearl",
     "from": {
       "species": "magmar"
     },
@@ -4716,6 +4821,22 @@
     "conditions": [
       {
         "condition": "heldItem",
+        "item": "Magmarizer"
+      }
+    ]
+  },
+  {
+    "id": "magmar-to-magmortar-legends-arceus",
+    "from": {
+      "species": "magmar"
+    },
+    "to": {
+      "species": "magmortar"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
         "item": "Magmarizer"
       }
     ]
@@ -5706,7 +5827,7 @@
     ]
   },
   {
-    "id": "onix-to-steelix",
+    "id": "onix-to-steelix-gold-silver",
     "from": {
       "species": "onix"
     },
@@ -5717,6 +5838,22 @@
     "conditions": [
       {
         "condition": "heldItem",
+        "item": "Metal Coat"
+      }
+    ]
+  },
+  {
+    "id": "onix-to-steelix-legends-arceus",
+    "from": {
+      "species": "onix"
+    },
+    "to": {
+      "species": "steelix"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
         "item": "Metal Coat"
       }
     ]
@@ -5897,7 +6034,7 @@
     ]
   },
   {
-    "id": "petilil-to-lilligant-black-white",
+    "id": "petilil-to-lilligant",
     "from": {
       "species": "petilil"
     },
@@ -5913,12 +6050,13 @@
     ]
   },
   {
-    "id": "petilil-to-lilligant-legends-arceus",
+    "id": "petilil-to-lilligant-hisui",
     "from": {
       "species": "petilil"
     },
     "to": {
-      "species": "lilligant"
+      "species": "lilligant",
+      "form": "lilligant-hisui"
     },
     "trigger": "useItem",
     "conditions": [
@@ -6303,7 +6441,7 @@
     ]
   },
   {
-    "id": "porygon-to-porygon2",
+    "id": "porygon-to-porygon2-gold-silver",
     "from": {
       "species": "porygon"
     },
@@ -6319,7 +6457,23 @@
     ]
   },
   {
-    "id": "porygon2-to-porygon-z",
+    "id": "porygon-to-porygon2-legends-arceus",
+    "from": {
+      "species": "porygon"
+    },
+    "to": {
+      "species": "porygon2"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Upgrade"
+      }
+    ]
+  },
+  {
+    "id": "porygon2-to-porygon-z-diamond-pearl",
     "from": {
       "species": "porygon2"
     },
@@ -6330,6 +6484,22 @@
     "conditions": [
       {
         "condition": "heldItem",
+        "item": "Dubious Disc"
+      }
+    ]
+  },
+  {
+    "id": "porygon2-to-porygon-z-legends-arceus",
+    "from": {
+      "species": "porygon2"
+    },
+    "to": {
+      "species": "porygon-z"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
         "item": "Dubious Disc"
       }
     ]
@@ -6497,7 +6667,7 @@
     ]
   },
   {
-    "id": "quilava-to-typhlosion-gold-silver",
+    "id": "quilava-to-typhlosion",
     "from": {
       "species": "quilava"
     },
@@ -6513,12 +6683,13 @@
     ]
   },
   {
-    "id": "quilava-to-typhlosion-legends-arceus",
+    "id": "quilava-to-typhlosion-hisui",
     "from": {
       "species": "quilava"
     },
     "to": {
-      "species": "typhlosion"
+      "species": "typhlosion",
+      "form": "typhlosion-hisui"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -6551,7 +6722,8 @@
   {
     "id": "qwilfish-to-overqwil-legends-arceus",
     "from": {
-      "species": "qwilfish"
+      "species": "qwilfish",
+      "form": "qwilfish-hisui"
     },
     "to": {
       "species": "overqwil"
@@ -6567,7 +6739,8 @@
   {
     "id": "qwilfish-to-overqwil-legends-za",
     "from": {
-      "species": "qwilfish"
+      "species": "qwilfish",
+      "form": "qwilfish-hisui"
     },
     "to": {
       "species": "overqwil"
@@ -6583,7 +6756,8 @@
   {
     "id": "qwilfish-to-overqwil-scarlet-violet",
     "from": {
-      "species": "qwilfish"
+      "species": "qwilfish",
+      "form": "qwilfish-hisui"
     },
     "to": {
       "species": "overqwil"
@@ -6694,7 +6868,7 @@
     ]
   },
   {
-    "id": "rhydon-to-rhyperior",
+    "id": "rhydon-to-rhyperior-diamond-pearl",
     "from": {
       "species": "rhydon"
     },
@@ -6705,6 +6879,22 @@
     "conditions": [
       {
         "condition": "heldItem",
+        "item": "Protector"
+      }
+    ]
+  },
+  {
+    "id": "rhydon-to-rhyperior-legends-arceus",
+    "from": {
+      "species": "rhydon"
+    },
+    "to": {
+      "species": "rhyperior"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
         "item": "Protector"
       }
     ]
@@ -6889,7 +7079,7 @@
     ]
   },
   {
-    "id": "rufflet-to-braviary-black-white",
+    "id": "rufflet-to-braviary",
     "from": {
       "species": "rufflet"
     },
@@ -6905,12 +7095,13 @@
     ]
   },
   {
-    "id": "rufflet-to-braviary-legends-arceus",
+    "id": "rufflet-to-braviary-hisui",
     "from": {
       "species": "rufflet"
     },
     "to": {
-      "species": "braviary"
+      "species": "braviary",
+      "form": "braviary-hisui"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -7075,7 +7266,7 @@
     ]
   },
   {
-    "id": "scyther-to-scizor",
+    "id": "scyther-to-scizor-gold-silver",
     "from": {
       "species": "scyther"
     },
@@ -7086,6 +7277,22 @@
     "conditions": [
       {
         "condition": "heldItem",
+        "item": "Metal Coat"
+      }
+    ]
+  },
+  {
+    "id": "scyther-to-scizor-legends-arceus",
+    "from": {
+      "species": "scyther"
+    },
+    "to": {
+      "species": "scizor"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
         "item": "Metal Coat"
       }
     ]
@@ -7559,7 +7766,7 @@
     ]
   },
   {
-    "id": "sliggoo-to-goodra-legends-arceus",
+    "id": "sliggoo-to-goodra",
     "from": {
       "species": "sliggoo"
     },
@@ -7579,12 +7786,14 @@
     ]
   },
   {
-    "id": "sliggoo-to-goodra-x-y",
+    "id": "sliggoo-to-goodra-hisui",
     "from": {
-      "species": "sliggoo"
+      "species": "sliggoo",
+      "form": "sliggoo-hisui"
     },
     "to": {
-      "species": "goodra"
+      "species": "goodra",
+      "form": "goodra-hisui"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -7717,7 +7926,8 @@
   {
     "id": "sneasel-to-sneasler",
     "from": {
-      "species": "sneasel"
+      "species": "sneasel",
+      "form": "sneasel-hisui"
     },
     "to": {
       "species": "sneasler"
@@ -8952,23 +9162,7 @@
     ]
   },
   {
-    "id": "voltorb-to-electrode-legends-arceus",
-    "from": {
-      "species": "voltorb"
-    },
-    "to": {
-      "species": "electrode"
-    },
-    "trigger": "useItem",
-    "conditions": [
-      {
-        "condition": "usedItem",
-        "item": "Leaf Stone"
-      }
-    ]
-  },
-  {
-    "id": "voltorb-to-electrode-red-blue",
+    "id": "voltorb-to-electrode",
     "from": {
       "species": "voltorb"
     },
@@ -8980,6 +9174,24 @@
       {
         "condition": "minimumLevel",
         "level": 30
+      }
+    ]
+  },
+  {
+    "id": "voltorb-to-electrode-hisui",
+    "from": {
+      "species": "voltorb",
+      "form": "voltorb-hisui"
+    },
+    "to": {
+      "species": "electrode",
+      "form": "electrode-hisui"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Leaf Stone"
       }
     ]
   },
@@ -9477,7 +9689,7 @@
     ]
   },
   {
-    "id": "zorua-to-zoroark-black-white",
+    "id": "zorua-to-zoroark",
     "from": {
       "species": "zorua"
     },
@@ -9493,12 +9705,14 @@
     ]
   },
   {
-    "id": "zorua-to-zoroark-legends-arceus",
+    "id": "zorua-to-zoroark-hisui",
     "from": {
-      "species": "zorua"
+      "species": "zorua",
+      "form": "zorua-hisui"
     },
     "to": {
-      "species": "zoroark"
+      "species": "zoroark",
+      "form": "zoroark-hisui"
     },
     "trigger": "levelUp",
     "conditions": [

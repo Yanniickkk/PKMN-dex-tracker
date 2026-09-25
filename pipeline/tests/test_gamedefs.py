@@ -15,6 +15,7 @@ from livingdex_pipeline.forms import (
     BDSP_FORMS,
     FORMS_NAMED_BY_THE_GAME,
     GALAR_FORMS,
+    HISUI_FORMS,
     NAMED_BY_HAND,
 )
 from livingdex_pipeline.gamedefs import (
@@ -43,6 +44,7 @@ from livingdex_pipeline.gamedefs import (
     kalos,
     kanto,
     leafgreen,
+    legends_arceus,
     lets_go,
     lets_go_eevee,
     lets_go_pikachu,
@@ -131,6 +133,8 @@ VERSION_GROUP_ORDER = {
     # real evolution rules in: Kubfu becomes an Urshifu in a tower on the first of them.
     "the-isle-of-armor": 19,
     "the-crown-tundra": 20,
+    "brilliant-diamond-and-shining-pearl": 21,
+    "legends-arceus": 22,
 }
 
 
@@ -1970,6 +1974,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "heartgold",
         "home",
         "leafgreen",
+        "legends-arceus",
         "lets-go-eevee",
         "lets-go-pikachu",
         "moon",
@@ -2033,11 +2038,17 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # between the halves, a deposit into HOME from each and an ordinary withdrawal back. Sinnoh
     # on a Switch reaches its own cartridges through nothing at all - Diamond is four link
     # cables and Pal Park, and not one of those goes anywhere near this pair.
+    #
+    # And two for Legends: Arceus, which is the smallest number any playable game in this
+    # dataset has ever brought. Every other one is half of something and carries a cable to its
+    # other half; this one trades only with other copies of itself, and a route from a game to
+    # itself is one a graph of games has nowhere to draw. So a deposit and a withdrawal, and
+    # nothing else at all.
     assert (
         len(routes)
-        == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5 + 5 + 5
+        == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5 + 5 + 5 + 2
     )
-    assert len(routes) == 140
+    assert len(routes) == 142
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -3990,7 +4001,7 @@ def test_the_way_out_of_bank_is_lit_now_that_its_other_end_exists() -> None:
     assert out.direction is TransferDirection.ONE_WAY
 
     # One way, and the reason the 3DS era ends here: a Pokemon that has gone into HOME has no
-    # route back to anything with a cartridge slot. What leaves HOME now goes to six Switch
+    # route back to anything with a cartridge slot. What leaves HOME now goes to seven Switch
     # games and takes nothing away from that sentence.
     leaving_home = [
         edge for edge in default_registry().edges if edge.from_ == home.NODE
@@ -3998,6 +4009,7 @@ def test_the_way_out_of_bank_is_lit_now_that_its_other_end_exists() -> None:
 
     assert [edge.to for edge in leaving_home] == [
         "brilliant-diamond",
+        "legends-arceus",
         "lets-go-eevee",
         "lets-go-pikachu",
         "shield",
@@ -4005,7 +4017,7 @@ def test_the_way_out_of_bank_is_lit_now_that_its_other_end_exists() -> None:
         "sword",
     ]
 
-    # Two of the six hand back only what they made themselves, which is the Let's Go rule:
+    # Two of the seven hand back only what they made themselves, which is the Let's Go rule:
     # anything that reached HOME through Bank was converted to Sword and Shield's format on the
     # way in and can never enter them.
     to_lets_go = [edge for edge in leaving_home if edge.to in lets_go.PAIR]
@@ -6274,3 +6286,433 @@ def test_two_of_the_form_changes_are_better_here_than_in_platinum() -> None:
     # A sex needs no line here: formchanges answers it once for every region.
     assert not [one for one in bdsp.FORM_CHANGES if one.endswith("-female")]
 
+
+
+def test_the_last_generation_8_game_is_the_first_that_is_half_of_nothing() -> None:
+    # No api worth the name: at step 1 a build of this game asks the source nothing at all.
+    hisui = legends_arceus.build(context(legends_arceus.GAME_ID)).game
+
+    assert hisui.generation == 8
+    assert hisui.released == date(2022, 1, 28)
+
+    # Sinnoh's ground under an older name, and written as its own region because that is the
+    # word a player of it reads. The two share a landmass and nothing a living dex cares about.
+    assert hisui.region == "Hisui"
+    assert brilliant_diamond.build(context("brilliant-diamond")).game.region == "Sinnoh"
+
+    # The first playable entry in the dataset with no other half. Every game before it is one of
+    # a pair or a third version beside one.
+    assert hisui.pair_partner is None
+
+
+def test_hisui_holds_a_list_the_way_galar_does_and_has_no_leftover_beside_it() -> None:
+    hisui = legends_arceus.build(context(legends_arceus.GAME_ID)).game
+
+    # Galar's answer, and the second time Generation 8 gives it: no National Pokedex, so the
+    # entity carries no number and the dex list is the whole claim.
+    assert hisui.national_dex_through is None
+    assert hisui.dex_source is DexSource.GAME_DEX
+    assert sword.build(context("sword")).game.national_dex_through is None
+
+    # And the half of it that is not Galar's. Sword and Shield hold eighty species none of their
+    # three lists names, which is what FOREIGN_TO_EVERY_DEX is for; the wiki says of this game
+    # that only Pokemon in the Hisui Pokedex may be transferred in at all. The dex is the boxes,
+    # and there is no second table here to write.
+    assert galar.FOREIGN_TO_EVERY_DEX
+    assert not hasattr(legends_arceus, "FOREIGN_TO_EVERY_DEX")
+
+
+def test_the_standalone_game_brings_two_routes_which_is_the_fewest_any_game_has() -> None:
+    routes = legends_arceus.edges()
+
+    # A deposit and a withdrawal, and nothing else. It trades with other copies of itself over
+    # the internet, and a route from a game to itself is one a graph of games cannot draw.
+    assert [(one.from_, one.to) for one in routes] == [
+        ("legends-arceus", home.NODE),
+        (home.NODE, "legends-arceus"),
+    ]
+
+    # The Switch sentence a third time: not compatible with other games of the same generation.
+    # So nothing to Sword, nothing to Brilliant Diamond, and nothing to the Sinnoh cartridges
+    # whose ground this is.
+    reachable = {one.to for one in routes} | {one.from_ for one in routes}
+    for absent in ("sword", "brilliant-diamond", "diamond", "platinum", "lets-go-pikachu", "bank"):
+        assert absent not in reachable
+
+    # Fewer than any other playable game in the dataset, every one of which carries a cable.
+    assert len(routes) < len(brilliant_diamond.edges())
+
+
+def test_the_withdrawal_into_hisui_asks_the_targets_own_list() -> None:
+    deposit, withdrawal = legends_arceus.edges()
+
+    assert isinstance(deposit.filter, AllSpeciesFilter)
+
+    # "Only Pokemon in the Hisui Pokedex can be transferred into Pokemon Legends: Arceus" is
+    # this filter's own question, so step 2 is what makes the edge honest and nothing here has
+    # to name a species.
+    assert isinstance(withdrawal.filter, PresentInTargetDexFilter)
+
+    # Not the Let's Go withdrawal, which asks where a Pokemon started rather than what a list
+    # says. This one takes back anything its dex names, whoever caught it.
+    assert withdrawal.origin is None
+
+
+def test_the_last_generation_8_game_lights_nothing_that_was_waiting() -> None:
+    registry = default_registry()
+    declared = {(one.from_, one.to) for one in registry.edges}
+
+    # The expected answer for the fifth Generation 8 game running rather than a gap: HOME is the
+    # only door this generation has, and everything older that can reach this game was already
+    # reaching HOME. So the two routes it brings are the two routes it declares.
+    into_hisui = {one for one in declared if "legends-arceus" in one}
+    assert into_hisui == {("legends-arceus", home.NODE), (home.NODE, "legends-arceus")}
+
+
+def test_hisui_shows_one_list_and_nothing_labels_it() -> None:
+    api = FakeApi([(1, "rowlet"), (2, "dartrix"), (3, "decidueye")])
+    entries = legends_arceus.build(context(legends_arceus.GAME_ID, api)).dex_entries
+
+    assert api.asked_for == ["hisui"]
+    assert [(one.number, one.target.species) for one in entries] == [
+        (1, "rowlet"),
+        (2, "dartrix"),
+        (3, "decidueye"),
+    ]
+
+    # One list needs no label, which is the rule every game before X and Y followed and the
+    # opposite of Galar's three. It is also the whole of what a living dex here aims at: there
+    # is no National Dex above it to count towards.
+    assert not [one for one in entries if one.dex is not None]
+    assert legends_arceus.entity().national_dex_through is None
+
+
+def test_the_hisui_list_numbers_species_and_leaves_the_forms_to_step_8() -> None:
+    # The wiki writes "DecidueyeHisuian Form" where the source writes `decidueye`, on 32 of the
+    # 242 rows. The difference is most of this game's character and none of it is a dex entry:
+    # these lists number species, the way Galar's three do.
+    api = FakeApi([(3, "decidueye"), (150, "growlithe")])
+    entries = legends_arceus.build(context(legends_arceus.GAME_ID, api)).dex_entries
+
+    assert not [one for one in entries if one.target.form is not None]
+    assert legends_arceus.DEX_SIZE == 242
+
+
+def test_hisui_holds_two_things_its_list_does_not_name() -> None:
+    # Galar's eighty, in miniature, and it took reading the dex to find them. The sentence
+    # beside the transfer rule excepts "Alolan Vulpix and Alolan Ninetales" - which looked like
+    # the wiki naming this game's own entries and is not: #168 and #169 are the Kantonian pair,
+    # the oddity a player meets in the snow of the Alabaster Icelands.
+    assert legends_arceus.HELD_WITHOUT_BEING_LISTED == ("vulpix-alola", "ninetales-alola")
+
+    # Written down and used nowhere. A form is not a dex entry, so nothing here reaches a tile
+    # before step 8 - unlike Galar's list, which its own dex step had to act on.
+    assert len(legends_arceus.HELD_WITHOUT_BEING_LISTED) < galar.FOREIGN_TO_EVERY_DEX
+
+
+def test_an_unobtainable_reason_reaches_the_entry_it_is_about() -> None:
+    # The shape step 7 will fill. Nothing passes one yet, which is why the default is no reason
+    # rather than an empty string.
+    api = FakeApi([(239, "phione"), (240, "manaphy")])
+    entries = legends_arceus.dex_entries(
+        context(legends_arceus.GAME_ID, api), unobtainable={"phione": "nothing here makes one"}
+    )
+
+    assert [one.unobtainable_reason for one in entries] == ["nothing here makes one", None]
+
+
+
+def test_hisuis_tables_are_a_level_below_the_place_a_player_would_name() -> None:
+    # Asking the wiki about the Obsidian Fieldlands gets an article whose Pokemon section is
+    # empty and nineteen sublocations underneath it. The encounters are on those.
+    assert len(legends_arceus.SUBLOCATIONS) == 5
+    assert len(legends_arceus.PAGES) == 81
+    assert legends_arceus.PAGES["Horseshoe_Plains"] == "Obsidian Fieldlands, Horseshoe Plains"
+    assert legends_arceus.PAGES["Lake_Verity"] == "Obsidian Fieldlands, Lake Verity"
+
+    # Which is the Grand Underground's shape: one place with the part of it after it, because
+    # that is what a player would say.
+    assert all(", " in one for one in legends_arceus.PAGES.values())
+
+
+def test_the_parts_of_hisui_with_no_wild_table_are_written_down_rather_than_dropped() -> None:
+    # Twenty-two of the hundred and three, and all three kinds are the game rather than a gap in
+    # the wiki: eleven base camps, four arenas where a noble is fought, and seven places the
+    # story owns.
+    absent = {one for names in legends_arceus.NO_WILD_TABLE.values() for one in names}
+
+    assert len(absent) == 22
+    assert {"Fieldlands Camp", "Moonview Arena", "Turnback Cave", "Hall of Origin"} <= absent
+
+    # Grandtree Arena is not among them: a noble is fought there and ordinary Pokemon walk
+    # around in it as well.
+    assert "Grandtree_Arena" in legends_arceus.PAGES
+
+    # And nothing is in both lists.
+    named = {one.rsplit(", ", 1)[-1] for one in legends_arceus.PAGES.values()}
+    assert not (absent & named)
+
+
+def test_three_of_lets_gos_words_do_most_of_hisuis_work() -> None:
+    # The same thing is asked of a player in both: no grass, no rod, nothing rolled when they
+    # walk. What is standing in the world is what is there.
+    assert legends_arceus.METHODS[""] is EncounterMethod.OVERWORLD
+    assert legends_arceus.METHODS["Water"] is EncounterMethod.OVERWORLD_WATER
+    assert legends_arceus.METHODS["In the air"] is EncounterMethod.OVERWORLD_FLYING
+
+    # The wiki writes the sky two ways and the outbreak three, and all of them are here rather
+    # than being lowercased into one: a heading nobody typed would then be quietly accepted.
+    assert legends_arceus.METHODS["Flying"] is EncounterMethod.OVERWORLD_FLYING
+    for spelling in ("Mass outbreak", "Mass Outbreak", "Mass outbreak s"):
+        assert legends_arceus.METHODS[spelling] is EncounterMethod.SWARM
+
+    # What is deliberately not here: the gift in Whiteout Valley and the two "Special Pokemon"
+    # are step 4's, and a heading the map does not hold is skipped rather than guessed at.
+    for skipped in ("Gift", "Special Pokémon"):
+        assert skipped not in legends_arceus.METHODS
+
+
+def test_hisui_adds_two_ways_of_meeting_something_and_both_were_measured_first() -> None:
+    # A space-time distortion holds 69 species and 30 of them are in nothing else in the game,
+    # which is the Max Raid argument: `other` would tell a player that a third of what the game
+    # holds has no answer.
+    assert legends_arceus.METHODS["Space-time distortions"] is EncounterMethod.SPACE_TIME_DISTORTION
+
+    # And three pieces of scenery with something inside are one method with the furniture said
+    # beside it, which is the call Kalos's five ambushes got.
+    for scenery in ("Shaking trees", "Shaking ore deposits", "Boxes"):
+        assert legends_arceus.METHODS[scenery] is EncounterMethod.SHAKEN_LOOSE
+        assert legends_arceus.METHOD_REQUIREMENTS[scenery]
+
+    assert "tree" in legends_arceus.METHOD_REQUIREMENTS["Shaking trees"]
+    assert "ore deposit" in legends_arceus.METHOD_REQUIREMENTS["Shaking ore deposits"]
+
+
+def test_a_fixed_alpha_is_walked_up_to_like_anything_else_and_says_which_one() -> None:
+    # Fourteen species in this game are only ever a fixed alpha - Garchomp, Torterra, Gallade,
+    # Machamp - so the row cannot be folded away. What it is not is a new way of meeting
+    # something: a player walks up to it, and the sentence says which one it is.
+    assert legends_arceus.METHODS["Fixed Alpha"] is EncounterMethod.OVERWORLD
+    assert "one spot" in legends_arceus.METHOD_REQUIREMENTS["Fixed Alpha"]
+
+
+def test_this_game_reads_the_wiki_because_the_source_has_nothing_at_all() -> None:
+    # The same sentence as Brilliant Diamond's and for the same reason, one game later: PokeAPI
+    # carries no encounter for any game after Sword and Shield. What is different is that there
+    # is no second reader to fall back on - the wiki is the whole of step 3 here.
+    api = FakeApi([(1, "rowlet")])
+    wiki = FakeWiki("rowlet")
+    built = legends_arceus.build(context(legends_arceus.GAME_ID, api, wiki=wiki))
+
+    assert wiki.asked_for
+
+    # A page with no rows leaves no wild slot behind, and what is left is step 4's - which is
+    # written down by hand and needs no page at build time at all.
+    assert {one.kind for one in built.acquisition_methods} == {"gift"}
+
+
+
+def test_every_starter_is_gettable_in_one_save_file_here() -> None:
+    # The only game in the dataset where that is true without a trade or a second cartridge.
+    # Laventon offers the three he has just chased across the Fieldlands, and after Mission 18
+    # he hands over the two that were not picked.
+    starters = [one for one in legends_arceus.GIFTS if one.kind is GiftKind.STARTER]
+
+    assert [one.species for one in starters] == ["rowlet", "cyndaquil", "oshawott"]
+    assert all(one.npc == "Professor Laventon" for one in starters)
+    assert all("Mission 18" in (one.requirement or "") for one in starters)
+
+
+def test_nineteen_of_hisuis_statics_are_a_mission_or_a_request() -> None:
+    # This game's shape: there is no cave a player can walk into and find a deity in. Every one
+    # of them is behind a numbered mission or request, which is what the list page is for.
+    statics = [
+        one for one in legends_arceus.GIFTS if one.kind is GiftKind.STATIC_ENCOUNTER
+    ]
+
+    assert len(statics) == 19
+    assert all(
+        "Mission" in (one.requirement or "") or "Request" in (one.requirement or "")
+        for one in statics
+    )
+
+    # And no levels anywhere, which is a gap rather than a decision: every other game takes its
+    # gifts from PokeAPI, which carries the level, and there is nothing here to take one from.
+    assert not [one for one in legends_arceus.GIFTS if one.level is not None]
+
+
+def test_a_static_cites_the_page_that_says_where_it_stands() -> None:
+    # Two kinds of page and neither can do the other's job. `Request` says which mission hands
+    # each one over and what has to be done first; it does not say where any of them is. The
+    # species' own article does, and nothing else does.
+    by_species = {one.species: one for one in legends_arceus.GIFTS}
+
+    assert by_species["enamorus"].location == "Crimson Mirelands, Scarlet Bog"
+    assert by_species["enamorus"].source is not None
+    assert by_species["enamorus"].source.url.endswith("Enamorus_(Pok%C3%A9mon)")
+
+    # The one that is handed over rather than caught cites the list, because the list is where
+    # it is written down.
+    assert by_species["spiritomb"].source is not None
+    assert by_species["spiritomb"].source.url.endswith("Request")
+
+
+def test_the_weather_decides_whether_two_of_them_are_there_at_all() -> None:
+    # The wild tables tick a weather on three rows out of 1,720. Two of the four Forces of
+    # Nature do not appear unless the sky is doing one particular thing, which is the only place
+    # in this game where weather is the whole answer.
+    by_species = {one.species: one for one in legends_arceus.GIFTS}
+
+    assert "blizzard" in by_species["tornadus"].requirement
+    assert "thunderstorm" in by_species["thundurus"].requirement
+
+
+def test_two_records_turn_on_another_games_save_file_being_on_the_console() -> None:
+    # The mirror of the Azure Flute, which Brilliant Diamond gets because this game has been
+    # played. A save file is not a route between two games and no edge is drawn for it: it is a
+    # condition on one record, and these two are the only ones of their kind in the dataset.
+    by_species = {one.species: one for one in legends_arceus.GIFTS}
+
+    assert "Sword or Shield save data" in by_species["shaymin"].requirement
+    assert "Brilliant Diamond or Shining Pearl save data" in by_species["darkrai"].requirement
+
+    # And neither is an edge. This game brings two routes and both of them are HOME's.
+    assert len(legends_arceus.edges()) == 2
+
+
+def test_the_alolan_vulpix_is_why_home_lets_one_in() -> None:
+    # Step 1 read HOME's exception for Alolan Vulpix and Ninetales and could not say why it was
+    # there. Step 2 found that the Hisui Pokedex's #168 is the Kantonian one. This is the rest
+    # of the answer: there is a second Vulpix in the game, behind a request, that the list has
+    # no page for.
+    [vulpix] = [one for one in legends_arceus.GIFTS if one.species == "vulpix"]
+
+    assert vulpix.location == "Alabaster Icelands, Whiteout Valley"
+    assert "Alolan" in vulpix.requirement
+    assert "vulpix-alola" in legends_arceus.HELD_WITHOUT_BEING_LISTED
+
+
+
+def test_hisui_has_no_in_game_trade_and_no_egg() -> None:
+    # Two absences rather than two lines nobody wrote. Bulbapedia says the first outright -
+    # "Pokemon Legends: Arceus is the only core series game to not feature in-game trades" - and
+    # the game's own article says the second: abilities, held items, breeding, Eggs and Pokerus
+    # have been removed.
+    api = FakeApi([(1, "rowlet")])
+    built = legends_arceus.build(context(legends_arceus.GAME_ID, api, wiki=FakeWiki("rowlet")))
+
+    assert not [one for one in built.acquisition_methods if one.kind in ("trade", "breeding")]
+
+    # This game's module has no table for either, which is what says nobody forgot.
+    assert not hasattr(legends_arceus, "TRADES")
+    assert not hasattr(legends_arceus, "DAY_CARE")
+
+
+def test_hisui_evolves_by_its_own_rules_and_reaches_back_to_nothing() -> None:
+    # The first game in the dataset whose evolution group is a group of one. Brilliant Diamond
+    # reaches back to `diamond-pearl` because a remake keeps its original's answers; nothing
+    # else evolves the way this does.
+    assert legends_arceus.EVOLUTION_GROUP == "legends-arceus"
+    assert legends_arceus.EVOLUTION_GROUP == legends_arceus.VERSION_GROUP
+
+
+
+def test_hisui_is_the_only_one_of_the_last_five_games_with_a_sheet() -> None:
+    # Sword and Shield have `8s`; after them Brilliant Diamond, Shining Pearl, Scarlet and
+    # Violet draw Pokemon HOME's renders, because the Archives have no sheet for any of them.
+    hisui = legends_arceus.entity()
+
+    assert hisui.sprite_set == "generation-viii/legends-arceus"
+    assert brilliant_diamond.build(context("brilliant-diamond")).game.sprite_set == "home"
+    assert sword.build(context("sword")).game.sprite_set == "generation-viii/sword-shield"
+
+
+
+def test_hisui_is_the_only_game_that_can_fill_its_own_pokedex() -> None:
+    # Step 7's input is the list of entries nothing in the game produces, and here that list is
+    # empty: every one of the 242 has a record in this game. Nothing else in the dataset can say
+    # that - Sword leaves 17 of its 821 to another game, Gold 17 of 251, Pearl 4 of 151.
+    api = FakeApi([(1, "rowlet"), (2, "dartrix")])
+    built = legends_arceus.build(context(legends_arceus.GAME_ID, api, wiki=FakeWiki("rowlet")))
+
+    assert not [one for one in built.dex_entries if one.unobtainable_reason is not None]
+    assert legends_arceus.NOTHING_IS_UNOBTAINABLE
+
+    # And `dex_entries` still takes a table, because the day one is needed it should not be a
+    # new argument as well as a new fact.
+    [phione] = legends_arceus.dex_entries(
+        context(legends_arceus.GAME_ID, FakeApi([(239, "phione")])),
+        unobtainable={"phione": "a reason"},
+    )
+    assert phione.unobtainable_reason == "a reason"
+
+
+
+def test_the_form_rule_is_off_for_hisui_and_the_margin_is_the_widest_yet() -> None:
+    # 393 against 117, which is the fourth game running the rule is wrong about and the worst.
+    # All it reads is when a form arrived, and this game came out after every one of them.
+    assert "legends-arceus" in FORMS_NAMED_BY_THE_GAME
+    assert len(HISUI_FORMS) == 117
+    assert set(HISUI_FORMS.values()) == {("legends-arceus",)}
+
+    # Read off the sheet: the Archives keep one model per thing the game draws, and every letter
+    # code in that category is a form. So eighteen regional ones and nothing else Alolan or
+    # Galarian - which is the third source to agree about the Alolan pair.
+    regional = [one for one in HISUI_FORMS if one.endswith(("-hisui", "-alola", "-galar"))]
+    assert len(regional) == 18
+    assert {one for one in regional if one.endswith("-alola")} == {
+        "vulpix-alola",
+        "ninetales-alola",
+    }
+    assert not [one for one in HISUI_FORMS if one.endswith(("-galar", "-gmax", "-mega"))]
+
+
+def test_the_one_thing_the_sheet_did_not_settle_is_left_out() -> None:
+    # Rotom's five appliances have models under this game's name and a Pokedex entry each, and
+    # nothing found says how a player changes one - there is no Rotom Room in Hisui. A form
+    # whose sentence cannot be written is a tile nobody can fill.
+    assert not [one for one in HISUI_FORMS if one.startswith("rotom-")]
+
+
+def test_twelve_sentences_cover_the_forms_a_player_does_something_to() -> None:
+    # The sixteen Hisuian forms are not changed into, they are the Growlithe that lives here;
+    # Unown's letters are found one at a time. What is left is the twelve.
+    assert len(legends_arceus.FORM_CHANGES) == 12
+
+    # And every one of the eleven is an item used out of the satchel, because this game has no
+    # held items: the Griseous Orb Platinum had Giratina carry is a Griseous Core here.
+    assert "satchel" in legends_arceus.FORM_CHANGES["giratina-origin"].requirement
+    assert "Adamant Crystal" in legends_arceus.FORM_CHANGES["dialga-origin"].requirement
+    assert "Reveal Glass" in legends_arceus.FORM_CHANGES["tornadus-therian"].requirement
+
+    # Sky Shaymin needs the Gracidea, which needs the same save data bonus the Shaymin request
+    # needs - so a console without Sword or Shield has neither.
+    assert "Sword or Shield" in legends_arceus.FORM_CHANGES["shaymin-sky"].requirement
+
+    # A sex needs no line: formchanges answers it once for every region.
+    assert not [one for one in legends_arceus.FORM_CHANGES if one.endswith("-female")]
+
+
+def test_the_wiki_spells_white_striped_with_a_hyphen_nobody_types() -> None:
+    # U+2011, the non-breaking one, and three spellings with the sex in brackets. All three were
+    # found by the reader's own warning rather than by reading the page, which is what that
+    # warning is for.
+    assert legends_arceus.STRIPED != "White-Striped"
+    assert legends_arceus.FORM_PHRASES[legends_arceus.STRIPED] == "White-Striped"
+    assert legends_arceus.FORM_PHRASES[f"{legends_arceus.STRIPED} (Female)"] == "White-Striped"
+
+    # And the phrases that name a default map to nothing, which leaves the record about the
+    # species: a Plant Cloak Burmy and a Kantonian Vulpix are what those species already are.
+    assert legends_arceus.FORM_PHRASES["Plant Cloak"] == ""
+    assert legends_arceus.FORM_PHRASES["Kantonian Form"] == ""
+    assert legends_arceus.FORM_PHRASES["Hisuian Form"] == "Hisui"
+
+
+def test_the_alolan_vulpix_is_handed_over_as_a_form() -> None:
+    # Without it the record says a Vulpix is handed over, and the Alolan Ninetales it evolves
+    # into starts from a form nothing in the game produces. It is the only gift in the dataset
+    # that names a form.
+    [vulpix] = [one for one in legends_arceus.GIFTS if one.species == "vulpix"]
+
+    assert vulpix.form == "vulpix-alola"
+    assert not [one for one in legends_arceus.GIFTS if one.form and one.species != "vulpix"]

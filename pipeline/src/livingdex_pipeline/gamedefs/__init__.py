@@ -23,6 +23,7 @@ from . import (
     heartgold,
     home,
     leafgreen,
+    legends_arceus,
     lets_go_eevee,
     lets_go_pikachu,
     moon,
@@ -59,7 +60,10 @@ from . import (
 # time, Yellow remade and a game that never existed remade beside it. Then the pair that opens
 # Generation 8 on the same console, which is the first in the series whose boxes hold a list
 # rather than everything up to a number, and then Sinnoh remade on that console two years
-# later - the first remakes here of a pair the dataset also holds as cartridges.
+# later - the first remakes here of a pair the dataset also holds as cartridges. Then the
+# game that closes that generation ten weeks after them, which is that same ground under an
+# older name and the first entry here that is not half of anything: one game, one region,
+# and a Pokedex of its own.
 #
 # Then the two nodes, out of that order and at the end, because neither is a game. Bank came out
 # between the two Generation 6 pairs and HOME six years after it. They are here for the same
@@ -100,6 +104,7 @@ MODULES = [
     shield,
     brilliant_diamond,
     shining_pearl,
+    legends_arceus,
     bank,
     home,
 ]

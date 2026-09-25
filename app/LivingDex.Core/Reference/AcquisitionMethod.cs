@@ -214,6 +214,29 @@ public enum EncounterMethod
     /// </remarks>
     DynamaxAdventure,
 
+    /// <summary>
+    /// A space-time distortion: a patch of Hisui that goes purple for a few minutes and fills
+    /// with Pokémon that are not in the region at all.
+    /// </summary>
+    /// <remarks>
+    /// Not another way and not a rarer kind of walking. Of the 69 species that appear in one,
+    /// 30 appear nowhere else in Legends: Arceus — every Johto and Unova starter, the whole
+    /// Eevee family, Porygon's line, Gengar, Scizor — so a distortion is where a player is told
+    /// to go and wait.
+    /// </remarks>
+    SpaceTimeDistortion,
+
+    /// <summary>
+    /// Something knocked out of the scenery in Hisui: a shaking tree, a shaking ore deposit, or
+    /// one of the wooden boxes in the Celestica ruins.
+    /// </summary>
+    /// <remarks>
+    /// One method with the furniture said beside it rather than three, which is the call Kalos's
+    /// five ambushes got. It is Johto's headbutt trees three hundred years earlier and it is not
+    /// <see cref="Headbutt"/>: there is no move, and two of the three are not trees.
+    /// </remarks>
+    ShakenLoose,
+
     Other,
 }
 

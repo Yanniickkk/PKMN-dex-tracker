@@ -206,6 +206,40 @@ public class AcquisitionSectionsTests
     }
 
     [Fact]
+    public void Hisuis_own_two_ways_are_named_and_neither_is_the_fallback()
+    {
+        // Legends: Arceus throws away the whole vocabulary above: no grass, no rod, nothing
+        // rolled when a player walks. Let's Go's three overworld words do most of the work, and
+        // these two are what those three cannot say.
+        EncounterMethod[] ownToHisui =
+        [
+            EncounterMethod.SpaceTimeDistortion,
+            EncounterMethod.ShakenLoose,
+        ];
+
+        var names = ownToHisui.Select(AcquisitionNames.Of).ToList();
+
+        // "another way" is where a method goes to stop being an answer, and 30 of the 69 species
+        // a distortion holds are in nothing else in that game.
+        Assert.DoesNotContain("another way", names);
+        Assert.Equal("a space-time distortion", AcquisitionNames.Of(EncounterMethod.SpaceTimeDistortion));
+        Assert.Equal("shaking it loose", AcquisitionNames.Of(EncounterMethod.ShakenLoose));
+    }
+
+    [Fact]
+    public void Every_encounter_method_reads_as_words_rather_than_as_another_way()
+    {
+        // The guard for the next game that adds one: a value with no name here falls through to
+        // "another way", which says nothing, and nothing in the dataset uses `Other`.
+        var unnamed = Enum.GetValues<EncounterMethod>()
+            .Where(one => one != EncounterMethod.Other)
+            .Where(one => AcquisitionNames.Of(one) == "another way")
+            .ToList();
+
+        Assert.Empty(unnamed);
+    }
+
+    [Fact]
     public void Changing_a_form_is_its_own_section_and_the_last_one()
     {
         // The only kind that needs the Pokemon already. Everything above it answers "how do I

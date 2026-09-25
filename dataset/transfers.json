@@ -657,6 +657,15 @@
   },
   {
     "from": "home",
+    "to": "legends-arceus",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "presentInTargetDex"
+    }
+  },
+  {
+    "from": "home",
     "to": "lets-go-eevee",
     "mechanism": "home",
     "direction": "oneWay",
@@ -783,6 +792,15 @@
       "filter": "nationalDexRange",
       "from": 1,
       "to": 386
+    }
+  },
+  {
+    "from": "legends-arceus",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
     }
   },
   {

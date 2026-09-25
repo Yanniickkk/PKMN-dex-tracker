@@ -22,6 +22,7 @@ from __future__ import annotations
 import logging
 from collections.abc import Container, Mapping, Sequence
 from dataclasses import dataclass, field
+from datetime import date
 
 import httpx
 
@@ -46,6 +47,7 @@ from .models import (
 )
 from .places import english, pretty
 from .pokeapi import BASE_URL, PokeApiClient
+from .sources import bulbapedia
 
 log = logging.getLogger(__name__)
 
@@ -184,6 +186,89 @@ class EnglishNames:
 
 
 @dataclass(frozen=True)
+class MissingVariant:
+    """One way of evolving that PokeAPI does not carry, and the page it was read from.
+
+    A fact about the series rather than about one game, which is what the rules table holds: the
+    Linking Cord evolves a Kadabra for whoever is holding one. Which games may *use* it follows
+    from its version group, exactly as it does for a way the source did carry.
+    """
+
+    from_species: str
+    to_species: str
+    version_group: str
+    trigger: EvolutionTrigger
+    conditions: tuple[EvolutionCondition, ...]
+    #: The Bulbapedia page this was read from, which the records made from it cite instead of a
+    #: chain url. Citing the chain would point at a document that does not say this.
+    page: str
+
+
+#: The day a person read the item pages the table below was typed from.
+NOT_IN_THE_SOURCE_READ_ON = date(2026, 9, 25)
+
+#: Ways of evolving that PokeAPI has no detail for, filled in by hand.
+#:
+#: The same last resort, and the same warning, as the hand-written wild slots in :mod:`wild` and
+#: the hand-written gifts in :mod:`gifts` - and it took until the twenty-ninth game for one to
+#: be needed, because until Hisui the source had every way a Pokemon could change.
+#:
+#: **Legends: Arceus has no held items and no in-game trade**, and between them those two facts
+#: break every trade evolution in the series. The game's answer is that the item is simply used:
+#: a Linking Cord on the four that needed nothing but a cable, and the item itself on the eight
+#: that were held during one. PokeAPI carries none of this - ``kadabra`` still has exactly one
+#: detail, ``red-blue`` and ``trade`` - so a build that trusted the source told a player of the
+#: one core series game without in-game trades to go and trade a Kadabra.
+#:
+#: Read off each item's own article rather than generalised from one: the Linking Cord's page
+#: names its four, and each of the other eight says the same sentence in its own words - "due to
+#: the absence of held items, the Metal Coat simply needs to be used on Onix or Scyther".
+#:
+#: What is deliberately *not* here is anything that only changes how hard something is. These
+#: twelve are the pairs where the way the source gives cannot be done in this game at all.
+NOT_IN_THE_SOURCE: tuple[MissingVariant, ...] = (
+    # The four that needed a cable and nothing else. One page names all four.
+    *(
+        MissingVariant(
+            from_species=before,
+            to_species=after,
+            version_group="legends-arceus",
+            trigger=EvolutionTrigger.USE_ITEM,
+            conditions=(UsedItemCondition(item="Linking Cord"),),
+            page="Linking_Cord",
+        )
+        for before, after in (
+            ("kadabra", "alakazam"),
+            ("machoke", "machamp"),
+            ("graveler", "golem"),
+            ("haunter", "gengar"),
+        )
+    ),
+    # And the eight that were traded holding something, which is now used instead.
+    *(
+        MissingVariant(
+            from_species=before,
+            to_species=after,
+            version_group="legends-arceus",
+            trigger=EvolutionTrigger.USE_ITEM,
+            conditions=(UsedItemCondition(item=item),),
+            page=page,
+        )
+        for before, after, item, page in (
+            ("onix", "steelix", "Metal Coat", "Metal_Coat"),
+            ("scyther", "scizor", "Metal Coat", "Metal_Coat"),
+            ("rhydon", "rhyperior", "Protector", "Protector"),
+            ("electabuzz", "electivire", "Electirizer", "Electirizer"),
+            ("magmar", "magmortar", "Magmarizer", "Magmarizer"),
+            ("porygon", "porygon2", "Upgrade", "Up-Grade"),
+            ("porygon2", "porygon-z", "Dubious Disc", "Dubious_Disc"),
+            ("dusclops", "dusknoir", "Reaper Cloth", "Reaper_Cloth"),
+        )
+    ),
+)
+
+
+@dataclass(frozen=True)
 class _Variant:
     """One way of evolving, and the version group it started in.
 
@@ -211,6 +296,9 @@ class _Variant:
     to_form: str | None = None
     from_fork: bool = False
     to_fork: bool = False
+    #: Set only on the ways :data:`NOT_IN_THE_SOURCE` supplies. A string rather than a citation
+    #: so that a variant stays hashable, which it has to be: it is a dict key twice over.
+    page: str | None = None
 
     @property
     def pair(self) -> tuple[str, str]:
@@ -474,7 +562,11 @@ def _ways_at(
                 game=game_id,
                 target=target,
                 rule=names[variant],
-                source=_cited(api, f"{BASE_URL}/evolution-chain/{chain}"),
+                source=(
+                    bulbapedia(variant.page, retrieved_on=NOT_IN_THE_SOURCE_READ_ON)
+                    if variant.page
+                    else _cited(api, f"{BASE_URL}/evolution-chain/{chain}")
+                ),
             )
         )
 
@@ -553,6 +645,20 @@ def _all_variants(
             into=variants,
         )
 
+    variants.extend(
+        _Variant(
+            from_species=one.from_species,
+            to_species=one.to_species,
+            version_group=one.version_group,
+            order=groups.order_of(one.version_group),
+            trigger=one.trigger,
+            conditions=one.conditions,
+            page=one.page,
+        )
+        for one in NOT_IN_THE_SOURCE
+        if one.from_species in _species_in(variants)
+    )
+
     # Two details a player could not tell apart are one way of evolving, however many times the
     # source lists them. Left in, they would each want the same id.
     seen: dict[_Variant, None] = dict.fromkeys(variants)
@@ -597,6 +703,13 @@ def _named(field_value: dict | None) -> str | None:
 #: A real fork in the chain that nothing in this project records, which is not a way to get
 #: anything here and is not the species either.
 _UNRECORDED = object()
+
+
+def _species_in(variants: Sequence[_Variant]) -> set[str]:
+    """Every species the chains just read mention, so a hand-written way is only added beside
+    the chain it belongs to. Without it, asking about one game's species would pull in ways
+    about Pokemon that game has never heard of."""
+    return {one.from_species for one in variants} | {one.to_species for one in variants}
 
 
 def _form_in(name: str | None, fork: bool, known: Container[str]) -> str | object | None:

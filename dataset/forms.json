@@ -11,6 +11,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -40,6 +41,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -67,6 +69,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
@@ -718,6 +721,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -744,6 +748,19 @@
     ]
   },
   {
+    "id": "arcanine-hisui",
+    "species": "arcanine",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "fire",
+      "rock"
+    ]
+  },
+  {
     "id": "articuno-galar",
     "species": "articuno",
     "name": "Galar",
@@ -755,6 +772,28 @@
     "types": [
       "psychic",
       "flying"
+    ]
+  },
+  {
+    "id": "avalugg-hisui",
+    "species": "avalugg",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "ice",
+      "rock"
+    ]
+  },
+  {
+    "id": "basculegion-female",
+    "species": "basculegion",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "legends-arceus"
     ]
   },
   {
@@ -780,6 +819,15 @@
     ]
   },
   {
+    "id": "basculin-white-striped",
+    "species": "basculin",
+    "name": "White-Striped",
+    "kind": "functional",
+    "games": [
+      "legends-arceus"
+    ]
+  },
+  {
     "id": "beautifly-female",
     "species": "beautifly",
     "name": "Female",
@@ -791,6 +839,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -818,6 +867,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -845,6 +895,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -888,6 +939,19 @@
     ]
   },
   {
+    "id": "braviary-hisui",
+    "species": "braviary",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "psychic",
+      "flying"
+    ]
+  },
+  {
     "id": "buizel-female",
     "species": "buizel",
     "name": "Female",
@@ -926,6 +990,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -953,6 +1018,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -1093,6 +1159,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -1161,6 +1228,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -1200,6 +1268,19 @@
     ],
     "types": [
       "ice"
+    ]
+  },
+  {
+    "id": "decidueye-hisui",
+    "species": "decidueye",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "grass",
+      "fighting"
     ]
   },
   {
@@ -1347,6 +1428,15 @@
     ]
   },
   {
+    "id": "dialga-origin",
+    "species": "dialga",
+    "name": "Origin",
+    "kind": "functional",
+    "games": [
+      "legends-arceus"
+    ]
+  },
+  {
     "id": "diglett-alola",
     "species": "diglett",
     "name": "Alola",
@@ -1483,6 +1573,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -1510,6 +1601,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
@@ -1536,6 +1628,28 @@
     "kind": "functional",
     "games": [
       "lets-go-eevee"
+    ]
+  },
+  {
+    "id": "electrode-hisui",
+    "species": "electrode",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "electric",
+      "grass"
+    ]
+  },
+  {
+    "id": "enamorus-therian",
+    "species": "enamorus",
+    "name": "Therian",
+    "kind": "functional",
+    "games": [
+      "legends-arceus"
     ]
   },
   {
@@ -1582,6 +1696,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -1673,6 +1788,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -2010,6 +2126,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -2039,6 +2156,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -2068,6 +2186,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -2113,6 +2232,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -2168,6 +2288,7 @@
       "black-2",
       "brilliant-diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "platinum",
@@ -2194,6 +2315,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -2252,6 +2374,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
@@ -2318,6 +2441,19 @@
     "types": [
       "rock",
       "electric"
+    ]
+  },
+  {
+    "id": "goodra-hisui",
+    "species": "goodra",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "steel",
+      "dragon"
     ]
   },
   {
@@ -2422,6 +2558,19 @@
     ]
   },
   {
+    "id": "growlithe-hisui",
+    "species": "growlithe",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "fire",
+      "rock"
+    ]
+  },
+  {
     "id": "gulpin-female",
     "species": "gulpin",
     "name": "Female",
@@ -2472,6 +2621,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
@@ -2503,6 +2653,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -2532,6 +2683,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -2561,6 +2713,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -2696,6 +2849,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
@@ -2757,6 +2911,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -2784,6 +2939,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -2843,6 +2999,7 @@
     "games": [
       "alpha-sapphire",
       "black-2",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "sun",
@@ -2908,6 +3065,19 @@
     ]
   },
   {
+    "id": "lilligant-hisui",
+    "species": "lilligant",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "grass",
+      "fighting"
+    ]
+  },
+  {
     "id": "linoone-galar",
     "species": "linoone",
     "name": "Galar",
@@ -2962,6 +3132,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -3001,6 +3172,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -3030,6 +3202,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -3097,6 +3270,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
@@ -3128,6 +3302,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -3563,6 +3738,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -3612,6 +3788,7 @@
     "name": "Alola",
     "kind": "regional",
     "games": [
+      "legends-arceus",
       "lets-go-eevee",
       "moon",
       "shield",
@@ -3693,6 +3870,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -3770,6 +3948,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -3783,6 +3962,15 @@
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "palkia-origin",
+    "species": "palkia",
+    "name": "Origin",
+    "kind": "functional",
+    "games": [
+      "legends-arceus"
     ]
   },
   {
@@ -3857,6 +4045,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
@@ -4007,6 +4196,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -4175,6 +4365,19 @@
     ]
   },
   {
+    "id": "qwilfish-hisui",
+    "species": "qwilfish",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "dark",
+      "poison"
+    ]
+  },
+  {
     "id": "raichu-alola",
     "species": "raichu",
     "name": "Alola",
@@ -4206,6 +4409,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
@@ -4389,6 +4593,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
@@ -4420,6 +4625,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
@@ -4451,6 +4657,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -4502,6 +4709,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -4531,6 +4739,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -4716,6 +4925,19 @@
     ]
   },
   {
+    "id": "samurott-hisui",
+    "species": "samurott",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "water",
+      "dark"
+    ]
+  },
+  {
     "id": "sandshrew-alola",
     "species": "sandshrew",
     "name": "Alola",
@@ -4825,6 +5047,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -4854,6 +5077,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
@@ -4915,6 +5139,7 @@
       "black-2",
       "brilliant-diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "platinum",
@@ -4945,6 +5170,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5001,6 +5227,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5318,6 +5545,19 @@
     ]
   },
   {
+    "id": "sliggoo-hisui",
+    "species": "sliggoo",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "steel",
+      "dragon"
+    ]
+  },
+  {
     "id": "slowbro-galar",
     "species": "slowbro",
     "name": "Galar",
@@ -5370,6 +5610,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5388,6 +5629,19 @@
     ]
   },
   {
+    "id": "sneasel-hisui",
+    "species": "sneasel",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "fighting",
+      "poison"
+    ]
+  },
+  {
     "id": "snover-female",
     "species": "snover",
     "name": "Female",
@@ -5399,6 +5653,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5428,6 +5683,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5455,6 +5711,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5482,6 +5739,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5509,6 +5767,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5552,6 +5811,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5608,6 +5868,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5633,6 +5894,7 @@
     "games": [
       "alpha-sapphire",
       "black-2",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "sun",
@@ -5688,6 +5950,7 @@
     "games": [
       "alpha-sapphire",
       "black-2",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "sun",
@@ -5710,6 +5973,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5735,6 +5999,19 @@
     "games": [
       "shield",
       "sword"
+    ]
+  },
+  {
+    "id": "typhlosion-hisui",
+    "species": "typhlosion",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "fire",
+      "ghost"
     ]
   },
   {
@@ -5776,6 +6053,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5811,6 +6089,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5846,6 +6125,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5881,6 +6161,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5914,6 +6195,7 @@
       "firered",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5948,6 +6230,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -5983,6 +6266,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6018,6 +6302,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6053,6 +6338,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6088,6 +6374,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6123,6 +6410,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6158,6 +6446,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6193,6 +6482,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6228,6 +6518,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6263,6 +6554,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6298,6 +6590,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6333,6 +6626,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6366,6 +6660,7 @@
       "firered",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6400,6 +6695,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6435,6 +6731,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6470,6 +6767,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6505,6 +6803,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6540,6 +6839,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6575,6 +6875,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6610,6 +6911,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6645,6 +6947,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6680,6 +6983,7 @@
       "gold",
       "heartgold",
       "leafgreen",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -6710,6 +7014,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -7118,11 +7423,25 @@
     ]
   },
   {
+    "id": "voltorb-hisui",
+    "species": "voltorb",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "electric",
+      "grass"
+    ]
+  },
+  {
     "id": "vulpix-alola",
     "species": "vulpix",
     "name": "Alola",
     "kind": "regional",
     "games": [
+      "legends-arceus",
       "lets-go-eevee",
       "moon",
       "shield",
@@ -7147,6 +7466,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -7248,6 +7568,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -7279,6 +7600,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "moon",
       "omega-ruby",
       "pearl",
@@ -7370,6 +7692,32 @@
     ]
   },
   {
+    "id": "zoroark-hisui",
+    "species": "zoroark",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "normal",
+      "ghost"
+    ]
+  },
+  {
+    "id": "zorua-hisui",
+    "species": "zorua",
+    "name": "Hisui",
+    "kind": "regional",
+    "games": [
+      "legends-arceus"
+    ],
+    "types": [
+      "normal",
+      "ghost"
+    ]
+  },
+  {
     "id": "zubat-female",
     "species": "zubat",
     "name": "Female",
@@ -7381,6 +7729,7 @@
       "brilliant-diamond",
       "diamond",
       "heartgold",
+      "legends-arceus",
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",

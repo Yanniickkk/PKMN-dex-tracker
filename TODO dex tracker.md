@@ -251,30 +251,33 @@ a scope decision rather than a finding, and it belongs with Z-A rather than befo
 
 ### Generation 8
 
-_Done: Sword and Shield in Galar, and Brilliant Diamond and Shining Pearl in Sinnoh. What each
-pair shares is in a module of its own - `galar.py` and `bdsp.py` - and what all four have in
-common is Pokemon HOME, which `home.py` has held since before any of them existed. Legends:
-Arceus is the last of the five, and there is still nothing for a `gen8.py` to say._
+_Done: all five. Sword and Shield in Galar, Brilliant Diamond and Shining Pearl in Sinnoh, and
+Legends: Arceus in Hisui. What each pair shares is in a module of its own - `galar.py` and
+`bdsp.py` - the standalone one is `legends_arceus.py`, and what all five have in common is
+Pokemon HOME, which `home.py` has held since before any of them existed. **There is nothing left
+for a `gen8.py` to say and now there never will be**: three modules are three answers to every
+question this generation asks._
 
-_**Every route these four declare has both of its ends**, and they declared them into a graph
+_**Every route these five declare has both of its ends**, and they declared them into a graph
 that was already waiting: HOME is the only door Generation 8 has, so nothing older had to be
-touched to let a Pokemon caught in Red reach Galar or Sinnoh._
+touched to let a Pokemon caught in Red reach Galar, Sinnoh or Hisui._
 
-**The generation is not one answer about Pokedexes, it is two.** Sword and Shield have no
+**The generation is not one answer about Pokedexes, it is three.** Sword and Shield have no
 National Dex and cannot hold what is not in their own list - three lists kept apart and eighty
 species left out of all of them, with `nationalDexThrough` empty. Brilliant Diamond and Shining
 Pearl remade the generation that invented the National Dex and kept it: 493, `dexSource` national,
 and a regional list of 151 that is only a page in the game. So the field that Galar left blank
 was filled in for the first time in Generation 8 by a game released two years later.
 
-_Whichever pair comes next should read both: `galar.FOREIGN_TO_EVERY_DEX` before assuming its own
-dex is the whole of what its boxes hold, and `bdsp.EVOLUTION_GROUP` before assuming a remake
-evolves things its own generation's way._
+_And Legends: Arceus is the third: no National Dex either, but unlike Galar **no leftover beside
+the list** - only Pokemon in its 242 may be transferred in at all, with two exceptions the game
+itself contains. `legends_arceus.HELD_WITHOUT_BEING_LISTED` has two entries where
+`galar.FOREIGN_TO_EVERY_DEX` has eighty._
 
-- [ ] **Legends: Arceus** (`legends-arceus`, gen 8, standalone)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
+_Whichever game comes next should read three things: `galar.FOREIGN_TO_EVERY_DEX` before
+assuming its own dex is the whole of what its boxes hold, `bdsp.EVOLUTION_GROUP` before assuming
+a remake evolves things its own generation's way, and `evolutions.NOT_IN_THE_SOURCE` before
+assuming PokeAPI has every way a Pokemon can change - it stopped having them at Hisui._
 
 ### Generation 9
 

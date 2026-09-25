@@ -15,6 +15,7 @@ from livingdex_pipeline.archives import (
     ARCHIVES_SHEETS,
     GALAR,
     GALAR_SET,
+    HISUI,
     HOME,
     HOME_SET,
     LETS_GO,
@@ -153,10 +154,26 @@ def test_a_regional_form_takes_a_letter() -> None:
 
 def test_a_form_with_no_code_is_not_asked_for_at_all() -> None:
     # A Totem Pokemon is drawn as the ordinary form and has no file of its own, which was
-    # checked on the wiki rather than assumed; Unown's letters have a hundred and thirty codes
-    # nobody has read. Both fall back to the shared set's picture of that form.
+    # checked on the wiki rather than assumed. It falls back to the shared set's picture.
     assert form_names(752, form_id="araquanid-totem", form_name="Totem") == ()
-    assert form_names(201, form_id="unown-b", form_name="B") == ()
+
+
+def test_unowns_letters_turned_out_to_be_a_rule_after_all() -> None:
+    # This module said for three generations that they are a hundred and thirty codes nobody has
+    # read, and put them with Vivillon's patterns. Reading a whole category rather than probing
+    # one name at a time showed the rule: the code is the letter.
+    assert form_names(201, form_id="unown-b", form_name="B") == ("Spr_7s_201B.png",)
+    assert form_names(201, form_id="unown-b", form_name="B", sheet=HISUI) == (
+        "Spr_8a_201B.png",
+    )
+
+    # And the two that are not letters, which is the only part of it that is a list.
+    assert form_names(201, form_id="unown-exclamation", form_name="!", sheet=HISUI) == (
+        "Spr_8a_201EX.png",
+    )
+    assert form_names(201, form_id="unown-question", form_name="?", sheet=HISUI) == (
+        "Spr_8a_201QU.png",
+    )
 
 
 # --- the second sheet, which is four pictures ---------------------------------------------------
@@ -374,3 +391,51 @@ def test_the_home_set_is_the_first_here_that_is_not_a_generations() -> None:
     assert ARCHIVES_SHEETS[HOME_SET] == HOME
     assert not HOME_SET.startswith("generation-")
 
+
+
+def test_hisuis_sheet_offers_a_form_code_where_a_species_name_belongs() -> None:
+    # Fifteen species are in Legends: Arceus only as their Hisuian form, so the sheet draws no
+    # plain one: Spr_8a_058.png does not exist and Spr_8a_058H.png is the Growlithe that game
+    # has. Falling back to the shared set would put a Kantonian Growlithe on a Hisui tile.
+    assert species_names(58, sheet=HISUI) == (
+        "Spr_8a_058.png",
+        "Spr_8a_058_m.png",
+        "Spr_8a_058H.png",
+        "Spr_8a_058H_m.png",
+        "Spr_8a_058W.png",
+        "Spr_8a_058W_m.png",
+        "Spr_8a_058_f.png",
+    )
+
+    # Last, so a species drawn both ways still gets the plain one. Vulpix has both, and the
+    # Pokedex entry is the Kantonian one.
+    assert species_names(37, sheet=HISUI)[0] == "Spr_8a_037.png"
+
+    # Sneasel is drawn four times, which is why the sexed spelling of the Hisuian name is here.
+    assert species_names(215, sheet=HISUI, sexed=True)[:4] == (
+        "Spr_8a_215_m.png",
+        "Spr_8a_215.png",
+        "Spr_8a_215H_m.png",
+        "Spr_8a_215H.png",
+    )
+
+
+def test_the_two_species_the_hisui_sheet_names_its_own_way() -> None:
+    # Basculin has no plain 550 at all: the White-Striped one is the only Basculin in Hisui and
+    # the only one that becomes a Basculegion, and the sheet spells it W rather than H because
+    # it is a form of the same shape rather than a regional one.
+    assert "Spr_8a_550W.png" in species_names(550, sheet=HISUI)
+
+    # And Floatzel is drawn once, as a female. That is an upload the wiki is short of rather
+    # than a Floatzel the game is short of, so it is asked for last and only ever used when
+    # nothing else answers.
+    assert species_names(419, sheet=HISUI)[-1] == "Spr_8a_419_f.png"
+
+
+def test_no_other_sheet_grew_a_hisuian_name() -> None:
+    # The extra two are this sheet's alone. Asking Alola's or Galar's for them would be two
+    # requests per species against a host that wants five seconds between each.
+    for sheet in (SM, USUM, LETS_GO, GALAR):
+        assert len(species_names(58, sheet=sheet)) == 2
+
+    assert species_names(58, sheet=HOME) == ("HOME0058.png",)

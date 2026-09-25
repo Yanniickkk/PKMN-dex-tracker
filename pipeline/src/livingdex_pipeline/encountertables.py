@@ -26,13 +26,20 @@ from __future__ import annotations
 import logging
 import re
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from selectolax.parser import HTMLParser, Node
 
 from .conditions import REQUIREMENTS
 from .http import PoliteClient
-from .models import DexTarget, EncounterMethod, LevelRange, SourceCitation, WildAcquisition
+from .models import (
+    DexTarget,
+    EncounterMethod,
+    Form,
+    LevelRange,
+    SourceCitation,
+    WildAcquisition,
+)
 from .normalise import Normaliser
 from .sources import BULBAPEDIA, bulbapedia
 
@@ -403,3 +410,396 @@ def _present(cell: Node) -> bool:
 
 def _text(node: Node) -> str:
     return " ".join(node.text(separator=" ").split())
+
+
+# ---------------------------------------------------------------------------
+# The Legends games' tables, which are a different table on the same wiki.
+# ---------------------------------------------------------------------------
+
+#: The tick a Legends table puts in a column when the species is there under that condition.
+TICK = "✔"
+
+#: What the first column of a Legends table is called, which is how one is told from the others.
+#:
+#: **A page can hold both kinds.** Lake Verity is a sublocation of the Obsidian Fieldlands and a
+#: Sinnoh lake, so its article carries forty-one tables: Diamond's, Platinum's, HeartGold's,
+#: Brilliant Diamond's - and one of these. Neither reader may read the other's rows, and neither
+#: does: this one insists on a header of its own shape, and the older one insists on a Games
+#: column holding two particular letters.
+LEGENDS_FIRST_COLUMN = ("Pokémon", "Pokemon")
+
+#: The header cell that says a table belongs to a game with alphas in it.
+ALPHA_LEVELS = "Alpha Levels"
+
+#: What a species cell carries besides a name and a form, and what a footnote marker looks like.
+DECORATIONS = ("\u2021", "\u2020", "*", "Shiny", "Alpha")
+_NOTE = re.compile(r"\[[^\]]*\]")
+
+#: The block every Legends table has, and the one no older table has.
+#:
+#: **Being wide is not enough to be one of these.** Wayward Cave carries two Generation 4 tables
+#: whose Games column spans six letters and whose Rate column spans three - morning, day and
+#: night - so "a header with a block in it" would have read them as Legends rows and named their
+#: six games as six weathers. The hours are what only these games put in a header.
+TIME_BLOCK = "Time of day"
+
+
+@dataclass(frozen=True)
+class LegendsSlot:
+    """One row of one Legends table, before it is matched against a species id."""
+
+    species: str
+    #: What the cell wrote after the species name: "Hisuian Form", "White-Striped Form", "Male".
+    #: Empty where the row is about the species itself.
+    form: str
+    #: The one-cell heading above this row, or "" for the rows that sit under none. It is what
+    #: the Location column is on an older page: the way a player meets this one.
+    group: str
+    #: What the page writes in each of the two level columns, either of which can be empty.
+    levels: tuple[int, int] | None
+    alpha_levels: tuple[int, int] | None
+    #: The names of the columns this row is ticked in, in the order the header writes them.
+    times: tuple[str, ...]
+    weathers: tuple[str, ...]
+    #: How wide each block of ticks is, so "ticked in all of them" - which is no condition at
+    #: all - can be told from "ticked in several".
+    time_columns: int = 0
+    weather_columns: int = 0
+
+
+def legends_encounters(
+    client: PoliteClient,
+    *,
+    game_id: str,
+    pages: Mapping[str, str],
+    methods: Mapping[str, EncounterMethod],
+    species: set[str],
+    forms: Sequence[Form] = (),
+    form_names: Mapping[str, str] | None = None,
+    requirements: Mapping[str, str] | None = None,
+    aliases: Mapping[str, str] | None = None,
+    refresh: bool = False,
+) -> list[WildAcquisition]:
+    """Every wild slot the Legends games' pages give, for the species given.
+
+    A second reader beside :func:`table_encounters` rather than more parameters on it, because
+    the two tables agree about almost nothing. **There is no Games column**, so nothing here is
+    a version exclusive and nothing is told apart by colour; **there is no rate**, because these
+    games do not roll one - a species is standing in a place or it is not; and **there is no
+    Location column**, so the way a player meets something is written as a heading over a group
+    of rows instead of beside every one of them.
+
+    What it has instead is two blocks of ticks, each column named by an icon and nothing else. A
+    row is ticked in the ones it is there for, and a cell spanning a whole block is the page
+    saying "all of them" - which is not a condition, and becomes no words on the record.
+
+    **How wide the weather block is depends on where you are standing**, which is why the header
+    is read rather than assumed: six columns in the Obsidian Fieldlands, seven in the Coronet
+    Highlands, five on the Cobalt Coastlands and four in the Alabaster Icelands, where it never
+    rains and it can blizzard. A reader that had counted on six would have put every tick in
+    three of the five areas in the wrong column and said so about nothing.
+
+    ``pages`` maps a page title to the name this dataset gives the place, as it does for the
+    older tables. ``methods`` maps a heading above a group of rows onto a way of meeting
+    something, with ``""`` for the rows that sit under no heading at all; a heading that is not
+    in it is skipped, which is the same guard the older reader has against gifts and trades.
+
+    **And a row here can be about a form, which no older table's is.** The species cell writes
+    the form's name straight onto the species name - the text reads "SneaselHisuian Form" - and
+    sixteen species in Hisui are in the game as that form and no other. ``form_names`` maps what
+    the cell writes onto the suffix this dataset spells a form with, and a phrase mapped to
+    nothing, or missing from the table, leaves the record about the species: "Plant Cloak" and
+    "Incarnate Forme" and "West Sea" are the source naming a default, not a choice.
+
+    Without it, ``growlithe-to-arcanine-hisui`` starts from a form nothing in the dataset
+    produces, which is what ``no-evolution-dead-ends`` says and what this closes.
+    """
+    names = Normaliser(
+        species_ids=species,
+        form_ids={one.id for one in forms},
+        aliases=dict(aliases or {}),
+    )
+    spelled = form_names or {}
+    said = requirements or {}
+    found: list[WildAcquisition] = []
+
+    for title, location in pages.items():
+        url = f"{BULBAPEDIA}/{title}"
+        page = HTMLParser(client.get_text(url, refresh=refresh))
+        citation = bulbapedia(title, retrieved_on=client.retrieved_on(url))
+        slots = _legends_slots(page, title=title)
+
+        if not slots:
+            # Loud rather than silent, for the reason the older reader gives: a place with no
+            # rows is either one this game does not have or a page that has been rewritten.
+            log.warning("%s: no Legends rows on %s", game_id, url)
+            continue
+
+        for slot in slots:
+            method = methods.get(slot.group)
+            if method is None:
+                continue
+
+            if slot.form and slot.form not in spelled:
+                # A phrase nobody has read is worth a person's eyes: it is either a form this
+                # game has that nothing here names, or a default spelled a new way.
+                log.warning(
+                    "%s: %s is written %r on %s and nothing says what that is",
+                    game_id,
+                    slot.species,
+                    slot.form,
+                    url,
+                )
+
+            target = names.target(slot.species, spelled.get(slot.form))
+            if target is None:
+                log.warning("%s: no species matches %r on %s", game_id, slot.species, url)
+                continue
+
+            levels = slot.levels or slot.alpha_levels
+            if levels is None:
+                # A row with neither level column filled says nothing about levels and
+                # everything about the species being here. There is no such row today; if one
+                # arrives it is worth a person's eyes rather than a made-up range.
+                log.warning("%s: %s has no levels on %s", game_id, slot.species, url)
+                continue
+
+            found.append(
+                WildAcquisition(
+                    game=game_id,
+                    target=target,
+                    location=location,
+                    method=method,
+                    levels=LevelRange(minimum=levels[0], maximum=levels[1]),
+                    time_of_day=_listed(slot.times, slot.time_columns),
+                    weather=_listed(slot.weathers, slot.weather_columns),
+                    requirement=_legends_requirement(slot, said=said),
+                    source=citation,
+                )
+            )
+
+    return found
+
+
+def _legends_requirement(slot: LegendsSlot, *, said: Mapping[str, str]) -> str | None:
+    """What this row asks that its method, its place, its hours and its sky do not say.
+
+    Two things, and the second is this game's own. A group's heading can mean more than the
+    method it maps to, which is what ``requirements`` is for on the older tables as well. And a
+    row with an empty Levels column and a filled Alpha Levels one is the page saying the only
+    one here is an alpha - a real restriction, because alphas do not appear at all until the
+    player has got far enough.
+    """
+    return (
+        "; ".join(
+            one
+            for one in (
+                said.get(slot.group),
+                "Only as an alpha" if slot.levels is None and slot.alpha_levels else None,
+            )
+            if one
+        )
+        or None
+    )
+
+
+def _listed(ticked: Sequence[str], columns: int) -> str | None:
+    """The ticked columns of one block as a phrase, or nothing when they say nothing.
+
+    Every column ticked is the page saying the species is there whatever the sky is doing, which
+    is no condition at all; none ticked is a row that says nothing either way. Both become an
+    empty field rather than a list of six weathers a reader has to notice adds up to "any".
+    """
+    if not ticked or len(ticked) >= columns:
+        return None
+
+    words = [one.lower() for one in ticked]
+    if len(words) == 1:
+        return words[0]
+
+    return f"{', '.join(words[:-1])} and {words[-1]}"
+
+
+def _legends_slots(page: HTMLParser, *, title: str) -> list[LegendsSlot]:
+    """Every Legends row on one page, whichever section of it they sit in."""
+    body = page.css_first("#mw-content-text")
+    if body is None:
+        raise EncounterTableError(f"{title} has no article body")
+
+    found: list[LegendsSlot] = []
+    for table in body.css("table"):
+        found.extend(_legends_rows(table))
+
+    return found
+
+
+def _legends_rows(table: Node) -> list[LegendsSlot]:
+    """One table's rows, when it is a Legends table, and nothing at all when it is not."""
+    rows = table.css("tr")
+    if len(rows) < 3:
+        return []
+
+    columns = _legends_columns(rows[0], rows[1])
+    if columns is None:
+        return []
+
+    names, width = columns
+    times = sum(1 for _, kind in names if kind == "time")
+    weathers = sum(1 for _, kind in names if kind == "weather")
+
+    found: list[LegendsSlot] = []
+    group = ""
+
+    for row in rows[2:]:
+        cells = [cell for cell in row.iter() if cell.tag in ("td", "th")]
+
+        if len(cells) == 1:
+            # A heading inside the table, which is where these pages write the method.
+            group = _text(cells[0])
+            continue
+
+        made = _legends_slot(cells, group=group, names=names, width=width)
+        if made is not None:
+            found.append(replace(made, time_columns=times, weather_columns=weathers))
+
+    return found
+
+
+def _legends_columns(header: Node, icons: Node) -> tuple[list[tuple[str, str]], int] | None:
+    """What each column of this table is, read off its two header rows.
+
+    **The header is what says a table is one of these**, which is the lesson the Generation 8
+    grass tables taught: the pair of letters and the split rate column were both written into a
+    reader as constants, and both turned out to be the header's business. So this reads the
+    header first and gives up on anything not shaped like a Legends table, rather than reading
+    rows and hoping.
+
+    The first row names the blocks and says how wide each one is; the second names each column
+    of each block, and only of the blocks - the first three cells of the first row span both
+    rows, so the second holds nothing for them. A column's name is its icon's alt text, because
+    the wiki writes these as pictures with no words at all.
+    """
+    top = [cell for cell in header.iter() if cell.tag in ("td", "th")]
+    if not top or _text(top[0]) not in LEGENDS_FIRST_COLUMN:
+        return None
+
+    blocks = [(_text(cell), int(cell.attributes.get("colspan", "1"))) for cell in top]
+    if not any(label == TIME_BLOCK and span > 1 for label, span in blocks):
+        return None
+
+    named = iter(
+        img.attributes.get("alt", "")
+        for cell in icons.iter()
+        if cell.tag in ("td", "th")
+        for img in cell.css("img")
+    )
+
+    columns: list[tuple[str, str]] = []
+    for label, span in blocks:
+        if span == 1:
+            columns.append((label, "column"))
+            continue
+
+        kind = "time" if label == TIME_BLOCK else "weather"
+        columns.extend((next(named, label), kind) for _ in range(span))
+
+    return columns, len(columns)
+
+
+def _legends_slot(
+    cells: Sequence[Node],
+    *,
+    group: str,
+    names: Sequence[tuple[str, str]],
+    width: int,
+) -> LegendsSlot | None:
+    """One row, expanded to the table's full width and read against the column names.
+
+    **A cell spans whatever somebody typed.** A row that is there at every hour writes one cell
+    over the four time columns; one that is there in any weather writes ``colspan="9"`` over six
+    columns, because nine is a number and a browser stops at the edge of the table anyway. So
+    the spans are expanded and then cut back to the width the header declared.
+    """
+    spread: list[Node] = []
+    for cell in cells:
+        span = int(cell.attributes.get("colspan", "1"))
+        spread.extend([cell] * max(span, 1))
+
+    if len(spread) < width:
+        return None
+
+    plain = [_text(cell) for cell in spread[:width]]
+    species = _species_name(spread[0])
+    if not species:
+        return None
+
+    levels = {
+        label: _range(text)
+        for (label, kind), text in zip(names, plain, strict=True)
+        if kind == "column"
+    }
+    ticked = {
+        kind: tuple(
+            label
+            for (label, this), text in zip(names, plain, strict=True)
+            if this == kind and TICK in text
+        )
+        for kind in ("time", "weather")
+    }
+
+    return LegendsSlot(
+        species=species,
+        form=_form_phrase(plain[0], species),
+        group=group,
+        levels=levels.get("Levels"),
+        alpha_levels=levels.get(ALPHA_LEVELS),
+        times=ticked["time"],
+        weathers=ticked["weather"],
+    )
+
+
+def _form_phrase(text: str, species: str) -> str:
+    """What the species cell says after the species name, with its decorations taken off.
+
+    The cell is a menu sprite, the species name, sometimes a form name run straight onto it, and
+    then any of a dagger pointing at a footnote, a bracketed note number, the word Shiny and an
+    alpha badge. Taking the species name off the front and the decorations off the back leaves
+    the form's name or nothing.
+    """
+    rest = text
+    if rest.startswith(species):
+        rest = rest[len(species) :]
+
+    for decoration in DECORATIONS:
+        rest = rest.replace(decoration, " ")
+
+    rest = _NOTE.sub(" ", rest)
+
+    return " ".join(rest.split())
+
+
+def _species_name(cell: Node) -> str:
+    """The species a row is about, taken from its link rather than from its text.
+
+    The cell holds a menu sprite, sometimes an alpha badge, a dagger pointing at a footnote, the
+    word Shiny, and - on sixteen species in Hisui - a form name run straight onto the end of the
+    species name, so that the text of the cell reads "SneaselHisuian Form". The link says
+    "Sneasel (Pokémon)", and says it the same way every time.
+
+    Which form it is goes deliberately unread. These records name species, the way every other
+    game's do; which Sneasel this is belongs to the form table, and step 8 is where it is
+    answered.
+    """
+    for link in cell.css("a"):
+        title = link.attributes.get("title", "")
+        if title.endswith(("(Pokémon)", "(Pokemon)")):
+            return title.rsplit("(", 1)[0].strip()
+
+    return ""
+
+
+def _range(text: str) -> tuple[int, int] | None:
+    """One level column, which is "3-6", or "40", or empty."""
+    numbers = [int(one) for one in _NUMBER.findall(text)]
+
+    return (min(numbers), max(numbers)) if numbers else None

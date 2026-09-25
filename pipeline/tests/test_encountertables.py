@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from datetime import date
 
-from livingdex_pipeline.encountertables import table_encounters
-from livingdex_pipeline.models import EncounterMethod
+from livingdex_pipeline.encountertables import legends_encounters, table_encounters
+from livingdex_pipeline.models import EncounterMethod, Form, FormKind
 
 PRESENT = "background:#AB2813;"
 ABSENT = "background:#FFF;"
@@ -428,3 +428,267 @@ def test_the_pair_of_letters_is_what_tells_one_generation_from_another() -> None
 
     assert len(switch) == 1
     assert len(remakes) == 1
+
+
+
+# ---------------------------------------------------------------------------
+# The Legends tables, which are the same wiki and a different table.
+# ---------------------------------------------------------------------------
+
+TIMES = ("Morning", "Day", "Evening", "Night")
+WEATHERS = ("Clear", "Harsh sunlight", "Cloudy", "Rain", "Thunderstorm", "Fog")
+
+def icon(name: str) -> str:
+    """A column of a Legends table, which is named by a picture and by nothing else."""
+    return f'<th><a href="/wiki/{name}"><img alt="{name}" src="/x.png"/></a></th>'
+
+
+LEGENDS_HEADER = (
+    "<tr>"
+    "<th rowspan=2>Pokémon</th><th rowspan=2>Levels</th><th rowspan=2>Alpha Levels</th>"
+    f"<th colspan={len(TIMES)}>Time of day</th>"
+    f"<th colspan={len(WEATHERS)}>Weather</th>"
+    "</tr>"
+    "<tr>"
+    + "".join(icon(one) for one in TIMES)
+    + "".join(icon(one) for one in WEATHERS)
+    + "</tr>"
+)
+
+
+def ticks(names, listed, over: int) -> str:
+    """One block of tick columns, or one cell spanning the block when every column is ticked.
+
+    ``over`` is what the page writes as the colspan in that case, which is four for the times
+    and nine for the six weathers - nine being a number somebody typed, and the weather block
+    being the last on the row, so a browser stops at the edge of the table.
+    """
+    if set(listed) == set(names):
+        return f'<td colspan="{over}">✔</td>'
+
+    return "".join(f"<td>{'✔' if one in listed else ''}</td>" for one in names)
+
+
+def legends_row(
+    species: str,
+    *,
+    levels: str = "3-6",
+    alpha: str = "18-21",
+    times=TIMES,
+    weathers=WEATHERS,
+    shown: str | None = None,
+) -> str:
+    """One row of a Legends table, with the decorations the real ones carry."""
+    return (
+        "<tr>"
+        f'<td><img src="/menu.png"/><a href="/wiki/{species}_(Pok%C3%A9mon)" '
+        f'title="{species} (Pokémon)">{shown or species}</a></td>'
+        f"<td>{levels}</td><td>{alpha}</td>"
+        f"{ticks(TIMES, times, len(TIMES))}{ticks(WEATHERS, weathers, 9)}"
+        "</tr>"
+    )
+
+
+def legends_table(*rows: str) -> str:
+    return f"<table><tbody>{LEGENDS_HEADER}{''.join(rows)}</tbody></table>"
+
+
+LEGENDS_METHODS = {
+    "": EncounterMethod.OVERWORLD,
+    "In the air": EncounterMethod.OVERWORLD_FLYING,
+    "Mass outbreak": EncounterMethod.SWARM,
+}
+
+
+def read_legends(
+    body: str,
+    *,
+    species: set[str],
+    methods=None,
+    requirements=None,
+    forms=(),
+    form_names=None,
+):
+    wiki = FakeWiki({"Horseshoe_Plains": page(body)})
+
+    return legends_encounters(
+        wiki,
+        game_id="legends-arceus",
+        pages={"Horseshoe_Plains": "Obsidian Fieldlands, Horseshoe Plains"},
+        methods=methods or LEGENDS_METHODS,
+        requirements=requirements,
+        species=species,
+        forms=forms,
+        form_names=form_names,
+    )
+
+
+def test_a_legends_row_has_no_rate_and_no_games_column() -> None:
+    [one] = read_legends(legends_table(legends_row("Ponyta")), species={"ponyta"})
+
+    assert one.target.species == "ponyta"
+    assert one.location == "Obsidian Fieldlands, Horseshoe Plains"
+    assert (one.levels.minimum, one.levels.maximum) == (3, 6)
+
+    # There is no rate on these pages at all, and none is invented. A species is standing in a
+    # place or it is not.
+    assert one.rate_percent is None
+
+    # Ticked in every column of both blocks, which is the page saying "whenever, whatever" -
+    # not a condition, and so not words on a record.
+    assert (one.time_of_day, one.weather) == (None, None)
+
+
+def test_a_block_of_ticks_becomes_a_phrase_only_when_it_leaves_something_out() -> None:
+    body = legends_table(
+        legends_row("Cascoon", times=("Night",)),
+        legends_row("Starly", times=("Morning", "Day", "Evening")),
+        legends_row("Ponyta", weathers=("Clear", "Harsh sunlight", "Cloudy")),
+    )
+    cascoon, starly, ponyta = read_legends(body, species={"cascoon", "starly", "ponyta"})
+
+    assert cascoon.time_of_day == "night"
+    assert starly.time_of_day == "morning, day and evening"
+    assert ponyta.weather == "clear, harsh sunlight and cloudy"
+
+    # And the block that is not restricted says nothing, on the same rows.
+    assert (cascoon.weather, starly.weather, ponyta.time_of_day) == (None, None, None)
+
+
+def test_a_cell_spans_whatever_somebody_typed() -> None:
+    # A row that is there in any weather writes colspan="9" over six columns. Nine is a number
+    # somebody typed; a browser stops at the edge of the table, and so does this.
+    assert 'colspan="9"' in legends_row("Eevee")
+
+    [one] = read_legends(legends_table(legends_row("Eevee")), species={"eevee"})
+
+    assert one.weather is None
+
+
+def test_the_heading_above_a_group_is_what_the_location_column_is_elsewhere() -> None:
+    body = legends_table(
+        legends_row("Starly"),
+        heading("In the air"),
+        legends_row("Drifloon", times=("Night",)),
+        heading("Mass outbreak"),
+        legends_row("Ponyta", levels="15-17"),
+        heading("Space-time distortions"),
+        legends_row("Gengar", levels="25-60"),
+    )
+    found = read_legends(body, species={"starly", "drifloon", "ponyta", "gengar"})
+
+    assert [(one.target.species, one.method) for one in found] == [
+        ("starly", EncounterMethod.OVERWORLD),
+        ("drifloon", EncounterMethod.OVERWORLD_FLYING),
+        ("ponyta", EncounterMethod.SWARM),
+    ]
+
+    # A heading nobody has mapped is skipped rather than guessed at, which is the same guard
+    # that keeps gifts and trades out of the older reader.
+    assert "gengar" not in {one.target.species for one in found}
+
+
+def test_a_row_with_only_alpha_levels_says_so() -> None:
+    body = legends_table(legends_row("Silcoon", levels="", alpha="22-24"))
+    [one] = read_legends(body, species={"silcoon"})
+
+    # The levels are the alpha ones, because they are the only ones there are, and the record
+    # says why rather than looking like an ordinary spawn that starts at 22.
+    assert (one.levels.minimum, one.levels.maximum) == (22, 24)
+    assert one.requirement == "Only as an alpha"
+
+
+def test_a_group_can_say_more_than_the_method_it_maps_to() -> None:
+    body = legends_table(heading("Mass outbreak"), legends_row("Ponyta"))
+    [one] = read_legends(
+        body,
+        species={"ponyta"},
+        requirements={"Mass outbreak": "Only while an outbreak is running"},
+    )
+
+    assert one.requirement == "Only while an outbreak is running"
+
+
+def test_the_species_comes_from_the_link_rather_than_the_text() -> None:
+    # The cell reads "SneaselHisuian Form" - a form name run straight onto the species name -
+    # and on other rows it carries a dagger, the word Shiny, or an alpha badge. The link says
+    # the same thing every time.
+    body = legends_table(legends_row("Sneasel", shown="Sneasel‡ Hisuian Form Shiny"))
+    [one] = read_legends(body, species={"sneasel"})
+
+    assert one.target.species == "sneasel"
+
+    # And which Sneasel goes deliberately unread here: these records name species, the way every
+    # other game's do, and step 8 is where a form is answered.
+    assert one.target.form is None
+
+
+def test_neither_reader_touches_the_others_rows() -> None:
+    # Lake Verity is a sublocation of the Obsidian Fieldlands and a Sinnoh lake, so one article
+    # carries both kinds of table. Each reader insists on its own header.
+    body = page(
+        table(switch_row("Starly"), row("Starly"))
+        + legends_table(legends_row("Ponyta"))
+    )
+    wiki = FakeWiki({"Lake_Verity": body})
+
+    legends = legends_encounters(
+        wiki,
+        game_id="legends-arceus",
+        pages={"Lake_Verity": "Obsidian Fieldlands, Lake Verity"},
+        methods=LEGENDS_METHODS,
+        species={"starly", "ponyta"},
+    )
+    remakes = table_encounters(
+        wiki,
+        game_id="brilliant-diamond",
+        column="BD",
+        pair=("BD", "SP"),
+        pages={"Lake_Verity": "Lake Verity"},
+        methods=METHODS,
+        species={"starly", "ponyta"},
+    )
+
+    assert [one.target.species for one in legends] == ["ponyta"]
+    assert [one.target.species for one in remakes] == ["starly"]
+
+
+
+def test_a_legends_row_can_be_about_a_form() -> None:
+    # Sixteen species are in Hisui as one form and no other, and the cell writes the form's name
+    # straight onto the species name: "GrowlitheHisuian Form". Without reading it, the Hisuian
+    # evolutions start from a form nothing in the dataset produces.
+    body = legends_table(legends_row("Growlithe", shown="GrowlitheHisuian Form"))
+    [one] = read_legends(
+        body,
+        species={"growlithe"},
+        forms=[
+            Form(
+                id="growlithe-hisui",
+                species="growlithe",
+                name="Hisuian",
+                kind=FormKind.REGIONAL,
+                games=["legends-arceus"],
+            )
+        ],
+        form_names={"Hisuian Form": "Hisui"},
+    )
+
+    assert one.target.form == "growlithe-hisui"
+
+
+def test_a_phrase_that_names_a_default_leaves_the_record_about_the_species() -> None:
+    # "Plant Cloak" and "West Sea" are the source naming what a species already is rather than a
+    # choice, and a phrase nobody has mapped is passed over with a warning rather than guessed.
+    body = legends_table(
+        legends_row("Burmy", shown="BurmyPlant Cloak"),
+        legends_row("Shellos", shown="ShellosNorth Sea"),
+    )
+    burmy, shellos = read_legends(
+        body,
+        species={"burmy", "shellos"},
+        form_names={"Plant Cloak": ""},
+    )
+
+    assert burmy.target.form is None
+    assert shellos.target.form is None

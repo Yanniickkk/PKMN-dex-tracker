@@ -4,7 +4,11 @@ from __future__ import annotations
 
 from datetime import date
 
-from livingdex_pipeline.evolutions import evolution_encounters, evolution_rules
+from livingdex_pipeline.evolutions import (
+    NOT_IN_THE_SOURCE,
+    evolution_encounters,
+    evolution_rules,
+)
 from livingdex_pipeline.models import EvolutionTrigger, Form, FormKind
 
 RETRIEVED_ON = date(2026, 9, 21)
@@ -19,6 +23,8 @@ ORDER = {
     "black-white": 11,
     "sun-moon": 17,
     "lets-go-pikachu-lets-go-eevee": 21,
+    "sword-shield": 22,
+    "legends-arceus": 24,
 }
 
 
@@ -688,3 +694,88 @@ def test_a_form_with_no_pokemon_of_its_own_is_still_a_form() -> None:
     )
 
     assert [one.target.form for one in methods] == [None, "gastrodon-east"]
+
+
+
+# ---------------------------------------------------------------------------
+# The ways PokeAPI does not carry, which took twenty-nine games to need.
+# ---------------------------------------------------------------------------
+
+
+def test_the_hand_written_ways_are_all_hisuis_and_all_use_an_item() -> None:
+    # Legends: Arceus has no held items and no in-game trade, and between them those two facts
+    # break every trade evolution in the series. Twelve pairs, and the source has a detail for
+    # none of them.
+    assert len(NOT_IN_THE_SOURCE) == 12
+    assert {one.version_group for one in NOT_IN_THE_SOURCE} == {"legends-arceus"}
+    assert {one.trigger for one in NOT_IN_THE_SOURCE} == {EvolutionTrigger.USE_ITEM}
+
+    # Four needed a cable and nothing else, and one page names all four.
+    cord = [one for one in NOT_IN_THE_SOURCE if one.page == "Linking_Cord"]
+    assert {one.to_species for one in cord} == {"alakazam", "machamp", "golem", "gengar"}
+
+    # The other eight were traded holding something, and each item's own page says the same
+    # sentence in its own words.
+    assert {one.page for one in NOT_IN_THE_SOURCE} - {"Linking_Cord"} == {
+        "Metal_Coat",
+        "Protector",
+        "Electirizer",
+        "Magmarizer",
+        "Up-Grade",
+        "Dubious_Disc",
+        "Reaper_Cloth",
+    }
+
+
+def test_a_hand_written_way_replaces_the_one_the_source_gave() -> None:
+    chains = {
+        "1": link(
+            "kadabra",
+            [],
+            [link("alakazam", [detail("trade", "red-blue")])],
+        )
+    }
+    api = FakeApi(chains, species={"kadabra": "1", "alakazam": "1"})
+
+    hisui = evolution_encounters(
+        api, game_id="legends-arceus", version_group="legends-arceus",
+        species=["kadabra", "alakazam"],
+    )
+
+    [one] = hisui
+    assert one.rule == "kadabra-to-alakazam-legends-arceus"
+
+    # And it cites the page it was read from rather than a chain the claim is not in.
+    assert one.source.source == "bulbapedia"
+    assert one.source.url.endswith("Linking_Cord")
+
+
+def test_an_older_game_keeps_the_way_it_always_had() -> None:
+    # The guard that matters: a way added for Hisui must not reach back. Sword is older than
+    # Legends: Arceus, so its Kadabra is still traded.
+    chains = {
+        "1": link(
+            "kadabra",
+            [],
+            [link("alakazam", [detail("trade", "red-blue")])],
+        )
+    }
+    api = FakeApi(chains, species={"kadabra": "1", "alakazam": "1"})
+
+    [one] = evolution_encounters(
+        api, game_id="sword", version_group="sword-shield",
+        species=["kadabra", "alakazam"],
+    )
+
+    assert one.rule == "kadabra-to-alakazam-red-blue"
+    assert one.source.source == "pokeapi"
+
+
+def test_a_hand_written_way_only_joins_the_chain_it_belongs_to() -> None:
+    # Asking about a chain that has nothing to do with any of the twelve must not drag them in.
+    chains = {"1": link("magikarp", [], [link("gyarados", [detail("level-up", "red-blue")])])}
+    api = FakeApi(chains, species={"magikarp": "1", "gyarados": "1"})
+
+    rules = evolution_rules(api, chains=["1"])
+
+    assert [one.id for one in rules] == ["magikarp-to-gyarados"]

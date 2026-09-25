@@ -58140,7 +58140,7 @@
       "target": {
         "species": "dusknoir"
       },
-      "rule": "dusclops-to-dusknoir",
+      "rule": "dusclops-to-dusknoir-diamond-pearl",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/182",
@@ -58270,7 +58270,7 @@
       "target": {
         "species": "electivire"
       },
-      "rule": "electabuzz-to-electivire",
+      "rule": "electabuzz-to-electivire-diamond-pearl",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/60",
@@ -58491,7 +58491,7 @@
       "target": {
         "species": "golem"
       },
-      "rule": "graveler-to-golem",
+      "rule": "graveler-to-golem-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/31",
@@ -58543,7 +58543,7 @@
       "target": {
         "species": "arcanine"
       },
-      "rule": "growlithe-to-arcanine-red-blue",
+      "rule": "growlithe-to-arcanine",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/25",
@@ -58582,7 +58582,7 @@
       "target": {
         "species": "gengar"
       },
-      "rule": "haunter-to-gengar",
+      "rule": "haunter-to-gengar-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/40",
@@ -58712,7 +58712,7 @@
       "target": {
         "species": "alakazam"
       },
-      "rule": "kadabra-to-alakazam",
+      "rule": "kadabra-to-alakazam-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/27",
@@ -58920,7 +58920,7 @@
       "target": {
         "species": "machamp"
       },
-      "rule": "machoke-to-machamp",
+      "rule": "machoke-to-machamp-red-blue",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/28",
@@ -58972,7 +58972,7 @@
       "target": {
         "species": "magmortar"
       },
-      "rule": "magmar-to-magmortar",
+      "rule": "magmar-to-magmortar-diamond-pearl",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/61",
@@ -59375,7 +59375,7 @@
       "target": {
         "species": "steelix"
       },
-      "rule": "onix-to-steelix",
+      "rule": "onix-to-steelix-gold-silver",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/41",
@@ -59570,7 +59570,7 @@
       "target": {
         "species": "porygon2"
       },
-      "rule": "porygon-to-porygon2",
+      "rule": "porygon-to-porygon2-gold-silver",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/68",
@@ -59583,7 +59583,7 @@
       "target": {
         "species": "porygon-z"
       },
-      "rule": "porygon2-to-porygon-z",
+      "rule": "porygon2-to-porygon-z-diamond-pearl",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/68",
@@ -59635,7 +59635,7 @@
       "target": {
         "species": "typhlosion"
       },
-      "rule": "quilava-to-typhlosion-gold-silver",
+      "rule": "quilava-to-typhlosion",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/80",
@@ -59687,7 +59687,7 @@
       "target": {
         "species": "rhyperior"
       },
-      "rule": "rhydon-to-rhyperior",
+      "rule": "rhydon-to-rhyperior-diamond-pearl",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/50",
@@ -59752,7 +59752,7 @@
       "target": {
         "species": "scizor"
       },
-      "rule": "scyther-to-scizor",
+      "rule": "scyther-to-scizor-gold-silver",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/58",
@@ -60507,7 +60507,7 @@
       "target": {
         "species": "electrode"
       },
-      "rule": "voltorb-to-electrode-red-blue",
+      "rule": "voltorb-to-electrode",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/44",

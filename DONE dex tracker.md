@@ -3642,7 +3642,13 @@ anywhere but Omega Ruby and Alpha Sapphire's Jirachi, which is their step 7.
 
 ### Generation 8
 
-_Nothing yet._
+_Done: all five. Sword and Shield in Galar, Brilliant Diamond and Shining Pearl in Sinnoh, and
+Legends: Arceus in Hisui - which is the same ground as Sinnoh under an older name and shares
+nothing else with it._
+
+_The generation has no module of its own and now never will: `galar.py`, `bdsp.py` and
+`legends_arceus.py` are three answers to every question, and the one thing all five have in
+common is Pokemon HOME, which `home.py` has held since before any of them existed._
 
 ### Generation 9
 
@@ -4948,3 +4954,335 @@ _Nothing yet._
     than a check - no module under `gamedefs/` may contain the string `date.today()`. The habit
     is one line long and comes back easily.
   - 635 pipeline tests, 257 app tests, validation 11 rules with 0 findings.
+
+- [x] **Legends: Arceus** (`legends-arceus`, gen 8, standalone) - 2026-09-25
+  - [x] 1 Entity + edges - 2026-09-25  - [x] 2 Dex list - 2026-09-25
+  - [x] 3 Wild - 2026-09-25  - [x] 4 Gifts & statics - 2026-09-25
+  - [x] 5 Trades & evolutions - 2026-09-25  - [x] 6 Sprites - 2026-09-25
+  - [x] 7 Events - 2026-09-25  - [x] 8 Alternate forms - 2026-09-25
+  - [x] 9 Validate + smoke test - 2026-09-25
+  - Step 1: **37 games, 142 routes, and the two smallest numbers in the dataset.** This is the
+    first playable entry here that is not half of anything - no pair partner, no third version
+    beside it - so it brings a deposit into HOME and a withdrawal back, and nothing else. Every
+    other game carries a cable. It trades only with other copies of itself, which is a route
+    from a game to itself and one a graph of games has nowhere to draw.
+  - No shared module, and the three it does not read from are named in `legends_arceus.py`
+    rather than left to be rediscovered: not `sinnoh.py`, because Hisui shares ground with
+    Sinnoh and nothing a living dex cares about; not a `gen8.py`, which still has nothing to
+    say; and not a `legends.py` shared with Z-A, because the one thing those two share is a
+    table reader and that belongs in `encountertables.py`.
+  - **Galar's Pokedex answer, reached by a different road.** No National Dex,
+    `nationalDexThrough` empty, `dexSource` gameDex. `galar.FOREIGN_TO_EVERY_DEX` was read
+    first, as the reading before these six games says to.
+    - _Step 1 concluded from it that the dex here **is** the boxes, and step 2 found two entries
+      that make that not quite true. Corrected in place rather than left standing: the leftover
+      is `HELD_WITHOUT_BEING_LISTED`, and it has two entries where Galar's has eighty._
+  - **Registering it changed 34 game files, and not one of them beyond a rule's name** -
+    measured by stripping the rule ids and comparing, rather than by reading the diff. What
+    happened is worth keeping: the 16 Hisuian forms were in no game's list, so `evolutions.py`
+    could not name them, and the rules that make them were told apart by version group with a
+    condition reading "in Hisui". They are now told apart by what they produce.
+    `bergmite-to-avalugg-legends-arceus` is `bergmite-to-avalugg-hisui`, and
+    `growlithe-to-arcanine-red-blue` goes back to being `growlithe-to-arcanine` because nothing
+    needs telling apart from it any more. 576 rules before and after; 17 renamed, 14 rewritten.
+  - **The form rule spoke for this game and handed it 393 forms**, which is more than it gave
+    any other Generation 8 game, for a game whose boxes hold 242 species and nothing else: every
+    Alcremie sweet, 19 Alolan forms, 18 Galarian ones. So `FORMS_NAMED_BY_THE_GAME` gains a
+    seventh game at step 8 and the table is written by hand, as the reading before these six
+    games budgeted. The rule is not wrong about dates; it is that a date is not what a game
+    holds.
+  - It also put **24 forms into the dataset that had never been in it** - the 16 Hisuian ones,
+    White-Striped Basculin and female Basculegion, Origin Dialga and Palkia, Therian Enamorus,
+    and three Generation 8 leftovers Sword and Shield's own hand-written table had dropped:
+    Eternamax Eternatus, World Cap Pikachu and Dada Zarude. Those three are step 8's to drop
+    again. No other game gained or lost a single form.
+  - Left for the steps that can answer them: the withdrawal filter asks whether the target lists
+    the species, and the wiki's sentence is stricter - non-Hisuian regional forms of a listed
+    species are refused. The app's `DexContains` lets a form through whenever the target lists
+    its species, so the same gap Brilliant Diamond left open is open here; it reaches a tile
+    only once there is a form list, which is step 8.
+  - `sprite_set` is deliberately left out. This is the only one of the six with a sheet of its
+    own - `Spr_8a_NNN`, 367 files - and step 6 fills it in, so that a guess made at step 1
+    cannot quietly become a folder of pictures.
+  - 663 pipeline tests, 257 app tests, validation 11 rules with 0 findings. The game file is an
+    entity and two empty lists, which is what step 1 means.
+  - Step 2: **the Hisui Pokedex, 242 entries, Rowlet #001 to Darkrai #242.** One list, so no
+    entry says which dex it is numbered in - the rule every game before X and Y followed, and
+    the opposite of Galar's three - and it is the whole of what a living dex here aims at, since
+    `dexSource` gameDex means there is no National Dex above it.
+  - **Checked against the wiki row by row rather than trusted.** PokeAPI's `hisui` and
+    Bulbapedia's list agree on all 242 entries, in the same order, with the same numbers. The
+    two texts differ in exactly one way, on 32 rows: the wiki names a form where the source
+    names a species - "DecidueyeHisuian Form" against `decidueye`.
+  - **And that difference is most of the game.** Sixteen of the 242 species exist here only as
+    their Hisuian form, so a grid drawn with forms switched off will put a Kantonian Growlithe
+    on a tile that a player of this game can only fill with the Hisuian one. Sinnoh had Burmy's
+    three cloaks and Shellos's two seas; here it is a quarter of what the game is about, and it
+    all waits on step 8. Nothing in the dex list carries a form, for the reason Galar's gives.
+  - **The finding that corrects step 1: #168 and #169 are the *Kantonian* Vulpix and Ninetales**
+    - the snow of the Alabaster Icelands is full of the Vulpix that is not the icy one - so the
+    Alolan pair the transfer rule excepts is a genuine exception rather than the wiki naming
+    this game's own entries. A box in Hisui can hold two kinds of Vulpix while the Pokedex has a
+    page for one. Written down as `HELD_WITHOUT_BEING_LISTED` and used nowhere: a form is not a
+    dex entry, and Galar's eighty had to be acted on where these two do not.
+  - Validation is **1 error and it is the right one**: `every-entry-has-a-method`, saying the
+    encounters have not been gathered. It carries a number worth keeping for steps 4, 5 and 7 -
+    **nine of the 242 are produced by nothing anywhere in the dataset**, and seven of those nine
+    are the Pokemon this game invented: Wyrdeer, Kleavor, Overqwil, Ursaluna, Basculegion,
+    Sneasler and Enamorus. The other two are Phione and Manaphy, which is the same hole
+    Brilliant Diamond has and this game fills.
+  - 667 pipeline tests, 257 app tests.
+  - Step 3: **1,720 wild records across 81 places, covering 216 of the 242.** The second table
+    reader the reading before these six games budgeted for, and the prediction about it was
+    wrong in almost every particular except the one that mattered - it is small.
+  - **The tables are a level below the place a player would name**, which the plan did get
+    right: the Obsidian Fieldlands' own article has an empty Pokemon section and nineteen
+    sublocations under it. So 81 pages rather than five, and a record reads "Obsidian Fieldlands,
+    Horseshoe Plains" the way the Grand Underground's say which cave. The other 22 parts of
+    Hisui are written down as `NO_WILD_TABLE` rather than dropped: eleven base camps, four
+    arenas where a noble is fought, and seven places the story owns.
+  - **The plan said `Pokemon | Levels | Alpha Levels | Time of day | Weather` with ticks. The
+    ticks are there; everything about how they are laid out is not.** Time of day and Weather
+    are not columns but *blocks* - four columns and six - named only by icons, in a second
+    header row, and a row ticked in all of one block writes a single cell spanning it. So the
+    reader expands colspans and reads the header's own icons rather than counting columns.
+  - **And the weather block is a different width in every area**, which is what makes reading
+    the header a requirement rather than good manners: six in the Obsidian Fieldlands and the
+    Crimson Mirelands, seven in the Coronet Highlands, five on the Cobalt Coastlands, four in
+    the Alabaster Icelands - where it never rains and it can blizzard. A reader that had counted
+    on six would have put every tick in three of the five areas one column out and reported
+    nothing wrong. This is the Brilliant Diamond lesson - *look at the header before trusting a
+    row* - paying for itself one game later.
+  - **A page can hold both kinds of table.** Lake Verity is a sublocation of the Obsidian
+    Fieldlands and a Sinnoh lake, so its article carries forty-one: Diamond's, Platinum's,
+    HeartGold's, Brilliant Diamond's, and one of these. Wayward Cave carries two Generation 4
+    tables whose Games column spans six letters and whose Rate column spans three - so "a header
+    with a block in it" would have read them as Hisui rows and named six games as six weathers.
+    Each reader insists on its own header: this one on a block called "Time of day", the older
+    one on two particular letters in a Games column.
+  - **There is no Location column at all**: the way a player meets something is a heading over a
+    group of rows, and the rows under no heading are the ordinary ones - so `""` is a real key
+    in `METHODS` and it is the commonest. Three of Let's Go's words do most of the work, because
+    these games ask the same thing of a player: no grass, no rod, nothing rolled when they walk.
+  - **Two new methods, and both were measured before they were named.** A space-time distortion
+    holds 69 species and **30 of them are in nothing else in the game** - every Johto and Unova
+    starter, the whole Eevee family, Porygon's line, Gengar, Scizor - which is the Max Raid
+    argument exactly: `other` would tell a player that a third of what this game holds has no
+    answer. And a shaking tree, a shaking ore deposit and the wooden boxes in the Celestica
+    ruins are **one** method with the furniture said beside it, which is the call Kalos's five
+    ambushes got. It is Johto's headbutt trees three hundred years earlier, and it is not
+    `headbutt`: there is no move and two of the three are not trees.
+  - A fixed alpha stayed `overworld`. Fourteen species are only ever one - Garchomp, Torterra,
+    Gallade, Machamp - so the rows cannot be folded away, but walking up to a Pokemon that is
+    standing there is not a new way of meeting one. Which one it is goes in the sentence.
+  - **The finding the ticks themselves gave: they carry almost nothing.** Of 1,720 records only
+    264 have a time of day and **three** have a weather. And the time is binary - every single
+    restricted row is either "night" (190) or "morning, day and evening" (74), and there is no
+    third phrase. A grid of ten columns per row turns out to say "is it nocturnal", and once for
+    a Ponyta that dislikes rain.
+  - Validation is **8 errors and they are the right eight**: seven of the Pokemon this game
+    invented - Wyrdeer, Kleavor, Overqwil, Ursaluna, Basculegion, Sneasler, Enamorus - plus
+    Manaphy. Every one of them is step 4's or step 5's. Phione came off that list, because the
+    water tables have one.
+  - 681 pipeline tests, 259 app tests.
+  - Step 4: **23 records - three starters, nineteen statics and one gift - and the dataset's
+    first game where every entry behind one of them is behind a numbered quest.** There is no
+    cave here a player can walk into and find a deity in: 19 of the 23 name a mission or a
+    request, and the list of those is one page while the place each one stands is on twenty-one
+    others.
+  - So a hand-written gift may now **cite its own page**. `RecordedGift` grew an optional
+    `source`, because citing the quest list for "Enamorus is in the Scarlet Bog" would be a
+    footnote pointing at a paragraph that does not say it. Every table before this one was read
+    off a single page and needed nothing of the kind.
+  - **All three starters are gettable in one save file**, which is true of no other game in the
+    dataset. Laventon offers the three he has just chased across the Fieldlands, and after
+    Mission 18 he hands over the two that were not picked - where every other starter anywhere
+    here needs a trade or a second cartridge.
+  - **Two records turn on another game's save file being on the console**, and they are the only
+    two of their kind: Shaymin's request appears if there is Sword or Shield save data, Darkrai's
+    if there is Brilliant Diamond or Shining Pearl save data. That is the Azure Flute looking
+    back - Brilliant Diamond gets its Arceus because *this* game has been played. A save file is
+    not a route between two games and no edge is drawn for it; it is a condition on one record.
+  - **The weather is the whole answer exactly twice.** Of 1,720 wild rows only three tick a
+    weather at all, and then two of the four Forces of Nature turn out not to appear unless the
+    sky is doing one particular thing: Tornadus in a blizzard at Bonechill Wastes, Thundurus in
+    a thunderstorm between Sand's Reach and Lunker's Lair.
+  - **And the Alolan Vulpix closes the question step 1 opened.** Step 1 read HOME's rule -
+    non-Hisuian regional forms are refused, "with the exception of Alolan Vulpix and Alolan
+    Ninetales" - and could not say why. Step 2 found that the Hisui Pokedex's #168 is the
+    *Kantonian* Vulpix. This is the rest: Request 83 has a Security Corps member from Alola
+    called Keaka whose Vulpix are hiding in Whiteout Valley, so there is a second Vulpix in the
+    game that the Pokedex has no page for. HOME excepts those two because the game contains them.
+  - **No levels on any of the 23**, which is a gap rather than a decision and is written down as
+    one: every other game takes its gifts from PokeAPI, which carries the level, and the pages
+    that say where each of these stands do not say what level it is at.
+  - Validation is **6 errors, down from 8**, and all six are step 5's: Wyrdeer, Kleavor,
+    Overqwil, Ursaluna, Basculegion and Sneasler, every one of them an evolution this game
+    invented. 233 of the 242 now have a record in this game; the nine left are those six plus
+    Hisuian Arcanine, Electrode and Lilligant, which are stones.
+  - 687 pipeline tests, 259 app tests.
+  - Step 5: **143 evolutions to 131 species, no trades and no eggs - and validation went green.**
+    All 242 entries now have a record in this game, and the two empty halves of this step are
+    the interesting half.
+  - **There is no in-game trade here, and the wiki says so outright**: "Pokemon Legends: Arceus
+    is the only core series game to not feature in-game trades." And no eggs either - the game's
+    own article lists what was removed: abilities, held items, breeding, Eggs and Pokerus. So
+    there is no `trade_encounters` call and no `breeding_encounters` call, the second game in
+    the dataset with neither after the Let's Go pair. Both are absences stated rather than lines
+    quietly not written, and a test asserts the module has no table for either.
+  - **And then the defect those two absences caused.** PokeAPI has **no Legends: Arceus detail
+    for a single one of the classic trade evolutions** - `kadabra` still carries exactly one
+    detail, `red-blue` and `trade` - so a build that trusted the source told a player of the one
+    core series game without in-game trades to go and trade a Kadabra. Thirteen records said it.
+  - So `evolutions.py` grew `NOT_IN_THE_SOURCE`: **twelve ways of evolving written by hand**,
+    the same last resort as the hand-written wild slots in `wild.py` and the hand-written gifts
+    in `gifts.py` - and it took until the twenty-ninth game for one to be needed, because until
+    Hisui the source had every way a Pokemon could change. Four use the Linking Cord, which that
+    item's page names all four of; the other eight use the item that used to be held, and each
+    of those eight pages says it in its own words: "due to the absence of held items, the Metal
+    Coat simply needs to be used on Onix or Scyther". Read one at a time rather than generalised
+    from the first.
+  - Each of the twelve **cites the item page it was read from** rather than a chain url, because
+    citing the chain would point at a document that does not say it. A variant carries a page
+    name rather than a citation so that it stays hashable - it is a dict key twice over.
+  - Measured rather than assumed: **no leakage.** The twelve are version group `legends-arceus`,
+    so Sword, Platinum and Brilliant Diamond all still trade their Kadabra, and the shared rules
+    file went from 576 to 588 with 29 renames and no rule losing its meaning. 34 game files
+    changed; ten of them beyond a rule's name, and every one of those ten is the
+    `evolution-chain` collection citation moving to today because the chains were read today.
+  - **One `trade` record survives and it is step 8's**: `graveler -> golem` by the Alolan rule,
+    which is here only because the form rule still hands this game every Alolan form. When step
+    8 writes the real list it goes, and that is the check - after step 8 this game should have no
+    trade record at all.
+  - Validation: **0 errors**, and one warning that is the same story. Seven evolutions here start
+    from a form nothing in the dataset produces - `growlithe-hisui`, `qwilfish-hisui`,
+    `basculin-white-striped` and four more - because step 3's records name species and sixteen of
+    the 242 exist here only as their Hisuian form. Step 2 predicted it and the validator found it
+    on its own. Closing it is a change to the table reader, not only to a form list.
+  - 693 pipeline tests, 259 app tests.
+  - Step 6: **318 pictures, 25 MB, and all 242 species drawn - nothing falls back.** `8a`, off
+    the Bulbagarden Archives, into `generation-viii/legends-arceus`. 33 minutes of fetching,
+    paid once.
+  - **The only one of the last five games in the series with a sheet.** Sword and Shield have
+    `8s`; after them Brilliant Diamond, Shining Pearl, Scarlet and Violet all draw Pokemon
+    HOME's renders because the Archives have nothing for any of them. The reading before these
+    six games got this right, and the two details it did not have are the interesting part.
+  - **This is the first sheet here that is not a whole National Dex.** `Spr_8a_001.png` is a 404
+    because Bulbasaur is not in Hisui - the Generation 7 sheets draw everything up to their own
+    number whether the game holds it or not. So a miss is ordinary here in a way it has never
+    been before, and 142 of them were needed to place 318 pictures.
+  - **And a species name on this sheet can be a form code**, which is new. Fifteen species are
+    in this game only as their Hisuian form, so the sheet draws no plain one at all:
+    `Spr_8a_058.png` does not exist and `Spr_8a_058H.png` is the Growlithe this game has.
+    Falling back for those fifteen would have put a *Kantonian* Growlithe on a Hisui tile, which
+    is a different Pokemon rather than another generation's drawing of the same one. The coded
+    names are asked for last, so Vulpix - which is drawn both ways - still gets the Kantonian
+    one its Pokedex lists.
+  - Two species needed a second look, and both were found by the count rather than guessed at:
+    **Basculin** has no plain 550 and spells its form `W` rather than `H`, because White-Striped
+    is a form of the same shape and not a regional one; and **Floatzel is drawn exactly once, as
+    a female**, with no plain name and no `_m`, which is an upload the wiki is short of rather
+    than a Floatzel the game is short of. That one is asked for last of all.
+  - **The sheet answered a step 8 question on its own.** The form rule still hands this game 393
+    forms, 37 of them Alolan or Galarian - and of those 37 the Archives drew exactly **two**:
+    `vulpix-alola` and `ninetales-alola`. Which is the pair Request 83 hands over and the pair
+    HOME excepts. Three sources now agree about those two and about nothing else Alolan.
+  - The crop `archives.py` has done since Generation 7 worked unchanged: these arrive square and
+    padded like Galar's and come out 106 to 454 pixels wide, against Galar's 140 to 895.
+  - 697 pipeline tests, 259 app tests, validation 11 rules with 0 errors and the one step 8
+    warning.
+  - Step 7: **nothing to write, because there is nothing unobtainable here** - and that is the
+    finding rather than a skipped step. Measured across the whole dataset: of the thirty-five
+    games with a Pokedex, **this is the only one that produces every entry of its own**. Sword
+    leaves 17 of its 821 to another game, Gold 17 of 251, Pearl 4 of 151, and every one of those
+    is where step 7 does its work - turning "nothing can produce this" into "nothing you can
+    play can produce this, and here is what once did". There was nothing here to turn.
+  - Two things keep that from being a boast, and both are written into the module rather than
+    left as a nice number:
+    - **Two of the 242 need another game on the console.** Shaymin's request only appears with
+      Sword or Shield save data, Darkrai's only with Brilliant Diamond or Shining Pearl save
+      data. Both are a gift with a requirement rather than an unobtainable entry - the call
+      Brilliant Diamond's Arceus got for the same reason in reverse - because it is a condition
+      a player can still meet, unlike a distribution that closed in 2006.
+    - **Three of the 242 stand on a chain step 8 has not finished.** Basculegion, Overqwil and
+      Sneasler are produced by nothing here but an evolution, and each starts from a form -
+      White-Striped Basculin, Hisuian Qwilfish, Hisuian Sneasel - that no record in this game
+      yet names, because step 3's records name species. That is the `no-evolution-dead-ends`
+      warning, found by the validator rather than by reading.
+  - 698 pipeline tests, 259 app tests.
+  - Step 8: **117 forms where the rule said 393, twelve sentences, and validation clean for the
+    first time - 0 errors and 0 warnings.** The widest margin any game has had: 276 forms the
+    rule handed over that this game does not have.
+  - **The list was read off the sheet rather than argued about, and the way in was something the
+    reading before these six games had written off.** That reading said the Archives' category
+    pages are not a shortcut because their "next 200" is a `/w/` url the robots.txt disallows.
+    True - and the same link works as a query on the `/wiki/` path the robots.txt allows. So the
+    whole category came back in two requests: 367 files, one per thing this game draws, every
+    number one of the Hisui Pokedex's 242 and every letter code a form.
+  - What it gives: **eighteen regional forms** (the sixteen Hisuian ones plus Alolan Vulpix and
+    Ninetales, and *nothing else Alolan or Galarian at all*), **eleven functional** - three
+    Origin Formes, four Therian Formes, Sky Shaymin, the White-Striped Basculin and Wormadam's
+    two other cloaks - twenty-seven Unown, four cosmetic, and fifty-seven sexes.
+  - **One thing is deliberately left out and it is the only real judgement call in this step:
+    Rotom's five appliances.** The models are in the category under this game's name, each has a
+    Pokedex entry written for this game - a cauldron, a bureau, a cupboard instead of a
+    microwave and a washing machine - and Bulbapedia says the forms were documented in the Hisui
+    Pokedex by Professor Laventon. What nothing found says is **how a player changes one**, and
+    there is no Rotom Room in Hisui. A form whose sentence cannot be written is a tile nobody
+    can fill, which is the call `lets_go.py` already made. One line to add them the day somebody
+    reads the mechanism, and the evidence for both sides is in the table's own comment.
+  - **Twelve sentences, and eight of them are the same sentence**: this game has no held items,
+    so the Griseous Orb Giratina carried in Platinum is a Griseous *Core* here and is used on it
+    out of the satchel. Three for the deities, four for the Forces of Nature with Cogita's
+    Reveal Glass, and the Gracidea for Sky Shaymin - which only arrives with the Sword or Shield
+    save data bonus, the same bonus that makes the Shaymin request appear at all.
+  - **And the reader had to change, which step 5 predicted and step 7 confirmed.** These pages
+    run a form's name onto the species name - the cell reads "SneaselHisuian Form" - and step 3
+    read only the link title, so sixteen species were recorded as the species and every Hisuian
+    evolution started from a form nothing produced. `legends_encounters` now reads the phrase
+    and a `FORM_PHRASES` table says what each one means; a phrase that maps to nothing leaves
+    the record about the species, because "Plant Cloak" and "West Sea" name a default.
+  - **The first table was written from the dex list page and got three phrases wrong**, and the
+    reader's own warning found all three rather than a person re-reading: the location pages
+    write "Trash Cloak" where the dex page writes "Plant Cloak", and they write White-Striped
+    with a **non-breaking hyphen** - U+2011 - sometimes with the sex in brackets. It is spelled
+    as an escape in the module so that it is visible rather than a character that looks exactly
+    like the ordinary one, and ruff flagged the literal, which is how it stayed visible.
+  - Two smaller things this needed. `RecordedGift` can now name a **form**: Request 83 hands
+    over an *Alolan* Vulpix, and without saying so the Alolan Ninetales it evolves into starts
+    from a form nothing in the game produces. It is the only gift in the dataset that names one.
+    And three forms left the dataset altogether - Eternamax Eternatus, World Cap Pikachu and
+    Dada Zarude - which step 1 said would happen: they were only ever here because this game's
+    wrong list picked up what Sword and Shield's hand-written one had dropped.
+  - **The check step 5 set passed exactly.** That step said this game should have no trade
+    record left once the real form list existed, because the one survivor was the Alolan
+    Graveler's rule. It has none: 140 evolutions, 102 by levelling, 34 by an item, 4 by
+    something else, and not one by trading - in the only core series game with no in-game trade.
+  - 1,952 records now: 1,720 wild, 140 evolutions, 69 form changes, 23 gifts. 90 of them name a
+    form, and every form an evolution here starts from is one this game produces.
+  - 705 pipeline tests, 259 app tests, validation 11 rules with **0 errors and 0 warnings**.
+  - Step 9: **validation 11 rules with 0 errors and 0 warnings, and a collection made in the
+    app with this game as its main game.** The picker offers it under Generation 8, which now
+    says five games, with its box art and "Gen 8 · Hisui" under it.
+  - The headless half first, against the published dataset: 242 tiles with forms off and **359
+    with them all on, every one of them drawn from this game's own set and not one falling back
+    to another**. 316 of the 359 are available in this game alone; nothing is explained as
+    unobtainable, because nothing needs to be.
+  - The linked-games step is worth a line of its own. Every older game in the dataset offers
+    itself, and each one says how it would get here: "via Poke Transporter, then Pokemon HOME"
+    for the Generation 5 cartridges, "via Pokemon Bank, then Pokemon HOME" for Generations 6 and
+    7, "via Pokemon HOME" for the Switch games. One door, and the graph draws every route
+    through it without this game naming any of them.
+  - Two tiles read end to end. **Growlithe (Hisui), Fire / Rock**, with the `Spr_8a_058H` render
+    and three wild records - Windbreak Stand at 41-44 and Veilstone Cape at 29-32 by walking up
+    to it, and Veilstone Cape again as a swarm with "Only while an outbreak of it is running".
+    And **Vulpix (Alola), Ice**, with one record: a static at Whiteout Valley reading "Request
+    83, and it is the Alolan Vulpix rather than the Kantonian one the Hisui Pokedex lists".
+    That one tile is the whole finding of this game.
+  - Smoke test discipline kept, and checked rather than asserted. The settings file was hashed
+    and backed up (D912EEA4..., 106 bytes), pointed at a scratch data file for the duration and
+    **restored byte for byte** - same hash, same size. The user's own data file was hashed
+    before and after: 2E5BEF75..., 4167 bytes, mtime 12:23:13, unchanged, and the collection the
+    test made went to the scratch file instead. Zero instances were running before, one was
+    started, and only that one was stopped.
+  - 705 pipeline tests, 259 app tests.
