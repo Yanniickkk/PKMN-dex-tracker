@@ -63,7 +63,9 @@ def dex_entries(context: BuildContext) -> list[DexEntry]:
     ``unobtainable`` table yet - which entries this cartridge can never fill is what steps 3 to 7
     find out, and guessing at it now would be claiming to have looked.
     """
-    return galar.dex_entries(context, game_id=GAME_ID)
+    return galar.dex_entries(
+        context, game_id=GAME_ID, unobtainable=galar.unobtainable_in(GAME_ID)
+    )
 
 
 def edges() -> list[TransferEdge]:

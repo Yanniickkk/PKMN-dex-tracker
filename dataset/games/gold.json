@@ -32637,7 +32637,7 @@
       "target": {
         "species": "weezing"
       },
-      "rule": "koffing-to-weezing-red-blue",
+      "rule": "koffing-to-weezing",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/49",
@@ -33053,7 +33053,7 @@
       "target": {
         "species": "rapidash"
       },
-      "rule": "ponyta-to-rapidash-red-blue",
+      "rule": "ponyta-to-rapidash",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/32",
@@ -33248,7 +33248,7 @@
       "target": {
         "species": "slowbro"
       },
-      "rule": "slowpoke-to-slowbro-red-blue",
+      "rule": "slowpoke-to-slowbro",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/33",
@@ -33261,7 +33261,7 @@
       "target": {
         "species": "slowking"
       },
-      "rule": "slowpoke-to-slowking-gold-silver",
+      "rule": "slowpoke-to-slowking",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/33",

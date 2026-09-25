@@ -4150,6 +4150,425 @@ _Nothing yet._
     them could say. It is a fact about a form, so it waits for step 8 and is written down in
     both places that would otherwise have to rediscover it.
 
+- [x] **Sword** (`sword`, gen 8, pair partner: Shield) — base + Isle of Armor + Crown Tundra - 2026-09-25
+  - [x] 1 Entity + edges - 2026-09-25
+  - [x] 2 Dex list - 2026-09-25
+  - [x] 3 Wild - 2026-09-25
+  - [x] 4 Gifts & statics - 2026-09-25
+  - [x] 5 Trades & evolutions - 2026-09-25
+  - [x] 6 Sprites - 2026-09-25
+  - [x] 7 Events - 2026-09-25
+  - [x] 8 Alternate forms - 2026-09-25
+  - [x] 9 Validate + smoke test - 2026-09-25
+- [x] **Shield** (`shield`, gen 8, pair partner: Sword) — base + Isle of Armor + Crown Tundra - 2026-09-25
+  - [x] 1 Entity + edges - 2026-09-25
+  - [x] 2 Dex list - 2026-09-25
+  - [x] 3 Wild - 2026-09-25
+  - [x] 4 Gifts & statics - 2026-09-25
+  - [x] 5 Trades & evolutions - 2026-09-25
+  - [x] 6 Sprites - 2026-09-25
+  - [x] 7 Events - 2026-09-25
+  - [x] 8 Alternate forms - 2026-09-25
+  - [x] 9 Validate + smoke test - 2026-09-25
+  - Step 9 for both: **validation green on all 11 rules with nothing at all to report**, and a
+    collection made through the wizard on the published exe. Coverage is **768 full, 0 partial, 0
+    missing and 53 explained** per half. 629 pipeline tests and 257 app tests.
+  - **Zero findings for the whole dataset**, which has not happened before. Every report since
+    Ultra Sun and Ultra Moon has carried the two Own Tempo Rockruff warnings, and step 8 answered
+    them by accident: Galar puts one in a Max Raid den, so the thing those two games could only
+    evolve is now produced somewhere.
+  - **"Galar on a Switch": Sword as main game, and the linked-games step offered every playable
+    game with the route it takes** - "via Poke Transporter, then Pokemon HOME" for Generation 5,
+    "via Pokemon Bank, then Pokemon HOME" for Generations 6 and 7, "via Pokemon HOME" for Let's
+    Go, and Shield "via trading". That is step 1's finding on screen: HOME is the only door
+    Generation 8 has, and it is a door rather than a wall.
+  - The grid draws **0 of 489** with regional, functional and gender forms switched on - 400
+    species and 89 forms - and **553 of 553 with cosmetic ones on too**, which is the headless
+    run. Every tile off `generation-viii/sword-shield` and not one falling back to another
+    generation's picture. The tiles read `#031 Zigzagoon`, `#031 Zigzagoon (Galar)`, `#015
+    Butterfree (Female)`, `#032 Linoone (Galar)`.
+  - Detail popup on the Galarian Zigzagoon: **Dark / Normal** - the form's own typing - and four
+    wild rows off Route 2, Route 3 and Bridge Field twice, at 2%, 38% and 35%, with "Before
+    entering the Hall of Fame" on one Bridge Field row and "After" on the other. Every part of
+    step 3 is legible there: the overworld method, the level band, the odds and the gate.
+  - The write path was exercised: marking it caught greened the tile and moved the counter to **1
+    of 489**, and the record landed in the data file as `zigzagoon` / `zigzagoon-galar`, status
+    `inMainGame`, dated today. The user's settings were copied out first and restored byte for
+    byte - same sha256, same 106 bytes - and their own data file was provably untouched: same
+    sha256, same size, last written three quarters of an hour before the test began.
+  - Run headless too, once per half, through the app's own wizard, dex builder, sprite chain and
+    store: both halves build the same 553 lines, Gible is obtainable in Shield and explained in
+    Sword, Sirfetch'd shows its raid *and* its evolution, and Galarian Slowking shows the
+    evolution and the Galarica Wreath beside it.
+  - One thing that is mine rather than the app's, written down so nobody chases it: **the GUI
+    driver stopped landing clicks partway through**, so the last few steps were done by keyboard
+    and the detail popup would not close at the end. Every input that did land was answered
+    correctly and the write reached disk; it is the PowerShell harness losing the WebView, not
+    the window.
+  - Step 8 for both: **189 forms each - 29 regional, 59 sexes, 37 functional and 64 cosmetic -
+    151 form-change records, and 87 more pictures off the same `8s` sheet**, which takes that
+    folder to 670 files. `forms.json` goes from 291 to 379. 629 pipeline tests and 257 app tests,
+    and validation is **11 rules, 0 errors, 0 warnings**.
+  - **Before this step there was not one Galarian form in the dataset.** The version-group rule
+    is off for this pair, so a form whose only games would be Sword and Shield came out with an
+    empty list and was dropped from the table altogether. Step 8 had to write those rows, not
+    switch them on - the same job `LETS_GO_FORMS` did for the partner Pikachu.
+  - **Nothing in the table was remembered; each of the three parts was measured**, and the parts
+    answer different kinds of form:
+    - **what the games place, they place.** A form is a Pokemon in the source and a Pokemon has
+      encounters, so asking each candidate for its own settles every form that is *met*: 45 of
+      them, including Rotom's five appliances, both Basculin stripes, three of Pumpkaboo's four
+      sizes, and the four Galarian forms the halves split.
+    - **the sexes are the Generation 4 rule**, not the sheet. That was the correction: the sheet
+      draws 54 of them apart and five it does not, and Croagunk has had a different throat since
+      Diamond whatever the wiki got round to uploading. A sprite sheet is a witness about
+      drawing.
+    - **and the rest are written by hand because they are changed into**: two Galarica items,
+      Type: Null's seventeen memories, Kubfu's second tower, the Reins of Unity's two riders,
+      the Rotom Catalog from a house in Wyndon, Sinistea's mark under the base, and Alcremie's
+      sixty-two faces, which are one spin with a different sweet in hand.
+  - **No Gigantamax form is here and none had to be refused by hand.** The source marks them
+    battle-only and `forms.py` refuses those wherever they come from - the same sentence that
+    keeps every Mega out. A Gigantamax Pokemon reverts when the battle ends.
+  - **The trap step 5 warned about was real and is shut.** Handing Galar its regional forms gains
+    seven evolutions and loses three, so `raichu-alola`, `marowak-alola` and `exeggutor-alola`
+    are refused by name: a Thunder Stone in Galar makes the Kantonian Raichu, and the Alolan one
+    is what the Diglett Trainer hands over for forty of his hidden Diglett. **The same three
+    Let's Go had to name**, which makes it a shape rather than an accident. Nothing else Alolan
+    is refused - those lines name their own form at both ends, so an Alolan Meowth becomes an
+    Alolan Persian here and a Kantonian one a Kantonian Persian.
+  - **Sirfetch'd and Cursola have their evolutions back**, which is what the forms were blocking:
+    the way in wants a Galarian Farfetch'd or Corsola and now the game has one. Checked rather
+    than assumed, and the check found a third: **the Alolan Ninetales was missing from the table
+    entirely.** Alolan Vulpix is a Diglett Trainer reward and so has a row of its own; the
+    Ninetales is only ever evolved into, so nothing placed it anywhere and the "what do the games
+    place" measurement could not see it. Five sexes and both Antique teacups were missing the
+    same way.
+  - **Two warnings that have been in every report since Ultra Sun and Ultra Moon are gone**, and
+    nothing was done to them. `no-evolution-dead-ends` said Own Tempo Rockruff exists in those
+    two only to become a Dusk Lycanroc and that nothing in the dataset produced one. Galar puts
+    one in a den. The oldest complaint in the report was answered by a game that arrived six
+    years later.
+  - Seven evolution rules lost a version group from their name - `koffing-to-weezing-red-blue` is
+    `koffing-to-weezing` now - because the Galarian variant is told apart by its form instead. It
+    reaches thirty other game files and is the naming rule working as written: a suffix is for a
+    pair that has nothing else to tell it apart by.
+  - Two condition families needed wording, and both arrived with the forms: the Diglett
+    Trainer's thresholds, which are a number and are read as one, and the Crown Tundra's three
+    birds, which have to be seen fighting over the Dyna Tree before any of them can be met.
+  - Left out on purpose and worth writing down: **East Sea Shellos and Gastrodon.** The source
+    has no Pokemon for them to hang an encounter on and the wiki's page did not settle whether
+    Galar has that sea, so they are not in the table. A form the table leaves out is a tile that
+    is not drawn; a form it invents is a tile nobody can fill.
+  - Step 7 for both: **71 species asked, 15 of the 53 explained entries now name a
+    distribution, and validation is green** - 11 rules, 0 errors, and the only two warnings left
+    are Ultra Sun's and Ultra Moon's Own Tempo Rockruff. Coverage is **768 full, 0 partial, 0
+    missing and 53 explained** per half. 624 pipeline tests and 257 app tests.
+  - Read the way the checklist says to: each species' own *In events* section, which is the only
+    place that names the games a distribution was for. Two things had to be got right to trust
+    it - the section also carries move tables, so only a table with "Distribution period" in its
+    header counts, and a row only counts when its Games column names the half that *lacks* the
+    species. A Sword-only raid does not answer a Shield player.
+  - **Wild Area News is a way of distributing a Pokemon that only these games have**, and it is
+    the strangest thing the step found. A den table is pushed to a Switch over the internet for a
+    few days and then taken away; what is in the den while it lasts is in the game neither before
+    nor after. Step 3 had already met its leftovers without knowing what they were - the
+    `max-den-rarity-special` condition on a handful of Rolling Fields spawns.
+  - **Four of those raids ran in the half that cannot catch the Pokemon at all, and they are
+    exactly the four Regina's trades are split by.** A Shield player could raid a Galarian
+    Farfetch'd and a Galarian Darumaka in the week of 19 to 25 March 2020; a Sword player a
+    Galarian Ponyta and a Rapidash in the same week. Covered once each, for seven days, six years
+    ago.
+  - **Neither box legendary is strictly one cartridge's after all.** Lancer's Shiny Zacian ran in
+    *Shield* and Arthur's Shiny Zamazenta ran in *Sword*, from October 2021, so each half was
+    once handed the other's hero. Nothing else in this dataset has a version exclusive covered by
+    a distribution aimed at the half that lacks it.
+  - **Zarude closes the last hole.** The Isle of Armor's Mythical Pokemon is not in the grass,
+    not in a den, not in the Max Lair and not handed over - the one entry of 821 that neither
+    half produces - and it was given away six times between August 2020 and March 2022, twice
+    over in three regions, once as itself and once as the Dada Zarude the film is about.
+  - **Twenty-nine of the thirty-eight exclusives were never covered by anything**, which is the
+    sparsest showing since Ultra Sun and Ultra Moon. A Sword player who wants a Gible, a Goomy or
+    an Eiscue has one answer and it is the cable.
+  - Four lines keep their own dates rather than inheriting the first stage's, because
+    `reach.spread_unobtainable` would otherwise give a Zweilous Deino's week: Zweilous and
+    Hydreigon had a raid of their own in October 2020, Pupitar and Tyranitar one in April and
+    May 2020, and Rapidash two.
+  - Step 6 for both: **583 of 584 species drawn, 44.6 MB, off the Bulbagarden Archives' `8s`
+    sheet.** The pair shares one folder, `generation-viii/sword-shield`, which is the first
+    Generation 8 set in the dataset. 620 pipeline tests and 257 app tests; the dataset is 120.7
+    MB and the exe 287 MB.
+  - **Looked before assuming, and PokeAPI has nothing again.** Its sprite repository stops having
+    battle sprites after Generation 6; what it holds for Generation 8 is a folder of box icons
+    and an empty entry for Brilliant Diamond. Same answer as Alola and Let's Go, for the same
+    reason: these games have no battle sprite to hold.
+  - **The sheet was read rather than guessed at**, which is the whole lesson of the `7p`/`7u`
+    mix-up. `Spr_8s_810.png` has a description page and it says "Game model of #810 Grookey from
+    Pokemon Sword and Shield", categorised under *Sword and Shield models*. That is the sheet.
+  - **And not Pokemon HOME's artwork**, which the same wiki keeps beside it as `HOME0810.png`
+    and which is a render of the same model. HOME is a service and these are the games; a
+    picture filed under the games is the one a Galar tile should show, which is the argument
+    `archives.py` already makes about Let's Go.
+  - **`gen7sprites.py` is now `archives.py`.** The name was true while Alola and Let's Go were
+    its only tenants. Sword and Shield are Generation 8 and read *exactly* the same rules -
+    three digits, the same form codes, the same `_m` and `_f` - so the name was the only thing
+    that had to change. The four sheets it knows are `7s`, `7u`, `7p` and `8s`.
+  - What looked like holes were the sexed spellings: Magikarp and Eevee have no plain name on
+    this sheet and both have `_m` and `_f`. **Eevee is drawn twice here where the Let's Go sheet
+    drew it once**, so Galar's female Eevee will get a picture of its own at step 8 where Let's
+    Go's had to fall back. 623 requests, 53 of them a 404, and every 404 was a species drawn
+    twice rather than one drawn nowhere.
+  - **One real hole, and the fallback is what it is for: Pinsir.** The wiki has no `8s` model for
+    it under any spelling - checked all three - so its tile shows today's artwork instead. It is
+    in the Isle of Armor list rather than the Galar one, so a collection opening on Galar's 400
+    never sees it. That is the "documented fallback" the checklist asks for, doing its job.
+  - The frame is 1080 pixels square where Let's Go's was 800, and the drawing inside runs from
+    240 to 770 - the largest thing in this dataset. `cropped` takes the air off and the result
+    averages **78 KB against Let's Go's 67**, so this is the same treatment at three times the
+    species rather than a heavier one.
+  - The app needed one line changed and it was a comment. The grid picks smooth scaling over
+    nearest-neighbour on the prefix `generation-vi`, which is a prefix of `generation-vii/` and
+    of `generation-viii/` and not of `generation-v/`. A trick written for Kalos took Alola and
+    Let's Go for free and has now taken Galar the same way; only the sentence saying "both 3D
+    generations" had to become three.
+  - Step 5 for both: **18 trades and 291 evolutions each, and coverage closes to 768 full, 0
+    partial, 52 explained and 1 missing** of 821. The one left is Zarude, which is step 7's
+    question rather than this step's. 619 pipeline tests and 257 app tests.
+  - **Twenty in-game traders, which is more than any game in this dataset has had.** Nine in the
+    base game - two of them handing over a different Pokemon per cartridge - and eleven from
+    Regina in the caves of the Isle of Armor.
+  - **Regina's eleven are one idea, and it is an idea only Galar could have had:** she swaps a
+    regional form for the original. Hand her the Galarian Meowth that Galar's grass is full of
+    and she gives back the Kantonian one; the same for Ponyta, Farfetch'd, Corsola, Zigzagoon,
+    Darumaka, Stunfisk, Weezing, Mr. Mime and Yamask, and for Exeggutor and Marowak it is the
+    Alolan form that goes the other way. **She is the only way any of those eleven originals
+    exists in these games.** `InGameTrade` carries what is wanted as a species, so which face of
+    it is said in the requirement - the same place Unova's Basculin would have been answered if
+    anybody had written down which stripe Kyle hands over.
+  - **And four of her eleven are a version exclusive arriving through a trade counter**, which
+    nothing before this pair has done. Galarian Farfetch'd and Darumaka are Sword's and Galarian
+    Ponyta and Corsola are Shield's, so the half without the form can neither make the trade nor
+    hold what it would have handed back.
+  - **Kubfu evolves by a rule the source files under `the-isle-of-armor`, not `sword-shield`.**
+    The expansions are version groups of their own and they carry real rules, so
+    `evolution_encounters` takes several names now and reads every way up to the newest of them.
+    Asking only about `sword-shield` left the one Pokemon the whole island is built around with
+    no way to exist. Nothing from Legends: Arceus or Scarlet and Violet leaks in: those sit above
+    the Crown Tundra in the source's own order and are refused by the same comparison.
+  - **Nineteen exclusives each, which is the evenest split in the series**, and the table is
+    written here rather than earlier because it is the answer to a question only the finished
+    steps can be asked: which of the 584 does this half produce that the other does not. Grass,
+    raids, gifts, statics, trades and evolutions all count. `reach.spread_unobtainable` then
+    carries each reason down its line without being asked, so 19 species become **35 species over
+    52 entries** - Lotad's reason reaching Lombre and Ludicolo, Gible's reaching Garchomp.
+  - Four of the thirty-eight are somebody else's doing: **Sirfetch'd is Sword's because Galarian
+    Farfetch'd is, and Cursola is Shield's because Galarian Corsola is.** Neither is split by
+    anything in its own right.
+  - The nursery produced **no eggs at all**, and that is the right answer rather than a gap: a
+    day care is only asked for what nothing else in the game produces, and after 507 species of
+    grass, 45 gifts and 18 trades there is nothing left for it to be asked about.
+  - Two evolutions are waiting on step 8 and the build says so by name: **Sirfetch'd and Cursola
+    have no evolution record**, because the way in needs a Galarian Farfetch'd or Corsola. Both
+    are still reachable - they turn up in Max Raid dens - so nothing is missing from the grid,
+    only from the reason underneath it.
+  - **And step 8 will have to invent those two forms rather than switch them on**, which was
+    worth measuring before assuming. `forms.json` holds 18 regional forms and **all 18 are
+    Alolan: there is not one Galarian form in the table**. Switching the version-group rule off
+    for this pair means a form whose only games would be Sword and Shield comes out with an
+    empty list and is dropped from the table altogether, so `farfetchd-galar` and `corsola-galar`
+    do not exist anywhere yet. Step 8 has to write them, the way `LETS_GO_FORMS` had to write
+    `pikachu-starter`.
+  - **A warning for that step, found the same way: handing Galar the Alolan forms is a trap.**
+    Run the evolution reader over Sword with the eleven Alolan forms whose species it lists and
+    it gains seven records - the Alolan Raichu, Ninetales, Persian, Sandslash, Dugtrio, Marowak
+    and Exeggutor - **and loses three**, because a Thunder Stone, a level and a Leaf Stone stop
+    making the Kantonian Raichu, Marowak and Exeggutor. That is exactly the regression Let's Go's
+    step 8 hit, and the fix is the same shape: those three are region-dependent and Galar is not
+    Alola. Six of the seven are real - the Diglett Trainer hands them over - so the forms are
+    wanted and the three evolutions have to be refused by name.
+  - One thing the day's date turned up rather than the step: **a full build now re-dates 3,014
+    hand-written citations** because they carry `date.today()`. That is the Phase 3 item about a
+    citation carrying the day a human read the page, arriving on schedule. The re-dating was
+    kept out of this step's diff by hand.
+  - Step 4 for both: **45 records each - 3 first partners, 4 fossils, 10 presents and 28 things
+    standing in one spot.** Coverage is **745 full, 68 partial and 8 missing** of Sword's 821
+    entries, up from 723/78/20. 614 pipeline tests and 257 app tests. One table for the pair,
+    because the two halves hand over the same things apart from which hero is on the box.
+  - **Galar's fossils are the first in the series made of two halves**, and it is the sharpest
+    thing in the step. Every fossil from the Helix to the Sail is one item revived into one
+    Pokemon; Cara Liss on Route 6 takes two out of a set of four - a bird, a fish, a drake and a
+    dino - and which two go in decides which of the four comes out. The source says so without
+    being asked: two `item-fossilized-` conditions on one row, which no row in this dataset has
+    ever carried.
+  - **A Let's Go save file on the same console is a way of getting a Pokemon**, and it is the
+    only one of its kind here. Two people at the Wild Area Station look at what else is on the
+    Switch and hand over the Gigantamax Pikachu or Eevee accordingly. Nothing is transferred and
+    no edge exists: `home.py` and `lets_go.py` both say those two games reach these two through
+    nothing at all, and this does not change it.
+  - **The Crown Tundra's giants ask for things the source has never heard of.** PokeAPI carries
+    no condition at all on Regirock, Regice and Registeel - what opens each temple is an
+    Everstone in the party, a Cryogonal walking behind the player, and a whistle at the door -
+    so those three sentences are read off the wiki. Without them a player is sent to a door that
+    will not open.
+  - **Four Pokemon in these games cost another Pokemon**, which is a shape the dataset has seen
+    once before in a fossil shop: the dots lit in the Split-Decision Ruins bring Regieleki *or*
+    Regidrago, and the carrot grown in Freezington calls Glastrier *or* Spectrier. Each one's
+    sentence names the one it costs, so a player reads the price before paying it.
+  - Two conditions joined the shared table rather than a game's: Mustard's first trial and all
+    three of them, which between them gate Bulbasaur, Squirtle, Kubfu and Porygon. The rest are
+    written in Galar's own table because they are about one game - fifty footprints, ten hidden
+    Alolan Diglett, thirty-two players talked to at a tombstone.
+  - Thirteen statics are left undescribed on purpose and the build says so: Chewtle on Route 2,
+    the Lapras in its lake, the Obstagoon by the road. A place and a level is the whole of what
+    there is to say about them, and the table is for what the source cannot say.
+  - **The 8 left are exactly steps 5 and 7's**, the same in both halves: the six that only
+    evolve - Thwackey, Rillaboom, Raboot, Cinderace, Drizzile, Inteleon - plus Urshifu, which
+    Kubfu becomes at one of two towers, and Zarude, which no copy of these games has ever
+    produced.
+  - One ordering note for step 8, found here rather than there: **the Diglett Trainer's seven
+    rewards are six Alolan forms and a Kantonian Slowpoke**, and only the Slowpoke is visible
+    now. A form has to be in the game's form table before the gift reader will ask about it, and
+    these two have no forms until step 8 - so six gifts, the Galarian birds and the Slowpoke at
+    Wedgehurst Station are all waiting on that step rather than missing from this one.
+  - Step 3 for both: **12,363 slots in Sword and 12,264 in Shield, over 358 places**, covering
+    507 of the 584 species each half lists. The biggest wild step in the dataset by some way -
+    SoulSilver held the record at 2,725 - and the two game files are 6.5 MB apiece. Coverage is
+    **723 full, 78 partial, 20 missing** of Sword's 821 entries. 609 pipeline tests and 257 app
+    tests.
+  - **PokeAPI has all of it, which was worth checking before assuming a scrape.** 45,381 rows
+    across six version names, structured and conditioned the same way every generation before
+    has been. What it needed was reading properly, and that is the step: **three PokeAPI versions
+    per half.** The source files each expansion as a version group of its own - a Sword player's
+    grass is `sword`, `the-isle-of-armor-sword` and `the-crown-tundra-sword` - so reading the one
+    name the way every game before this did would have quietly dropped two thirds of the game.
+    `wild_encounters` takes a name or several now, and nothing else had to change.
+  - **The weather field is filled in for the first time since it was written.** Nine states of
+    the Wild Area's sky, each its own table, and 5,517 of Sword's slots carry one. The other side
+    of that is the fold: a species standing there in every sky the place has is not
+    weather-dependent, and nine records differing in one word tell a player nothing. What counts
+    as "every sky" is measured per place from what the game lists there rather than assumed to be
+    nine, because a place the sun never leaves has no snow table.
+  - **Two ways of getting a Pokemon that are not a place at all**, and they are the first in the
+    dataset: a **Max Raid** - a beam of light over a den, four trainers against one Dynamax
+    Pokemon and a single throw at the end - and a **Dynamax Adventure**, the Crown Tundra's run
+    through the Max Lair. 5,336 raid records over 276 dens in Sword, and 212 species in the Max
+    Lair. Neither could be `other`, which is where a method goes to stop being an answer.
+  - **A den's star rating is a number, so it is read as one.** The source writes a row per star,
+    which would have put five records under every species in every den; folded into a range they
+    read "In a den under a strong purple beam of light and at 2 to 3 stars". 22,461 raid rows
+    became 5,336 records that way.
+  - Four more overworld methods where Let's Go had three, and all four land on the existing
+    three with a sentence beside them: what **wanders a fixed patch**, what **comes up out of the
+    ground or the swamp**, and what **gives chase the moment the water is entered**. Three places
+    to look is a method; how the thing behaves once it is looked at is a sentence - the same call
+    Let's Go's rare spawns and Kalos' flower patches got.
+  - **The 20 entries still missing are exactly steps 4 and 5's list**, and the same 20 in both
+    halves: the three starter lines, Zacian, Zamazenta, Eternatus, Kubfu and Urshifu, Zarude,
+    Regieleki and Regidrago, and Calyrex with Glastrier and Spectrier. Their conditions are
+    already visible in the source and were left alone on purpose - the fossils, the Master Dojo's
+    two trials, the Regis' fifty footprints, the two carrots, and the Pokemon a Let's Go save on
+    the same console hands over.
+  - **Step 2's decision showed up exactly where it was predicted to.** Most of the legendaries a
+    Dynamax Adventure produces - Mewtwo, the Kanto birds, the Tapus - are among the eighty these
+    games hold without listing, so the dataset never asks about them and the Max Lair records
+    them for the 212 species that do have an entry. Nothing is wrong; the grid is 584 species and
+    this is what that costs.
+  - Step 2 for both: **821 entries each across three lists, and 584 species under them.** Galar
+    #001 Grookey to #400 Eternatus, the Isle of Armor #001 Slowpoke to #211 Zarude, the Crown
+    Tundra #001 Snom to #210 Calyrex. Both halves show the same three with the same numbers,
+    which is what a version pair has always meant: they split what can be caught, never what is
+    listed. 603 pipeline tests and 257 app tests.
+  - **The three overlap, which Kalos' three did not, and that is the whole difference.** X and
+    Y's 153 + 153 + 151 add up to the 457 the games ask for; 400 + 211 + 210 here is 821 entries
+    and 584 species, because 101 species are in both Galar's list and the Isle of Armor's, 135
+    in Galar's and the Crown Tundra's, 13 on both islands and 12 in all three. **Magikarp is
+    #144, #42 and #62 in one save file** - one Pokemon wearing three numbers, which no game
+    before this pair has done.
+  - **Decision: the three are kept apart and there is no combined list.** That is X and Y's
+    ruling applied to a harder case, and `every-dex-number-means-one-thing` is the rule that has
+    been guarding it since: a number spanning the three is a number no player has been shown,
+    and the only one available - the National Dex number - would make the grid say #129 where
+    the game says #144. **What it costs is written down rather than left to be found:** a
+    collection built on Sword opens on Galar's 400 of the 584 these games hold, and the other
+    184 are behind the dex switch. Seeing everything one of these games holds in one grid is not
+    something this dataset can express, and that is not a gap in Galar - it is the first time a
+    game's Pokedex and a game's boxes have been different lists.
+  - **And the eighty get no entry at all.** Bulbapedia counts eighty species Sword and Shield can
+    hold while naming them in none of their three Pokedexes - Mewtwo, Celebi, the three Alola
+    starters, every Ultra Beast - and twenty-six of those have a Sword and Shield Pokedex entry
+    that can only be read in Pokemon HOME. A dex entry is a number in a list and there is no
+    number to give them. So the dataset says these games hold 584 where the truth is 664, in the
+    safe direction: a tile the grid does not draw asks nothing of a player, while a tile it
+    invents asks for something they may not be able to get.
+  - **That found a sentence in `home.py` that was wrong.** It named Decidueye as the Pokemon
+    Sword has no entry for and HOME will not put there. Decidueye is one of the eighty: the
+    example was true about this dataset and false about the game. Changed to Chikorita, which is
+    in neither list, and the real consequence is now written down where the filter lives - the
+    withdrawal out of HOME is **eighty species stricter than the service it describes**, and no
+    tile turns on any of them.
+  - **146 of the 821 entries have no source anywhere in the dataset, and they are exactly the 89
+    species these games invented.** Not one older species in the three lists is unaccounted for:
+    every one of the other 495 is already produced by something written months ago. That is the
+    graph checking its own work, and step 3 is what closes it.
+  - Validation is **2 errors on purpose**, one per half, which is the same state Let's Go's step
+    2 left behind: `every-entry-has-a-method` reports a game with a dex and no encounters as not
+    worked on yet rather than as full of holes. They go away when step 3 does.
+  - Checked through the app's own dex builder: Sword builds **400 tiles** by default - the Galar
+    list - with no forms, since step 8 has not named any yet, and every picture falling back to
+    the shared set because step 6 has not run. No tile points at a file that is not there.
+  - Step 1 for both: **five routes, which is every route these two have** - the cable between
+    the halves, and for each half a deposit into HOME and a withdrawal back out. The dataset is
+    at 34 games and 135 routes, nothing held back. 600 pipeline tests and 257 app tests, and
+    validation green on all 11 rules with the same two Rockruff warnings as before.
+  - **Registering them lights nothing that was waiting, and that is the finding rather than a
+    gap.** Every pair since Generation 5 has arrived to find routes already pointing at it,
+    declared by files written years earlier; these arrive to find none, because HOME is the only
+    door Generation 8 has and every older game that can reach them was already reaching HOME. A
+    Pokemon caught in Red still gets to Galar - Poke Transporter, Bank, HOME, Sword - and not one
+    edge on that route had to be told these games exist. Checked through the app's own graph with
+    Sword as main game: the linked-games step offers all thirty-one other playable games, where
+    Let's Go offered one.
+  - **The withdrawal out of HOME is the edge `home.home_edges` was written for**, back when the
+    node was built and before either of these games was registered, and this is the first time
+    that function has had anything to describe: Bank and the four Generation 6 cartridges got their own pair, Let's Go got a
+    withdrawal that asks where a Pokemon started, and these get the ordinary one that reads the
+    target's own Pokedex. `home.py` even named the example - Sword has no entry for Decidueye and
+    HOME will not put one there - and step 1 did not have to invent a thing.
+  - `galar.py` is the pair's module and the region's both, which is the `kalos.py` shape rather
+    than `alola.py`'s. **There is nothing for a `gen8.py` to hold**: Generation 8 is these two in
+    Galar, Brilliant Diamond and Shining Pearl in Sinnoh and Legends: Arceus in Hisui, and what
+    those five share is Pokemon HOME, which `home.py` has held since before any of them existed.
+  - **Dexit, measured.** The three Pokedexes PokeAPI counts 400, 211 and 210 in overlap heavily:
+    584 distinct species, plus the eighty Bulbapedia lists as compatible with these games while
+    being in none of the three, is 664 out of the 898 that existed when the Crown Tundra shipped.
+    Twenty-six of those eighty have a Sword and Shield Pokedex entry that can only be read in
+    HOME. **Whether the eighty belong in the list is step 2's, not this step's** - they are
+    written down in `galar.FOREIGN_TO_EVERY_DEX` so that step does not have to find them again -
+    and the filter on the way out of HOME is right either way the question goes, because an entry
+    no list holds is a tile nobody is shown.
+  - **And the same trap Let's Go sprang, this time for good.** `from_group_on` gives a form every
+    game from its own version group onward, which holds only while a game can hold everything up
+    to its own National Dex number. Left alone it hands this pair **373 forms across 746 lines,
+    92 of them rows the table does not hold at all** - every Vivillon pattern, every Unown letter,
+    every Burmy cloak. Switched off for them as it is for Let's Go, and `forms.json` stayed at
+    291 to prove it. Nineteen Alolan forms are in that 373 and are the part step 8 will have to
+    look at hardest: Bulbapedia says a regional form of a species these games are compatible with
+    is compatible too, and Raichu, Vulpix, Meowth, Marowak and Sandshrew are all in a Galar list.
+  - Three Pokedexes means `DexEntry.dex` gets its second user after X and Y, and not the same
+    shape: Kalos' three are one region cut in thirds and share nothing, while the Isle of Armor's
+    and the Crown Tundra's each start at #001 and each repeat much of the Galar list. Step 2's.
+  - **These games changed after they shipped**, which nothing in the series had done - 400 entries
+    on 15 November 2019, the Isle of Armor's 211 with version 1.2.0 on 16 June 2020 and the Crown
+    Tundra's 210 with 1.3.0 on 22 October 2020, and both times for every player rather than only
+    for the ones who bought the pass. So the dataset holds version 1.3.x, the game as it can be
+    bought and played today, while `released` stays the day it first went on sale. Same decision
+    the Virtual Console releases got, in a different shape.
+  - One thing left standing on purpose at the time: **the picker offered Sword and Shield and a
+    collection made with either was an empty grid.** That is what a game between step 1 and step
+    2 looks like, and the validator was quiet about it by design - `every-entry-has-a-method`
+    reports a game with a dex and no encounters, and a game with neither has not been claimed
+    about yet. Step 2 filled it.
+
 ### Virtual Console releases
 
 _Nothing yet._

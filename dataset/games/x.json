@@ -20959,7 +20959,7 @@
       "target": {
         "species": "darmanitan"
       },
-      "rule": "darumaka-to-darmanitan-black-white",
+      "rule": "darumaka-to-darmanitan",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/282",
@@ -22310,7 +22310,7 @@
       "target": {
         "species": "weezing"
       },
-      "rule": "koffing-to-weezing-red-blue",
+      "rule": "koffing-to-weezing",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/49",
@@ -22778,7 +22778,7 @@
       "target": {
         "species": "mr-mime"
       },
-      "rule": "mime-jr-to-mr-mime-diamond-pearl",
+      "rule": "mime-jr-to-mr-mime",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/57",
@@ -23376,7 +23376,7 @@
       "target": {
         "species": "rapidash"
       },
-      "rule": "ponyta-to-rapidash-red-blue",
+      "rule": "ponyta-to-rapidash",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/32",
@@ -24056,7 +24056,7 @@
       "target": {
         "species": "slowbro"
       },
-      "rule": "slowpoke-to-slowbro-red-blue",
+      "rule": "slowpoke-to-slowbro",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/33",
@@ -24069,7 +24069,7 @@
       "target": {
         "species": "slowking"
       },
-      "rule": "slowpoke-to-slowking-gold-silver",
+      "rule": "slowpoke-to-slowking",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/33",
@@ -25005,7 +25005,7 @@
       "target": {
         "species": "linoone"
       },
-      "rule": "zigzagoon-to-linoone-ruby-sapphire",
+      "rule": "zigzagoon-to-linoone",
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain/134",
@@ -25224,7 +25224,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25242,7 +25242,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25260,7 +25260,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25282,7 +25282,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25303,7 +25303,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25322,7 +25322,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25340,7 +25340,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25358,7 +25358,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25379,7 +25379,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25400,7 +25400,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25418,7 +25418,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25436,7 +25436,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25457,7 +25457,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25475,7 +25475,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25496,7 +25496,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25514,7 +25514,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25532,7 +25532,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25550,7 +25550,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25569,7 +25569,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25587,7 +25587,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25606,7 +25606,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25625,7 +25625,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25643,7 +25643,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25664,7 +25664,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25682,7 +25682,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25703,7 +25703,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {
@@ -25724,7 +25724,7 @@
       "source": {
         "source": "pokeapi",
         "url": "https://pokeapi.co/api/v2/evolution-chain",
-        "retrievedOn": "2026-09-24"
+        "retrievedOn": "2026-09-25"
       }
     },
     {

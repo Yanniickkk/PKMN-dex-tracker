@@ -152,6 +152,11 @@ REQUIREMENTS: dict[str, str] = {
     "max-den-rarity-common": "In a den under an ordinary red beam of light",
     "max-den-rarity-rare": "In a den under a strong purple beam of light",
     "max-den-rarity-special": "Only while the Wild Area News has put it there",
+    # The Crown Tundra's three birds, which have to be seen leaving before they can be met.
+    "other-witness-galarian-bird-fight": (
+        "After watching the three fight over the Dyna Tree, which is what scatters them "
+        "across Galar in the first place"
+    ),
     # Generation 3 has exactly three conditioned wild slots, and all three are the roaming eon
     # duo: neither one is loose in Hoenn until the Elite Four are beaten, and in Emerald which
     # of the two it is depends on the colour picked when the television asks.
@@ -333,6 +338,14 @@ REQUIREMENTS: dict[str, str] = {
 #: two slots a species is drawn for. The number is the slot, not the odds.
 _GREAT_MARSH = "great-marsh-daily-slot-"
 
+#: The Isle of Armor's Diglett hunt, which is a threshold rather than a yes-or-no.
+#:
+#: The Diglett Trainer hands over a regional form of something Galar never had at five, ten,
+#: twenty, thirty, forty, fifty, seventy-five, a hundred and all hundred and fifty-one, so
+#: the number is the condition and writing nine of them out would be writing one sentence
+#: nine times.
+_DIGLETT = "alolan-diglett-found-"
+
 #: Johto's Safari Zone, where what lives in an area depends on what has been put in it.
 #:
 #: The number is not a count of objects, quite. An area holds thirty at a time, and each one
@@ -402,6 +415,13 @@ def phrase(value: str, *, subject: str) -> str:
     """One condition as a sentence a player can act on."""
     if value in REQUIREMENTS:
         return REQUIREMENTS[value]
+
+    if value.startswith(_DIGLETT):
+        found = value.removeprefix(_DIGLETT)
+        return (
+            f"After finding {found} of the Isle of Armor's 151 hidden Alolan Diglett, which the "
+            "Diglett Trainer asks for"
+        )
 
     if value.startswith(_GREAT_MARSH):
         slot = value.removeprefix(_GREAT_MARSH).replace("-of-", " of ")

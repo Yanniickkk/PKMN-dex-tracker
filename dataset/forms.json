@@ -14,8 +14,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -66,14 +68,636 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "alcremie-caramel-swirl-berry-sweet",
+    "species": "alcremie",
+    "name": "Caramel-Swirl-Berry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-caramel-swirl-clover-sweet",
+    "species": "alcremie",
+    "name": "Caramel-Swirl-Clover-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-caramel-swirl-flower-sweet",
+    "species": "alcremie",
+    "name": "Caramel-Swirl-Flower-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-caramel-swirl-love-sweet",
+    "species": "alcremie",
+    "name": "Caramel-Swirl-Love-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-caramel-swirl-ribbon-sweet",
+    "species": "alcremie",
+    "name": "Caramel-Swirl-Ribbon-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-caramel-swirl-star-sweet",
+    "species": "alcremie",
+    "name": "Caramel-Swirl-Star-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-caramel-swirl-strawberry-sweet",
+    "species": "alcremie",
+    "name": "Caramel-Swirl-Strawberry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-lemon-cream-berry-sweet",
+    "species": "alcremie",
+    "name": "Lemon-Cream-Berry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-lemon-cream-clover-sweet",
+    "species": "alcremie",
+    "name": "Lemon-Cream-Clover-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-lemon-cream-flower-sweet",
+    "species": "alcremie",
+    "name": "Lemon-Cream-Flower-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-lemon-cream-love-sweet",
+    "species": "alcremie",
+    "name": "Lemon-Cream-Love-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-lemon-cream-ribbon-sweet",
+    "species": "alcremie",
+    "name": "Lemon-Cream-Ribbon-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-lemon-cream-star-sweet",
+    "species": "alcremie",
+    "name": "Lemon-Cream-Star-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-lemon-cream-strawberry-sweet",
+    "species": "alcremie",
+    "name": "Lemon-Cream-Strawberry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-matcha-cream-berry-sweet",
+    "species": "alcremie",
+    "name": "Matcha-Cream-Berry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-matcha-cream-clover-sweet",
+    "species": "alcremie",
+    "name": "Matcha-Cream-Clover-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-matcha-cream-flower-sweet",
+    "species": "alcremie",
+    "name": "Matcha-Cream-Flower-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-matcha-cream-love-sweet",
+    "species": "alcremie",
+    "name": "Matcha-Cream-Love-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-matcha-cream-ribbon-sweet",
+    "species": "alcremie",
+    "name": "Matcha-Cream-Ribbon-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-matcha-cream-star-sweet",
+    "species": "alcremie",
+    "name": "Matcha-Cream-Star-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-matcha-cream-strawberry-sweet",
+    "species": "alcremie",
+    "name": "Matcha-Cream-Strawberry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-mint-cream-berry-sweet",
+    "species": "alcremie",
+    "name": "Mint-Cream-Berry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-mint-cream-clover-sweet",
+    "species": "alcremie",
+    "name": "Mint-Cream-Clover-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-mint-cream-flower-sweet",
+    "species": "alcremie",
+    "name": "Mint-Cream-Flower-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-mint-cream-love-sweet",
+    "species": "alcremie",
+    "name": "Mint-Cream-Love-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-mint-cream-ribbon-sweet",
+    "species": "alcremie",
+    "name": "Mint-Cream-Ribbon-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-mint-cream-star-sweet",
+    "species": "alcremie",
+    "name": "Mint-Cream-Star-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-mint-cream-strawberry-sweet",
+    "species": "alcremie",
+    "name": "Mint-Cream-Strawberry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-rainbow-swirl-berry-sweet",
+    "species": "alcremie",
+    "name": "Rainbow-Swirl-Berry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-rainbow-swirl-clover-sweet",
+    "species": "alcremie",
+    "name": "Rainbow-Swirl-Clover-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-rainbow-swirl-flower-sweet",
+    "species": "alcremie",
+    "name": "Rainbow-Swirl-Flower-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-rainbow-swirl-love-sweet",
+    "species": "alcremie",
+    "name": "Rainbow-Swirl-Love-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-rainbow-swirl-ribbon-sweet",
+    "species": "alcremie",
+    "name": "Rainbow-Swirl-Ribbon-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-rainbow-swirl-star-sweet",
+    "species": "alcremie",
+    "name": "Rainbow-Swirl-Star-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-rainbow-swirl-strawberry-sweet",
+    "species": "alcremie",
+    "name": "Rainbow-Swirl-Strawberry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-cream-berry-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Cream-Berry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-cream-clover-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Cream-Clover-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-cream-flower-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Cream-Flower-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-cream-love-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Cream-Love-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-cream-ribbon-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Cream-Ribbon-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-cream-star-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Cream-Star-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-cream-strawberry-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Cream-Strawberry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-swirl-berry-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Swirl-Berry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-swirl-clover-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Swirl-Clover-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-swirl-flower-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Swirl-Flower-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-swirl-love-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Swirl-Love-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-swirl-ribbon-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Swirl-Ribbon-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-swirl-star-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Swirl-Star-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-ruby-swirl-strawberry-sweet",
+    "species": "alcremie",
+    "name": "Ruby-Swirl-Strawberry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-salted-cream-berry-sweet",
+    "species": "alcremie",
+    "name": "Salted-Cream-Berry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-salted-cream-clover-sweet",
+    "species": "alcremie",
+    "name": "Salted-Cream-Clover-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-salted-cream-flower-sweet",
+    "species": "alcremie",
+    "name": "Salted-Cream-Flower-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-salted-cream-love-sweet",
+    "species": "alcremie",
+    "name": "Salted-Cream-Love-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-salted-cream-ribbon-sweet",
+    "species": "alcremie",
+    "name": "Salted-Cream-Ribbon-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-salted-cream-star-sweet",
+    "species": "alcremie",
+    "name": "Salted-Cream-Star-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-salted-cream-strawberry-sweet",
+    "species": "alcremie",
+    "name": "Salted-Cream-Strawberry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-vanilla-cream-berry-sweet",
+    "species": "alcremie",
+    "name": "Vanilla-Cream-Berry-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-vanilla-cream-clover-sweet",
+    "species": "alcremie",
+    "name": "Vanilla-Cream-Clover-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-vanilla-cream-flower-sweet",
+    "species": "alcremie",
+    "name": "Vanilla-Cream-Flower-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-vanilla-cream-love-sweet",
+    "species": "alcremie",
+    "name": "Vanilla-Cream-Love-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-vanilla-cream-ribbon-sweet",
+    "species": "alcremie",
+    "name": "Vanilla-Cream-Ribbon-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "alcremie-vanilla-cream-star-sweet",
+    "species": "alcremie",
+    "name": "Vanilla-Cream-Star-Sweet",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
     ]
   },
   {
@@ -112,6 +736,20 @@
     ]
   },
   {
+    "id": "articuno-galar",
+    "species": "articuno",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "psychic",
+      "flying"
+    ]
+  },
+  {
     "id": "basculin-blue-striped",
     "species": "basculin",
     "name": "Blue-Striped",
@@ -122,7 +760,9 @@
       "black-2",
       "moon",
       "omega-ruby",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -323,8 +963,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -356,6 +998,34 @@
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "calyrex-ice",
+    "species": "calyrex",
+    "name": "Ice",
+    "kind": "functional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "psychic",
+      "ice"
+    ]
+  },
+  {
+    "id": "calyrex-shadow",
+    "species": "calyrex",
+    "name": "Shadow",
+    "kind": "functional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "psychic",
+      "ghost"
     ]
   },
   {
@@ -398,8 +1068,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -434,6 +1106,18 @@
     ]
   },
   {
+    "id": "corsola-galar",
+    "species": "corsola",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield"
+    ],
+    "types": [
+      "ghost"
+    ]
+  },
+  {
     "id": "croagunk-female",
     "species": "croagunk",
     "name": "Female",
@@ -448,14 +1132,40 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "darmanitan-galar-standard",
+    "species": "darmanitan",
+    "name": "Galar-Standard",
+    "kind": "functional",
+    "games": [
+      "sword"
+    ],
+    "types": [
+      "ice"
+    ]
+  },
+  {
+    "id": "darumaka-galar",
+    "species": "darumaka",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "sword"
+    ],
+    "types": [
+      "ice"
     ]
   },
   {
@@ -605,7 +1315,9 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -702,7 +1414,9 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -753,8 +1467,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -781,13 +1497,27 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
     "types": [
       "grass",
       "dragon"
+    ]
+  },
+  {
+    "id": "farfetchd-galar",
+    "species": "farfetchd",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "sword"
+    ],
+    "types": [
+      "fighting"
     ]
   },
   {
@@ -1059,7 +1789,9 @@
       "black-2",
       "moon",
       "omega-ruby",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1227,8 +1959,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1252,8 +1986,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1320,8 +2056,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1420,8 +2158,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1447,8 +2187,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1474,8 +2216,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1511,7 +2255,9 @@
       "alpha-sapphire",
       "moon",
       "omega-ruby",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "x",
@@ -1527,7 +2273,9 @@
       "alpha-sapphire",
       "moon",
       "omega-ruby",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "x",
@@ -1543,7 +2291,9 @@
       "alpha-sapphire",
       "moon",
       "omega-ruby",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "x",
@@ -1651,8 +2401,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1676,8 +2428,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1701,8 +2455,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1726,8 +2482,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1807,6 +2565,16 @@
     ]
   },
   {
+    "id": "indeedee-female",
+    "species": "indeedee",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
     "id": "jellicent-female",
     "species": "jellicent",
     "name": "Female",
@@ -1817,7 +2585,9 @@
       "black-2",
       "moon",
       "omega-ruby",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -1843,8 +2613,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -2038,6 +2810,20 @@
     ]
   },
   {
+    "id": "linoone-galar",
+    "species": "linoone",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "dark",
+      "normal"
+    ]
+  },
+  {
     "id": "ludicolo-female",
     "species": "ludicolo",
     "name": "Female",
@@ -2052,8 +2838,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -2114,8 +2902,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -2139,8 +2929,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -2155,6 +2947,8 @@
     "name": "Dusk",
     "kind": "functional",
     "games": [
+      "shield",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ]
@@ -2166,7 +2960,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ]
@@ -2200,8 +2996,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -2225,8 +3023,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -2244,7 +3044,9 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -2351,7 +3153,9 @@
       "alpha-sapphire",
       "moon",
       "omega-ruby",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "x",
@@ -2366,12 +3170,27 @@
     "games": [
       "lets-go-eevee",
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
     "types": [
       "dark"
+    ]
+  },
+  {
+    "id": "meowth-galar",
+    "species": "meowth",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "steel"
     ]
   },
   {
@@ -2389,8 +3208,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -2568,6 +3389,34 @@
     ]
   },
   {
+    "id": "moltres-galar",
+    "species": "moltres",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "dark",
+      "flying"
+    ]
+  },
+  {
+    "id": "mr-mime-galar",
+    "species": "mr-mime",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "ice",
+      "psychic"
+    ]
+  },
+  {
     "id": "muk-alola",
     "species": "muk",
     "name": "Alola",
@@ -2645,7 +3494,9 @@
     "games": [
       "lets-go-eevee",
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -2694,8 +3545,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -2719,8 +3572,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -2810,7 +3665,9 @@
     "games": [
       "lets-go-eevee",
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -2877,8 +3734,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3021,8 +3880,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3046,14 +3907,38 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "polteageist-antique",
+    "species": "polteageist",
+    "name": "Antique",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "ponyta-galar",
+    "species": "ponyta",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield"
+    ],
+    "types": [
+      "psychic"
     ]
   },
   {
@@ -3065,7 +3950,9 @@
       "alpha-sapphire",
       "moon",
       "omega-ruby",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "x",
@@ -3081,7 +3968,9 @@
       "alpha-sapphire",
       "moon",
       "omega-ruby",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "x",
@@ -3097,7 +3986,9 @@
       "alpha-sapphire",
       "moon",
       "omega-ruby",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "x",
@@ -3135,8 +4026,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3154,7 +4047,9 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -3180,14 +4075,29 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "rapidash-galar",
+    "species": "rapidash",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield"
+    ],
+    "types": [
+      "psychic",
+      "fairy"
     ]
   },
   {
@@ -3311,8 +4221,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3338,8 +4250,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3365,8 +4279,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3390,8 +4306,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3416,6 +4334,8 @@
     "name": "Own-Tempo",
     "kind": "functional",
     "games": [
+      "shield",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ]
@@ -3435,8 +4355,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3460,8 +4382,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3483,8 +4407,10 @@
       "moon",
       "omega-ruby",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3510,8 +4436,10 @@
       "moon",
       "omega-ruby",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3537,8 +4465,10 @@
       "moon",
       "omega-ruby",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3564,8 +4494,10 @@
       "moon",
       "omega-ruby",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3591,8 +4523,10 @@
       "moon",
       "omega-ruby",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3625,7 +4559,9 @@
     "games": [
       "lets-go-pikachu",
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -3642,7 +4578,9 @@
     "games": [
       "lets-go-pikachu",
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -3726,8 +4664,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3753,8 +4693,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3780,8 +4722,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3857,8 +4801,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3882,8 +4828,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -3899,7 +4847,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -3914,7 +4864,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -3929,7 +4881,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -3944,7 +4898,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -3959,7 +4915,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -3974,7 +4932,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -3989,7 +4949,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -4004,7 +4966,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -4019,7 +4983,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -4034,7 +5000,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -4049,7 +5017,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -4064,7 +5034,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -4079,7 +5051,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -4094,7 +5068,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -4109,7 +5085,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -4124,7 +5102,9 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -4139,12 +5119,65 @@
     "kind": "functional",
     "games": [
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
     "types": [
       "water"
+    ]
+  },
+  {
+    "id": "sinistea-antique",
+    "species": "sinistea",
+    "name": "Antique",
+    "kind": "cosmetic",
+    "games": [
+      "shield",
+      "sword"
+    ]
+  },
+  {
+    "id": "slowbro-galar",
+    "species": "slowbro",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "poison",
+      "psychic"
+    ]
+  },
+  {
+    "id": "slowking-galar",
+    "species": "slowking",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "poison",
+      "psychic"
+    ]
+  },
+  {
+    "id": "slowpoke-galar",
+    "species": "slowpoke",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "psychic"
     ]
   },
   {
@@ -4162,8 +5195,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -4187,8 +5222,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -4287,14 +5324,30 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "stunfisk-galar",
+    "species": "stunfisk",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "ground",
+      "steel"
     ]
   },
   {
@@ -4312,8 +5365,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -4362,8 +5417,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -4458,14 +5515,26 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "toxtricity-low-key",
+    "species": "toxtricity",
+    "name": "Low-Key",
+    "kind": "functional",
+    "games": [
+      "shield",
+      "sword"
     ]
   },
   {
@@ -4479,7 +5548,9 @@
       "black-2",
       "moon",
       "omega-ruby",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -5399,6 +6470,20 @@
     ]
   },
   {
+    "id": "urshifu-rapid-strike",
+    "species": "urshifu",
+    "name": "Rapid-Strike",
+    "kind": "functional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "fighting",
+      "water"
+    ]
+  },
+  {
     "id": "venusaur-female",
     "species": "venusaur",
     "name": "Female",
@@ -5415,8 +6500,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -5454,8 +6541,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -5776,7 +6865,9 @@
     "games": [
       "lets-go-eevee",
       "moon",
+      "shield",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun"
     ],
@@ -5799,14 +6890,30 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "weezing-galar",
+    "species": "weezing",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "poison",
+      "fairy"
     ]
   },
   {
@@ -5824,8 +6931,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -5849,8 +6958,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
@@ -5932,14 +7043,58 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "yamask-galar",
+    "species": "yamask",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "ground",
+      "ghost"
+    ]
+  },
+  {
+    "id": "zapdos-galar",
+    "species": "zapdos",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "fighting",
+      "flying"
+    ]
+  },
+  {
+    "id": "zigzagoon-galar",
+    "species": "zigzagoon",
+    "name": "Galar",
+    "kind": "regional",
+    "games": [
+      "shield",
+      "sword"
+    ],
+    "types": [
+      "dark",
+      "normal"
     ]
   },
   {
@@ -5959,8 +7114,10 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "shield",
       "soulsilver",
       "sun",
+      "sword",
       "ultra-moon",
       "ultra-sun",
       "white",

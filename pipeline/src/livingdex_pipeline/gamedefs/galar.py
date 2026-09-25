@@ -46,6 +46,10 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from datetime import date
 
+from ..archives import GALAR_SET
+from ..breeding import CAUGHT, breeding_encounters, day_care_eggs
+from ..evolutions import evolution_encounters
+from ..formchanges import FormChange, form_change_encounters, spread
 from ..games import BuildContext
 from ..gifts import GiftDetail, GiftDetails, gift_encounters
 from ..models import (
@@ -57,13 +61,17 @@ from ..models import (
     Game,
     GameRelease,
     GiftKind,
+    SourceCitation,
     TransferDirection,
     TransferEdge,
     TransferMechanism,
 )
 from ..places import LocationNames
+from ..pokeapi import BASE_URL
+from ..sources import bulbapedia
+from ..trades import InGameTrade, trade_encounters
 from ..wild import wild_encounters
-from . import home
+from . import exclusives, home
 
 #: The region itself, and the first in the series drawn from the United Kingdom.
 REGION = "Galar"
@@ -179,6 +187,506 @@ DEX_TOTAL = 821
 #: put there. Decidueye is one of the eighty: the example was true about this dataset and false
 #: about the game, and it has been changed to Chikorita, which is in neither list.
 FOREIGN_TO_EVERY_DEX = 80
+
+
+
+
+#: What each half calls itself in the other half's reason.
+TITLE = {"sword": "Sword", "shield": "Shield"}
+
+#: The one entry neither half produces, and the six distributions that did.
+#:
+#: Zarude is the Isle of Armor's Mythical Pokemon and nothing in either cartridge makes one: it
+#: is not in the grass, not in a den, not in the Max Lair and not handed over. It was given away
+#: six times between August 2020 and March 2022 - twice over in three regions, once as itself
+#: and once as Dada Zarude, which the film it came with is about.
+ZARUDE = exclusives.with_event(
+    "Nothing in either half produces one: it is not in the grass, not in a den, not in the Max "
+    "Lair and not handed over",
+    exclusives.handed_out(
+        "the Jungle Zarude of August 2020",
+        "the Jungle Dada Zarude of December 2020",
+        "four more distributions of those two through to March 2022",
+    ),
+)
+
+#: What a Wild Area News raid was, said once because ten entries want it.
+#:
+#: **The strangest thing step 7 found, and it is a way of distributing a Pokemon that only these
+#: games have.** Wild Area News pushes a den table to a Switch over the internet for a few days
+#: and takes it away again; what is in the den while it lasts is not in the game before or
+#: after. The source marks the leftovers of it in the encounter tables - the
+#: ``max-den-rarity-special`` condition step 3 found on a handful of Rolling Fields spawns - and
+#: Bulbapedia files the rest under each species' own events, which is where these were read.
+#:
+#: It matters here because four of the raids were run in the half that cannot catch the Pokemon
+#: at all: a Shield player could raid a Galarian Farfetch'd and a Galarian Darumaka for one week
+#: in March 2020, and a Sword player a Galarian Ponyta and a Rapidash in the same week. Those
+#: four are exactly the four forms Regina's trades are split by, covered once each and never
+#: again.
+def raid(*periods: str) -> str:
+    """One sentence for however many of these a species got, which is one or two."""
+    if len(periods) == 1:
+        return f"a Wild Area News raid of {periods[0]}"
+
+    return "Wild Area News raids of " + " and of ".join(periods)
+
+
+#: The nineteen species each half can produce and the other cannot, and what once covered them.
+#:
+#: Worked out at step 5, dated at step 7. ``None`` means what it says in every game file in this
+#: dataset: the question was asked and the answer was nothing - no distribution has ever put one
+#: of these in the half that lacks it, so a player without a trading partner has no way at all.
+#:
+#: **Nine of the thirty-eight were covered and twenty-nine were not**, which is the sparsest
+#: showing of any pair since Ultra Sun and Ultra Moon. Six of the nine are a Wild Area News raid
+#: that lasted a week or a month; the other three are Mystery Gift - Lancer's Shiny Zacian and
+#: Arthur's Shiny Zamazenta, which each ran in *both* halves so that neither box legendary is
+#: strictly one cartridge's, and Ash's Sirfetch'd from the year the animated series ended.
+ONLY_ON: dict[str, dict[str, str | None]] = {
+    # Sword's, which is what a Shield player is told they cannot have.
+    "sword": {
+        "darumaka": exclusives.handed_out(raid("19 to 25 March 2020")),
+        "deino": exclusives.handed_out(raid("October 2020")),
+        "farfetchd": exclusives.handed_out(raid("19 to 25 March 2020")),
+        "pinsir": exclusives.handed_out(raid("6 to 8 August 2021")),
+        "sirfetchd": exclusives.handed_out("Ash's Sirfetch'd of September 2022"),
+        "zacian": exclusives.handed_out("Lancer's Shiny Zacian of October 2021"),
+        # And the twelve nothing ever covered.
+        "bagon": None,
+        "clauncher": None,
+        "gothita": None,
+        "jangmo-o": None,
+        "mawile": None,
+        "omanyte": None,
+        "rufflet": None,
+        "scraggy": None,
+        "seedot": None,
+        "solrock": None,
+        "stonjourner": None,
+        "swirlix": None,
+        "turtonator": None,
+    },
+    # Shield's, which is what a Sword player is told they cannot have.
+    "shield": {
+        "corsola": exclusives.handed_out(
+            "the Hidden Ability Galarian Corsola of June 2020"
+        ),
+        "larvitar": exclusives.handed_out(raid("28 April to 11 May 2020")),
+        "ponyta": exclusives.handed_out(
+            "the Hidden Ability Galarian Ponyta of May 2020", raid("19 to 25 March 2020")
+        ),
+        "sableye": exclusives.handed_out("Kohei Fujida's Sableye of June 2022"),
+        "zamazenta": exclusives.handed_out("Arthur's Shiny Zamazenta of October 2021"),
+        # And the fourteen nothing ever covered.
+        "croagunk": None,
+        "cursola": None,
+        "drampa": None,
+        "eiscue": None,
+        "gible": None,
+        "goomy": None,
+        "heracross": None,
+        "kabuto": None,
+        "lotad": None,
+        "lunatone": None,
+        "skrelp": None,
+        "solosis": None,
+        "spritzee": None,
+        "vullaby": None,
+    },
+}
+
+#: What a line's later stages were covered by, where they had a raid of their own.
+#:
+#: :func:`reach.spread_unobtainable` gives an entry the reason its own line already carries, so a
+#: Zweilous would otherwise inherit Deino's date. These four had raids of their own and the dates
+#: differ, so they are written out rather than inherited.
+ALSO_RAIDED: dict[str, dict[str, str]] = {
+    "sword": {
+        "zweilous": exclusives.handed_out(raid("October 2020")),
+        "hydreigon": exclusives.handed_out(raid("October 2020")),
+    },
+    "shield": {
+        "pupitar": exclusives.handed_out(raid("28 April to 11 May 2020")),
+        "tyranitar": exclusives.handed_out(raid("28 April to 11 May 2020")),
+        "rapidash": exclusives.handed_out(raid("December 2020", "19 to 25 March 2020")),
+    },
+}
+
+
+def only_on(partner: str, event: str | None = None) -> str:
+    """Why an entry in this dex is not in this cartridge, with Generation 8 filled in."""
+    return exclusives.only_on(partner, generation=GENERATION, event=event)
+
+
+def unobtainable_in(game_id: str) -> dict[str, str]:
+    """Everything one half cannot produce: the other half's nineteen, and the one neither can.
+
+    Each reason is two sentences where step 7 found something and one where it did not, which is
+    the shape every game in this dataset uses: the first says why the cartridge cannot make one,
+    the second says what once could. An event does not make an entry obtainable - a raid that ran
+    for a week in 2020 is not a way to fill a dex today - it answers the next question.
+    """
+    other = next(one for one in PAIR if one != game_id)
+
+    return {
+        **{species: only_on(TITLE[other], event) for species, event in ONLY_ON[other].items()},
+        **{
+            species: only_on(TITLE[other], event)
+            for species, event in ALSO_RAIDED[other].items()
+        },
+        "zarude": ZARUDE,
+    }
+
+
+#: The folder both halves draw their pictures from, which is theirs alone.
+#:
+#: **These games draw no battle sprite, and neither did the two before them.** PokeAPI's sprite
+#: repository stops having a battle sprite folder after Generation 6, and what it holds for
+#: Generation 8 is a set of box icons and an empty entry for Brilliant Diamond. The Archives
+#: have the models, filed under "Sword and Shield models" and named ``8s`` - the same shape
+#: Let's Go's ``7p`` turned out to be, and checked the same way rather than guessed at from the
+#: number: the description page says "Game model of #810 Grookey from Pokemon Sword and Shield".
+#:
+#: Not Pokemon HOME's artwork, which the same wiki also keeps and which is a render of the same
+#: model. HOME is a service and these are the games; a picture filed under the games is the one
+#: a Galar tile should show, and :mod:`archives` says the same thing about Let's Go.
+SPRITE_SET = GALAR_SET
+
+#: Three evolutions the source offers and Galar does not have, named because nothing can say it.
+#:
+#: The same three Let's Go had to name, for the same reason, and finding them twice is what makes
+#: them a shape rather than an accident. A Pikachu, a Cubone and an Exeggcute are one Pokemon
+#: each; what a Thunder Stone, a level and a Leaf Stone make of them depends on where the player
+#: is standing, and the source writes the Alolan outcome as the newer way without naming an
+#: Alolan form to start from. Every other Alolan line names its own form on both ends and is left
+#: alone: an Alolan Meowth becomes an Alolan Persian here, because the Diglett Trainer hands one
+#: over and the detail says ``meowth-alola``.
+#:
+#: **Measured before it was written.** Handing the evolution reader Galar's regional forms gains
+#: seven records and loses three, and the three are exactly these - a Kantonian Raichu, Marowak
+#: and Exeggutor, which are what these games actually make.
+NOT_AN_EVOLUTION_HERE: dict[str, str] = {
+    "raichu-alola": (
+        "A Thunder Stone in Galar makes the Kantonian Raichu; the Alolan one is what the Diglett "
+        "Trainer hands over for forty of his hidden Diglett"
+    ),
+    "marowak-alola": (
+        "A Cubone levelling up in Galar becomes the Kantonian Marowak; the Alolan one is the "
+        "Diglett Trainer's reward for fifty"
+    ),
+    "exeggutor-alola": (
+        "A Leaf Stone in Galar makes the Kantonian Exeggutor; the Alolan one is the Diglett "
+        "Trainer's reward for seventy-five"
+    ),
+}
+
+#: Where the sentences below were read, which is one page for all of them.
+FORMS_PAGE = "List_of_Pok%C3%A9mon_with_form_differences"
+
+#: How a form that is not met is come by. A sex needs no line: :mod:`formchanges` answers it.
+#:
+#: Only what nothing else in this game already records. Galar's regional forms are caught, so
+#: the grass and the dens explain them; what is left is the things a player does to a Pokemon
+#: they already have.
+FORM_CHANGES: dict[str, FormChange] = {
+    "slowbro-galar": FormChange(
+        requirement=(
+            "Use a Galarica Cuff on a Galarian Slowpoke, which a woman on the Isle of Armor "
+            "makes from thirty-five Galarica Twigs"
+        ),
+        where="Isle of Armor, Master Dojo",
+    ),
+    "slowking-galar": FormChange(
+        requirement=(
+            "Use a Galarica Wreath on a Galarian Slowpoke, which a woman in the Crown Tundra "
+            "makes from fifteen Galarica Twigs"
+        ),
+        where="Crown Tundra, Freezington",
+    ),
+    "urshifu-rapid-strike": FormChange(
+        requirement=(
+            "Train the Kubfu at the Tower of Waters rather than the Tower of Darkness; the "
+            "choice is made once and cannot be taken back"
+        ),
+        where="Isle of Armor",
+    ),
+    "toxtricity-low-key": FormChange(
+        requirement=(
+            "Evolve a Toxel whose nature is one of the quiet half - Lonely, Bold, Calm and their "
+            "like. The loud half makes the Amped one, and the nature is fixed when it hatches"
+        )
+    ),
+    # Galar's own two, which are one mark under a teacup's base. The Antique Sinistea is the rare
+    # one and the pot decides what it becomes: a Cracked Pot on an Antique, a Chipped Pot on a
+    # Phony, and using the wrong one makes the wrong Polteageist.
+    "sinistea-antique": FormChange(
+        requirement=(
+            "Catch the rare one. A Phony and an Antique Sinistea are told apart by the mark "
+            "stamped under the base, and nothing else about them differs"
+        )
+    ),
+    "polteageist-antique": FormChange(
+        requirement=(
+            "Use a Cracked Pot on an Antique Sinistea; a Chipped Pot on a Phony one makes the "
+            "ordinary Polteageist instead"
+        )
+    ),
+    "calyrex-ice": FormChange(
+        requirement=(
+            "Put Calyrex and Glastrier together with the Reins of Unity, which is how the two "
+            "are caught in the first place and how they come apart again"
+        ),
+        where="Crown Tundra, Freezington",
+    ),
+    "calyrex-shadow": FormChange(
+        requirement=(
+            "Put Calyrex and Spectrier together with the Reins of Unity, which is how the two "
+            "are caught in the first place and how they come apart again"
+        ),
+        where="Crown Tundra, Freezington",
+    ),
+    **spread(
+        FormChange(
+            requirement=(
+                "Give Silvally the memory of that type, which come with the Type: Null the "
+                "League Staff member hands over"
+            ),
+            where="Wyndon, Battle Tower",
+        ),
+        "silvally-bug",
+        "silvally-dark",
+        "silvally-dragon",
+        "silvally-electric",
+        "silvally-fairy",
+        "silvally-fighting",
+        "silvally-fire",
+        "silvally-flying",
+        "silvally-ghost",
+        "silvally-grass",
+        "silvally-ground",
+        "silvally-ice",
+        "silvally-poison",
+        "silvally-psychic",
+        "silvally-rock",
+        "silvally-steel",
+        "silvally-water",
+    ),
+    **spread(
+        FormChange(
+            requirement=(
+                "Order the appliance from the Rotom Catalog, which a League Staff member in a "
+                "Wyndon house hands over once he has been beaten"
+            ),
+            where="Wyndon",
+        ),
+        "rotom-heat",
+        "rotom-wash",
+        "rotom-frost",
+        "rotom-fan",
+        "rotom-mow",
+    ),
+    **spread(
+        FormChange(
+            requirement=(
+                "Spin with a sweet in hand and a Milcery in the party. The cream is decided by "
+                "how long and which way the spin went and by the time of day, and the sweet is "
+                "whichever one was being held"
+            )
+        ),
+        "alcremie-caramel-swirl-berry-sweet",
+        "alcremie-caramel-swirl-clover-sweet",
+        "alcremie-caramel-swirl-flower-sweet",
+        "alcremie-caramel-swirl-love-sweet",
+        "alcremie-caramel-swirl-ribbon-sweet",
+        "alcremie-caramel-swirl-star-sweet",
+        "alcremie-caramel-swirl-strawberry-sweet",
+        "alcremie-lemon-cream-berry-sweet",
+        "alcremie-lemon-cream-clover-sweet",
+        "alcremie-lemon-cream-flower-sweet",
+        "alcremie-lemon-cream-love-sweet",
+        "alcremie-lemon-cream-ribbon-sweet",
+        "alcremie-lemon-cream-star-sweet",
+        "alcremie-lemon-cream-strawberry-sweet",
+        "alcremie-matcha-cream-berry-sweet",
+        "alcremie-matcha-cream-clover-sweet",
+        "alcremie-matcha-cream-flower-sweet",
+        "alcremie-matcha-cream-love-sweet",
+        "alcremie-matcha-cream-ribbon-sweet",
+        "alcremie-matcha-cream-star-sweet",
+        "alcremie-matcha-cream-strawberry-sweet",
+        "alcremie-mint-cream-berry-sweet",
+        "alcremie-mint-cream-clover-sweet",
+        "alcremie-mint-cream-flower-sweet",
+        "alcremie-mint-cream-love-sweet",
+        "alcremie-mint-cream-ribbon-sweet",
+        "alcremie-mint-cream-star-sweet",
+        "alcremie-mint-cream-strawberry-sweet",
+        "alcremie-rainbow-swirl-berry-sweet",
+        "alcremie-rainbow-swirl-clover-sweet",
+        "alcremie-rainbow-swirl-flower-sweet",
+        "alcremie-rainbow-swirl-love-sweet",
+        "alcremie-rainbow-swirl-ribbon-sweet",
+        "alcremie-rainbow-swirl-star-sweet",
+        "alcremie-rainbow-swirl-strawberry-sweet",
+        "alcremie-ruby-cream-berry-sweet",
+        "alcremie-ruby-cream-clover-sweet",
+        "alcremie-ruby-cream-flower-sweet",
+        "alcremie-ruby-cream-love-sweet",
+        "alcremie-ruby-cream-ribbon-sweet",
+        "alcremie-ruby-cream-star-sweet",
+        "alcremie-ruby-cream-strawberry-sweet",
+        "alcremie-ruby-swirl-berry-sweet",
+        "alcremie-ruby-swirl-clover-sweet",
+        "alcremie-ruby-swirl-flower-sweet",
+        "alcremie-ruby-swirl-love-sweet",
+        "alcremie-ruby-swirl-ribbon-sweet",
+        "alcremie-ruby-swirl-star-sweet",
+        "alcremie-ruby-swirl-strawberry-sweet",
+        "alcremie-salted-cream-berry-sweet",
+        "alcremie-salted-cream-clover-sweet",
+        "alcremie-salted-cream-flower-sweet",
+        "alcremie-salted-cream-love-sweet",
+        "alcremie-salted-cream-ribbon-sweet",
+        "alcremie-salted-cream-star-sweet",
+        "alcremie-salted-cream-strawberry-sweet",
+        "alcremie-vanilla-cream-berry-sweet",
+        "alcremie-vanilla-cream-clover-sweet",
+        "alcremie-vanilla-cream-flower-sweet",
+        "alcremie-vanilla-cream-love-sweet",
+        "alcremie-vanilla-cream-ribbon-sweet",
+        "alcremie-vanilla-cream-star-sweet",
+        "alcremie-vanilla-cream-strawberry-sweet",
+    ),
+}
+
+#: The three version groups these two span, which is what their evolutions hang off.
+#:
+#: One group is what every game before them needed. The source files each expansion as a group
+#: of its own and puts real rules in them: **Kubfu becomes an Urshifu in a tower on the Isle of
+#: Armor, and that detail is stamped** ``the-isle-of-armor``. Asking only about ``sword-shield``
+#: leaves the one Pokemon the whole island is built around with no way to exist.
+EVOLUTION_GROUPS = ("sword-shield", "the-isle-of-armor", "the-crown-tundra")
+
+#: Where an egg is left and collected. Two buildings, and the pair is the first to have them in
+#: two different kinds of place: one beside a route, one out in the Wild Area.
+NURSERY = "Pokemon Nursery, Route 5 or Bridge Field"
+
+#: Bulbapedia's in-game trade tables, which are where all twenty of these were read.
+TRADES_PAGE = "In-game_trade"
+
+#: Why eleven of the twenty are one idea, and it is an idea only Galar could have had.
+#:
+#: Regina stands in the caves of the Isle of Armor and swaps a regional form for the original.
+#: Hand her the Galarian Meowth that Galar's own grass is full of and she gives back the
+#: Kantonian one; the same for Ponyta, Farfetch'd, Corsola, Zigzagoon, Darumaka, Stunfisk,
+#: Weezing, Mr. Mime and Yamask, and for Exeggutor and Marowak it is the Alolan form that goes
+#: the other way. **She is the only way any of those originals exists in these games**, which
+#: makes eleven trades that each fill a tile nothing else can.
+#:
+#: Four of the eleven are one half's only, and the reason is the form being handed over rather
+#: than the one being handed back: Galarian Ponyta and Galarian Corsola are Shield's, Galarian
+#: Farfetch'd and Galarian Darumaka are Sword's, so those four trades cannot be made in the
+#: other half at all. That is a version exclusive arriving through a trade counter, which
+#: nothing before this pair has done.
+REGINA = "Regina"
+CAVES = "Random caves across the Isle of Armor"
+
+def wants_the(form: str, species: str) -> str:
+    """Why a trade that looks like a species for itself is not.
+
+    :class:`InGameTrade` carries what is wanted as a species, which is what every trade before
+    this pair asked for. Eleven of these want a particular face of one and the difference is the
+    whole trade - a Galarian Meowth in, a Kantonian Meowth out - so it is said in the
+    requirement instead. That is the same place Unova's Basculin would have been answered if
+    anybody had ever written down which stripe Kyle hands over.
+    """
+    return (
+        f"The {species} handed over has to be the {form} one, which is the form these games "
+        "have; what comes back is the original, and this trade is the only place it exists here"
+    )
+
+
+#: Every in-game trade in Galar, in the order a player meets them.
+#:
+#: Nine in the base game, two of which hand over a different Pokemon depending on the cartridge,
+#: and eleven from Regina in the caves of the Isle of Armor. Twenty, which is more than any game
+#: in this dataset before them.
+BASE_TRADES: tuple[InGameTrade, ...] = (
+    InGameTrade(
+        gets="skwovet", wants="bunnelby", location="Motostoke", npc="Haley"
+    ),
+    InGameTrade(
+        gets="meowth",
+        wants="meowth",
+        location="Turffield Stadium",
+        npc="Mattia",
+        requirement=wants_the("Galarian", "Meowth"),
+    ),
+    InGameTrade(gets="cottonee", wants="minccino", location="Hulbury", npc="Grazia"),
+    InGameTrade(gets="togepi", wants="toxel", location="Hammerlocke", npc="Holly"),
+    InGameTrade(
+        gets="yamask",
+        wants="yamask",
+        location="Ballonlea Stadium",
+        npc="Eve",
+        requirement=wants_the("Galarian", "Yamask"),
+    ),
+    InGameTrade(gets="mr-mime", wants="obstagoon", location="Spikemuth", npc="Edmund"),
+    InGameTrade(gets="duraludon", wants="frosmoth", location="Wyndon", npc="Kapoor"),
+)
+
+#: The two base-game traders who hand over a different Pokemon in each half.
+TRADES_BY_HALF: dict[str, tuple[InGameTrade, ...]] = {
+    "sword": (
+        InGameTrade(gets="hatenna", wants="maractus", location="Stow-on-Side", npc="Romeo"),
+        InGameTrade(gets="throh", wants="vanillish", location="Circhester", npc="Grimm"),
+    ),
+    "shield": (
+        InGameTrade(gets="impidimp", wants="maractus", location="Stow-on-Side", npc="Romeo"),
+        InGameTrade(gets="sawk", wants="vanillish", location="Circhester", npc="Grimm"),
+    ),
+}
+
+#: Regina's eleven, and which half each of them can be made in.
+#:
+#: The seven both halves have, then the two Sword's Galarian forms open and the two Shield's do.
+REGINA_TRADES: tuple[tuple[str, str, tuple[str, ...]], ...] = (
+    ("meowth", "Galarian", PAIR),
+    ("exeggutor", "Alolan", PAIR),
+    ("marowak", "Alolan", PAIR),
+    ("weezing", "Galarian", PAIR),
+    ("mr-mime", "Galarian", PAIR),
+    ("zigzagoon", "Galarian", PAIR),
+    ("stunfisk", "Galarian", PAIR),
+    ("farfetchd", "Galarian", ("sword",)),
+    ("darumaka", "Galarian", ("sword",)),
+    ("ponyta", "Galarian", ("shield",)),
+    ("corsola", "Galarian", ("shield",)),
+)
+
+
+def traders(game_id: str) -> list[InGameTrade]:
+    """Every trade one half can make: the seven both have, its own two, and Regina's."""
+    return [
+        *BASE_TRADES,
+        *TRADES_BY_HALF[game_id],
+        *(
+            InGameTrade(
+                gets=species,
+                wants=species,
+                location=CAVES,
+                npc=REGINA,
+                requirement=wants_the(form, PRETTY.get(species, species.title())),
+            )
+            for species, form, halves in REGINA_TRADES
+            if game_id in halves
+        ),
+    ]
+
+
+#: What a species is called in a sentence, where the slug is not it.
+PRETTY = {"mr-mime": "Mr. Mime", "farfetchd": "Farfetch'd"}
 
 
 #: The people Galar hands things over through, named once because several rows want them.
@@ -321,6 +829,14 @@ GIFTS: dict[str, GiftDetails] = {
     ),
     "toxel": GiftDetail(kind=GiftKind.NPC_GIFT, npc="a Breeder in the Route 5 Nursery"),
     "type-null": GiftDetail(kind=GiftKind.NPC_GIFT, npc="a League Staff member"),
+    # The Diglett Trainer's other six, which are regional forms of things Galar never had. How
+    # many Diglett each one costs is the condition's to say, and :mod:`conditions` says it once.
+    **{
+        species: GiftDetail(kind=GiftKind.NPC_GIFT, npc=DIGLETT_TRAINER)
+        for species in (
+            "meowth", "vulpix", "sandshrew", "raichu", "marowak", "exeggutor", "diglett",
+        )
+    },
     "slowpoke": GiftDetail(
         kind=GiftKind.NPC_GIFT,
         npc=DIGLETT_TRAINER,
@@ -390,7 +906,7 @@ def cartridge(
     title: str,
     version: str,
     pair_partner: str,
-    sprite_set: str | None = None,
+    sprite_set: str | None = SPRITE_SET,
 ) -> Game:
     """One half of the pair, with everything the two of them agree about filled in.
 
@@ -400,8 +916,8 @@ def cartridge(
     cannot keep a Chikorita, and no number separates those two. :class:`DexSource.GAME_DEX` is
     the answer, and step 2 fills it in.
 
-    ``sprite_set`` is left open. These games draw no battle sprite at all - they are models, the
-    way X and Y and the Let's Go pair are - and which pictures a Galar tile shows is step 6's.
+    ``sprite_set`` is :data:`SPRITE_SET`, which step 6 filled in: these games draw no battle
+    sprite at all, so what a Galar tile shows is a render of the model, off the Archives.
     """
     return Game(
         id=game_id,
@@ -484,7 +1000,7 @@ def acquisition_methods(
     species = context.living_dex(through=None, entries=entries)
     places = LocationNames(api, refresh=context.refresh)
 
-    return [
+    found = [
         *wild_encounters(
             api,
             game_id=game_id,
@@ -503,6 +1019,53 @@ def acquisition_methods(
             forms=context.forms_here(),
             refresh=context.refresh,
             places=places,
+        ),
+        *trade_encounters(
+            game_id=game_id,
+            trades=traders(game_id),
+            citation=bulbapedia(TRADES_PAGE, retrieved_on=date.today()),
+        ),
+        *evolution_encounters(
+            api,
+            game_id=game_id,
+            version_group=EVOLUTION_GROUPS,
+            species=species,
+            forms=context.forms_here(),
+            all_forms=context.forms,
+            excluded=NOT_AN_EVOLUTION_HERE,
+            refresh=context.refresh,
+        ),
+        *form_change_encounters(
+            game_id=game_id,
+            forms=context.forms_here(),
+            changes=FORM_CHANGES,
+            citation=bulbapedia(FORMS_PAGE, retrieved_on=date.today()),
+        ),
+    ]
+
+    # Last, and worked out from what the steps above came to rather than from a table: a nursery
+    # can only be asked for what nothing else here produces.
+    return [
+        *found,
+        *breeding_encounters(
+            game_id=game_id,
+            day_care=NURSERY,
+            eggs=day_care_eggs(
+                api,
+                chains={
+                    one.id: one.evolution_chain
+                    for one in context.species
+                    if one.id in set(species)
+                },
+                caught={one.target.species for one in found if one.kind in CAUGHT},
+                evolved={one.target.species for one in found if one.kind == "evolution"},
+                refresh=context.refresh,
+            ),
+            citation=SourceCitation(
+                source="pokeapi",
+                url=f"{BASE_URL}/evolution-chain",
+                retrieved_on=api.retrieved_on(f"{BASE_URL}/evolution-chain"),
+            ),
         ),
     ]
 

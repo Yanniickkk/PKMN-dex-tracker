@@ -11,7 +11,7 @@ from datetime import date
 import pytest
 
 from livingdex_pipeline.build import default_registry
-from livingdex_pipeline.forms import FORMS_NAMED_BY_THE_GAME
+from livingdex_pipeline.forms import FORMS_NAMED_BY_THE_GAME, GALAR_FORMS, NAMED_BY_HAND
 from livingdex_pipeline.gamedefs import (
     alola,
     alpha_sapphire,
@@ -119,6 +119,10 @@ VERSION_GROUP_ORDER = {
     "ultra-sun-ultra-moon": 16,
     "lets-go-pikachu-lets-go-eevee": 17,
     "sword-shield": 18,
+    # The two expansions, which the source files as version groups of their own and puts
+    # real evolution rules in: Kubfu becomes an Urshifu in a tower on the first of them.
+    "the-isle-of-armor": 19,
+    "the-crown-tundra": 20,
 }
 
 
@@ -5491,8 +5495,10 @@ def test_the_galar_pair_is_generation_8_in_a_region_only_they_have() -> None:
     assert sword_game.pair_partner == shield_game.id
     assert shield_game.pair_partner == sword_game.id
 
-    # Step 6's field, left open on purpose: these games draw no battle sprite at all.
-    assert (sword_game.sprite_set, shield_game.sprite_set) == (None, None)
+    # These games draw no battle sprite at all, so what a Galar tile shows is a render of the
+    # model off the Archives - the same answer Let's Go got, from a different sheet.
+    assert sword_game.sprite_set == "generation-viii/sword-shield"
+    assert shield_game.sprite_set == sword_game.sprite_set
 
 
 def test_the_galar_pair_show_three_pokedexes_and_every_entry_says_which() -> None:
@@ -5753,3 +5759,206 @@ def test_the_box_legendary_is_a_static_in_its_own_half_and_says_why_it_is_caught
     assert hero.gift_kind is GiftKind.STATIC_ENCOUNTER
     assert hero.level == 70
     assert "Sordward and Shielbert" in hero.requirement
+
+
+def test_galar_has_twenty_traders_and_eighteen_of_them_in_each_half() -> None:
+    # Nine in the base game, two of which hand over a different Pokemon per cartridge, and
+    # eleven from Regina in the caves of the Isle of Armor - four of which one half cannot make
+    # at all. More in-game trades than any game in this dataset before them.
+    sword_trades = galar.traders("sword")
+    shield_trades = galar.traders("shield")
+
+    assert (len(sword_trades), len(shield_trades)) == (18, 18)
+
+    # The two base-game traders who differ, which is the ordinary kind of version split.
+    assert {one.gets for one in sword_trades} - {one.gets for one in shield_trades} == {
+        "hatenna",
+        "throh",
+        "farfetchd",
+        "darumaka",
+    }
+    assert {one.gets for one in shield_trades} - {one.gets for one in sword_trades} == {
+        "impidimp",
+        "sawk",
+        "ponyta",
+        "corsola",
+    }
+
+
+def test_reginas_eleven_swap_a_regional_form_for_the_original() -> None:
+    # The idea only Galar could have had: hand her the Galarian Meowth that Galar's grass is
+    # full of and she gives back the Kantonian one. She is the only way any of those originals
+    # exists in these games, so each of the eleven fills a tile nothing else can.
+    regina = [one for one in galar.traders("sword") if one.npc == "Regina"]
+
+    assert len(regina) == 9
+    assert all(one.gets == one.wants for one in regina)
+    assert all(one.location == galar.CAVES for one in regina)
+
+    # Two of the eleven are Alolan rather than Galarian, because there is no Galarian Exeggutor
+    # or Marowak to hand over.
+    said = {one.gets: one.requirement for one in regina}
+    assert "the Alolan one" in said["exeggutor"]
+    assert "the Alolan one" in said["marowak"]
+    assert "the Galarian one" in said["meowth"]
+
+
+def test_the_four_regina_trades_one_half_cannot_make_are_split_by_the_form_going_in() -> None:
+    # A version exclusive arriving through a trade counter, which nothing before this pair has
+    # done: Galarian Farfetch'd and Darumaka are Sword's and Galarian Ponyta and Corsola are
+    # Shield's, so the trade that wants one cannot be made in the other half - and the original
+    # it would have handed back is missing there too.
+    assert "farfetchd" in galar.ONLY_ON["sword"] and "darumaka" in galar.ONLY_ON["sword"]
+    assert "ponyta" in galar.ONLY_ON["shield"] and "corsola" in galar.ONLY_ON["shield"]
+
+
+def test_kubfu_evolves_by_a_rule_the_isle_of_armor_carries_rather_than_sword_shield() -> None:
+    # The source files each expansion as a version group of its own and puts real rules in them.
+    # Asking only about sword-shield leaves the one Pokemon the whole island is built around
+    # with no way to exist.
+    assert galar.EVOLUTION_GROUPS == ("sword-shield", "the-isle-of-armor", "the-crown-tundra")
+
+
+def test_each_half_keeps_nineteen_and_says_so_on_the_other_halfs_entries() -> None:
+    # Worked out at step 5 rather than guessed at earlier, because it is the answer to a
+    # question only the finished steps can be asked. Nineteen each is the evenest split in the
+    # series.
+    assert len(galar.ONLY_ON["sword"]) == 19
+    assert len(galar.ONLY_ON["shield"]) == 19
+    assert not set(galar.ONLY_ON["sword"]) & set(galar.ONLY_ON["shield"])
+
+    reasons = galar.unobtainable_in("sword")
+
+    assert set(galar.ONLY_ON["shield"]) <= set(reasons)
+    assert reasons["gible"] == "Shield only in Generation 8; trade one in"
+    assert galar.unobtainable_in("shield")["deino"].startswith(
+        "Sword only in Generation 8; trade one in."
+    )
+
+
+def test_step_7_answers_the_next_question_without_changing_the_first() -> None:
+    # An event does not make an entry obtainable - a raid that ran for a week in 2020 is not a
+    # way to fill a dex today - so every reason still opens with the cartridge that has it, and
+    # what was handed out is a second sentence after it.
+    sword = galar.unobtainable_in("sword")
+
+    assert sword["sableye"] == (
+        "Shield only in Generation 8; trade one in. "
+        "Kohei Fujida's Sableye of June 2022 handed one out"
+    )
+    # And the twenty-nine nothing ever covered say the first sentence and stop, which is the
+    # answer "we asked and there was nothing" rather than "nobody looked".
+    assert sword["gible"] == "Shield only in Generation 8; trade one in"
+
+
+def test_wild_area_news_is_a_way_of_distributing_a_pokemon_only_these_games_have() -> None:
+    # A den table pushed to a Switch for a few days and taken away again. Four of the raids ran
+    # in the half that cannot catch the Pokemon at all, and they are exactly the four Galarian
+    # forms Regina's trades are split by.
+    sword = galar.unobtainable_in("sword")
+    shield = galar.unobtainable_in("shield")
+
+    assert "Wild Area News raid of 19 to 25 March 2020" in sword["ponyta"]
+    assert "Wild Area News raid of 19 to 25 March 2020" in shield["farfetchd"]
+    assert "Wild Area News raid of 19 to 25 March 2020" in shield["darumaka"]
+
+    # A line whose later stages had raids of their own keeps its own dates rather than
+    # inheriting the first stage's, which is what spread_unobtainable would otherwise give it.
+    assert "December 2020" in sword["rapidash"]
+    assert "28 April to 11 May 2020" in sword["tyranitar"]
+
+
+def test_neither_box_legendary_is_strictly_one_cartridges_after_all() -> None:
+    # The sharpest thing step 7 found: Lancer's Shiny Zacian ran in Shield and Arthur's Shiny
+    # Zamazenta ran in Sword, so each half was once handed the other's hero.
+    assert "Lancer's Shiny Zacian of October 2021" in galar.unobtainable_in("shield")["zacian"]
+    assert (
+        "Arthur's Shiny Zamazenta of October 2021" in galar.unobtainable_in("sword")["zamazenta"]
+    )
+
+
+def test_zarude_is_the_one_entry_neither_half_produces_and_it_was_given_away_six_times() -> None:
+    # The Isle of Armor's Mythical Pokemon: not in the grass, not in a den, not in the Max Lair,
+    # not handed over. Both halves carry the same reason because both halves have the same gap.
+    said = galar.unobtainable_in("sword")["zarude"]
+
+    assert said == galar.unobtainable_in("shield")["zarude"]
+    assert said.startswith("Nothing in either half produces one")
+    assert "Jungle Zarude of August 2020" in said
+    assert "Dada Zarude" in said
+
+
+def test_galar_names_its_own_forms_because_nothing_else_can() -> None:
+    # The version-group rule is off for this pair, so a form whose only games would be these two
+    # comes out with an empty list and is dropped from the table altogether. Before step 8 there
+    # was not one Galarian form in the dataset.
+    assert len(GALAR_FORMS) == 189
+    assert GALAR_FORMS["farfetchd-galar"] == ("sword",)
+    assert GALAR_FORMS["corsola-galar"] == ("shield",)
+    assert GALAR_FORMS["meowth-galar"] == ("sword", "shield")
+
+    # Merged rather than chained: an Alolan Raichu is one of Let's Go's traders' and one of the
+    # Diglett Trainer's rewards, and either table alone would lose the other's games.
+    assert NAMED_BY_HAND["raichu-alola"] == (
+        "lets-go-eevee",
+        "lets-go-pikachu",
+        "shield",
+        "sword",
+    )
+    # And a form that is only one pair's keeps only that pair.
+    assert NAMED_BY_HAND["pikachu-starter"] == ("lets-go-pikachu",)
+
+
+def test_no_gigantamax_form_is_here_and_none_had_to_be_refused_by_hand() -> None:
+    # The source marks them battle-only and the form table refuses those wherever they come
+    # from, which is the same sentence that keeps every Mega out: a Gigantamax Pokemon reverts
+    # when the battle ends, and a living dex is about what a box can hold.
+    assert not [one for one in GALAR_FORMS if "gmax" in one or "gigantamax" in one]
+
+    # Nor the two Let's Go partners, which cannot leave those games at all, nor an Eternamax
+    # Eternatus, which is a state rather than something a box holds.
+    for absent in ("pikachu-starter", "eevee-starter", "eternatus-eternamax", "marowak-totem"):
+        assert absent not in GALAR_FORMS
+
+
+def test_the_sexes_come_from_the_generation_4_rule_rather_than_the_sprite_sheet() -> None:
+    # A sheet is a witness about drawing. Fifty-four of these are drawn twice on `8s` and five
+    # are not - Croagunk, Octillery, Politoed, Quagsire and Toxicroak - and a species drawn
+    # apart since Diamond is drawn apart here whatever the wiki got round to uploading.
+    sexes = [one for one in GALAR_FORMS if one.endswith("-female")]
+
+    assert len(sexes) == 59
+    for drawn_once in ("croagunk-female", "octillery-female", "toxicroak-female"):
+        assert GALAR_FORMS[drawn_once] == ("sword", "shield")
+
+
+def test_galar_refuses_the_three_evolutions_that_depend_on_where_you_are_standing() -> None:
+    # The same three Let's Go had to name, which is what makes them a shape rather than an
+    # accident. A Pikachu, a Cubone and an Exeggcute are one Pokemon each, and the source writes
+    # the Alolan outcome as the newer way without naming an Alolan form to start from.
+    assert set(galar.NOT_AN_EVOLUTION_HERE) == {
+        "raichu-alola",
+        "marowak-alola",
+        "exeggutor-alola",
+    }
+    assert "Diglett Trainer" in galar.NOT_AN_EVOLUTION_HERE["raichu-alola"]
+
+    # And nothing else Alolan is refused: those lines name their own form on both ends, so an
+    # Alolan Meowth becomes an Alolan Persian here and a Kantonian one becomes a Kantonian
+    # Persian, which is the reader's own rule doing the work.
+    assert "persian-alola" not in galar.NOT_AN_EVOLUTION_HERE
+    assert "ninetales-alola" not in galar.NOT_AN_EVOLUTION_HERE
+
+
+def test_a_form_that_is_changed_into_says_what_changes_it() -> None:
+    # The sixth kind of record, for what no encounter table can place. Galar's regional forms
+    # are caught, so the grass and the dens explain them; what is left is the things a player
+    # does to a Pokemon they already have.
+    assert "Galarica Cuff" in galar.FORM_CHANGES["slowbro-galar"].requirement
+    assert "Galarica Wreath" in galar.FORM_CHANGES["slowking-galar"].requirement
+    assert "Tower of Waters" in galar.FORM_CHANGES["urshifu-rapid-strike"].requirement
+    assert "Reins of Unity" in galar.FORM_CHANGES["calyrex-ice"].requirement
+    assert galar.FORM_CHANGES["rotom-wash"].where == "Wyndon"
+
+    # A sex needs no line here: formchanges answers it once for every region.
+    assert not [one for one in galar.FORM_CHANGES if one.endswith("-female")]

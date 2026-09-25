@@ -223,6 +223,162 @@ LETS_GO_FORMS: Mapping[str, tuple[str, ...]] = {
     ),
 }
 
+#: The two halves, spelled here so the table below can say "both" in one word.
+GALAR = ("sword", "shield")
+
+#: What Sword and Shield hold, which is step 8's answer to the question this file cannot ask.
+#:
+#: 181 entries, added to whatever the rule worked out rather than replacing it, the same way
+#: :data:`LETS_GO_FORMS` is. Nothing was remembered into this table; each of the three parts was
+#: measured, and the parts answer different kinds of form.
+#:
+#: **What the games place, they place: 45 forms have an encounter row of their own** under one of
+#: the six Sword and Shield version names. A form is a Pokemon in the source and a Pokemon has
+#: encounters, so asking each candidate settles every form that is met rather than made - the
+#: Galarian Ponyta that is Shield's, the Galarian Farfetch'd that is Sword's, Rotom's five
+#: appliances, both Basculin stripes, three of Pumpkaboo's four sizes.
+#:
+#: **The sexes come off the sprite sheet**, which is a better witness than any rule: a species
+#: the Archives draw twice under ``_m`` and ``_f`` is a species these games draw apart, and 54 of
+#: them are. Not an encounter's business - a sex is something you look for while catching, so an
+#: encounter table places a female Meowstic in Shield and not in Sword and that says nothing
+#: about Sword. Read back out of the http cache rather than off a build log, because a name the
+#: cache already remembers as missing is never requested again and so never appears in one.
+#:
+#: **And the rest are written by hand, because they are changed into or evolved into**: the two
+#: Galarica items that make a Galarian Slowbro and Slowking, Type: Null's seventeen memories,
+#: Kubfu's second tower, the Reins of Unity's two riders, and Alcremie's sixty-two faces, which
+#: are one spin with a different sweet in hand.
+#:
+#: **No Gigantamax form is here and none was excluded by hand.** The source marks them
+#: battle-only and :func:`_form` refuses those wherever they come from, which is the same
+#: sentence that keeps every Mega out. A Gigantamax Pokemon reverts when the battle ends, and a
+#: living dex is about what a box can hold.
+GALAR_FORMS: Mapping[str, tuple[str, ...]] = {
+    # The regional forms both halves have: eighteen Galarian and eleven Alolan, less the six the
+    # halves split. The Alolan ones are the Diglett Trainer's seven rewards and what they evolve
+    # into, which is the whole of what Alola left in Galar.
+    **dict.fromkeys(
+        (
+            "articuno-galar", "diglett-alola", "dugtrio-alola", "exeggutor-alola",
+            "linoone-galar", "marowak-alola", "meowth-alola", "meowth-galar", "moltres-galar",
+            "mr-mime-galar", "persian-alola", "raichu-alola", "sandshrew-alola",
+            "ninetales-alola", "sandslash-alola", "slowbro-galar", "slowking-galar",
+            "slowpoke-galar",
+            "stunfisk-galar", "vulpix-alola", "weezing-galar", "yamask-galar", "zapdos-galar",
+            "zigzagoon-galar",
+        ),
+        GALAR,
+    ),
+    # The sexes, by the Generation 4 rule rather than off the sheet: a species drawn apart
+    # since Diamond is drawn apart here, and a sprite sheet is a witness about drawing
+    # rather than about the game. Fifty-four of these are drawn twice on `8s`; Croagunk,
+    # Octillery, Politoed, Quagsire and Toxicroak are not, and those five fall back to the
+    # shared set's female, which is the right Pokemon in another generation's style.
+    **dict.fromkeys(
+        (
+            "abomasnow-female", "alakazam-female", "butterfree-female", "combee-female",
+            "croagunk-female", "eevee-female", "frillish-female", "gabite-female",
+            "garchomp-female", "gible-female", "gloom-female", "golbat-female", "goldeen-female",
+            "gyarados-female", "heracross-female", "hippopotas-female", "hippowdon-female",
+            "indeedee-female", "jellicent-female", "kadabra-female", "ludicolo-female",
+            "luxio-female", "luxray-female", "magikarp-female", "mamoswine-female",
+            "meowstic-female", "milotic-female", "nuzleaf-female", "octillery-female",
+            "pikachu-female", "piloswine-female", "politoed-female", "quagsire-female",
+            "raichu-female", "relicanth-female", "rhydon-female", "rhyhorn-female",
+            "rhyperior-female", "roselia-female", "roserade-female", "scizor-female",
+            "scyther-female", "seaking-female", "shiftry-female", "shinx-female",
+            "sneasel-female", "snover-female", "steelix-female", "sudowoodo-female",
+            "tangrowth-female", "toxicroak-female", "unfezant-female", "venusaur-female",
+            "vileplume-female", "weavile-female", "wobbuffet-female", "wooper-female",
+            "xatu-female", "zubat-female",
+        ),
+        GALAR,
+    ),
+    # Alcremie, which is one form change wearing sixty-two faces: a cream from how the spin was
+    # done and a sweet from what was in hand.
+    **dict.fromkeys(
+        (
+            "alcremie-caramel-swirl-berry-sweet", "alcremie-caramel-swirl-clover-sweet",
+            "alcremie-caramel-swirl-flower-sweet", "alcremie-caramel-swirl-love-sweet",
+            "alcremie-caramel-swirl-ribbon-sweet", "alcremie-caramel-swirl-star-sweet",
+            "alcremie-caramel-swirl-strawberry-sweet", "alcremie-lemon-cream-berry-sweet",
+            "alcremie-lemon-cream-clover-sweet", "alcremie-lemon-cream-flower-sweet",
+            "alcremie-lemon-cream-love-sweet", "alcremie-lemon-cream-ribbon-sweet",
+            "alcremie-lemon-cream-star-sweet", "alcremie-lemon-cream-strawberry-sweet",
+            "alcremie-matcha-cream-berry-sweet", "alcremie-matcha-cream-clover-sweet",
+            "alcremie-matcha-cream-flower-sweet", "alcremie-matcha-cream-love-sweet",
+            "alcremie-matcha-cream-ribbon-sweet", "alcremie-matcha-cream-star-sweet",
+            "alcremie-matcha-cream-strawberry-sweet", "alcremie-mint-cream-berry-sweet",
+            "alcremie-mint-cream-clover-sweet", "alcremie-mint-cream-flower-sweet",
+            "alcremie-mint-cream-love-sweet", "alcremie-mint-cream-ribbon-sweet",
+            "alcremie-mint-cream-star-sweet", "alcremie-mint-cream-strawberry-sweet",
+            "alcremie-rainbow-swirl-berry-sweet", "alcremie-rainbow-swirl-clover-sweet",
+            "alcremie-rainbow-swirl-flower-sweet", "alcremie-rainbow-swirl-love-sweet",
+            "alcremie-rainbow-swirl-ribbon-sweet", "alcremie-rainbow-swirl-star-sweet",
+            "alcremie-rainbow-swirl-strawberry-sweet", "alcremie-ruby-cream-berry-sweet",
+            "alcremie-ruby-cream-clover-sweet", "alcremie-ruby-cream-flower-sweet",
+            "alcremie-ruby-cream-love-sweet", "alcremie-ruby-cream-ribbon-sweet",
+            "alcremie-ruby-cream-star-sweet", "alcremie-ruby-cream-strawberry-sweet",
+            "alcremie-ruby-swirl-berry-sweet", "alcremie-ruby-swirl-clover-sweet",
+            "alcremie-ruby-swirl-flower-sweet", "alcremie-ruby-swirl-love-sweet",
+            "alcremie-ruby-swirl-ribbon-sweet", "alcremie-ruby-swirl-star-sweet",
+            "alcremie-ruby-swirl-strawberry-sweet", "alcremie-salted-cream-berry-sweet",
+            "alcremie-salted-cream-clover-sweet", "alcremie-salted-cream-flower-sweet",
+            "alcremie-salted-cream-love-sweet", "alcremie-salted-cream-ribbon-sweet",
+            "alcremie-salted-cream-star-sweet", "alcremie-salted-cream-strawberry-sweet",
+            "alcremie-vanilla-cream-berry-sweet", "alcremie-vanilla-cream-clover-sweet",
+            "alcremie-vanilla-cream-flower-sweet", "alcremie-vanilla-cream-love-sweet",
+            "alcremie-vanilla-cream-ribbon-sweet", "alcremie-vanilla-cream-star-sweet",
+        ),
+        GALAR,
+    ),
+    # Type: Null's memories, which the League Staff member hands over with it.
+    **dict.fromkeys(
+        (
+            "silvally-bug", "silvally-dark", "silvally-dragon", "silvally-electric",
+            "silvally-fairy", "silvally-fighting", "silvally-fire", "silvally-flying",
+            "silvally-ghost", "silvally-grass", "silvally-ground", "silvally-ice",
+            "silvally-poison", "silvally-psychic", "silvally-rock", "silvally-steel",
+            "silvally-water",
+        ),
+        GALAR,
+    ),
+    # And the rest both halves have, the last two of them faces Galar invented: a Sinistea with
+    # a mark under its base, and what a Cracked Pot makes of that one.
+    **dict.fromkeys(
+        (
+            "sinistea-antique", "polteageist-antique", "basculin-blue-striped",
+            "calyrex-ice", "calyrex-shadow", "gourgeist-large",
+            "gourgeist-small", "gourgeist-super", "lycanroc-dusk", "lycanroc-midnight",
+            "pumpkaboo-large", "pumpkaboo-small", "pumpkaboo-super", "rockruff-own-tempo",
+            "rotom-fan", "rotom-frost", "rotom-heat", "rotom-mow", "rotom-wash",
+            "toxtricity-low-key", "urshifu-rapid-strike",
+        ),
+        GALAR,
+    ),
+    # Sword's three, which are Galarian Darumaka, what it becomes, and Galarian Farfetch'd.
+    **dict.fromkeys(
+        ("darmanitan-galar-standard", "darumaka-galar", "farfetchd-galar"),
+        ("sword",),
+    ),
+    # And Shield's three: Galarian Ponyta, what it becomes, and Galarian Corsola.
+    **dict.fromkeys(
+        ("corsola-galar", "ponyta-galar", "rapidash-galar"),
+        ("shield",),
+    ),
+}
+
+#: Every form a game names for itself, which is two pairs now and will be every pair after them.
+#:
+#: Merged rather than chained, because a form can be in both tables and mean both: an Alolan
+#: Raichu is one of Let's Go's eight traders' and one of the Diglett Trainer's rewards, and
+#: taking either table's answer alone would lose the other's games.
+NAMED_BY_HAND: Mapping[str, tuple[str, ...]] = {
+    slug: tuple(sorted({*LETS_GO_FORMS.get(slug, ()), *GALAR_FORMS.get(slug, ())}))
+    for slug in {*LETS_GO_FORMS, *GALAR_FORMS}
+}
+
 #: Where a form is, when the version group it arrived in says more than the truth.
 #:
 #: The default is that a form reaches every game from its own version group onward, which is
@@ -368,11 +524,11 @@ class VersionGroupGames:
     def named_by_hand(self, slug: str) -> list[str]:
         """The games a hand-written table gives this form, filtered to the ones being built.
 
-        Filtered because a build of one game is still a build: :data:`LETS_GO_FORMS` names two
-        games and a ``--game red`` build has neither, and a form that claimed them would write a
-        table the rest of the dataset disagrees with.
+        Filtered because a build of one game is still a build: :data:`NAMED_BY_HAND` names four
+        games and a ``--game red`` build has none of them, and a form that claimed them would
+        write a table the rest of the dataset disagrees with.
         """
-        return [game for game in LETS_GO_FORMS.get(slug, ()) if game in self._generation]
+        return [game for game in NAMED_BY_HAND.get(slug, ()) if game in self._generation]
 
     def order_of(self, group: str) -> int:
         return self._order[group]

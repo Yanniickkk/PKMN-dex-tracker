@@ -277,7 +277,7 @@ def evolution_encounters(
     api: PokeApiClient,
     *,
     game_id: str,
-    version_group: str,
+    version_group: str | Sequence[str],
     species: Sequence[str],
     forms: Sequence[Form] = (),
     all_forms: Sequence[Form] = (),
@@ -323,6 +323,12 @@ def evolution_encounters(
     game does not have, while one naming a form nobody records is PokeAPI spelling out a
     default. Rockruff's Dusk Lycanroc is the first and Gastrodon's West Sea is the second.
 
+    ``version_group`` is usually one name and may be several, which Galar is the first to need.
+    The source files Sword and Shield's two expansions as version groups of their own, and it
+    puts real rules in them: Kubfu becomes an Urshifu in a tower on the Isle of Armor, and that
+    detail is stamped ``the-isle-of-armor`` rather than ``sword-shield``. What counts is the
+    newest of the names given, because this reads every way up to it.
+
     ``species`` is asked of both ends. Every game before the Let's Go pair holds everything up
     to its own National Dex number, so anything a species in the list evolves into is in the
     list too; these two hold a fixed 153 and nothing else, and their Eevee would otherwise have
@@ -344,7 +350,8 @@ def evolution_encounters(
     variants = _all_variants(api, chains=sorted(set(chain_of.values())), refresh=refresh)
     names = _name_of(variants, every_form)
     groups = VersionGroups(api, refresh=refresh)
-    here = groups.order_of(version_group)
+    wanted_groups = (version_group,) if isinstance(version_group, str) else tuple(version_group)
+    here = max(groups.order_of(one) for one in wanted_groups)
 
     found: list[EvolutionAcquisition] = []
 

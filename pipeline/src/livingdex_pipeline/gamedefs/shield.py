@@ -54,7 +54,9 @@ def dex_entries(context: BuildContext) -> list[DexEntry]:
     each can actually produce, and that is steps 3 to 5; step 7 turns whatever is left over into
     a reason on the entry.
     """
-    return galar.dex_entries(context, game_id=GAME_ID)
+    return galar.dex_entries(
+        context, game_id=GAME_ID, unobtainable=galar.unobtainable_in(GAME_ID)
+    )
 
 
 def edges() -> list[TransferEdge]:

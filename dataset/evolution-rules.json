@@ -1240,7 +1240,8 @@
   {
     "id": "corsola-to-cursola",
     "from": {
-      "species": "corsola"
+      "species": "corsola",
+      "form": "corsola-galar"
     },
     "to": {
       "species": "cursola"
@@ -1591,7 +1592,7 @@
     ]
   },
   {
-    "id": "darumaka-to-darmanitan-black-white",
+    "id": "darumaka-to-darmanitan",
     "from": {
       "species": "darumaka"
     },
@@ -1607,12 +1608,14 @@
     ]
   },
   {
-    "id": "darumaka-to-darmanitan-sword-shield",
+    "id": "darumaka-to-darmanitan-galar-standard",
     "from": {
-      "species": "darumaka"
+      "species": "darumaka",
+      "form": "darumaka-galar"
     },
     "to": {
-      "species": "darmanitan"
+      "species": "darmanitan",
+      "form": "darmanitan-galar-standard"
     },
     "trigger": "useItem",
     "conditions": [
@@ -2675,7 +2678,8 @@
   {
     "id": "farfetchd-to-sirfetchd",
     "from": {
-      "species": "farfetchd"
+      "species": "farfetchd",
+      "form": "farfetchd-galar"
     },
     "to": {
       "species": "sirfetchd"
@@ -4190,7 +4194,7 @@
     ]
   },
   {
-    "id": "koffing-to-weezing-red-blue",
+    "id": "koffing-to-weezing",
     "from": {
       "species": "koffing"
     },
@@ -4206,12 +4210,13 @@
     ]
   },
   {
-    "id": "koffing-to-weezing-sword-shield",
+    "id": "koffing-to-weezing-galar",
     "from": {
       "species": "koffing"
     },
     "to": {
-      "species": "weezing"
+      "species": "weezing",
+      "form": "weezing-galar"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -4274,6 +4279,40 @@
     ]
   },
   {
+    "id": "kubfu-to-urshifu-rapid-strike-scarlet-violet",
+    "from": {
+      "species": "kubfu"
+    },
+    "to": {
+      "species": "urshifu",
+      "form": "urshifu-rapid-strike"
+    },
+    "trigger": "useItem",
+    "conditions": [
+      {
+        "condition": "usedItem",
+        "item": "Scroll of Waters"
+      }
+    ]
+  },
+  {
+    "id": "kubfu-to-urshifu-rapid-strike-the-isle-of-armor",
+    "from": {
+      "species": "kubfu"
+    },
+    "to": {
+      "species": "urshifu",
+      "form": "urshifu-rapid-strike"
+    },
+    "trigger": "other",
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after training in the Tower of Waters"
+      }
+    ]
+  },
+  {
     "id": "kubfu-to-urshifu-scarlet-violet",
     "from": {
       "species": "kubfu"
@@ -4290,22 +4329,6 @@
     ]
   },
   {
-    "id": "kubfu-to-urshifu-scarlet-violet-2",
-    "from": {
-      "species": "kubfu"
-    },
-    "to": {
-      "species": "urshifu"
-    },
-    "trigger": "useItem",
-    "conditions": [
-      {
-        "condition": "usedItem",
-        "item": "Scroll of Waters"
-      }
-    ]
-  },
-  {
     "id": "kubfu-to-urshifu-the-isle-of-armor",
     "from": {
       "species": "kubfu"
@@ -4318,22 +4341,6 @@
       {
         "condition": "other",
         "description": "after training in the Tower of Darkness"
-      }
-    ]
-  },
-  {
-    "id": "kubfu-to-urshifu-the-isle-of-armor-2",
-    "from": {
-      "species": "kubfu"
-    },
-    "to": {
-      "species": "urshifu"
-    },
-    "trigger": "other",
-    "conditions": [
-      {
-        "condition": "other",
-        "description": "after training in the Tower of Waters"
       }
     ]
   },
@@ -4508,7 +4515,8 @@
   {
     "id": "linoone-to-obstagoon",
     "from": {
-      "species": "linoone"
+      "species": "linoone",
+      "form": "linoone-galar"
     },
     "to": {
       "species": "obstagoon"
@@ -5003,7 +5011,8 @@
   {
     "id": "meowth-to-perrserker",
     "from": {
-      "species": "meowth"
+      "species": "meowth",
+      "form": "meowth-galar"
     },
     "to": {
       "species": "perrserker"
@@ -5115,7 +5124,7 @@
     ]
   },
   {
-    "id": "mime-jr-to-mr-mime-diamond-pearl",
+    "id": "mime-jr-to-mr-mime",
     "from": {
       "species": "mime-jr"
     },
@@ -5131,12 +5140,13 @@
     ]
   },
   {
-    "id": "mime-jr-to-mr-mime-sword-shield",
+    "id": "mime-jr-to-mr-mime-galar",
     "from": {
       "species": "mime-jr"
     },
     "to": {
-      "species": "mr-mime"
+      "species": "mr-mime",
+      "form": "mr-mime-galar"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -5233,7 +5243,8 @@
   {
     "id": "mr-mime-to-mr-rime",
     "from": {
-      "species": "mr-mime"
+      "species": "mr-mime",
+      "form": "mr-mime-galar"
     },
     "to": {
       "species": "mr-rime"
@@ -6226,7 +6237,7 @@
     ]
   },
   {
-    "id": "ponyta-to-rapidash-red-blue",
+    "id": "ponyta-to-rapidash",
     "from": {
       "species": "ponyta"
     },
@@ -6242,12 +6253,14 @@
     ]
   },
   {
-    "id": "ponyta-to-rapidash-sword-shield",
+    "id": "ponyta-to-rapidash-galar",
     "from": {
-      "species": "ponyta"
+      "species": "ponyta",
+      "form": "ponyta-galar"
     },
     "to": {
-      "species": "rapidash"
+      "species": "rapidash",
+      "form": "rapidash-galar"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -7384,7 +7397,7 @@
     ]
   },
   {
-    "id": "sinistea-to-polteageist-sword-shield",
+    "id": "sinistea-to-polteageist",
     "from": {
       "species": "sinistea"
     },
@@ -7400,12 +7413,14 @@
     ]
   },
   {
-    "id": "sinistea-to-polteageist-sword-shield-2",
+    "id": "sinistea-to-polteageist-antique",
     "from": {
-      "species": "sinistea"
+      "species": "sinistea",
+      "form": "sinistea-antique"
     },
     "to": {
-      "species": "polteageist"
+      "species": "polteageist",
+      "form": "polteageist-antique"
     },
     "trigger": "useItem",
     "conditions": [
@@ -7584,7 +7599,7 @@
     ]
   },
   {
-    "id": "slowpoke-to-slowbro-red-blue",
+    "id": "slowpoke-to-slowbro",
     "from": {
       "species": "slowpoke"
     },
@@ -7600,12 +7615,14 @@
     ]
   },
   {
-    "id": "slowpoke-to-slowbro-the-isle-of-armor",
+    "id": "slowpoke-to-slowbro-galar",
     "from": {
-      "species": "slowpoke"
+      "species": "slowpoke",
+      "form": "slowpoke-galar"
     },
     "to": {
-      "species": "slowbro"
+      "species": "slowbro",
+      "form": "slowbro-galar"
     },
     "trigger": "useItem",
     "conditions": [
@@ -7616,7 +7633,7 @@
     ]
   },
   {
-    "id": "slowpoke-to-slowking-gold-silver",
+    "id": "slowpoke-to-slowking",
     "from": {
       "species": "slowpoke"
     },
@@ -7632,12 +7649,14 @@
     ]
   },
   {
-    "id": "slowpoke-to-slowking-the-isle-of-armor",
+    "id": "slowpoke-to-slowking-galar",
     "from": {
-      "species": "slowpoke"
+      "species": "slowpoke",
+      "form": "slowpoke-galar"
     },
     "to": {
-      "species": "slowking"
+      "species": "slowking",
+      "form": "slowking-galar"
     },
     "trigger": "useItem",
     "conditions": [
@@ -8544,7 +8563,7 @@
     ]
   },
   {
-    "id": "toxel-to-toxtricity-sword-shield",
+    "id": "toxel-to-toxtricity",
     "from": {
       "species": "toxel"
     },
@@ -8560,12 +8579,13 @@
     ]
   },
   {
-    "id": "toxel-to-toxtricity-sword-shield-2",
+    "id": "toxel-to-toxtricity-low-key",
     "from": {
       "species": "toxel"
     },
     "to": {
-      "species": "toxtricity"
+      "species": "toxtricity",
+      "form": "toxtricity-low-key"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -9352,7 +9372,8 @@
   {
     "id": "yamask-to-runerigus",
     "from": {
-      "species": "yamask"
+      "species": "yamask",
+      "form": "yamask-galar"
     },
     "to": {
       "species": "runerigus"
@@ -9422,7 +9443,7 @@
     ]
   },
   {
-    "id": "zigzagoon-to-linoone-ruby-sapphire",
+    "id": "zigzagoon-to-linoone",
     "from": {
       "species": "zigzagoon"
     },
@@ -9438,12 +9459,14 @@
     ]
   },
   {
-    "id": "zigzagoon-to-linoone-sword-shield",
+    "id": "zigzagoon-to-linoone-galar",
     "from": {
-      "species": "zigzagoon"
+      "species": "zigzagoon",
+      "form": "zigzagoon-galar"
     },
     "to": {
-      "species": "linoone"
+      "species": "linoone",
+      "form": "linoone-galar"
     },
     "trigger": "levelUp",
     "conditions": [
