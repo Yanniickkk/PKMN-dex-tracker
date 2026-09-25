@@ -93,7 +93,7 @@ def dex_entries(context: BuildContext) -> list[DexEntry]:
     The unobtainable table is what this step added: the four the other half keeps, its fossil,
     and the one that only a Pokemon Ranger cartridge produces.
     """
-    return sinnoh.pair_dex_entries(context, game_id=GAME_ID, unobtainable=UNOBTAINABLE)
+    return sinnoh.original_dex_entries(context, game_id=GAME_ID, unobtainable=UNOBTAINABLE)
 
 
 def acquisition_methods(

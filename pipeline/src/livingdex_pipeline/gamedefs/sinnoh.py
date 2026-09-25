@@ -40,8 +40,13 @@ NATIONAL_DEX_THROUGH = ds.NATIONAL_DEX_THROUGH
 #:
 #: Not :data:`EXTENDED_DEX`, which is the 210-entry dex Platinum shows: the third version added
 #: 59 species to the regional list, so unlike the Hoenn three the Sinnoh three do *not* share one
-#: dex. Platinum names its own, which is why this constant says which pair it belongs to.
-PAIR_DEX = "original-sinnoh"
+#: dex. Platinum names its own, which is why this one says which of the two lists it is.
+#:
+#: Named for the list rather than for a pair, because two pairs show it. Brilliant Diamond and
+#: Shining Pearl went back to it over Platinum's - Bulbapedia calls that "the Sinnoh Pokedex's
+#: return to the original Diamond and Pearl numbering" - so four games in two generations put
+#: Turtwig at #001 and Manaphy at #151.
+ORIGINAL_DEX = "original-sinnoh"
 
 #: PokeAPI's name for the 210-entry Sinnoh dex, the one Platinum shows.
 #:
@@ -96,13 +101,17 @@ def edges(game_id: str) -> list[TransferEdge]:
     return ds.edges(game_id)
 
 
-def pair_dex_entries(
+def original_dex_entries(
     context: BuildContext,
     *,
     game_id: str,
     unobtainable: Mapping[str, str] | None = None,
 ) -> list[DexEntry]:
     """The Sinnoh dex as Diamond and Pearl number it: Turtwig #001 to Manaphy #151.
+
+    Four games rather than two, which is why this is named for the list. The Switch remakes show
+    the same 151 in the same order - they went back to this numbering rather than taking
+    Platinum's 210 - so :mod:`bdsp` asks for it here instead of holding a copy.
 
     This is the game's own Pokedex, not the list a living dex in it is aiming at. That list is
     the National Dex, which the entity already says it reaches 493 of.
@@ -114,7 +123,7 @@ def pair_dex_entries(
     the way Deoxys does in Hoenn. Rotom's appliances are not a question here at all: those
     arrived with Platinum.
     """
-    return _dex_entries(context, game_id=game_id, dex=PAIR_DEX, unobtainable=unobtainable)
+    return _dex_entries(context, game_id=game_id, dex=ORIGINAL_DEX, unobtainable=unobtainable)
 
 
 def extended_dex_entries(

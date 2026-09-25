@@ -93,6 +93,22 @@ LETS_GO_SET = "generation-vii/lets-go"
 #: Sword and Shield's own folder, which is the first Generation 8 set in the dataset.
 GALAR_SET = "generation-viii/sword-shield"
 
+#: Pokemon HOME's artwork, which is what the games with no sheet of their own show.
+#:
+#: **The first set here that is not a generation's**, and it is named for what it is rather than
+#: filed under one, because four games in two generations will share it. Brilliant Diamond and
+#: Shining Pearl are the first: the Archives have no sheet for them at all - the only category
+#: carrying their name holds trainer select-screen models - and the two files in the Scarlet and
+#: Violet category are not a sheet either. What the wiki actually draws the modern games with is
+#: HOME's own renders, 3,143 of them.
+#:
+#: That is the honest answer as well as the available one. These games have no battle sprite to
+#: photograph: a HOME render is the picture a player of them sees when they open a box.
+HOME_SET = "home"
+
+#: And the marker that says a name is built HOME's way rather than a sheet's.
+HOME = "home"
+
 #: Which sheet a folder is filled from, for the sets that come off the Archives.
 #:
 #: ``None`` means "work it out from the number", which is Alola's rule and nobody else's: its
@@ -102,6 +118,7 @@ ARCHIVES_SHEETS: dict[str, str | None] = {
     ALOLA_SET: None,
     LETS_GO_SET: LETS_GO,
     GALAR_SET: GALAR,
+    HOME_SET: HOME,
 }
 
 #: How far Sun and Moon's National Dex goes, and so how far their sheet does.
@@ -179,7 +196,16 @@ def species_names(number: int, *, sheet: str | None = None, sexed: bool = False)
     Both spellings are offered either way, because being wrong about that should cost one extra
     request rather than a picture - which is what saved Eevee, whose female PokeAPI records and
     whose Generation 7 sheet draws only once.
+
+    HOME spells everything differently and more simply: four digits, no sheet code, no prefix
+    but its own, and a plain name for every species - ``HOME0001.png``. Only the female is
+    marked, with ``_f``, so unlike a sheet there is no ``_m`` to try and the plain name is
+    always right. Shiny renders sit beside them under ``_s`` and this dataset has no use for
+    one.
     """
+    if sheet == HOME:
+        return (f"HOME{number:04d}.png",)
+
     sheet = sheet or (SM if number <= SM_THROUGH else USUM)
     plain = f"Spr_{sheet}_{number:03d}.png"
     male = f"Spr_{sheet}_{number:03d}_m.png"
@@ -209,6 +235,13 @@ def form_names(
     Both fall back to the shared set's picture of that form, which is the right Pokemon in
     another generation's style rather than a hole.
     """
+    if sheet == HOME:
+        # HOME's own way of spelling a form is not read here yet, and nothing wants it: the two
+        # games drawing from this set name no forms at all until their step 8. A form with no
+        # name falls back to the shared set's picture, which is the right Pokemon in another
+        # generation's style rather than a hole.
+        return (f"HOME{number:04d}_f.png",) if form_name == "Female" else ()
+
     if sheet is None and (usum := USUM_FORMS.get(form_id)) is not None:
         return (f"Spr_{USUM}_{number:03d}{usum}.png",)
 

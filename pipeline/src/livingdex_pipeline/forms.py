@@ -134,7 +134,29 @@ INVISIBLE_FORMS = frozenset({"scatterbug", "spewpa", "mothim"})
 #: says every regional form of a species these games are compatible with is compatible too, and
 #: Raichu, Vulpix, Meowth, Marowak and Sandshrew are all in a Galar list. Closer to right is not
 #: right, and which of the nineteen survives is that step's answer rather than this one's.
-FORMS_NAMED_BY_THE_GAME = frozenset({"lets-go-pikachu", "lets-go-eevee", "sword", "shield"})
+#:
+#: **Brilliant Diamond and Shining Pearl break it for a third reason, and it is the one that
+#: shows the rule was never about Dexit.** These two do hold everything up to a National Dex
+#: number - 493, the way Diamond did - so the sentence that explains Galar does not apply, and
+#: the rule should have been right. Registering them at step 1 handed them 373 forms anyway, the
+#: same count and almost the same list: every Alcremie sweet, an Eternamax Eternatus, thirty-six
+#: regional forms. The reason is the one thing the rule reads, which is *when* a form arrived:
+#: these came out after Sword and Shield, so everything is old enough, and being old enough has
+#: nothing to do with it. Bulbapedia states the real limit in a line - only Pokemon that exist
+#: in the game data, the first four generations, regional forms excluded.
+#:
+#: So a remake is the clearest case of all: **what a game holds is a fact about the game, and a
+#: date is not a substitute for it.** Off for these two as well, and step 8 writes the answer.
+FORMS_NAMED_BY_THE_GAME = frozenset(
+    {
+        "lets-go-pikachu",
+        "lets-go-eevee",
+        "sword",
+        "shield",
+        "brilliant-diamond",
+        "shining-pearl",
+    }
+)
 
 #: The two halves, spelled here so the table below can say "both" in one word.
 LETS_GO = ("lets-go-pikachu", "lets-go-eevee")
@@ -374,9 +396,180 @@ GALAR_FORMS: Mapping[str, tuple[str, ...]] = {
 #: Merged rather than chained, because a form can be in both tables and mean both: an Alolan
 #: Raichu is one of Let's Go's eight traders' and one of the Diglett Trainer's rewards, and
 #: taking either table's answer alone would lose the other's games.
+#: The two halves of the Sinnoh remake, spelled here so the table below can say "both".
+BDSP = ("brilliant-diamond", "shining-pearl")
+
+#: What Brilliant Diamond and Shining Pearl hold, which is Platinum's list and Diamond's games.
+#:
+#: **137 forms, and the shape of the answer is the whole finding: this is Diamond's 130 plus
+#: the seven Platinum added.** Not the generation's, not the console's - the third version's.
+#: Every one of the seven was checked on the wiki rather than carried over:
+#:
+#: * **Rotom's five appliances** are in Rotom's Room in the Team Galactic Eterna Building, which
+#:   the Secret Key opens, exactly as in Platinum;
+#: * **Giratina's Origin Forme** is the Griseous Orb - "from Platinum to Brilliant Diamond and
+#:   Shining Pearl, it transforms into its Origin Forme while holding a Griseous Orb";
+#: * **Shaymin's Sky Forme** is the Gracidea, which the wiki files under Generation VIII key
+#:   items for these games.
+#:
+#: And what is *not* here matters as much. **No regional form of anything**, which is not a
+#: judgement call: Bulbapedia states that only Pokemon that exist in the game data - the first
+#: four generations, regional forms excluded - can be transferred in at all. No Mega, no
+#: Gigantamax, no form from a species above 493.
+#:
+#: The sexes are the same 94 Diamond has, for the same reason: the rule is Generation 4's, the
+#: species are the same species, and a remake redraws them rather than re-deciding them.
+BDSP_FORMS: dict[str, tuple[str, ...]] = {
+    "abomasnow-female": BDSP,
+    "aipom-female": BDSP,
+    "alakazam-female": BDSP,
+    "ambipom-female": BDSP,
+    "beautifly-female": BDSP,
+    "bibarel-female": BDSP,
+    "bidoof-female": BDSP,
+    "blaziken-female": BDSP,
+    "buizel-female": BDSP,
+    "burmy-sandy": BDSP,
+    "burmy-trash": BDSP,
+    "butterfree-female": BDSP,
+    "cacturne-female": BDSP,
+    "camerupt-female": BDSP,
+    "combee-female": BDSP,
+    "combusken-female": BDSP,
+    "croagunk-female": BDSP,
+    "deoxys-attack": BDSP,
+    "deoxys-defense": BDSP,
+    "deoxys-speed": BDSP,
+    "dodrio-female": BDSP,
+    "doduo-female": BDSP,
+    "donphan-female": BDSP,
+    "dustox-female": BDSP,
+    "eevee-female": BDSP,
+    "finneon-female": BDSP,
+    "floatzel-female": BDSP,
+    "gabite-female": BDSP,
+    "garchomp-female": BDSP,
+    "gastrodon-east": BDSP,
+    "gible-female": BDSP,
+    "girafarig-female": BDSP,
+    "giratina-origin": BDSP,
+    "gligar-female": BDSP,
+    "gloom-female": BDSP,
+    "golbat-female": BDSP,
+    "goldeen-female": BDSP,
+    "gulpin-female": BDSP,
+    "gyarados-female": BDSP,
+    "heracross-female": BDSP,
+    "hippopotas-female": BDSP,
+    "hippowdon-female": BDSP,
+    "houndoom-female": BDSP,
+    "hypno-female": BDSP,
+    "kadabra-female": BDSP,
+    "kricketot-female": BDSP,
+    "kricketune-female": BDSP,
+    "ledian-female": BDSP,
+    "ledyba-female": BDSP,
+    "ludicolo-female": BDSP,
+    "lumineon-female": BDSP,
+    "luxio-female": BDSP,
+    "luxray-female": BDSP,
+    "magikarp-female": BDSP,
+    "mamoswine-female": BDSP,
+    "medicham-female": BDSP,
+    "meditite-female": BDSP,
+    "meganium-female": BDSP,
+    "milotic-female": BDSP,
+    "murkrow-female": BDSP,
+    "numel-female": BDSP,
+    "nuzleaf-female": BDSP,
+    "octillery-female": BDSP,
+    "pachirisu-female": BDSP,
+    "pikachu-female": BDSP,
+    "piloswine-female": BDSP,
+    "politoed-female": BDSP,
+    "quagsire-female": BDSP,
+    "raichu-female": BDSP,
+    "raticate-female": BDSP,
+    "rattata-female": BDSP,
+    "relicanth-female": BDSP,
+    "rhydon-female": BDSP,
+    "rhyhorn-female": BDSP,
+    "rhyperior-female": BDSP,
+    "roselia-female": BDSP,
+    "roserade-female": BDSP,
+    "rotom-fan": BDSP,
+    "rotom-frost": BDSP,
+    "rotom-heat": BDSP,
+    "rotom-mow": BDSP,
+    "rotom-wash": BDSP,
+    "scizor-female": BDSP,
+    "scyther-female": BDSP,
+    "seaking-female": BDSP,
+    "shaymin-sky": BDSP,
+    "shellos-east": BDSP,
+    "shiftry-female": BDSP,
+    "shinx-female": BDSP,
+    "sneasel-female": BDSP,
+    "snover-female": BDSP,
+    "staraptor-female": BDSP,
+    "staravia-female": BDSP,
+    "starly-female": BDSP,
+    "steelix-female": BDSP,
+    "sudowoodo-female": BDSP,
+    "swalot-female": BDSP,
+    "tangrowth-female": BDSP,
+    "torchic-female": BDSP,
+    "toxicroak-female": BDSP,
+    "unown-b": BDSP,
+    "unown-c": BDSP,
+    "unown-d": BDSP,
+    "unown-e": BDSP,
+    "unown-exclamation": BDSP,
+    "unown-f": BDSP,
+    "unown-g": BDSP,
+    "unown-h": BDSP,
+    "unown-i": BDSP,
+    "unown-j": BDSP,
+    "unown-k": BDSP,
+    "unown-l": BDSP,
+    "unown-m": BDSP,
+    "unown-n": BDSP,
+    "unown-o": BDSP,
+    "unown-p": BDSP,
+    "unown-q": BDSP,
+    "unown-question": BDSP,
+    "unown-r": BDSP,
+    "unown-s": BDSP,
+    "unown-t": BDSP,
+    "unown-u": BDSP,
+    "unown-v": BDSP,
+    "unown-w": BDSP,
+    "unown-x": BDSP,
+    "unown-y": BDSP,
+    "unown-z": BDSP,
+    "ursaring-female": BDSP,
+    "venusaur-female": BDSP,
+    "vileplume-female": BDSP,
+    "weavile-female": BDSP,
+    "wobbuffet-female": BDSP,
+    "wooper-female": BDSP,
+    "wormadam-sandy": BDSP,
+    "wormadam-trash": BDSP,
+    "xatu-female": BDSP,
+    "zubat-female": BDSP,
+}
+
 NAMED_BY_HAND: Mapping[str, tuple[str, ...]] = {
-    slug: tuple(sorted({*LETS_GO_FORMS.get(slug, ()), *GALAR_FORMS.get(slug, ())}))
-    for slug in {*LETS_GO_FORMS, *GALAR_FORMS}
+    slug: tuple(
+        sorted(
+            {
+                *LETS_GO_FORMS.get(slug, ()),
+                *GALAR_FORMS.get(slug, ()),
+                *BDSP_FORMS.get(slug, ()),
+            }
+        )
+    )
+    for slug in {*LETS_GO_FORMS, *GALAR_FORMS, *BDSP_FORMS}
 }
 
 #: Where a form is, when the version group it arrived in says more than the truth.
@@ -524,7 +717,7 @@ class VersionGroupGames:
     def named_by_hand(self, slug: str) -> list[str]:
         """The games a hand-written table gives this form, filtered to the ones being built.
 
-        Filtered because a build of one game is still a build: :data:`NAMED_BY_HAND` names four
+        Filtered because a build of one game is still a build: :data:`NAMED_BY_HAND` names six
         games and a ``--game red`` build has none of them, and a form that claimed them would
         write a table the rest of the dataset disagrees with.
         """

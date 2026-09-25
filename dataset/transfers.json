@@ -260,6 +260,24 @@
     }
   },
   {
+    "from": "brilliant-diamond",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "brilliant-diamond",
+    "to": "shining-pearl",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
     "from": "crystal",
     "to": "bank",
     "mechanism": "pokeTransporter",
@@ -630,6 +648,15 @@
   },
   {
     "from": "home",
+    "to": "brilliant-diamond",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "presentInTargetDex"
+    }
+  },
+  {
+    "from": "home",
     "to": "lets-go-eevee",
     "mechanism": "home",
     "direction": "oneWay",
@@ -661,6 +688,15 @@
   {
     "from": "home",
     "to": "shield",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "presentInTargetDex"
+    }
+  },
+  {
+    "from": "home",
+    "to": "shining-pearl",
     "mechanism": "home",
     "direction": "oneWay",
     "filter": {
@@ -1142,6 +1178,15 @@
     "to": "sword",
     "mechanism": "trade",
     "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "shining-pearl",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
     "filter": {
       "filter": "all"
     }

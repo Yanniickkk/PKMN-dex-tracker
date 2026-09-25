@@ -375,11 +375,18 @@ def test_a_form_that_belongs_to_nothing_but_that_pair_is_left_out_altogether() -
     ).forms
 
     assert found == []
+
+    # Three pairs now, for three different reasons, and the third is the one that shows what the
+    # rule actually reads. Let's Go and Galar hold a list instead of a number; Brilliant Diamond
+    # and Shining Pearl hold everything up to 493 and the rule was wrong about them anyway,
+    # because all it asks is when a form arrived and these came out last.
     assert set(FORMS_NAMED_BY_THE_GAME) == {
         "lets-go-pikachu",
         "lets-go-eevee",
         "sword",
         "shield",
+        "brilliant-diamond",
+        "shining-pearl",
     }
 
 

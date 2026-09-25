@@ -14,6 +14,7 @@ from . import (
     black,
     black2,
     blue,
+    brilliant_diamond,
     crystal,
     diamond,
     emerald,
@@ -32,6 +33,7 @@ from . import (
     ruby,
     sapphire,
     shield,
+    shining_pearl,
     silver,
     soulsilver,
     sun,
@@ -56,7 +58,8 @@ from . import (
 # then the two that close it on a different console in a different region: Kanto for the fifth
 # time, Yellow remade and a game that never existed remade beside it. Then the pair that opens
 # Generation 8 on the same console, which is the first in the series whose boxes hold a list
-# rather than everything up to a number.
+# rather than everything up to a number, and then Sinnoh remade on that console two years
+# later - the first remakes here of a pair the dataset also holds as cartridges.
 #
 # Then the two nodes, out of that order and at the end, because neither is a game. Bank came out
 # between the two Generation 6 pairs and HOME six years after it. They are here for the same
@@ -95,6 +98,8 @@ MODULES = [
     lets_go_eevee,
     sword,
     shield,
+    brilliant_diamond,
+    shining_pearl,
     bank,
     home,
 ]

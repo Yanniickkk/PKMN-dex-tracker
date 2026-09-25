@@ -30,6 +30,7 @@ from dataclasses import dataclass
 
 from selectolax.parser import HTMLParser, Node
 
+from .conditions import REQUIREMENTS
 from .http import PoliteClient
 from .models import DexTarget, EncounterMethod, LevelRange, SourceCitation, WildAcquisition
 from .normalise import Normaliser
@@ -53,6 +54,21 @@ LEGEND = "colored background"
 _NUMBER = re.compile(r"\d+")
 _RATE = re.compile(r"([\d.]+)\s*%")
 
+#: The two letters Omega Ruby and Alpha Sapphire fill their Games column with.
+#:
+#: A default rather than a constant now that a second pair reads these tables. Brilliant Diamond
+#: and Shining Pearl write "BD" and "SP" in the same column on the same kind of page, and a row
+#: is told from another generation's by exactly this.
+ORAS = ("OR", "AS")
+
+#: What the three rate columns on a Generation 8 grass table mean, left to right.
+#:
+#: The wiki writes them as icons with no text, so they are read from the header's own links -
+#: Morning, Day, Night. Nothing before Generation 8 splits the column this way: Diamond varied
+#: by time too and PokeAPI carried it as a condition on one slot, where these pages carry it as
+#: three numbers on one row.
+TIMES = ("time-morning", "time-day", "time-night")
+
 
 class EncounterTableError(Exception):
     """A page could not be read the way this parser expects. The message is for a human."""
@@ -74,6 +90,8 @@ class TableSlot:
     highest: int
     rate_percent: float | None
     games: frozenset[str]
+    #: Which of :data:`TIMES` this row's rate belongs to, when the page splits it three ways.
+    when: str | None = None
 
 
 def table_encounters(
@@ -87,6 +105,7 @@ def table_encounters(
     requirements: Mapping[str, str] | None = None,
     conditions: Mapping[str, str] | None = None,
     aliases: Mapping[str, str] | None = None,
+    pair: tuple[str, str] = ORAS,
     refresh: bool = False,
 ) -> list[WildAcquisition]:
     """Every wild slot these pages give one game, for the species given.
@@ -96,7 +115,11 @@ def table_encounters(
     Kanto's, and everything else in this dataset - including the gifts and statics of the same
     game, which still come from PokeAPI - calls it "Route 101".
 
-    ``column`` is how the Games column spells this game: "OR" or "AS".
+    ``column`` is how the Games column spells this game: "OR" or "AS", "BD" or "SP".
+
+    ``pair`` is both of those letters, and it is what tells one generation's rows from another's
+    on a page that keeps a section for each. It is the one thing in here that was a constant
+    until a second pair of games turned out to keep its tables in the same shape.
 
     ``methods`` maps the page's word for a way of meeting something onto this project's, and a
     word that is not in it is skipped rather than guessed at. That is how gifts and trades stay
@@ -123,13 +146,13 @@ def table_encounters(
         url = f"{BULBAPEDIA}/{title}"
         page = HTMLParser(client.get_text(url, refresh=refresh))
         citation = bulbapedia(title, retrieved_on=client.retrieved_on(url))
-        slots = _slots(page, title=title)
+        slots = _slots(page, title=title, pair=pair)
 
         if not slots:
             # Loud rather than silent. A page with no rows for either half is either a place
             # these games do not have or a page that has been rewritten, and both are worth a
             # human's attention rather than a quietly shorter dataset.
-            log.warning("%s: no Omega Ruby or Alpha Sapphire rows on %s", game_id, url)
+            log.warning("%s: no %s or %s rows on %s", game_id, *pair, url)
             continue
 
         for slot in slots:
@@ -173,16 +196,18 @@ def _requirement(
 ) -> str | None:
     """Everything this row asks of a player that its method and place do not already say.
 
-    Two kinds, in the order a player would want them: where to be standing, which is what the
-    Location column says beyond the method it maps to, and then what has to be true first,
-    which is what the headings say. A heading that only repeats either word is dropped, and one
-    reworded as nothing is dropped too - "Underwater" above rows that are already dives.
+    Three kinds, in the order a player would want them: where to be standing, which is what the
+    Location column says beyond the method it maps to, then which hours it is there, and then
+    what has to be true first, which is what the headings say. A heading that only repeats
+    either word is dropped, and one reworded as nothing is dropped too - "Underwater" above rows
+    that are already dives.
     """
     return (
         "; ".join(
             one
             for one in (
                 said.get(slot.method),
+                REQUIREMENTS[slot.when] if slot.when else None,
                 *(
                     conditions.get(heading, heading)
                     for heading in slot.headings
@@ -218,7 +243,7 @@ def _record(
     )
 
 
-def _slots(page: HTMLParser, *, title: str) -> list[TableSlot]:
+def _slots(page: HTMLParser, *, title: str, pair: tuple[str, str]) -> list[TableSlot]:
     """Every row on one page that is about this pair, whichever section it sits in.
 
     A row is recognised by its Games column rather than by the heading above it, which is what
@@ -238,7 +263,7 @@ def _slots(page: HTMLParser, *, title: str) -> list[TableSlot]:
         if node.tag in ("h2", "h3", "h4"):
             sub_area = _sub_area(_text(node))
         elif node.tag == "table":
-            found.extend(_rows(node, sub_area=sub_area))
+            found.extend(_rows(node, sub_area=sub_area, pair=pair))
 
     return found
 
@@ -257,7 +282,7 @@ def _sub_area(heading: str) -> str | None:
     return heading
 
 
-def _rows(table: Node, *, sub_area: str | None) -> list[TableSlot]:
+def _rows(table: Node, *, sub_area: str | None, pair: tuple[str, str]) -> list[TableSlot]:
     """One table's rows, each carrying the headings written above it.
 
     A one-cell row is a heading inside the table, and it is where the wiki writes a condition:
@@ -290,12 +315,12 @@ def _rows(table: Node, *, sub_area: str | None) -> list[TableSlot]:
 
             continue
 
-        if len(cells) != 6:
+        if len(cells) not in (6, 8):
             continue
 
-        slot = _slot(cells, headings=headings, sub_area=sub_area)
-        if slot is not None:
-            found.append(slot)
+        made = _slot(cells, headings=headings, sub_area=sub_area, pair=pair)
+        if made:
+            found.extend(made)
             in_group = True
 
     return found
@@ -306,35 +331,58 @@ def _slot(
     *,
     headings: Sequence[str],
     sub_area: str | None,
-) -> TableSlot | None:
-    species, first, second, where, levels, rate = cells
+    pair: tuple[str, str],
+) -> list[TableSlot]:
+    """One row, which is one slot on most pages and up to three on a Generation 8 grass table.
 
-    if (_text(first), _text(second)) != ("OR", "AS"):
+    **The rate column is split by time of day there**, morning, day and night, and the three
+    numbers are nearly always different - on Sinnoh's thirty route pages, all ninety-two rows
+    that carry three rates carry three different ones. So a row is three slots, and a rate of
+    **0%** is the page saying the species is not there at that hour rather than that it is
+    there and rare: those become no slot at all, which is the difference between a tile a
+    player can fill after dark and one they can never fill.
+
+    Where the three numbers agree, the time says nothing and is dropped, the same way a heading
+    that only repeats the method column is.
+    """
+    species, first, second, where, levels, *rates = cells
+
+    if (_text(first), _text(second)) != pair:
         # Another generation's rows, or the header row of this one.
-        return None
+        return []
 
     games = frozenset(_text(cell) for cell in (first, second) if _present(cell))
     if not games:
-        return None
+        return []
 
     numbers = [int(one) for one in _NUMBER.findall(_text(levels))]
     if not numbers:
-        return None
+        return []
 
-    rate_match = _RATE.search(_text(rate))
+    def made(rate: Node, when: str | None) -> TableSlot | None:
+        match = _RATE.search(_text(rate))
+        if match is not None and float(match.group(1)) == 0:
+            return None
 
-    return TableSlot(
-        species=_text(species),
-        method=_text(where),
-        headings=tuple(headings),
-        sub_area=sub_area,
-        lowest=min(numbers),
-        highest=max(numbers),
-        # "??%" is the wiki saying nobody has measured it, and Soaring's flocks are graded in
-        # words rather than numbers. Both become no rate rather than a made-up one.
-        rate_percent=float(rate_match.group(1)) if rate_match else None,
-        games=games,
-    )
+        return TableSlot(
+            species=_text(species),
+            method=_text(where),
+            headings=tuple(headings),
+            sub_area=sub_area,
+            lowest=min(numbers),
+            highest=max(numbers),
+            # "??%" is the wiki saying nobody has measured it, "Varies" is a Grand Underground
+            # table saying it depends how far the player has got, and Soaring's flocks are
+            # graded in words. All three become no rate rather than a made-up one.
+            rate_percent=float(match.group(1)) if match else None,
+            games=games,
+            when=when,
+        )
+
+    if len(rates) == 1 or len({_text(one) for one in rates}) == 1:
+        return [one for one in (made(rates[0], None),) if one is not None]
+
+    return [one for one in (made(*pair_) for pair_ in zip(rates, TIMES, strict=True)) if one]
 
 
 def _repeats(heading: str, method: str) -> bool:

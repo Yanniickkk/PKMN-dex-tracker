@@ -15,6 +15,8 @@ from livingdex_pipeline.archives import (
     ARCHIVES_SHEETS,
     GALAR,
     GALAR_SET,
+    HOME,
+    HOME_SET,
     LETS_GO,
     LETS_GO_SET,
     SM,
@@ -348,3 +350,27 @@ def test_which_spelling_to_try_first_comes_out_of_the_form_table(tmp_path: Path)
     # so the table it already has says which of the two spellings to ask for first.
     assert planned["rattata"][0] == "Spr_7s_019_m.png"
     assert planned["rattata-female"] == ("Spr_7s_019_f.png",)
+
+
+def test_home_spells_a_name_its_own_way_and_more_simply() -> None:
+    # Four digits, no sheet code, and a plain name for every species. A sheet draws a species
+    # with visible sexes as `_m` and `_f` and gives it no plain name at all; HOME marks only the
+    # female, so the plain name is always right and there is no second spelling to try.
+    assert species_names(1, sheet=HOME) == ("HOME0001.png",)
+    assert species_names(3, sheet=HOME, sexed=True) == ("HOME0003.png",)
+    assert form_names(3, form_id="venusaur-female", form_name="Female", sheet=HOME) == (
+        "HOME0003_f.png",
+    )
+
+    # And a form it has no rule for is no name rather than a guess, which falls back to the
+    # shared set's picture - the right Pokemon in another generation's style.
+    assert form_names(479, form_id="rotom-heat", form_name="Heat", sheet=HOME) == ()
+
+
+def test_the_home_set_is_the_first_here_that_is_not_a_generations() -> None:
+    # Named for what it is rather than filed under a generation, because four games in two of
+    # them will share it: these are the games the Archives have no sheet for at all.
+    assert HOME_SET == "home"
+    assert ARCHIVES_SHEETS[HOME_SET] == HOME
+    assert not HOME_SET.startswith("generation-")
+

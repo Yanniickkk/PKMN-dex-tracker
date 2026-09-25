@@ -11,14 +11,21 @@ from datetime import date
 import pytest
 
 from livingdex_pipeline.build import default_registry
-from livingdex_pipeline.forms import FORMS_NAMED_BY_THE_GAME, GALAR_FORMS, NAMED_BY_HAND
+from livingdex_pipeline.forms import (
+    BDSP_FORMS,
+    FORMS_NAMED_BY_THE_GAME,
+    GALAR_FORMS,
+    NAMED_BY_HAND,
+)
 from livingdex_pipeline.gamedefs import (
     alola,
     alpha_sapphire,
     bank,
+    bdsp,
     black,
     black2,
     blue,
+    brilliant_diamond,
     crystal,
     diamond,
     ds,
@@ -47,6 +54,7 @@ from livingdex_pipeline.gamedefs import (
     ruby,
     sapphire,
     shield,
+    shining_pearl,
     silver,
     sinnoh,
     soulsilver,
@@ -909,7 +917,7 @@ def test_platinum_shows_the_extended_sinnoh_dex_and_the_pair_does_not() -> None:
     # The whole point of the two names. Emerald shows the Hoenn pair's dex; Platinum does not
     # show Diamond and Pearl's, and a third version that borrowed the pair's would be 59 short.
     assert set(api.asked_for) == {"extended-sinnoh"}
-    assert sinnoh.EXTENDED_DEX != sinnoh.PAIR_DEX
+    assert sinnoh.EXTENDED_DEX != sinnoh.ORIGINAL_DEX
 
 
 def test_platinum_reads_its_own_version_of_the_encounter_table() -> None:
@@ -1953,6 +1961,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "black",
         "black-2",
         "blue",
+        "brilliant-diamond",
         "crystal",
         "diamond",
         "emerald",
@@ -1971,6 +1980,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "ruby",
         "sapphire",
         "shield",
+        "shining-pearl",
         "silver",
         "soulsilver",
         "sun",
@@ -2018,8 +2028,16 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # withdrawal back out. Registering them lights nothing that was waiting, and that is the
     # finding rather than the gap - HOME is the only door Generation 8 has, and every older game
     # that can reach these two was already reaching HOME.
-    assert len(routes) == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5 + 5
-    assert len(routes) == 135
+    #
+    # And five for Brilliant Diamond and Shining Pearl, which is the same five again: the cable
+    # between the halves, a deposit into HOME from each and an ordinary withdrawal back. Sinnoh
+    # on a Switch reaches its own cartridges through nothing at all - Diamond is four link
+    # cables and Pal Park, and not one of those goes anywhere near this pair.
+    assert (
+        len(routes)
+        == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5 + 5 + 5
+    )
+    assert len(routes) == 140
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -3972,26 +3990,28 @@ def test_the_way_out_of_bank_is_lit_now_that_its_other_end_exists() -> None:
     assert out.direction is TransferDirection.ONE_WAY
 
     # One way, and the reason the 3DS era ends here: a Pokemon that has gone into HOME has no
-    # route back to anything with a cartridge slot. What leaves HOME now goes to four Switch
+    # route back to anything with a cartridge slot. What leaves HOME now goes to six Switch
     # games and takes nothing away from that sentence.
     leaving_home = [
         edge for edge in default_registry().edges if edge.from_ == home.NODE
     ]
 
     assert [edge.to for edge in leaving_home] == [
+        "brilliant-diamond",
         "lets-go-eevee",
         "lets-go-pikachu",
         "shield",
+        "shining-pearl",
         "sword",
     ]
 
-    # Two of the four hand back only what they made themselves, which is the Let's Go rule:
+    # Two of the six hand back only what they made themselves, which is the Let's Go rule:
     # anything that reached HOME through Bank was converted to Sword and Shield's format on the
     # way in and can never enter them.
     to_lets_go = [edge for edge in leaving_home if edge.to in lets_go.PAIR]
     assert all(edge.origin.games == list(lets_go.PAIR) for edge in to_lets_go)
 
-    # And the other two read the target's own Pokedex instead, which is a door rather than a
+    # And the other four read the target's own Pokedex instead, which is a door rather than a
     # mirror: a Pokemon caught in Red can be standing in Galar, if Galar has a page for it.
     to_galar = [edge for edge in leaving_home if edge.to in galar.PAIR]
     assert all(edge.origin is None for edge in to_galar)
@@ -5966,3 +5986,291 @@ def test_a_form_that_is_changed_into_says_what_changes_it() -> None:
 
     # A sex needs no line here: formchanges answers it once for every region.
     assert not [one for one in galar.FORM_CHANGES if one.endswith("-female")]
+
+
+def bdsp_entity(module):
+    # No api worth the name: at step 1 a build of these two asks the source nothing at all.
+    return module.build(context(module.GAME_ID)).game
+
+
+def test_sinnoh_on_a_switch_is_generation_8_and_keeps_its_national_dex() -> None:
+    diamond_again = bdsp_entity(brilliant_diamond)
+    pearl_again = bdsp_entity(shining_pearl)
+
+    # The generation is the console and the year, not the game being remade. These carry the
+    # same 8 Sword and Shield do and could hardly be less like them.
+    assert (diamond_again.generation, pearl_again.generation) == (8, 8)
+    assert (diamond_again.region, pearl_again.region) == ("Sinnoh", "Sinnoh")
+    assert diamond_again.released == date(2021, 11, 19)
+    assert pearl_again.released == diamond_again.released
+
+    # **The decision Galar did not have, going the other way.** Sword and Shield hold a list and
+    # no National Dex; these are a remake of the generation that invented one, they kept it, and
+    # it stops where Diamond's did.
+    assert (diamond_again.national_dex_through, pearl_again.national_dex_through) == (493, 493)
+    assert diamond_again.dex_source is DexSource.NATIONAL_DEX
+    assert pearl_again.dex_source is DexSource.NATIONAL_DEX
+
+    assert diamond_again.pair_partner == pearl_again.id
+    assert pearl_again.pair_partner == diamond_again.id
+
+    # Step 6 answered the interesting one: the Archives have no sheet for these at all, only
+    # trainer select-screen models, so what a tile shows is a Pokemon HOME render - the first
+    # set in this dataset that is not a generation's.
+    assert diamond_again.sprite_set == "home"
+    assert pearl_again.sprite_set == diamond_again.sprite_set
+
+
+def test_the_remake_is_a_second_entity_beside_the_cartridge_it_remakes() -> None:
+    # Not Diamond with a newer date on it. A different studio, a different generation, a
+    # different way out, and a set of Pokemon that is not quite the same.
+    old, new = diamond.build(context("diamond")).game, bdsp_entity(brilliant_diamond)
+
+    assert old.id != new.id
+    assert (old.generation, new.generation) == (4, 8)
+    assert old.region == new.region == "Sinnoh"
+    assert old.national_dex_through == new.national_dex_through == 493
+
+
+def test_the_remade_pair_has_three_routes_and_none_of_them_reaches_its_own_cartridges() -> None:
+    routes = brilliant_diamond.edges()
+
+    assert [(one.from_, one.to) for one in routes] == [
+        ("brilliant-diamond", "shining-pearl"),
+        ("brilliant-diamond", home.NODE),
+        (home.NODE, "brilliant-diamond"),
+    ]
+
+    # The Switch sentence again, word for word what it was for Sword: not compatible with other
+    # games in the same generation outside of its pairing. So no route to Sword, none to Legends:
+    # Arceus, none to the two Let's Go games - and, less obviously, none to Diamond. Sinnoh is at
+    # both ends and there is nothing between them.
+    reachable = {one.to for one in routes} | {one.from_ for one in routes}
+    for absent in ("diamond", "pearl", "platinum", "sword", "lets-go-pikachu", "bank"):
+        assert absent not in reachable
+
+
+def test_the_remade_pair_take_the_ordinary_home_pair_rather_than_lets_gos() -> None:
+    # The withdrawal reads the target's own list, which is the wiki's own sentence about these
+    # games: only what exists in the game data - the first four generations, regional forms
+    # excluded - may be transferred in. So an Alolan Vulpix may not, and nothing here has to say
+    # so: step 2 and step 8 are what make the filter honest.
+    deposit, withdrawal = bdsp.edges("shining-pearl")[1:]
+
+    assert (deposit.from_, deposit.to) == ("shining-pearl", home.NODE)
+    assert isinstance(deposit.filter, AllSpeciesFilter)
+    assert (withdrawal.from_, withdrawal.to) == (home.NODE, "shining-pearl")
+    assert isinstance(withdrawal.filter, PresentInTargetDexFilter)
+
+    # Not the Let's Go withdrawal, which asks where a Pokemon started rather than what a list
+    # says. These take back anything their own dex names, whoever caught it.
+    assert withdrawal.origin is None
+
+
+def test_the_remade_pair_show_the_dex_diamond_showed_and_not_platinums() -> None:
+    # The one place a remake could quietly have grown and did not. Platinum added 59 species to
+    # the regional list in 2008 and these two went back past it - Bulbapedia calls it "the
+    # Sinnoh Pokedex's return to the original Diamond and Pearl numbering" - so Eevee's family,
+    # Togepi's, Rotom and Scyther are National Dex work here the way they were in 2007.
+    api = FakeApi([(1, "turtwig"), (2, "grotle")])
+    entries = brilliant_diamond.build(context("brilliant-diamond", api)).dex_entries
+
+    assert api.asked_for == [sinnoh.ORIGINAL_DEX]
+    assert sinnoh.ORIGINAL_DEX != sinnoh.EXTENDED_DEX
+    assert [(one.number, one.target.species) for one in entries] == [(1, "turtwig"), (2, "grotle")]
+
+    # And no dex name on the entries, which is the other half of the answer: one list needs no
+    # label, and it is Galar's three that were the exception rather than this.
+    assert {one.dex for one in entries} == {None}
+
+
+def test_both_halves_of_the_remade_pair_show_the_same_list() -> None:
+    # What a version pair has always meant: the halves split what can be caught, not what is
+    # listed. Fifteen years and a console later it still means that.
+    here = brilliant_diamond.build(context("brilliant-diamond", FakeApi([(1, "turtwig")])))
+    there = shining_pearl.build(context("shining-pearl", FakeApi([(1, "turtwig")])))
+    one, other = here.dex_entries, there.dex_entries
+
+    assert [(x.number, x.target.species) for x in one] == [
+        (y.number, y.target.species) for y in other
+    ]
+
+
+def test_the_remade_pair_aim_at_493_while_showing_151() -> None:
+    # Two lists doing two jobs, which is the ordinary arrangement everywhere before Galar: the
+    # Pokedex on screen is the region's, and what a living dex here is aiming at is the National
+    # Dex the entity carries.
+    built = brilliant_diamond.build(context("brilliant-diamond", FakeApi([(1, "turtwig")])))
+
+    assert built.game.national_dex_through == 493
+    assert built.game.dex_source is DexSource.NATIONAL_DEX
+    assert len(built.dex_entries) == 1
+
+
+def test_the_grand_underground_is_one_place_with_eighteen_caves_under_it() -> None:
+    # Diamond and Pearl's Underground rebuilt, and the part that is new is that Pokemon walk
+    # around in it. Eleven caves are reached from the tunnels and seven more open after the
+    # National Pokedex does, and between them they hold species Sinnoh above ground has none of.
+    assert len(bdsp.HIDEAWAYS) == 18
+    assert bdsp.PAGES["Grassland_Cave"] == "Grand Underground, Grassland Cave"
+    assert bdsp.PAGES["Sinnoh_Route_210"] == "Route 210"
+    assert bdsp.PAGES["Victory_Road_(Sinnoh)"] == "Victory Road"
+
+
+def test_the_remade_pair_read_the_wiki_because_the_source_has_nothing_at_all() -> None:
+    # Not a thin table - none. PokeAPI answers for `bidoof` with seven versions and not one of
+    # them is this pair, and the same is true of every game left to write. So unlike Hoenn,
+    # where the wiki filled a hole in the source, here the wiki is the source.
+    assert bdsp.COLUMNS == {"brilliant-diamond": "BD", "shining-pearl": "SP"}
+
+    # What is deliberately not read: a gift, an egg and a trade are steps 4 and 5 and have
+    # records of their own, so a word the map does not hold is skipped rather than guessed at.
+    for skipped in ("Gift", "Egg", "Trade Finneon"):
+        assert skipped not in bdsp.METHODS
+
+    # And the floors, which are a page's habit rather than a way of meeting anything: Iron
+    # Island writes which floor a table covers in the column where every other page writes the
+    # method, and a floor is still walking.
+    assert bdsp.METHODS["4F"] is EncounterMethod.WALK
+    assert bdsp.METHODS["Poké Radar"] is EncounterMethod.WALK
+    assert "Poke Radar" in bdsp.METHOD_REQUIREMENTS["Poké Radar"]
+
+
+def test_ramanas_park_is_the_remakes_answer_to_having_no_cartridge_slot() -> None:
+    # A Generation 4 cartridge got the older legendaries by trading with a Generation 3
+    # cartridge through Pal Park. A Switch game has nothing to trade with, so these two grow a
+    # building instead and seventeen legendaries that used to be somebody else's become theirs.
+    here = {one.species for one in bdsp.handed_over("brilliant-diamond")}
+    there = {one.species for one in bdsp.handed_over("shining-pearl")}
+
+    # And it splits the way a version pair always splits: Johto's three and Ho-Oh here, Kanto's
+    # three and Lugia there, the rest in both.
+    assert {"raikou", "entei", "suicune", "ho-oh"} <= here
+    assert not {"raikou", "entei", "suicune", "ho-oh"} & there
+    assert {"articuno", "zapdos", "moltres", "lugia"} <= there
+    assert {"mewtwo", "regirock", "latias", "kyogre", "rayquaza"} <= here & there
+
+    # The Distortion Slate calls up a second Giratina and is deliberately not recorded: Turnback
+    # Cave already has the first, and a living dex counts what a box holds rather than how many
+    # ways there are to fill one page.
+    assert [one for one in bdsp.RAMANAS if one[0] == "giratina"] == []
+
+
+def test_the_two_mythicals_in_floaroma_town_are_a_console_rather_than_an_event() -> None:
+    # The strangest rows in the table and the reason they are in it: an old woman hands over a
+    # Mew for Let's Go save data and an old man a Jirachi for Sword or Shield save data. That is
+    # a condition on hardware, which a player who owns those games can meet today - unlike the
+    # three below it, whose items were handed out over the internet in 2022 and never since.
+    by_name = {one.species: one for one in bdsp.GIFTS}
+
+    assert "Let's Go" in by_name["mew"].requirement
+    assert "Sword or Shield" in by_name["jirachi"].requirement
+    assert by_name["mew"].kind is GiftKind.NPC_GIFT
+
+    for shut in ("shaymin", "darkrai"):
+        assert "2022" in by_name[shut].requirement
+    assert "Legends: Arceus save data" in by_name["arceus"].requirement
+
+
+def test_each_half_digs_up_its_own_fossil_and_faces_its_own_cover_legendary() -> None:
+    here = {one.species: one for one in bdsp.SPLIT_GIFTS["brilliant-diamond"]}
+    there = {one.species: one for one in bdsp.SPLIT_GIFTS["shining-pearl"]}
+
+    assert set(here) == {"dialga", "cranidos"}
+    assert set(there) == {"palkia", "shieldon"}
+    assert here["cranidos"].kind is GiftKind.FOSSIL
+    assert "Skull Fossil" in here["cranidos"].requirement
+
+    # The five older fossils are both halves', and they come up earlier than they did in 2007:
+    # the Grand Underground gives them once the cover legendary has been faced rather than once
+    # the National Pokedex opens.
+    shared = {one.species for one in bdsp.GIFTS if one.kind is GiftKind.FOSSIL}
+    assert shared == {"omanyte", "kabuto", "aerodactyl", "lileep", "anorith"}
+
+
+def test_the_remake_evolves_things_its_originals_way_rather_than_its_own_generations() -> None:
+    # The one place where treating a remake as a Generation 8 game gives the wrong answer.
+    # Asked as its own version group the reader returns the same 246 evolutions, seven of them
+    # by a route these games have no item for: Bulbapedia says the Ice Stone is not obtainable
+    # in Brilliant Diamond and Shining Pearl, so Eevee can only reach Glaceon by the Ice Rock.
+    assert bdsp.EVOLUTION_GROUP == sinnoh.PAIR_VERSION_GROUP
+    assert bdsp.EVOLUTION_GROUP != bdsp.VERSION_GROUP
+
+    # The four traders are the originals' four as well, checked against the wiki's table rather
+    # than assumed: the same people in the same rooms wanting the same things.
+    assert bdsp.TRADES is sinnoh.TRADES
+    assert [one.gets for one in bdsp.TRADES] == ["abra", "chatot", "haunter", "magikarp"]
+    assert bdsp.DAY_CARE == "Solaceon Town, Pokemon Day Care"
+
+
+def test_only_manaphy_was_ever_handed_out_for_these_two() -> None:
+    # Nine entries the two halves cannot fill between them, checked species by species against
+    # the wiki's own events table. Eight of them have no distribution in the series at all -
+    # never mind one for these games - and the emptiness is the finding: a version exclusive is
+    # filled by the link to the other half, which is what the transfer graph is for.
+    assert set(bdsp.ONLY_ON["brilliant-diamond"]) == {"misdreavus", "glameow", "palkia"}
+    assert set(bdsp.ONLY_ON["shining-pearl"]) == {"murkrow", "stunky", "dialga"}
+    assert set(bdsp.ONLY_ON["brilliant-diamond"].values()) == {None}
+    assert set(bdsp.ONLY_ON["shining-pearl"].values()) == {None}
+
+    # And the one that was covered opened on the day the games came out and ran three months,
+    # so a player who bought them at release can fill this entry and one who bought them in
+    # March cannot.
+    reason = bdsp.unobtainable_in("brilliant-diamond")["manaphy"]
+    assert "no Ranger on this console" in reason
+    assert "19 November 2021" in reason and "21 February 2022" in reason
+
+
+def test_the_remakes_inherited_the_hole_and_not_the_way_out_of_it() -> None:
+    # The one place a remake of a linked game is poorer than the game it remakes: Diamond and
+    # Pearl hatch Manaphy from an egg Pokemon Ranger sends over, and Ranger is a Nintendo DS
+    # game with no version of itself on this console.
+    assert "Pokemon Ranger" in bdsp.MANAPHY_REASON
+
+    # The fossil takes its own sentence, because a fossil is an item: it can come across the
+    # link held by a traded Pokemon, so there are two ways over rather than one.
+    here = bdsp.unobtainable_in("brilliant-diamond")
+    assert "Armor Fossil" in here["shieldon"]
+    assert "Skull Fossil" in bdsp.unobtainable_in("shining-pearl")["cranidos"]
+
+    # Each half names the other by the name on its own box rather than its ancestor's.
+    assert "Shining Pearl only" in here["palkia"]
+
+
+def test_the_remake_holds_platinums_list_rather_than_its_own_generations() -> None:
+    # 137 forms, and the shape of the answer is the finding: Diamond's 130 plus the seven the
+    # third version added. Not the generation's, not the console's - Platinum's.
+    assert len(BDSP_FORMS) == 137
+    assert set(BDSP_FORMS.values()) == {("brilliant-diamond", "shining-pearl")}
+
+    # Each of the seven was checked on the wiki rather than carried over.
+    for late in ("giratina-origin", "shaymin-sky", "rotom-heat", "rotom-mow"):
+        assert late in BDSP_FORMS
+
+    # And what is not here is not a judgement call: Bulbapedia states that only Pokemon that
+    # exist in the game data - the first four generations, regional forms excluded - can be
+    # transferred in at all.
+    assert not [one for one in BDSP_FORMS if one.endswith(("-alola", "-galar", "-hisui"))]
+    assert not [one for one in BDSP_FORMS if one.endswith(("-mega", "-mega-x", "-gmax"))]
+
+
+def test_two_of_the_form_changes_are_better_here_than_in_platinum() -> None:
+    # The Secret Key was the first of four items Platinum handed out at events. Here it arrives
+    # on its own the moment the Rotom in the Old Chateau is caught - which is the difference
+    # between a living dex of Rotom's six forms being possible and not.
+    assert "Secret Key" in bdsp.FORM_CHANGES["rotom-wash"].requirement
+    assert "events" in bdsp.FORM_CHANGES["rotom-wash"].requirement
+
+    # And Giratina's second shape has one way in rather than two: there is no Distortion World
+    # here, so the Griseous Orb is the whole of it.
+    assert "Distortion World" in bdsp.FORM_CHANGES["giratina-origin"].requirement
+    assert "Griseous Orb" in bdsp.FORM_CHANGES["giratina-origin"].requirement
+
+    # The rest are Diamond and Pearl's own table, meteorites included - checked rather than
+    # carried over: four of them stand on the east side of Veilstone City in these games too.
+    assert bdsp.FORM_CHANGES["deoxys-attack"] is sinnoh.PAIR_FORM_CHANGES["deoxys-attack"]
+    assert bdsp.FORM_CHANGES["unown-b"] is sinnoh.PAIR_FORM_CHANGES["unown-b"]
+
+    # A sex needs no line here: formchanges answers it once for every region.
+    assert not [one for one in bdsp.FORM_CHANGES if one.endswith("-female")]
+

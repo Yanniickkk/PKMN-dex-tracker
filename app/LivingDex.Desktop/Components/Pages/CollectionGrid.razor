@@ -660,14 +660,30 @@ else
     /// not even one size: 43×48 for a Bulbasaur, 121×129 for a Rayquaza. Scaling those with
     /// nearest-neighbour makes every edge ragged.
     ///
-    /// The set names the generation, so the answer is already in the string the dataset carries,
-    /// and one prefix covers every 3D generation: <c>generation-vi</c> is a prefix of
-    /// <c>generation-vii/</c> and <c>generation-viii/</c> and not of <c>generation-v/</c>. That
-    /// held for Alola, for Let's Go, and now for Galar, whose set is a render of the model the
-    /// games show. A game with no set of its own shows today's artwork, which is rendered too.
+    /// The set used to name the generation, and one prefix could stand for every 3D one:
+    /// <c>generation-vi</c> is a prefix of <c>generation-vii/</c> and <c>generation-viii/</c>
+    /// and not of <c>generation-v/</c>. Brilliant Diamond and Shining Pearl ended that. They
+    /// have no sheet of their own anywhere, so they draw from Pokémon HOME's renders and their
+    /// set is called <c>home</c> — not a generation, because four games in two generations will
+    /// share it.
+    ///
+    /// So the question is asked the other way round now: the five drawn generations are named
+    /// and everything else is rendered. That is the safer default of the two — a new set nobody
+    /// has told this about is far likelier to be a render than a hand-drawn grid, and it is
+    /// what a game with no set of its own already fell back to.
     /// </remarks>
+    private static readonly string[] DrawnByHand =
+    [
+        "generation-i/",
+        "generation-ii/",
+        "generation-iii/",
+        "generation-iv/",
+        "generation-v/",
+    ];
+
     private string SpriteScaling =>
-        MainGameSpriteSet is { } set && !set.StartsWith("generation-vi", StringComparison.Ordinal)
+        MainGameSpriteSet is { } set
+        && DrawnByHand.Any(one => set.StartsWith(one, StringComparison.Ordinal))
             ? "is-drawn"
             : string.Empty;
 

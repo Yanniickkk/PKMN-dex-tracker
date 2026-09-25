@@ -166,32 +166,111 @@ which is neither: they are Kanto without being `kanto.py`'s, and a Switch module
 a file those two sat in alone. **Every route this generation declares now has both of its
 ends**, and Generation 8 is what opens the graph again._
 
+### The last six games, read before any of them is written — 2026-09-25
+
+_A reading rather than a step. The six games left share four questions, and answering them once
+is cheaper than meeting each of them six times: the answers change each other, and two of them
+change which game should go first. Nothing here is code._
+
+**Every one of these games needs a source for step 3 that is not PokeAPI.** Measured rather than
+assumed: `sprigatito` and `lechonk` have no encounters at all, `bidoof` has seven versions and
+none of them is `brilliant-diamond`. The bare fact is that the source stops at Sword and Shield.
+That is not new - `encountertables.py` exists because Omega Ruby and Alpha Sapphire had the same
+hole - but from here it is the rule instead of the exception.
+
+- **Brilliant Diamond and Shining Pearl need no new reader at all.** Sinnoh Route 201 carries a
+  second table under its own heading, shaped `Pokemon | Games | Location | Levels | Rate` with
+  **BD** and **SP** in the games column - which is exactly what `table_encounters` already
+  parses, and exactly what `column=` is for. Swarms are a heading inside it, the way tides and
+  floors already are elsewhere.
+  - _**Half right, and the half it got wrong is worth carrying to the other three.** The page
+    shape was the one the reader already parses. Two things in the reader were not: the pair of
+    letters in the Games column was written in as `("OR", "AS")`, and a Generation 8 grass table
+    splits its rate column three ways under a morning, a day and a night icon with no text at
+    all - which only the header row shows. Both are fixed and both are general, so whoever
+    writes Scarlet and Violet should look at the header before trusting a row._
+- **Legends: Arceus and Legends: Z-A share one new reader, and it is a small one.** Neither has
+  a rate and neither has a games column, because neither has a second half: an Arceus
+  sublocation page - Horseshoe Plains, not Obsidian Fieldlands, which only lists names and says
+  to go a level deeper - gives `Pokemon | Levels | Alpha Levels | Time of day | Weather`, and a
+  Z-A Wild Zone page gives the same minus the alphas. Ticks rather than percentages. The time of
+  day and the weather are conditions this dataset already words.
+- **Scarlet and Violet are the only real question, and it is about the record rather than the
+  parser.** South Province (Area One) gives `Pokemon | Games | Terrain | Levels | Probability
+  Weight | Group Rate | Group Pokemon`, grouped under biome headings like "Prairie", with five
+  terrain ticks. **There is no percentage per row** - there is a weight of 60 or 80 or 1, and a
+  group rate on the row that leads a group. `wild.py` records a rate, so either the weight is
+  turned into one or the model grows a second way of saying how likely something is. Decide that
+  before writing the reader, not during. The fixed and special encounters on the same page are
+  in the familiar shape and need none of this.
+- So: **two new readers, not one, and not six.** Whichever is written first should be the Legends
+  one, because it is the simplest and it proves the shape.
+
+**The sprite sheets exist, and the naming rule changed twice.** Probing `Spr_8b_001`, `Spr_8a_001`
+and `Spr_9s_001` gave three 404s, which looked like "no sheets" and was wrong both times - this
+is the Generation 7 lesson again, and reading the Archives' own categories settled it in minutes:
+
+- **Legends: Arceus has its own sheet**: `Spr_8a_NNN[_m|_f].png`, 367 files. `Spr_8a_001` is a
+  404 because Bulbasaur is not in Hisui - the sheet only draws its own 242.
+- **Generation 9 numbers to four digits.** `Spr_9s_0726.png` answers where `Spr_9s_001.png` does
+  not. But the Scarlet and Violet category holds **two files**, so there is no sheet there to
+  speak of.
+- **Legends: Z-A has 35 files and all of them are Megas**: `Spr_9z_0121M.png`. That is Ultra Sun
+  and Ultra Moon's shape - a layer over another sheet rather than a sheet.
+- **Brilliant Diamond and Shining Pearl have nothing.** The only category with their name in it
+  is trainer select-screen models.
+- **What actually draws the modern games is HOME artwork**: `HOME0906.png`, `HOME0003_f.png`,
+  3,143 files, and it resolves under the same md5 path rule as everything else. So four of the
+  six games draw from one shared set rather than from a sheet of their own, and step 6's words -
+  "a picture of each from this game's own sheet" - need to admit that. It is the honest answer:
+  these games have no battle sprite, and a HOME render is what a player of them actually sees in
+  a box.
+- The renders are **512 by 512 with the drawing padded inside**, exactly like Generation 7's 240
+  pixel frames. The Pillow crop `archives.py` already does for those applies unchanged.
+
+**Every one of the six will need its forms written by hand.** `forms.py` says so itself and has
+since Sword and Shield: the version-group rule is switched off for a game whose boxes do not hold
+the generation, and "from here on it stays broken". `REGIONAL` already knows `hisui` and `paldea`.
+So step 8 is a `GALAR_FORMS` for each, and budgeting it as a measurement rather than a switch is
+the difference between half a day and a whole step.
+
+**The dex shapes, from the source:**
+
+- Brilliant Diamond and Shining Pearl: `original-sinnoh`, 151. **But these games do get a
+  National Dex after the Sinnoh one is seen, and PokeAPI does not model that** - it lists only
+  the 151. Step 2 has a decision to make that Galar did not: `nationalDexThrough` is empty for
+  Sword and Shield because those games genuinely have no National Dex, and these do.
+- Legends: Arceus: `hisui`, 242.
+- Scarlet and Violet: `paldea` 400, `kitakami` 200, `blueberry` 243 - **the same three-lists
+  shape as Galar**, and the same trap. Read `galar.FOREIGN_TO_EVERY_DEX` first.
+- Legends: Z-A: `lumiose-city` 232 and `hyperspace` 132, the second being the expansion's.
+
+**And the source knows two things this file does not list.** `mega-dimension` is Z-A's expansion
+and `champions` is a game of its own with a 231-entry dex. Neither has a line in Phase 2. That is
+a scope decision rather than a finding, and it belongs with Z-A rather than before it.
+
 ### Generation 8
 
-_Done: Sword and Shield, which are Galar and the first Pokedex in the series that does not have
-room for everything. What they share is in `galar.py`, which is the region module and the pair's
-both: Generation 8 is those two in Galar, Brilliant Diamond and Shining Pearl in Sinnoh and
-Legends: Arceus in Hisui, and what the five have in common is Pokemon HOME, which `home.py` has
-held since before any of them existed. There is nothing left for a `gen8.py` to say._
+_Done: Sword and Shield in Galar, and Brilliant Diamond and Shining Pearl in Sinnoh. What each
+pair shares is in a module of its own - `galar.py` and `bdsp.py` - and what all four have in
+common is Pokemon HOME, which `home.py` has held since before any of them existed. Legends:
+Arceus is the last of the five, and there is still nothing for a `gen8.py` to say._
 
-_**Every route this pair declares has both of its ends**, and it declared them into a graph that
-was already waiting: HOME is the only door Generation 8 has, so nothing older had to be touched
-to let a Pokemon caught in Red reach Galar._
+_**Every route these four declare has both of its ends**, and they declared them into a graph
+that was already waiting: HOME is the only door Generation 8 has, so nothing older had to be
+touched to let a Pokemon caught in Red reach Galar or Sinnoh._
 
-No National Dex either, and unlike Generation 7 these games cannot hold what is not in their own
-list — step 2 uses the game's own dex, DLC included, and `nationalDexThrough` stays empty. Sword
-and Shield answered that with three lists kept apart and eighty species left out of all of them;
-whichever of the three remaining pairs comes next should read `galar.FOREIGN_TO_EVERY_DEX` before
-assuming its own dex is the whole of what its boxes hold.
+**The generation is not one answer about Pokedexes, it is two.** Sword and Shield have no
+National Dex and cannot hold what is not in their own list - three lists kept apart and eighty
+species left out of all of them, with `nationalDexThrough` empty. Brilliant Diamond and Shining
+Pearl remade the generation that invented the National Dex and kept it: 493, `dexSource` national,
+and a regional list of 151 that is only a page in the game. So the field that Galar left blank
+was filled in for the first time in Generation 8 by a game released two years later.
 
-- [ ] **Brilliant Diamond** (`brilliant-diamond`, gen 8, pair partner: Shining Pearl)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
-- [ ] **Shining Pearl** (`shining-pearl`, gen 8, pair partner: Brilliant Diamond)
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
+_Whichever pair comes next should read both: `galar.FOREIGN_TO_EVERY_DEX` before assuming its own
+dex is the whole of what its boxes hold, and `bdsp.EVOLUTION_GROUP` before assuming a remake
+evolves things its own generation's way._
+
 - [ ] **Legends: Arceus** (`legends-arceus`, gen 8, standalone)
   - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events

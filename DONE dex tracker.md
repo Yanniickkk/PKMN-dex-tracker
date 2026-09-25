@@ -4569,6 +4569,290 @@ _Nothing yet._
     reports a game with a dex and no encounters, and a game with neither has not been claimed
     about yet. Step 2 filled it.
 
+- [x] **Brilliant Diamond** (`brilliant-diamond`, gen 8, pair partner: Shining Pearl) - 2026-09-25
+  - [x] 1 Entity + edges - 2026-09-25
+  - [x] 2 Dex list - 2026-09-25
+  - [x] 3 Wild - 2026-09-25
+  - [x] 4 Gifts & statics - 2026-09-25
+  - [x] 5 Trades & evolutions - 2026-09-25
+  - [x] 6 Sprites - 2026-09-25
+  - [x] 7 Events - 2026-09-25
+  - [x] 8 Alternate forms - 2026-09-25
+  - [x] 9 Validate + smoke test - 2026-09-25
+- [x] **Shining Pearl** (`shining-pearl`, gen 8, pair partner: Brilliant Diamond) - 2026-09-25
+  - [x] 1 Entity + edges - 2026-09-25
+  - [x] 2 Dex list - 2026-09-25
+  - [x] 3 Wild - 2026-09-25
+  - [x] 4 Gifts & statics - 2026-09-25
+  - [x] 5 Trades & evolutions - 2026-09-25
+  - [x] 6 Sprites - 2026-09-25
+  - [x] 7 Events - 2026-09-25
+  - [x] 8 Alternate forms - 2026-09-25
+  - [x] 9 Validate + smoke test - 2026-09-25
+  - Step 1 for both: **`bdsp.py` is new, five new routes, and the dataset is at 36 games and
+    140.** The pair module is the arrangement `lets_go.py` made with `kanto.py`: `sinnoh.py`
+    holds what is true of the place across the generations and is written for Generation 4 -
+    its `cartridge` and its `edges` both hand the question to `ds.py`, which answers with four
+    link cables and Pal Park. Neither sentence is true here.
+  - **The remake is a second entity beside the cartridge, not a newer date on it.** Same region,
+    same 493, different studio, different generation, different way out. Two Sinnohs in one
+    dataset with nothing between them: no route this pair brings goes anywhere near Diamond.
+  - **The National Dex decision went the other way from Galar's**, which is what makes it worth
+    writing down. Sword and Shield were the first games whose boxes hold a list, so their entity
+    carries no number at all. These remake the generation that invented the National Dex, they
+    kept it, and `nationalDexThrough` is 493 - the same field, filled in for the first time in
+    Generation 8.
+  - Three routes each, the same count Galar has: the cable between the halves and HOME both
+    ways. HOME arrived six months after the games did, in May 2022, so for half a year these
+    were the only core games on the console with no way out - which is a fact about a service's
+    release rather than a property of a game, and the dataset grows no field for it.
+  - **Registering them showed that `forms.py`'s rule breaks here too, for a third reason - and
+    it is the reason that shows the rule was never about Dexit.** These hold everything up to a
+    number, so the sentence that explains Galar does not apply and the rule should have been
+    right. It handed them **373 forms** anyway: the same count as Galar and nearly the same
+    list, every Alcremie sweet, an Eternamax Eternatus, thirty-six regional forms. All the rule
+    reads is *when* a form arrived, and these came out after Sword and Shield, so everything is
+    old enough. Bulbapedia states the real limit in one line: only Pokemon that exist in the
+    game data, the first four generations, **regional forms excluded**.
+  - So the rule is off for these two as well and step 8 writes the table. A remake is the
+    clearest case there is: what a game holds is a fact about the game, and a date is no
+    substitute for it.
+  - Three limits on the HOME routes, read rather than assumed, and **none of them changes what a
+    living dex here can hold**: Spinda cannot be transferred either way at all, a Nincada from
+    another game cannot be deposited in, and certain Legendaries may leave a save file only once
+    each. The first two are entries a player fills in the game instead, and the third is a limit
+    on how often a route may be used rather than on where it goes. Step 3 says whether any of
+    them needs more than a docstring.
+  - The withdrawal filter needed no special case: `PresentInTargetDexFilter` asks the target's
+    own list, which is the wiki's own sentence about these games. An Alolan Vulpix is refused
+    because step 2 and step 8 will not put it in the list, not because anything here names it.
+  - 639 pipeline tests, 257 app tests, validation 11 rules with 0 findings. The two game files
+    are an entity and two empty lists, which is what step 1 means.
+  - Step 2 for both: **the 151 Diamond showed, in Diamond's order, and not Platinum's 210.**
+    That is the one place a remake could quietly have grown and did not. The third version of
+    2008 added 59 species to the regional list; these went back past it - Bulbapedia calls it
+    "the Sinnoh Pokedex's return to the original Diamond and Pearl numbering" - so Eevee's
+    family, Togepi's, Rotom and Scyther are National Dex work here the way they were in 2007.
+  - The list is asked of `sinnoh.py` rather than copied, because a Pokedex is a fact about the
+    region and this is the same list: PokeAPI files `original-sinnoh` under both version groups,
+    and four games in two generations now put Turtwig at #001 and Manaphy at #151. Its function
+    was called `pair_dex_entries` and is `original_dex_entries` now - named for the list rather
+    than for a pair, since there are two pairs.
+  - **Two lists doing two jobs, which Galar did not have.** The Pokedex on screen is the
+    region's 151 and what a living dex here aims at is the National Dex the entity carries: 493
+    tiles in the grid, 151 of them named on a page in the game. Every entry's `dex` is empty,
+    because one list needs no label - Galar's three were the exception, not this.
+  - Validation is **2 errors and they are the right two**: `every-entry-has-a-method` against
+    each half, saying their encounters have not been gathered. That is the state the rule was
+    written for. It also says something worth keeping for step 7: of the 151, exactly one -
+    **Manaphy** - is produced by nothing anywhere in the dataset, and the other 150 are all
+    produced by some older game. Diamond and Pearl reach Manaphy through Pokemon Ranger, which
+    these two have no version of.
+  - 642 pipeline tests, 257 app tests.
+  - Step 3 for both: **2,060 wild records for Brilliant Diamond and 2,065 for Shining Pearl,
+    across 82 places, covering 257 and 261 species.** Read off Bulbapedia, because PokeAPI has
+    no encounter for these games at all - not a thin table, none - which is what the reading
+    before Generation 8's remaining games found and is true of all six of them.
+  - **The prediction that this pair needed no new reader was half right, and the half it got
+    wrong is the interesting half.** The page shape is the one `encountertables.py` already
+    parses. Two things in it were not: the pair of letters in the Games column was written into
+    the reader as `("OR", "AS")`, and **a Generation 8 grass table splits its rate column three
+    ways**, under a morning, a day and a night icon with no text.
+  - So a row is up to three slots now. On Sinnoh's thirty route pages **all ninety-two rows that
+    carry three rates carry three different ones**, so folding them into one would have thrown
+    away the whole of what they say - and **0% appears 112 times**, which is the page saying the
+    species is not out at that hour. Those become no slot at all: the difference between a tile
+    a player fills after dark and one they could stand in the grass all morning for and never
+    fill. Three rates that agree say nothing and the hour is dropped, the way a heading that
+    repeats the method column already was.
+  - **The Grand Underground is eighteen caves with a page each**, and it is the reason a
+    remake's encounter list is not its original's: it holds species Sinnoh above ground has
+    none of. Eleven are reached from the tunnels and seven open after the National Pokedex does.
+    Named "Grand Underground, Grassland Cave" and so on, because that is what a player would
+    say; the pages' own split into Visible Encounters and Rare Spawns arrives as the sub-area
+    without anything naming it.
+  - Fifty-six route and town pages plus the eighteen caves, **and not one warning**: every page
+    yielded rows and every species name the wiki writes matched something. The four aliases are
+    Shellos's and Gastrodon's two seas, which is the answer Hoenn gives too.
+  - Version exclusives came out of the tables rather than a list: **20 species only Brilliant
+    Diamond catches and 24 only Shining Pearl does** - Murkrow, Stunky, Scyther, Seel here;
+    Misdreavus, Glameow, Pinsir, Slowpoke there.
+  - Validation is **2 errors and they have changed for the better**: not "this game's encounters
+    have not been gathered" any more, but **Manaphy**, which is in the dex at #151 and which
+    nothing in the dataset produces. Diamond and Pearl reach it through Pokemon Ranger and these
+    two have no version of that. It is step 4's to place or step 7's to explain.
+  - 648 pipeline tests, 257 app tests.
+  - Step 4 for both: **41 gifts and statics each - 3 starters, 6 fossils, 3 handed over, 2 eggs
+    and 27 standing in one spot.** 2,116 records for Brilliant Diamond, covering 295 species.
+    Written out by hand, because there is nothing to write it *onto*: every game before Let's Go
+    had PokeAPI rows for a `GiftDetail` to add a sentence to, and these have none.
+  - **Ramanas Park is the remake's answer to a question Diamond never had to ask.** A Generation
+    4 cartridge got the older legendaries by trading with a Generation 3 cartridge through Pal
+    Park; a Switch game has no cartridge slot to trade with. So these two grow a building, and
+    **seventeen legendaries that used to be somebody else's become theirs** - the birds, the
+    beasts, the tower duo, the giants, the eon duo, the three super-ancient and Mewtwo - each
+    called up by a slate dug out of the Grand Underground. It splits the way a pair always
+    splits: Johto's three and Ho-Oh in Brilliant Diamond, Kanto's three and Lugia in Shining
+    Pearl, the rest in both.
+  - The Distortion Slate is deliberately not recorded. It calls up a second Giratina and
+    Turnback Cave already has the first: a living dex counts what a box can hold, not how many
+    ways there are to fill one page.
+  - **The two Mythical Pokemon in Floaroma Town are the strangest rows in the table, and they
+    are in it because a player can still get them today**: an old woman hands over a Mew if the
+    console has Let's Go save data and an old man a Jirachi if it has Sword or Shield save data.
+    That is a condition on hardware rather than an event that closed. Compare the three below
+    them that really are shut - Oak's Letter and the Member Card were handed out over the
+    internet in 2022 and never since, and the Azure Flute wants a finished Legends: Arceus on
+    the same console. Those three are step 7's clearest cases.
+  - **Step 3 was missing the honey trees and now is not.** They are not on any location page:
+    the wiki keeps one table for all twenty-one trees, so this dataset can say what a slathered
+    tree gives and not which tree - where Diamond, whose slots came from PokeAPI one place at a
+    time, names Valley Windworks and the rest. 15 rows, Munchlax and Heracross among them, and
+    the four trees each save file picks are a requirement rather than a place.
+  - Manaphy is still the only error, and step 4 is where it became certain rather than likely:
+    **the wiki's list of this pair's event Pokemon does not have it.** Diamond and Pearl hatch
+    it from an egg Pokemon Ranger sends over, and there is no Ranger to send it. It is step 7's.
+  - 651 pipeline tests, 257 app tests.
+  - Step 5 for both: **4 traders, 246 evolutions and 9 babies the day care alone produces.**
+    2,375 records for Brilliant Diamond, covering 468 of the 493 a living dex here aims at.
+  - **The one place where treating a remake as a Generation 8 game gives the wrong answer**, and
+    it was measured before it was decided. Asked as `brilliant-diamond-shining-pearl` the
+    evolution reader returns the same 246 records - but seven of them by the newest route, so
+    Eevee would take an Ice Stone and a Leaf Stone, Magneton and Nosepass a Thunder Stone and
+    Feebas a Prism Scale. **Not one of those items is in these games.** Bulbapedia states it
+    outright: the Ice Stone is not obtainable in Brilliant Diamond and Shining Pearl, so Eevee
+    can only evolve into Glaceon with the Ice Rock.
+  - So `EVOLUTION_GROUP` is `diamond-pearl` - the original's, not the remake's - and the rule
+    ids that come out are Diamond's. **`evolution-rules.json` did not change by one byte**,
+    which is the answer being right rather than merely chosen: a Magnezone made at Mt. Coronet
+    in 2007 and one made there in 2021 were made the same way.
+  - Nothing is lost by looking backwards, and that was checked too: both readings give 246
+    records with the same targets. No evolution arrived after Diamond and Pearl for a species
+    this dex holds.
+  - The four traders are the originals' four, read off the wiki rather than assumed - Hilary's
+    Abra for a Machop, Norton's Chatot for a Buizel, Mindy's Haunter for a Medicham, Meister's
+    foreign Magikarp for a Finneon. Same people, same rooms, same wants, so the table stays in
+    `sinnoh.py` and this pair asks for it.
+  - Of the Sinnoh 151, **146 are produced in Brilliant Diamond**: Glameow, Misdreavus, Palkia
+    and Shieldon are the other half's, and Manaphy is nobody's.
+  - 652 pipeline tests, 257 app tests.
+  - Step 6 for both: **493 pictures, 44 MB, from Pokemon HOME rather than from a sheet** -
+    because these games have no sheet. The Archives' only category carrying their name holds
+    trainer select-screen models, and the two files under Scarlet and Violet's are not a sheet
+    either. What the wiki draws the modern games with is HOME's renders, 3,143 of them.
+  - **That is the honest answer as well as the available one.** These games have no battle
+    sprite to photograph: a HOME render is the picture a player sees when they open a box.
+  - **The first set here that is not a generation's.** It is called `home`, not
+    `generation-viii/home`, because four games in two generations will share it - these two,
+    Scarlet and Violet, and whatever Legends: Z-A's thirty-five Mega files do not cover.
+  - HOME spells a name its own way and more simply: four digits, no sheet code, no prefix but
+    its own - `HOME0001.png`. A sheet draws a species with visible sexes as `_m` and `_f` and
+    gives it no plain name at all; HOME marks only the female, so the plain name is always right
+    and there is no second spelling to try. **All 493 answered on the first name asked**, which
+    is the first set in this dataset where nothing had to be guessed at twice.
+  - They arrive padded in a 512 pixel frame, exactly like Generation 7's 240 - so `cropped`
+    applies unchanged and the folder is 44 MB rather than what the frames claimed. 91 KB a
+    picture, which is Galar's 81 with four more years of polygons.
+  - **And it broke an assumption in the app, which is the part worth keeping.** The scaling rule
+    read the generation out of the set name: `generation-vi` as a prefix covered every 3D
+    generation in one stroke. A set called `home` is not a generation. So the question is asked
+    the other way round now - the five hand-drawn generations are named and everything else is a
+    render - which is the safer of the two defaults: a set nobody has told the app about is far
+    likelier to be a render than a hand-drawn grid, and it is what a game with no set of its own
+    already fell back to.
+  - 41 minutes of fetching, paid once. 654 pipeline tests, 257 app tests.
+  - Step 7 for both: **nine entries the two halves cannot fill between them, and exactly one
+    distribution ever covered any of them.** Checked species by species against the wiki's own
+    events table rather than assumed. Validation is back to **11 rules, 0 errors, 0 warnings**
+    for the whole dataset.
+  - Eight of the nine are the other half's version exclusives, and **not one of them has ever
+    been handed out in any distribution in the series** - no Misdreavus, no Glameow, no Palkia,
+    no Shieldon, no Murkrow, no Stunky, no Cranidos, no Dialga. That emptiness is the finding
+    rather than a gap: a version exclusive is filled by the link to the other half, which is
+    what the transfer graph is for.
+  - The ninth is **Manaphy, and the reason is the one place a remake is poorer than the game it
+    remakes.** Diamond and Pearl hatch it from an egg Pokemon Ranger sends across; Ranger is a
+    Nintendo DS game with no version of itself on this console. So these two inherited the hole
+    and not the way out of it.
+  - What covered it is generous and narrow at once: the Manaphy Egg was handed out over the
+    internet **from 19 November 2021, the day the games came out, until 21 February 2022**. A
+    player who bought them at release can fill that entry; one who bought them in March cannot.
+  - Five reasons per half became **eight entries with reasons**, because `spread_unobtainable`
+    pushed them down the evolution lines: Bastiodon behind Shieldon, Mismagius behind
+    Misdreavus, Purugly behind Glameow. Nothing was typed twice.
+  - 656 pipeline tests, 257 app tests.
+  - Step 8 for both: **137 forms each - 94 sexes, 31 cosmetic, 12 functional - 137 form-change
+    records, and 93 more pictures.** `forms.json` goes from 379 to 379, because these are the
+    same forms the Generation 4 cartridges already hold; what changed is which games claim them.
+  - **The shape of the answer is the finding: this is Diamond's 130 plus the seven Platinum
+    added.** Not the generation's list, not the console's - the third version's. Each of the
+    seven was checked on the wiki rather than carried over: Rotom's five appliances are in
+    Rotom's Room in the Team Galactic Eterna Building, Giratina's Origin Forme is the Griseous
+    Orb ("from Platinum to Brilliant Diamond and Shining Pearl, it transforms into its Origin
+    Forme while holding a Griseous Orb"), and Shaymin's Sky Forme is the Gracidea, which the
+    wiki files under Generation VIII key items for these games.
+  - **Two of them are better here than in Platinum, and for a living dex that is not a detail.**
+    The Secret Key was the first of four items Platinum handed out at events; here the player
+    gets it the moment the Rotom in the Old Chateau is caught. And Platinum let only one Rotom
+    possess each appliance at a time and would not let the forms be traded - these will, and
+    they add the Rotom Catalog. **In Platinum a living dex of Rotom's six forms was impossible;
+    here it is not.**
+  - One thing is worse, and it gets its own sentence: there is no Distortion World, so the
+    Griseous Orb is the whole of how Giratina takes its second shape rather than one of two ways.
+  - **What is not here is not a judgement call.** No regional form of anything, no Mega, no
+    Gigantamax, nothing above 493 - Bulbapedia states the limit outright, and `forms.py` had the
+    rule switched off for this pair since step 1 precisely so this step could write the answer
+    instead of inheriting 373 wrong ones.
+  - The meteorites were checked rather than carried over too: the wiki has a "Meteorites in
+    Pokemon Brilliant Diamond and Shining Pearl" section saying four stand on the east side of
+    Veilstone City and a Deoxys in the party changes form when they are inspected. So Diamond
+    and Pearl's own table serves unchanged for everything except those three.
+  - **HOME drew 93 of the 94 sexes and not the ninety-fourth**: there is no female Torchic
+    render. It falls back to the shared set's picture, which is the right Pokemon in another
+    generation's style rather than a hole - the documented answer, working.
+  - 658 pipeline tests, 257 app tests, validation 11 rules with 0 findings.
+  - Step 9 for both: **validation green on all 11 rules with nothing to report**, and a
+    collection made through the wizard on the published exe. Coverage is **465 full, 19 partial,
+    1 missing and 8 explained** per half, against Diamond's 437 full and 47 partial - the
+    remake covers twenty-eight more species in the game itself, and that is the Grand
+    Underground.
+  - **The one missing is Phione, and it is Diamond's too.** It hatches from a Manaphy and
+    nothing in the dataset produces a Manaphy, so the hole the originals have was inherited
+    rather than introduced. Diamond reports the same 1.
+  - **"Sinnoh on a Switch": Brilliant Diamond as main game, and the linked-games step offered
+    every playable game with the route it takes** - "via Poke Transporter, then Pokemon HOME"
+    for Generation 5, "via Pokemon Bank, then Pokemon HOME" for Generations 6 and 7, "via
+    Pokemon HOME" for Let's Go and for Sword and Shield, and Shining Pearl **"via trading"**.
+    Step 1's finding on screen: HOME is the only door, and the pair's own cable is the one
+    exception.
+  - The grid draws **0 of 599** with regional, functional and gender forms on - 493 species and
+    106 forms - and the headless run makes 630 with cosmetic ones too. Every tile off `home`
+    and not one falling back to another set.
+  - **Searching "rotom" gives six tiles at #479** - Rotom, Fan, Frost, Heat, Mow, Wash - which
+    is step 8's whole point standing on the screen: that row is a living dex Platinum could not
+    hold.
+  - The Wash Rotom popup reads **Electric / Water**, the form's own typing, and carries the
+    form-change sentence for both halves with "Eterna City, Team Galactic Eterna Building"
+    under it and "Then to Brilliant Diamond: trading" on the other half's. Its citation line
+    says **"bulbapedia, read 25 Sep 2026"** - which is the Phase 3 citation item visible in the
+    interface rather than only in a file.
+  - The write path was exercised: marking it caught greened the tile, moved the counter to **1
+    of 599**, filled in "Caught on 25/09/2026", and the record landed in the data file as
+    `rotom` / `rotom-wash`, status `inMainGame`, held in `brilliant-diamond`. The user's
+    settings were copied out first and restored byte for byte - same sha256, same 106 bytes -
+    and their own data file was provably untouched: same sha256, same 4,167 bytes, last written
+    two hours before the test began.
+  - Run headless too, once per half, through the app's own dataset loader, dex builder,
+    availability rule, sprite chain and capture store: both halves build the same 630 lines with
+    every form on, every one of them draws, and 584 of 630 are available in Brilliant Diamond
+    alone against 579 in Shining Pearl.
+  - One thing found rather than fixed, written down for Phase 3: **a form with no picture of its
+    own falls back to its species' picture on the same sheet before it falls back to the shared
+    set's picture of the form.** That is right for a Wash Rotom in Black, which should keep the
+    Generation 5 Rotom the game drew - and wrong for the one gender form HOME does not draw, the
+    female Torchic, which now shows the male render instead of the shared female one. One tile
+    in 630, and the rule that makes it is deliberate, so it is a note rather than a change.
+
 ### Virtual Console releases
 
 _Nothing yet._
@@ -4618,6 +4902,7 @@ _Nothing yet._
   - Safe because capture records are keyed by target and never by number: Turtwig is 387 in one
     list and 1 in the other, and it is the same tick either way. A test pins that.
   - Only offered when the game really has both lists.
+
 - [x] A hand-written table's citation should carry the day a human read the page — 2026-09-25
   - The last of the build-day dates. A fetched citation has taken its date from the cache entry
     the answer came out of since the build-time work; what was left were the tables a person

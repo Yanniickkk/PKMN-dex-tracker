@@ -310,3 +310,121 @@ def test_a_heading_reworded_as_nothing_is_dropped() -> None:
 
     assert dive.method is EncounterMethod.DIVE
     assert dive.requirement is None
+
+
+# --- the second pair to keep its tables this way -------------------------------------------------
+
+
+def switch_row(
+    species: str,
+    *,
+    method: str = "Grass",
+    levels: str = "5",
+    rates: tuple[str, ...] = ("20%",),
+    brilliant_diamond: bool = True,
+    shining_pearl: bool = True,
+) -> str:
+    """One row the way a Generation 8 remake's page shapes one: the rate may be split by hour."""
+    cells = "".join(f"<td>{one}</td>" for one in rates)
+
+    return f"""
+    <tr>
+      <td><a href="/wiki/{species}_(Pok%C3%A9mon)">{species}</a></td>
+      <th style="{PRESENT if brilliant_diamond else ABSENT}">BD</th>
+      <th style="{PRESENT if shining_pearl else ABSENT}">SP</th>
+      <td>{method}</td>
+      <td>{levels}</td>
+      {cells}
+    </tr>
+    """
+
+
+def test_a_rate_split_by_hour_is_three_slots_with_the_hour_said() -> None:
+    # Generation 8 writes the rate three times, under a morning, a day and a night icon. On
+    # Sinnoh's thirty route pages every single row that carries three carries three different
+    # ones, so folding them into an average would throw away the whole of what they say.
+    rows = table(switch_row("Starly", rates=("50%", "50%", "40%")))
+    wiki = FakeWiki({"Sinnoh_Route_201": page(rows)})
+
+    found = table_encounters(
+        wiki,
+        game_id="brilliant-diamond",
+        column="BD",
+        pair=("BD", "SP"),
+        pages={"Sinnoh_Route_201": "Route 201"},
+        methods=METHODS,
+        species={"starly"},
+    )
+
+    assert [one.rate_percent for one in found] == [50.0, 50.0, 40.0]
+    assert [one.requirement for one in found] == [
+        "In the morning",
+        "During the day",
+        "At night",
+    ]
+
+
+def test_an_hour_a_species_is_not_there_is_no_slot_rather_than_a_rare_one() -> None:
+    # 0% is the page saying it is not out at that hour. Reading it as a rate would offer a
+    # player a tile they could stand in the grass all morning for and never fill.
+    rows = table(switch_row("Hoothoot", rates=("0%", "0%", "30%")))
+    wiki = FakeWiki({"Sinnoh_Route_201": page(rows)})
+
+    found = table_encounters(
+        wiki,
+        game_id="brilliant-diamond",
+        column="BD",
+        pair=("BD", "SP"),
+        pages={"Sinnoh_Route_201": "Route 201"},
+        methods=METHODS,
+        species={"hoothoot"},
+    )
+
+    assert [(one.rate_percent, one.requirement) for one in found] == [(30.0, "At night")]
+
+
+def test_an_hour_that_changes_nothing_is_not_said_at_all() -> None:
+    # Three of the same number is the page saying the hour does not matter, and a requirement
+    # that is true all day is noise on a tile.
+    wiki = FakeWiki({"Sinnoh_Route_201": page(table(switch_row("Bidoof", rates=("25%",) * 3)))})
+
+    found = table_encounters(
+        wiki,
+        game_id="brilliant-diamond",
+        column="BD",
+        pair=("BD", "SP"),
+        pages={"Sinnoh_Route_201": "Route 201"},
+        methods=METHODS,
+        species={"bidoof"},
+    )
+
+    assert [(one.rate_percent, one.requirement) for one in found] == [(25.0, None)]
+
+
+def test_the_pair_of_letters_is_what_tells_one_generation_from_another() -> None:
+    # The same page carries Diamond and Pearl's tables and these two's, and the rows are told
+    # apart by the letters in the Games column rather than by the heading above them. Until a
+    # second pair needed this, those letters were written into the reader.
+    body = page(table(switch_row("Starly"), row("Starly"), old_row("Starly")))
+    wiki = FakeWiki({"Sinnoh_Route_201": body})
+
+    switch = table_encounters(
+        wiki,
+        game_id="brilliant-diamond",
+        column="BD",
+        pair=("BD", "SP"),
+        pages={"Sinnoh_Route_201": "Route 201"},
+        methods=METHODS,
+        species={"starly"},
+    )
+    remakes = table_encounters(
+        wiki,
+        game_id="omega-ruby",
+        column="OR",
+        pages={"Sinnoh_Route_201": "Route 201"},
+        methods=METHODS,
+        species={"starly"},
+    )
+
+    assert len(switch) == 1
+    assert len(remakes) == 1
