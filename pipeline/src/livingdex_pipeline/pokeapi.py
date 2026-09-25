@@ -33,6 +33,14 @@ class PokeApiClient:
         """
         return self._client.retrieved_on(url)
 
+    def newest_read_under(self, url: str) -> date:
+        """When the most recently read thing under this url was fetched.
+
+        For a citation that names a collection rather than one of its pages, which is a url
+        nobody fetches: the answer it stands for was read chain by chain.
+        """
+        return self._client.newest_read_under(url)
+
     def species_list(self, *, limit: int = 2000, refresh: bool = False) -> list[dict[str, Any]]:
         """Every species, name and url, in National Dex order."""
         page = self.resource(f"pokemon-species?limit={limit}", refresh=refresh)

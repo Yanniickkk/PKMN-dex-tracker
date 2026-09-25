@@ -29,9 +29,17 @@ from ..evolutions import evolution_encounters
 from ..formchanges import FormChange, form_change_encounters, spread
 from ..games import BuildContext
 from ..gifts import GiftDetail, GiftDetails, RecordedGift, gift_encounters, recorded_gifts
-from ..models import AcquisitionMethod, DexEntry, DexTarget, Game, GiftKind, TransferEdge
+from ..models import (
+    AcquisitionMethod,
+    DexEntry,
+    DexTarget,
+    Game,
+    GiftKind,
+    SourceCitation,
+    TransferEdge,
+)
 from ..places import LocationNames
-from ..sources import bulbapedia
+from ..sources import ReadByHand
 from ..trades import InGameTrade, trade_encounters
 from ..wild import RecordedSlot, recorded_encounters, wild_encounters
 from . import ds, exclusives, gbc
@@ -708,7 +716,7 @@ def gbc_acquisition_methods(
     eggs: Mapping[str, EggFrom] | None = None,
     excluded: Mapping[str, str] | None = None,
     handed_over: Sequence[RecordedGift] = (),
-    handed_over_from: str | None = None,
+    handed_over_from: SourceCitation | None = None,
 ) -> list[AcquisitionMethod]:
     """Every way to get something in one Generation 2 release, whichever of the three it is.
 
@@ -745,7 +753,7 @@ def gbc_acquisition_methods(
         handed_over_from=handed_over_from,
         renamed=gbc.RENAMED_PLACES,
         recorded=GBC_CONTEST,
-        recorded_from="Bug-Catching_Contest",
+        recorded_from=READ_ON("Bug-Catching_Contest"),
     )
 
 
@@ -1003,6 +1011,21 @@ DS_FORM_CHANGES: dict[str, FormChange] = {
 }
 
 
+#: The day a person read each page the tables below were typed from.
+#:
+#: A fetched citation takes its date from the cache entry the answer came out of. These have no
+#: fetch to take one from, so the day is written down beside the table that was read - which is
+#: the only place it can come from once the reading is over.
+READ_ON = ReadByHand(
+    {
+        "Baby_Pok%C3%A9mon": date(2026, 9, 22),
+        "Bug-Catching_Contest": date(2026, 9, 22),
+        "In-game_trade": date(2026, 9, 22),
+        "List_of_Pok%C3%A9mon_with_form_differences": date(2026, 9, 23),
+    }
+)
+
+
 def acquisition_methods(
     context: BuildContext,
     *,
@@ -1018,9 +1041,9 @@ def acquisition_methods(
     renamed: Mapping[str, str] | None = None,
     form_changes: Mapping[str, FormChange] | None = None,
     recorded: Sequence[RecordedSlot] = (),
-    recorded_from: str | None = None,
+    recorded_from: SourceCitation | None = None,
     handed_over: Sequence[RecordedGift] = (),
-    handed_over_from: str | None = None,
+    handed_over_from: SourceCitation | None = None,
 ) -> list[AcquisitionMethod]:
     """Every way to get something in one Johto cartridge.
 
@@ -1047,7 +1070,6 @@ def acquisition_methods(
     # Every species the living dex here asks for, which is not the game's own Pokedex. Kanto is
     # half of these games and none of it is in their 256 entries.
     species = context.living_dex(through=through, entries=entries)
-    today = date.today()
     places = LocationNames(api, refresh=context.refresh, renamed=renamed or {})
 
     found: list[AcquisitionMethod] = [
@@ -1095,7 +1117,7 @@ def acquisition_methods(
                 game_id=game_id,
                 day_care=DAY_CARE,
                 eggs=eggs,
-                citation=bulbapedia("Baby_Pok%C3%A9mon", retrieved_on=today),
+                citation=READ_ON("Baby_Pok%C3%A9mon"),
             )
         )
 
@@ -1105,7 +1127,7 @@ def acquisition_methods(
                 game_id=game_id,
                 gifts=handed_over,
                 species=species,
-                citation=bulbapedia(handed_over_from, retrieved_on=today),
+                citation=handed_over_from,
             )
         )
 
@@ -1115,7 +1137,7 @@ def acquisition_methods(
                 game_id=game_id,
                 slots=recorded,
                 species=species,
-                citation=bulbapedia(recorded_from, retrieved_on=today),
+                citation=recorded_from,
             )
         )
 
@@ -1123,7 +1145,7 @@ def acquisition_methods(
         trade_encounters(
             game_id=game_id,
             trades=trades,
-            citation=bulbapedia("In-game_trade", retrieved_on=today),
+            citation=READ_ON("In-game_trade"),
         )
     )
 
@@ -1132,7 +1154,7 @@ def acquisition_methods(
             game_id=game_id,
             forms=context.forms_here(),
             changes=form_changes or {},
-            citation=bulbapedia("List_of_Pok%C3%A9mon_with_form_differences", retrieved_on=today),
+            citation=READ_ON("List_of_Pok%C3%A9mon_with_form_differences"),
         )
     )
 

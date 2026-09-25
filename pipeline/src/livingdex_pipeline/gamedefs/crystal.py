@@ -24,6 +24,7 @@ from datetime import date
 from ..games import BuildContext, GameRegistry
 from ..gifts import GiftDetail, GiftDetails, RecordedGift
 from ..models import AcquisitionMethod, DexEntry, GameData, TransferEdge
+from ..sources import ReadByHand
 from ..trades import InGameTrade
 from . import johto
 
@@ -222,6 +223,14 @@ def dex_entries(context: BuildContext) -> list[DexEntry]:
     return johto.gbc_dex_entries(context, game_id=GAME_ID, unobtainable=UNOBTAINABLE)
 
 
+#: The day a person read the page the table below was typed from.
+#:
+#: Only one, and it is this game's rather than Johto's: the Suicune that stands in Mt. Mortar is
+#: Crystal's alone, so :mod:`johto` has no date for it and is handed the citation instead of a
+#: page name.
+READ_ON = ReadByHand({"Mt._Mortar": date(2026, 9, 22)})
+
+
 def acquisition_methods(
     context: BuildContext,
     entries: list[DexEntry],
@@ -243,7 +252,7 @@ def acquisition_methods(
         trades=TRADES,
         eggs=johto.GBC_EGGS,
         handed_over=HANDED_OVER,
-        handed_over_from="Mt._Mortar",
+        handed_over_from=READ_ON("Mt._Mortar"),
     )
 
 

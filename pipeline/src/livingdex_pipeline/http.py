@@ -145,6 +145,7 @@ class DiskCache:
 
     def __init__(self, root: Path) -> None:
         self.root = root
+        self._newest: dict[str, date | None] = {}
 
     def _paths(self, url: str) -> tuple[Path, Path]:
         digest = hashlib.sha256(url.encode("utf-8")).hexdigest()
@@ -234,6 +235,42 @@ class DiskCache:
                 return date.fromisoformat(recorded)
 
         return date.fromtimestamp(body_path.stat().st_mtime)
+
+    def newest_under(self, prefix: str) -> date | None:
+        """The day the most recently read thing under this url was fetched.
+
+        For a fact that came from a whole collection rather than one page of it. The evolution
+        graph is the only one so far: a build reads every chain it needs and the answer is made
+        of all of them, so the citation names the collection - and a collection url is one
+        nobody fetches, which is how it came to be dated by the build day instead.
+
+        The scan is the whole of one host's metadata and it happens once, because a cache is
+        keyed by the digest of a url and there is no cheaper way to ask what starts with what.
+        Each entry is dated by the same rule one url is, timestamp fallback included: most of
+        the chains in a cache this old were written before the date was recorded, and skipping
+        those would say nothing had ever been read.
+        """
+        if prefix in self._newest:
+            return self._newest[prefix]
+
+        host = urlsplit(prefix).netloc or "unknown"
+        newest: date | None = None
+
+        for meta_path in (self.root / host).glob("*.json"):
+            try:
+                meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+
+            if meta.get("refused") or not meta.get("url", "").startswith(prefix):
+                continue
+
+            read = self.retrieved_on(meta["url"])
+            if read is not None and (newest is None or read > newest):
+                newest = read
+
+        self._newest[prefix] = newest
+        return newest
 
     def forget(self, url: str) -> None:
         for path in self._paths(url):
@@ -350,9 +387,20 @@ class PoliteClient:
         """When the answer at this url was fetched, for whoever has to cite it.
 
         Today for anything not in the cache, which is the honest answer for a page this build
-        is about to ask for.
+        is about to ask for - and the wrong one for a url nobody ever asks for. Cite a
+        collection with :meth:`newest_read_under` instead.
         """
         return self.cache.retrieved_on(url) or date.today()
+
+    def newest_read_under(self, prefix: str) -> date:
+        """When the most recently read thing under this url was fetched.
+
+        For a fact made of a whole collection - the evolution graph is read chain by chain and
+        cited as ``/evolution-chain``, which is a url no build ever fetches. Asking the cache
+        about it got nothing and fell through to today, so those citations moved every day
+        while the chains behind them had not been read in a week.
+        """
+        return self.cache.newest_under(prefix) or date.today()
 
     def get_text(self, url: str, *, refresh: bool = False) -> str:
         return self.fetch(url, refresh=refresh).body.decode("utf-8")

@@ -265,21 +265,6 @@ from the one it looked like._
 
 
 
-- [ ] A hand-written table's citation should carry the day a human read the page
-  - The fetched half is done: a PokeAPI citation now takes its date from the cache entry the
-    answer came out of, so a rebuild from unchanged pages no longer re-dates 27,000 records
-    with the build day. What is left is the 209 records whose source was read by a person and
-    typed in - the in-game trades, the day care, the Bug-Catching Contest, the Karate King -
-    because there is no fetch to take a date from.
-  - Two ways to do it. Either each game module declares when its tables were read
-    (`READ_ON = date(...)`, passed to `bulbapedia(...)`), or the build actually fetches the page
-    it cites and lets the cache answer, which is honest but makes the build depend on a page it
-    does not read. The first is simpler and does not pretend.
-  - A third way turned up at Black 2's step 3 and is worth weighing before the other two:
-    `grottoes.py` reads its page instead of citing it from memory, and its dates come out of the
-    cache for free. That only works where the page is uniform enough to parse, which is not most
-    of the 209 - but a table that is worth parsing never joins the queue in the first place.
-
 ### Generation 7's pictures - 2026-09-24
 
 _Done, and it cost a quarter of what the two items it replaces budgeted. The four Alola

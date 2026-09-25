@@ -152,6 +152,10 @@ class FakeApi:
         """The day the cache says this url was fetched, which a citation carries."""
         return date(2026, 9, 21)
 
+    def newest_read_under(self, url: str) -> date:
+        """The day the newest thing under this url was fetched, for a whole collection."""
+        return date(2026, 9, 21)
+
     def default_pokemon(self, species: str, *, refresh: bool = False) -> str:
         return species
 

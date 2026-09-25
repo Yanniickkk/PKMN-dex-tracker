@@ -4618,3 +4618,48 @@ _Nothing yet._
   - Safe because capture records are keyed by target and never by number: Turtwig is 387 in one
     list and 1 in the other, and it is the same tick either way. A test pins that.
   - Only offered when the game really has both lists.
+- [x] A hand-written table's citation should carry the day a human read the page — 2026-09-25
+  - The last of the build-day dates. A fetched citation has taken its date from the cache entry
+    the answer came out of since the build-time work; what was left were the tables a person
+    read off a wiki and typed in, which have no fetch to take a date from and were taking
+    `date.today()` instead. That said a reader had been on Bulbapedia this morning, and said
+    something different tomorrow about a table nobody had touched.
+  - **The measurement was wrong twice before it was right, and both corrections made the item
+    bigger.** The TODO said 209 records; it was 209 when it was written and Galar has since
+    added 641. Then the first count of what carried today's date turned up 793 - and 491 of
+    those were not hand-written at all but PokeAPI's. Most were honest, because Galar's
+    encounters really were fetched today; 152 were not, and they were in the half that was
+    supposed to be finished.
+  - **Two defects, not one.** The hand-written tables are 31 call sites across eleven modules.
+    The other is four citations that name `pokeapi.co/api/v2/evolution-chain` - the collection
+    rather than one chain in it - because the fact they stand for was read chain by chain.
+    Nothing ever fetches a collection url, so asking the cache about it got nothing and fell
+    through to today: those citations moved every day while what was behind them had not been
+    read in a week.
+  - `ReadByHand` in `sources.py` is the answer to the first: a module states the pages its
+    tables were typed from and the day each was read, and cites through it. What matters is
+    what it does with a page it does not know, which is raise - a new table cannot quietly
+    inherit a date nobody chose for it. Six games are still to be written and each brings
+    tables of its own, which is why this went first rather than last.
+  - The dates are the commit that first carried each table, which is the best evidence there
+    is once the reading is over. They are not all one day per module and that is the point:
+    Hoenn's trades were read on the 22nd and its fossils on the 23rd, and a single date per
+    file would have been a smaller lie rather than none.
+  - Crystal's Suicune has a page of its own - Mt. Mortar - and `johto.py` has no date for it,
+    because it is Crystal's table rather than Johto's. So the two parameters that used to take
+    a page name now take a citation, and the game that read the page dates it.
+  - `DiskCache.newest_under` answers the second: the newest thing read under a url, for a fact
+    made of a whole collection. It scans one host's metadata once, dates each entry by the same
+    rule a single url is dated by - timestamp fallback included, because most chains in a cache
+    this old were written before the date was recorded - and costs 1.8 seconds on a 17,732-file
+    cache. A build still takes 74 seconds.
+  - **Proved rather than argued: the build was run again with the clock moved to 2 October, and
+    the two datasets are byte-identical apart from `builtOn`**, which is the one field that is
+    supposed to say when the build ran. Before this, that experiment moved 2,395 lines.
+  - 641 citations still say 2026-09-25 and every one of them is true: Galar's tables were
+    written today and its encounters fetched today. A date being today is not the bug; a date
+    being today *because* the build ran today is.
+  - Three tests in `test_sources.py`, three in `test_http.py`, and one of them is a guard rather
+    than a check - no module under `gamedefs/` may contain the string `date.today()`. The habit
+    is one line long and comes back easily.
+  - 635 pipeline tests, 257 app tests, validation 11 rules with 0 findings.

@@ -24,7 +24,7 @@ from ..models import (
     TransferEdge,
 )
 from ..places import LocationNames
-from ..sources import bulbapedia
+from ..sources import ReadByHand
 from ..trades import InGameTrade, trade_encounters
 from ..wild import wild_encounters
 from . import hoenn, kanto
@@ -215,6 +215,20 @@ def register(registry: GameRegistry) -> None:
     registry.register(GAME_ID, build, edges(), box_art="Emerald EN boxart.jpg")
 
 
+#: The day a person read each page the tables below were typed from.
+#:
+#: A fetched citation takes its date from the cache entry the answer came out of. These have no
+#: fetch to take one from, so the day is written down beside the table that was read - which is
+#: the only place it can come from once the reading is over.
+READ_ON = ReadByHand(
+    {
+        "Baby_Pok%C3%A9mon": date(2026, 9, 22),
+        "In-game_trade": date(2026, 9, 22),
+        "List_of_Pok%C3%A9mon_with_form_differences": date(2026, 9, 23),
+    }
+)
+
+
 def acquisition_methods(context: BuildContext, entries: list[DexEntry]) -> list[AcquisitionMethod]:
     """Every way to get something in Emerald.
 
@@ -232,7 +246,6 @@ def acquisition_methods(context: BuildContext, entries: list[DexEntry]) -> list[
     # outside the regional dex with nothing recorded against it - in games that produce plenty
     # of them.
     species = context.living_dex(through=hoenn.GBA_NATIONAL_DEX_THROUGH, entries=entries)
-    today = date.today()
     places = LocationNames(api, refresh=context.refresh)
 
     return [
@@ -268,12 +281,12 @@ def acquisition_methods(context: BuildContext, entries: list[DexEntry]) -> list[
             # Hoenn has one day care, and it is on the route between Mauville and Verdanturf.
             day_care="Route 117, Pokemon Day Care",
             eggs=EGGS,
-            citation=bulbapedia("Baby_Pok%C3%A9mon", retrieved_on=today),
+            citation=READ_ON("Baby_Pok%C3%A9mon"),
         ),
         *trade_encounters(
             game_id=GAME_ID,
             trades=TRADES,
-            citation=bulbapedia("In-game_trade", retrieved_on=today),
+            citation=READ_ON("In-game_trade"),
         ),
         # Two forms and both are Kanto's business rather than Hoenn's: the letters of Unown are
         # in the Sevii Islands, and which Deoxys a cartridge makes is decided by the cartridge.
@@ -282,6 +295,6 @@ def acquisition_methods(context: BuildContext, entries: list[DexEntry]) -> list[
             game_id=GAME_ID,
             forms=context.forms_here(),
             changes=kanto.gba_form_changes(POKEAPI_VERSION),
-            citation=bulbapedia("List_of_Pok%C3%A9mon_with_form_differences", retrieved_on=today),
+            citation=READ_ON("List_of_Pok%C3%A9mon_with_form_differences"),
         ),
     ]

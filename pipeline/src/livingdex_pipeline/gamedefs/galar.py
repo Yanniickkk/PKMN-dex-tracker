@@ -68,7 +68,7 @@ from ..models import (
 )
 from ..places import LocationNames
 from ..pokeapi import BASE_URL
-from ..sources import bulbapedia
+from ..sources import ReadByHand
 from ..trades import InGameTrade, trade_encounters
 from ..wild import wild_encounters
 from . import exclusives, home
@@ -971,6 +971,19 @@ def dex_entries(
     ]
 
 
+#: The day a person read each page the tables below were typed from.
+#:
+#: A fetched citation takes its date from the cache entry the answer came out of. These have no
+#: fetch to take one from, so the day is written down beside the table that was read - which is
+#: the only place it can come from once the reading is over.
+READ_ON = ReadByHand(
+    {
+        FORMS_PAGE: date(2026, 9, 25),
+        TRADES_PAGE: date(2026, 9, 25),
+    }
+)
+
+
 def acquisition_methods(
     context: BuildContext,
     *,
@@ -1023,7 +1036,7 @@ def acquisition_methods(
         *trade_encounters(
             game_id=game_id,
             trades=traders(game_id),
-            citation=bulbapedia(TRADES_PAGE, retrieved_on=date.today()),
+            citation=READ_ON(TRADES_PAGE),
         ),
         *evolution_encounters(
             api,
@@ -1039,7 +1052,7 @@ def acquisition_methods(
             game_id=game_id,
             forms=context.forms_here(),
             changes=FORM_CHANGES,
-            citation=bulbapedia(FORMS_PAGE, retrieved_on=date.today()),
+            citation=READ_ON(FORMS_PAGE),
         ),
     ]
 
@@ -1064,7 +1077,7 @@ def acquisition_methods(
             citation=SourceCitation(
                 source="pokeapi",
                 url=f"{BASE_URL}/evolution-chain",
-                retrieved_on=api.retrieved_on(f"{BASE_URL}/evolution-chain"),
+                retrieved_on=api.newest_read_under(f"{BASE_URL}/evolution-chain"),
             ),
         ),
     ]

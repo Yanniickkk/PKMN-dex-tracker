@@ -68,7 +68,7 @@ from ..models import (
 from ..normalise import Normaliser
 from ..places import LocationNames
 from ..pokeapi import BASE_URL
-from ..sources import bulbapedia
+from ..sources import ReadByHand
 from ..trades import InGameTrade, trade_encounters
 from ..wild import wild_encounters
 from . import bank, exclusives
@@ -1194,6 +1194,20 @@ def dex_entries(
     ]
 
 
+#: The day a person read each page the tables below were typed from.
+#:
+#: A fetched citation takes its date from the cache entry the answer came out of. These have no
+#: fetch to take one from, so the day is written down beside the table that was read - which is
+#: the only place it can come from once the reading is over.
+READ_ON = ReadByHand(
+    {
+        "QR_Scanner": date(2026, 9, 24),
+        "In-game_trade": date(2026, 9, 23),
+        "List_of_Pok%C3%A9mon_with_form_differences": date(2026, 9, 24),
+    }
+)
+
+
 def acquisition_methods(
     context: BuildContext,
     *,
@@ -1272,7 +1286,7 @@ def acquisition_methods(
                 game_id=game_id,
                 gifts=recorded,
                 species=species,
-                citation=bulbapedia("QR_Scanner", retrieved_on=date.today()),
+                citation=READ_ON("QR_Scanner"),
             )
         )
 
@@ -1294,7 +1308,7 @@ def acquisition_methods(
             trade_encounters(
                 game_id=game_id,
                 trades=trades,
-                citation=bulbapedia("In-game_trade", retrieved_on=date.today()),
+                citation=READ_ON("In-game_trade"),
             )
         )
 
@@ -1304,9 +1318,7 @@ def acquisition_methods(
                 game_id=game_id,
                 forms=context.forms_here(),
                 changes=form_changes,
-                citation=bulbapedia(
-                    "List_of_Pok%C3%A9mon_with_form_differences", retrieved_on=date.today()
-                ),
+                citation=READ_ON("List_of_Pok%C3%A9mon_with_form_differences"),
             )
         )
 
@@ -1333,7 +1345,7 @@ def acquisition_methods(
                 citation=SourceCitation(
                     source="pokeapi",
                     url=f"{BASE_URL}/evolution-chain",
-                    retrieved_on=api.retrieved_on(f"{BASE_URL}/evolution-chain"),
+                    retrieved_on=api.newest_read_under(f"{BASE_URL}/evolution-chain"),
                 ),
             )
         )

@@ -334,3 +334,29 @@ def test_an_old_cache_entry_falls_back_to_the_file_it_was_written_as(tmp_path: P
 
 def test_a_url_that_was_never_cached_has_no_date_of_its_own(tmp_path: Path) -> None:
     assert DiskCache(tmp_path).retrieved_on("https://example.test/nothing") is None
+
+
+def test_a_collection_is_dated_by_the_newest_thing_read_under_it(tmp_path: Path) -> None:
+    # The evolution graph is read chain by chain and cited as the collection, and a collection
+    # url is one no build ever fetches. Asking the cache about it got nothing and fell through
+    # to today, so that citation moved every day while the chains behind it had not been read
+    # in a week.
+    cache = DiskCache(tmp_path)
+    cache.put("https://example.test/chain/1", b"one", retrieved_on=date(2026, 9, 20))
+    cache.put("https://example.test/chain/2", b"two", retrieved_on=date(2026, 9, 22))
+    cache.put("https://example.test/other/9", b"nine", retrieved_on=date(2026, 9, 25))
+
+    assert cache.newest_under("https://example.test/chain") == date(2026, 9, 22)
+
+
+def test_a_refusal_is_not_something_that_was_read(tmp_path: Path) -> None:
+    # A remembered 404 carries a date too, and it is the day nobody got an answer.
+    cache = DiskCache(tmp_path)
+    cache.put("https://example.test/chain/1", b"one", retrieved_on=date(2026, 9, 20))
+    cache.refuse("https://example.test/chain/2", 404, on=date(2026, 9, 25))
+
+    assert cache.newest_under("https://example.test/chain") == date(2026, 9, 20)
+
+
+def test_a_collection_nothing_was_read_under_has_no_date(tmp_path: Path) -> None:
+    assert DiskCache(tmp_path).newest_under("https://example.test/chain") is None

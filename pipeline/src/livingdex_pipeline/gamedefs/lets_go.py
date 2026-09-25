@@ -54,7 +54,7 @@ from ..models import (
     TransferMechanism,
 )
 from ..places import LocationNames
-from ..sources import bulbapedia
+from ..sources import ReadByHand
 from ..trades import InGameTrade, trade_encounters
 from ..wild import wild_encounters
 from . import exclusives, home, kanto
@@ -683,6 +683,19 @@ def dex_entries(
     ]
 
 
+#: The day a person read each page the tables below were typed from.
+#:
+#: A fetched citation takes its date from the cache entry the answer came out of. These have no
+#: fetch to take one from, so the day is written down beside the table that was read - which is
+#: the only place it can come from once the reading is over.
+READ_ON = ReadByHand(
+    {
+        SILPH_LAPRAS_PAGE: date(2026, 9, 24),
+        TRADERS_PAGE: date(2026, 9, 24),
+    }
+)
+
+
 def acquisition_methods(
     context: BuildContext,
     *,
@@ -759,12 +772,12 @@ def acquisition_methods(
             game_id=game_id,
             gifts=HANDED_OVER,
             species=species,
-            citation=bulbapedia(SILPH_LAPRAS_PAGE, retrieved_on=date.today()),
+            citation=READ_ON(SILPH_LAPRAS_PAGE),
         ),
         *trade_encounters(
             game_id=game_id,
             trades=traders(game_id),
-            citation=bulbapedia(TRADERS_PAGE, retrieved_on=date.today()),
+            citation=READ_ON(TRADERS_PAGE),
         ),
         *evolution_encounters(
             api,
