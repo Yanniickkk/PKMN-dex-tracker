@@ -326,6 +326,51 @@ public class DexBuilderTests
     }
 
     [Fact]
+    public void A_game_counts_every_list_a_player_can_choose_between()
+    {
+        var reference = Reference();
+
+        // Platinum has a National Dex of 493 and a Sinnoh Pokedex with its own numbering: two,
+        // and a switch to choose between them.
+        Assert.Equal(2, reference.DexChoiceCount(Platinum));
+
+        // X has three lists of its own and a National Dex above them: four.
+        Assert.Equal(4, reference.DexChoiceCount(X));
+
+        // And Sword, in this fixture, has one list and no National Dex: nothing to choose.
+        Assert.Equal(1, reference.DexChoiceCount(Sword));
+
+        // A game the dataset has no dex for has no lists at all, and the switch must not be
+        // drawn over an empty grid.
+        Assert.Equal(0, reference.DexChoiceCount(new GameId("nothing")));
+    }
+
+    [Fact]
+    public void Several_lists_and_no_national_dex_is_still_a_choice()
+    {
+        // The case the grid used to miss, and it cost more than any other: a game with several
+        // Pokedexes of its own and no National Dex above them was asked only whether it had a
+        // National Dex, said no, and got no switch - so the first of its lists was on screen
+        // and the others could not be reached. Legends: Z-A is 132 of 364 that way.
+        var game = new GameId("legends-z-a");
+        Game[] games =
+        [
+            new(game, "Pokemon Legends: Z-A", "Legends: Z-A", 9, "Kalos", GameRelease.Cartridge, null, DexSource.GameDex, null),
+        ];
+        DexEntry[] entries =
+        [
+            new(game, DexTarget.ForSpecies(Vivillon), 17, null, "Lumiose"),
+            new(game, DexTarget.ForSpecies(Rotom), 22, null, "Hyperspace"),
+        ];
+
+        var reference = new ReferenceData(games, [], [], entries);
+
+        Assert.False(reference.FindGame(game)!.HasNationalDex);
+        Assert.Equal(["Lumiose", "Hyperspace"], reference.DexNamesOf(game));
+        Assert.Equal(2, reference.DexChoiceCount(game));
+    }
+
+    [Fact]
     public void A_game_with_several_lists_names_them_in_the_order_it_hands_them_over()
     {
         // Not sorted: Coastal would come first, and a player was given Central first.

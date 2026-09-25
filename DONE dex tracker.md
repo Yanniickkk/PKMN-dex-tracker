@@ -5687,3 +5687,30 @@ _Nothing yet._
     test made went to the scratch file instead. Zero instances were running before, one was
     started, and only that one was stopped.
   - 757 pipeline tests, 259 app tests.
+
+### A game with several Pokedexes and no National Dex could only show the first of them - 2026-09-25
+
+_Found by Legends: Z-A's step 9 rather than by Galar's, although Galar has had it since Galar.
+`CollectionGrid` asked whether the game had a National Dex before it drew the dex switch at all,
+which is the right question for Diamond - 493 entries and a Sinnoh Pokedex of 151 - and the
+wrong one for a game whose several lists have no National Dex above them. Those games got no
+switch, so the grid showed the first of their lists and offered no way to the others._
+
+_**What it cost, which is the part that was invisible: 132 of Legends: Z-A's 364 entries - the
+whole Hyperspace Pokedex - and 184 of Sword and Shield's 584.** `galar.DEXES` describes those
+184 as being "behind the switch". The switch was not there._
+
+_The question moved out of the page and into the dataset, where it can be tested:
+`ReferenceData.DexChoiceCount` counts the lists a player can choose between - the game's own,
+plus the National Dex when it has one - and the grid draws the switch when that is more than
+one and offers the National Dex option only when there is one. A game that names no list still
+has one, which is the twenty games written before a dex needed a name._
+
+_One smaller thing fixed with it: the switch started on nothing. `ChosenView` read the chosen
+list, which is empty until a player chooses, where the builder reads "the first this game
+names". Now they agree, so the select opens on the list that is actually on screen._
+
+_Checked in the app on the published exe: the switch reads **Lumiose dex** and **Hyperspace
+dex** with no National Dex option, and switching to the second draws **164 tiles** that could
+not be reached before - Mankey to Rotom, with Meowth's two regional forms and Rotom's five
+appliances among them, every one with its picture. 757 pipeline tests, 261 app tests._

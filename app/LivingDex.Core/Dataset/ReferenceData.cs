@@ -178,6 +178,42 @@ public sealed class ReferenceData
         [.. DexOf(game).Select(entry => entry.Dex).OfType<string>().Distinct()];
 
     /// <summary>
+    /// How many lists a player of this game can choose between, which is what a dex switch is
+    /// for. One means there is nothing to choose and the switch should not be drawn.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// There are two ways to have more than one, and until Legends: Z-A only the first was
+    /// asked about. Diamond has a National Dex of 493 and a Sinnoh Pokédex of 151 with its own
+    /// numbering: two. Sword has no National Dex at all and three lists of its own: also two -
+    /// three, in fact - and the grid used to ask only whether the game had a National Dex.
+    /// </para>
+    /// <para>
+    /// What that cost is worth naming, because it was invisible: a game with several lists and
+    /// no National Dex got no switch, so the grid showed the first of its lists and offered no
+    /// way to the others. 184 of Sword and Shield's 584 entries, and 132 of Legends: Z-A's 364
+    /// - the whole Hyperspace Pokédex - were in the dataset and unreachable in the app.
+    /// </para>
+    /// <para>
+    /// A game that names no list at all still has one: twenty games were written before a dex
+    /// needed a name, and a number that can only belong to one list does not need one.
+    /// </para>
+    /// </remarks>
+    public int DexChoiceCount(GameId game)
+    {
+        var entries = DexOf(game);
+        if (entries.Count == 0)
+        {
+            return 0;
+        }
+
+        var named = DexNamesOf(game).Count;
+        var ofItsOwn = named == 0 ? 1 : named;
+
+        return FindGame(game) is { HasNationalDex: true } ? ofItsOwn + 1 : ofItsOwn;
+    }
+
+    /// <summary>
     /// One entry of one game's dex, or null when that game does not list it.
     /// </summary>
     /// <remarks>

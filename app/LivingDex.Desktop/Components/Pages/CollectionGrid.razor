@@ -30,18 +30,23 @@ else
         <a class="button" href="collections">All collections</a>
     </div>
 
-    @* Two lists, one game. Diamond asks a player for 493 entries and shows a Sinnoh Pokedex of
-       151 with its own numbering; which of the two is on screen is the player's choice. Only
-       offered when the game really has both.
+    @* More than one list, one game. Diamond asks a player for 493 entries and shows a Sinnoh
+       Pokedex of 151 with its own numbering; which of the two is on screen is the player's
+       choice. Only offered when there is a choice to make.
 
-       Two is the usual number and not the rule: X and Y show three Pokedexes of their own, so
-       the game's side of the switch is a list rather than a second option. *@
-    @if (BothDexesExist())
+       Two is the usual number and not the rule. X and Y show three Pokedexes of their own
+       beside the National Dex, so the game's side of the switch is a list rather than a second
+       option - and Sword and Legends: Z-A show several with no National Dex above them at all,
+       which is the case this used to miss. *@
+    @if (Dataset.Reference.DexChoiceCount(_collection.MainGame) > 1)
     {
         <div class="dex-switch">
             <label for="dex-view">Showing</label>
             <select id="dex-view" value="@ChosenView()" @onchange="OnViewChanged">
-                <option value="@NationalOption">National dex</option>
+                @if (HasNationalDex())
+                {
+                    <option value="@NationalOption">National dex</option>
+                }
                 @foreach (var (value, label) in GameDexOptions())
                 {
                     <option value="@value">@label</option>
@@ -567,10 +572,10 @@ else
     }
 
     /// <summary>True when the main game has both a National Dex and a Pokedex of its own.</summary>
-    private bool BothDexesExist() =>
+    /// <summary>Whether the National Dex is one of the lists this game can show.</summary>
+    private bool HasNationalDex() =>
         _collection is not null
-        && Dataset.Reference.FindGame(_collection.MainGame) is { HasNationalDex: true }
-        && Dataset.Reference.DexOf(_collection.MainGame).Count > 0;
+        && Dataset.Reference.FindGame(_collection.MainGame) is { HasNationalDex: true };
 
     /// <summary>What to call the main game's own dex, for example <c>Sinnoh dex</c>.</summary>
     private string RegionalDexName() =>
@@ -584,7 +589,17 @@ else
 
     /// <summary>The value of the option in the switch that is currently on screen.</summary>
     private string ChosenView() =>
-        _view == DexSource.NationalDex ? NationalOption : GameDexOption(_dex);
+        _view == DexSource.NationalDex ? NationalOption : GameDexOption(_dex ?? FirstGameDex());
+
+    /// <summary>
+    /// The list the builder shows when the player has not chosen one, which is the first the
+    /// game names - or nothing at all for a game whose single dex has no name.
+    /// </summary>
+    private string? FirstGameDex() =>
+        _collection is not null
+        && Dataset.Reference.DexNamesOf(_collection.MainGame) is { Count: > 0 } names
+            ? names[0]
+            : null;
 
     /// <summary>
     /// The game's own lists, as (option value, label) pairs: one per Pokédex it names, or a
