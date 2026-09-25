@@ -15,6 +15,7 @@ from pathlib import Path
 
 import httpx
 
+from .archives import ARCHIVES_SHEETS, cropped, first_picture, form_names, species_names
 from .boxart import ARCHIVES_MIN_INTERVAL, BoxArtError, fetch_box_art
 from .emit import (
     DatasetWriter,
@@ -27,7 +28,6 @@ from .emit import (
 from .evolutions import evolution_rules
 from .forms import form_pictures, form_table
 from .games import BuildContext, GameRegistry, UnknownGameError
-from .gen7sprites import ARCHIVES_SHEETS, cropped, first_picture, form_names, species_names
 from .grottoes import MIN_INTERVAL as GROTTO_MIN_INTERVAL
 from .http import PoliteClient, RobotsDisallowed
 from .icons import fetch_icons
@@ -602,7 +602,7 @@ class Build:
         Generation 7 has no battle sprites in the sprite repository - and for Let's Go what it
         does have is animated GIFs a megabyte and a half apiece - so both of that generation's
         folders come off the Bulbagarden Archives instead: a different host, a different naming
-        scheme and five seconds between requests rather than none. :mod:`gen7sprites` holds the
+        scheme and five seconds between requests rather than none. :mod:`archives` holds the
         naming; what is here is the same shape every other set is fetched in, so the dataset
         cannot tell the difference afterwards.
 

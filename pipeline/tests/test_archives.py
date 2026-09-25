@@ -1,4 +1,4 @@
-"""Generation 7's pictures: what they are called, and where the Archives keep them."""
+"""The pictures off the Archives: what they are called, and where the wiki keeps them."""
 
 from __future__ import annotations
 
@@ -9,12 +9,12 @@ from pathlib import Path
 import httpx
 from PIL import Image
 
-from livingdex_pipeline.build import Build
-from livingdex_pipeline.emit import DatasetWriter
-from livingdex_pipeline.gen7sprites import (
+from livingdex_pipeline.archives import (
     ALOLA_SET,
     ARCHIVES,
     ARCHIVES_SHEETS,
+    GALAR,
+    GALAR_SET,
     LETS_GO,
     LETS_GO_SET,
     SM,
@@ -25,6 +25,8 @@ from livingdex_pipeline.gen7sprites import (
     media_url,
     species_names,
 )
+from livingdex_pipeline.build import Build
+from livingdex_pipeline.emit import DatasetWriter
 from livingdex_pipeline.models import (
     DexEntry,
     DexSource,
@@ -168,10 +170,11 @@ def test_two_forms_called_dusk_are_not_the_same_picture() -> None:
     assert form_names(745, form_id="lycanroc-dusk", form_name="Dusk") == ("Spr_7u_745D.png",)
 
 
-def test_the_three_sheets_are_told_apart() -> None:
+def test_the_four_sheets_are_told_apart() -> None:
     # 7p is Let's Go and not Ultra Sun and Ultra Moon. Matching on the number alone would have
-    # given Alola a sheet drawn from the wrong games, at ten times the size.
-    assert (SM, USUM, LETS_GO) == ("7s", "7u", "7p")
+    # given Alola a sheet drawn from the wrong games, at ten times the size. 8s is Galar's, and
+    # it was read off a description page for the same reason rather than guessed at.
+    assert (SM, USUM, LETS_GO, GALAR) == ("7s", "7u", "7p", "8s")
 
 
 # --- and the second folder, which is the same rules with the sheet said out loud -----------------
@@ -201,11 +204,33 @@ def test_what_ultra_sun_added_is_not_read_onto_another_sheet() -> None:
     assert form_names(800, form_id="necrozma-dusk", form_name="Dusk", sheet=LETS_GO) == ()
 
 
-def test_the_two_folders_know_which_sheet_fills_them() -> None:
+def test_the_three_folders_know_which_sheet_fills_them() -> None:
     assert ARCHIVES_SHEETS[LETS_GO_SET] == LETS_GO
+    assert ARCHIVES_SHEETS[GALAR_SET] == GALAR
     # Alola's is the one that works it out from the number, and nothing else does.
     assert ARCHIVES_SHEETS[ALOLA_SET] is None
-    assert LETS_GO_SET != ALOLA_SET
+    assert len({ALOLA_SET, LETS_GO_SET, GALAR_SET}) == 3
+
+    # And Galar's is the first folder in the dataset that is not a Generation 7 one.
+    assert GALAR_SET.startswith("generation-viii/")
+
+
+def test_galar_reads_the_same_rules_as_generation_7_under_a_different_prefix() -> None:
+    # The whole of what changed for a new generation: the sheet's name. Three digits, the same
+    # form codes, the same _m and _f, and a number that decides nothing because these two games
+    # name their own sheet - Melmetal at 809 would otherwise have been asked for on Ultra Sun's.
+    assert species_names(810, sheet=GALAR) == ("Spr_8s_810.png", "Spr_8s_810_m.png")
+    assert species_names(25, sheet=GALAR, sexed=True)[0] == "Spr_8s_025_m.png"
+    assert species_names(809, sheet=GALAR)[0] == "Spr_8s_809.png"
+
+    # Checked on the wiki rather than assumed: the Galarian Meowth is 052G, which is the same
+    # shape as the Alolan one's 052A on either Generation 7 sheet.
+    assert form_names(52, form_id="meowth-galar", form_name="Galar", sheet=GALAR)[0] == (
+        "Spr_8s_052G.png"
+    )
+    assert form_names(52, form_id="meowth-alola", form_name="Alola", sheet=GALAR)[0] == (
+        "Spr_8s_052A.png"
+    )
 
 
 # --- asking for one ---------------------------------------------------------------------------

@@ -1,9 +1,14 @@
-"""Generation 7's pictures, from the Bulbagarden Archives.
+"""The pictures PokeAPI has none of, from the Bulbagarden Archives.
 
 PokeAPI's sprite repository has a folder of battle sprites for every generation from the first
-to the sixth and none for the seventh, so the four Alola cartridges have been drawing the shared
-set since they were written. The Archives have what is missing, under their own names and their
-own rules, and this module is those rules.
+to the sixth and none for the seventh or the eighth, so every game from Sun onwards drew the
+shared set until this module was written. The Archives have what is missing, under their own
+names and their own rules, and this module is those rules.
+
+**This file was called** ``gen7sprites`` **until Galar arrived**, which was true while Alola and
+Let's Go were the only games in it. Sword and Shield are Generation 8 and read exactly the same
+rules - the same three-digit number, the same form codes, the same ``_m`` and ``_f`` - so the
+name was the only thing that had to change.
 
 **Three sheets, and now two folders.** The wiki prefixes a Generation 7 sprite with the games
 it came from, and the three are ``7s`` for Sun and Moon, ``7u`` for Ultra Sun and Ultra Moon,
@@ -71,11 +76,22 @@ USUM = "7u"
 #: Let's Go. 800 pixels square, and not these games' - here so it is not mistaken for ``7u``.
 LETS_GO = "7p"
 
+#: Sword and Shield, whose models the wiki files under "Sword and Shield models".
+#:
+#: The frame is 1080 pixels square and the drawing inside it runs from about 240 to 770, which
+#: is the largest thing in this dataset and the reason :func:`cropped` matters more here than
+#: anywhere. Checked on the description page rather than guessed at, the way ``7p`` was: the
+#: file says "Game model of #810 Grookey from Pokemon Sword and Shield" in as many words.
+GALAR = "8s"
+
 #: The folder under ``dataset/sprites`` that all four Alola cartridges draw from.
 ALOLA_SET = "generation-vii/alola"
 
 #: And the one the two Let's Go games draw from, which shares nothing with it but a generation.
 LETS_GO_SET = "generation-vii/lets-go"
+
+#: Sword and Shield's own folder, which is the first Generation 8 set in the dataset.
+GALAR_SET = "generation-viii/sword-shield"
 
 #: Which sheet a folder is filled from, for the sets that come off the Archives.
 #:
@@ -85,6 +101,7 @@ LETS_GO_SET = "generation-vii/lets-go"
 ARCHIVES_SHEETS: dict[str, str | None] = {
     ALOLA_SET: None,
     LETS_GO_SET: LETS_GO,
+    GALAR_SET: GALAR,
 }
 
 #: How far Sun and Moon's National Dex goes, and so how far their sheet does.
@@ -111,6 +128,10 @@ FORM_CODES: dict[str, str] = {
     # the `7u` sheet is the Partner Cap Pikachu, which is a hat rather than a partner and is
     # keyed by form id in :data:`USUM_FORMS` - one sheet apart, and they never meet.
     "Partner": "P",
+    # Galar's own, checked the same way: ``Spr_8s_052G.png`` is the Galarian Meowth. Step 8 is
+    # what wants it, and it is written here beside the Alolan one because the two sheets spell
+    # a regional form the same way and there is nothing to choose between them.
+    "Galar": "G",
 }
 
 #: Everything Ultra Sun and Ultra Moon drew that Sun and Moon did not.

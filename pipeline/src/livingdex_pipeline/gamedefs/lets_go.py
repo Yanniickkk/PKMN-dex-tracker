@@ -119,7 +119,7 @@ VERSION_GROUP = "lets-go-pikachu-lets-go-eevee"
 #: flat 240 pixel drawing on a Let's Go tile would show a Pokemon from a game whose whole point
 #: is that you can see it standing there.
 #:
-#: PokeAPI does have a Let's Go folder and it cannot be used; :mod:`gen7sprites` says why.
+#: PokeAPI does have a Let's Go folder and it cannot be used; :mod:`archives` says why.
 SPRITE_SET = "generation-vii/lets-go"
 
 #: What the three birds ask, which is the same of all three and is step 3's finding from the

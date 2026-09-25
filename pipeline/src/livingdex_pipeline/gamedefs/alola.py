@@ -165,7 +165,7 @@ RENAMED_SUB_AREAS: dict[str, str] = {}
 #: different kind of picture from the battle sprites every other game here shows.
 #:
 #: So these four drew the shared set until the Bulbagarden Archives were read instead, which is
-#: what :mod:`~livingdex_pipeline.gen7sprites` is. Two things that source settled and this one
+#: what :mod:`~livingdex_pipeline.archives` is. Two things that source settled and this one
 #: could not:
 #:
 #: * **Ultra Sun and Ultra Moon have no sheet of their own.** Their category on the Archives

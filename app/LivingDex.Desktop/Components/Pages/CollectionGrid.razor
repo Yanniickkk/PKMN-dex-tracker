@@ -661,9 +661,10 @@ else
     /// nearest-neighbour makes every edge ragged.
     ///
     /// The set names the generation, so the answer is already in the string the dataset carries,
-    /// and one prefix covers both 3D generations: <c>generation-vi</c> is not a prefix of
-    /// <c>generation-v/</c>. A game with no set of its own shows today's artwork, which is
-    /// rendered too.
+    /// and one prefix covers every 3D generation: <c>generation-vi</c> is a prefix of
+    /// <c>generation-vii/</c> and <c>generation-viii/</c> and not of <c>generation-v/</c>. That
+    /// held for Alola, for Let's Go, and now for Galar, whose set is a render of the model the
+    /// games show. A game with no set of its own shows today's artwork, which is rendered too.
     /// </remarks>
     private string SpriteScaling =>
         MainGameSpriteSet is { } set && !set.StartsWith("generation-vi", StringComparison.Ordinal)
