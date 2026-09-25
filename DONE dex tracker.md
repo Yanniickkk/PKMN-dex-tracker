@@ -3652,7 +3652,8 @@ common is Pokemon HOME, which `home.py` has held since before any of them existe
 
 ### Generation 9
 
-_Nothing yet._
+_One of three. Legends: Z-A is Lumiose City on the Switch, and Scarlet and Violet are still to
+come._
 
 ### Transfer-only nodes
 
@@ -5286,3 +5287,403 @@ _Nothing yet._
     test made went to the scratch file instead. Zero instances were running before, one was
     started, and only that one was stopped.
   - 705 pipeline tests, 259 app tests.
+
+- [x] **Legends: Z-A** (`legends-z-a`, gen 9, standalone) - 2026-09-25
+  - [x] 0 **Verify against a live source first** — dex contents and HOME compatibility - 2026-09-25
+  - [x] 1 Entity + edges - 2026-09-25  - [x] 2 Dex list - 2026-09-25
+  - [x] 3 Wild - 2026-09-25  - [x] 4 Gifts & statics - 2026-09-25
+  - [x] 5 Trades & evolutions - 2026-09-25  - [x] 6 Sprites - 2026-09-25
+  - [x] 7 Events - 2026-09-25  - [x] 8 Alternate forms - 2026-09-25
+  - [x] 9 Validate + smoke test - 2026-09-25
+  - Step 0: **the source is there, both halves of it, and the one thing this game needed a
+    verification step for turned out to be the thing the reading got right.** Nothing written.
+  - **The version group is `legends-za`, not `legends-z-a`.** Order 30, generation IX, one
+    version, two dexes - and `regions` is *empty*. Five of the source's thirty-two version
+    groups have no region and the other four are Colosseum, XD, this game's expansion and
+    Champions, none of which this dataset holds - so this is **the first game in the dataset
+    whose region has to be written by hand**. The game id in this file stays as it is; only the
+    source's spelling changes.
+  - **Both sources agree on both dexes, to the entry.** `lumiose-city` 232, Chikorita to Mewtwo;
+    `hyperspace` 132, Mankey to Zeraora - and Bulbapedia's two list pages count exactly 232 and
+    132 rows. That is the first time a dex has been checked against two sources before it was
+    written rather than after.
+  - **The hole is total, as predicted.** Six species spread over the Lumiose dex, 11 to 33
+    versions of encounter data each, and not one row for any Generation 9 version. Measured, not
+    assumed.
+  - **The reader Hisui forced parses this game unchanged**, and that was proved by running it:
+    `legends_encounters` over the real pages gives **260 rows off twenty `Wild_Zone_N` pages,
+    172 distinct species**, with nothing changed. The shape is `Pokemon | Levels | Time of day
+    x2 | Weather x5`.
+  - **Two times where Hisui had four, five weathers where Hisui had four to seven.** The
+    header-first design was written because the weather block varies between Hisui's own areas;
+    a second game now varies the *time* block too, which nothing in Hisui did. A hard-coded
+    width would have been wrong here in a way no test would have caught.
+  - The headings inside the tables are methods and conditions, exactly as in Hisui: nothing at
+    all for the ordinary rows, `Fixed alpha Pokemon spawns`, and `Only during Main Mission 40` /
+    `Only during Side Mission 017`, which are `METHOD_REQUIREMENTS` rather than methods.
+  - **Forms are run onto the species name again** - `Female`, `Male`, `Meadow Pattern`, `Medium
+    Variety`, `Red Flower`, `Alolan Marowak` - so `FORM_PHRASES` is needed from step 3 rather
+    than discovered in step 8 the way Hisui's was. **And the phrase is sometimes the whole name
+    rather than a suffix**, which Hisui never wrote: "Alolan Marowak", not "MarowakAlolan Form".
+  - **172 of the 232 come out of the wild zones**, so sixty entries are steps 4 and 5's problem.
+    Worth knowing before step 4 rather than at the end of it.
+  - **Mega Dimension folds in, Galar-style, and that is the scope decision made rather than
+    deferred.** `hyperspace` is the expansion's dex - Hyperspace Lumiose's own infobox says
+    "Introduction: Legends: Z-A (Mega Dimension)" - and the source gives it a version group of
+    its own, `mega-dimension`, order 31, sharing that dex. Sword and Shield already answered
+    this: one entity, three dexes, three version groups. Here it is one entity and two.
+  - The expansion's encounters are **eighteen pages organised by type**,
+    `List_of_<Type>-type_hyperspace_wild_zones`, in the same table shape - **but the single-cell
+    heading row is the zone number rather than the method**, so it names a place where every
+    other Legends page names a method. That is the one reader change this game needs, and it is
+    for the expansion rather than the base game.
+  - **The pictures are a layer, not a sheet**: 35 files in `Category:Legends:_Z-A_models`, every
+    one of them a Mega, codes M, MC, MD, MO, MS and MZ, and **not one plain number**. That is
+    Ultra Sun's shape exactly - a layer over another set - and the set underneath is HOME's,
+    which Brilliant Diamond already draws from. They are 670 square where HOME's are 512.
+  - **And the source knows every one of them, which makes step 8 a selection rather than an
+    invention**: thirty species with a new `-mega` variety, plus `absol-mega-z` and
+    `garchomp-mega-z`. That is what `MZ` means - **a second, different Mega for a species that
+    already had one**, which nothing in this dataset has yet.
+  - **HOME: compatible since 2 April 2026, version 4.0.0, and it is a one-way door.** Only the
+    Lumiose and Hyperspace dexes can be transferred in, and *nothing caught or transferred into
+    this game can be sent back to any previous game*. So it is a sink: a withdrawal edge in and
+    no deposit edge that leads anywhere older. The transfer-only note above predicted this in one
+    line; it now has a date and a citation.
+  - **`champions` is out, and for a reason rather than by omission.** The source carries it as a
+    Generation IX version group with a 231-entry dex, which is what made it look like a game.
+    The article says what it is: side series, battle simulation, and **Pokemon originally
+    obtained there cannot be deposited in HOME at all**. Nothing is caught in it and nothing
+    leaves it. That is the call Pokemon GO already gets as a game, for the same reason.
+  - Step 1: **the 38th game, and the first in the dataset with a way in and no way out.** One
+    edge where every Switch game before it brings two, and `legends_z_a.py` is the module.
+  - **The missing half is the finding.** `home.home_edges` draws a deposit and a withdrawal
+    because HOME moves Pokemon both ways with every core series game on the Switch. Not this
+    one: both the game's article and HOME's own say, in the same words, that nothing transferred
+    into it and nothing obtained in it goes back to a previous game. So this game does not call
+    that function at all - the first that does not.
+  - **And the deposit is left undrawn on purpose rather than by omission**, which is the part
+    worth being careful about. A player really can put a Pokemon from this game into HOME and
+    take it out again into this game; that is how two save files on one console swap anything.
+    What they cannot do is take it out anywhere else - so every path the deposit opens leads
+    back here, and `legends_arceus.py` already wrote the rule for that case in another context:
+    a route from a game to itself is one a graph of games has nowhere to draw. Drawing it would
+    not be harmless: this graph answers which games can supply an entry, so the edge would tell
+    a player of Sword that a Pokemon caught here fills a tile there. The docstring says where to
+    start the day a game after this one is added, because then the deposit is what connects them.
+  - **`kalos.py` was written for this game three generations early, and the promise held.** That
+    module's own docstring says Legends: Z-A will read from it and that nothing in it should
+    have to be edited to let that happen. Step 1 asked for one thing - the region's name - and
+    it was there, unedited. Hisui is written as its own region because nobody in that game has
+    heard the word Sinnoh; here the name has not changed and neither has the era, so this is
+    **Kalos**, the same region X and Y are set in. The city is not the region.
+  - **The first game in the dataset whose id is not the source's name for it**, and the check
+    that caught it was written to catch exactly this. `forms.VersionGroupGames` said in its
+    docstring that a game id and PokeAPI's version name are the same string for every game here,
+    and checked it rather than assuming - so the build **stopped** instead of quietly giving
+    this game no forms at all. `pokeapi.VERSION_NAMES` is where the one difference now lives:
+    `legends-z-a` here, `legends-za` there. Thirty-seven games and a table with one row.
+  - Mega Dimension folds in as `EXPANSION`, Galar-style. The pictures are HOME's set with a
+    layer of 35 Megas to come in step 6. Released 16 October 2025, everywhere on one day.
+  - Step 2: **two lists, 364 entries, 364 species - and the two share nothing at all.** That is
+    Galar's shape without Galar's arithmetic, and it is the first game in the dataset with more
+    than one Pokedex whose lists do not overlap. Sword and Shield number a Magikarp once in
+    Galar and again on the Isle of Armor, so their 821 entries are 584 species; the three Kalos
+    lists overlap too. Here 232 + 132 is 364 either way you count it.
+  - **The source and the wiki agree on all 364, in order, with nothing to reconcile.** Both
+    numbers line up and both names do. That is a better result than Hisui's, which disagreed on
+    32 rows - and the 26 rows here whose text is longer than a species name are every one of
+    them the wiki naming a *default*: an Icy Snow Vivillon, a Male Meowstic, a Shield Forme
+    Aegislash, an Ordinary Keldeo. The one row that looked like a real exception was Zygarde,
+    and the page is showing all three formes under one number rather than choosing one.
+  - **There is no leftover, and that was checked by contrast rather than by not finding one** -
+    which is the only way a missing sentence can be checked. Legends: Arceus has the same
+    transfer rule and a clause after it: non-Hisuian regional forms of a listed species cannot
+    come in either, "with the exception of Alolan Vulpix and Alolan Ninetales". That clause is
+    what `HELD_WITHOUT_BEING_LISTED` is. This game's article has the rule and stops. So Galar's
+    leftover is eighty, Hisui's is two, and **this one's is nothing** - the first game with no
+    National Dex whose Pokedexes really are the whole of what its boxes hold.
+  - **What each list is made of, which being disjoint makes worth knowing.** The base game is
+    Kalos: seventy of its 232 are Generation VI species, and there are seventy-two of those in
+    the series - the missing pair being **Hoopa and Volcanion**, which are in the expansion's
+    list instead. So the wiki's own line that all of Generation VI is in the base game is off by
+    exactly its two Mythicals. **And exactly two of the 232 are newer than Kalos**: Drampa from
+    Alola and Falinks from Galar, both of which are in the 35 Mega files step 0 read - so both
+    are there because this game gives them a Mega. Nothing from Generation IX is in the base
+    game's list at all, and 32 of the expansion's 132 are.
+  - **Validation is one error and it is the designed one.** `every-entry-has-a-method` reports a
+    game that brought no methods *once* rather than 364 times, and its own comment says why:
+    that is a game that has not been worked on yet rather than one with gaps. It also counts the
+    interesting number - **42 of the 364 have no source anywhere in the dataset** - and 40 of
+    those are species. The two that are not are **Hoopa and Keldeo**, which every other game
+    produces only as a form target, so a bare species entry for them is uncovered. Worth
+    remembering at step 8 rather than rediscovering.
+  - 721 pipeline tests, 259 app tests. The sprite step drew 216 new HOME renders for this game.
+  - Step 3: **2,582 wild records off thirty-eight pages, and they cover 350 of the 364.** What
+    is left is fourteen, and every one of them is steps 4, 5 and 7's: ten Mythicals and
+    legendaries, and four that only evolve.
+  - **The reader needed one change and step 0 had already named it.** On every other Legends
+    page a one-cell row inside a table says *how* the rows under it are met - "Mass outbreak",
+    "Fixed alpha Pokemon spawns". On the expansion's eighteen pages it says *where* they are.
+    So `legends_encounters` takes a `places` table now: a heading in it names a place, a heading
+    in `METHODS` names a method, and a heading in neither is passed over with a warning - which
+    is what stops the footnote at the foot of each of those tables being read as an 11th zone.
+  - **And it needed a second change nobody had predicted**, which the data found rather than a
+    person: those pages cut themselves into sections by star rating and **number their zones
+    from one again inside every section**, so Fire-type 2* Wild Zone 1 and Fire-type 5* Wild
+    Zone 1 are different places with different Pokemon. The reader now reads a page in document
+    order and remembers the heading above each table. Hisui's pages have exactly one heading -
+    the word "Pokemon" - and nothing there uses it.
+  - _A smaller trap inside that one, worth writing down because it looked right and was not: a
+    css selector for several tags hands back all of one tag and then all of the next, not
+    document order. The first version put every row on a page under that page's **last**
+    heading, and it looked plausible until the counts were printed._
+  - **Thirty-eight pages in two shapes.** Twenty `Wild_Zone_N` pages for the base game, which is
+    Hisui's shape - and a location that says which district, because the whole game is one city
+    and Lumiose's six districts are what Hisui's five areas were. Wild Zone 20 is not in a
+    district at all: it is Centrico Plaza, the roundabout the city is built around, and it is
+    the last to open. Then eighteen pages for the expansion, one per type.
+  - **Four headings where Hisui needed thirteen.** No fishing, nothing shaken out of a tree, no
+    space-time distortions: a Pokemon here is standing in the street and the only question is
+    which street. The other three are a fixed alpha and two missions, and those are
+    requirements rather than methods.
+  - **Forty-eight form phrases against Hisui's sixteen, and a kind of phrase Hisui never wrote.**
+    These pages sometimes write a suffix - "Red Flower", "Amped Form" - and sometimes the whole
+    name over again: "Alolan Marowak", "Galarian Mr. Mime", "Heat Rotom". Most map to nothing,
+    because they name a *default*; what is left is twenty-odd real forms and **nineteen of those
+    belong to another region**. This game introduces no regional form of its own - the wiki says
+    so and step 8 will check it - and holds more of other people's than anything since Galar.
+  - **Rotom's five appliances are here, in the grass.** `legends_arceus.py` found the models
+    under that game's name and a Pokedex entry for each, found nothing saying how a player
+    changed one, and left them out with the evidence for both sides in a comment. This game
+    puts a Heat Rotom in an Electric-type distortion at level 54.
+  - **Two phrases this dataset cannot say, and they are written down rather than quietly zero.**
+    A cell reading "all forms" or "All Flowers" means every one of them is there, and a record
+    names one target - so those 21 rows leave the record about the species. True, and less than
+    the page says. It is Flabebe's line, Vivillon and Furfrou, and **step 8 is where it bites**:
+    those forms will have a tile and nothing here fills it.
+  - 2,582 records, 332 species, 129 of them naming a form, over **520 distinct places** - which
+    is more places than any game in this dataset has ever had. 731 pipeline tests, 259 app tests.
+  - Step 4: **sixty-eight entries over sixty-seven species, which is more than any game in this
+    dataset has ever needed** - and it takes the fourteen uncovered entries down to four. The
+    four left only evolve, which is step 5's.
+  - **A static outnumbers a gift two to one**: forty-seven standing in a spot against twenty-one
+    handed over. That is this game being what it is - a city where things wait on a street
+    corner rather than a region where somebody meets you at a gate.
+  - **Two pages, and neither is cited for something it does not say.** One article lists every
+    Pokemon this game hands over or leaves standing with its level and its place; the gift page
+    is where the *condition* lives - which side mission, which NPC - and it covers only the
+    gifts. So a static cites the list and a gift cites the gift page, which is the shape Hisui's
+    two kinds of citation already had.
+  - **The three this game starts a player with are Chikorita, Tepig and Totodile** - three
+    regions and no Kalos, in a game set in Kalos. The Kalos three are here, and they are three
+    separate side missions rather than a choice; so are the Kanto three, as a choice of one from
+    Mable. **Four sets of first partners in one game**, which nothing else here has.
+  - **Two gifts name a form**, where Hisui needed that field once: Terri's Stunfisk is the
+    Galarian one and the Floette is the Eternal Flower, which is the only one there is.
+  - **Nothing hatches, because nothing breeds.** The article says it in a single line -
+    abilities, breeding and Eggs are not featured - so this is the third game in the dataset
+    with no day care after the Let's Go pair and Legends: Arceus, and the second Legends game
+    running. Written down rather than left as a `breeding_encounters` call quietly not made.
+  - Two smaller things worth keeping. **Melmetal is handed over during Side Mission #193**,
+    which makes this the only game in the dataset that produces one without Pokemon GO - and GO
+    is still an open Phase 3 item for exactly that reason. And the **Old Amber Aerodactyl** is
+    the only thing here the Stone Emporium will not sell until an earlier fossil has been
+    revived, so it is a fossil behind a fossil.
+  - 737 pipeline tests, 259 app tests. 2,650 records: 2,582 wild and 68 handed over or standing.
+  - Step 5: **five traders, 202 evolutions, validation clean for the first time - and a bug in
+    the shared evolution reader that only this game could have found.**
+  - **Five NPC trades, where the other Legends game has none.** `legends_arceus.py` had to write
+    down that not one NPC in Hisui will swap anything; this game puts four on the street and a
+    fifth in the expansion, and **one of them is not optional** - the Pikachu for Heracross is
+    part of Side Mission 002, inside Main Mission 5. Two of the five hand back the species they
+    were given, a Slowpoke for a Slowpoke and a Raichu for a Raichu, which nothing else here
+    does; they are in the table because leaving them out would make it a list of *useful* trades.
+    And the fifth is a trade evolution a player can do alone: the Porygon comes back holding an
+    Up-Grade, so what they end up with is a Porygon2.
+  - **The source has exactly one evolution rule stamped with this game's name**, which was
+    measured rather than guessed: of the 540 chains PokeAPI holds, one detail says `legends-za`
+    and none says `mega-dimension`. It is Hisuian Qwilfish into Overqwil by using Barb Barrage
+    twenty times - a Hisui evolution this game brought back, for a form its own wild tables hold.
+  - **And the fallback that fills the other 201 was handing this game seven instructions a
+    player here cannot follow.** The reader takes the newest way at or before a game's order, so
+    Legends: Z-A - being newer than Legends: Arceus - was told to evolve Kadabra, Machoke and
+    Haunter with a **Linking Cord**, and Onix, Scyther, Porygon and Porygon2 by *using* the item
+    they are normally traded holding. Every one of those is Hisui's own change, and the sources
+    say so in as many words: the Linking Cord's page lists Legends: Arceus as the only game it
+    can be obtained in, and Kadabra's evolution chart marks it **"LA only"**.
+  - **The fix is one sentence and it is about where a fact comes from.** A rule PokeAPI carries
+    is the source saying "this is how it works from here", and carrying it forward is right. A
+    rule in `evolutions.NOT_IN_THE_SOURCE` was typed in by a person from **one item's page in
+    one game** - so it now stays in the version group it was read from. `MissingVariant`'s
+    docstring said the opposite in so many words, and that sentence is now the correction.
+    Seven records changed from "use a Linking Cord" to "trade it", which is what the series does
+    and what this game does: Milotic's own page lists **Trade** as a Legends: Z-A game location,
+    so trading here is a thing a player can do.
+  - _Nothing else in the dataset moved, and that was checked rather than assumed: Legends: Z-A
+    is the only game in it newer than Legends: Arceus, so it is the only one the old rule could
+    ever have reached._
+  - **Four rules are still another game's and are left alone on purpose**, because fixing them
+    would be guessing rather than reading. `feebas-to-milotic` uses ORAS's Beauty condition,
+    `mime-jr-to-mr-mime` carries a literal "in Galar", and Slowpoke's two Galarian evolutions
+    want a Galarica Cuff and Wreath. All four come from PokeAPI rather than from this project's
+    own table, so the sentence above does not touch them, and **all four name a species this
+    game's wild tables already produce** - Milotic in the expansion, Galarian Mr. Mime, Slowbro
+    and Slowking in the hyperspace zones - so no tile turns on them. Worth a reading of its own
+    the day Scarlet and Violet are written, because they will meet the same four.
+  - 202 evolutions: 148 by levelling, 33 by an item, 15 by trading, 6 by something else. 22 of
+    them name a form.
+  - 744 pipeline tests, 259 app tests, **validation 11 rules with 0 errors and 0 warnings** -
+    all 364 entries covered, at step 5 rather than at step 8.
+  - Step 7: **nothing to do, and the working is the point rather than the answer.** Every one
+    of the 364 entries is produced by **this game** - not one is covered only by another game in
+    the dataset, and not one carries an unobtainable reason. So there was nothing to turn from
+    "nothing can produce this" into "nothing you can play can produce this, and here is what
+    once did", and no species' *In events* section had to be opened at all.
+  - **The second game in the dataset of which that is true, after Legends: Arceus - and this one
+    gets there more comfortably.** Hisui had two caveats and this game has neither: Shaymin's
+    request there appears only with Sword or Shield save data on the console and Darkrai's only
+    with Brilliant Diamond or Shining Pearl. Searching every requirement in this game for
+    another game's name, for a date, or for the word distribution turns up **nothing**. All
+    twenty-four legendaries and Mythicals, Mewtwo to Zeraora, are standing in a spot or handed
+    over by somebody in the game.
+  - **How the 364 break down by what reaches them**: 162 by a wild slot and an evolution, 123 by
+    a wild slot alone, 29 by a wild slot and a gift, 24 by a gift or a static alone - which is
+    exactly that set of legendaries - 13 by all three, 7 only by evolving, and 5 involving a
+    trade.
+  - **And the one thing this step leaves open, stated rather than glossed over.** The checklist
+    puts step 7 after step 6 because its input is the list of entries nothing produces. Step 6
+    cannot change that list - a picture is not a way of obtaining anything - so running it early
+    costs nothing. **Step 8 can.** Two of the seven entries reachable only by evolving start
+    from a *form*: Runerigus from a Galarian Yamask and Sirfetch'd from a Galarian Farfetch'd,
+    with no wild slot, gift or trade of their own. Both forms are in the wild tables today, so
+    both chains stand - and `legends_z_a.STANDS_ON_A_FORM` is where that is written down, so
+    step 8 knows what it must not take away.
+  - 747 pipeline tests, 259 app tests, validation still **11 rules with 0 errors and 0
+    warnings**. Nothing was written to the dataset, which is the right outcome for this step.
+  - Step 8: **the rule gave this game 420 forms and it has 90** - a margin of 330, where
+    Hisui's was 276. The fifth game running the rule is wrong about, and by now the rule being
+    wrong is the expected answer rather than the finding.
+  - **Most of that margin is not a judgement at all, and measuring it first is what made this
+    step small.** Of the 420, only **135 are even forms of a species this game lists** - the
+    other 285 belong to species in neither Pokedex, and only Pokemon in those two lists can be
+    here at all. So the real question was 135 wide over 73 species, which is a list a person can
+    read in one sitting.
+  - **There is no sheet to read it off, which is the difference from Hisui.** The Archives keep
+    367 files for Legends: Arceus, one per thing it draws; they keep **35** for this game and
+    every one is a Mega. So the list is assembled from what the game's own sources say: its wild
+    tables, its gifts, its evolutions, and the Game locations row on each species' article.
+  - What it comes to: **sixteen regional forms, sixteen functional, seventeen cosmetic and
+    forty-one sexes.** And every one of the sixteen regional forms belongs to somebody else -
+    four Hisuian, four Alolan, eight Galarian. **This game introduces none of its own**, which
+    the wiki states as a fact about it: the first non-remake core series game since Generation
+    VII not to add a regional form.
+  - **Rotom's five appliances are in this one.** `HISUI_FORMS` leaves them out because nothing
+    there said how a player changes one; here nobody has to change anything - a Heat Rotom is
+    standing in an Electric-type distortion at level 54 and the game's own table says so. The
+    two tables now sit beside each other making opposite calls about the same five forms, each
+    for a reason written down.
+  - **Four things are left out and all four are the same call as Hisui's Rotom.** Hoopa Unbound,
+    Resolute Keldeo, Original Color Magearna and Furfrou's nine trims each have a Pokedex entry
+    written for this game - and a Pokedex entry is exactly what Hisui's Rotom had. What none has
+    is a sentence saying how a player gets one: no Prison Bottle, no Secret Sword, no groomer,
+    and the Game locations row for each names no form. **Seventeen of Vivillon's nineteen
+    patterns are out for the same reason**, and the two that are in are in because the game
+    produces them - a Garden Pattern in the wild tables and the Marine Pattern the museum's
+    Spewpa evolves into.
+  - **And two are out because the game removed the mechanism rather than because nobody read
+    it**: abilities are not featured here, so a Battle Bond Greninja and Zygarde's two Power
+    Construct formes cannot be what they are.
+  - **`FORM_CHANGES` is empty, and that is the finding rather than an omission.** Legends:
+    Arceus needed twelve sentences for 117 forms, eight of them an item used out of the satchel.
+    Every one of this game's ninety is caught, handed over or evolved into. The table is kept
+    empty rather than deleted, because "nothing here is changed into" is a claim about the game
+    worth being able to point at.
+  - **What this adds to the dataset is six forms**, not ninety: the table went from 400 before
+    this game existed to 406, and the six are ones no other game here holds - a Roaming
+    Gimmighoul, three Squawkabilly plumages and two Tatsugiri.
+  - _And it tidied up after step 1. The window in which the rule gave this game every Generation
+    9 form had it fetch fourteen pictures for forms nothing now holds - Paldean Tauros, the
+    Ogerpon masks, Bloodmoon Ursaluna. They name nothing in the dataset and are deleted rather
+    than committed._
+  - **Step 7's one open question is closed**: both forms `STANDS_ON_A_FORM` names survived, so
+    Runerigus and Sirfetch'd are still produced and nothing became unobtainable.
+  - 754 pipeline tests, 259 app tests, full build **11 rules with 0 errors and 0 warnings**.
+  - Step 6: **364 species and 89 of the 90 forms drawn from Pokemon HOME's own set** - and the
+    work was not fetching anything. Every picture was already on disk from steps 1 and 2. The
+    work was teaching the namer how HOME spells a form.
+  - **The comment that had to be deleted had been waiting since Brilliant Diamond.**
+    `archives.form_names` returned a name for a female and nothing at all for any other form of
+    the HOME set, with a comment saying that HOME's way of spelling a form was not read yet and
+    that nothing wanted it. True for as long as the games drawing from this set named no forms
+    between them. **This game names ninety.**
+  - **Read off the category rather than guessed at, on a category nine times Hisui's.** HOME's
+    artwork is 3,126 files and every code in it belongs to one kind of form. Three of the codes
+    are the sheets' own letters a fourth time - `A` Alola, `G` Galar, `H` Hisui - and the rest
+    are HOME's, including three that are two letters where a sheet uses one: `La`, `Sm` and `Su`
+    for a Gourgeist's size. Twenty-six codes cover all ninety.
+  - **Every code was checked against the file's own description page, and Rotom is where that
+    paid.** Its five appliances are `F`, `L`, `O`, `R` and `W`, and only the pages say that `O`
+    is the oven and `L` is the lawnmower. **Guessing alphabetically would have put a washing
+    machine on the microwave's tile** - which is the Generation 7 `7p` lesson applied before it
+    could cost anything instead of four hours afterwards.
+  - _And the same letter means two things, which is why the table is keyed by a form's name and
+    not by a letter: `L` is the lawnmower on a Rotom and Low Key on a Toxtricity, and `W` is the
+    washing machine, the White Flower and the White Plumage._
+  - **The category was wrong once, and the build is what caught it.** Reading it said
+    `HOME0710Sm.png` was missing and that the Small Size Pumpkaboo would fall back - and asking
+    for it returned a picture. The file is there; the category does not list it. **A category is
+    a good index and not a complete one**, which is worth knowing before the next game trusts
+    one. So `HOME_HAS_NO_PICTURE` holds what a build found rather than what the category said,
+    and it holds one thing: Torchic's female, whose `HOME0255_f.png` does not answer.
+  - **And the 35 Mega models are not used at all, which is not a gap.** `Spr_9z` draws Mega
+    Starmie, Mega Clefable and 33 others - and a Mega is not a form in this dataset, because
+    `forms._form` refuses anything the source marks `is_mega`, the same sentence that keeps
+    every Gigantamax out. A Mega reverts when the battle ends and a living dex is about what a
+    box can hold. **So the game about Mega Evolution contributes no tile that a Mega goes on**,
+    by a rule written three generations before it for exactly this reason.
+  - 757 pipeline tests, 259 app tests, full build **11 rules with 0 errors and 0 warnings**.
+  - **And registering it moved `forms.json` before this game has a single Pokedex entry, which
+    is expected rather than a fault.** Until step 8 switches the version-group rule off, that
+    rule hands this game every form that arrived in Generation 9 or earlier: **420 of the 430 in
+    the table**, and it pulled in a set of Generation 9 sprites nothing had asked for yet -
+    Paldean Wooper, Ogerpon's masks, Squawkabilly's plumages. This is the same rhythm Legends:
+    Arceus ran through with 393, and the number is here so step 8 can be checked against it.
+  - 715 pipeline tests, 259 app tests, full build **11 rules with 0 errors and 0 warnings**,
+    and 143 routes where there were 142 - one where every Switch game before it added two.
+  - Step 9: **validation 11 rules with 0 errors and 0 warnings, and a collection made in the
+    app with this game as its main game.** The picker offers it under Generation 9, which says
+    one game, with its box art and "Gen 9 - Kalos" under it.
+  - The headless half first, against the published dataset: **232 tiles with forms off and 290
+    with all four kinds on, every one of them drawn from this game's own set and not one falling
+    back to another.** Nothing is explained as unobtainable, because nothing needs to be.
+  - **256 of the 290 are available in this game alone, and the 34 that are not are all forms and
+    not one is a species** - which is the whole of step 7 restated by the app's own availability
+    rule rather than by the validator.
+  - **The routes read the way step 1 drew them: one edge in, none out.** The linked-games step
+    offers every older game in the dataset and each one says how it would get here - "via Poke
+    Transporter, then Pokemon HOME" for the Generation 5 cartridges, "via Pokemon Bank, then
+    Pokemon HOME" for Generations 6 and 7, "via Pokemon HOME" for the Switch games. One door,
+    and nothing offers a way back.
+  - **One tile read end to end, and it is the one that proves steps 3, 6 and 8 at once.**
+    Vivillon (Garden), Bug / Flying, with its own HOME render, and five wild records reading
+    "Hyperspace Lumiose, Bug-type, 1* Wild Zone 2", "walking up to it", levels 15-17, cited to
+    bulbapedia read 25 September 2026. The three-part place the expansion needed reads as a
+    sentence in the popup rather than as a string with commas in it.
+  - Marking it caught moved the counter to **1 of 290** and wrote one record naming
+    `vivillon-garden` with `holdingGame: legends-z-a`.
+  - **And the smoke test found something that is not this game's fault, which is what a smoke
+    test is for.** The grid shows **the first of a game's Pokedexes and offers no way to the
+    others unless the game also has a National Dex**: `CollectionGrid.BothDexesExist` requires
+    `HasNationalDex: true` before it renders the switch at all. This game has no National Dex
+    and two lists, so **132 of its 364 entries - the whole Hyperspace Pokedex - cannot be shown
+    in the app**. Sword and Shield have the same shape and lose 184 of 584 the same way, which
+    `galar.DEXES` describes as being "behind the switch" - and the switch is not there. The
+    dataset is right and the app cannot show all of it. It is a Phase 3 item now.
+  - Smoke test discipline kept, and checked rather than asserted. The settings file was hashed
+    and backed up (D912EEA4..., 106 bytes), pointed at a scratch data file for the duration and
+    **restored byte for byte** - same hash, same size. The user's own data file was hashed
+    before and after: 2E5BEF75..., 4167 bytes, mtime 12:23:13, unchanged, and the collection the
+    test made went to the scratch file instead. Zero instances were running before, one was
+    started, and only that one was stopped.
+  - 757 pipeline tests, 259 app tests.

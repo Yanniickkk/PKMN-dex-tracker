@@ -465,6 +465,14 @@ class LegendsSlot:
     #: all - can be told from "ticked in several".
     time_columns: int = 0
     weather_columns: int = 0
+    #: The article heading this row's table sits under, or "" when it sits under none.
+    #:
+    #: **Hisui's pages need this and never use it**: one page is one place, and the only heading
+    #: over its table is the word "Pokemon". Z-A's expansion writes its encounters on eighteen
+    #: pages by type, cuts each into sections by star rating, and repeats the same ten zone
+    #: numbers in every section - so the heading is the only thing telling Fire-type 2* Wild
+    #: Zone 1 from Fire-type 3* Wild Zone 1, which are different places with different Pokemon.
+    section: str = ""
 
 
 def legends_encounters(
@@ -477,6 +485,7 @@ def legends_encounters(
     forms: Sequence[Form] = (),
     form_names: Mapping[str, str] | None = None,
     requirements: Mapping[str, str] | None = None,
+    places: Mapping[str, str] | None = None,
     aliases: Mapping[str, str] | None = None,
     refresh: bool = False,
 ) -> list[WildAcquisition]:
@@ -521,6 +530,7 @@ def legends_encounters(
     )
     spelled = form_names or {}
     said = requirements or {}
+    named = places or {}
     found: list[WildAcquisition] = []
 
     for title, location in pages.items():
@@ -536,7 +546,16 @@ def legends_encounters(
             continue
 
         for slot in slots:
-            method = methods.get(slot.group)
+            here = location
+            if (place := named.get(slot.group)) is not None:
+                # The heading names where these rows are rather than how they are met, which is
+                # what the expansion's pages do. The section is part of the name because the
+                # zone numbers start again in each of them.
+                here = f"{location}, {slot.section} {place}".replace(",  ", ", ").rstrip()
+                method = methods.get("")
+            else:
+                method = methods.get(slot.group)
+
             if method is None:
                 continue
 
@@ -568,7 +587,7 @@ def legends_encounters(
                 WildAcquisition(
                     game=game_id,
                     target=target,
-                    location=location,
+                    location=here,
                     method=method,
                     levels=LevelRange(minimum=levels[0], maximum=levels[1]),
                     time_of_day=_listed(slot.times, slot.time_columns),
@@ -621,19 +640,33 @@ def _listed(ticked: Sequence[str], columns: int) -> str | None:
 
 
 def _legends_slots(page: HTMLParser, *, title: str) -> list[LegendsSlot]:
-    """Every Legends row on one page, whichever section of it they sit in."""
+    """Every Legends row on one page, each carrying the heading it sits under.
+
+    Read in document order rather than by pulling the tables out, because the heading above a
+    table is part of what the table says. Nothing in Hisui needed that - one of those pages is
+    one place, and the heading over its table is the word "Pokemon" - and Z-A's expansion cannot
+    do without it: eighteen pages by type, each cut into sections by star rating, each section
+    numbering its zones from one again.
+    """
     body = page.css_first("#mw-content-text")
     if body is None:
         raise EncounterTableError(f"{title} has no article body")
 
     found: list[LegendsSlot] = []
-    for table in body.css("table"):
-        found.extend(_legends_rows(table))
+    section = ""
+
+    # Walked rather than selected: a css selector for several tags hands back all of one tag
+    # and then all of the next, which put every row on a page under that page's last heading.
+    for node in body.traverse(include_text=False):
+        if node.tag in ("h2", "h3", "h4"):
+            section = _text(node)
+        elif node.tag == "table":
+            found.extend(_legends_rows(node, section=section))
 
     return found
 
 
-def _legends_rows(table: Node) -> list[LegendsSlot]:
+def _legends_rows(table: Node, *, section: str = "") -> list[LegendsSlot]:
     """One table's rows, when it is a Legends table, and nothing at all when it is not."""
     rows = table.css("tr")
     if len(rows) < 3:
@@ -660,7 +693,9 @@ def _legends_rows(table: Node) -> list[LegendsSlot]:
 
         made = _legends_slot(cells, group=group, names=names, width=width)
         if made is not None:
-            found.append(replace(made, time_columns=times, weather_columns=weathers))
+            found.append(
+                replace(made, section=section, time_columns=times, weather_columns=weathers)
+            )
 
     return found
 

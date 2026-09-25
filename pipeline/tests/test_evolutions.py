@@ -25,6 +25,10 @@ ORDER = {
     "lets-go-pikachu-lets-go-eevee": 21,
     "sword-shield": 22,
     "legends-arceus": 24,
+    # And the generation after it, which is the first thing newer than Hisui this dataset holds
+    # and so the first that can be handed a way of evolving that is Hisui's own.
+    "legends-za": 26,
+    "mega-dimension": 27,
 }
 
 
@@ -779,3 +783,55 @@ def test_a_hand_written_way_only_joins_the_chain_it_belongs_to() -> None:
     rules = evolution_rules(api, chains=["1"])
 
     assert [one.id for one in rules] == ["magikarp-to-gyarados"]
+
+
+
+def test_a_hand_written_way_does_not_reach_the_game_after_the_one_it_was_read_in() -> None:
+    # The guard the older one is the mirror of, and the bug it was written for was live: Legends
+    # Z-A is newer than Legends: Arceus, so "the newest way at or before this game" handed it the
+    # Linking Cord - an item whose own page lists Legends: Arceus as the only game it can be
+    # obtained in, and whose entry on Kadabra's evolution chart is marked "LA only".
+    chains = {
+        "1": link(
+            "kadabra",
+            [],
+            [link("alakazam", [detail("trade", "red-blue")])],
+        )
+    }
+    api = FakeApi(chains, species={"kadabra": "1", "alakazam": "1"})
+
+    [one] = evolution_encounters(
+        api, game_id="legends-z-a", version_group="legends-za",
+        species=["kadabra", "alakazam"],
+    )
+
+    assert one.rule == "kadabra-to-alakazam-red-blue"
+    assert one.source.source == "pokeapi"
+
+
+def test_a_way_the_source_carries_still_moves_forward() -> None:
+    # The distinction this turns on, kept honest: a rule read off a chain is the source saying
+    # "this is how it works from here", and it is right to carry it. Only a rule a person typed
+    # in from one item's page in one game stays there.
+    chains = {
+        "1": link(
+            "eevee",
+            [],
+            [link("leafeon", [detail("use-item", "sword-shield", item={"name": "leaf-stone"})])],
+        )
+    }
+    api = FakeApi(chains, species={"eevee": "1", "leafeon": "1"})
+
+    [one] = evolution_encounters(
+        api, game_id="legends-z-a", version_group="legends-za", species=["eevee", "leafeon"],
+    )
+
+    # It applies, and it keeps its own citation. The id carries no game's name because there is
+    # only one way of doing it, which is what a rule with no suffix means.
+    assert one.rule == "eevee-to-leafeon"
+    assert one.source.source == "pokeapi"
+
+
+def test_the_hand_written_ways_say_they_are_one_games_own() -> None:
+    # Which is the field that makes the two tests above different, and it is true of all twelve.
+    assert {one.version_group for one in NOT_IN_THE_SOURCE} == {"legends-arceus"}

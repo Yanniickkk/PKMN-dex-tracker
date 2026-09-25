@@ -6,10 +6,12 @@ to get subtly wrong later - a dex source, a National Dex cap, an edge pointing a
 
 from __future__ import annotations
 
+from collections import Counter
 from datetime import date
 
 import pytest
 
+from livingdex_pipeline.archives import HOME_SET
 from livingdex_pipeline.build import default_registry
 from livingdex_pipeline.forms import (
     BDSP_FORMS,
@@ -17,6 +19,7 @@ from livingdex_pipeline.forms import (
     GALAR_FORMS,
     HISUI_FORMS,
     NAMED_BY_HAND,
+    ZA_FORMS,
 )
 from livingdex_pipeline.gamedefs import (
     alola,
@@ -45,6 +48,7 @@ from livingdex_pipeline.gamedefs import (
     kanto,
     leafgreen,
     legends_arceus,
+    legends_z_a,
     lets_go,
     lets_go_eevee,
     lets_go_pikachu,
@@ -135,6 +139,11 @@ VERSION_GROUP_ORDER = {
     "the-crown-tundra": 20,
     "brilliant-diamond-and-shining-pearl": 21,
     "legends-arceus": 22,
+    # Generation 9, which this dataset reaches at Legends: Z-A - and its expansion, which the
+    # source files as a version group of its own the way it does Galar's two.
+    "scarlet-violet": 23,
+    "legends-za": 24,
+    "mega-dimension": 25,
 }
 
 
@@ -1975,6 +1984,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "home",
         "leafgreen",
         "legends-arceus",
+        "legends-z-a",
         "lets-go-eevee",
         "lets-go-pikachu",
         "moon",
@@ -2044,11 +2054,16 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # other half; this one trades only with other copies of itself, and a route from a game to
     # itself is one a graph of games has nowhere to draw. So a deposit and a withdrawal, and
     # nothing else at all.
+    #
+    # And one for Legends: Z-A, which takes that record and halves it. The withdrawal is there
+    # and the deposit is not: nothing transferred into that game, and nothing obtained in it,
+    # goes back to a previous game. It is the first entry in the dataset with a way in and no
+    # way out.
     assert (
         len(routes)
-        == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5 + 5 + 5 + 2
+        == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5 + 5 + 5 + 2 + 1
     )
-    assert len(routes) == 142
+    assert len(routes) == 143
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -4001,7 +4016,7 @@ def test_the_way_out_of_bank_is_lit_now_that_its_other_end_exists() -> None:
     assert out.direction is TransferDirection.ONE_WAY
 
     # One way, and the reason the 3DS era ends here: a Pokemon that has gone into HOME has no
-    # route back to anything with a cartridge slot. What leaves HOME now goes to seven Switch
+    # route back to anything with a cartridge slot. What leaves HOME now goes to eight Switch
     # games and takes nothing away from that sentence.
     leaving_home = [
         edge for edge in default_registry().edges if edge.from_ == home.NODE
@@ -4010,12 +4025,19 @@ def test_the_way_out_of_bank_is_lit_now_that_its_other_end_exists() -> None:
     assert [edge.to for edge in leaving_home] == [
         "brilliant-diamond",
         "legends-arceus",
+        "legends-z-a",
         "lets-go-eevee",
         "lets-go-pikachu",
         "shield",
         "shining-pearl",
         "sword",
     ]
+
+    # Seven of the eight also declare the way back in. The eighth is Legends: Z-A, which is why
+    # that sentence about cartridge slots now has a second half: there is a game on this console
+    # that nothing comes back out of either.
+    into_home = {edge.from_ for edge in default_registry().edges if edge.to == home.NODE}
+    assert {edge.to for edge in leaving_home} - into_home == {"legends-z-a"}
 
     # Two of the seven hand back only what they made themselves, which is the Let's Go rule:
     # anything that reached HOME through Bank was converted to Sword and Shield's format on the
@@ -5936,6 +5958,7 @@ def test_galar_names_its_own_forms_because_nothing_else_can() -> None:
     # Merged rather than chained: an Alolan Raichu is one of Let's Go's traders' and one of the
     # Diglett Trainer's rewards, and either table alone would lose the other's games.
     assert NAMED_BY_HAND["raichu-alola"] == (
+        "legends-z-a",
         "lets-go-eevee",
         "lets-go-pikachu",
         "shield",
@@ -6716,3 +6739,508 @@ def test_the_alolan_vulpix_is_handed_over_as_a_form() -> None:
 
     assert vulpix.form == "vulpix-alola"
     assert not [one for one in legends_arceus.GIFTS if one.form and one.species != "vulpix"]
+
+
+
+def test_the_last_generation_9_game_is_kalos_three_generations_later() -> None:
+    # No api worth the name: at step 1 a build of this game asks the source nothing at all.
+    lumiose = legends_z_a.build(context(legends_z_a.GAME_ID)).game
+
+    assert lumiose.generation == 9
+    assert lumiose.released == date(2025, 10, 16)
+
+    # Not the shape Hisui got, and the difference is what the region field is for. Legends:
+    # Arceus writes Hisui rather than Sinnoh because nobody in that game has heard the word
+    # Sinnoh. Here the name has not changed and neither has the era, so it is Kalos - the same
+    # region X and Y are set in, taken from the module that holds it rather than spelled again.
+    assert lumiose.region == kalos.REGION
+    assert lumiose.region == x.build(context("x")).game.region
+
+    # The second playable entry in the dataset with no other half, after Legends: Arceus.
+    assert lumiose.pair_partner is None
+
+
+def test_the_source_spells_this_game_without_the_second_hyphen() -> None:
+    # Found by asking for version-group/legends-z-a and getting a 404, which is the whole of why
+    # step 0 exists. The id is this dataset's word and matches the title; only the source's
+    # spelling changes.
+    assert legends_z_a.GAME_ID == "legends-z-a"
+    assert legends_z_a.VERSION_GROUP == "legends-za"
+    assert legends_z_a.POKEAPI_VERSION == legends_z_a.VERSION_GROUP
+
+
+def test_the_expansion_folds_in_the_way_galar_folded_in_its_two() -> None:
+    # The source models Mega Dimension as a version group of its own, exactly as it models the
+    # Isle of Armor and the Crown Tundra - and Sword and Shield already answered what to do with
+    # that: one game, several Pokedexes, because a player who owns the expansion is playing one
+    # game. There it is three, here it is two.
+    assert legends_z_a.EXPANSION == "mega-dimension"
+    assert legends_z_a.EXPANSION != legends_z_a.VERSION_GROUP
+    assert len(galar.EVOLUTION_GROUPS) == 3
+
+
+def test_lumiose_holds_two_lists_and_has_no_leftover_beside_them() -> None:
+    lumiose = legends_z_a.build(context(legends_z_a.GAME_ID)).game
+
+    # Galar's answer a third time: no National Pokedex, so the entity carries no number and the
+    # dex lists are the whole claim.
+    assert lumiose.national_dex_through is None
+    assert lumiose.dex_source is DexSource.GAME_DEX
+
+    # And no leftover, so far. Galar holds eighty species none of its three lists names and
+    # Hisui holds two; the sentence about this game names the two Pokedexes and stops. Step 2 is
+    # where that gets checked rather than believed.
+    assert galar.FOREIGN_TO_EVERY_DEX
+    assert legends_arceus.HELD_WITHOUT_BEING_LISTED
+    assert not hasattr(legends_z_a, "HELD_WITHOUT_BEING_LISTED")
+
+
+def test_this_is_the_first_game_with_a_way_in_and_no_way_out() -> None:
+    routes = legends_z_a.edges()
+
+    # One edge, where every Switch game before it brings two. Both the game's article and HOME's
+    # say it in the same words: nothing transferred into this game, and nothing obtained in it,
+    # goes back to a previous game.
+    assert [(one.from_, one.to) for one in routes] == [(home.NODE, "legends-z-a")]
+
+    # Not a game that simply talks to nothing - the fewest any playable game has had until now
+    # was Legends: Arceus's two, and this has half of that.
+    assert len(routes) < len(legends_arceus.edges())
+
+    # And it is genuinely one-directional rather than a both-ways edge read twice.
+    assert routes[0].direction is TransferDirection.ONE_WAY
+
+
+def test_the_deposit_is_left_undrawn_on_purpose_rather_than_forgotten() -> None:
+    # A player really can put a Pokemon from this game into HOME and take it out again into this
+    # game; that is how two save files on one console swap anything. What they cannot do is take
+    # it out anywhere else - so every path the deposit opens leads back here, and a route from a
+    # game to itself is one a graph of games has nowhere to draw.
+    assert not [one for one in legends_z_a.edges() if one.from_ == "legends-z-a"]
+
+    # Drawing it would not be a harmless extra. This graph answers which games can supply an
+    # entry, so the edge would tell a player of Sword that a Pokemon caught here fills a tile
+    # there. Every other Switch game does declare its deposit.
+    assert any(one.from_ == "legends-arceus" for one in legends_arceus.edges())
+    assert any(one.from_ == "brilliant-diamond" for one in brilliant_diamond.edges())
+
+
+def test_the_withdrawal_into_lumiose_asks_the_targets_own_lists() -> None:
+    [withdrawal] = legends_z_a.edges()
+
+    # "Only Pokemon in the Lumiose Pokedex and the Hyperspace Pokedex can be transferred into
+    # Pokemon Legends: Z-A" is this filter's own question, so step 2 is what makes the edge
+    # honest and nothing here has to name a species.
+    assert isinstance(withdrawal.filter, PresentInTargetDexFilter)
+
+    # Not the Let's Go withdrawal, which asks where a Pokemon started rather than what a list
+    # says.
+    assert withdrawal.origin is None
+
+
+def test_nothing_older_was_waiting_for_this_game_to_arrive() -> None:
+    registry = default_registry()
+    declared = {(one.from_, one.to) for one in registry.edges}
+
+    # The expected answer rather than a gap, for the sixth Switch game running: HOME is the only
+    # door, and everything that can reach this game was already reaching HOME. So the one route
+    # it brings is the one route anything in the dataset names it in.
+    assert {one for one in declared if "legends-z-a" in one} == {(home.NODE, "legends-z-a")}
+
+
+def test_the_pictures_are_a_layer_over_homes_renders_rather_than_a_sheet() -> None:
+    # Step 0 read the Archives' own category: 35 files, every one of them a Mega, and not one
+    # plain number. So there is nothing here to draw an ordinary Chikorita with, and the set
+    # underneath is the one Brilliant Diamond and Shining Pearl already draw from.
+    assert legends_z_a.SPRITE_SET == HOME_SET
+    assert legends_z_a.SPRITE_SET == bdsp.SPRITE_SET
+
+    # Which is not what the other Legends game does: that one has a sheet of its own.
+    assert legends_arceus.SPRITE_SET != legends_z_a.SPRITE_SET
+
+
+
+def test_this_game_shows_two_lists_and_every_entry_says_which() -> None:
+    # Galar's shape: two lists that each start at #001, so an entry that does not name its list
+    # is not a fact about anything.
+    api = FakeApi([(1, "chikorita"), (2, "bayleef")])
+    entries = legends_z_a.build(context(legends_z_a.GAME_ID, api)).dex_entries
+
+    assert api.asked_for == ["lumiose-city", "hyperspace"]
+    assert [one.dex for one in entries] == ["Lumiose", "Lumiose", "Hyperspace", "Hyperspace"]
+    assert [one.number for one in entries] == [1, 2, 1, 2]
+    assert all(one.game == "legends-z-a" for one in entries)
+
+
+def test_the_two_lists_share_nothing_which_no_other_multi_list_game_can_say() -> None:
+    # Not Galar's arithmetic. Sword and Shield number a Magikarp once in Galar and again on the
+    # Isle of Armor, so their 821 entries are 584 species; the three Kalos lists overlap too.
+    # These two are 232 and 132, and 364 either way you count.
+    assert legends_z_a.DEX_TOTAL == 364
+    assert legends_z_a.DEX_TOTAL == 232 + 132
+
+    # The two games in the dataset whose entries and species are different numbers.
+    assert galar.DEX_TOTAL == 821
+    assert kalos.DEX_TOTAL == 457
+
+
+def test_the_expansions_list_comes_second_because_it_is_the_expansions() -> None:
+    # A player without Mega Dimension sees one list of 232. The dataset holds the game a player
+    # who owns it plays, which is the call Galar made for its two islands.
+    assert [dex for dex, _ in legends_z_a.DEXES] == ["lumiose-city", "hyperspace"]
+    assert [name for _, name in legends_z_a.DEXES] == ["Lumiose", "Hyperspace"]
+    assert legends_z_a.EXPANSION == "mega-dimension"
+
+
+def test_lumiose_has_no_leftover_beside_its_lists_and_hisui_does() -> None:
+    # The only way a missing sentence can be checked is by contrast. Legends: Arceus has the
+    # same transfer rule and a clause after it - non-Hisuian regional forms cannot come in
+    # either, with two exceptions - and that clause is what its constant holds. The article for
+    # this game has the rule and stops.
+    assert legends_arceus.HELD_WITHOUT_BEING_LISTED
+    assert galar.FOREIGN_TO_EVERY_DEX == 80
+    assert not hasattr(legends_z_a, "HELD_WITHOUT_BEING_LISTED")
+
+
+def test_a_dex_entry_here_carries_no_form_the_way_no_dex_entry_ever_does() -> None:
+    api = FakeApi([(17, "vivillon")])
+    entries = legends_z_a.build(context(legends_z_a.GAME_ID, api)).dex_entries
+
+    # The wiki writes "VivillonIcy Snow Pattern" on that row and 25 others, and every one of
+    # them names a default rather than a choice. These lists number species; which Vivillon is
+    # step 8's.
+    assert {one.target.form for one in entries} == {None}
+
+
+def test_a_reason_can_be_hung_on_an_entry_before_step_7_has_any() -> None:
+    api = FakeApi([(114, "volcanion")])
+    entries = legends_z_a.dex_entries(
+        context(legends_z_a.GAME_ID, api), unobtainable={"volcanion": "nothing here makes one"}
+    )
+
+    # Both lists get the reason, because a reason is about a species and the lists are where it
+    # is numbered. Nothing has one yet: step 7 is what fills this in.
+    assert [one.unobtainable_reason for one in entries] == ["nothing here makes one"] * 2
+
+
+
+def test_the_city_is_read_off_thirty_eight_pages_in_two_shapes() -> None:
+    # Twenty for the base game, one per wild zone, which is the shape Hisui's sublocations have.
+    # Eighteen for the expansion, one per type, which is a shape nothing here had before.
+    assert len(legends_z_a.PAGES) == 38
+    assert len(legends_z_a.DISTRICTS) == 20
+    assert len(legends_z_a.HYPERSPACE_TYPES) == 18
+
+    assert legends_z_a.PAGES["Wild_Zone_1"] == "Vert District, Wild Zone 1"
+    assert legends_z_a.PAGES["Wild_Zone_20"] == "Centrico Plaza, Wild Zone 20"
+    assert legends_z_a.PAGES["List_of_Fire-type_hyperspace_wild_zones"] == (
+        "Hyperspace Lumiose, Fire-type"
+    )
+
+    # The whole game is one city, so what plays the part Hisui's five areas play is Lumiose's
+    # six districts - and the twentieth zone is not in one. Centrico Plaza is the roundabout at
+    # the centre, and it is the last to open.
+    assert set(legends_z_a.DISTRICTS.values()) == {
+        "Vert District",
+        "Rouge District",
+        "Bleu District",
+        "Jaune District",
+        "Magenta District",
+        "Centrico Plaza",
+    }
+
+
+def test_the_expansions_headings_name_a_place_and_the_base_games_name_a_method() -> None:
+    # The one thing about this game that the reader did not already do, found at step 0.
+    assert len(legends_z_a.PLACES) == 10
+    assert legends_z_a.PLACES["Hyperspace Wild Zone 1"] == "Wild Zone 1"
+
+    # A table rather than a set, because a record says what this dataset calls the place: the
+    # page writes "Hyperspace Wild Zone 1" inside an article already called Hyperspace Lumiose.
+    assert "Hyperspace" not in legends_z_a.PLACES["Hyperspace Wild Zone 1"]
+
+    # And nothing in PLACES is a method, or a heading would mean two things at once.
+    assert not set(legends_z_a.PLACES) & set(legends_z_a.METHODS)
+
+
+def test_four_headings_cover_this_game_where_hisui_needed_thirteen() -> None:
+    # No fishing, nothing shaken out of a tree, no space-time distortions. A Pokemon here is
+    # standing in the street and the only question is which street.
+    assert len(legends_z_a.METHODS) == 4
+    assert set(legends_z_a.METHODS.values()) == {EncounterMethod.OVERWORLD}
+    assert len(legends_arceus.METHODS) > len(legends_z_a.METHODS)
+
+    # The three that are not the ordinary rows say something a method cannot.
+    assert set(legends_z_a.METHOD_REQUIREMENTS) == set(legends_z_a.METHODS) - {""}
+
+
+def test_the_form_phrases_are_mostly_the_source_naming_a_default() -> None:
+    phrases = legends_z_a.FORM_PHRASES
+
+    # Forty-eight against Hisui's sixteen, and two kinds of phrase rather than one: these pages
+    # write a suffix sometimes and the whole name over again other times.
+    assert len(phrases) == 48
+    assert phrases["Low Key Form"] == "Low Key"
+    assert phrases["Alolan Marowak"] == "Alola"
+    assert phrases["Heat Rotom"] == "Heat"
+
+    # A phrase that names what a species already is leaves the record about the species.
+    for default in ("Red Flower", "Meadow Pattern", "Male Meowstic", "Amped Form", "Curly Form"):
+        assert phrases[default] == ""
+
+    # And the two the dataset cannot say. A cell reading "all forms" means every one of them is
+    # there and a record names one target, so this is true and less than the page says.
+    assert phrases["all forms"] == ""
+    assert phrases["All Flowers"] == ""
+
+
+def test_rotoms_appliances_are_here_where_hisui_had_to_leave_them_out() -> None:
+    # legends_arceus found the models under that game's name, a Pokedex entry for each, and
+    # nothing saying how a player changed one - so it left them out. Here they are in the grass.
+    assert not [one for one in HISUI_FORMS if one.startswith("rotom-")]
+    appliances = ("Heat", "Wash", "Fan", "Frost", "Mow")
+    assert {legends_z_a.FORM_PHRASES[f"{one} Rotom"] for one in appliances} == set(appliances)
+
+
+
+def test_this_game_hands_over_more_than_any_other_and_most_of_it_is_standing_still() -> None:
+    kinds = Counter(one.kind for one in legends_z_a.GIFTS)
+
+    assert len(legends_z_a.GIFTS) == 68
+    assert kinds[GiftKind.STATIC_ENCOUNTER] == 47
+    assert kinds[GiftKind.STARTER] == 3
+    assert kinds[GiftKind.FOSSIL] == 3
+
+    # A city where things wait on a street corner rather than a region where somebody meets you
+    # at a gate: the statics outnumber everything handed over two to one.
+    assert kinds[GiftKind.STATIC_ENCOUNTER] > sum(kinds.values()) - kinds[GiftKind.STATIC_ENCOUNTER]
+
+    # One species appears twice, and it is the one the two halves of the game disagree about:
+    # Absol is beaten as a Rogue Mega in the expansion and handed over by one in the base game.
+    assert len({one.species for one in legends_z_a.GIFTS}) == 67
+    assert len([one for one in legends_z_a.GIFTS if one.species == "absol"]) == 2
+
+
+def test_the_three_this_game_starts_a_player_with() -> None:
+    starters = [one for one in legends_z_a.GIFTS if one.kind is GiftKind.STARTER]
+
+    # Chikorita, Tepig and Totodile, which is three regions and no Kalos - in a game set in
+    # Kalos. The Kalos three are here too and they are side missions rather than a choice.
+    assert [one.species for one in starters] == ["chikorita", "tepig", "totodile"]
+    assert all(one.level == 5 for one in starters)
+
+    kalos_three = [one.species for one in legends_z_a.GIFTS if one.location in {
+        "Academie Etoile",
+        "Magenta Sector 2",
+        "North Boulevard",
+    }]
+    assert kalos_three == ["chespin", "fennekin", "froakie"]
+    assert not [one for one in legends_z_a.GIFTS if one.species in kalos_three
+                and one.kind is GiftKind.STARTER]
+
+
+def test_two_gifts_name_a_form_because_the_species_would_be_the_wrong_answer() -> None:
+    named = [one for one in legends_z_a.GIFTS if one.form]
+
+    # Terri's Stunfisk is the Galarian one and the Floette is the Eternal Flower, which is the
+    # only one there is. Hisui needed this field once; this game needs it twice.
+    assert {one.form for one in named} == {"stunfisk-galar", "floette-eternal"}
+    assert len(legends_arceus.GIFTS) and len([one for one in legends_arceus.GIFTS if one.form]) == 1
+
+
+def test_the_ten_nothing_else_could_produce_are_here() -> None:
+    # Step 3 left fourteen of the 364 with no source anywhere in the dataset. These close ten of
+    # them; the other four only evolve, which is step 5's.
+    covered = {one.species for one in legends_z_a.GIFTS}
+
+    for one in ("diancie", "volcanion", "keldeo", "meloetta", "genesect", "hoopa", "marshadow",
+                "meltan", "melmetal", "zeraora"):
+        assert one in covered
+
+    for later in ("annihilape", "gholdengo", "armarouge", "ceruledge"):
+        assert later not in covered
+
+
+def test_nothing_here_hatches_because_nothing_here_breeds() -> None:
+    # The article says it in one line: abilities, breeding and Eggs are not featured in this
+    # game. So it is the third in the dataset with no day care, after the Let's Go pair and
+    # Legends: Arceus, and the second Legends game running.
+    assert not [one for one in legends_z_a.GIFTS if one.kind is GiftKind.EGG]
+    assert not [one for one in legends_arceus.GIFTS if one.kind is GiftKind.EGG]
+
+
+def test_a_gift_cites_the_page_that_says_why_and_a_static_the_one_that_says_where() -> None:
+    # Two pages and neither is cited for something it does not say. The event list carries the
+    # level and the place for all sixty-eight; the gift page carries the condition and covers
+    # only the gifts.
+    [stunfisk] = [one for one in legends_z_a.GIFTS if one.species == "stunfisk"]
+    [mewtwo] = [one for one in legends_z_a.GIFTS if one.species == "mewtwo"]
+
+    assert legends_z_a.GIFTS_PAGE in stunfisk.source.url
+    assert legends_z_a.EVENTS_PAGE in mewtwo.source.url
+
+
+
+def test_five_traders_where_the_other_legends_game_has_none() -> None:
+    # legends_arceus had to write down that not one NPC in Hisui will swap anything. This game
+    # puts four on the street and a fifth in the expansion.
+    assert len(legends_z_a.TRADES) == 5
+    assert not hasattr(legends_arceus, "TRADES")
+
+    # And one of the five is not optional: the Pikachu for Heracross is part of Side Mission
+    # 002, which is part of Main Mission 5.
+    [heracross] = [one for one in legends_z_a.TRADES if one.gets == "heracross"]
+    assert heracross.wants == "pikachu"
+    assert "Main Mission 5" in heracross.requirement
+
+
+def test_two_of_the_five_hand_back_what_they_were_given() -> None:
+    # A Slowpoke for a Slowpoke and a Raichu for a Raichu, which nothing else in this dataset
+    # does. They fill no tile a player did not already have, and they are here because leaving
+    # them out would make this a list of useful trades rather than a list of trades.
+    mirrors = [one for one in legends_z_a.TRADES if one.gets == one.wants]
+
+    assert {one.gets for one in mirrors} == {"slowpoke", "raichu"}
+
+
+def test_the_one_trade_evolution_a_player_can_do_alone() -> None:
+    # The NPC hands back a Porygon holding an Up-Grade, so it evolves on arrival. What the
+    # player ends up with is a Porygon2, and that is what the record says.
+    [porygon] = [one for one in legends_z_a.TRADES if one.wants == "porygon"]
+
+    assert porygon.gets == "porygon2"
+    assert "Up-Grade" in porygon.requirement
+
+
+def test_the_evolution_groups_are_this_game_and_its_expansion() -> None:
+    # Galar's shape in miniature, and for the same reason: a rule stamped with the expansion's
+    # name is still this game's.
+    assert legends_z_a.EVOLUTION_GROUPS == ("legends-za", "mega-dimension")
+    assert len(galar.EVOLUTION_GROUPS) == 3
+
+
+
+def test_nothing_in_this_game_is_unobtainable_and_that_is_measured() -> None:
+    # The second game in the dataset with no unobtainable entry, after Legends: Arceus. Step 7
+    # turns "nothing can produce this" into "nothing you can play can produce this, and here is
+    # what once did", and there is nothing here to turn.
+    assert legends_z_a.NOTHING_IS_UNOBTAINABLE
+    assert legends_arceus.NOTHING_IS_UNOBTAINABLE
+
+    # No table of reasons, and no argument about whether one is needed: dex_entries takes them
+    # from a mapping nothing passes.
+    api = FakeApi([(1, "chikorita")])
+    entries = legends_z_a.build(context(legends_z_a.GAME_ID, api)).dex_entries
+
+    assert {one.unobtainable_reason for one in entries} == {None}
+
+
+def test_nothing_here_waits_on_another_game_the_way_two_of_hisuis_do() -> None:
+    # Hisui's two caveats, which this game does not have: Shaymin's request appears only with
+    # Sword or Shield save data on the console and Darkrai's only with Brilliant Diamond or
+    # Shining Pearl. Searching every requirement in this game for another game's name, for a
+    # date or for the word distribution turns up nothing.
+    said = [one.requirement or "" for one in legends_z_a.GIFTS]
+    joined = " ".join(said)
+
+    for word in ("save data", "Sword", "Shield", "Brilliant", "distribution", "Mystery Gift"):
+        assert word not in joined
+
+    # And the thing that makes that easy to believe: every legendary and Mythical in the game is
+    # in this table rather than left to an event.
+    handed = {one.species for one in legends_z_a.GIFTS}
+    for one in ("mewtwo", "xerneas", "yveltal", "zygarde", "diancie", "darkrai", "magearna",
+                "meltan", "melmetal", "zeraora", "hoopa", "volcanion", "keldeo", "meloetta"):
+        assert one in handed
+
+
+def test_step_7_names_the_two_entries_step_8_could_take_away() -> None:
+    # The one thing this step leaves open, because it was run before step 8 rather than after.
+    # Runerigus is evolved from a Galarian Yamask and Sirfetch'd from a Galarian Farfetch'd, and
+    # nothing else in this game produces either.
+    assert legends_z_a.STANDS_ON_A_FORM == {
+        "runerigus": "yamask-galar",
+        "sirfetchd": "farfetchd-galar",
+    }
+
+    # Both forms are in the wild tables today, which is what makes the chains stand - the phrase
+    # the page writes for each one is in the table that says what those phrases mean.
+    assert legends_z_a.FORM_PHRASES["Galarian Yamask"] == "Galar"
+    assert legends_z_a.FORM_PHRASES["Galarian Farfetch'd"] == "Galar"
+
+
+
+def test_the_form_rule_is_off_for_lumiose_and_the_margin_is_the_widest_yet() -> None:
+    # 420 against 90, where Hisui's was 393 against 117. The fifth game running the rule is
+    # wrong about, and by now that is the expected answer rather than the finding.
+    assert "legends-z-a" in FORMS_NAMED_BY_THE_GAME
+    assert len(ZA_FORMS) == 90
+    assert set(ZA_FORMS.values()) == {("legends-z-a",)}
+
+    # Most of the margin is not a judgement at all: only 135 of the 420 were even forms of a
+    # species this game lists, because only Pokemon in its two Pokedexes can be here.
+    assert len(HISUI_FORMS) > len(ZA_FORMS)
+
+
+def test_every_regional_form_here_belongs_to_somebody_else() -> None:
+    # The wiki states it as a fact about the game: the first non-remake core series game since
+    # Generation VII not to introduce a regional form of its own. Sixteen, and all borrowed.
+    regional = sorted(one for one in ZA_FORMS if one.endswith(("-hisui", "-alola", "-galar")))
+
+    assert len(regional) == 16
+    assert not [one for one in ZA_FORMS if one.endswith(("-paldea", "-lumiose", "-gmax"))]
+
+    # Four Hisuian, four Alolan, and the rest Galarian - including the Mr. Mime, the Slowpoke
+    # line and the Yamask that Runerigus stands on.
+    assert len([one for one in regional if one.endswith("-hisui")]) == 4
+    assert len([one for one in regional if one.endswith("-alola")]) == 4
+    assert "yamask-galar" in ZA_FORMS
+    assert "farfetchd-galar" in ZA_FORMS
+
+
+def test_step_8_kept_the_two_forms_step_7_said_it_had_to() -> None:
+    # Runerigus and Sirfetch'd are reachable only by evolving, and each starts from a form.
+    # Take either form away and an entry stops being produced.
+    for form in legends_z_a.STANDS_ON_A_FORM.values():
+        assert form in ZA_FORMS
+
+
+def test_rotoms_five_appliances_are_in_the_form_list_and_not_in_hisuis() -> None:
+    # Step 3 found the phrases; this is the list they end up in. The other Legends game found
+    # the models and no mechanism, so it left the five out - this one skips the mechanism
+    # because a Heat Rotom is standing in an Electric-type distortion at level 54.
+    assert len([one for one in ZA_FORMS if one.startswith("rotom-")]) == 5
+    assert not [one for one in HISUI_FORMS if one.startswith("rotom-")]
+
+
+def test_four_forms_are_left_out_for_the_reason_hisui_left_rotom_out() -> None:
+    # Hoopa Unbound, Resolute Keldeo, Original Color Magearna and Furfrou's nine trims each have
+    # a Pokedex entry written for this game - and a Pokedex entry is what Hisui's Rotom had too.
+    # None has a sentence saying how a player gets one.
+    for absent in ("hoopa-unbound", "keldeo-resolute", "magearna-original"):
+        assert absent not in ZA_FORMS
+
+    assert not [one for one in ZA_FORMS if one.startswith("furfrou-")]
+
+    # And seventeen of Vivillon's nineteen patterns, for the same reason. The two that are in
+    # are in because the game produces them: one in a wild table, one out of the museum's Spewpa.
+    assert {one for one in ZA_FORMS if one.startswith("vivillon-")} == {
+        "vivillon-garden",
+        "vivillon-marine",
+    }
+
+
+def test_two_forms_are_out_because_the_game_removed_the_mechanism() -> None:
+    # Abilities are not featured in this game, which the article says in one line. So a Battle
+    # Bond Greninja and Zygarde's two Power Construct formes cannot be what they are. That is a
+    # mechanism the game took away rather than one nobody has read.
+    assert "greninja-battle-bond" not in ZA_FORMS
+    assert not [one for one in ZA_FORMS if one.startswith("zygarde-")]
+
+
+def test_nothing_in_this_game_is_changed_into() -> None:
+    # Legends: Arceus needed twelve sentences for 117 forms. Every one of this game's ninety is
+    # caught, handed over or evolved into, so the table is empty - and kept, because "nothing
+    # here is changed into" is a claim about the game worth being able to point at.
+    assert legends_z_a.FORM_CHANGES == {}
+    assert legends_arceus.FORM_CHANGES

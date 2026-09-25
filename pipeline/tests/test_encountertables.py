@@ -508,6 +508,7 @@ def read_legends(
     requirements=None,
     forms=(),
     form_names=None,
+    places=None,
 ):
     wiki = FakeWiki({"Horseshoe_Plains": page(body)})
 
@@ -520,6 +521,7 @@ def read_legends(
         species=species,
         forms=forms,
         form_names=form_names,
+        places=places,
     )
 
 
@@ -692,3 +694,82 @@ def test_a_phrase_that_names_a_default_leaves_the_record_about_the_species() -> 
 
     assert burmy.target.form is None
     assert shellos.target.form is None
+
+
+
+def test_a_heading_can_name_a_place_instead_of_a_way_of_being_met() -> None:
+    # Z-A's expansion writes its encounters on eighteen pages by type, and the one-cell heading
+    # inside each table is the zone rather than the method - which is the opposite of what the
+    # same heading means on every other Legends page.
+    body = legends_table(
+        heading("Hyperspace Wild Zone 1"),
+        legends_row("Charmander"),
+    )
+    [one] = read_legends(
+        body,
+        species={"charmander"},
+        places={"Hyperspace Wild Zone 1": "Wild Zone 1"},
+    )
+
+    assert one.location == "Obsidian Fieldlands, Horseshoe Plains, Wild Zone 1"
+    assert one.method is EncounterMethod.OVERWORLD
+
+
+def test_a_heading_that_names_no_place_is_still_read_as_a_method() -> None:
+    # Both kinds on one page, because nothing says a page cannot have both.
+    body = legends_table(
+        heading("Mass outbreak"),
+        legends_row("Charmander"),
+    )
+    [one] = read_legends(
+        body,
+        species={"charmander"},
+        places={"Hyperspace Wild Zone 1": "Wild Zone 1"},
+    )
+
+    assert one.location == "Obsidian Fieldlands, Horseshoe Plains"
+    assert one.method is EncounterMethod.SWARM
+
+
+def test_an_unmapped_heading_is_passed_over_rather_than_read_as_a_place() -> None:
+    # Which is what keeps the footnote at the foot of each of those eighteen pages - a sentence
+    # about alphas having a 5% chance - from being recorded as an eleventh zone.
+    body = legends_table(
+        heading("Non-fixed wild alpha Pokemon always have a 5% chance"),
+        legends_row("Charmander"),
+    )
+
+    assert not read_legends(
+        body,
+        species={"charmander"},
+        places={"Hyperspace Wild Zone 1": "Wild Zone 1"},
+    )
+
+
+def test_the_section_a_table_sits_under_is_part_of_where_its_rows_are() -> None:
+    # The expansion numbers its zones from one again in every star rating's section, so the
+    # heading above the table is the only thing telling two Wild Zone 1s apart.
+    body = (
+        "<h3>3★</h3>"
+        + legends_table(heading("Hyperspace Wild Zone 1"), legends_row("Charmander"))
+        + "<h3>5★</h3>"
+        + legends_table(heading("Hyperspace Wild Zone 1"), legends_row("Charizard"))
+    )
+    three, five = read_legends(
+        body,
+        species={"charmander", "charizard"},
+        places={"Hyperspace Wild Zone 1": "Wild Zone 1"},
+    )
+
+    assert three.location.endswith("3★ Wild Zone 1")
+    assert five.location.endswith("5★ Wild Zone 1")
+    assert three.location != five.location
+
+
+def test_a_page_with_one_heading_over_all_of_it_is_unchanged() -> None:
+    # Hisui's pages have exactly one heading - the word "Pokemon" - and nothing there uses it.
+    # A section is only read into a location where a heading names a place.
+    body = "<h2>Pokémon</h2>" + legends_table(legends_row("Charmander"))
+    [one] = read_legends(body, species={"charmander"})
+
+    assert one.location == "Obsidian Fieldlands, Horseshoe Plains"

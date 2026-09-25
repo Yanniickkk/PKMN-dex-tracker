@@ -195,6 +195,12 @@ hole - but from here it is the rule instead of the exception.
   to go a level deeper - gives `Pokemon | Levels | Alpha Levels | Time of day | Weather`, and a
   Z-A Wild Zone page gives the same minus the alphas. Ticks rather than percentages. The time of
   day and the weather are conditions this dataset already words.
+  - _**Right, and Z-A's step 0 proved it by running the reader rather than reading the page:
+    260 rows off twenty pages with nothing in `encountertables.py` changed.** Two details were
+    wrong and neither costs anything. The page is `Wild_zone` with a small z, and `Wild_Zone`
+    is a 404. And the alphas are not missing - they are a heading inside the table, "Fixed alpha
+    Pokemon spawns", where Hisui made them a column. `alpha_levels` is a `.get`, so the reader
+    never noticed._
 - **Scarlet and Violet are the only real question, and it is about the record rather than the
   parser.** South Province (Area One) gives `Pokemon | Games | Terrain | Levels | Probability
   Weight | Group Rate | Group Pokemon`, grouped under biome headings like "Prairie", with five
@@ -281,6 +287,13 @@ assuming PokeAPI has every way a Pokemon can change - it stopped having them at 
 
 ### Generation 9
 
+_Legends: Z-A is done and the Paldea pair is not. The two halves of this generation have nothing
+in common but Pokemon HOME: one is Lumiose City on the Switch three generations after X and Y,
+and the other is the three-list shape Galar invented. Whoever writes Scarlet should read
+`legends_z_a.EVOLUTION_GROUPS` before assuming an expansion needs a module of its own, and the
+four rules step 5 left alone - Feebas's Beauty condition, Mr. Mime's literal "in Galar", and
+Slowpoke's two Galarica items - because Scarlet and Violet meet all four._
+
 - [ ] **Scarlet** (`scarlet`, gen 9, pair partner: Violet) — base + Teal Mask + Indigo Disk
   - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
@@ -289,12 +302,6 @@ assuming PokeAPI has every way a Pokemon can change - it stopped having them at 
   - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
   - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
   - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
-- [ ] **Legends: Z-A** (`legends-z-a`, gen 9, standalone)
-  - [ ] 0 **Verify against a live source first** — dex contents and HOME compatibility
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
-
 ### Transfer-only nodes
 
 _Both are built. Nothing is held back: for the first time since this dataset held one game,
@@ -400,6 +407,16 @@ pictures opens no client at all, and the app needed no change, because the datas
 where a folder of pictures came from._
 
 
+- [ ] A game with several Pokedexes and no National Dex can only show the first of them
+  - Found by Legends: Z-A's step 9 rather than by Galar's, although Galar has it too.
+    `CollectionGrid.BothDexesExist` asks for `HasNationalDex: true` before it renders the dex
+    switch, so a game that has two or three lists and no National Dex above them gets no switch
+    and no way to reach the others.
+  - **What it costs today: 132 of Legends: Z-A's 364 entries - the whole Hyperspace Pokedex -
+    and 184 of Sword and Shield's 584.** `galar.DEXES` already describes those 184 as being
+    "behind the switch", which is where they would be if there were one.
+  - The fix is small and the shape of it is the question: show the switch whenever the game
+    names more than one list, and leave the National Dex option out when there is none.
 - [ ] Multiple collections: list, switch, rename, delete
 - [ ] Editing a collection's settings after creation, records preserved
 - [ ] Dataset version and build date shown somewhere in the UI

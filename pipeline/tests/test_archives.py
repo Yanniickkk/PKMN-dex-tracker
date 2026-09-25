@@ -13,10 +13,13 @@ from livingdex_pipeline.archives import (
     ALOLA_SET,
     ARCHIVES,
     ARCHIVES_SHEETS,
+    FORM_CODES,
     GALAR,
     GALAR_SET,
     HISUI,
     HOME,
+    HOME_FORM_CODES,
+    HOME_HAS_NO_PICTURE,
     HOME_SET,
     LETS_GO,
     LETS_GO_SET,
@@ -379,9 +382,26 @@ def test_home_spells_a_name_its_own_way_and_more_simply() -> None:
         "HOME0003_f.png",
     )
 
-    # And a form it has no rule for is no name rather than a guess, which falls back to the
-    # shared set's picture - the right Pokemon in another generation's style.
-    assert form_names(479, form_id="rotom-heat", form_name="Heat", sheet=HOME) == ()
+    # **And it spells a form the way a sheet does, which step 6 of Legends: Z-A read off the
+    # category.** This used to assert the opposite - that HOME had no rule for a form and so no
+    # name - and that was true for exactly as long as the games drawing from this set named no
+    # forms between them.
+    assert form_names(479, form_id="rotom-heat", form_name="Heat", sheet=HOME) == (
+        "HOME0479O.png",
+    )
+
+    # O for the oven and L for the lawnmower, which only the files' own description pages say.
+    # Guessing alphabetically would have put a washing machine on the microwave's tile.
+    assert form_names(479, form_id="rotom-mow", form_name="Mow", sheet=HOME) == ("HOME0479L.png",)
+
+    # Two letters where a sheet uses one, which is why this is a table of its own.
+    assert form_names(711, form_id="gourgeist-super", form_name="Super", sheet=HOME) == (
+        "HOME0711Su.png",
+    )
+
+    # And a form it still has no rule for is no name rather than a guess, which falls back to
+    # the shared set's picture - the right Pokemon in another generation's style.
+    assert form_names(869, form_id="alcremie-ruby-cream", form_name="Ruby Cream", sheet=HOME) == ()
 
 
 def test_the_home_set_is_the_first_here_that_is_not_a_generations() -> None:
@@ -439,3 +459,42 @@ def test_no_other_sheet_grew_a_hisuian_name() -> None:
         assert len(species_names(58, sheet=sheet)) == 2
 
     assert species_names(58, sheet=HOME) == ("HOME0058.png",)
+
+
+
+def test_home_spells_every_kind_of_form_legends_z_a_has() -> None:
+    # Twenty-six codes for ninety forms, read off a category of 3,126 files. Three of them are
+    # the sheets' own letters a fourth time.
+    assert HOME_FORM_CODES["Alola"] == "A"
+    assert HOME_FORM_CODES["Galar"] == "G"
+    assert HOME_FORM_CODES["Hisui"] == "H"
+    assert FORM_CODES["Alola"] == HOME_FORM_CODES["Alola"]
+
+    # And the rest are HOME's own, including three that are two letters where a sheet uses one.
+    assert form_names(710, form_id="pumpkaboo-large", form_name="Large", sheet=HOME) == (
+        "HOME0710La.png",
+    )
+    assert form_names(931, form_id="squawkabilly-blue-plumage", form_name="Blue-Plumage",
+                      sheet=HOME) == ("HOME0931B.png",)
+    assert form_names(999, form_id="gimmighoul-roaming", form_name="Roaming", sheet=HOME) == (
+        "HOME0999R.png",
+    )
+
+
+def test_the_same_letter_means_two_things_and_the_species_is_what_tells_them_apart() -> None:
+    # L is the lawnmower on a Rotom and Low Key on a Toxtricity; W is the washing machine and
+    # the White Flower and the White Plumage. The number in front of it is what separates them,
+    # which is why this table is keyed by a form's name rather than by a letter.
+    assert HOME_FORM_CODES["Mow"] == HOME_FORM_CODES["Low-Key"] == "L"
+    assert HOME_FORM_CODES["Wash"] == HOME_FORM_CODES["White"] == "W"
+
+    assert form_names(479, form_id="rotom-mow", form_name="Mow", sheet=HOME) == ("HOME0479L.png",)
+    assert form_names(849, form_id="toxtricity-low-key", form_name="Low-Key", sheet=HOME) == (
+        "HOME0849L.png",
+    )
+
+
+def test_one_form_of_the_ninety_has_no_picture_and_it_is_not_the_one_the_category_said() -> None:
+    # The finding worth keeping: reading the category said the Small Size Pumpkaboo was missing,
+    # and asking for it got a picture. A category is a good index and not a complete one.
+    assert HOME_HAS_NO_PICTURE == ("torchic-female",)

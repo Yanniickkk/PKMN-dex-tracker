@@ -219,6 +219,75 @@ USUM_FORMS: dict[str, str] = {
 }
 
 
+
+#: How HOME spells a form, which is the same idea as :data:`FORM_CODES` and not the same table.
+#:
+#: **It had to be read rather than assumed, and the reading was the whole of step 6.** HOME's
+#: artwork category is 3,126 files and every code in it belongs to one kind of form, which is
+#: what made it readable at all - the same trick that settled Hisui's list, on a category nine
+#: times the size.
+#:
+#: Three of the codes are the sheets' own letters a fourth time: ``A`` for Alola, ``G`` for
+#: Galar, ``H`` for Hisui. The rest are HOME's, and two of them are two letters where a sheet
+#: uses one - ``La``, ``Sm``, ``Su`` for a Gourgeist's size - which is why this is a second
+#: table rather than a few more rows in the first.
+#:
+#: **Every entry here was checked against the file's own description page**, which is the
+#: Generation 7 lesson applied before it could cost anything: ``Spr_7p`` was read as Ultra Sun's
+#: sheet for months because the number looked right. Rotom is where it would have hurt - its
+#: five appliances are ``F``, ``L``, ``O``, ``R`` and ``W``, and only the page says that ``O``
+#: is the oven and ``L`` is the lawnmower. Guessing alphabetically would have put a washing
+#: machine on the microwave's tile.
+HOME_FORM_CODES: dict[str, str] = {
+    # The three regional letters, which every sheet since Alola has spelled the same way.
+    "Alola": "A",
+    "Galar": "G",
+    "Hisui": "H",
+    # Rotom's five appliances, read off five description pages rather than guessed at.
+    "Fan": "F",
+    "Mow": "L",
+    "Heat": "O",
+    "Frost": "R",
+    "Wash": "W",
+    # The Flabebe line's four other flowers, and the Eternal Flower that is only Floette's.
+    "Blue": "B",
+    "Orange": "O",
+    "White": "W",
+    "Yellow": "Y",
+    "Eternal": "E",
+    # Squawkabilly's three other plumages, which are the same letters with the word attached.
+    "Blue-Plumage": "B",
+    "White-Plumage": "W",
+    "Yellow-Plumage": "Y",
+    # The two-letter ones: Pumpkaboo's and Gourgeist's sizes.
+    "Large": "La",
+    "Small": "Sm",
+    "Super": "Su",
+    # And the four that are one form each.
+    "Low-Key": "L",
+    "Droopy": "D",
+    "Stretchy": "S",
+    "Roaming": "R",
+    # Vivillon's patterns are three letters of the pattern's own name. Two of the nineteen are
+    # in this dataset's Lumiose list and the rule would spell all of them.
+    "Garden": "Gar",
+    "Marine": "Mar",
+}
+
+#: The one form of Legends: Z-A's ninety that this set does not draw.
+#:
+#: **A category is a good index and not a complete one, which is worth knowing before the next
+#: game trusts one.** Reading the 3,126 files said ``HOME0710Sm.png`` was missing and that the
+#: Small Size Pumpkaboo would have to fall back - and asking for it got a picture. The file is
+#: there; the category does not list it. So the list below is what a *build* found rather than
+#: what the category said, which is the only kind of answer worth writing down here.
+#:
+#: What is really absent is Torchic's female, whose ``HOME0255_f.png`` does not answer. It is
+#: the wiki being short of an upload rather than the game being short of a Torchic, so that one
+#: form falls back to the shared set's picture - the right Pokemon drawn another way.
+HOME_HAS_NO_PICTURE = ("torchic-female",)
+
+
 def media_url(file_name: str) -> str:
     """Where the Archives keep a file, from its name alone.
 
@@ -313,11 +382,16 @@ def form_names(
     :data:`UNOWN_CODES`.
     """
     if sheet == HOME:
-        # HOME's own way of spelling a form is not read here yet, and nothing wants it: the two
-        # games drawing from this set name no forms at all until their step 8. A form with no
-        # name falls back to the shared set's picture, which is the right Pokemon in another
-        # generation's style rather than a hole.
-        return (f"HOME{number:04d}_f.png",) if form_name == "Female" else ()
+        # **HOME spells a form the way a sheet does, and step 6 of Legends: Z-A is what read
+        # it.** The comment that stood here said this was not read yet and that nothing wanted
+        # it, which was true for as long as the only games drawing from this set named no forms.
+        # That game names ninety.
+        if form_name == "Female":
+            return (f"HOME{number:04d}_f.png",)
+
+        code = HOME_FORM_CODES.get(form_name)
+
+        return (f"HOME{number:04d}{code}.png",) if code else ()
 
     if sheet is None and (usum := USUM_FORMS.get(form_id)) is not None:
         return (f"Spr_{USUM}_{number:03d}{usum}.png",)

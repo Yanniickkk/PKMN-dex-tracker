@@ -189,9 +189,17 @@ class EnglishNames:
 class MissingVariant:
     """One way of evolving that PokeAPI does not carry, and the page it was read from.
 
-    A fact about the series rather than about one game, which is what the rules table holds: the
-    Linking Cord evolves a Kadabra for whoever is holding one. Which games may *use* it follows
-    from its version group, exactly as it does for a way the source did carry.
+    **A fact about one game, not about the series, and that is the correction Legends: Z-A
+    forced.** This used to say the opposite - that the Linking Cord evolves a Kadabra for
+    whoever is holding one, and that which games may use it follows from its version group
+    exactly as it does for a way the source carried. The first half is true and the second is
+    not: the item's own page lists Legends: Arceus as the only game it can be obtained in, and
+    Kadabra's evolution chart marks it "LA only". Carried forward, it told a player of the next
+    Legends game to use an item that game does not have.
+
+    So a hand-written way stays in the version group it was read from. A way the source carries
+    still moves forward, because there the source is saying "this is how it works from here";
+    here a person read one item's page in one game.
     """
 
     from_species: str
@@ -292,6 +300,17 @@ class _Variant:
     order: int
     trigger: EvolutionTrigger
     conditions: tuple[EvolutionCondition, ...]
+    #: Whether this way of evolving is that one game's and stops there, rather than the series'
+    #: from then on.
+    #:
+    #: **False for everything PokeAPI carries and true for everything in**
+    #: :data:`NOT_IN_THE_SOURCE`. A rule read off a chain is the source saying "this is how it
+    #: works from here", and the picker is right to carry it forward. A rule typed in by hand
+    #: was read off *one item's page in one game*, and carrying it forward is how Legends: Z-A
+    #: came to tell a player to use a Linking Cord - an item whose own page lists Legends:
+    #: Arceus as the only game it can be obtained in, and whose entry on Kadabra's evolution
+    #: chart is marked "LA only".
+    only_in_its_own_game: bool = False
     from_form: str | None = None
     to_form: str | None = None
     from_fork: bool = False
@@ -466,7 +485,12 @@ def evolution_encounters(
             )
             continue
 
-        usable = [variant for variant in choices if variant.order <= here]
+        usable = [
+            variant
+            for variant in choices
+            if variant.order <= here
+            and (not variant.only_in_its_own_game or variant.version_group in wanted_groups)
+        ]
         if not usable:
             log.info(
                 "%s does not evolve into %s in %s: every way of doing it came later",
@@ -654,6 +678,7 @@ def _all_variants(
             trigger=one.trigger,
             conditions=one.conditions,
             page=one.page,
+            only_in_its_own_game=True,
         )
         for one in NOT_IN_THE_SOURCE
         if one.from_species in _species_in(variants)

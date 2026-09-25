@@ -48,7 +48,7 @@ from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 
 from .models import DexTarget, Form, FormKind, PokemonType, Species
-from .pokeapi import PokeApiClient
+from .pokeapi import PokeApiClient, game_id_of
 
 log = logging.getLogger(__name__)
 
@@ -156,6 +156,7 @@ FORMS_NAMED_BY_THE_GAME = frozenset(
         "brilliant-diamond",
         "shining-pearl",
         "legends-arceus",
+        "legends-z-a",
     }
 )
 
@@ -715,6 +716,151 @@ HISUI_FORMS: dict[str, tuple[str, ...]] = {
     "zubat-female": HISUI,
 }
 
+
+#: The one game in Lumiose City, spelled so the table below can say it in one word.
+ZA = ("legends-z-a",)
+
+#: What Legends: Z-A holds, which is step 8's answer to the question this file cannot ask.
+#:
+#: **The rule gave this game 420 forms and it has 90** - a margin of 330, where Hisui's was 276
+#: and Galar's was the first of the four. It is the fifth game running the rule is wrong about,
+#: and by now the rule being wrong is the expected answer rather than the finding.
+#:
+#: **Most of that margin is not a judgement at all.** Of the 420, only 135 are even forms of a
+#: species this game lists - the other 285 belong to species that are in neither the Lumiose
+#: Pokedex nor the Hyperspace one, and **only Pokemon in those two lists can be here at all**.
+#: So the real question was 135 wide, over 73 species, and that is a list a person can read.
+#:
+#: **There is no sheet to read it off, which is what makes this game different from Hisui.**
+#: The Archives keep 367 files for Legends: Arceus, one per thing it draws; they keep **35** for
+#: this game and every one is a Mega. So the list below is assembled from what the game's own
+#: sources say it has: its wild tables, its gifts, its evolutions, and the Game locations rows
+#: on each species' article. What it comes to:
+#:
+#: * **sixteen regional forms**, every one of them another region's - four Hisuian, seven
+#:   Galarian, four Alolan and Galarian Mr. Mime. **This game introduces none of its own**,
+#:   which the wiki states as a fact about it: the first non-remake core series game since
+#:   Generation VII not to add a regional form.
+#: * **sixteen functional** - Rotom's five appliances, Eternal Flower Floette, the Low Key
+#:   Toxtricity, two Tatsugiri, three Gourgeist and three Pumpkaboo sizes, and a Roaming
+#:   Gimmighoul.
+#: * **seventeen cosmetic** - the Flabebe line's four colours each, the three Squawkabilly
+#:   plumages, and two Vivillon.
+#: * **forty-one sexes**, which is a fact about the species rather than about the game.
+#:
+#: **And Rotom's five appliances are in this one**, which is worth saying beside
+#: :data:`HISUI_FORMS`: that table leaves them out because nothing said how a player changes
+#: one. Here nobody has to change anything - a Heat Rotom is standing in an Electric-type
+#: distortion at level 54, and the game's own table says so.
+#:
+#: **Four things are deliberately left out, and all four are the same call.** Hoopa Unbound,
+#: Resolute Keldeo, Original Color Magearna and Furfrou's nine trims each have a Pokedex entry
+#: written for this game - and a Pokedex entry is what Hisui's Rotom had too. What none of them
+#: has is a sentence saying how a player gets one: no Prison Bottle, no Secret Sword, no
+#: groomer, and the Game locations row for each names no form. **A form whose sentence cannot be
+#: written is a tile nobody can fill.** Four lines to add them the day somebody reads the
+#: mechanism, and Vivillon is the shape of what that reading would look like - seventeen of its
+#: nineteen patterns are out for the same reason, and the two that are in are in because the
+#: game produces them: a Garden Pattern in Wild Zone tables and the Marine Pattern the museum's
+#: Spewpa evolves into.
+#:
+#: **Two more are out for a reason the game states about itself**: abilities are not featured
+#: here, so a Battle Bond Greninja and Zygarde's two Power Construct formes cannot be what they
+#: are. That is a mechanism the game removed rather than one nobody has read.
+ZA_FORMS: dict[str, tuple[str, ...]] = {
+    "abomasnow-female": ZA,
+    "alakazam-female": ZA,
+    "avalugg-hisui": ZA,
+    "blaziken-female": ZA,
+    "camerupt-female": ZA,
+    "combusken-female": ZA,
+    "eevee-female": ZA,
+    "farfetchd-galar": ZA,
+    "flabebe-blue": ZA,
+    "flabebe-orange": ZA,
+    "flabebe-white": ZA,
+    "flabebe-yellow": ZA,
+    "floette-blue": ZA,
+    "floette-eternal": ZA,
+    "floette-orange": ZA,
+    "floette-white": ZA,
+    "floette-yellow": ZA,
+    "florges-blue": ZA,
+    "florges-orange": ZA,
+    "florges-white": ZA,
+    "florges-yellow": ZA,
+    "gabite-female": ZA,
+    "garchomp-female": ZA,
+    "gible-female": ZA,
+    "gimmighoul-roaming": ZA,
+    "golbat-female": ZA,
+    "goodra-hisui": ZA,
+    "gourgeist-large": ZA,
+    "gourgeist-small": ZA,
+    "gourgeist-super": ZA,
+    "gulpin-female": ZA,
+    "gyarados-female": ZA,
+    "heracross-female": ZA,
+    "hippopotas-female": ZA,
+    "hippowdon-female": ZA,
+    "houndoom-female": ZA,
+    "indeedee-female": ZA,
+    "kadabra-female": ZA,
+    "magikarp-female": ZA,
+    "marowak-alola": ZA,
+    "medicham-female": ZA,
+    "meditite-female": ZA,
+    "meganium-female": ZA,
+    "meowstic-female": ZA,
+    "meowth-alola": ZA,
+    "meowth-galar": ZA,
+    "milotic-female": ZA,
+    "mr-mime-galar": ZA,
+    "numel-female": ZA,
+    "persian-alola": ZA,
+    "pikachu-female": ZA,
+    "pumpkaboo-large": ZA,
+    "pumpkaboo-small": ZA,
+    "pumpkaboo-super": ZA,
+    "pyroar-female": ZA,
+    "qwilfish-hisui": ZA,
+    "raichu-alola": ZA,
+    "raichu-female": ZA,
+    "roselia-female": ZA,
+    "roserade-female": ZA,
+    "rotom-fan": ZA,
+    "rotom-frost": ZA,
+    "rotom-heat": ZA,
+    "rotom-mow": ZA,
+    "rotom-wash": ZA,
+    "scizor-female": ZA,
+    "scyther-female": ZA,
+    "sliggoo-hisui": ZA,
+    "slowbro-galar": ZA,
+    "slowking-galar": ZA,
+    "slowpoke-galar": ZA,
+    "snover-female": ZA,
+    "squawkabilly-blue-plumage": ZA,
+    "squawkabilly-white-plumage": ZA,
+    "squawkabilly-yellow-plumage": ZA,
+    "staraptor-female": ZA,
+    "staravia-female": ZA,
+    "starly-female": ZA,
+    "steelix-female": ZA,
+    "stunfisk-galar": ZA,
+    "swalot-female": ZA,
+    "tatsugiri-droopy": ZA,
+    "tatsugiri-stretchy": ZA,
+    "torchic-female": ZA,
+    "toxtricity-low-key": ZA,
+    "venusaur-female": ZA,
+    "vivillon-garden": ZA,
+    "vivillon-marine": ZA,
+    "yamask-galar": ZA,
+    "zubat-female": ZA,
+}
+
+
 NAMED_BY_HAND: Mapping[str, tuple[str, ...]] = {
     slug: tuple(
         sorted(
@@ -723,10 +869,11 @@ NAMED_BY_HAND: Mapping[str, tuple[str, ...]] = {
                 *GALAR_FORMS.get(slug, ()),
                 *BDSP_FORMS.get(slug, ()),
                 *HISUI_FORMS.get(slug, ()),
+                *ZA_FORMS.get(slug, ()),
             }
         )
     )
-    for slug in {*LETS_GO_FORMS, *GALAR_FORMS, *BDSP_FORMS, *HISUI_FORMS}
+    for slug in {*LETS_GO_FORMS, *GALAR_FORMS, *BDSP_FORMS, *HISUI_FORMS, *ZA_FORMS}
 }
 
 #: Where a form is, when the version group it arrived in says more than the truth.
@@ -833,9 +980,11 @@ LABELS: Mapping[str, str] = {
 class VersionGroupGames:
     """Which games are in each version group, and where each group sits in the series.
 
-    A game id and PokeAPI's version name are the same string for every game in this dataset,
-    which is checked rather than assumed: a game the registry knows and the source does not
-    would otherwise quietly lose all of its forms.
+    A game id and PokeAPI's version name are the same string for almost every game in this
+    dataset, and :data:`pokeapi.VERSION_NAMES` is where the exceptions are written down. The
+    check below is what found the first of them: a game the registry knows and the source does
+    not would otherwise quietly lose all of its forms, and Legends: Z-A - ``legends-z-a`` here
+    and ``legends-za`` there - would have been built without a single one.
     """
 
     api: PokeApiClient
@@ -852,7 +1001,9 @@ class VersionGroupGames:
             group = self.api.resource(f"version-group/{entry['name']}", refresh=self.refresh)
             self._order[entry["name"]] = int(group["order"])
             self._games[entry["name"]] = tuple(
-                version["name"] for version in group["versions"] if version["name"] in self.game_ids
+                game
+                for version in group["versions"]
+                if (game := game_id_of(version["name"])) in self.game_ids
             )
             for game in self._games[entry["name"]]:
                 self._generation[game] = generation_of(group["generation"]["url"])

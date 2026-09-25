@@ -666,6 +666,15 @@
   },
   {
     "from": "home",
+    "to": "legends-z-a",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "presentInTargetDex"
+    }
+  },
+  {
+    "from": "home",
     "to": "lets-go-eevee",
     "mechanism": "home",
     "direction": "oneWay",

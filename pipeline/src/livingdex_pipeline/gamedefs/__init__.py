@@ -24,6 +24,7 @@ from . import (
     home,
     leafgreen,
     legends_arceus,
+    legends_z_a,
     lets_go_eevee,
     lets_go_pikachu,
     moon,
@@ -63,7 +64,9 @@ from . import (
 # later - the first remakes here of a pair the dataset also holds as cartridges. Then the
 # game that closes that generation ten weeks after them, which is that same ground under an
 # older name and the first entry here that is not half of anything: one game, one region,
-# and a Pokedex of its own.
+# and a Pokedex of its own. Then, out of Generation 9's own order, the game that closes it:
+# Lumiose City on the Switch three generations after X and Y, the second game here that is not
+# half of anything, and the first with a way in and no way out.
 #
 # Then the two nodes, out of that order and at the end, because neither is a game. Bank came out
 # between the two Generation 6 pairs and HOME six years after it. They are here for the same
@@ -105,6 +108,7 @@ MODULES = [
     brilliant_diamond,
     shining_pearl,
     legends_arceus,
+    legends_z_a,
     bank,
     home,
 ]

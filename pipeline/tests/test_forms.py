@@ -389,6 +389,7 @@ def test_a_form_that_belongs_to_nothing_but_that_pair_is_left_out_altogether() -
         "brilliant-diamond",
         "shining-pearl",
         "legends-arceus",
+        "legends-z-a",
     }
 
 

@@ -8,6 +8,7 @@ because per-game encounter detail is where PokeAPI is thinnest.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from datetime import date
 from typing import Any
 
@@ -15,6 +16,32 @@ from .http import PoliteClient
 from .models import PokemonType, Species
 
 BASE_URL = "https://pokeapi.co/api/v2"
+
+#: Where this dataset's id for a game and the source's name for that game differ.
+#:
+#: **For thirty-seven games there was no difference at all**, and :class:`forms.
+#: VersionGroupGames` says so in its docstring and checks it rather than assuming it - a game
+#: the registry knows and the source does not would otherwise quietly lose all of its forms.
+#: That check did its job: Legends: Z-A is ``legends-z-a`` here and ``legends-za`` there, and
+#: the build stopped rather than building a game with no forms.
+#:
+#: The id is this dataset's own word - it is what a saved collection names, and it matches the
+#: title the way every other id does - so the difference is written down here instead. A game
+#: absent from this table is spelled the same in both places, which is still almost all of them.
+VERSION_NAMES: Mapping[str, str] = {"legends-z-a": "legends-za"}
+
+#: The same table read the other way, for turning an answer from the source back into an id.
+GAME_IDS: Mapping[str, str] = {source: game for game, source in VERSION_NAMES.items()}
+
+
+def version_name(game_id: str) -> str:
+    """What the source calls this game."""
+    return VERSION_NAMES.get(game_id, game_id)
+
+
+def game_id_of(version_name: str) -> str:
+    """What this dataset calls the game the source named."""
+    return GAME_IDS.get(version_name, version_name)
 
 
 class PokeApiClient:
