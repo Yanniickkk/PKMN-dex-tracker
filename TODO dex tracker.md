@@ -304,8 +304,13 @@ _What the two of them left for the games above, so it is read before those games
 `bank.bank_edges` and `home.home_edges` each give a deposit and a withdrawal as two one-way
 edges, because in both cases the service hands back less than it takes. Three Switch pairs do
 **not** get `home_edges` and each needs its own answer - Let's Go only takes back what started
-there, Legends: Z-A gives nothing back to anything older, and Pokemon GO and the Switch FireRed
-and LeafGreen send one way into HOME and are not games this dataset holds._
+there, Legends: Z-A gives nothing back to anything older, and Pokemon GO sends one way into HOME
+and is not a game this dataset holds._
+
+_**The fourth answer was written in Phase 3 and this line used to get it wrong.** The Switch
+releases of FireRed and LeafGreen were filed here beside GO as something the dataset does not
+hold; they are two entities of its own now, with a deposit into HOME and no withdrawal beside
+it. What they are and why is in `gamedefs/frlg_switch.py`._
 
 _The Virtual Console releases used to be a separate job at the end of this list. They are not:
 they **are** Generations 1 and 2 here, built in their place above, and the cartridges are not in
@@ -399,32 +404,3 @@ Archives' robots.txt disallows. 77 minutes of fetching, paid once - a build that
 pictures opens no client at all, and the app needed no change, because the dataset cannot tell
 where a folder of pictures came from._
 
-
-- [ ] Export a collection to CSV
-- [ ] Pokemon GO as a one-way source into HOME
-  - Turned up while HOME was being written, and it is the Dream Radar's problem again with a
-    bigger source: GO sends into HOME one way, some of what it sends has no other route, and it
-    is not a game in the sense used here - no Pokedex to fill, and nothing is caught in it the
-    way this tracker means. So it is neither an edge between two games nor an NPC with a gift.
-  - Whatever shape the Radar gets should fit this too, which is a reason to decide the two
-    together rather than one at a time.
-  - And a third case, met by step 4 of the Let's Go pair: the **GO Park** is the same question
-    inside one pair of games rather than at the hub. It is the only source of Meltan and
-    Melmetal anywhere in the dataset, and those two carry a reason saying so - which is the
-    holding answer the Radar's three already have. Three cases now wait on one decision.
-- [ ] Decide what the Switch releases of FireRed and LeafGreen are
-  - They send one way into HOME from October 2026, which makes them the first things since the
-    3DS Virtual Console releases that can reach a living dex kept anywhere later.
-  - The same decision Generation 1 needed: this dataset holds one `firered`, the Game Boy
-    Advance cartridge, and it reaches Pal Park and stops. A Switch FireRed would be a third
-    entity beside it and the 3DS release - or the two would be one entry with two ways out, which
-    is what the Virtual Console decision refused to do.
-- [ ] The Pokemon Dream Radar as a source for Black 2 and White 2
-  - A 3DS app rather than a game: no dex of its own, nothing caught in it, and it sends one way
-    into those two and nowhere else. So it is neither a transfer edge nor an NPC with a gift,
-    and it needs a shape of its own - a source that is not a game, which nothing in the dataset
-    is yet. What it is worth is that some of what it sends has no other way in.
-  - Not the Dream World, and not by oversight: that was a website, it closed in 2014, and a
-    player starting today cannot reach any of it. The Radar is still runnable by whoever has it.
-  - Worth saying in the reason a player reads: the eShop it came from shut in 2023, so it is
-    ownable rather than buyable. That is a different answer from "this cannot be done".

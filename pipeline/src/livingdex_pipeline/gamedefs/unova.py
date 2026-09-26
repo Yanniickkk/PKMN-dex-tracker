@@ -36,6 +36,7 @@ from ..models import (
     DexEntry,
     DexSource,
     DexTarget,
+    FormChangeAcquisition,
     Game,
     GameRelease,
     GiftKind,
@@ -43,6 +44,7 @@ from ..models import (
     TransferEdge,
     TransferMechanism,
 )
+from ..outside import SentIn, sent_in
 from ..places import LocationNames
 from ..sources import ReadByHand
 from ..trades import InGameTrade, trade_encounters
@@ -345,7 +347,9 @@ B2W2_UNOBTAINABLE: dict[str, str] = {
     # roam the first pair's Unova and are nowhere in the sequels' - what replaced them is the
     # Pokemon Dream Radar, which is a Nintendo 3DS download rather than a cartridge, has no dex
     # of its own, and sends one way into these two and nowhere else. It is written down as a
-    # Phase 3 item; until it is, this is the honest answer.
+    # Phase 3 item, which has since been written: :data:`DREAM_RADAR` says what the Radar
+    # sends and never counts it, and this reason stays above it to say why the cartridge itself
+    # has none.
     **{
         species: (
             "Only from the Pokemon Dream Radar, a Nintendo 3DS download that sends into these "
@@ -1216,6 +1220,121 @@ def b2w2_form_changes() -> dict[str, FormChange]:
     return {**BW_FORM_CHANGES, **B2W2_FORM_CHANGES}
 
 
+#: Where the Dream Radar was read, spelled the way the article's own url spells it.
+DREAM_RADAR_PAGE = "Pok%C3%A9mon_Dream_Radar"
+
+#: What the Pokemon Dream Radar sends into these two that these two cannot produce.
+#:
+#: A Nintendo 3DS download from 2012, not a cartridge: no Pokedex of its own, nothing caught in
+#: it the way this tracker means, and it sends one way into Black 2 and White 2 and into nothing
+#: else. It is :class:`models.OutsideAcquisition` for exactly that reason - see
+#: :mod:`outside` for the shape and for the line Yannick drew around it.
+#:
+#: **Eight of the twenty-six it can send.** The other eighteen are Dream World Pokemon with
+#: Hidden Abilities and three behind secret codes, and Black 2 can catch every one of them, so
+#: writing them here would add rows that change no answer.
+#:
+#: **The forces of nature arrive in Therian Forme**, which is not a detail: the article's
+#: locations table says "Transfer from Dream Radar (Therian Forme)" for all three, and the page
+#: explains why - the Interdream Zone is what that Forme is an adaptation to. It is also what
+#: makes the Reveal Glass record in :data:`B2W2_FORM_CHANGES` only half the story, which
+#: :func:`reveal_glass_back` is the other half of.
+#:
+#: **And it is a chain five deep.** Tornadus wants 400 Dream Orbs, Thundurus a thousand more
+#: after him, Landorus sixteen hundred more after that - and each of the five Generation IV
+#: legendaries wants Landorus caught first *and* its own cartridge in the same 3DS. A Dialga out
+#: of the Radar is the furthest thing from a free gift in this dataset.
+DREAM_RADAR: tuple[SentIn, ...] = (
+    SentIn(
+        species="tornadus",
+        form="tornadus-therian",
+        how=(
+            "Caught in the Interdream Zone with Eureka Extension alpha and sent down to the "
+            "cartridge. It arrives in its Therian Forme, which the page says is what the "
+            "Interdream Zone turns the forces of nature into"
+        ),
+        requirement="400 Dream Orbs collected",
+    ),
+    SentIn(
+        species="thundurus",
+        form="thundurus-therian",
+        how=(
+            "Caught in the Interdream Zone with Eureka Extension beta and sent down to the "
+            "cartridge, in its Therian Forme"
+        ),
+        requirement="Tornadus caught first, then 1,000 more Dream Orbs",
+    ),
+    SentIn(
+        species="landorus",
+        form="landorus-therian",
+        how=(
+            "Caught in the Interdream Zone with Eureka Extension gamma and sent down to the "
+            "cartridge, in its Therian Forme"
+        ),
+        requirement="Thundurus caught first, then 1,600 more Dream Orbs",
+    ),
+    *(
+        SentIn(
+            species=species,
+            how=(
+                f"Caught in the Interdream Zone with the {extension} Extension and sent down "
+                "to the cartridge"
+            ),
+            requirement=(
+                f"Landorus caught first, and a Pokemon {cartridge} card in the same Nintendo 3DS"
+            ),
+        )
+        for species, extension, cartridge in (
+            ("dialga", "Temporal", "Diamond"),
+            ("palkia", "Spatial", "Pearl"),
+            ("giratina", "Renegade", "Platinum"),
+            ("ho-oh", "Rainbow", "HeartGold"),
+            ("lugia", "Diving", "SoulSilver"),
+        )
+    ),
+)
+
+#: Why the Radar never counts towards being able to get one here.
+#:
+#: Not because it cannot be done - it can, and that is the difference this sentence is for. It
+#: is another program on another device, and the shop it came from is shut, so it is ownable
+#: rather than buyable. The row is shown and the tile stays out of reach, which is the same
+#: treatment Kalos's Friend Safari has had since Generation 6.
+DREAM_RADAR_DOES_NOT_COUNT = (
+    "It is caught in the Pokemon Dream Radar, a separate Nintendo 3DS download rather than "
+    "anything in the cartridge, and the shop it came from is shut - ownable rather than buyable"
+)
+
+
+def reveal_glass_back(game_id: str) -> list[FormChangeAcquisition]:
+    """The Reveal Glass in the direction the form table cannot express.
+
+    :data:`B2W2_FORM_CHANGES` has the Glass turning an Incarnate Forme into a Therian one, which
+    is what a table keyed by form can say. It is also the direction almost nobody travels: the
+    only way to have any of the three in these two games is the Dream Radar, and what the Radar
+    hands over is already Therian. So the Glass is used the other way round first, and without
+    these three records the dataset says a player can reach a Therian Forme it has no way to
+    reach and cannot reach an Incarnate one that is a single item away.
+
+    Written out here rather than added to the form table because the target is the species
+    rather than one of its forms, which :func:`formchanges.form_change_encounters` has no way to
+    produce: it walks the game's forms and every record it makes is about one of them.
+    """
+    return [
+        FormChangeAcquisition(
+            game=game_id,
+            target=DexTarget(species=species),
+            requirement=(
+                "Use the Reveal Glass on its Therian Forme, which is what the Pokemon Dream "
+                "Radar sends. Cedric Juniper hands the Glass over in the Abundant Shrine's "
+                "house once the trio has been caught"
+            ),
+            source=READ_ON(DREAM_RADAR_PAGE),
+        )
+        for species in ("tornadus", "thundurus", "landorus")
+    ]
+
+
 def bw_acquisition_methods(
     context: BuildContext,
     *,
@@ -1260,7 +1379,7 @@ def b2w2_acquisition_methods(
 
     ``column`` is how the wiki page's Games column spells this half: "B2" or "W2".
     """
-    return acquisition_methods(
+    found = acquisition_methods(
         context,
         game_id=game_id,
         version=version,
@@ -1273,6 +1392,21 @@ def b2w2_acquisition_methods(
         grotto_column=column,
     )
 
+    # The sequels' own, and the first pair's not: the Radar came out with these two and sends
+    # into nothing else, and the Reveal Glass is only here because the Radar is.
+    found.extend(
+        sent_in(
+            game_id=game_id,
+            sent_from="the Pokemon Dream Radar",
+            rows=list(DREAM_RADAR),
+            does_not_count=DREAM_RADAR_DOES_NOT_COUNT,
+            citation=READ_ON(DREAM_RADAR_PAGE),
+        )
+    )
+    found.extend(reveal_glass_back(game_id))
+
+    return found
+
 
 #: The day a person read each page the tables below were typed from.
 #:
@@ -1284,6 +1418,7 @@ READ_ON = ReadByHand(
         "In-game_trade": date(2026, 9, 23),
         "Pok%C3%A9mon_Day_Care": date(2026, 9, 23),
         "List_of_Pok%C3%A9mon_with_form_differences": date(2026, 9, 23),
+        DREAM_RADAR_PAGE: date(2026, 9, 26),
     }
 )
 

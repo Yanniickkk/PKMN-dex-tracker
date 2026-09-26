@@ -35673,6 +35673,176 @@
         "url": "https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_with_form_differences",
         "retrievedOn": "2026-09-23"
       }
+    },
+    {
+      "kind": "outside",
+      "game": "black-2",
+      "target": {
+        "species": "tornadus",
+        "form": "tornadus-therian"
+      },
+      "sentFrom": "the Pokemon Dream Radar",
+      "how": "Caught in the Interdream Zone with Eureka Extension alpha and sent down to the cartridge. It arrives in its Therian Forme, which the page says is what the Interdream Zone turns the forces of nature into",
+      "requirement": "400 Dream Orbs collected",
+      "doesNotCount": "It is caught in the Pokemon Dream Radar, a separate Nintendo 3DS download rather than anything in the cartridge, and the shop it came from is shut - ownable rather than buyable",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Dream_Radar",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
+      "kind": "outside",
+      "game": "black-2",
+      "target": {
+        "species": "thundurus",
+        "form": "thundurus-therian"
+      },
+      "sentFrom": "the Pokemon Dream Radar",
+      "how": "Caught in the Interdream Zone with Eureka Extension beta and sent down to the cartridge, in its Therian Forme",
+      "requirement": "Tornadus caught first, then 1,000 more Dream Orbs",
+      "doesNotCount": "It is caught in the Pokemon Dream Radar, a separate Nintendo 3DS download rather than anything in the cartridge, and the shop it came from is shut - ownable rather than buyable",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Dream_Radar",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
+      "kind": "outside",
+      "game": "black-2",
+      "target": {
+        "species": "landorus",
+        "form": "landorus-therian"
+      },
+      "sentFrom": "the Pokemon Dream Radar",
+      "how": "Caught in the Interdream Zone with Eureka Extension gamma and sent down to the cartridge, in its Therian Forme",
+      "requirement": "Thundurus caught first, then 1,600 more Dream Orbs",
+      "doesNotCount": "It is caught in the Pokemon Dream Radar, a separate Nintendo 3DS download rather than anything in the cartridge, and the shop it came from is shut - ownable rather than buyable",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Dream_Radar",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
+      "kind": "outside",
+      "game": "black-2",
+      "target": {
+        "species": "dialga"
+      },
+      "sentFrom": "the Pokemon Dream Radar",
+      "how": "Caught in the Interdream Zone with the Temporal Extension and sent down to the cartridge",
+      "requirement": "Landorus caught first, and a Pokemon Diamond card in the same Nintendo 3DS",
+      "doesNotCount": "It is caught in the Pokemon Dream Radar, a separate Nintendo 3DS download rather than anything in the cartridge, and the shop it came from is shut - ownable rather than buyable",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Dream_Radar",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
+      "kind": "outside",
+      "game": "black-2",
+      "target": {
+        "species": "palkia"
+      },
+      "sentFrom": "the Pokemon Dream Radar",
+      "how": "Caught in the Interdream Zone with the Spatial Extension and sent down to the cartridge",
+      "requirement": "Landorus caught first, and a Pokemon Pearl card in the same Nintendo 3DS",
+      "doesNotCount": "It is caught in the Pokemon Dream Radar, a separate Nintendo 3DS download rather than anything in the cartridge, and the shop it came from is shut - ownable rather than buyable",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Dream_Radar",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
+      "kind": "outside",
+      "game": "black-2",
+      "target": {
+        "species": "giratina"
+      },
+      "sentFrom": "the Pokemon Dream Radar",
+      "how": "Caught in the Interdream Zone with the Renegade Extension and sent down to the cartridge",
+      "requirement": "Landorus caught first, and a Pokemon Platinum card in the same Nintendo 3DS",
+      "doesNotCount": "It is caught in the Pokemon Dream Radar, a separate Nintendo 3DS download rather than anything in the cartridge, and the shop it came from is shut - ownable rather than buyable",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Dream_Radar",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
+      "kind": "outside",
+      "game": "black-2",
+      "target": {
+        "species": "ho-oh"
+      },
+      "sentFrom": "the Pokemon Dream Radar",
+      "how": "Caught in the Interdream Zone with the Rainbow Extension and sent down to the cartridge",
+      "requirement": "Landorus caught first, and a Pokemon HeartGold card in the same Nintendo 3DS",
+      "doesNotCount": "It is caught in the Pokemon Dream Radar, a separate Nintendo 3DS download rather than anything in the cartridge, and the shop it came from is shut - ownable rather than buyable",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Dream_Radar",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
+      "kind": "outside",
+      "game": "black-2",
+      "target": {
+        "species": "lugia"
+      },
+      "sentFrom": "the Pokemon Dream Radar",
+      "how": "Caught in the Interdream Zone with the Diving Extension and sent down to the cartridge",
+      "requirement": "Landorus caught first, and a Pokemon SoulSilver card in the same Nintendo 3DS",
+      "doesNotCount": "It is caught in the Pokemon Dream Radar, a separate Nintendo 3DS download rather than anything in the cartridge, and the shop it came from is shut - ownable rather than buyable",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Dream_Radar",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "black-2",
+      "target": {
+        "species": "tornadus"
+      },
+      "requirement": "Use the Reveal Glass on its Therian Forme, which is what the Pokemon Dream Radar sends. Cedric Juniper hands the Glass over in the Abundant Shrine's house once the trio has been caught",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Dream_Radar",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "black-2",
+      "target": {
+        "species": "thundurus"
+      },
+      "requirement": "Use the Reveal Glass on its Therian Forme, which is what the Pokemon Dream Radar sends. Cedric Juniper hands the Glass over in the Abundant Shrine's house once the trio has been caught",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Dream_Radar",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
+      "kind": "formChange",
+      "game": "black-2",
+      "target": {
+        "species": "landorus"
+      },
+      "requirement": "Use the Reveal Glass on its Therian Forme, which is what the Pokemon Dream Radar sends. Cedric Juniper hands the Glass over in the Abundant Shrine's house once the trio has been caught",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Dream_Radar",
+        "retrievedOn": "2026-09-26"
+      }
     }
   ]
 }

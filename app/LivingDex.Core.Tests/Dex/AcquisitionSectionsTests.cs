@@ -240,13 +240,18 @@ public class AcquisitionSectionsTests
     }
 
     [Fact]
-    public void Changing_a_form_is_its_own_section_and_the_last_one()
+    public void Changing_a_form_is_its_own_section_and_a_source_outside_the_game_is_the_last()
     {
-        // The only kind that needs the Pokemon already. Everything above it answers "how do I
-        // get one"; this answers "and then what", so it reads last.
+        // A form change is the only kind that needs the Pokemon already. Everything above it
+        // answers "how do I get one"; this answers "and then what".
         Assert.Equal("Changing its form", AcquisitionNames.Of(AcquisitionKind.FormChange));
+
+        // And below even that: the Pokemon Dream Radar and Pokemon GO, which are not this game
+        // and not any game here. Last, because it is the only section that asks a player to
+        // leave, and none of its rows counts towards being able to get one.
+        Assert.Equal("From outside the game", AcquisitionNames.Of(AcquisitionKind.Outside));
         Assert.Equal(
-            AcquisitionKind.FormChange,
+            AcquisitionKind.Outside,
             Enum.GetValues<AcquisitionKind>().Max());
     }
 

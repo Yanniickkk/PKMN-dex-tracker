@@ -88,6 +88,7 @@ public static class AcquisitionNames
         AcquisitionKind.Breeding => "From the day care",
         AcquisitionKind.Trade => "In-game trades",
         AcquisitionKind.FormChange => "Changing its form",
+        AcquisitionKind.Outside => "From outside the game",
         _ => kind.ToString(),
     };
 

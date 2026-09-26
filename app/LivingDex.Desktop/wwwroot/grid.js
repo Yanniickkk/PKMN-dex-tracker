@@ -63,6 +63,41 @@ window.livingdex = window.livingdex || {};
     }
   };
 
+  // How many tiles fit across, and a call back whenever that changes.
+  //
+  // The count has to be worked out here and sent to C# rather than left to CSS, because the
+  // rows are chunked in C# for `Virtualize` and the keyboard counts in columns. `clientWidth`
+  // already leaves out the scrollbar and takes in the padding, so the padding comes off.
+  const columnsFor = (element, tile, gap, padding) => {
+    const usable = element.clientWidth - (2 * padding);
+    return Math.max(1, Math.floor((usable + gap) / (tile + gap)));
+  };
+
+  window.livingdex.watchColumns = function (element, tile, gap, padding, caller) {
+    if (!drawn(element) || element.dataset.columnsWatched) {
+      return 0;
+    }
+
+    element.dataset.columnsWatched = "on";
+    let last = columnsFor(element, tile, gap, padding);
+
+    // Observing the grid rather than the window: the sidebar and the scrollbar change this
+    // width without the window moving at all. The observer is held on the element, so it goes
+    // when the element does and there is nothing to unregister.
+    element.livingdexColumns = new ResizeObserver(function () {
+      const now = columnsFor(element, tile, gap, padding);
+
+      if (now !== last) {
+        last = now;
+        caller.invokeMethodAsync("ColumnsChanged", now);
+      }
+    });
+
+    element.livingdexColumns.observe(element);
+
+    return last;
+  };
+
   // What a page means here, asked rather than assumed: the window can be any height.
   window.livingdex.rowsVisible = function (element, rowHeight) {
     if (!drawn(element) || !rowHeight) {

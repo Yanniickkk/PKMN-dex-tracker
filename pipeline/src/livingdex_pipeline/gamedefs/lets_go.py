@@ -53,6 +53,7 @@ from ..models import (
     TransferEdge,
     TransferMechanism,
 )
+from ..outside import SentIn, sent_in
 from ..places import LocationNames
 from ..sources import ReadByHand
 from ..trades import InGameTrade, trade_encounters
@@ -314,6 +315,51 @@ HANDED_OVER: tuple[RecordedGift, ...] = (
     ),
 )
 
+#: Where the GO Park was read, spelled the way the article's own url spells it.
+GO_PARK_PAGE = "GO_Park"
+
+#: What Pokemon GO sends into this pair that the pair itself cannot produce.
+#:
+#: **Two, out of everything GO could send.** The park takes any of the first 150 and their
+#: Alolan forms, and Kanto is full of them; what it adds to this dataset is Meltan and Melmetal,
+#: which are #152 and #153 of a Pokedex this Kanto cannot fill without a phone.
+#:
+#: Melmetal is the sharper of the two: it arrives **already evolved**, because the 400 Meltan
+#: Candy that makes one is spent in GO and nothing in Kanto can evolve the Meltan that comes out
+#: of the park. So the row is not "evolve it here" - it is a second thing the park hands over.
+#:
+#: The eleven Pokemon only the other half of the pair has are deliberately not here. GO has
+#: every one of them and the park would bring them across, and trading with the other half is a
+#: way this dataset already records - which is the line Yannick drew on 26 September 2026:
+#: only what nothing else in the dataset provides.
+GO_PARK: tuple[SentIn, ...] = (
+    SentIn(
+        species="meltan",
+        how=(
+            "Caught in Pokemon GO, where a Mystery Box makes it appear, and sent to the GO Park "
+            "in Fuchsia City. The box is opened by sending a Pokemon the other way, so the park "
+            "unlocks its own source"
+        ),
+    ),
+    SentIn(
+        species="melmetal",
+        how=(
+            "Evolved in Pokemon GO with 400 Meltan Candy and sent to the GO Park in Fuchsia "
+            "City. It arrives already evolved: nothing in Kanto can evolve a Meltan"
+        ),
+    ),
+)
+
+#: Why the park never counts towards being able to get one here.
+#:
+#: The same treatment the Friend Safari has had since Generation 6, and for a plainer reason:
+#: this one is not in the game at all. A player with the cartridge and no phone cannot be told
+#: to go and use it.
+GO_PARK_DOES_NOT_COUNT = (
+    "It is caught in another game on another device: Pokemon GO, on a phone, with a Nintendo "
+    "Switch Online account tying the two together"
+)
+
 #: Where a trader was read, spelled the way the article's own url spells it.
 TRADERS_PAGE = (
     "List_of_in-game_trade_Pok%C3%A9mon_in_Pok%C3%A9mon:"
@@ -562,15 +608,13 @@ NOT_AN_EVOLUTION_HERE: dict[str, str] = {
 #: dataset, it has no Pokedex to fill and nothing in it is caught in the sense this tracker
 #: means. What that function went on to guess was that the park must therefore be an
 #: acquisition, "the same shape as an egg from an NPC". It is not, and the Pokemon Dream Radar
-#: is the precedent that settles it: a source that is not a game, sending one way into two
-#: cartridges and nowhere else, which :data:`unova.B2W2_UNOBTAINABLE` states as a reason while a
-#: Phase 3 item works out what shape such a thing should have. That item says in as many words
-#: that GO and the Radar want deciding together rather than one at a time. A GO Park shaped
-#: acquisition invented here would have decided it alone, for two species, in a schema the app
-#: draws pictures from.
+#: is the precedent that settled it: a source that is not a game, sending one way into two
+#: cartridges and nowhere else. Phase 3 decided the two together, as the item asked, and gave
+#: them one shape - :class:`models.OutsideAcquisition`, which :data:`GO_PARK` fills in here.
 #:
-#: So the reason carries the whole truth instead, which is what a reason is for: a player is
-#: told exactly what to do, and nothing in the dataset claims Kanto contains a Meltan.
+#: **The reason below stays anyway**, which is Yannick's decision of 26 September 2026 and is
+#: worth the room: it says why Kanto itself has none, and the row underneath says by what road
+#: one arrives. Neither sentence can do the other's work.
 UNOBTAINABLE: dict[str, str] = {
     # Never in these games, and the one Mythical Pokemon here whose route is hardware. Not a
     # distribution that ended: the code inside a Poke Ball Plus has been good since the day
@@ -598,7 +642,6 @@ UNOBTAINABLE: dict[str, str] = {
         only_in_china("melmetal"),
     ),
 }
-
 
 
 def cartridge(
@@ -692,6 +735,7 @@ READ_ON = ReadByHand(
     {
         SILPH_LAPRAS_PAGE: date(2026, 9, 24),
         TRADERS_PAGE: date(2026, 9, 24),
+        GO_PARK_PAGE: date(2026, 9, 26),
     }
 )
 
@@ -778,6 +822,13 @@ def acquisition_methods(
             game_id=game_id,
             trades=traders(game_id),
             citation=READ_ON(TRADERS_PAGE),
+        ),
+        *sent_in(
+            game_id=game_id,
+            sent_from="Pokemon GO",
+            rows=list(GO_PARK),
+            does_not_count=GO_PARK_DOES_NOT_COUNT,
+            citation=READ_ON(GO_PARK_PAGE),
         ),
         *evolution_encounters(
             api,
@@ -870,10 +921,9 @@ def edges(game_id: str) -> list[TransferEdge]:
     this tracker means, and :mod:`home` already writes down that decision for the same reason.
 
     What this paragraph said next, before step 4 ran, was that the park must therefore be a way
-    of obtaining a species here - "the same shape as an egg from an NPC". It is not, and
-    :data:`UNOBTAINABLE` is where the working is: the Dream Radar is the same thing in Unova and
-    is written down as a reason, a Phase 3 item exists to give sources-that-are-not-games a
-    shape, and that item asks for GO and the Radar to be decided together. So the two species
-    only the park can bring carry a reason that says exactly how it is done.
+    of obtaining a species here - "the same shape as an egg from an NPC". It is not one of the
+    six kinds, and Phase 3 gave it a seventh: :class:`models.OutsideAcquisition`, decided
+    alongside the Dream Radar as the item asked. :data:`GO_PARK` is the two species it brings,
+    and neither of them counts towards being able to get one here.
     """
     return [*trade_edges(game_id), *home_edges(game_id)]

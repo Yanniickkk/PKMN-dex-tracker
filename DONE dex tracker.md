@@ -5698,6 +5698,34 @@ _Nothing yet._
     started, and only that one was stopped.
   - 757 pipeline tests, 259 app tests.
 
+### The dex grid filled half a wide window - 2026-09-26
+
+_Reported by Yannick, whose Pokemon reached the middle of the screen and stopped. The page was
+capped at a reading width like every other page, and the grid inside it was **ten fixed
+columns** - chunked in C# because `Virtualize` hands out rows rather than tiles, and counted in
+columns again by the keyboard. The cap was deliberate and the comment in `app.css` said why:
+taking the cap off without the rest would have drawn ten wider tiles with a 56 pixel sprite
+adrift in each, which is worse than the half-empty screen._
+
+_So the column count follows the width now. `grid.js` works out how many tiles of at least 93
+pixels fit across the grid, hands the number to the component, and keeps a `ResizeObserver` on
+the grid element to say when it changes - the grid rather than the window, because the sidebar
+and the scrollbar change this width without the window moving. **93 is measured rather than
+chosen**: ten columns in the old capped width came to 93 pixels each, so a window the old width
+still draws ten and every pixel past it buys another tile._
+
+_The row height never moves, which is what keeps `Virtualize` honest: a resize changes how many
+tiles are on a row and not how tall a row is. And the cursor needed nothing at all - it is an
+index into the shown list rather than a row and a column, so a reflow moves the tile a player
+is on across the screen without moving it in the list._
+
+_Only the grid takes the window. Everything above it keeps the old reading width, because a
+progress bar two thousand pixels wide is not an improvement._
+
+_Checked on the published exe at two sizes: **21 columns** across a 2576 pixel window, **11**
+at 1500, the same tiles and the same sprites in both, and the keyboard cursor still on Kakuna
+after the window was made narrow and wide again. 321 app tests, `dotnet format` green._
+
 ### A game with several Pokedexes and no National Dex could only show the first of them - 2026-09-25
 
 _Found by Legends: Z-A's step 9 rather than by Galar's, although Galar has had it since Galar.
@@ -6456,3 +6484,146 @@ appliances among them, every one with its picture. 757 pipeline tests, 261 app t
     held open with `FileShare.None` while the app was asked to read it - the busy notice, then
     the list again the moment it was let go.
   - 312 app tests, up from 306.
+
+- [x] Export a collection to CSV — 2026-09-26
+  - **It exports what is on screen**, in the order the grid draws it, with the filters applied -
+    and the button says so: "Export" when nothing is filtered, "**Export these 479**" when
+    something is. "Export what I am looking at" is the only rule that needs no explaining, and a
+    player who has narrowed down to "still to catch in Emerald" wants that list rather than the
+    whole dex.
+  - Columns: **Number, Name, Form, Status, Held in, Caught on, Out of reach, Note** - the things
+    a person sorts on, and nothing that only means something inside this app. The status is the
+    same sentence the tile gives ("In Platinum", "In Emerald, still to transfer"), and the date
+    is ISO, because 03/04 is two different days either side of the Channel and a spreadsheet
+    will not ask which was meant.
+  - **RFC 4180 to the letter**, which a note makes worth doing properly: it is free text a
+    player typed, so a comma, a quote and a line break all really happen, and a test pins each.
+  - **Written with a byte order mark, which is the exact opposite of what step 4 decided about
+    reading one** - and both are right. Excel reads a CSV as the machine's ANSI codepage unless
+    a mark is there, and half these names carry an accent; a file this app reads should not be
+    refused over three invisible bytes. So: tolerated on the way in, written on the way out.
+  - The suggested name is the collection and the day, with everything that needs escaping taken
+    out: `Platinum-living-dex-test-2026-09-26.csv`.
+  - _One difference worth knowing about between the file and the screen: the **Out of reach**
+    column is a fact about the row - can another one be got in these games - while the figure
+    above the grid counts only what is **left** to get. So a collection showing "25 of these are
+    out of reach" can export 26 rows marked yes, and the extra one is the entry already sitting
+    in the main game. Both are right and they answer different questions._
+  - Checked by exporting a real one: 506 lines for a 505-entry National Dex, the mark in front,
+    Bulbasaur reading `1,Bulbasaur,,In Platinum,Platinum,2026-09-26,yes,` - which is the event
+    case, caught and unrepeatable, said in one row.
+  - _And the save dialog opens where the last one did, which the first run of this test showed
+    was the player's own data folder. Nothing was written there; the test typed a path into the
+    scratchpad. Worth remembering for whoever tests the next thing that saves a file._
+  - 320 app tests, up from 312.
+
+- [x] Pokemon GO as a one-way source into HOME — 2026-09-26
+- [x] The Pokemon Dream Radar as a source for Black 2 and White 2 — 2026-09-26
+  - **Decided together, which is what both items asked for**, and every decision in here is
+    Yannick's rather than mine: the shape, what counts, how far it goes, and what the player
+    reads. The research round came first and changed two of the questions before they were put.
+  - **The shape: a seventh acquisition kind, not a game and not an edge.**
+    `OutsideAcquisition` - "caught somewhere this dataset does not hold, and sent in" - with the
+    source named, what the player does there, what else has to be true, and **a required
+    `doesNotCount`**. Required rather than optional is the decision written into the model: a
+    way that leaves this dataset is a way this dataset cannot promise. The row is shown, the
+    tile stays out of reach, and the popup says why - the treatment Kalos's Friend Safari has
+    had since Generation 6, which is also where the field came from.
+  - _The alternative was a node like Bank and HOME with edges into Let's Go and into HOME. It
+    was refused because a node is a spel-shaped place for something that is not a game, and
+    because GO reaches Let's Go directly through the GO Park rather than through HOME at all._
+  - **What the research found before anything was built, and it is most of the value here:**
+  - **The item's own premise was out of date.** It says the GO Park is "the only source of
+    Meltan and Melmetal anywhere in the dataset". Legends: Z-A arrived after it was written and
+    gives both - a static Meltan in Rouge Sector 1, a Melmetal from Side Mission #193 - and
+    Z-A's own note already said "the only game in the dataset that produces one without Pokemon
+    GO". The pressure behind the item was lower than the item thought.
+  - **The Radar sends twenty-six species, not three.** Read off its own page: fifteen Dream
+    World Pokemon with Hidden Abilities, three behind secret codes, five behind a Generation IV
+    cartridge in the 3DS slot, and the three forces of nature. Measured against Black 2, the
+    cartridge can catch ten of them itself; what it cannot produce is thirteen.
+  - **And the three the item names already had a method** - only a *form change*. The Reveal
+    Glass turning an Incarnate Forme into a Therian one was the whole of what the dataset said
+    about them, and the base species had no way at all, so the Therian forms were unreachable
+    too. Which is exactly backwards from the game: **Bulbapedia's locations table says
+    "Transfer from Dream Radar (Therian Forme)"** - what arrives is the Therian, and the Glass
+    is used the other way round first. `reveal_glass_back` is the three records the form table
+    cannot make, because every record it makes is about one of the game's forms and this one's
+    target is the species.
+  - **The scope Yannick drew: only what nothing in the game produces anyway.** So the Radar
+    gets **eight** - the three forces of nature in Therian Forme, and Dialga, Palkia, Giratina,
+    Ho-Oh and Lugia, each behind its own cartridge and each behind the whole chain first: 400
+    Dream Orbs for Tornadus, a thousand more for Thundurus, sixteen hundred more for Landorus,
+    and only then does the title screen offer a Diamond. A Dialga out of the Radar is the
+    furthest thing from a free gift in this dataset.
+  - **And GO gets two**: Meltan and Melmetal, in each half of Let's Go. The park will send any
+    of the first 150 across and Kanto is full of them; the eleven the other half has are a trade
+    away, which the dataset already records. _Melmetal is the interesting one: it arrives
+    **already evolved**, because the 400 Meltan Candy is spent in GO and nothing in Kanto can
+    evolve the Meltan that comes out of the park._
+  - **GO into HOME is deliberately not written down at all.** Measured first: every entry the
+    Switch games cannot produce is a version exclusive or an event, so a GO leg into HOME would
+    fill no gap - and **GO has no species list this pipeline can read**, where the Radar has one
+    page that names all twenty-six. That asymmetry is why one of these is data and the other is
+    a decision.
+  - **The reasons stay above the rows**, which was its own question. "Not in Black 2" says why
+    the cartridge itself has none; the row below says by what road one arrives. Neither sentence
+    can do the other's work, and the validator agrees: `unobtainable-entries-really-are` only
+    counts ways that count, so an entry may keep its reason and have a row.
+  - On screen: a section of its own, **From outside the game**, last of the seven because it is
+    the only one that asks a player to leave - with its own drawn icon, an arrow into something
+    that is not open on that side, because neither source has an item or a sprite.
+  - _One thing the app had to be taught in passing: a form change whose target is the species
+    used to title itself "From Tornadus" on Tornadus's own tile. It now says "From another of
+    its formes", which is the first time this dataset has had a change that runs that way._
+  - 828 pipeline tests, 321 app tests, 11 rules with 0 errors and 0 warnings.
+  - _What is left of this Phase 3 group is the one item that is about a game rather than a
+    source: what the Switch releases of FireRed and LeafGreen are._
+
+- [x] Decide what the Switch releases of FireRed and LeafGreen are — 2026-09-26
+  - **Two entities of their own beside the Game Paks, decided by Yannick, and built as a copy.**
+    `firered-switch` and `leafgreen-switch`: the same 151 entries in the same order, the same
+    grass, the same gifts and statics, the same nine traders, the same sprite sheet, and the
+    same Deoxys forme decided by which half you bought. The tables are `firered`'s and
+    `leafgreen`'s, imported rather than retyped - two copies of a table is how one of them gets
+    corrected and the other does not - and a test compares the two builds record for record so
+    it stays that way.
+  - **That is the opposite of the Virtual Console answer, and the reason is the one** `vc.py`
+    **gives.** There the cartridge is not in the dataset at all, because a Game Boy cartridge
+    trades with another Game Boy cartridge and reaches nothing else, so only one of the two was
+    worth holding. Here both are: the Game Pak migrates through Pal Park into Generation 4 and
+    up the whole chain, and the eShop release reaches Pokemon HOME. One game, two ways out, and
+    neither can stand in for the other - which is the whole of what an entity is for here.
+  - **Three routes, and that is all.** Local wireless between two Switch copies stands in for
+    both the Game Link Cable and the GBA Wireless Adapter, so the pair still fills in each
+    other's seven exclusives. Nothing else: not the five cartridges, not the Nintendo Classics
+    release of Pokemon XD, no Pal Park. And **one** HOME edge instead of the usual two -
+    deposit only, from October 2026 - which is Legends: Z-A's shape in a mirror. 148 routes
+    became 151.
+  - _The wizard is where that is worth seeing: step 2 of a collection built on Switch FireRed
+    offers exactly one game in the whole series - Switch LeafGreen, via trading._
+  - **The one thing the game actually changed is not visible, and that is a question rather
+    than an oversight.** On the Switch the MysticTicket and the AuroraTicket arrive in the bag
+    once the Hall of Fame is entered with a Pokemon that has no Champion Ribbon, where the
+    originals only ever handed them out at distribution events - which is what makes Lugia,
+    Ho-Oh and Deoxys catchable by anybody who finishes the game. But this dataset already lists
+    all three as ordinary statics on the cartridges, straight out of PokeAPI's location tables,
+    with nothing to say that the boat needed a ticket nobody can be given any more. **Ten
+    records across the five Generation 3 games are in that state** - Emerald's Faraway Island
+    Mew and the Eon Ticket's pair among them - and correcting them is a decision about those
+    games rather than about these two.
+  - The mechanics, four of them small: `GameRelease.NINTENDO_CLASSICS` beside `CARTRIDGE` and
+    `VIRTUAL_CONSOLE`, because the shelf is a different one and so is the door; `forms.
+    RE_RELEASES`, because PokeAPI has one FireRed and this dataset now has two, and a game the
+    source has no version of would otherwise have lost every form it has; `forms.ONLY_IN`
+    naming each Deoxys forme twice; and `frlg_switch.py` for what the two halves share.
+  - **Smoke test on the published exe**, against a scratch data file: both halves in the picker
+    under Generation 3, a collection built on Switch FireRed showing **0 of 387** with **166 out
+    of reach**, and Deoxys #386 with its Birth Island static in FireRed and the same in
+    LeafGreen followed by "Then to FireRed: trading".
+  - 830 pipeline tests, 321 app tests, 11 rules with 0 errors and 0 warnings.
+  - _Left behind on purpose: the eShop listing uses the Game Pak's cover, so both new tiles
+    wear the Game Boy Advance box - and the popup labels a record with the game's `version`, so
+    inside one of these collections a row reads "FireRed" rather than "FireRed (Nintendo
+    Switch)". Neither is ambiguous where it stands, since a collection holds one pair or the
+    other._

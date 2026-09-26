@@ -17,6 +17,12 @@ public enum AcquisitionKind
     Breeding = 3,
     Trade = 4,
     FormChange = 5,
+
+    /// <summary>
+    /// Caught somewhere this dataset does not hold, and sent in. Last, because it is the only
+    /// section that asks a player to leave the game.
+    /// </summary>
+    Outside = 6,
 }
 
 /// <summary>
@@ -30,6 +36,7 @@ public enum AcquisitionKind
 [JsonDerivedType(typeof(BreedingAcquisition), "breeding")]
 [JsonDerivedType(typeof(TradeAcquisition), "trade")]
 [JsonDerivedType(typeof(FormChangeAcquisition), "formChange")]
+[JsonDerivedType(typeof(OutsideAcquisition), "outside")]
 public abstract record AcquisitionMethod
 {
     /// <summary>The game this method applies to.</summary>
@@ -379,4 +386,32 @@ public sealed record FormChangeAcquisition : AcquisitionMethod
 
     /// <summary>Where it happens, when it is somewhere rather than something.</summary>
     public string? Location { get; init; }
+}
+
+/// <summary>
+/// Caught somewhere this dataset does not hold, and sent in.
+/// </summary>
+/// <remarks>
+/// Two things in the series put Pokémon into a game without being games themselves: the
+/// Pokémon Dream Radar, a Nintendo 3DS download that sends what it catches down into Black 2
+/// and White 2, and Pokémon GO, which reaches Let's Go through the GO Park. Neither has a
+/// Pokédex to fill and nothing is caught in either in the sense this tracker means.
+///
+/// Every one of these carries a <see cref="AcquisitionMethod.DoesNotCount"/>, so the row is
+/// shown and the tile stays out of reach: a way that leaves this dataset is a way this dataset
+/// cannot promise.
+/// </remarks>
+public sealed record OutsideAcquisition : AcquisitionMethod
+{
+    [JsonIgnore]
+    public override AcquisitionKind Kind => AcquisitionKind.Outside;
+
+    /// <summary>Where it is really caught, as a player would name it.</summary>
+    public required string SentFrom { get; init; }
+
+    /// <summary>What the player does there.</summary>
+    public required string How { get; init; }
+
+    /// <summary>What else has to be true first.</summary>
+    public string? Requirement { get; init; }
 }

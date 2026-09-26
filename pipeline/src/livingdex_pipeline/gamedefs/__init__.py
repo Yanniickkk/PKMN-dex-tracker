@@ -19,10 +19,12 @@ from . import (
     diamond,
     emerald,
     firered,
+    firered_switch,
     gold,
     heartgold,
     home,
     leafgreen,
+    leafgreen_switch,
     legends_arceus,
     legends_z_a,
     lets_go_eevee,
@@ -73,6 +75,12 @@ from . import (
 # That last one was written before the pair above it, and this list is release order rather than
 # the order the work was done in, so it moved down a line rather than the pair going after it.
 #
+# Then the Kanto pair for the second time, and not as a remake: FireRed and LeafGreen sold again
+# on the Switch for the series' thirtieth anniversary, twenty-two years after the Game Paks that
+# are still in this list above them. They are the first entries here that are the same game as
+# another entry - :mod:`frlg_switch` is where that decision is written down - and the only ones
+# whose release order puts them last among the games while their generation puts them ninth.
+#
 # Then the two nodes, out of that order and at the end, because neither is a game. Bank came out
 # between the two Generation 6 pairs and HOME six years after it. They are here for the same
 # reason the games are: the registry is what puts a node in the dataset, and fifteen routes had
@@ -116,6 +124,8 @@ MODULES = [
     scarlet,
     violet,
     legends_z_a,
+    firered_switch,
+    leafgreen_switch,
     bank,
     home,
 ]

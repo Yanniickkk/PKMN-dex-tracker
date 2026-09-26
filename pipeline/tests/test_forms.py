@@ -451,10 +451,19 @@ def test_a_form_the_version_group_cannot_place_is_written_out_by_hand() -> None:
     assert module.ONLY_IN["deoxys-attack"][0] == "firered"
     assert module.ONLY_IN["deoxys-defense"][0] == "leafgreen"
     assert module.ONLY_IN["deoxys-speed"][0] == "emerald"
+    # The Switch re-releases of the Kanto pair are the same game and make the same shape, so
+    # each of those two formes is pinned to two ids rather than one. Emerald has no re-release
+    # here and stays at one, which is what makes this a table rather than a rule.
+    assert module.ONLY_IN["deoxys-attack"][1] == "firered-switch"
+    assert module.ONLY_IN["deoxys-defense"][1] == "leafgreen-switch"
     for one in ("deoxys-attack", "deoxys-defense", "deoxys-speed"):
-        assert set(module.ONLY_IN[one]) - {"firered", "leafgreen", "emerald"} == set(
-            module.METEORITE
-        )
+        assert set(module.ONLY_IN[one]) - {
+            "firered",
+            "firered-switch",
+            "leafgreen",
+            "leafgreen-switch",
+            "emerald",
+        } == set(module.METEORITE)
 
     # Ruby and Sapphire have no meteorite and no forme but the one they hold, so they are not on
     # the list; the spiky-eared Pichu is the other kind of hand-written answer, a form that

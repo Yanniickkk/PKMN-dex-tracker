@@ -224,6 +224,36 @@ public class AvailabilityTests
     }
 
     [Fact]
+    public void A_source_outside_the_dataset_is_read_and_never_counted()
+    {
+        // The Pokemon Dream Radar and Pokemon GO: real ways, in another program on another
+        // device. The row is what the popup shows; the tile stays out of reach, and the model
+        // makes that structural rather than optional - every one of these carries its reason.
+        var radar = new OutsideAcquisition
+        {
+            Game = Platinum,
+            Target = Of(Bulbasaur),
+            SentFrom = "the Pokemon Dream Radar",
+            How = "Caught in the Interdream Zone and sent down to the cartridge",
+            DoesNotCount = "It is caught in a separate Nintendo 3DS download",
+            Source = Citation,
+        };
+
+        var reference = new ReferenceData(
+            [Game(Platinum)],
+            [],
+            [],
+            [],
+            acquisitionMethods: [radar]);
+
+        var availability = new Availability(reference, CaptureIndex.Empty);
+
+        Assert.False(availability.In(Platinum, Of(Bulbasaur)));
+        Assert.Single(reference.MethodsFor(Platinum, Of(Bulbasaur)));
+        Assert.False(radar.Counts);
+    }
+
+    [Fact]
     public void Nothing_can_be_evolved_from_something_only_an_uncounted_way_produces()
     {
         // The same lie one step further on: an Ivysaur evolved from a Bulbasaur nobody can be

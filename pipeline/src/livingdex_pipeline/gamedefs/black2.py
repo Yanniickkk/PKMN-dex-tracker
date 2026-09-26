@@ -14,7 +14,9 @@ The routes are the same four-cartridge set Black and White declare, which is wha
 held-back edges up: all four trade with each other, Generation 4 comes in over the Poke
 Transfer, and Poke Transporter goes out to Bank. One route into this game is missing on purpose
 - the Pokemon Dream Radar on the 3DS sends its catches down into these two and into nothing
-else - and it is a Phase 3 item, because the thing at the other end is not a cartridge.
+else - because the thing at the other end is not a cartridge. Phase 3 gave it a shape that is
+not a route at all: :class:`models.OutsideAcquisition`, a row on the entry rather than an edge
+between two games. :data:`unova.DREAM_RADAR` is what it sends.
 """
 
 from __future__ import annotations

@@ -84,28 +84,28 @@ public sealed class Availability
         GameId game,
         AcquisitionMethod method,
         HashSet<(GameId, DexTarget)> visiting) => method switch
-    {
-        // A rule the dataset does not have is not a way to get anything. The validator reports
-        // it separately; here it simply does not count.
-        EvolutionAcquisition evolution =>
-            _reference.FindEvolutionRule(evolution.Rule) is { } rule
-            && CanBeHad(game, rule.From, visiting),
+        {
+            // A rule the dataset does not have is not a way to get anything. The validator reports
+            // it separately; here it simply does not count.
+            EvolutionAcquisition evolution =>
+                _reference.FindEvolutionRule(evolution.Rule) is { } rule
+                && CanBeHad(game, rule.From, visiting),
 
-        // Any one parent at the day care lays the egg.
-        BreedingAcquisition breeding =>
-            breeding.Parents.Any(parent => CanBeHad(game, parent, visiting)),
+            // Any one parent at the day care lays the egg.
+            BreedingAcquisition breeding =>
+                breeding.Parents.Any(parent => CanBeHad(game, parent, visiting)),
 
-        // A form is not caught, it is changed into - so what it is changed *from* has to be
-        // gettable, exactly as an evolution's earlier stage does. Ultra Sun knows how to touch
-        // the meteorite beside Sophocles and has no way at all of producing a Deoxys, so
-        // "available in Ultra Sun" listed three Deoxys formes that no Ultra Sun player can have.
-        // Same shape as the Ivysaur this class was written for, one record kind further on.
-        FormChangeAcquisition change =>
-            CanBeHad(game, DexTarget.ForSpecies(change.Target.Species), visiting),
+            // A form is not caught, it is changed into - so what it is changed *from* has to be
+            // gettable, exactly as an evolution's earlier stage does. Ultra Sun knows how to touch
+            // the meteorite beside Sophocles and has no way at all of producing a Deoxys, so
+            // "available in Ultra Sun" listed three Deoxys formes that no Ultra Sun player can have.
+            // Same shape as the Ivysaur this class was written for, one record kind further on.
+            FormChangeAcquisition change =>
+                CanBeHad(game, DexTarget.ForSpecies(change.Target.Species), visiting),
 
-        // Caught, handed over or traded for: the game produces it outright.
-        _ => true,
-    };
+            // Caught, handed over or traded for: the game produces it outright.
+            _ => true,
+        };
 
     private bool CanBeHad(GameId game, DexTarget target, HashSet<(GameId, DexTarget)> visiting) =>
         _captures.IsIn(game, target) || Resolve(game, target, visiting);

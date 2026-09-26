@@ -558,6 +558,24 @@
     }
   },
   {
+    "from": "firered-switch",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "firered-switch",
+    "to": "leafgreen-switch",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
     "from": "gold",
     "to": "bank",
     "mechanism": "pokeTransporter",
@@ -819,6 +837,15 @@
       "filter": "nationalDexRange",
       "from": 1,
       "to": 386
+    }
+  },
+  {
+    "from": "leafgreen-switch",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
     }
   },
   {

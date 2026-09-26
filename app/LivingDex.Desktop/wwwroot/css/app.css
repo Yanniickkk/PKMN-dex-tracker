@@ -917,10 +917,19 @@ code {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* No `max-width: none` here, unlike the picker below, and it is worth saying why: this grid
-     is ten fixed columns chunked in C# for `Virtualize`, so a wider page does not hold more
-     tiles - it holds ten wider ones, with a 56px sprite adrift in each. Letting it take the
-     window needs the column count to follow the width first. */
+  /* The cap used to stay on here, because the grid was ten fixed columns chunked in C# for
+     `Virtualize` and a wider page would only have held ten wider tiles with a 56px sprite
+     adrift in each. The column count follows the width now - `grid.js` measures it and the
+     component chunks by it - so the page takes the window and the extra width becomes more
+     Pokemon per row. Reported by Yannick, whose grid was filling half a screen. */
+  max-width: none;
+}
+
+/* Everything above the grid keeps the reading width the rest of the app has: 1100px less the
+   content's own padding. The grid is the only thing on this page that wants the window, and a
+   progress bar two thousand pixels wide is not an improvement. */
+.content:has(.dex-grid) > *:not(.dex-grid) {
+  max-width: 1020px;
 }
 
 /* ---- game picker ---- */
@@ -1184,6 +1193,16 @@ code {
   color: var(--state-elsewhere);
 }
 
+/* More than one control beside a page's title. */
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.export-done {
+  margin: 8px 0 0;
+}
+
 /* The sentence the percentage cannot say, under the figures rather than beside them. */
 .progress-unreachable {
   margin: 0 0 8px;
@@ -1220,7 +1239,9 @@ code {
 
 .dex-row {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  /* However many the grid measured. The fallback is what the old fixed grid was, so a row is
+     still drawn if the measuring never happens. */
+  grid-template-columns: repeat(var(--dex-columns, 10), 1fr);
   gap: 8px;
   /* Must match RowHeight in CollectionGrid.razor. */
   height: 108px;

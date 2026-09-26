@@ -14643,6 +14643,36 @@
       }
     },
     {
+      "kind": "outside",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "meltan"
+      },
+      "sentFrom": "Pokemon GO",
+      "how": "Caught in Pokemon GO, where a Mystery Box makes it appear, and sent to the GO Park in Fuchsia City. The box is opened by sending a Pokemon the other way, so the park unlocks its own source",
+      "doesNotCount": "It is caught in another game on another device: Pokemon GO, on a phone, with a Nintendo Switch Online account tying the two together",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/GO_Park",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
+      "kind": "outside",
+      "game": "lets-go-pikachu",
+      "target": {
+        "species": "melmetal"
+      },
+      "sentFrom": "Pokemon GO",
+      "how": "Evolved in Pokemon GO with 400 Meltan Candy and sent to the GO Park in Fuchsia City. It arrives already evolved: nothing in Kanto can evolve a Meltan",
+      "doesNotCount": "It is caught in another game on another device: Pokemon GO, on a phone, with a Nintendo Switch Online account tying the two together",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/GO_Park",
+        "retrievedOn": "2026-09-26"
+      }
+    },
+    {
       "kind": "evolution",
       "game": "lets-go-pikachu",
       "target": {

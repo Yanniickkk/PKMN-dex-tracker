@@ -37,6 +37,8 @@ from livingdex_pipeline.gamedefs import (
     ds,
     emerald,
     firered,
+    firered_switch,
+    frlg_switch,
     galar,
     gba,
     gbc,
@@ -49,6 +51,7 @@ from livingdex_pipeline.gamedefs import (
     kalos,
     kanto,
     leafgreen,
+    leafgreen_switch,
     legends_arceus,
     legends_z_a,
     lets_go,
@@ -1973,6 +1976,58 @@ def test_each_generation_1_release_describes_what_it_hands_over_in_its_own_words
     assert gift_of(yellow).npc == "A girl in a house in Cerulean City"
 
 
+def test_the_switch_kanto_pair_is_the_cartridge_pair_record_for_record() -> None:
+    # The re-release changed where it was sold and where its Pokemon can go, and nothing a
+    # player does. So the two builds have to agree about everything except which game each
+    # record names - and comparing them is the whole test, because a table copied rather than
+    # shared would pass on the day it was written and drift the first time one half was fixed.
+    for cartridge, re_release in ((firered, firered_switch), (leafgreen, leafgreen_switch)):
+        old = cartridge.build(context(cartridge.GAME_ID))
+        new = re_release.build(context(re_release.GAME_ID))
+
+        assert [entry.model_dump(exclude={"game"}) for entry in new.dex_entries] == [
+            entry.model_dump(exclude={"game"}) for entry in old.dex_entries
+        ]
+        assert [one.model_dump(exclude={"game"}) for one in new.acquisition_methods] == [
+            one.model_dump(exclude={"game"}) for one in old.acquisition_methods
+        ]
+
+        # The same game asks the same of a player: 386 after the Elite Four, drawn by the same
+        # sheet. What differs is the four things a re-release is.
+        assert new.game.national_dex_through == old.game.national_dex_through == 386
+        assert new.game.dex_source is old.game.dex_source
+        assert new.game.sprite_set == old.game.sprite_set
+        assert new.game.generation == old.game.generation == 3
+        assert new.game.region == old.game.region
+
+        assert new.game.id != old.game.id
+        assert new.game.title != old.game.title
+        assert new.game.release is GameRelease.NINTENDO_CLASSICS
+        assert old.game.release is GameRelease.CARTRIDGE
+        assert new.game.released == frlg_switch.RELEASED == date(2026, 2, 27)
+
+
+def test_the_switch_kanto_pair_reaches_its_other_half_and_pokemon_home_and_nothing_else() -> None:
+    # Local wireless stands in for the link cable, so the seven entries each half never grows
+    # still come from the other one. Everything else the Game Paks have is gone: no cable to the
+    # five cartridges, no Pal Park, and a deposit into HOME with no withdrawal beside it.
+    routes = {
+        (edge.from_, edge.to, edge.mechanism, edge.direction) for edge in firered_switch.edges()
+    }
+
+    assert routes == {
+        (
+            "firered-switch",
+            "leafgreen-switch",
+            TransferMechanism.TRADE,
+            TransferDirection.BOTH_WAYS,
+        ),
+        ("firered-switch", "home", TransferMechanism.HOME, TransferDirection.ONE_WAY),
+    }
+    assert not {edge.to for edge in firered_switch.edges()} & set(gba.CARTRIDGES)
+    assert {edge.to for edge in leafgreen_switch.edges()} == {"firered-switch", home.NODE}
+
+
 def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> None:
     registry = default_registry()
 
@@ -1987,10 +2042,12 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "diamond",
         "emerald",
         "firered",
+        "firered-switch",
         "gold",
         "heartgold",
         "home",
         "leafgreen",
+        "leafgreen-switch",
         "legends-arceus",
         "legends-z-a",
         "lets-go-eevee",
@@ -2074,11 +2131,38 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # and the deposit is not: nothing transferred into that game, and nothing obtained in it,
     # goes back to a previous game. It is the first entry in the dataset with a way in and no
     # way out.
+    # And three for the Switch re-releases of FireRed and LeafGreen, which is the first time two
+    # entries in this dataset are the same game as two others. The cable between the halves is a
+    # console's radio now and still one route, and each half deposits into HOME. What is not
+    # here is everything the Game Paks have: no link to the five cartridges, no Pal Park, and no
+    # withdrawal back out of HOME. Twenty-two years of hardware between the two pairs, and the
+    # only thing either of them can reach that the other can is the other half of itself.
     assert (
         len(routes)
-        == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5 + 5 + 5 + 2 + 5 + 1
+        == 3
+        + 3
+        + 9
+        + 10
+        + 10
+        + 25
+        + 6
+        + 20
+        + 6
+        + 10
+        + 4
+        + 4
+        + 1
+        + 6
+        + 8
+        + 5
+        + 5
+        + 5
+        + 2
+        + 5
+        + 1
+        + 3
     )
-    assert len(routes) == 148
+    assert len(routes) == 151
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -3150,11 +3234,59 @@ def test_victini_and_genesect_swap_places_between_the_two_pairs() -> None:
     assert "every other Victini distribution was for the first pair" in sequels
 
 
+def test_the_dream_radar_sends_eight_and_none_of_them_count() -> None:
+    # Phase 3's answer to the reason above: a source that is not a game, read off one page on
+    # 26 September 2026 and bounded by Yannick to what the cartridge cannot produce itself.
+    rows = {(row.species, row.form): row for row in unova.DREAM_RADAR}
+    assert len(rows) == 8
+
+    # The three the sequels' own dex lists, and they arrive in Therian Forme - which is what
+    # the article's locations table says and what makes the Reveal Glass record only half a
+    # story on its own.
+    assert ("tornadus", "tornadus-therian") in rows
+    assert ("thundurus", "thundurus-therian") in rows
+    assert ("landorus", "landorus-therian") in rows
+
+    # And five that are National Dex tiles rather than entries, each behind its own cartridge.
+    for species, cartridge in (
+        ("dialga", "Diamond"),
+        ("palkia", "Pearl"),
+        ("giratina", "Platinum"),
+        ("ho-oh", "HeartGold"),
+        ("lugia", "SoulSilver"),
+    ):
+        row = rows[(species, None)]
+        assert f"Pokemon {cartridge} card in the same Nintendo 3DS" in row.requirement
+        # Five deep: the whole chain of three comes first.
+        assert "Landorus caught first" in row.requirement
+
+    # The chain the Radar itself imposes, which nothing in the dataset said before.
+    assert "400 Dream Orbs" in rows[("tornadus", "tornadus-therian")].requirement
+    assert "Tornadus caught first" in rows[("thundurus", "thundurus-therian")].requirement
+    assert "Thundurus caught first" in rows[("landorus", "landorus-therian")].requirement
+
+    # Ownable rather than buyable, which is a different answer from "this cannot be done".
+    assert "ownable rather than buyable" in unova.DREAM_RADAR_DOES_NOT_COUNT
+
+
+def test_the_reveal_glass_works_in_the_direction_a_player_actually_needs() -> None:
+    # The form table can only say Incarnate to Therian, because every record it makes is about
+    # one of the game's forms. The Radar hands over the Therian one, so without these the
+    # dataset offers a road out of a place nobody can be.
+    back = unova.reveal_glass_back("black-2")
+
+    assert [one.target.species for one in back] == ["tornadus", "thundurus", "landorus"]
+    assert all(one.target.form is None for one in back)
+    assert all("Therian Forme" in one.requirement for one in back)
+    assert all("Cedric Juniper" in one.requirement for one in back)
+
+
 def test_the_forces_of_nature_are_behind_another_game_rather_than_a_date() -> None:
     # Not a distribution that ended: the Pokemon Dream Radar is a 3DS download that sends into
     # these two cartridges and nowhere else, and it is the only source of any of the three here.
-    # Every other entry in either pair's list is a door that shut; this one is a door nobody
-    # has written yet.
+    # Every other entry in either pair's list is a door that shut; this one is a door that is
+    # open and is not in the game - which is why the reason stays even now that the Radar has
+    # rows of its own below it.
     for species in ("tornadus", "thundurus", "landorus"):
         reason = unova.B2W2_UNOBTAINABLE[species]
 
@@ -4305,12 +4437,12 @@ def test_the_only_distributions_these_two_ever_had_were_for_another_release() ->
     assert "never closed" in pikachu["mew"]
 
 
-def test_the_go_park_is_a_reason_rather_than_a_record() -> None:
-    # What step 1 guessed would be "the same shape as an egg from an NPC" is the Dream Radar's
-    # problem instead: a source that is not a game, sending one way into two cartridges and
-    # nowhere else. A Phase 3 item exists to give such a thing a shape and asks for GO and the
-    # Radar to be decided together, so nothing here invents a GO Park shaped acquisition for
-    # two species - the reason carries the whole truth and says what to do.
+def test_the_go_park_is_a_row_that_does_not_count() -> None:
+    # What step 1 guessed would be "the same shape as an egg from an NPC" turned out to be the
+    # Dream Radar's problem: a source that is not a game, sending one way into a cartridge and
+    # nowhere else. Phase 3 gave it a shape - OutsideAcquisition - and Yannick drew the line
+    # round it on 26 September 2026: only what nothing else in the dataset provides, shown and
+    # never counted, with the entry's own reason left standing above it.
     api = FakeApi([(151, "mew"), (152, "meltan"), (153, "melmetal")])
 
     for module in (lets_go_pikachu, lets_go_eevee):
@@ -4321,14 +4453,30 @@ def test_the_go_park_is_a_reason_rather_than_a_record() -> None:
             if entry.unobtainable_reason is not None
         }
 
-        # Three of 153, one table for the pair, and not one of them a version exclusive.
+        # Three of 153, one table for the pair, and not one of them a version exclusive. The
+        # reasons stay: they say why Kanto itself has none, which the row below cannot.
         assert set(reasons) == {"mew", "meltan", "melmetal"}
         assert "GO Park" in reasons["meltan"]
         assert "GO Park" in reasons["melmetal"]
         assert "Poke Ball Plus" in reasons["mew"]
 
-        # Nothing in the dataset claims Kanto contains a Meltan.
-        produced = {one.target.species for one in data.acquisition_methods}
+        outside = {
+            one.target.species: one for one in data.acquisition_methods if one.kind == "outside"
+        }
+
+        # Two, and only two. The park will send any of the first 150 across and Kanto is full of
+        # them; the eleven the other half has are a trade away, which the dataset already
+        # records. What it adds is the two numbers Kanto cannot reach without a phone.
+        assert set(outside) == {"meltan", "melmetal"}
+        assert all(one.sent_from == "Pokemon GO" for one in outside.values())
+        assert "Mystery Box" in outside["meltan"].how
+        assert "already evolved" in outside["melmetal"].how
+
+        # And neither counts, which is the whole reason the field is required on this kind.
+        assert all(one.does_not_count for one in outside.values())
+
+        # Nothing else claims Kanto contains one, and Mew still has no way at all.
+        produced = {one.target.species for one in data.acquisition_methods if one.kind != "outside"}
         assert not produced & {"meltan", "melmetal", "mew"}
 
 

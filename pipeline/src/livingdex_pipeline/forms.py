@@ -1211,8 +1211,11 @@ COSPLAY_PIKACHU: tuple[str, ...] = (
 #: :data:`COSPLAY_PIKACHU` and the spiky-eared Pichu are forms that reach *less* far, because
 #: nothing will carry them out of the games that made them.
 ONLY_IN: Mapping[str, tuple[str, ...]] = {
-    "deoxys-attack": ("firered", *METEORITE),
-    "deoxys-defense": ("leafgreen", *METEORITE),
+    # The Switch releases are the same game and make the same shape, so each half's forme is
+    # named twice here. Nothing derives one id from the other: a re-release that had changed
+    # this would be a re-release this table could still describe.
+    "deoxys-attack": ("firered", "firered-switch", *METEORITE),
+    "deoxys-defense": ("leafgreen", "leafgreen-switch", *METEORITE),
     "deoxys-speed": ("emerald", *METEORITE),
     "pichu-spiky-eared": ("heartgold", "soulsilver"),
     **dict.fromkeys(COSPLAY_PIKACHU, ("omega-ruby", "alpha-sapphire")),
@@ -1232,6 +1235,20 @@ LABELS: Mapping[str, str] = {
     "east": "East Sea",
     "west": "West Sea",
     "spiky-eared": "Spiky-eared",
+}
+
+
+#: Games the source has no version of, and the version group each one belongs to anyway.
+#:
+#: PokeAPI has one FireRed. This dataset has two - the Game Pak and the 2026 Switch release -
+#: because they go to different places, and :mod:`gamedefs.frlg_switch` is where that is argued.
+#: A re-release is not a new version group: it plays the game its group describes, holds the
+#: forms that group holds, and sits where that group sits in the series. So it is named here
+#: rather than derived, and the check below stays a check: an id that is in neither the source
+#: nor this table is still a mistake rather than a game with no forms.
+RE_RELEASES: Mapping[str, str] = {
+    "firered-switch": "firered-leafgreen",
+    "leafgreen-switch": "firered-leafgreen",
 }
 
 
@@ -1259,10 +1276,17 @@ class VersionGroupGames:
         for entry in listing["results"]:
             group = self.api.resource(f"version-group/{entry['name']}", refresh=self.refresh)
             self._order[entry["name"]] = int(group["order"])
-            self._games[entry["name"]] = tuple(
-                game
-                for version in group["versions"]
-                if (game := game_id_of(version["name"])) in self.game_ids
+            self._games[entry["name"]] = (
+                *(
+                    game
+                    for version in group["versions"]
+                    if (game := game_id_of(version["name"])) in self.game_ids
+                ),
+                *(
+                    game
+                    for game, in_group in RE_RELEASES.items()
+                    if in_group == entry["name"] and game in self.game_ids
+                ),
             )
             for game in self._games[entry["name"]]:
                 self._generation[game] = generation_of(group["generation"]["url"])

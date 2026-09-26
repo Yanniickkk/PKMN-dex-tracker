@@ -120,6 +120,22 @@
       }
     },
     {
+      "kind": "outside",
+      "game": "platinum",
+      "target": {
+        "species": "shaymin"
+      },
+      "sentFrom": "a distribution that is not in this dataset",
+      "how": "Caught somewhere else and sent in",
+      "requirement": "Something else first",
+      "doesNotCount": "It is not in this game at all",
+      "source": {
+        "source": "bulbapedia",
+        "url": "https://bulbapedia.bulbagarden.net/wiki/Route_201",
+        "retrievedOn": "2026-09-21"
+      }
+    },
+    {
       "kind": "breeding",
       "game": "platinum",
       "target": {

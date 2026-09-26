@@ -33,6 +33,11 @@ class Model(BaseModel):
 class GameRelease(StrEnum):
     CARTRIDGE = "cartridge"
     VIRTUAL_CONSOLE = "virtualConsole"
+    #: An older game sold again on the Nintendo Switch, under the name Nintendo gives that
+    #: shelf. Not the same thing as a Virtual Console release and kept apart from it on
+    #: purpose: those reach Pokemon Bank and these reach Pokemon HOME, which is the only
+    #: reason either is an entity of its own.
+    NINTENDO_CLASSICS = "nintendoClassics"
     #: Bank and HOME: not games, but nodes in the transfer graph.
     SERVICE = "service"
 
@@ -602,13 +607,49 @@ class FormChangeAcquisition(Model):
     source: SourceCitation
 
 
+class OutsideAcquisition(Model):
+    """Caught somewhere this dataset does not hold, and sent in.
+
+    The seventh kind, and the first that is not about the game at all. Two things in the series
+    put Pokemon into a cartridge without being cartridges themselves: the Pokemon Dream Radar,
+    a Nintendo 3DS download that sends what it catches down into Black 2 and White 2, and
+    Pokemon GO, which reaches Let's Go through the GO Park. Neither has a Pokedex to fill and
+    nothing is caught in either in the sense this tracker means, so neither is a game here -
+    and a transfer edge would have had to point at one.
+
+    What is left is this: a row on the entry saying where it really comes from and what the
+    player has to do there. It is shown and it never counts - :attr:`does_not_count` is
+    required rather than optional, because a way that leaves this dataset is by definition a
+    way this dataset cannot promise.
+
+    Scope, decided by Yannick on 26 September 2026: only where nothing in the game produces one
+    anyway. The Radar also hands out fifteen Dream World Pokemon with Hidden Abilities and
+    Black 2 can catch every one of them, so those are not written down here.
+    """
+
+    kind: Literal["outside"] = "outside"
+    game: str
+    target: DexTarget
+    #: Where it is really caught, named as a player would name it: "the Pokemon Dream Radar".
+    sent_from: str
+    #: What the player does there, in words they can act on.
+    how: str
+    #: What else has to be true. The Radar's Dialga wants a Pokemon Diamond card in the same
+    #: Nintendo 3DS, and its Thundurus wants its Tornadus caught first.
+    requirement: str | None = None
+    #: Why this never counts towards being able to get one here. Required, not optional.
+    does_not_count: str
+    source: SourceCitation
+
+
 AcquisitionMethod = Annotated[
     GiftAcquisition
     | WildAcquisition
     | EvolutionAcquisition
     | BreedingAcquisition
     | TradeAcquisition
-    | FormChangeAcquisition,
+    | FormChangeAcquisition
+    | OutsideAcquisition,
     Field(discriminator="kind"),
 ]
 

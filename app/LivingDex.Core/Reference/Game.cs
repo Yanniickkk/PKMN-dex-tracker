@@ -11,6 +11,13 @@ public enum GameRelease
     VirtualConsole,
 
     /// <summary>
+    /// An older game sold again on the Nintendo Switch. A separate entity from the cartridge
+    /// for the same reason a Virtual Console release is, and a separate kind from it because
+    /// the door is a different one: those reach Pokémon Bank and these reach Pokémon HOME.
+    /// </summary>
+    NintendoClassics,
+
+    /// <summary>
     /// Pokémon Bank and HOME. They are not games and cannot be a main game, but they are
     /// nodes in the transfer graph, so they need an entity like everything else.
     /// </summary>

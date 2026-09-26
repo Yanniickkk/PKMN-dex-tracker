@@ -9,8 +9,9 @@ of routes - but every step after it has to ask which pair it is answering for.
 
 The routes are the same four-cartridge set, so registering this game and its partner lights up
 the four trades Black and White have been declaring into an empty space. The Pokemon Dream
-Radar, which sends into these two and nowhere else, is a Phase 3 item: the thing at the other
-end of that route is a 3DS download rather than a cartridge.
+Radar, which sends into these two and nowhere else, is not one of them: the thing at the other
+end of that route is a 3DS download rather than a cartridge, so Phase 3 made it a row on the
+entry instead of an edge. See :data:`unova.DREAM_RADAR`.
 """
 
 from __future__ import annotations

@@ -32,6 +32,7 @@ from livingdex_pipeline.models import (
     LocationCondition,
     MinimumLevelCondition,
     NationalDexRangeFilter,
+    OutsideAcquisition,
     PokemonType,
     PresentInTargetDexFilter,
     SourceCitation,
@@ -259,6 +260,18 @@ def platinum() -> GameData:
                 method=EncounterMethod.WALK,
                 levels=LevelRange(minimum=16, maximum=18),
                 requirement="Only on days Mr. Backlot mentions it in the Trophy Garden",
+                source=CITATION,
+            ),
+            # The seventh kind, and the only one that is not about this game: a source that is
+            # not a game at all, with the reason it never counts. Both of those are the point of
+            # the shape, so both are in the sample.
+            OutsideAcquisition(
+                game="platinum",
+                target=DexTarget(species="shaymin"),
+                sent_from="a distribution that is not in this dataset",
+                how="Caught somewhere else and sent in",
+                requirement="Something else first",
+                does_not_count="It is not in this game at all",
                 source=CITATION,
             ),
             # Two parents and a requirement, so the list and the optional field are both pinned.

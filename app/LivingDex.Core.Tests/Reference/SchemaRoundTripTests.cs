@@ -344,7 +344,7 @@ public class SchemaRoundTripTests
     }
 
     [Fact]
-    public void Sections_are_ordered_gift_wild_evolution_breeding_trade_form_change()
+    public void Sections_run_from_the_surest_way_to_the_one_that_leaves_the_game()
     {
         Assert.Equal(
             [
@@ -354,6 +354,7 @@ public class SchemaRoundTripTests
                 AcquisitionKind.Breeding,
                 AcquisitionKind.Trade,
                 AcquisitionKind.FormChange,
+                AcquisitionKind.Outside,
             ],
             Enum.GetValues<AcquisitionKind>().OrderBy(kind => (int)kind));
     }

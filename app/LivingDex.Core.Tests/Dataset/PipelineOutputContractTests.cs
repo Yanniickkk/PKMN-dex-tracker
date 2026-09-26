@@ -175,7 +175,16 @@ public class PipelineOutputContractTests
         Assert.Equal("Only on days Mr. Backlot mentions it in the Trophy Garden", arranged.Requirement);
         Assert.Null(wild.Requirement);
 
-        var breeding = Assert.IsType<BreedingAcquisition>(platinum.AcquisitionMethods[5]);
+        // [5] is the seventh kind and the only one that is not about this game at all: a source
+        // outside the dataset, which always carries the reason it does not count.
+        var outside = Assert.IsType<OutsideAcquisition>(platinum.AcquisitionMethods[5]);
+        Assert.Equal("a distribution that is not in this dataset", outside.SentFrom);
+        Assert.Equal("Caught somewhere else and sent in", outside.How);
+        Assert.Equal("Something else first", outside.Requirement);
+        Assert.Equal("It is not in this game at all", outside.DoesNotCount);
+        Assert.False(outside.Counts);
+
+        var breeding = Assert.IsType<BreedingAcquisition>(platinum.AcquisitionMethods[6]);
         Assert.Equal(
             [DexTarget.ForSpecies(new SpeciesId("pikachu")), DexTarget.ForSpecies(new SpeciesId("raichu"))],
             breeding.Parents);

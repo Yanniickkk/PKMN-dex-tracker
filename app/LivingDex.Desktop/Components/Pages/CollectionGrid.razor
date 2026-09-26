@@ -1,4 +1,5 @@
 @page "/collections/{CollectionId}"
+@using System.IO
 @using LivingDex.Core.Dataset
 @using LivingDex.Core.Dex
 @using LivingDex.Core.Reference
@@ -8,6 +9,7 @@
 @inject UserDataStoreProvider StoreProvider
 @inject TransferGraph Transfers
 @inject IJSRuntime JS
+@implements IDisposable
 
 <PageTitle>@(_collection?.Name ?? "Collection")</PageTitle>
 
@@ -32,8 +34,29 @@ else
 {
     <div class="page-header">
         <h1>@_collection.Name</h1>
-        <a class="button" href="collections">All collections</a>
+
+        <div class="header-actions">
+            @* What it exports is what is on screen, which is why the label counts. A player who
+               has filtered down to "still to catch in Emerald" wants that list and not the
+               whole dex, and one who has filtered nothing gets the whole dex either way. *@
+            <button type="button" class="button" @onclick="Export" disabled="@(_exporting || _shown.Count == 0)">
+                @(_exporting ? "Exporting…" : ExportLabel)
+            </button>
+            <a class="button" href="collections">All collections</a>
+        </div>
     </div>
+
+    @if (_exported is not null)
+    {
+        <p class="muted export-done" role="status">Written to @_exported.</p>
+    }
+
+    @if (_exportError is not null)
+    {
+        <div class="notice notice-error" role="alert">
+            <p>@_exportError</p>
+        </div>
+    }
 
     @* An archived collection is one that was put away, so it is read rather than filled in:
        every control that would write is off below. Saying so once, here, is what keeps that
@@ -191,6 +214,7 @@ else
            by row number rather than by element. *@
         <div class="dex-grid" @ref="_grid" tabindex="0" role="grid"
              aria-label="@(_collection.Name) dex" aria-activedescendant="@CursorId"
+             style="--dex-columns: @_columns"
              @onkeydown="OnGridKey">
             @* Rows rather than tiles: Virtualize inserts spacer elements, which a CSS grid would
                lay out as if they were cells. A row is one grid of its own. *@
@@ -509,11 +533,30 @@ else
 
 @code {
     /// <summary>
-    /// How many tiles sit on one row. Fixed rather than measured: virtualising needs a row height
-    /// it can trust, and a count that changes with the window would invalidate that on every
-    /// resize. The window has a minimum width, so ten tiles always fit.
+    /// How many tiles sit on one row, which is however many fit.
     /// </summary>
-    private const int Columns = 10;
+    /// <remarks>
+    /// It used to be ten, fixed, and the worry written here was that virtualising needs a row
+    /// height it can trust. It still does and it still has one: widening the grid changes how
+    /// many tiles are on a row and not how tall the row is, so <see cref="RowHeight"/> holds
+    /// whatever the window does. What a resize does invalidate is the chunking and the cursor's
+    /// arithmetic, and both are redone in <see cref="ColumnsChanged"/>.
+    ///
+    /// Ten is the starting figure rather than the rule: it is what fits before the browser has
+    /// been asked, and what is used if the ask fails.
+    /// </remarks>
+    private int _columns = 10;
+
+    /// <summary>The narrowest a tile is allowed to be, in pixels, before a column is dropped.</summary>
+    /// <remarks>
+    /// Measured from what the grid was: ten columns in the old capped width came to 93 pixels
+    /// each, and a 56 pixel sprite sits in that with room around it. So a window the old width
+    /// still draws ten, and every pixel past it buys another tile rather than ten wider ones.
+    /// </remarks>
+    private const int TileMinWidth = 93;
+
+    /// <summary>The gap between tiles and the grid's own padding. Must match <c>.dex-row</c>.</summary>
+    private const int TileGap = 8;
 
     /// <summary>Must match the height a <c>.dex-row</c> actually takes, or scrolling drifts.</summary>
     private const float RowHeight = 116f;
@@ -531,6 +574,8 @@ else
     private int _cursor = -1;
     private ElementReference _grid;
     private bool _gridKeysHooked;
+    //: Handed to the browser so the resize observer can call back. Disposed with the component.
+    private DotNetObjectReference<CollectionGrid>? _self;
     //: How many of the whole dex nothing here can produce, caught or not. What decides whether
     //: the switch to hide them is worth offering.
     private int _unreachable;
@@ -568,6 +613,9 @@ else
     private GridRow[] _rows = [];
     private string? _error;
     private UserDataProblem? _problem;
+    private bool _exporting;
+    private string? _exported;
+    private string? _exportError;
 
     /// <summary>
     /// Whether this collection is read. An archived one is kept exactly as it was put away, so
@@ -799,12 +847,119 @@ else
     /// </remarks>
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (_gridKeysHooked || _shown.Count == 0 || string.IsNullOrEmpty(_grid.Id))
+        // An element reference is only good once the element has actually been drawn, and the
+        // grid is not drawn at all while nothing passes the filters.
+        if (_shown.Count == 0 || string.IsNullOrEmpty(_grid.Id))
         {
             return;
         }
 
-        _gridKeysHooked = await JS.InvokeAsync<bool>("livingdex.gridKeys", _grid);
+        if (!_gridKeysHooked)
+        {
+            _gridKeysHooked = await JS.InvokeAsync<bool>("livingdex.gridKeys", _grid);
+        }
+
+        // Nothing comes back the second time the same element is offered, which is what makes
+        // this safe to run on every render: a grid that is already watched answers zero.
+        _self ??= DotNetObjectReference.Create(this);
+
+        var columns = await JS.InvokeAsync<int>(
+            "livingdex.watchColumns", _grid, TileMinWidth, TileGap, TileGap, _self);
+
+        if (columns > 0)
+        {
+            ColumnsChanged(columns);
+        }
+    }
+
+    /// <summary>
+    /// The grid is a different width, so it holds a different number of tiles.
+    /// </summary>
+    /// <remarks>
+    /// Called from the browser, by the observer <c>grid.js</c> puts on the grid element, and
+    /// once from the first render with whatever fits right now. Public and <c>JSInvokable</c>
+    /// because that is what calling into a component from JavaScript asks for.
+    ///
+    /// The cursor is an index into <c>_shown</c> rather than a row and a column, which is what
+    /// makes this cheap: reflowing moves the tile a player was on to a different place on the
+    /// screen and does not move it in the list, so there is nothing to recompute but the rows.
+    /// </remarks>
+    [JSInvokable]
+    public void ColumnsChanged(int columns)
+    {
+        var wanted = Math.Max(1, columns);
+
+        if (wanted == _columns)
+        {
+            return;
+        }
+
+        _columns = wanted;
+        Chunk();
+        StateHasChanged();
+    }
+
+    /// <summary>Cuts what is on screen into rows of the width the grid currently has.</summary>
+    private void Chunk() =>
+        _rows = [.. _shown.Chunk(_columns).Select((lines, row) => new GridRow(row * _columns, lines))];
+
+    /// <summary>
+    /// Lets go of the reference the browser was given.
+    /// </summary>
+    /// <remarks>
+    /// The observer itself needs nothing: <c>grid.js</c> hangs it on the grid element, so it is
+    /// collected with the element when the page goes. This is the .NET half, which is not.
+    /// </remarks>
+    public void Dispose() => _self?.Dispose();
+
+    /// <summary>What the export button says, which is also what it will write.</summary>
+    private string ExportLabel =>
+        _filter.IsEmpty ? "Export" : $"Export these {_shown.Count}";
+
+    /// <summary>
+    /// Writes what is on screen as a spreadsheet.
+    /// </summary>
+    /// <remarks>
+    /// The dex on screen, in the order it is drawn, with the filters applied: "export what I am
+    /// looking at" is the only rule that does not need explaining, and the button says how many
+    /// rows that is whenever it is not simply all of them.
+    /// </remarks>
+    private async Task Export()
+    {
+        if (_collection is null || _shown.Count == 0)
+        {
+            return;
+        }
+
+        _exporting = true;
+        _exported = null;
+        _exportError = null;
+
+        try
+        {
+            var csv = CollectionCsv.Of(
+                _shown,
+                _captures,
+                GameName(_collection.MainGame),
+                GameName,
+                ReachableHere);
+
+            var name = CollectionCsv.FileNameFor(_collection.Name, DateOnly.FromDateTime(DateTime.Now));
+
+            // Back to the UI thread's dialog and away from it again: the page only learns where
+            // the file went, or that the player changed their mind.
+            _exported = WpfExportPrompt.SaveCsv(name, csv);
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            _exportError = $"That file could not be written. {exception.Message}";
+        }
+        finally
+        {
+            _exporting = false;
+        }
+
+        await Task.CompletedTask;
     }
 
     /// <summary>The cell the keyboard is on, for <c>aria-activedescendant</c>.</summary>
@@ -846,27 +1001,27 @@ else
                 break;
 
             case "ArrowDown":
-                await MoveCursorTo(_cursor + Columns);
+                await MoveCursorTo(_cursor + _columns);
                 break;
 
             case "ArrowUp":
-                await MoveCursorTo(_cursor - Columns);
+                await MoveCursorTo(_cursor - _columns);
                 break;
 
             case "Home":
-                await MoveCursorTo(e.CtrlKey ? 0 : _cursor - (_cursor % Columns));
+                await MoveCursorTo(e.CtrlKey ? 0 : _cursor - (_cursor % _columns));
                 break;
 
             case "End":
-                await MoveCursorTo(e.CtrlKey ? _shown.Count - 1 : _cursor - (_cursor % Columns) + Columns - 1);
+                await MoveCursorTo(e.CtrlKey ? _shown.Count - 1 : _cursor - (_cursor % _columns) + _columns - 1);
                 break;
 
             case "PageDown":
-                await MoveCursorTo(_cursor + (Columns * await RowsVisible()));
+                await MoveCursorTo(_cursor + (_columns * await RowsVisible()));
                 break;
 
             case "PageUp":
-                await MoveCursorTo(_cursor - (Columns * await RowsVisible()));
+                await MoveCursorTo(_cursor - (_columns * await RowsVisible()));
                 break;
 
             case "Enter":
@@ -904,7 +1059,7 @@ else
         }
 
         _cursor = next;
-        await JS.InvokeVoidAsync("livingdex.showRow", _grid, _cursor / Columns, RowHeight);
+        await JS.InvokeVoidAsync("livingdex.showRow", _grid, _cursor / _columns, RowHeight);
     }
 
     /// <summary>How many rows a page holds, asked rather than assumed: the window can be any height.</summary>
@@ -1215,9 +1370,17 @@ else
             : "Trade anything for it",
 
         // The one line that names the Pokemon rather than the way, because the way is the whole
-        // of the record below it and what a player needs first is "catch one of these".
-        FormChangeAcquisition change =>
-            $"From {Dataset.Reference.NameOf(DexTarget.ForSpecies(change.Target.Species))}",
+        // of the record below it and what a player needs first is "catch one of these". A change
+        // that produces the species itself is the exception - Black 2's Reveal Glass turning a
+        // Therian Forme back - and naming the species there would read as "From Tornadus" on
+        // Tornadus's own tile.
+        FormChangeAcquisition change => change.Target.Form is null
+            ? "From another of its formes"
+            : $"From {Dataset.Reference.NameOf(DexTarget.ForSpecies(change.Target.Species))}",
+
+        // The place, not the deed: "the Pokemon Dream Radar" is the thing a player has to go
+        // and find, and what they do once they are there is the line underneath.
+        OutsideAcquisition outside => $"From {outside.SentFrom}",
 
         _ => "Another way",
     };
@@ -1280,6 +1443,11 @@ else
             case FormChangeAcquisition change:
                 fields.Add(("How", change.Requirement));
                 fields.Add(("Where", change.Location));
+                break;
+
+            case OutsideAcquisition outside:
+                fields.Add(("How", outside.How));
+                fields.Add(("First", outside.Requirement));
                 break;
 
             default:
@@ -1373,8 +1541,11 @@ else
     private void ApplyFilter()
     {
         _shown = _filter.Apply(_lines, _captures, IsAvailableIn, ReachableHere);
-        _rows = [.. _shown.Chunk(Columns).Select((lines, row) => new GridRow(row * Columns, lines))];
+        Chunk();
         _unreachable = _lines.Count(line => !ReachableHere(line.Target));
+
+        // "Written to ..." was about a set of rows that is no longer the set on screen.
+        _exported = null;
 
         // The cursor points into a list that has just changed under it. Keeping the position
         // rather than the entry is deliberate: filtering is how a player narrows down to what

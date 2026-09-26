@@ -6,7 +6,7 @@
    when a popup lists a dozen ways to get one Pokemon.
 
    In-game trading has no item and so no sprite, and a picture that means something else would be
-   worse than none: that one is drawn here instead. *@
+   worse than none: that one is drawn here instead, and so is a source outside the game. *@
 @using LivingDex.Core.Dataset
 @using LivingDex.Core.Reference
 @inject LoadedDataset Dataset
@@ -23,6 +23,16 @@
              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 8h14l-4-4" />
             <path d="M20 16H6l4 4" />
+        </svg>
+    }
+    else if (Method is OutsideAcquisition)
+    {
+        @* One arrow, from outside, into something that is not open on that side: the Radar and
+           the GO Park both send one way and take nothing back. *@
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12h11l-4-4M14 12l-4 4" />
+            <path d="M17 4h4v16h-4" />
         </svg>
     }
 </span>
@@ -80,6 +90,9 @@
         EvolutionAcquisition => "evolution",
         BreedingAcquisition => "breeding",
         FormChangeAcquisition => "form-change",
+
+        // Neither has an item and neither has a sprite; both are drawn above instead.
+        OutsideAcquisition => "outside",
         _ => "trade",
     };
 }
