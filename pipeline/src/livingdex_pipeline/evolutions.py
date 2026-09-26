@@ -73,6 +73,14 @@ OTHER_TRIGGERS: dict[str, str] = {
     "recoil-damage": "after taking enough recoil damage",
     "agile-style-move": "after using an agile style move enough times",
     "strong-style-move": "after using a strong style move enough times",
+    # Generation 9's four, and every one of them was already in the dataset reading as its own
+    # slug before Scarlet and Violet were written: Legends: Z-A lists Primeape and Gimmighoul,
+    # so "use move" and "gimmighoul coins" have been on two tiles since that game was built.
+    # Writing these down fixes those as well, which is what a shared table is for.
+    "in-battle-level-up": "by levelling up during a battle",
+    "use-move": "after using one of its own moves",
+    "three-defeated-bisharp": "after defeating three Bisharp that lead a pack",
+    "gimmighoul-coins": "by collecting enough Gimmighoul Coins",
     "other": "in a way the source does not spell out",
 }
 
@@ -854,6 +862,25 @@ def _prose(detail: dict, *, names: EnglishNames, what: str) -> list[EvolutionCon
     if (beauty := detail.get("min_beauty")) is not None:
         said.append(OtherCondition(description=f"with Beauty {beauty} or higher"))
 
+    # Generation 9's three, and the first of them is the reason they are here. Pawmo's only
+    # requirement is a thousand steps walked beside the player, and the source carries it as
+    # `min_steps` and nothing else - so before this the rule came out with an empty condition
+    # list and told a player that a Pawmo levels up into a Pawmot, which it does not.
+    if (steps := detail.get("min_steps")) is not None:
+        said.append(
+            OtherCondition(
+                description=f"after walking {steps:,} steps with it out of its ball"
+            )
+        )
+
+    # Said as the move and the count rather than as another sentence starting "after using",
+    # because the trigger above has already said that much and a record that says it twice
+    # reads like a stutter.
+    if used := detail.get("used_move"):
+        times = detail.get("min_move_count")
+        counted = f", {times} times" if times else ""
+        said.append(OtherCondition(description=f"{pretty(used['name'])}{counted}"))
+
     if (affection := detail.get("min_affection")) is not None:
         said.append(OtherCondition(description=f"with affection {affection} or higher"))
 
@@ -921,6 +948,9 @@ _HANDLED = frozenset(
         "relative_physical_stats",
         "region",
         "condition_expression",
+        "min_steps",
+        "used_move",
+        "min_move_count",
     }
 )
 

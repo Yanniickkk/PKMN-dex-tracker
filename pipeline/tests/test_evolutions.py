@@ -29,6 +29,10 @@ ORDER = {
     # and so the first that can be handed a way of evolving that is Hisui's own.
     "legends-za": 26,
     "mega-dimension": 27,
+    # And the pair that opens Generation 9, whose own rules the four new triggers come from.
+    "scarlet-violet": 23,
+    "the-teal-mask": 24,
+    "the-indigo-disk": 25,
 }
 
 
@@ -835,3 +839,85 @@ def test_a_way_the_source_carries_still_moves_forward() -> None:
 def test_the_hand_written_ways_say_they_are_one_games_own() -> None:
     # Which is the field that makes the two tests above different, and it is true of all twelve.
     assert {one.version_group for one in NOT_IN_THE_SOURCE} == {"legends-arceus"}
+
+
+def test_generation_9_brought_four_triggers_nobody_had_written_words_for() -> None:
+    # And every one of them was already wrong in the dataset before Scarlet and Violet were
+    # written: Legends: Z-A lists Primeape and Gimmighoul, so two tiles had been reading "use
+    # move" and "gimmighoul coins" since that game was built. A shared table is what makes
+    # writing them down for one game fix them for another.
+    api = FakeApi(
+        {
+            "bisharp": {
+                "species": {"name": "bisharp"},
+                "evolves_to": [
+                    link("kingambit", [detail("three-defeated-bisharp", "scarlet-violet")])
+                ],
+            }
+        }
+    )
+
+    rule = evolution_rules(api, chains=["bisharp"])[0]
+
+    assert rule.trigger is EvolutionTrigger.OTHER
+    assert [one.description for one in rule.conditions] == [
+        "after defeating three Bisharp that lead a pack"
+    ]
+
+
+def test_pawmo_had_no_condition_at_all_until_min_steps_was_read() -> None:
+    # The quietest of Generation 9's gaps, and the worst for it. Pawmo's only requirement is a
+    # thousand steps walked beside the player; the source carries that as min_steps and nothing
+    # read it, so the rule came out with an empty condition list and told a player that a Pawmo
+    # simply levels up into a Pawmot, which it does not.
+    api = FakeApi(
+        {
+            "pawmi": {
+                "species": {"name": "pawmo"},
+                "evolves_to": [
+                    link("pawmot", [detail("level-up", "scarlet-violet", min_steps=1000)])
+                ],
+            }
+        }
+    )
+
+    rule = evolution_rules(api, chains=["pawmi"])[0]
+
+    assert rule.trigger is EvolutionTrigger.LEVEL_UP
+    assert [one.description for one in rule.conditions] == [
+        "after walking 1,000 steps with it out of its ball"
+    ]
+
+
+def test_a_move_used_enough_times_names_the_move_and_the_count() -> None:
+    # Said as the move and the count rather than as a second sentence starting "after using",
+    # because the trigger has already said that much and a record saying it twice reads like a
+    # stutter.
+    api = FakeApi(
+        {
+            "mankey": {
+                "species": {"name": "primeape"},
+                "evolves_to": [
+                    link(
+                        "annihilape",
+                        [
+                            detail(
+                                "use-move",
+                                "scarlet-violet",
+                                used_move={"name": "rage-fist"},
+                                min_move_count=20,
+                            )
+                        ],
+                    )
+                ],
+            }
+        }
+    )
+
+    rule = evolution_rules(api, chains=["mankey"])[0]
+
+    assert rule.trigger is EvolutionTrigger.OTHER
+    assert [one.description for one in rule.conditions] == [
+        "after using one of its own moves",
+        "Rage Fist, 20 times",
+    ]

@@ -705,6 +705,15 @@
   },
   {
     "from": "home",
+    "to": "scarlet",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "presentInTargetDex"
+    }
+  },
+  {
+    "from": "home",
     "to": "shield",
     "mechanism": "home",
     "direction": "oneWay",
@@ -724,6 +733,15 @@
   {
     "from": "home",
     "to": "sword",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "presentInTargetDex"
+    }
+  },
+  {
+    "from": "home",
+    "to": "violet",
     "mechanism": "home",
     "direction": "oneWay",
     "filter": {
@@ -1192,6 +1210,24 @@
     }
   },
   {
+    "from": "scarlet",
+    "to": "home",
+    "mechanism": "home",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "scarlet",
+    "to": "violet",
+    "mechanism": "trade",
+    "direction": "bothWays",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
     "from": "shield",
     "to": "home",
     "mechanism": "home",
@@ -1333,6 +1369,15 @@
     "from": "ultra-sun",
     "to": "bank",
     "mechanism": "bank",
+    "direction": "oneWay",
+    "filter": {
+      "filter": "all"
+    }
+  },
+  {
+    "from": "violet",
+    "to": "home",
+    "mechanism": "home",
     "direction": "oneWay",
     "filter": {
       "filter": "all"

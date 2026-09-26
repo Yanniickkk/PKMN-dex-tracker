@@ -3652,8 +3652,18 @@ common is Pokemon HOME, which `home.py` has held since before any of them existe
 
 ### Generation 9
 
-_One of three. Legends: Z-A is Lumiose City on the Switch, and Scarlet and Violet are still to
-come._
+_Done: all three, and with them Phase 2. Scarlet and Violet are Paldea, and `paldea.py` is what
+the two of them share; Legends: Z-A is Lumiose City on the Switch and stands alone in
+`legends_z_a.py`. There is nothing left for a `gen9.py` to say - the two halves of this
+generation have **nothing in common but Pokemon HOME**, which `home.py` has held since before
+either existed._
+
+_**And the generation was written backwards, which turned out to be worth it.** Legends: Z-A
+came first because it came out last, and three things it paid for were waiting when the pair
+arrived: `archives.form_names` already knew how HOME spells a form, so 134 of Paldea's 171 forms
+needed no new code; `pokeapi.VERSION_NAMES` already existed, and this pair needed no row in it;
+and Z-A's refusal to draw a deposit edge turned out to be exactly what Scarlet's own article
+says. A game that improves the one written before it is the shape this project keeps finding._
 
 ### Transfer-only nodes
 
@@ -5714,3 +5724,538 @@ _Checked in the app on the published exe: the switch reads **Lumiose dex** and *
 dex** with no National Dex option, and switching to the second draws **164 tiles** that could
 not be reached before - Mankey to Rotom, with Meowth's two regional forms and Rotom's five
 appliances among them, every one with its picture. 757 pipeline tests, 261 app tests._
+
+- [x] **Scarlet** (`scarlet`, gen 9, pair partner: Violet) — base + Teal Mask + Indigo Disk - 2026-09-26
+  - [x] 1 Entity + edges - 2026-09-25  - [x] 2 Dex list - 2026-09-26  - [x] 3 Wild - 2026-09-26  - [x] 4 Gifts & statics - 2026-09-26
+  - [x] 5 Trades & evolutions - 2026-09-26  - [x] 6 Sprites - 2026-09-26  - [x] 7 Events - 2026-09-26
+  - [x] 8 Alternate forms - 2026-09-26  - [x] 9 Validate + smoke test - 2026-09-26
+- [x] **Violet** (`violet`, gen 9, pair partner: Scarlet) — base + Teal Mask + Indigo Disk - 2026-09-26
+  - [x] 1 Entity + edges - 2026-09-25  - [x] 2 Dex list - 2026-09-26  - [x] 3 Wild - 2026-09-26  - [x] 4 Gifts & statics - 2026-09-26
+  - [x] 5 Trades & evolutions - 2026-09-26  - [x] 6 Sprites - 2026-09-26  - [x] 7 Events - 2026-09-26
+  - [x] 8 Alternate forms - 2026-09-26  - [x] 9 Validate + smoke test - 2026-09-26
+  - Step 1, both halves at once: **the 39th and 40th games, and the last pair this dataset
+    will hold.** `paldea.py` is the shared module, `scarlet.py` and `violet.py` are the halves,
+    and the whole of it is **Galar's shape three years on** - three Pokedexes kept apart, two of
+    them brought by an expansion the source files as version groups of its own, no National
+    Pokedex, a leftover beside the lists, and HOME as the only door. `galar.py` had answered
+    every one of those once already, so step 1 was mostly finding out where the answer is the
+    same and saying where it is not.
+  - **The source spells this pair exactly as the dataset does**, which is worth asserting rather
+    than assuming now that one game does not: `scarlet-violet` at order 27, versions `scarlet`
+    and `violet`, region `paldea`, dexes `paldea` 400, `kitakami` 200, `blueberry` 243. Legends:
+    Z-A's `pokeapi.VERSION_NAMES` table still has exactly one row.
+  - **Three version names per half, exactly as Galar has**: `the-teal-mask` at order 28 and
+    `the-indigo-disk` at order 29, each with a version per half. So a Scarlet player's grass is
+    spread over `scarlet`, `the-teal-mask-scarlet` and `the-indigo-disk-scarlet`, and reading
+    only the first would lose Kitakami and the Terarium with nothing in the data to say so.
+    `paldea.VERSIONS` holds all three from step 1 rather than from step 3.
+  - **Where it is not Galar is the map, and it is the one real decision step 1 had to make.**
+    The Isle of Armor and the Crown Tundra are islands off a region the base game is already
+    set in. Kitakami is a land of its own, and **Blueberry Academy is in Unova** - the region
+    this dataset already holds for Black and White. Bulbapedia counts it among the pair's
+    firsts: three separate territories, and **the first core series games since HeartGold and
+    SoulSilver with more than one playable region**. `johto.py` settled that in one line twelve
+    games ago - Kanto is a second half of the map rather than a second region, and a HeartGold
+    cartridge is a Johto game - so these are Paldea games, and the source agrees rather than
+    being overruled: all three version groups carry `paldea` as their only region.
+  - **There is a leftover and it has a page**, which is Galar's shape rather than Hisui's or
+    Lumiose's. The article says only Pokemon in the three Pokedexes and "a select few" foreign
+    ones may be transferred in, and those two words link to a section of the Paldea list called
+    *Compatible Pokemon not in any Scarlet and Violet Pokedex*. Galar's is eighty and Hisui's is
+    two; **counting this one is step 2's**, and step 1's job was to establish that it is not
+    zero.
+  - **The way out is real, and the game written before this one already drew its end.** The
+    article says a Pokemon may still be transferred to any Generation VIII game, and that one
+    which has been transferred to any later game *starting with Legends: Z-A* becomes
+    incompatible. That is the deposit `legends_z_a.py` deliberately declined to draw, read from
+    the other side - and **neither edge had to be added or removed**: the graph already said a
+    Pokemon caught here can reach Sword, and already said that one which has gone on to Legends:
+    Z-A can reach nothing. A decision made last week about a game released in 2025 turns out to
+    be the right one for a game released in 2022.
+  - Five routes for the two of them, which is Galar's five a third time: the cable between the
+    halves, and for each half a deposit into HOME and an ordinary withdrawal back out. HOME
+    since its version 3.0.0 of 30 May 2023. Registering them lights nothing that was waiting,
+    for the seventh Switch game running.
+  - **Pokemon GO connects to these two and it is not a route.** Bluetooth LE since version
+    1.2.0, and what crosses it is postcards and Gimmighoul Coins rather than Pokemon - so it
+    changes a Vivillon's pattern and moves nothing. Worth writing down because it looks like an
+    edge until you read what it carries.
+  - _And one thing for step 4 to be careful about, found while reading the article rather than
+    looked for: **this is the softest version pair in the series.** Most of the exclusives can
+    be caught by a player of the other half who joins a Union Circle or a Tera Raid Battle, and
+    only Koraidon and Miraidon really have to be traded for. Every pair since Red and Blue has
+    meant "one half catches these", and this one means it less than the words suggest._
+  - **And registering the pair moved `forms.json` before either half had a single Pokedex
+    entry, which is the Legends: Z-A finding again and four hundred times larger.** The first
+    build after step 1 wrote 48 sprite files nobody asked for, and the reason was the form
+    table: the version-group rule handed these two **eighteen new rows and 396 existing forms
+    gaining two games each** - a Galarian Corsola in Paldea, a Hisuian Zoroark, every Vivillon
+    pattern. `forms.py` has said since Sword and Shield that the rule is off for a game whose
+    boxes hold a list rather than a number and that "from here on it stays broken", and this is
+    the fourth pair it stays broken for. Both halves are in `FORMS_NAMED_BY_THE_GAME` now and
+    step 8 writes their table by hand.
+  - _The measurement is what makes it worth writing down rather than just fixing._ The rule is
+    **not uniformly wrong here**, which is what would have made it easy to leave: the eighteen
+    new rows are Generation 9's own and mostly real - Paldean Wooper, the three Tauros breeds,
+    Maushold, Dudunsparce, a female Oinkologne, Koraidon's and Miraidon's builds. It is right
+    about a handful and wrong about four hundred, and there is no way to keep the handful except
+    by hand. The eighteen go away again until step 8, and that is the direction to be wrong in.
+  - Step 2: **843 entries and 664 species across three lists, and it is Galar's arithmetic
+    rather than Galar's numbers.** 400 Paldea, 200 Kitakami, 243 Blueberry; 179 of the 843 are
+    a species' second or third listing - 101 in both Paldea and Kitakami, 69 in Paldea and
+    Blueberry, 13 in the two expansions', and 4 in all three. Sword and Shield are 821 and 584,
+    and Legends: Z-A in between them is still the only game here with several lists and nothing
+    at all to subtract.
+  - **The cleanest wiki cross-check any multi-list game has had.** Kitakami's 200 and
+    Blueberry's 243 match the source number for number and name for name with **nothing to
+    reconcile**; Paldea's 400 have exactly one row where the two texts differ, and it is #145
+    Flabébé, where the wiki names the Red Flower it always shows first. Hisui had 32 rows to
+    argue about and Lumiose had none but was a third the size.
+  - **The leftover is sixty-nine species, and the page checks its own work.** *Compatible
+    Pokémon not in any Scarlet and Violet Pokédex* is kept as three tables by the version each
+    became compatible in - 60 since 1.0.0, 6 since 2.0.1, 24 since 3.0.0. **Ninety rows, of
+    which 69 are a species no list names** and 21 are a form of a species a list does name, an
+    Alolan Raichu beside a listed Raichu. So **664 listed + 69 unlisted = 733 these two can
+    hold**, against Galar's 584 + 80 = 664: a smaller leftover on a much larger game, which is
+    the two DLC packs in one subtraction.
+  - _And the count is trustworthy because the page keeps a fourth table of Pokémon **formerly**
+    not in any of these Pokédexes - 64 rows, the ones a DLC list later took in - and **every one
+    of those 64 is in one of the three lists today**. A page that records its own corrections is
+    a page whose current section is worth counting._
+  - They get no entries, which is Galar's decision taken for its reason rather than by following
+    it: a dex entry is a number in a list, and these 69 have no number in any list these games
+    show. The error is in the safe direction - a tile the grid does not draw asks nothing of a
+    player - and the one place it shows is the withdrawal out of HOME, which reads the target's
+    list and so refuses 69 species the real service would hand over.
+  - **And the one finding no arithmetic would have produced: twenty of the 843 rows name a form,
+    and not the species' default one.** Fifteen of the twenty are Blueberry's, which is the
+    Terarium doing exactly what it was built for - the biomes are stocked with Alolan Sandshrew,
+    Galarian Slowpoke and Hisuian Qwilfish, and the list numbers *those* rather than the
+    originals. Kitakami numbers a White-Striped Basculin and a **Bloodmoon Ursaluna**; Paldea a
+    Paldean Wooper, a Combat Breed Paldean Tauros and a Family of Three Maushold.
+  - **Ursaluna is the sharpest and it is worth carrying to step 8.** Kitakami's #196 is the
+    Bloodmoon one and the *ordinary* Ursaluna is in the leftover - so the species-level entry
+    this dataset writes says the exact inverse of the game's own row. The same inversion runs
+    the other way round in the leftover, where an Alolan Raichu is a stranger beside a listed
+    Raichu. That is the known cost of a species-level dex, paid here harder than anywhere
+    before, and `paldea.LISTS_THAT_NAME_A_FORM` is where it is written down.
+  - _A further 29 rows name a form and it **is** the species' default - an Icy Snow Vivillon, a
+    Midday Lycanroc, a Baile Oricorio - which costs nothing and is the same harmless pattern
+    Legends: Z-A found 26 of. This pair is the first game where that pattern has a harmful
+    twin, which is why the two had to be told apart by asking the source which variety is
+    default rather than by eye._
+  - Step 3: **the wild is fifty pages, 3,409 rows and no API at all.** The hole the reading
+    before these six games predicted is total here too, and it was measured rather than
+    assumed: Sprigatito, Lechonk and Ursaluna return **no location areas whatever**, and
+    Pikachu, Magikarp and Wooper - which have between 40 and 287 - return **not one row** for
+    `scarlet`, `violet`, or any of the four version names the two expansions add.
+  - **A third reader, and the reason is the record rather than the parser** - which is exactly
+    what the survey above predicted. `paldea_encounters` joins `table_encounters` and
+    `legends_encounters` in `encountertables.py`. It is closer to the Legends one: no rate, no
+    grass to push into, ticks rather than percentages. What neither of the other two can say is
+    a **weight** and a **terrain block**.
+  - **The decision the TODO said to make before writing the reader, made: the weight does not
+    become a rate.** The page's own legend says a higher probability weight generally means a
+    Pokémon is more likely to spawn "relative to others that can spawn there", and stops.
+    Turning that into a percentage needs a denominator that depends on the biome, the terrain
+    and the hour **all at once** - 60 against 1 in the same Prairie says a great deal, and 60 in
+    a lake against 60 in a cave says nothing. So the model grew the second way of saying it:
+    `WildAcquisition.probability_weight`, `ProbabilityWeight` on the C# side, and a **"Weight"**
+    field of its own in the detail popup beside "Chance". `rate_percent` stays empty, for the
+    first time in a game that has any notion of likelihood at all.
+  - **Five terrain columns come to four methods, and which two share a name was measured.**
+    Land, Water surface, Underwater, Overland, Sky. Of the 3,409 rows, **393 tick Underwater
+    and 197 tick it and nothing else** - an Arrokuda is never on the surface, so folding it into
+    the water above would tell a player to swim past one. That earns `overworldUnderwater`, the
+    fourth member of Let's Go's overworld family. **The Sky column did not earn one**: 246 ticks
+    and exactly **four** rows where it is the only tick, all four a Braviary in Area Zero that
+    walks on the ground elsewhere in the same game. Two names for one event with different
+    scenery, which is the call Kalos's five ambushes got - so a row ticked in both Overland and
+    Sky is one record, deduplicated rather than said twice.
+  - _Not `dive`, which is Mossdeep's HM and a table of its own beneath the water a player is
+    surfing on. There is no move here: a player swims and presses a button._
+  - **The `css("th, td")` trap again, one level down.** The first dump of a row came back with
+    the Violet cell before the species name and the four hour icons before the five terrain
+    icons, which would have put every tick in the wrong column and named the hours as terrains.
+    A selector for several tags hands back all of one tag and then all of the next - the same
+    thing that put every Z-A row under a page's last heading - and here it was inside a single
+    `<tr>`. The readers already walk with `row.iter()`; only the scratch script did not, and the
+    raw HTML settled it in one look.
+  - **The header is read and not counted, which is Brilliant Diamond's lesson paying off a
+    second time.** The terrain block is five wide and the weight block four on every page today,
+    and neither number is written into the reader: both are read off the icons' alt text, in
+    document order. A table is recognised as one of these by having a Probability Weight block
+    at all, so the older tables these pages share space with cannot be read by mistake.
+  - **The hours are the weight block, and 435 rows use them.** One cell spanning all four is a
+    Pokémon that is there whatever the time; four numbers is one that is not. A Hoothoot in the
+    Kitakami Wilds is **70 in the morning and the day and 400 in the evening and at night**,
+    which is two records rather than one that has to average them, and **385 rows carry a zero**
+    for at least one hour - an hour it is simply not there.
+  - **Thirty-one rows name two level bands** - "30-39, 50-53", an area with a low half and a
+    high half, which Kitakami writes a good deal and Paldea hardly at all. Two records, because
+    30-53 would send a player looking for a level 45 one that is not there.
+  - **Fifty-three form phrases, fourteen of them the source naming a default.** Hisui needed 24
+    and Lumiose 48. Every one belongs to a single species or family, so nothing is ambiguous -
+    and **most of them resolve to a species today and to a form at step 8**, because both halves
+    are in `FORMS_NAMED_BY_THE_GAME` and `Normaliser.target` drops an unknown form back to its
+    species rather than inventing an id. The table is written once, now, from the pages
+    themselves, and starts answering in full the day step 8 fills the form table in.
+  - **The Group columns were read and deliberately not recorded, and that was checked rather
+    than waved away.** A row that leads a cluster carries a percentage and the name of what the
+    cluster is made of, and the species it names is sometimes not the row's own - a Pawmo in
+    Area Zero leads a group of **Pawmi**. So the obvious worry is a species that exists only as
+    somebody else's group. There is none: **167 species are named in that column and every one
+    of them has a row of its own somewhere**, so the column adds no source and is not a rate.
+  - **Fifty pages found by reading rather than by listing.** All 125 pages in the wiki's own
+    *Category:Scarlet and Violet locations* were fetched and asked whether they hold a table
+    with a Probability Weight header; fifty do, and the other 75 are shops, restaurants, plazas,
+    gyms and towns. **One genuine hole, and it is the wiki's**: Timeless Woods in Kitakami has a
+    Pokémon section with no table under it at all. Left out rather than guessed at, and step 9
+    checks what that costs.
+  - **What it came to: 4,225 records for Scarlet and 4,249 for Violet** - 120 rows are Scarlet's
+    alone and 151 are Violet's, told apart by the colour behind the letter and not by the letter
+    - over **50 places and 320 sub-areas**, with a weight on every one of them and an hour on
+    about 620. **486 of the 664 species are in the grass**, which leaves 178 for steps 4 and 5.
+  - _The sub-area is two halves, because these pages say "where" twice: the biome is a one-cell
+    heading inside the table - Prairie, Forest, Cave, Lake, Ruins, 23 of them - and the part of
+    the place is an article heading above it. The Terarium's Canyon Biome has five parts and
+    South Province (Area One) has none, so "Craggy Cliffs, Cave" and "Prairie" are both whole
+    answers._
+  - Fixed and special encounters are deliberately not read here. They sit on the same fifty
+    pages in a table of the familiar shape - a Games column, a Location, and a Rate that says
+    "Respawns" - and what they hold is one Pokémon standing in one named spot, which is step 4.
+  - Step 4: **two halves, split by what a location page knows** - and the split is the whole
+    finding. The fifty pages step 3 read carry **302 fixed encounters** between them, in a
+    table shaped the way every location page in this dataset has been shaped since Hoenn:
+    `Pokémon | Games | Location | Levels | Rate`. And **not one of the nineteen that matter
+    most is on any of them.** Koraidon is not in Poco Path's tables; Koraidon's own article
+    says "Poco Path (only one)".
+  - **`paldea_fixed` reads the 302 and it is not a call to `table_encounters`**, for one
+    reason: there the Location column holds a *method* - the word "Grass" or "Surfing" that
+    says how a player meets the row - and here it holds a place, or the word "Fixed", which is
+    the page saying nothing. 278 of the 302 say exactly that, and the other 24 are Gimmighoul's
+    watchtowers and the Titans' own sentence.
+  - **What a fixed encounter is worth saying is that it is a guarantee.** A weighted row above
+    says a Pokémon is in the pool at a spawn point; one of these says it is standing there.
+    **295 of the 302 respawn and seven do not**, and both are one Pokémon in one place, so both
+    are a static and the Rate column becomes a sentence rather than a second kind of record.
+  - _And one claim made here at step 4 was wrong, caught at step 7 and worth leaving in
+    corrected rather than quietly fixed: I wrote that **no fixed-encounter row is a version
+    exclusive**, because the Games cells all read "S" and "V". They always do. **The answer is
+    the colour behind the letter**, which is the one thing the reader itself gets right and the
+    script I measured with did not - the same trap Hoenn wrote down twelve games ago, made in a
+    scratch file rather than in the pipeline. **Four of the 302 are exclusive**: the Asado
+    Desert Titan is a Great Tusk in Scarlet and an Iron Treads in Violet, and a North Province
+    spawn is a Pupitar against a Shelgon. Each half gets 300._
+  - **Ten species are in the fixed tables and in no wild table at all**: the Titans that stay
+    where they were beaten, Gimmighoul on its eleven watchtowers, and the high-level spawns
+    Area Zero and the late provinces stand rather than roll - arctibax, cacturne, dragonite,
+    garchomp, hippowdon, sandaconda, shelgon, spiritomb.
+  - _One thing the reader had to be taught and no other table needed: a Titan's row writes the
+    badge on the species cell - "Great TuskFormer Titan", "TatsugiriCurly Form Former Titan" -
+    **and** spells the same thing out in the Location column. It is said once on the record,
+    because a requirement carrying both reads like a stutter._
+  - **The nineteen were read off their own articles, one at a time**, which is Hisui's shape
+    and for Hisui's reason: the list of them is nowhere and each species' *Game locations* row
+    says exactly where it stands. Three a player picks between in Cabo Poco from Clavell; the
+    box legendary; the four Treasures of Ruin, each at its shrine behind eight stakes; the Teal
+    Mask's four; Terapagos at the bottom of the Underdepths; and Pecharunt, which wants a berry.
+  - **The box legendary is the pair's sharpest exclusive and the graph already had it.**
+    Scarlet's article says "Poco Path (only one) (Limited Build)" and then "Area Zero (after
+    credits; only one) (Apex Build)"; Violet's says **"Trade, Event"**. So a Koraidon in Violet
+    comes over the cable from the other half, which the pair's own trade edge said at step 1
+    and nothing here has to repeat. The Indigo Disk splits four more Paradox Pokémon the same
+    way - Gouging Fire and Raging Bolt to Scarlet, Iron Crown and Iron Boulder to Violet.
+  - **And two of the twenty-one are not step 4's at all, which the reading caught rather than
+    the build.** Walking Wake and Iron Leaves say **"Poké Portal News"** where the other
+    nineteen name a place: they were handed out in a seven-star raid in 2023 and in nothing
+    else. Neither is a static, neither gets a record, and their reason is step 7's to write -
+    which is exactly the job that step exists for.
+  - **What it came to: 4,541 records for Scarlet and 4,565 for Violet**, of which 316 are
+    gifts - 3 starters and 313 statics. **Species covered went from 486 to 510 of 664**, and
+    the validator from 76 errors to 38.
+  - _The 38 are step 5 and step 7 listed out, and nothing else: **fifteen evolutions** that
+    cannot exist until their rules do - the three starter lines, Pawmot, Maushold, Arboliva,
+    Palafin, Kingambit, Dipplin, Sinistcha, Archaludon, Hydrapple - and the **two events**
+    above._
+  - Step 5: **three version groups, twenty-one trades, no eggs at all - and four words the
+    whole dataset had been missing.** The groups are Galar's answer again, and asking only
+    about `scarlet-violet` would have lost five evolutions the DLC owns: Applin to Dipplin with
+    a Syrupy Apple, Dipplin to Hydrapple knowing Dragon Cheer, Duraludon to Archaludon, and
+    both Sinistcha.
+  - **The finding is that Generation 9 had four triggers nobody had written words for, and
+    every one of them was already wrong in the dataset before this pair existed.**
+    `evolutions.OTHER_TRIGGERS` had no wording for `in-battle-level-up`, `use-move`,
+    `three-defeated-bisharp` or `gimmighoul-coins`, so an unknown trigger fell back to its own
+    slug prettied up. **Legends: Z-A lists Primeape and Gimmighoul**, so two tiles in that game
+    have been reading "use move" and "gimmighoul coins" since it was built. Writing the words
+    down here fixed them there, which is what a shared table is for.
+  - **And Pawmo was worse, because it was silent rather than ugly.** Its only requirement is a
+    thousand steps walked beside the player; PokeAPI carries that as `min_steps` and nothing
+    read it, so `pawmo-to-pawmot` came out with **an empty condition list** and told a player
+    that a Pawmo levels up into a Pawmot. It does not. `min_steps`, `used_move` and
+    `min_move_count` are read now, and the five rules read as sentences: "after defeating three
+    Bisharp that lead a pack", "by collecting enough Gimmighoul Coins", "by levelling up during
+    a battle", "after walking 1,000 steps with it out of its ball".
+  - _Which is the third time a game has improved another one by being written. Legends: Z-A's
+    evolution work fixed the Linking Cord for Hisui; this fixes two of Z-A's own tiles. The
+    rule is the same both times: **a shared table is where a fix reaches further than the game
+    that paid for it.**_
+  - **Twenty-one trades, and eighteen of them are a kind this dataset has never held.** Three
+    are the old sense - an NPC who wants one particular thing - and two of the three are worth
+    the sentence: the Cascarrafa trader takes a **Paldean** Wooper and gives back the ordinary
+    one, which happens nowhere else in these games, and the Haunter from Levincia **becomes a
+    Gengar on the way across**, which is the series' oldest joke and the only Gengar this pair
+    makes without a second console.
+  - **The other eighteen are the League Club Room**, and they ask for nothing in particular:
+    invite a Gym Leader, an Elite Four member, a staff member, Geeta or Cyrano three times and
+    they will swap one of theirs for **any Pokémon the player raised themselves**. So
+    `InGameTrade.wants` is left empty, which is exactly what that field's docstring has always
+    said an empty one means, and a field written for one trader in Kanto finally describes
+    eighteen. Every one of the eighteen is a species the grass already produces, which was
+    worth checking rather than assuming: they add a second way and not a second species.
+  - **No trade here belongs to one half**, which is unusual enough to be worth saying: a pair
+    normally splits its traders the way it splits its grass, and there is no table keyed by
+    game in this module at all.
+  - **And the picnic produces nothing, which is a real answer rather than an empty step.**
+    These are the first games in the dataset with **no day care and no nursery** - a player
+    sets out a picnic anywhere and comes back to a basket - and `day_care_eggs` can only be
+    asked for what nothing else produces. It came back with **zero**: every baby in these three
+    lists is already standing in the grass, which is what Paldea does with babies that Sinnoh
+    did with a building.
+  - **What it came to: 4,904 records for Scarlet and 4,928 for Violet** - 4,225 wild, 316
+    gifts, 21 trades, 342 evolutions, 0 eggs - and **640 of the 664 species covered by this
+    half alone**. The other 24 are the partner's exclusives, which the cable answers, and the
+    two events.
+  - **Validation went from 38 errors to 4**, and the four are two species said twice: Walking
+    Wake and Iron Leaves, in both halves. Step 7 is the only step left that owes them anything.
+  - Step 7, taken before step 6 because the pictures are being kept for last: **forty-two
+    entries carry a reason now, and the build is green.** Twenty are the other half's, two are
+    the pair's own dead end, and nine more came free from `spread_unobtainable` - an Ambipom
+    inherits Aipom's sentence without anybody writing Ambipom down.
+  - **This is the first pair where "trade one in" is not the whole truth, and step 7 is where
+    that becomes a sentence a player reads.** The article says most version exclusives can be
+    caught by somebody of the opposite version who joins a **Union Circle** or a **Tera Raid
+    Battle** - no pair from Red and Blue to Sword and Shield allowed anything of the kind. So
+    `exclusives.only_on` grew an `also` clause, and the forty split three ways the article
+    draws itself: **Koraidon and Miraidon require trading**, the fourteen Paradox Pokémon can
+    be met in a Union Circle but not a raid, and the other twenty-four in either.
+  - **Ten of the forty had a distribution, and the sharpest two are Galar's finding repeated
+    exactly.** *Paldea's Shiny Koraidon* went to **Violet** players from 26 September to 23
+    October 2025 and *Paldea's Shiny Miraidon* to **Scarlet** ones a day longer - which is
+    Lancer's Shiny Zacian running in Shield and Arthur's Shiny Zamazenta in Sword, six years
+    later and on a different console. The series has now handed each half the other's box
+    legendary twice.
+  - The other eight are CoroCoro's, and they were **SV** distributions rather than one half's,
+    so a Scarlet player really was handed an Iron Hands and a Violet player a Brute Bonnet:
+    Brute Bonnet, Flutter Mane, Roaring Moon, Scream Tail, Iron Hands, Iron Jugulis, Iron
+    Thorns and Iron Valiant, over the winter of 2023 and 2024.
+  - **And the first step-7 event in this dataset that is not over.** Walking Wake and Iron
+    Leaves are in the Blueberry dex and neither half produces one; the *Walking Wake and Iron
+    Leaves Showcase* is a seven-star Tera Raid that has come back **six times in three years** -
+    February 2023, May 2023, December 2023, April 2024, February 2025, and 19 December 2025 to
+    4 January 2026. Every distribution named in any other game's reasons ran once or twice and
+    stopped. This one has returned every year since it started.
+  - _So the sentence a player gets is different in kind, and deliberately so. A raid that ran
+    for a week in 2020 is not a way to fill a dex today; a raid that has returned every year is
+    a reason to watch the news. **The entry stays unobtainable either way**, because the field
+    means "nothing a player can do today produces one" and that is still true - what changes is
+    the answer to the next question._
+  - **Two entries were deliberately left unmarked, and that is step 8's doing.** Basculegion
+    and Overqwil are the other two no method here fills, and both hang on a form the form
+    table does not hold yet - a White-Striped Basculin and a Hisuian Qwilfish. Overqwil's rule
+    is **already in the source**, stamped `scarlet-violet`, waiting only for the form to exist.
+    Marking either unobtainable would be writing down a gap the next step closes.
+  - _**And the second thing I got wrong in this game, corrected by step 8 a few hours later.**
+    I wrote here that the source was missing a Basculegion variant, because its only rule is
+    stamped `legends-arceus` and nothing says `scarlet-violet`. That is not a gap: a rule the
+    source carries **moves forward** to every later game, which is exactly the distinction
+    `MissingVariant`'s own docstring draws - the source saying "this is how it works from here"
+    against a person reading one item's page in one game. Step 8 added White-Striped Basculin
+    and `basculin-to-basculegion` fired on its own, both sexes. Nothing was missing; I read the
+    absence of a stamp as an absence of a rule._
+  - _One small imprecision is left and is the source's: its single variant is Hisui's, where
+    the wiki says a White-Striped Basculin does **not** need to level up after the 294 recoil
+    damage. In Paldea it does. The record says "after taking enough recoil damage" and omits
+    the level-up, which is one clause short rather than wrong._
+  - Step 8: **170 forms, and not one of them was remembered into the table.** The universe to
+    choose from was 273 forms of a species one of the three lists names, plus thirty the table
+    did not hold at all - and **nine of those thirty were refused before anybody had to think
+    about them**, by the sentence that has kept every Mega out since Generation 6: a Gulping
+    Cramorant, a Noice Eiscue, a Busted Mimikyu, a Hangry Morpeko, an Ash-Greninja, a Hero
+    Palafin and both Terapagos formes are battle-only, and a living dex is about what a box can
+    hold. A rule written four generations early did a ninth of this step's work.
+  - **All thirty-six regional forms are in, and the article decides it rather than the grass**:
+    "all regional forms of compatible Pokémon that existed at the time of release and their
+    respective regional evolved forms are also compatible". So an Alolan Raichu belongs in a
+    Paldean box whether or not the Terarium places one - and fifteen of the thirty-six it does
+    place, which is the Indigo Disk doing what it was built for.
+  - **All seventy-five sexes are in, and this pair could not use Galar's method.** Sword and
+    Shield read their own sprite sheet - a species the Archives draw under `_m` and `_f` is one
+    those games draw apart. These two draw from **Pokémon HOME's** set, which is shared, so a
+    sheet here would answer a question about HOME. A sex is a fact about the species, which is
+    what Lumiose said about its forty-one, so the species being listed is the whole test.
+  - **Sixteen functional and thirty-two cosmetic, and every exclusion has a reason rather than
+    a shrug:**
+  - **Alcremie's sixty-two are out because the game has no Sweets.** An Alcremie in Paldea
+    comes out of a five- or six-star Tera Raid already made, so there is no Milcery to spin and
+    no cream to choose. Galar, which does have Sweets, holds all sixty-two.
+  - **Minior is in as its meteors and not as its cores**, which took reading the source's own
+    default to settle: `minior-red-meteor` is what it calls the ordinary Minior, so the meteor
+    is what a box holds and a core is what a shield breaks into at low health. The six
+    non-default meteors are in, the seven cores are out - and `FORM_PHRASES` was **changed to
+    match**, so the page's "Blue Core" now points at `minior-blue-meteor` and "Red Core" at the
+    default. Step 3 had it the other way round.
+  - **Seventeen of Vivillon's nineteen patterns are out, and the route they are reachable by is
+    one no other game in this dataset has.** A postcard sent from **Pokémon GO** changes the
+    pattern of wild Vivillon for a day, according to where in the world the postcard came from.
+    That is a second app and a physical location - the Friend Safari's shape - and a form whose
+    sentence a player cannot act on is a tile nobody can fill. Only the Fancy Pattern, which a
+    table here places, is in.
+  - **Roaming Form Gimmighoul is out and the reason is exact**: it flees when it is interacted
+    with and leaves coins behind. The only place it can be caught is Pokémon GO, which is not a
+    game this dataset holds. Lumiose has it and Paldea does not, which is the same table
+    disagreeing with itself on purpose for the second time in two games.
+  - **And eleven are Generation IX's own**, which is the part that was invisible until step 1
+    switched the rule off and watched them disappear: Dunsparce's 1% third segment, Tandemaus's
+    1% third mouse, a female Oinkologne, Ogerpon's three masks, Paldean Tauros's three breeds,
+    Paldean Wooper - and **Bloodmoon Ursaluna**, which closes the sharpest thing step 2 found.
+  - **Koraidon's four builds and Miraidon's four modes are out**, and it is the one call here
+    about a vehicle rather than a Pokémon: they are how the thing a player rides gets over a
+    river, and a box holds one of it.
+  - **Both of step 7's hand-offs came back on their own, and one of them corrected me.**
+    Overqwil evolved off a rule the source stamps `scarlet-violet` the moment Hisuian Qwilfish
+    existed, as predicted. Basculegion did too - off a rule stamped **`legends-arceus`** - and
+    I had written at step 7 that the source was missing a variant. It is not: **a rule the
+    source carries moves forward to every later game**, which is precisely the distinction
+    `MissingVariant`'s docstring draws between the source saying "this is how it works from
+    here" and a person reading one item's page in one game. I read the absence of a stamp as
+    the absence of a rule. The note is corrected in place above.
+  - **What it came to: 410 records name a form, 80 distinct forms are produced by these games'
+    own methods**, and the other ninety are held rather than made - the regional forms the
+    article lets in and the sexes. `forms.json` went from 406 rows to 417.
+  - Step 6, taken last on purpose: **664 species and 167 of 171 forms drawn from Pokémon
+    HOME's set, and the species half was already done before this step started.** Step 2's
+    build fetched 233 renders the day the three lists landed, because a species needs no
+    naming rule - `HOME0906.png` is Sprigatito and that is the whole of it. What step 6 had to
+    do was the forms.
+  - **And Legends: Z-A had already done half of that too.** That game taught
+    `archives.form_names` how HOME spells a form and left 26 codes behind; 134 of these 171
+    forms resolved off that table without a line being written. **Thirty-six did not**, and
+    twenty new codes were read for them.
+  - **Paldean Tauros is where guessing would have cost most, and it is Rotom's oven a second
+    time.** The three breeds are `PA`, `PB` and `PC` - and they are **alphabetical by the
+    breed's name**, not in the order the game lists them, so `PA` is the *Aqua* Breed and `PC`
+    the Combat one. Reading the game's own order would have put the Combat bull on the Aqua
+    tile and back again, on three tiles, invisibly. Every code was read off the file's own
+    description page, which is the only reason that was caught.
+  - **A colour is a colour whoever is wearing it**, which is why the table is keyed by a form's
+    name rather than by a species: Minior's Blue Core and the Flabébé line's Blue Flower are
+    both `B`, and neither had to be written twice. Three of Minior's seven were already in the
+    table for that reason.
+  - **And step 6 reversed a decision step 8 had made two hours earlier, which is the finding.**
+    Step 8 put Minior in as its six non-default *meteors*: the source's default is
+    `minior-red-meteor` and a meteor is what stands in the overworld. Then the pictures were
+    asked for, and **HOME draws one plain Minior and seven cores and no coloured meteor at
+    all**. So the meteors would have been six tiles falling back to another generation's style,
+    beside a species drawn from HOME, to show a difference nobody can see until the shield
+    breaks. The seven cores are in instead, `FORM_PHRASES` points back at them, and the picture
+    set answered a question the form table could not.
+  - **Four forms fall back, and each has its own reason rather than one shrug:**
+  - An **Own Tempo Rockruff** has no file because HOME draws it as an ordinary Rockruff, which
+    is what it looks like. Nothing is missing.
+  - An **Antique Sinistea** and an **Antique Polteageist** have a file each - and it is the
+    **back** of them, and the description page says the render exists only in the mobile app.
+    A back view on a tile is worse than a fallback, so neither gets a code. That is the
+    sharpest thing reading a description page has caught since Rotom's oven, and it would have
+    been invisible in a build log.
+  - And **Torchic's female**, which Legends: Z-A already found and wrote down.
+  - _**The category was incomplete again, for the third time.** Reading the 3,125 files said
+    there is no plain `HOME0774.png`, which would have made Minior the one species in these
+    games with no picture of its own. Asking for it returned "Artwork of #0774 Minior from
+    Pokémon HOME". A category is a good index and not a complete one - Let's Go taught it,
+    Legends: Z-A confirmed it with a Pumpkaboo, and Paldea has now done it a third time._
+  - **And the Megas are not a gap here either.** The Archives' category for these games' own
+    models holds two files, which is why `SPRITE_SET` was HOME's from step 1 - and there is no
+    `Spr_9s` sheet to miss. Unlike Legends: Z-A there is not even a layer of Megas over it:
+    Paldea has no Mega Evolution at all.
+  - 826 pipeline tests, 262 app tests, full build **11 rules with 0 errors and 0 warnings** and
+    40 games. **Zero errors**, with one step still to run: the
+    pictures are step 6's and a picture is not something the validator counts.
+  - _And the error counts the interesting number while it is there: **99 of the 843 entries, 88
+    distinct species, have no source anywhere in the dataset** - 71 in Paldea's list, 15 in
+    Kitakami's, 13 in Blueberry's. They are Generation 9's own, which nothing older can produce,
+    and they are the floor under steps 3 and 4: every one of those 88 has to come out of this
+    pair's own grass or gifts or come out nowhere._
+  - With the form rule off, **the only dataset files these two touch are their own two, their
+    two covers, `transfers.json`** - 143 routes to 148 - **and 112 new HOME renders**, which are
+    the species Brilliant Diamond and Legends: Z-A between them never needed.
+  - Step 9: **validation 11 rules with 0 errors and 0 warnings, and a collection made in the
+    app with Scarlet as its main game and Violet linked.** The picker offers Generation 9 with
+    **three games** now - Scarlet, Violet and Legends: Z-A - each with its box art and
+    "Gen 9 · Paldea" under the pair.
+  - **The smoke test found four things, which is the most any step 9 in this dataset has
+    caught, and every one of them was a gap rather than a crash.**
+  - **One: Bloodmoon Ursaluna had a tile, a picture and no way to fill it.** The headless half
+    said `ursaluna-bloodmoon  0 method(s)`. It stands in **Timeless Woods** - the one page step
+    3 found with a Pokémon section and no table under it, left out rather than guessed at, with
+    a note saying step 9 would check what that cost. It cost two.
+  - **Two: White-Striped Basculin, in the same woods.** The dex lists it, Basculegion evolves
+    from it, and no method produced one. Both are written as statics rather than wild slots,
+    and the reason is worth keeping: **neither article states a level**, a static may leave the
+    level out and a wild slot may not, and writing 1-100 to satisfy a field would tell a player
+    something no page says. _That was caught by looking at the tile: the first attempt did write
+    1-100, and it read as a range the game states rather than as a blank._
+  - **Three: step 8 had left out its own third part.** "How each one is come by" was never
+    written, so **eighty-nine of the 171 forms had no method at all** - fifty-one of them a sex.
+    `formchanges.form_change_encounters` answers a sex everywhere without a table, and Paldea
+    simply never called it. Calling it, plus a `FORM_CHANGES` of **eight** - Rotom's five
+    appliances off the Catalog, which these games unlock whole, and Ogerpon's three masks -
+    took the orphans from 89 to 10. The ten left are the eight regional forms that arrive
+    through HOME rather than being made here, and the two breeds each half has to trade for.
+  - **Four, and the sharpest: the Linking Cord problem in a new dress.** A tile for the ordinary
+    Ursaluna told a player of Scarlet to "use a Peat Block on an Ursaring, during the
+    full-moon". **The Peat Block is Hisui's and is in no shop, cave or tree in Paldea.** A rule
+    the *source* carries moves forward to every later game - which is right almost always, and
+    is exactly the distinction `MissingVariant` draws - but the **item** moves with it, and an
+    item can stop existing.
+  - _Three of them, found by asking which rules Paldea shares with Hisui and which of those name
+    an item: **Ursaluna** (Peat Block), **Kleavor** (Black Augurite) and **Hisuian Lilligant**,
+    whose rule says "in Hisui" in as many words. Each was checked against its own article, which
+    says in every case that the evolution happens in Legends: Arceus and arrives here through
+    HOME. `paldea.NOT_AN_EVOLUTION_HERE` is Galar's mechanism used for the first time since
+    Galar. Two of the three are still obtainable and the reasons say how: a Kleavor is **caught**
+    in the Terarium, and Ursaluna's Bloodmoon form stands in Timeless Woods._
+  - **The headless half, against the published dataset.** 400 tiles with forms off and **523
+    with all four kinds on**, every one of them drawn from Pokémon HOME's set and **not one
+    falling back**. 490 of the 523 are available in Scarlet alone; the switch offers **three**
+    choices and no National dex, which is the fix from Legends: Z-A's step 9 doing its job -
+    without it 246 of the 523 would have been unreachable.
+  - **The two halves are the same 523 tiles and a different 23 of them catchable**, which is
+    what a version pair is, said by the app rather than by the data.
+  - **The routes read the way step 1 drew them**: in from HOME, out to HOME and to the other
+    half. The linked-games step offers every older game with its own sentence - "via Poké
+    Transporter, then Pokémon HOME" for the Generation 5 cartridges, "via Pokémon Bank, then
+    Pokémon HOME" for Generations 6 and 7, "via Pokémon HOME" for the Switch games - and
+    Generation 9 offers **one game, Violet, "via trading"**. Legends: Z-A is absent, because
+    nothing comes back out of it: a decision made about that game in its own step 1, showing up
+    correctly in another game's picker.
+  - **One tile read end to end, and it is the one that proves six steps at once.** Tauros
+    (Paldea-Aqua-Breed), Fighting / Water, with the blue-finned HOME render - so `PA` really is
+    the Aqua Breed. Two wild records reading "East Province (Area Two), Prairie", "walking up to
+    it", levels 25-26, **Weight 3**, marked Violet with "Then to Scarlet: trading", cited to
+    bulbapedia read 26 September 2026. The three-part place, the weight as its own field rather
+    than dressed as a chance, the version split at form level, and the picture.
+  - Marking it caught moved the counter to **1 of 523** and wrote one record naming
+    `tauros-paldea-aqua-breed` with `holdingGame: scarlet`.
+  - Smoke test discipline kept, and checked rather than asserted. The settings file was hashed
+    and backed up (D912EEA4..., 106 bytes), pointed at a scratch data file for the duration and
+    **restored byte for byte** - same hash, same size, same modified time. The user's own data
+    file was hashed before and after: 07FC5225..., 4452 bytes, mtime 22:28:01 on 25 September,
+    unchanged, and the collection the test made went to the scratch file instead. Zero instances
+    were running before; the test started and stopped its own, three times over, and stopped
+    nothing else.
+  - 826 pipeline tests, 262 app tests.
+  - **What the pair came to: 5,025 records for Scarlet and 5,049 for Violet** - 4,225 and 4,249
+    wild, 318 gifts, 21 trades, 377 evolutions, 84 form changes - over 843 dex entries, 664
+    species and 171 forms.

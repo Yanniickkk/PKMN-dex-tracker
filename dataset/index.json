@@ -1,7 +1,7 @@
 {
   "stamp": {
     "version": "0.1.0",
-    "builtOn": "2026-09-25"
+    "builtOn": "2026-09-26"
   },
   "games": [
     "alpha-sapphire",
@@ -29,6 +29,7 @@
     "red",
     "ruby",
     "sapphire",
+    "scarlet",
     "shield",
     "shining-pearl",
     "silver",
@@ -37,6 +38,7 @@
     "sword",
     "ultra-moon",
     "ultra-sun",
+    "violet",
     "white",
     "white-2",
     "x",

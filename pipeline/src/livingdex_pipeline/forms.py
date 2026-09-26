@@ -147,6 +147,19 @@ INVISIBLE_FORMS = frozenset({"scatterbug", "spewpa", "mothim"})
 #:
 #: So a remake is the clearest case of all: **what a game holds is a fact about the game, and a
 #: date is not a substitute for it.** Off for these two as well, and step 8 writes the answer.
+#:
+#: **Scarlet and Violet are Galar's case again, and this time the cost was measured at step 1
+#: rather than guessed at.** Registering the pair before either half had a single Pokedex entry
+#: moved the form table by itself: **eighteen new rows and 396 existing ones gaining two games
+#: each**, which is every form in the dataset old enough to qualify. A Galarian Corsola, a
+#: Hisuian Zoroark, every Vivillon pattern - none of which these two have ever met. The
+#: eighteen new ones are Generation 9's own and mostly real, which is what makes the rest
+#: dangerous: the rule is not uniformly wrong here, it is right about a handful and wrong about
+#: four hundred.
+#:
+#: Off for both, and step 8 writes a table for them the way it did for Galar. The eighteen
+#: vanish with the rest until it does - a form the table leaves out is a tile that is not drawn,
+#: and this is the direction to be wrong in.
 FORMS_NAMED_BY_THE_GAME = frozenset(
     {
         "lets-go-pikachu",
@@ -157,6 +170,8 @@ FORMS_NAMED_BY_THE_GAME = frozenset(
         "shining-pearl",
         "legends-arceus",
         "legends-z-a",
+        "scarlet",
+        "violet",
     }
 )
 
@@ -861,6 +876,242 @@ ZA_FORMS: dict[str, tuple[str, ...]] = {
 }
 
 
+
+#: The two halves, spelled here so the table below can say "both" in one word.
+PALDEA = ("scarlet", "violet")
+
+#: What Scarlet and Violet hold, which is step 8's answer to the question this file cannot ask.
+#:
+#: **170 entries, and not one of them was remembered into this table.** Every part was measured,
+#: and the parts answer different kinds of form. The universe to choose from was 273 forms of a
+#: species one of the three lists names, plus thirty the table did not hold at all - and nine of
+#: those thirty were refused before anybody had to think about them, by the same sentence that
+#: keeps every Mega out: a Gulping Cramorant, a Noice Eiscue, a Busted Mimikyu, a Hangry Morpeko,
+#: an Ash-Greninja, a Hero Palafin and both Terapagos formes are battle-only, and a living dex is
+#: about what a box can hold.
+#:
+#: **All thirty-six regional forms are in, and the article says so rather than the grass.**
+#: "All regional forms of compatible Pokemon that existed at the time of release and their
+#: respective regional evolved forms are also compatible" - so an Alolan Raichu belongs in a
+#: Paldean box whether or not the Terarium places one. Fifteen of them it does place, which is
+#: the Indigo Disk doing what it was built for.
+#:
+#: **All seventy-five sexes are in, because a sex is a fact about the species.** Galar read its
+#: own sprite sheet to decide this and Hisui and Lumiose did not have to; these two draw from
+#: Pokemon HOME's set, which is shared, so a sheet would answer a question about HOME rather
+#: than about Paldea.
+#:
+#: **Sixteen functional and thirty-two cosmetic**, and each exclusion has a reason rather than
+#: a shrug:
+#:
+#: * **Alcremie's sixty-two are out because the game has no Sweets.** An Alcremie in Paldea
+#:   comes out of a five- or six-star Tera Raid already made, so there is no Milcery to spin
+#:   and no cream to choose.
+#: * **Minior is in as its seven cores, and step 6 is what settled that.** Step 8 chose the
+#:   meteors, because the source's default is ``minior-red-meteor`` and a meteor is what stands
+#:   in the overworld. Then the pictures were asked for and Pokemon HOME turned out to draw
+#:   **one plain Minior and seven cores, and no coloured meteor at all** - so the meteors would
+#:   have been six tiles falling back to another generation's style beside a species drawn from
+#:   HOME, to show a difference nobody can see until the shield breaks. The picture set
+#:   answered a question the form table could not, which is a thing worth having happened once.
+#: * **Seventeen of Vivillon's nineteen patterns are out**, which is Lumiose's call again: only
+#:   the Fancy Pattern is in a table here. The others are reachable, and by a route no other
+#:   game in this dataset has - a postcard sent from Pokemon GO changes the pattern of wild
+#:   Vivillon for a day, according to where in the world the postcard came from. That is a
+#:   second app and a physical location, which is the Friend Safari's shape, and a form whose
+#:   sentence a player cannot act on is a tile nobody can fill.
+#: * **Roaming Form Gimmighoul is out and the reason is exact**: it flees when it is
+#:   interacted with and leaves coins behind. It can be caught in Pokemon GO and sent over, and
+#:   Pokemon GO is not a game this dataset holds.
+#: * The Totem Pokemon, the spiky-eared Pichu, Pikachu's caps, the Let's Go partners, the
+#:   Eternal Flower Floette and a Battle Bond Greninja are out because they are somebody else's
+#:   game or somebody else's event.
+#:
+#: **And eleven are Generation IX's own**, which is the part that was invisible until step 1
+#: switched the version-group rule off and watched them disappear: Dunsparce's 1% third
+#: segment, Tandemaus's 1% third mouse, a female Oinkologne, Ogerpon's three masks, Paldean
+#: Tauros's three breeds, Paldean Wooper - and **Bloodmoon Ursaluna**, which closes the sharpest
+#: thing step 2 found. Kitakami numbers the Bloodmoon one at #196 and the ordinary Ursaluna is
+#: a stranger to all three lists; the entry is still the species, but the form now exists and
+#: the tile can be drawn.
+#:
+#: **Koraidon's four builds and Miraidon's four modes are out**, and it is the one call here
+#: that is about a vehicle rather than a Pokemon: they are how the thing a player rides gets
+#: over a river, and a box holds one of it.
+PALDEA_FORMS: Mapping[str, tuple[str, ...]] = {
+    "abomasnow-female": PALDEA,
+    "aipom-female": PALDEA,
+    "ambipom-female": PALDEA,
+    "arcanine-hisui": PALDEA,
+    "avalugg-hisui": PALDEA,
+    "basculegion-female": PALDEA,
+    "basculin-blue-striped": PALDEA,
+    "basculin-white-striped": PALDEA,
+    "blaziken-female": PALDEA,
+    "braviary-hisui": PALDEA,
+    "buizel-female": PALDEA,
+    "cacturne-female": PALDEA,
+    "camerupt-female": PALDEA,
+    "combee-female": PALDEA,
+    "combusken-female": PALDEA,
+    "croagunk-female": PALDEA,
+    "decidueye-hisui": PALDEA,
+    "deerling-autumn": PALDEA,
+    "deerling-summer": PALDEA,
+    "deerling-winter": PALDEA,
+    "diglett-alola": PALDEA,
+    "dodrio-female": PALDEA,
+    "doduo-female": PALDEA,
+    "donphan-female": PALDEA,
+    "dudunsparce-three-segment": PALDEA,
+    "dugtrio-alola": PALDEA,
+    "eevee-female": PALDEA,
+    "electrode-hisui": PALDEA,
+    "exeggutor-alola": PALDEA,
+    "finneon-female": PALDEA,
+    "flabebe-blue": PALDEA,
+    "flabebe-orange": PALDEA,
+    "flabebe-white": PALDEA,
+    "flabebe-yellow": PALDEA,
+    "floatzel-female": PALDEA,
+    "floette-blue": PALDEA,
+    "floette-orange": PALDEA,
+    "floette-white": PALDEA,
+    "floette-yellow": PALDEA,
+    "florges-blue": PALDEA,
+    "florges-orange": PALDEA,
+    "florges-white": PALDEA,
+    "florges-yellow": PALDEA,
+    "gabite-female": PALDEA,
+    "garchomp-female": PALDEA,
+    "gastrodon-east": PALDEA,
+    "geodude-alola": PALDEA,
+    "gible-female": PALDEA,
+    "girafarig-female": PALDEA,
+    "gligar-female": PALDEA,
+    "gloom-female": PALDEA,
+    "golem-alola": PALDEA,
+    "goodra-hisui": PALDEA,
+    "graveler-alola": PALDEA,
+    "grimer-alola": PALDEA,
+    "growlithe-hisui": PALDEA,
+    "gulpin-female": PALDEA,
+    "gyarados-female": PALDEA,
+    "heracross-female": PALDEA,
+    "hippopotas-female": PALDEA,
+    "hippowdon-female": PALDEA,
+    "houndoom-female": PALDEA,
+    "hypno-female": PALDEA,
+    "indeedee-female": PALDEA,
+    "kricketot-female": PALDEA,
+    "kricketune-female": PALDEA,
+    "lilligant-hisui": PALDEA,
+    "ludicolo-female": PALDEA,
+    "lumineon-female": PALDEA,
+    "luxio-female": PALDEA,
+    "luxray-female": PALDEA,
+    "lycanroc-dusk": PALDEA,
+    "lycanroc-midnight": PALDEA,
+    "magikarp-female": PALDEA,
+    "mamoswine-female": PALDEA,
+    "maushold-family-of-three": PALDEA,
+    "medicham-female": PALDEA,
+    "meditite-female": PALDEA,
+    "meganium-female": PALDEA,
+    "meowstic-female": PALDEA,
+    "meowth-alola": PALDEA,
+    "meowth-galar": PALDEA,
+    "milotic-female": PALDEA,
+    "minior-blue": PALDEA,
+    "minior-green": PALDEA,
+    "minior-indigo": PALDEA,
+    "minior-orange": PALDEA,
+    "minior-red": PALDEA,
+    "minior-violet": PALDEA,
+    "minior-yellow": PALDEA,
+    "muk-alola": PALDEA,
+    "murkrow-female": PALDEA,
+    "ninetales-alola": PALDEA,
+    "numel-female": PALDEA,
+    "nuzleaf-female": PALDEA,
+    "ogerpon-cornerstone-mask": PALDEA,
+    "ogerpon-hearthflame-mask": PALDEA,
+    "ogerpon-wellspring-mask": PALDEA,
+    "oinkologne-female": PALDEA,
+    "oricorio-pau": PALDEA,
+    "oricorio-pom-pom": PALDEA,
+    "oricorio-sensu": PALDEA,
+    "pachirisu-female": PALDEA,
+    "persian-alola": PALDEA,
+    "pikachu-female": PALDEA,
+    "piloswine-female": PALDEA,
+    "politoed-female": PALDEA,
+    "polteageist-antique": PALDEA,
+    "pyroar-female": PALDEA,
+    "quagsire-female": PALDEA,
+    "qwilfish-hisui": PALDEA,
+    "raichu-alola": PALDEA,
+    "raichu-female": PALDEA,
+    "rhydon-female": PALDEA,
+    "rhyhorn-female": PALDEA,
+    "rhyperior-female": PALDEA,
+    "rockruff-own-tempo": PALDEA,
+    "rotom-fan": PALDEA,
+    "rotom-frost": PALDEA,
+    "rotom-heat": PALDEA,
+    "rotom-mow": PALDEA,
+    "rotom-wash": PALDEA,
+    "samurott-hisui": PALDEA,
+    "sandshrew-alola": PALDEA,
+    "sandslash-alola": PALDEA,
+    "sawsbuck-autumn": PALDEA,
+    "sawsbuck-summer": PALDEA,
+    "sawsbuck-winter": PALDEA,
+    "scizor-female": PALDEA,
+    "scyther-female": PALDEA,
+    "shellos-east": PALDEA,
+    "shiftry-female": PALDEA,
+    "shinx-female": PALDEA,
+    "sinistea-antique": PALDEA,
+    "sliggoo-hisui": PALDEA,
+    "slowbro-galar": PALDEA,
+    "slowking-galar": PALDEA,
+    "slowpoke-galar": PALDEA,
+    "sneasel-female": PALDEA,
+    "sneasel-hisui": PALDEA,
+    "snover-female": PALDEA,
+    "squawkabilly-blue-plumage": PALDEA,
+    "squawkabilly-white-plumage": PALDEA,
+    "squawkabilly-yellow-plumage": PALDEA,
+    "staraptor-female": PALDEA,
+    "staravia-female": PALDEA,
+    "starly-female": PALDEA,
+    "sudowoodo-female": PALDEA,
+    "swalot-female": PALDEA,
+    "tatsugiri-droopy": PALDEA,
+    "tatsugiri-stretchy": PALDEA,
+    "tauros-paldea-aqua-breed": PALDEA,
+    "tauros-paldea-blaze-breed": PALDEA,
+    "tauros-paldea-combat-breed": PALDEA,
+    "torchic-female": PALDEA,
+    "toxicroak-female": PALDEA,
+    "toxtricity-low-key": PALDEA,
+    "typhlosion-hisui": PALDEA,
+    "ursaluna-bloodmoon": PALDEA,
+    "ursaring-female": PALDEA,
+    "venusaur-female": PALDEA,
+    "vileplume-female": PALDEA,
+    "vivillon-fancy": PALDEA,
+    "voltorb-hisui": PALDEA,
+    "vulpix-alola": PALDEA,
+    "weavile-female": PALDEA,
+    "weezing-galar": PALDEA,
+    "wooper-female": PALDEA,
+    "wooper-paldea": PALDEA,
+    "zoroark-hisui": PALDEA,
+    "zorua-hisui": PALDEA,
+}
+
 NAMED_BY_HAND: Mapping[str, tuple[str, ...]] = {
     slug: tuple(
         sorted(
@@ -870,10 +1121,18 @@ NAMED_BY_HAND: Mapping[str, tuple[str, ...]] = {
                 *BDSP_FORMS.get(slug, ()),
                 *HISUI_FORMS.get(slug, ()),
                 *ZA_FORMS.get(slug, ()),
+                *PALDEA_FORMS.get(slug, ()),
             }
         )
     )
-    for slug in {*LETS_GO_FORMS, *GALAR_FORMS, *BDSP_FORMS, *HISUI_FORMS, *ZA_FORMS}
+    for slug in {
+        *LETS_GO_FORMS,
+        *GALAR_FORMS,
+        *BDSP_FORMS,
+        *HISUI_FORMS,
+        *ZA_FORMS,
+        *PALDEA_FORMS,
+    }
 }
 
 #: Where a form is, when the version group it arrived in says more than the truth.

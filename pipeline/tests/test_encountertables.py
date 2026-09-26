@@ -4,8 +4,13 @@ from __future__ import annotations
 
 from datetime import date
 
-from livingdex_pipeline.encountertables import legends_encounters, table_encounters
-from livingdex_pipeline.models import EncounterMethod, Form, FormKind
+from livingdex_pipeline.encountertables import (
+    legends_encounters,
+    paldea_encounters,
+    paldea_fixed,
+    table_encounters,
+)
+from livingdex_pipeline.models import EncounterMethod, Form, FormKind, GiftKind
 
 PRESENT = "background:#AB2813;"
 ABSENT = "background:#FFF;"
@@ -773,3 +778,434 @@ def test_a_page_with_one_heading_over_all_of_it_is_unchanged() -> None:
     [one] = read_legends(body, species={"charmander"})
 
     assert one.location == "Obsidian Fieldlands, Horseshoe Plains"
+
+
+# ---------------------------------------------------------------------------
+# Scarlet and Violet's tables, which are the third shape on this wiki.
+# ---------------------------------------------------------------------------
+
+PALDEA_TERRAINS = {
+    "Land": EncounterMethod.OVERWORLD,
+    "Water surface": EncounterMethod.OVERWORLD_WATER,
+    "Underwater": EncounterMethod.OVERWORLD_UNDERWATER,
+    "Overland": EncounterMethod.OVERWORLD_FLYING,
+    "Sky": EncounterMethod.OVERWORLD_FLYING,
+}
+
+PALDEA_HEADER = """
+<tr>
+  <th rowspan="2">Pokémon</th>
+  <th rowspan="2" colspan="2">Games</th>
+  <th colspan="5">Terrain</th>
+  <th rowspan="2">Levels</th>
+  <th colspan="4">Probability Weight</th>
+  <th rowspan="2">Group Rate</th>
+  <th rowspan="2">Group Pokémon</th>
+</tr>
+<tr>
+  <td><img alt="Land"></td>
+  <td><img alt="Water surface"></td>
+  <td><img alt="Underwater"></td>
+  <td><img alt="Overland"></td>
+  <td><img alt="Sky"></td>
+  <th><img alt="Morning"></th>
+  <th><img alt="Day"></th>
+  <th><img alt="Evening"></th>
+  <th><img alt="Night"></th>
+</tr>
+"""
+
+
+def paldea_row(
+    species: str,
+    *,
+    form: str = "",
+    terrain: tuple[str, ...] = ("Land",),
+    levels: str = "5-8",
+    weight: str | tuple[str, str, str, str] = "60",
+    scarlet: bool = True,
+    violet: bool = True,
+    group_rate: str = "✘",
+    group_species: str = "✘",
+) -> str:
+    """One row, shaped the way a Scarlet and Violet location page shapes one."""
+    ticks = "".join(
+        f"<td>{'✔' if one in terrain else '✘'}</td>"
+        for one in ("Land", "Water surface", "Underwater", "Overland", "Sky")
+    )
+    weights = (
+        f'<td colspan="4">{weight}</td>'
+        if isinstance(weight, str)
+        else "".join(f"<td>{one}</td>" for one in weight)
+    )
+
+    return f"""
+    <tr>
+      <td><a href="/wiki/{species}" title="{species} (Pokémon)">{species}{form}</a></td>
+      <td style="{PRESENT if scarlet else ABSENT}">S</td>
+      <th style="{PRESENT if violet else ABSENT}">V</th>
+      {ticks}
+      <td>{levels}</td>
+      {weights}
+      <td>{group_rate}</td>
+      <td>{group_species}</td>
+    </tr>
+    """
+
+
+def biome(text: str) -> str:
+    """A one-cell row inside a Scarlet and Violet table, which is always the biome."""
+    return f'<tr><th colspan="15">{text}</th></tr>'
+
+
+def paldea_table(*rows: str) -> str:
+    return f"<table><tbody>{PALDEA_HEADER}{''.join(rows)}{LEGEND}</tbody></table>"
+
+
+def read_paldea(
+    body: str,
+    *,
+    species: set[str],
+    version: str = "S",
+    terrains=None,
+    forms=(),
+    form_names=None,
+    pages=None,
+):
+    wiki = FakeWiki(
+        {title: html if "mw-content-text" in html else page(html) for title, html in
+         (pages or {"South_Province_(Area_One)": body}).items()}
+    )
+
+    return paldea_encounters(
+        wiki,
+        game_id="scarlet",
+        version=version,
+        pages={title: title.replace("_", " ") for title in wiki.pages},
+        terrains=terrains or PALDEA_TERRAINS,
+        species=species,
+        forms=forms,
+        form_names=form_names,
+    )
+
+
+def test_a_paldea_row_has_a_weight_where_every_other_table_has_a_rate() -> None:
+    [one] = read_paldea(paldea_table(paldea_row("Lechonk", weight="80")), species={"lechonk"})
+
+    assert one.target.species == "lechonk"
+    assert one.location == "South Province (Area One)"
+    assert (one.levels.minimum, one.levels.maximum) == (5, 8)
+
+    # The whole reason for a third reader. The page counts in weights against the others that
+    # can spawn at the same point and declines to turn that into a percentage, so this dataset
+    # declines too: a denominator that depends on the biome, the terrain and the hour at once
+    # is not something a player was ever shown.
+    assert one.probability_weight == 80
+    assert one.rate_percent is None
+
+
+def test_which_half_a_row_belongs_to_is_a_colour_here_too() -> None:
+    # Hoenn's lesson on a new table: both letters are always written, and the answer is whether
+    # the cell behind them is filled in.
+    body = paldea_table(
+        paldea_row("Larvitar", scarlet=True, violet=False),
+        paldea_row("Bagon", scarlet=False, violet=True),
+    )
+    listed = {"larvitar", "bagon"}
+
+    assert [one.target.species for one in read_paldea(body, species=listed)] == ["larvitar"]
+    assert [
+        one.target.species for one in read_paldea(body, species=listed, version="V")
+    ] == ["bagon"]
+
+
+def test_a_row_ticked_in_several_terrains_is_several_places_to_look() -> None:
+    # A Wingull on a beach walks on the sand, hovers over it and circles above it. One record
+    # would have to pick one of the three and would be wrong about the other two - and two of
+    # the three are one place, because Overland and Sky both map to flying, so this is two
+    # records rather than three.
+    found = read_paldea(
+        paldea_table(paldea_row("Wingull", terrain=("Land", "Overland", "Sky"))),
+        species={"wingull"},
+    )
+
+    assert [one.method for one in found] == [
+        EncounterMethod.OVERWORLD,
+        EncounterMethod.OVERWORLD_FLYING,
+    ]
+    assert {one.probability_weight for one in found} == {60}
+
+
+def test_underwater_is_its_own_place_and_the_sky_is_not() -> None:
+    # Both halves of the same measurement, which is why they are asserted together. Of the
+    # 3,409 rows these games' fifty pages hold, 197 are ticked underwater and nothing else, so
+    # folding it into the water above it would tell a player to swim past an Arrokuda. The Sky
+    # column has four such rows, all of them a Braviary that walks on the ground elsewhere in
+    # the same game, so it is the Overland column with different scenery.
+    [under] = read_paldea(
+        paldea_table(paldea_row("Arrokuda", terrain=("Underwater",))), species={"arrokuda"}
+    )
+    assert under.method is EncounterMethod.OVERWORLD_UNDERWATER
+
+    [high] = read_paldea(
+        paldea_table(paldea_row("Braviary", terrain=("Sky",))), species={"braviary"}
+    )
+    assert high.method is EncounterMethod.OVERWORLD_FLYING
+
+
+def test_a_terrain_nothing_maps_is_skipped_rather_than_guessed_at() -> None:
+    # The same guard the other two readers have against a heading nobody has read.
+    found = read_paldea(
+        paldea_table(paldea_row("Arrokuda", terrain=("Underwater",))),
+        species={"arrokuda"},
+        terrains={"Land": EncounterMethod.OVERWORLD},
+    )
+
+    assert found == []
+
+
+def test_one_weight_across_the_block_says_nothing_about_the_time() -> None:
+    [one] = read_paldea(paldea_table(paldea_row("Hoppip")), species={"hoppip"})
+
+    assert one.time_of_day is None
+    assert one.probability_weight == 60
+
+
+def test_four_weights_are_read_as_the_hours_they_belong_to() -> None:
+    # A Hoothoot in the Kitakami Wilds is weight 70 in the morning and the day and 400 in the
+    # evening and at night. Two records rather than one that has to average them.
+    found = read_paldea(
+        paldea_table(paldea_row("Hoothoot", weight=("70", "70", "400", "400"))),
+        species={"hoothoot"},
+    )
+
+    assert [(one.time_of_day, one.probability_weight) for one in found] == [
+        ("morning and day", 70),
+        ("evening and night", 400),
+    ]
+
+
+def test_an_hour_with_a_weight_of_zero_is_an_hour_it_is_not_there() -> None:
+    # Sunkern is 60, 60, 60, 0: a slot with no chance in it is not a slot.
+    [one] = read_paldea(
+        paldea_table(paldea_row("Sunkern", weight=("60", "60", "60", "0"))),
+        species={"sunkern"},
+    )
+
+    assert one.time_of_day == "morning, day and evening"
+    assert one.probability_weight == 60
+
+
+def test_four_equal_weights_say_the_same_thing_as_one_spanning_cell() -> None:
+    [one] = read_paldea(
+        paldea_table(paldea_row("Hoppip", weight=("60", "60", "60", "60"))),
+        species={"hoppip"},
+    )
+
+    assert one.time_of_day is None
+
+
+def test_the_one_cell_row_inside_the_table_is_the_biome() -> None:
+    # Never a method and never a condition, which is what makes these tables different from
+    # the Legends ones: it is where in this place the Pokemon is.
+    found = read_paldea(
+        paldea_table(
+            biome("Prairie"),
+            paldea_row("Hoppip"),
+            biome("Lake"),
+            paldea_row("Psyduck", terrain=("Water surface",)),
+        ),
+        species={"hoppip", "psyduck"},
+    )
+
+    assert [one.sub_area for one in found] == ["Prairie", "Lake"]
+
+
+def test_the_heading_above_the_table_is_the_part_of_the_place() -> None:
+    # The Terarium's Canyon Biome carries five tables under five headings, and the biome
+    # heading inside each of them starts again. Both halves are the answer to "where".
+    body = page(
+        "<h2>Pokémon</h2>"
+        + paldea_table(biome("Prairie"), paldea_row("Scyther"))
+        + "<h3>East Bridge Cave</h3>"
+        + paldea_table(biome("Cave"), paldea_row("Geodude"))
+    )
+
+    found = read_paldea(body, species={"scyther", "geodude"})
+
+    # "Pokemon" is the heading the tables live under rather than a part of anywhere.
+    assert [one.sub_area for one in found] == ["Prairie", "East Bridge Cave, Cave"]
+
+
+def test_two_level_bands_are_two_records_rather_than_one_with_a_hole_in_it() -> None:
+    # "30-39, 50-53" is an area with a low half and a high half, which Kitakami writes a good
+    # deal. 30-53 would send a player looking for a level 45 one that is not there.
+    found = read_paldea(
+        paldea_table(paldea_row("Hoothoot", levels="30-39, 50-53")),
+        species={"hoothoot"},
+    )
+
+    assert [(one.levels.minimum, one.levels.maximum) for one in found] == [(30, 39), (50, 53)]
+
+
+def test_a_form_written_onto_the_species_name_is_read_off_the_link() -> None:
+    # The same cell shape Hisui has: the text runs the form's name onto the species name, and
+    # the link says which species it is.
+    found = read_paldea(
+        paldea_table(paldea_row("Wooper", form="Paldean Form")),
+        species={"wooper"},
+        forms=[
+            Form(
+                id="wooper-paldea",
+                species="wooper",
+                name="Paldean Wooper",
+                kind=FormKind.REGIONAL,
+                games=["scarlet"],
+            )
+        ],
+        form_names={"Paldean Form": "paldea"},
+    )
+
+    assert [(one.target.species, one.target.form) for one in found] == [
+        ("wooper", "wooper-paldea")
+    ]
+
+
+def test_a_table_without_a_weight_block_is_not_one_of_these() -> None:
+    # A page can hold both kinds: the older tables share the wiki with these, and the header is
+    # what tells them apart rather than a row's width.
+    assert read_paldea(table(row("Zigzagoon")), species={"zigzagoon"}) == []
+    assert read_paldea(legends_table(legends_row("Ponyta")), species={"ponyta"}) == []
+
+
+def fixed_row(
+    species: str,
+    *,
+    form: str = "",
+    location: str = "Fixed",
+    levels: str = "20",
+    rate: str = "Respawns",
+    scarlet: bool = True,
+    violet: bool = True,
+) -> str:
+    """One row of a Fixed encounters table, which is the familiar five-column shape."""
+    return f"""
+    <tr>
+      <td><a href="/wiki/{species}" title="{species} (Pokémon)">{species}{form}</a></td>
+      <td colspan="3" style="{PRESENT if scarlet else ABSENT}">S</td>
+      <th colspan="3" style="{PRESENT if violet else ABSENT}">V</th>
+      <td>{location}</td>
+      <td>{levels}</td>
+      <td colspan="3">{rate}</td>
+    </tr>
+    """
+
+
+FIXED_HEADER = (
+    '<tr><th>Pokémon</th><th colspan="6">Games</th><th>Location</th>'
+    '<th>Levels</th><th colspan="3">Rate</th></tr>'
+)
+
+
+def fixed_table(*rows: str) -> str:
+    return f"<table><tbody>{FIXED_HEADER}{''.join(rows)}</tbody></table>"
+
+
+def read_fixed(body: str, *, species: set[str], version: str = "S", form_names=None, forms=()):
+    wiki = FakeWiki({"Asado_Desert": page(body)})
+
+    return paldea_fixed(
+        wiki,
+        game_id="scarlet",
+        version=version,
+        pages={"Asado_Desert": "Asado Desert"},
+        species=species,
+        forms=forms,
+        form_names=form_names,
+    )
+
+
+def test_a_fixed_encounter_is_one_pokemon_standing_in_one_place() -> None:
+    body = page("<h2>Fixed encounters</h2>" + fixed_table(fixed_row("Gimmighoul", levels="20")))
+
+    [one] = read_fixed(body, species={"gimmighoul"})
+
+    assert one.target.species == "gimmighoul"
+    assert one.gift_kind is GiftKind.STATIC_ENCOUNTER
+    assert one.location == "Asado Desert"
+    assert one.level == 20
+
+    # A weighted row says a Pokemon is in the pool at a spawn point; one of these says it is
+    # standing there, and 295 of the 302 come back when they are caught.
+    assert one.requirement == "respawns after it is caught"
+
+
+def test_the_location_column_here_is_a_place_and_not_a_method() -> None:
+    # Which is the whole reason this is not a call to table_encounters: there the column holds
+    # the word "Grass" or "Surfing" and says how a player meets the row.
+    body = page(
+        "<h2>Fixed encounters</h2>"
+        + fixed_table(fixed_row("Gimmighoul", location="Asado Desert Watchtower"))
+    )
+
+    [one] = read_fixed(body, species={"gimmighoul"})
+
+    assert one.requirement == "Asado Desert Watchtower; respawns after it is caught"
+
+
+def test_the_page_saying_only_fixed_is_the_page_saying_nothing() -> None:
+    # 278 of the 302 rows write it, and copying it into a requirement would be the page's own
+    # scaffolding wearing a player's sentence.
+    body = page("<h2>Fixed encounters</h2>" + fixed_table(fixed_row("Dragonite")))
+
+    [one] = read_fixed(body, species={"dragonite"})
+
+    assert "Fixed" not in (one.requirement or "")
+
+
+def test_a_titan_is_said_once_rather_than_twice() -> None:
+    # The badge is on the species cell and the same thing is spelled out in the Location
+    # column, and a record carrying both reads like a stutter.
+    body = page(
+        "<h2>Fixed encounters</h2>"
+        + fixed_table(
+            fixed_row(
+                "Great Tusk",
+                form="Former Titan",
+                location="Appears in the same area where it was fought as a Titan Pokémon",
+                rate="Only One",
+            )
+        )
+    )
+
+    [one] = read_fixed(body, species={"great-tusk"})
+
+    assert one.target.species == "great-tusk"
+    assert one.requirement is not None
+    assert one.requirement.count("Titan") == 1
+    assert one.requirement.endswith("there is only one")
+
+
+def test_a_row_only_one_half_has_stays_out_of_the_other() -> None:
+    body = page(
+        "<h2>Fixed encounters</h2>"
+        + fixed_table(fixed_row("Spiritomb", scarlet=True, violet=False))
+    )
+
+    assert len(read_fixed(body, species={"spiritomb"})) == 1
+    assert read_fixed(body, species={"spiritomb"}, version="V") == []
+
+
+def test_only_the_two_sections_that_hold_these_are_read() -> None:
+    # The same table shape appears nowhere else on these pages, but the wild tables above do
+    # carry six-cell rows, and reading them here would double every one of them.
+    body = page(
+        "<h2>Items</h2>"
+        + fixed_table(fixed_row("Gimmighoul"))
+        + "<h2>Fixed encounters</h2>"
+        + fixed_table(fixed_row("Dragonite"))
+    )
+
+    found = read_fixed(body, species={"gimmighoul", "dragonite"})
+
+    assert [one.target.species for one in found] == ["dragonite"]

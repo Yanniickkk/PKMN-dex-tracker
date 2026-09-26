@@ -17,6 +17,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -24,6 +25,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -47,11 +49,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -728,11 +732,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -755,7 +761,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "fire",
@@ -783,7 +791,9 @@
     "kind": "regional",
     "games": [
       "legends-arceus",
-      "legends-z-a"
+      "legends-z-a",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "ice",
@@ -796,7 +806,9 @@
     "name": "Female",
     "kind": "gender",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ]
   },
   {
@@ -810,11 +822,13 @@
       "black-2",
       "moon",
       "omega-ruby",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -827,7 +841,9 @@
     "name": "White-Striped",
     "kind": "functional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ]
   },
   {
@@ -931,11 +947,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -948,7 +966,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "psychic",
@@ -971,11 +991,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1085,11 +1107,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1141,11 +1165,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1169,6 +1195,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -1176,6 +1203,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1199,11 +1227,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1239,6 +1269,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -1246,6 +1277,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1282,7 +1314,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "grass",
@@ -1300,9 +1334,11 @@
       "black-2",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1320,9 +1356,11 @@
       "black-2",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1340,9 +1378,11 @@
       "black-2",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1451,11 +1491,13 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "ground",
@@ -1480,11 +1522,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1509,11 +1553,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1536,15 +1582,27 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "dudunsparce-three-segment",
+    "species": "dudunsparce",
+    "name": "Three-Segment",
+    "kind": "cosmetic",
+    "games": [
+      "scarlet",
+      "violet"
     ]
   },
   {
@@ -1556,11 +1614,13 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "ground",
@@ -1615,6 +1675,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -1622,6 +1683,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1643,7 +1705,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "electric",
@@ -1668,11 +1732,13 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "grass",
@@ -1709,11 +1775,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1730,9 +1798,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -1747,9 +1817,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -1764,9 +1836,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -1781,9 +1855,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -1805,11 +1881,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -1826,9 +1904,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -1860,9 +1940,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -1877,9 +1959,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -1894,9 +1978,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -1911,9 +1997,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -1928,9 +2016,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -1945,9 +2035,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -1962,9 +2054,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -2153,6 +2247,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -2160,6 +2255,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2184,6 +2280,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -2191,6 +2288,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2214,11 +2312,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2234,9 +2334,11 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "rock",
@@ -2261,6 +2363,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -2268,6 +2371,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2299,11 +2403,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2353,11 +2459,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2382,6 +2490,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -2389,6 +2498,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2468,9 +2578,11 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "rock",
@@ -2484,7 +2596,9 @@
     "kind": "regional",
     "games": [
       "legends-arceus",
-      "legends-z-a"
+      "legends-z-a",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "steel",
@@ -2557,9 +2671,11 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "rock",
@@ -2586,9 +2702,11 @@
     "games": [
       "lets-go-pikachu",
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "poison",
@@ -2601,7 +2719,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "fire",
@@ -2625,11 +2745,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2668,6 +2790,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -2675,6 +2798,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2699,6 +2823,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -2706,6 +2831,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2730,6 +2856,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -2737,6 +2864,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2761,6 +2889,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -2768,6 +2897,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2809,11 +2939,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2838,11 +2970,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2856,8 +2990,10 @@
     "kind": "gender",
     "games": [
       "legends-z-a",
+      "scarlet",
       "shield",
-      "sword"
+      "sword",
+      "violet"
     ]
   },
   {
@@ -2962,11 +3098,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -2990,11 +3128,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3116,7 +3256,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "grass",
@@ -3153,6 +3295,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -3160,6 +3303,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3183,11 +3327,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3223,6 +3369,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -3230,6 +3377,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3253,6 +3401,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -3260,6 +3409,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3272,10 +3422,12 @@
     "name": "Dusk",
     "kind": "functional",
     "games": [
+      "scarlet",
       "shield",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ]
   },
   {
@@ -3285,11 +3437,13 @@
     "kind": "functional",
     "games": [
       "moon",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ]
   },
   {
@@ -3324,6 +3478,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -3331,6 +3486,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3354,6 +3510,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -3361,6 +3518,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3403,6 +3561,16 @@
     ]
   },
   {
+    "id": "maushold-family-of-three",
+    "species": "maushold",
+    "name": "Family-Of-Three",
+    "kind": "cosmetic",
+    "games": [
+      "scarlet",
+      "violet"
+    ]
+  },
+  {
     "id": "medicham-female",
     "species": "medicham",
     "name": "Female",
@@ -3419,11 +3587,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3447,11 +3617,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3475,11 +3647,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3496,11 +3670,13 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -3514,11 +3690,13 @@
       "legends-z-a",
       "lets-go-eevee",
       "moon",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "dark"
@@ -3531,8 +3709,10 @@
     "kind": "regional",
     "games": [
       "legends-z-a",
+      "scarlet",
       "shield",
-      "sword"
+      "sword",
+      "violet"
     ],
     "types": [
       "steel"
@@ -3555,6 +3735,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -3562,6 +3743,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3587,9 +3769,11 @@
     "kind": "functional",
     "games": [
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ]
   },
   {
@@ -3611,9 +3795,11 @@
     "kind": "functional",
     "games": [
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ]
   },
   {
@@ -3635,9 +3821,11 @@
     "kind": "functional",
     "games": [
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ]
   },
   {
@@ -3659,9 +3847,11 @@
     "kind": "functional",
     "games": [
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ]
   },
   {
@@ -3683,9 +3873,11 @@
     "kind": "functional",
     "games": [
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ]
   },
   {
@@ -3695,9 +3887,11 @@
     "kind": "functional",
     "games": [
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ]
   },
   {
@@ -3719,9 +3913,11 @@
     "kind": "functional",
     "games": [
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ]
   },
   {
@@ -3773,9 +3969,11 @@
     "games": [
       "lets-go-pikachu",
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "poison",
@@ -3799,11 +3997,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3847,11 +4047,13 @@
       "legends-arceus",
       "lets-go-eevee",
       "moon",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "ice",
@@ -3875,11 +4077,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3902,6 +4106,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -3909,6 +4114,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -3946,15 +4152,69 @@
     ]
   },
   {
+    "id": "ogerpon-cornerstone-mask",
+    "species": "ogerpon",
+    "name": "Cornerstone-Mask",
+    "kind": "functional",
+    "games": [
+      "scarlet",
+      "violet"
+    ],
+    "types": [
+      "grass",
+      "rock"
+    ]
+  },
+  {
+    "id": "ogerpon-hearthflame-mask",
+    "species": "ogerpon",
+    "name": "Hearthflame-Mask",
+    "kind": "functional",
+    "games": [
+      "scarlet",
+      "violet"
+    ],
+    "types": [
+      "grass",
+      "fire"
+    ]
+  },
+  {
+    "id": "ogerpon-wellspring-mask",
+    "species": "ogerpon",
+    "name": "Wellspring-Mask",
+    "kind": "functional",
+    "games": [
+      "scarlet",
+      "violet"
+    ],
+    "types": [
+      "grass",
+      "water"
+    ]
+  },
+  {
+    "id": "oinkologne-female",
+    "species": "oinkologne",
+    "name": "Female",
+    "kind": "gender",
+    "games": [
+      "scarlet",
+      "violet"
+    ]
+  },
+  {
     "id": "oricorio-pau",
     "species": "oricorio",
     "name": "Pau",
     "kind": "functional",
     "games": [
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "psychic",
@@ -3968,9 +4228,11 @@
     "kind": "functional",
     "games": [
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "electric",
@@ -3984,9 +4246,11 @@
     "kind": "functional",
     "games": [
       "moon",
+      "scarlet",
       "sun",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "ghost",
@@ -4010,11 +4274,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4039,11 +4305,13 @@
       "legends-z-a",
       "lets-go-eevee",
       "moon",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "dark"
@@ -4111,6 +4379,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4118,6 +4387,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4260,6 +4530,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4267,6 +4538,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4289,6 +4561,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4296,6 +4569,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4308,8 +4582,10 @@
     "name": "Antique",
     "kind": "cosmetic",
     "games": [
+      "scarlet",
       "shield",
-      "sword"
+      "sword",
+      "violet"
     ]
   },
   {
@@ -4391,9 +4667,11 @@
       "legends-z-a",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -4414,6 +4692,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4421,6 +4700,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4434,7 +4714,9 @@
     "kind": "regional",
     "games": [
       "legends-arceus",
-      "legends-z-a"
+      "legends-z-a",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "dark",
@@ -4451,11 +4733,13 @@
       "lets-go-eevee",
       "lets-go-pikachu",
       "moon",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "electric",
@@ -4482,6 +4766,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4489,6 +4774,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4666,6 +4952,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4673,6 +4960,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4698,6 +4986,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4705,6 +4994,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4728,6 +5018,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4735,6 +5026,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4757,10 +5049,12 @@
     "name": "Own-Tempo",
     "kind": "functional",
     "games": [
+      "scarlet",
       "shield",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ]
   },
   {
@@ -4840,6 +5134,7 @@
       "moon",
       "omega-ruby",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4847,6 +5142,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4872,6 +5168,7 @@
       "moon",
       "omega-ruby",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4879,6 +5176,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4904,6 +5202,7 @@
       "moon",
       "omega-ruby",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4911,6 +5210,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4936,6 +5236,7 @@
       "moon",
       "omega-ruby",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4943,6 +5244,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -4968,6 +5270,7 @@
       "moon",
       "omega-ruby",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -4975,6 +5278,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5003,7 +5307,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "water",
@@ -5018,11 +5324,13 @@
     "games": [
       "lets-go-pikachu",
       "moon",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "ice",
@@ -5037,11 +5345,13 @@
     "games": [
       "lets-go-pikachu",
       "moon",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "ice",
@@ -5059,9 +5369,11 @@
       "black-2",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5079,9 +5391,11 @@
       "black-2",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5099,9 +5413,11 @@
       "black-2",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5126,6 +5442,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -5133,6 +5450,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5159,6 +5477,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -5166,6 +5485,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5250,11 +5570,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5277,6 +5599,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -5284,6 +5607,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5307,6 +5631,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -5314,6 +5639,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5615,8 +5941,10 @@
     "name": "Antique",
     "kind": "cosmetic",
     "games": [
+      "scarlet",
       "shield",
-      "sword"
+      "sword",
+      "violet"
     ]
   },
   {
@@ -5626,7 +5954,9 @@
     "kind": "regional",
     "games": [
       "legends-arceus",
-      "legends-z-a"
+      "legends-z-a",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "steel",
@@ -5640,8 +5970,10 @@
     "kind": "regional",
     "games": [
       "legends-z-a",
+      "scarlet",
       "shield",
-      "sword"
+      "sword",
+      "violet"
     ],
     "types": [
       "poison",
@@ -5655,8 +5987,10 @@
     "kind": "regional",
     "games": [
       "legends-z-a",
+      "scarlet",
       "shield",
-      "sword"
+      "sword",
+      "violet"
     ],
     "types": [
       "poison",
@@ -5670,8 +6004,10 @@
     "kind": "regional",
     "games": [
       "legends-z-a",
+      "scarlet",
       "shield",
-      "sword"
+      "sword",
+      "violet"
     ],
     "types": [
       "psychic"
@@ -5694,6 +6030,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -5701,6 +6038,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5713,7 +6051,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "fighting",
@@ -5738,6 +6078,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -5745,6 +6086,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5757,7 +6099,9 @@
     "name": "Blue-Plumage",
     "kind": "cosmetic",
     "games": [
-      "legends-z-a"
+      "legends-z-a",
+      "scarlet",
+      "violet"
     ]
   },
   {
@@ -5766,7 +6110,9 @@
     "name": "White-Plumage",
     "kind": "functional",
     "games": [
-      "legends-z-a"
+      "legends-z-a",
+      "scarlet",
+      "violet"
     ]
   },
   {
@@ -5775,7 +6121,9 @@
     "name": "Yellow-Plumage",
     "kind": "functional",
     "games": [
-      "legends-z-a"
+      "legends-z-a",
+      "scarlet",
+      "violet"
     ]
   },
   {
@@ -5796,11 +6144,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5825,11 +6175,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5854,11 +6206,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5928,6 +6282,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -5935,6 +6290,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -5958,11 +6314,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -6005,7 +6363,9 @@
     "name": "Droopy",
     "kind": "cosmetic",
     "games": [
-      "legends-z-a"
+      "legends-z-a",
+      "scarlet",
+      "violet"
     ]
   },
   {
@@ -6014,7 +6374,50 @@
     "name": "Stretchy",
     "kind": "cosmetic",
     "games": [
-      "legends-z-a"
+      "legends-z-a",
+      "scarlet",
+      "violet"
+    ]
+  },
+  {
+    "id": "tauros-paldea-aqua-breed",
+    "species": "tauros",
+    "name": "Paldea-Aqua-Breed",
+    "kind": "functional",
+    "games": [
+      "scarlet",
+      "violet"
+    ],
+    "types": [
+      "fighting",
+      "water"
+    ]
+  },
+  {
+    "id": "tauros-paldea-blaze-breed",
+    "species": "tauros",
+    "name": "Paldea-Blaze-Breed",
+    "kind": "functional",
+    "games": [
+      "scarlet",
+      "violet"
+    ],
+    "types": [
+      "fighting",
+      "fire"
+    ]
+  },
+  {
+    "id": "tauros-paldea-combat-breed",
+    "species": "tauros",
+    "name": "Paldea-Combat-Breed",
+    "kind": "functional",
+    "games": [
+      "scarlet",
+      "violet"
+    ],
+    "types": [
+      "fighting"
     ]
   },
   {
@@ -6063,11 +6466,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -6110,6 +6515,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -6117,6 +6523,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -6130,8 +6537,10 @@
     "kind": "functional",
     "games": [
       "legends-z-a",
+      "scarlet",
       "shield",
-      "sword"
+      "sword",
+      "violet"
     ]
   },
   {
@@ -6140,7 +6549,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "fire",
@@ -7136,6 +7547,16 @@
     ]
   },
   {
+    "id": "ursaluna-bloodmoon",
+    "species": "ursaluna",
+    "name": "Bloodmoon",
+    "kind": "functional",
+    "games": [
+      "scarlet",
+      "violet"
+    ]
+  },
+  {
     "id": "ursaring-female",
     "species": "ursaring",
     "name": "Female",
@@ -7152,11 +7573,13 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shining-pearl",
       "soulsilver",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -7196,6 +7619,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -7203,6 +7627,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -7239,6 +7664,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -7246,6 +7672,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -7309,9 +7736,11 @@
       "alpha-sapphire",
       "moon",
       "omega-ruby",
+      "scarlet",
       "sun",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "x",
       "y"
     ]
@@ -7564,7 +7993,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "electric",
@@ -7580,11 +8011,13 @@
       "legends-arceus",
       "lets-go-eevee",
       "moon",
+      "scarlet",
       "shield",
       "sun",
       "sword",
       "ultra-moon",
-      "ultra-sun"
+      "ultra-sun",
+      "violet"
     ],
     "types": [
       "ice"
@@ -7607,6 +8040,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -7614,6 +8048,7 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
@@ -7626,8 +8061,10 @@
     "name": "Galar",
     "kind": "regional",
     "games": [
+      "scarlet",
       "shield",
-      "sword"
+      "sword",
+      "violet"
     ],
     "types": [
       "poison",
@@ -7679,6 +8116,7 @@
       "omega-ruby",
       "pearl",
       "platinum",
+      "scarlet",
       "shield",
       "shining-pearl",
       "soulsilver",
@@ -7686,10 +8124,25 @@
       "sword",
       "ultra-moon",
       "ultra-sun",
+      "violet",
       "white",
       "white-2",
       "x",
       "y"
+    ]
+  },
+  {
+    "id": "wooper-paldea",
+    "species": "wooper",
+    "name": "Paldea",
+    "kind": "regional",
+    "games": [
+      "scarlet",
+      "violet"
+    ],
+    "types": [
+      "poison",
+      "ground"
     ]
   },
   {
@@ -7834,7 +8287,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "normal",
@@ -7847,7 +8302,9 @@
     "name": "Hisui",
     "kind": "regional",
     "games": [
-      "legends-arceus"
+      "legends-arceus",
+      "scarlet",
+      "violet"
     ],
     "types": [
       "normal",

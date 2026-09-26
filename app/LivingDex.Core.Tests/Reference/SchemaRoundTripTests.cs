@@ -539,4 +539,38 @@ public class SchemaRoundTripTests
             EncounterMethod.OverworldWater,
             JsonSerializer.Deserialize<EncounterMethod>("\"overworldWater\"", DatasetJson.Options));
     }
+
+    [Fact]
+    public void Paldea_counts_in_weights_and_the_two_halves_spell_that_the_same_way()
+    {
+        // Scarlet and Violet are the first games here that neither roll a percentage nor stay
+        // silent about how likely a slot is. A spawn point picks from the species that can be
+        // there, each with a weight, and the source declines to turn that into a percentage —
+        // so the app has a second field rather than a divided number, and a drift between the
+        // two spellings would lose every weight in 8,474 records without a single failure.
+        var arrokuda = Serialize<AcquisitionMethod>(new WildAcquisition
+        {
+            Game = new GameId("scarlet"),
+            Target = DexTarget.ForSpecies(new SpeciesId("arrokuda")),
+            Source = Citation,
+            Location = "South Province (Area One)",
+            SubArea = "Riverside",
+            Method = EncounterMethod.OverworldUnderwater,
+            Levels = new LevelRange(2, 8),
+            ProbabilityWeight = 40,
+        });
+
+        Assert.Equal("overworldUnderwater", arrokuda.GetProperty("method").GetString());
+        Assert.Equal(40, arrokuda.GetProperty("probabilityWeight").GetInt32());
+
+        // And a weight is not a chance: the field that holds one stays empty here, so nothing
+        // downstream can read 40 as forty per cent.
+        Assert.False(arrokuda.TryGetProperty("ratePercent", out _));
+
+        Assert.Equal(
+            EncounterMethod.OverworldUnderwater,
+            JsonSerializer.Deserialize<EncounterMethod>(
+                "\"overworldUnderwater\"",
+                DatasetJson.Options));
+    }
 }

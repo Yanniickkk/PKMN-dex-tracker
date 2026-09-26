@@ -36,6 +36,8 @@ from .models import (
     DexTarget,
     EncounterMethod,
     Form,
+    GiftAcquisition,
+    GiftKind,
     LevelRange,
     SourceCitation,
     WildAcquisition,
@@ -838,3 +840,545 @@ def _range(text: str) -> tuple[int, int] | None:
     numbers = [int(one) for one in _NUMBER.findall(text)]
 
     return (min(numbers), max(numbers)) if numbers else None
+
+
+# ---------------------------------------------------------------------------
+# Scarlet and Violet's tables, which are a third table on the same wiki.
+# ---------------------------------------------------------------------------
+
+#: The block that says a table belongs to Scarlet and Violet, and the whole reason for a third
+#: reader.
+#:
+#: **These games do not roll a rate, and they do not merely stand something in the world
+#: either**, which is what makes them their own shape. A Pokemon spawns at a point with a
+#: *weight* against the others that can spawn there - 60, or 80, or 1 - and the page says in its
+#: own legend that a higher weight generally means more likely, and then stops.
+#: :attr:`WildAcquisition.probability_weight` is where it goes, because turning it into a
+#: percentage here would be inventing a denominator nobody was ever shown.
+WEIGHT_BLOCK = "Probability Weight"
+
+#: The other block, which is five places to be rather than five ways of looking.
+#:
+#: Land, water, under the water, hovering over the ground and high in the sky - and a row is
+#: ticked in every one it is found in, so a Wingull on a beach is three ticks and three records.
+#: ``terrains`` maps each column onto a way of meeting something.
+TERRAIN_BLOCK = "Terrain"
+
+#: The Games block, which these tables put *after* the species rather than before it.
+GAMES_BLOCK = "Games"
+
+#: The two columns about group spawns, which are read and deliberately not recorded as a rate.
+#:
+#: A row that leads a group carries a percentage and the name of what the group is made of, and
+#: the two are about a cluster arriving rather than about this Pokemon being here. The species
+#: it names is the interesting half: a Pawmo in Area Zero leads a group of **Pawmi**, which is a
+#: different Pokemon from the one the row is about.
+GROUP_RATE = "Group Rate"
+GROUP_SPECIES = "Group Pokémon"
+
+#: The one plain column these tables share with every other table on the wiki.
+LEVELS = "Levels"
+
+
+@dataclass(frozen=True)
+class PaldeaSlot:
+    """One row of one Scarlet and Violet table, before it is matched against a species id."""
+
+    species: str
+    #: What the cell wrote after the species name: "Paldean Form", "Pom-Pom Style", "Male".
+    form: str
+    #: The one-cell heading above this row, which on these pages is the biome: Prairie, Forest,
+    #: Cave, Lake, Ocean, Ruins. Never a method and never a condition - it is where in this
+    #: place the Pokemon is.
+    biome: str
+    #: The halves whose letter is filled in rather than left white.
+    games: frozenset[str]
+    #: The terrain columns this row is ticked in, in the order the header writes them.
+    terrains: tuple[str, ...]
+    #: Every level band the cell names. Two where an area has a low half and a high half, which
+    #: is Kitakami's shape: "30-39, 50-53" is two bands and not a range with a hole in it.
+    levels: tuple[tuple[int, int], ...]
+    #: The weight at each time column, in the header's order, with that column's own name.
+    weights: tuple[tuple[str, int], ...]
+    #: What the group columns say, unparsed. Kept because the species named is sometimes not
+    #: the species the row is about.
+    group_rate: str
+    group_species: str
+    #: The article heading this row's table sits under, or "" when it sits under none.
+    section: str = ""
+
+
+def paldea_encounters(
+    client: PoliteClient,
+    *,
+    game_id: str,
+    version: str,
+    pages: Mapping[str, str],
+    terrains: Mapping[str, EncounterMethod],
+    species: set[str],
+    forms: Sequence[Form] = (),
+    form_names: Mapping[str, str] | None = None,
+    aliases: Mapping[str, str] | None = None,
+    refresh: bool = False,
+) -> list[WildAcquisition]:
+    """Every wild slot Scarlet and Violet's pages give, for the species given.
+
+    A third reader beside :func:`table_encounters` and :func:`legends_encounters`, and it is
+    closer to the second than the first: there is no rate, nothing is met by pushing into grass,
+    and what a row carries is ticks. What it has that neither of the others has is a **weight**
+    and a **terrain block**, and those are the two reasons it cannot be either of them.
+
+    **The weight is not a rate and is not made into one.** The page's own legend says a higher
+    probability weight generally means a Pokemon is more likely to spawn "relative to others
+    that can spawn there", and stops there. Making that a percentage would need a denominator
+    that depends on the biome, the terrain and the hour at once, and would hand a player a
+    number no game ever showed them. So ``rate_percent`` stays empty, and the weight is
+    recorded as itself.
+
+    **The terrain block is five places, and a row ticked in three of them is three records.**
+    Land, water surface, underwater, overland and sky: a Wingull on a beach walks on the sand,
+    hovers over it and circles above it, and an Arrokuda is only ever under the water. Mapping
+    those onto one method would lose the one thing a player needs, which is where to look.
+    ``terrains`` maps each column name onto a way of meeting something, and a column missing
+    from it is skipped, which is the guard the other two readers have against a heading nobody
+    has read.
+
+    **The weight block is the hours**, in the shape Brilliant Diamond's reader learned to read
+    off the header instead of assuming: one cell spanning all four is a Pokemon that is there
+    whatever the time, and four numbers is one that is not. A zero is an hour it is absent for,
+    and two different non-zero numbers are two records - a Hoothoot in the Kitakami Wilds is
+    weight 70 in the morning and the day and 400 in the evening and at night, which is one
+    Pokemon said twice rather than one record that has to average them.
+
+    ``version`` is the letter this half fills its Games column with - ``S`` or ``V`` - and a row
+    whose letter is left white is not on this cartridge at all.
+    """
+    names = Normaliser(
+        species_ids=species,
+        form_ids={one.id for one in forms},
+        aliases=dict(aliases or {}),
+    )
+    spelled = form_names or {}
+    found: list[WildAcquisition] = []
+
+    for title, location in pages.items():
+        url = f"{BULBAPEDIA}/{title}"
+        page = HTMLParser(client.get_text(url, refresh=refresh))
+        citation = bulbapedia(title, retrieved_on=client.retrieved_on(url))
+        slots = _paldea_slots(page, title=title)
+
+        if not slots:
+            log.warning("%s: no Scarlet and Violet rows on %s", game_id, url)
+            continue
+
+        for slot in slots:
+            if version not in slot.games:
+                continue
+
+            if slot.form and slot.form not in spelled:
+                log.warning(
+                    "%s: %s is written %r on %s and nothing says what that is",
+                    game_id,
+                    slot.species,
+                    slot.form,
+                    url,
+                )
+
+            target = names.target(slot.species, spelled.get(slot.form))
+            if target is None:
+                log.warning("%s: no species matches %r on %s", game_id, slot.species, url)
+                continue
+
+            if not slot.levels:
+                log.warning("%s: %s has no levels on %s", game_id, slot.species, url)
+                continue
+
+            # Deduplicated rather than one per tick, because two of the five columns are one
+            # place: a row ticked in Overland and Sky is a Pikipek that circles at two heights
+            # and is caught the same way at both, and two identical records would say so twice.
+            here = dict.fromkeys(
+                method
+                for terrain in slot.terrains
+                if (method := terrains.get(terrain)) is not None
+            )
+
+            for method in here:
+                for when, weight in _hours(slot.weights):
+                    for lowest, highest in slot.levels:
+                        found.append(
+                            WildAcquisition(
+                                game=game_id,
+                                target=target,
+                                location=location,
+                                sub_area=_paldea_sub_area(slot),
+                                method=method,
+                                levels=LevelRange(minimum=lowest, maximum=highest),
+                                probability_weight=weight,
+                                time_of_day=when,
+                                source=citation,
+                            )
+                        )
+
+    return found
+
+
+def _paldea_sub_area(slot: PaldeaSlot) -> str | None:
+    """Where in this place the row is, which these pages say in two halves.
+
+    The biome is a one-cell heading inside the table - Prairie, Forest, Cave, Lake - and the
+    part of the place is an article heading above it, where a page has parts at all. The
+    Terarium's Canyon Biome has five of them and South Province (Area One) has none.
+    """
+    return ", ".join(one for one in (slot.section, slot.biome) if one) or None
+
+
+def _hours(weights: Sequence[tuple[str, int]]) -> list[tuple[str | None, int]]:
+    """The hours this row is there for, grouped by the weight it has in them.
+
+    One cell spanning the whole block is a Pokemon that is there at every hour with one weight,
+    and becomes one record with nothing said about the time - and four numbers that happen to
+    be equal say the same thing and are read the same way. A zero is an hour it is not there
+    for, and is dropped rather than recorded as a slot with no chance in it.
+    """
+    here = [(name, weight) for name, weight in weights if weight > 0]
+    if not here:
+        return []
+
+    if len({weight for _, weight in here}) == 1 and len(here) == len(weights):
+        return [(None, here[0][1])]
+
+    grouped: dict[int, list[str]] = {}
+    for name, weight in here:
+        grouped.setdefault(weight, []).append(name)
+
+    return [(_listed(tuple(when), len(weights)), weight) for weight, when in grouped.items()]
+
+
+def _paldea_slots(page: HTMLParser, *, title: str) -> list[PaldeaSlot]:
+    """Every Scarlet and Violet row on one page, each carrying the heading it sits under.
+
+    Walked in document order for the reason :func:`_legends_slots` gives, and it matters more
+    here: the Terarium's biome pages carry five tables under five headings, and a selector that
+    handed back all the headings and then all the tables would put every row in the last one.
+    """
+    body = page.css_first("#mw-content-text")
+    if body is None:
+        raise EncounterTableError(f"{title} has no article body")
+
+    found: list[PaldeaSlot] = []
+    section = ""
+
+    for node in body.traverse(include_text=False):
+        if node.tag in ("h2", "h3", "h4"):
+            heading = _text(node)
+            # "Pokemon" is the heading the tables live under rather than a part of anywhere,
+            # and repeating it in every sub-area would be saying nothing twice.
+            section = "" if heading in LEGENDS_FIRST_COLUMN else heading
+        elif node.tag == "table":
+            found.extend(_paldea_rows(node, section=section))
+
+    return found
+
+
+def _paldea_rows(table: Node, *, section: str = "") -> list[PaldeaSlot]:
+    """One table's rows, when it is a Scarlet and Violet table, and nothing when it is not."""
+    rows = table.css("tr")
+    if len(rows) < 3:
+        return []
+
+    columns = _paldea_columns(rows[0], rows[1])
+    if columns is None:
+        return []
+
+    found: list[PaldeaSlot] = []
+    biome = ""
+
+    for row in rows[2:]:
+        cells = [cell for cell in row.iter() if cell.tag in ("td", "th")]
+
+        if len(cells) == 1:
+            # A one-cell row is the biome - or the legend at the foot of the table, which is a
+            # paragraph wearing a heading's clothes.
+            heading = _text(cells[0])
+            if LEGEND not in heading:
+                biome = heading
+            continue
+
+        made = _paldea_slot(cells, biome=biome, names=columns)
+        if made is not None:
+            found.append(replace(made, section=section))
+
+    return found
+
+
+def _paldea_columns(header: Node, icons: Node) -> list[tuple[str, str]] | None:
+    """What each column of this table is, read off its two header rows.
+
+    The header is what says a table is one of these, which is the rule all three readers on
+    this wiki now follow. A Scarlet and Violet table is the one with a Probability Weight block
+    in it: nothing else on the wiki writes those two words in a header, and the older games
+    these pages share space with have neither block.
+
+    Both blocks are named by icons with no words, and the order they are written in is the
+    order the columns appear, so they are read rather than counted: the terrain block is five
+    wide on every page today and the weight block four, and neither number is written down
+    here. That is Brilliant Diamond's lesson, which cost a reader two constants.
+    """
+    top = [cell for cell in header.iter() if cell.tag in ("td", "th")]
+    if not top or _text(top[0]) not in LEGENDS_FIRST_COLUMN:
+        return None
+
+    blocks = [(_text(cell), int(cell.attributes.get("colspan", "1"))) for cell in top]
+    if not any(label == WEIGHT_BLOCK and span > 1 for label, span in blocks):
+        return None
+
+    named = iter(
+        img.attributes.get("alt", "")
+        for cell in icons.iter()
+        if cell.tag in ("td", "th")
+        for img in cell.css("img")
+    )
+
+    columns: list[tuple[str, str]] = []
+    for label, span in blocks:
+        if label == GAMES_BLOCK:
+            columns.extend(("", "games") for _ in range(span))
+        elif label in (TERRAIN_BLOCK, WEIGHT_BLOCK):
+            kind = "terrain" if label == TERRAIN_BLOCK else "weight"
+            columns.extend((next(named, label), kind) for _ in range(span))
+        else:
+            columns.extend((label, "column") for _ in range(span))
+
+    return columns
+
+
+def _paldea_slot(
+    cells: Sequence[Node],
+    *,
+    biome: str,
+    names: Sequence[tuple[str, str]],
+) -> PaldeaSlot | None:
+    """One row, expanded to the table's full width and read against the column names.
+
+    The spans are expanded for the reason :func:`_legends_slot` gives, and here one of them
+    carries meaning rather than tidiness: a weight cell spanning the whole block is the page
+    saying this Pokemon has the same weight at every hour of the day.
+    """
+    spread: list[Node] = []
+    for cell in cells:
+        span = int(cell.attributes.get("colspan", "1"))
+        spread.extend([cell] * max(span, 1))
+
+    if len(spread) < len(names):
+        return None
+
+    spread = spread[: len(names)]
+    plain = [_text(cell) for cell in spread]
+
+    species = _species_name(spread[0])
+    if not species:
+        return None
+
+    labelled = list(zip(names, spread, plain, strict=True))
+
+    def column(wanted: str) -> str:
+        return next((text for (label, _), _, text in labelled if label == wanted), "")
+
+    return PaldeaSlot(
+        species=species,
+        form=_form_phrase(plain[0], species),
+        biome=biome,
+        games=frozenset(
+            text for (_, kind), cell, text in labelled if kind == "games" and _present(cell)
+        ),
+        terrains=tuple(
+            label for (label, kind), _, text in labelled if kind == "terrain" and TICK in text
+        ),
+        levels=_bands(column(LEVELS)),
+        weights=tuple(
+            (label, int(text) if text.isdigit() else 0)
+            for (label, kind), _, text in labelled
+            if kind == "weight"
+        ),
+        group_rate=column(GROUP_RATE),
+        group_species=column(GROUP_SPECIES),
+    )
+
+
+def _bands(text: str) -> tuple[tuple[int, int], ...]:
+    """Every level band a cell names, which is one on most pages and two on some.
+
+    "5-8" is one band and "30-39, 50-53" is two: an area with a low half and a high half, which
+    Kitakami writes a good deal and Paldea hardly at all. Two records rather than 30-53, which
+    would send a player looking for a level 45 one that is not there.
+    """
+    return tuple(band for part in text.split(",") if (band := _range(part)) is not None)
+
+
+#: The two sections a Scarlet and Violet page keeps its one-of-a-kind Pokemon in.
+#:
+#: Read together because they are one table in two places: across all fifty pages there are 29
+#: *Fixed encounters* tables and a single *Special encounters* one, and the header is identical.
+FIXED_SECTIONS = ("Fixed encounters", "Special encounters")
+
+#: What the Rate column of one of those tables says when the Pokemon comes back.
+#:
+#: 295 rows of 302 say this and seven say "Only One". That is the whole difference between a
+#: Gimmighoul on a watchtower, which a player can farm, and a Titan, which stands where it was
+#: beaten and is there once.
+RESPAWNS = "respawns"
+
+#: What the Location column says when it has nothing to add, which is most of the time.
+#:
+#: 278 of the 302 rows. The other 24 are Gimmighoul's watchtowers and the Titans' own sentence,
+#: and those are worth carrying; "Fixed" copied into a requirement would be the page's own
+#: scaffolding wearing a player's sentence.
+NO_LOCATION = "fixed"
+
+#: What a species cell adds on these tables and nowhere else.
+#:
+#: A Titan's row writes "Great TuskFormer Titan" and "TatsugiriCurly Form Former Titan" - a
+#: form's name and then a badge - so the badge comes off before the rest is read as a form,
+#: and it is worth a sentence on the record instead of being thrown away.
+FORMER_TITAN = "Former Titan"
+
+
+def paldea_fixed(
+    client: PoliteClient,
+    *,
+    game_id: str,
+    version: str,
+    pages: Mapping[str, str],
+    species: set[str],
+    forms: Sequence[Form] = (),
+    form_names: Mapping[str, str] | None = None,
+    aliases: Mapping[str, str] | None = None,
+    refresh: bool = False,
+) -> list[GiftAcquisition]:
+    """Every Pokemon standing in one spot on a Scarlet and Violet page, as a static.
+
+    The other half of these pages, and the half the survey before this generation predicted
+    would need nothing new: ``Pokemon | Games | Location | Levels | Rate``, which is the shape
+    every location page in the dataset has had since Hoenn. What makes it a reader of its own
+    rather than a call to :func:`table_encounters` is the Location column - there it holds a
+    *method*, the word "Grass" or "Surfing" that says how a player meets the row, and here it
+    holds a place, or the word "Fixed", which is the page saying nothing.
+
+    **What it holds is a guarantee.** A weighted row in the table above says a Pokemon is in
+    the pool at a spawn point; one of these says it is standing there. 295 of the 302 rows come
+    back when they are caught and seven do not, and both are one Pokemon in one place, so both
+    are :attr:`GiftKind.STATIC_ENCOUNTER` and the Rate column becomes a sentence rather than a
+    second kind of record.
+
+    Ten species are here and in no wild table at all: the Titans that stay where they were
+    beaten, Gimmighoul on its watchtowers, and the handful of high-level spawns that Area Zero
+    and the late provinces stand rather than roll.
+    """
+    names = Normaliser(
+        species_ids=species,
+        form_ids={one.id for one in forms},
+        aliases=dict(aliases or {}),
+    )
+    spelled = form_names or {}
+    found: list[GiftAcquisition] = []
+
+    for title, location in pages.items():
+        url = f"{BULBAPEDIA}/{title}"
+        page = HTMLParser(client.get_text(url, refresh=refresh))
+        citation = bulbapedia(title, retrieved_on=client.retrieved_on(url))
+
+        for cells in _fixed_rows(page, title=title):
+            plain = [_text(cell) for cell in cells]
+            here, there = cells[1], cells[2]
+            letters = {
+                text for cell, text in ((here, plain[1]), (there, plain[2])) if _present(cell)
+            }
+            if version not in letters:
+                continue
+
+            species_name = _species_name(cells[0])
+            if not species_name:
+                continue
+
+            phrase = _form_phrase(plain[0], species_name)
+            titan = FORMER_TITAN in phrase
+            phrase = " ".join(phrase.replace(FORMER_TITAN, " ").split())
+
+            if phrase and phrase not in spelled:
+                log.warning(
+                    "%s: %s is written %r on %s and nothing says what that is",
+                    game_id,
+                    species_name,
+                    phrase,
+                    url,
+                )
+
+            target = names.target(species_name, spelled.get(phrase))
+            if target is None:
+                log.warning("%s: no species matches %r on %s", game_id, species_name, url)
+                continue
+
+            levels = _range(plain[4])
+
+            found.append(
+                GiftAcquisition(
+                    game=game_id,
+                    target=target,
+                    gift_kind=GiftKind.STATIC_ENCOUNTER,
+                    location=location,
+                    level=levels[0] if levels else None,
+                    requirement=_fixed_requirement(plain[3], plain[5], titan=titan),
+                    source=citation,
+                )
+            )
+
+    return found
+
+
+def _fixed_requirement(where: str, rate: str, *, titan: bool) -> str | None:
+    """What this row asks or offers that its place and its level do not say.
+
+    Three things, and a row usually has one: where in the place it stands, when the page
+    bothers to say; whether it comes back, which 295 of 302 rows do and is the reason a player
+    can stop worrying about it; and whether it is a Titan standing where it was beaten, which
+    is a badge on the species cell rather than a column.
+    """
+    said = []
+    if where and where.lower() != NO_LOCATION:
+        said.append(where)
+    if titan and "Titan" not in where:
+        # Said once. The Titans' rows write the badge on the species cell *and* spell the same
+        # thing out in the Location column, and a record that carries both reads like a stutter.
+        said.append("The Titan, once it has been beaten")
+
+    said.append(
+        "respawns after it is caught" if rate.lower() == RESPAWNS else "there is only one"
+    )
+
+    return "; ".join(said) or None
+
+
+def _fixed_rows(page: HTMLParser, *, title: str) -> list[list[Node]]:
+    """Every row of every fixed-encounter table on one page, expanded to six cells.
+
+    The Games block spans six columns and the Rate block three, which is the wiki writing a
+    table wide enough to sit beside the one above it; the cells themselves are one per column,
+    so nothing has to be expanded and a row is six cells or it is not one of these.
+    """
+    body = page.css_first("#mw-content-text")
+    if body is None:
+        raise EncounterTableError(f"{title} has no article body")
+
+    found: list[list[Node]] = []
+    inside = False
+
+    for node in body.traverse(include_text=False):
+        if node.tag == "h2":
+            inside = _text(node) in FIXED_SECTIONS
+        elif node.tag == "table" and inside:
+            for row in node.css("tr")[1:]:
+                cells = [cell for cell in row.iter() if cell.tag in ("td", "th")]
+                if len(cells) == 6:
+                    found.append(cells)
+
+    return found

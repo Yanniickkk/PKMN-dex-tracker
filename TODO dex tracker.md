@@ -41,6 +41,10 @@ Target: **Platinum** as main game, **Emerald** linked.
 
 ## Phase 2 — Games, one at a time
 
+_**Done: forty entities, and every one of them has all nine steps ticked.** Thirty-eight games
+and two nodes; 143 routes became 148 when the last pair arrived, and every route any entry
+declares has both of its ends in the dataset. What is left of this project is Phase 3._
+
 ### The per-game checklist
 
 Every game below repeats these 9 steps:
@@ -287,21 +291,10 @@ assuming PokeAPI has every way a Pokemon can change - it stopped having them at 
 
 ### Generation 9
 
-_Legends: Z-A is done and the Paldea pair is not. The two halves of this generation have nothing
-in common but Pokemon HOME: one is Lumiose City on the Switch three generations after X and Y,
-and the other is the three-list shape Galar invented. Whoever writes Scarlet should read
-`legends_z_a.EVOLUTION_GROUPS` before assuming an expansion needs a module of its own, and the
-four rules step 5 left alone - Feebas's Beauty condition, Mr. Mime's literal "in Galar", and
-Slowpoke's two Galarica items - because Scarlet and Violet meet all four._
+_Done: all three, and with them **Phase 2**. Scarlet and Violet are Paldea and Legends: Z-A is
+Lumiose City, and the two halves of this generation have nothing in common but Pokemon HOME -
+so there is no `gen9.py` and now there never will be._
 
-- [ ] **Scarlet** (`scarlet`, gen 9, pair partner: Violet) — base + Teal Mask + Indigo Disk
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
-- [ ] **Violet** (`violet`, gen 9, pair partner: Scarlet) — base + Teal Mask + Indigo Disk
-  - [ ] 1 Entity + edges  - [ ] 2 Dex list  - [ ] 3 Wild  - [ ] 4 Gifts & statics
-  - [ ] 5 Trades & evolutions  - [ ] 6 Sprites  - [ ] 7 Events
-  - [ ] 8 Alternate forms  - [ ] 9 Validate + smoke test
 ### Transfer-only nodes
 
 _Both are built. Nothing is held back: for the first time since this dataset held one game,

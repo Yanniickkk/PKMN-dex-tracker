@@ -269,9 +269,50 @@ HOME_FORM_CODES: dict[str, str] = {
     "Stretchy": "S",
     "Roaming": "R",
     # Vivillon's patterns are three letters of the pattern's own name. Two of the nineteen are
-    # in this dataset's Lumiose list and the rule would spell all of them.
+    # in this dataset's Lumiose list, one is in Paldea's, and the rule would spell all of them.
     "Garden": "Gar",
     "Marine": "Mar",
+    "Fancy": "Fan",
+    # --- and Paldea's, which is the second game to need this table and added twenty to it ---
+    #
+    # **Paldean Tauros is where guessing would have cost most, and it is the Rotom lesson a
+    # second time.** The three breeds are PA, PB and PC, and they are *alphabetical by the
+    # breed's name* rather than in the order the game lists them - so PA is the Aqua Breed and
+    # PC the Combat one, where reading the game's own order would have put the Combat bull on
+    # the Aqua tile and back again. Every code below was read off the file's own description
+    # page, which is the only reason that was caught.
+    "Paldea": "P",
+    "Paldea-Aqua-Breed": "PA",
+    "Paldea-Blaze-Breed": "PB",
+    "Paldea-Combat-Breed": "PC",
+    # Basculin's stripes, the four seasons, and the two sea slugs.
+    "Blue-Striped": "B",
+    "White-Striped": "W",
+    "Autumn": "A",
+    "Summer": "S",
+    "Winter": "W",
+    "East Sea": "E",
+    # Lycanroc's two, of which the midnight one needs two letters because D is already dusk.
+    "Dusk": "D",
+    "Midnight": "Mn",
+    # Oricorio's three styles, all two letters.
+    "Pau": "Pa",
+    "Pom-Pom": "Po",
+    "Sensu": "Se",
+    # Minior's cores. Blue, Orange and Yellow are already above as the Flabebe line's flowers
+    # and are the same letter, which is why this table is keyed by a form's name and not by a
+    # species: a colour is a colour whoever is wearing it.
+    "Red": "R",
+    "Green": "G",
+    "Indigo": "I",
+    "Violet": "V",
+    # Ogerpon's three masks, and Generation 9's own three.
+    "Cornerstone-Mask": "C",
+    "Hearthflame-Mask": "H",
+    "Wellspring-Mask": "W",
+    "Bloodmoon": "B",
+    "Family-Of-Three": "T",
+    "Three-Segment": "Th",
 }
 
 #: The one form of Legends: Z-A's ninety that this set does not draw.
@@ -285,6 +326,19 @@ HOME_FORM_CODES: dict[str, str] = {
 #: What is really absent is Torchic's female, whose ``HOME0255_f.png`` does not answer. It is
 #: the wiki being short of an upload rather than the game being short of a Torchic, so that one
 #: form falls back to the shared set's picture - the right Pokemon drawn another way.
+#:
+#: **Paldea added three more and none of them is in this tuple**, because a form with no code
+#: in :data:`HOME_FORM_CODES` is never asked for and so can never be remembered as missing.
+#: They are here in words because the reason differs each time and each one was read:
+#:
+#: * An **Own Tempo Rockruff** has no file because HOME draws it as an ordinary Rockruff, which
+#:   is what it looks like. Nothing is missing.
+#: * An **Antique Sinistea** and an **Antique Polteageist** have a file each - and it is the
+#:   *back* of them, and its own description page says the render exists only in the mobile
+#:   app. A back view on a tile would be worse than a fallback, so neither gets a code. This is
+#:   the sharpest thing reading a description page has caught since Rotom's oven.
+#:
+#: All four fall back to the shared set, which is the right Pokemon in another style.
 HOME_HAS_NO_PICTURE = ("torchic-female",)
 
 

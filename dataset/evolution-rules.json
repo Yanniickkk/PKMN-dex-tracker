@@ -431,7 +431,7 @@
     "conditions": [
       {
         "condition": "other",
-        "description": "three defeated bisharp"
+        "description": "after defeating three Bisharp that lead a pack"
       }
     ]
   },
@@ -535,7 +535,12 @@
       "species": "brambleghast"
     },
     "trigger": "levelUp",
-    "conditions": []
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after walking 1,000 steps with it out of its ball"
+      }
+    ]
   },
   {
     "id": "brionne-to-primarina",
@@ -2028,7 +2033,7 @@
     ]
   },
   {
-    "id": "dunsparce-to-dudunsparce-scarlet-violet",
+    "id": "dunsparce-to-dudunsparce",
     "from": {
       "species": "dunsparce"
     },
@@ -2048,12 +2053,13 @@
     ]
   },
   {
-    "id": "dunsparce-to-dudunsparce-scarlet-violet-2",
+    "id": "dunsparce-to-dudunsparce-three-segment",
     "from": {
       "species": "dunsparce"
     },
     "to": {
-      "species": "dudunsparce"
+      "species": "dudunsparce",
+      "form": "dudunsparce-three-segment"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -3344,7 +3350,7 @@
     "conditions": [
       {
         "condition": "other",
-        "description": "gimmighoul coins"
+        "description": "by collecting enough Gimmighoul Coins"
       }
     ]
   },
@@ -4498,7 +4504,7 @@
     ]
   },
   {
-    "id": "lechonk-to-oinkologne-scarlet-violet",
+    "id": "lechonk-to-oinkologne",
     "from": {
       "species": "lechonk"
     },
@@ -4518,12 +4524,13 @@
     ]
   },
   {
-    "id": "lechonk-to-oinkologne-scarlet-violet-2",
+    "id": "lechonk-to-oinkologne-female",
     "from": {
       "species": "lechonk"
     },
     "to": {
-      "species": "oinkologne"
+      "species": "oinkologne",
+      "form": "oinkologne-female"
     },
     "trigger": "levelUp",
     "conditions": [
@@ -6015,7 +6022,12 @@
       "species": "pawmot"
     },
     "trigger": "levelUp",
-    "conditions": []
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after walking 1,000 steps with it out of its ball"
+      }
+    ]
   },
   {
     "id": "pawniard-to-bisharp",
@@ -6516,7 +6528,11 @@
     "conditions": [
       {
         "condition": "other",
-        "description": "use move"
+        "description": "after using one of its own moves"
+      },
+      {
+        "condition": "other",
+        "description": "Rage Fist, 20 times"
       }
     ]
   },
@@ -6733,6 +6749,10 @@
       {
         "condition": "other",
         "description": "after using a strong style move enough times"
+      },
+      {
+        "condition": "other",
+        "description": "Barb Barrage, 20 times"
       }
     ]
   },
@@ -6749,7 +6769,11 @@
     "conditions": [
       {
         "condition": "other",
-        "description": "use move"
+        "description": "after using one of its own moves"
+      },
+      {
+        "condition": "other",
+        "description": "Barb Barrage, 20 times"
       }
     ]
   },
@@ -6849,7 +6873,12 @@
       "species": "rabsca"
     },
     "trigger": "levelUp",
-    "conditions": []
+    "conditions": [
+      {
+        "condition": "other",
+        "description": "after walking 1,000 steps with it out of its ball"
+      }
+    ]
   },
   {
     "id": "remoraid-to-octillery",
@@ -8241,6 +8270,10 @@
       {
         "condition": "other",
         "description": "after using an agile style move enough times"
+      },
+      {
+        "condition": "other",
+        "description": "Psyshield Bash, 20 times"
       }
     ]
   },
@@ -8469,7 +8502,7 @@
     ]
   },
   {
-    "id": "tandemaus-to-maushold-scarlet-violet",
+    "id": "tandemaus-to-maushold",
     "from": {
       "species": "tandemaus"
     },
@@ -8480,7 +8513,7 @@
     "conditions": [
       {
         "condition": "other",
-        "description": "in battle level up"
+        "description": "by levelling up during a battle"
       },
       {
         "condition": "minimumLevel",
@@ -8493,18 +8526,19 @@
     ]
   },
   {
-    "id": "tandemaus-to-maushold-scarlet-violet-2",
+    "id": "tandemaus-to-maushold-family-of-three",
     "from": {
       "species": "tandemaus"
     },
     "to": {
-      "species": "maushold"
+      "species": "maushold",
+      "form": "maushold-family-of-three"
     },
     "trigger": "other",
     "conditions": [
       {
         "condition": "other",
-        "description": "in battle level up"
+        "description": "by levelling up during a battle"
       },
       {
         "condition": "minimumLevel",
@@ -9440,7 +9474,8 @@
   {
     "id": "wooper-to-clodsire",
     "from": {
-      "species": "wooper"
+      "species": "wooper",
+      "form": "wooper-paldea"
     },
     "to": {
       "species": "clodsire"

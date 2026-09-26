@@ -13,12 +13,14 @@ import pytest
 
 from livingdex_pipeline.archives import HOME_SET
 from livingdex_pipeline.build import default_registry
+from livingdex_pipeline.evolutions import OTHER_TRIGGERS
 from livingdex_pipeline.forms import (
     BDSP_FORMS,
     FORMS_NAMED_BY_THE_GAME,
     GALAR_FORMS,
     HISUI_FORMS,
     NAMED_BY_HAND,
+    PALDEA_FORMS,
     ZA_FORMS,
 )
 from livingdex_pipeline.gamedefs import (
@@ -54,11 +56,13 @@ from livingdex_pipeline.gamedefs import (
     lets_go_pikachu,
     moon,
     omega_ruby,
+    paldea,
     pearl,
     platinum,
     red,
     ruby,
     sapphire,
+    scarlet,
     shield,
     shining_pearl,
     silver,
@@ -67,6 +71,7 @@ from livingdex_pipeline.gamedefs import (
     sun,
     sword,
     unova,
+    violet,
     white,
     white2,
     x,
@@ -139,11 +144,14 @@ VERSION_GROUP_ORDER = {
     "the-crown-tundra": 20,
     "brilliant-diamond-and-shining-pearl": 21,
     "legends-arceus": 22,
-    # Generation 9, which this dataset reaches at Legends: Z-A - and its expansion, which the
-    # source files as a version group of its own the way it does Galar's two.
+    # Generation 9, whose first pair spans three groups the way Galar's does - the base game
+    # and the two halves of The Hidden Treasure of Area Zero - and whose last game has one
+    # expansion of its own.
     "scarlet-violet": 23,
-    "legends-za": 24,
-    "mega-dimension": 25,
+    "the-teal-mask": 24,
+    "the-indigo-disk": 25,
+    "legends-za": 26,
+    "mega-dimension": 27,
 }
 
 
@@ -1994,6 +2002,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "red",
         "ruby",
         "sapphire",
+        "scarlet",
         "shield",
         "shining-pearl",
         "silver",
@@ -2002,6 +2011,7 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
         "sword",
         "ultra-moon",
         "ultra-sun",
+        "violet",
         "white",
         "white-2",
         "x",
@@ -2055,15 +2065,20 @@ def test_the_real_registry_emits_only_the_routes_both_of_whose_ends_exist() -> N
     # itself is one a graph of games has nowhere to draw. So a deposit and a withdrawal, and
     # nothing else at all.
     #
+    # And five for Scarlet and Violet, which is Galar's five a third time and for the third
+    # identical reason: the cable between the halves, a deposit into HOME from each and an
+    # ordinary withdrawal back out. A generation on, and the shape of a Switch pair's routes has
+    # not moved at all.
+    #
     # And one for Legends: Z-A, which takes that record and halves it. The withdrawal is there
     # and the deposit is not: nothing transferred into that game, and nothing obtained in it,
     # goes back to a previous game. It is the first entry in the dataset with a way in and no
     # way out.
     assert (
         len(routes)
-        == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5 + 5 + 5 + 2 + 1
+        == 3 + 3 + 9 + 10 + 10 + 25 + 6 + 20 + 6 + 10 + 4 + 4 + 1 + 6 + 8 + 5 + 5 + 5 + 2 + 5 + 1
     )
-    assert len(routes) == 143
+    assert len(routes) == 148
     assert routes == sorted(routes)
     assert ("blue", "red") in routes
     assert ("red", "yellow") in routes
@@ -4016,7 +4031,7 @@ def test_the_way_out_of_bank_is_lit_now_that_its_other_end_exists() -> None:
     assert out.direction is TransferDirection.ONE_WAY
 
     # One way, and the reason the 3DS era ends here: a Pokemon that has gone into HOME has no
-    # route back to anything with a cartridge slot. What leaves HOME now goes to eight Switch
+    # route back to anything with a cartridge slot. What leaves HOME now goes to ten Switch
     # games and takes nothing away from that sentence.
     leaving_home = [
         edge for edge in default_registry().edges if edge.from_ == home.NODE
@@ -4028,12 +4043,14 @@ def test_the_way_out_of_bank_is_lit_now_that_its_other_end_exists() -> None:
         "legends-z-a",
         "lets-go-eevee",
         "lets-go-pikachu",
+        "scarlet",
         "shield",
         "shining-pearl",
         "sword",
+        "violet",
     ]
 
-    # Seven of the eight also declare the way back in. The eighth is Legends: Z-A, which is why
+    # Nine of the ten also declare the way back in. The tenth is Legends: Z-A, which is why
     # that sentence about cartridge slots now has a second half: there is a game on this console
     # that nothing comes back out of either.
     into_home = {edge.from_ for edge in default_registry().edges if edge.to == home.NODE}
@@ -5961,8 +5978,10 @@ def test_galar_names_its_own_forms_because_nothing_else_can() -> None:
         "legends-z-a",
         "lets-go-eevee",
         "lets-go-pikachu",
+        "scarlet",
         "shield",
         "sword",
+        "violet",
     )
     # And a form that is only one pair's keeps only that pair.
     assert NAMED_BY_HAND["pikachu-starter"] == ("lets-go-pikachu",)
@@ -7244,3 +7263,704 @@ def test_nothing_in_this_game_is_changed_into() -> None:
     # here is changed into" is a claim about the game worth being able to point at.
     assert legends_z_a.FORM_CHANGES == {}
     assert legends_arceus.FORM_CHANGES
+
+
+def test_the_pair_that_opens_generation_9_is_paldea_and_two_places_it_is_not() -> None:
+    # No api worth the name: at step 1 a build of either half asks the source nothing at all.
+    scarlet_game = scarlet.entity()
+    violet_game = violet.entity()
+
+    assert scarlet_game.generation == 9
+    assert scarlet_game.released == date(2022, 11, 18)
+    assert violet_game.released == scarlet_game.released
+
+    # One region for a game played in three territories. Kitakami is a land of its own and
+    # Blueberry Academy is in Unova, which this dataset already holds for Black and White - and
+    # the article calls these the first core series games since HeartGold and SoulSilver to
+    # have more than one playable region. Johto wrote the rule for that case: Kanto is a second
+    # half of the map rather than a second region, and a HeartGold cartridge is a Johto game.
+    assert scarlet_game.region == "Paldea"
+    assert scarlet_game.region == violet_game.region
+    assert heartgold.build(context("heartgold")).game.region == johto.REGION
+    assert johto.REGION != kanto.REGION
+
+    # And the source agrees rather than being overruled: all three of this pair's version
+    # groups carry paldea as their only region, the expansions included.
+    assert paldea.REGION.lower() == "paldea"
+
+    # Two halves that know about each other, which is what a pair is.
+    assert scarlet_game.pair_partner == "violet"
+    assert violet_game.pair_partner == "scarlet"
+    assert paldea.PAIR == ("scarlet", "violet")
+
+
+def test_the_source_spells_this_pair_exactly_as_the_dataset_does() -> None:
+    # The opposite of the surprise Legends: Z-A brought, and worth asserting rather than
+    # assuming after it: that game is legends-z-a here and legends-za there, and the check that
+    # caught it is only useful if the ordinary case is pinned too.
+    assert scarlet.POKEAPI_VERSION == scarlet.GAME_ID == "scarlet"
+    assert violet.POKEAPI_VERSION == violet.GAME_ID == "violet"
+    assert paldea.VERSION_GROUP == "scarlet-violet"
+
+
+def test_each_half_is_three_versions_to_the_source_the_way_galars_halves_are() -> None:
+    # The source files The Hidden Treasure of Area Zero as two version groups of its own - one
+    # at order 28 and one at order 29 - each with a version per half, exactly as it files the
+    # Isle of Armor and the Crown Tundra. So a Scarlet player's grass is spread over three
+    # names, and reading only the first would lose Kitakami and the Terarium silently.
+    assert paldea.VERSIONS["scarlet"] == (
+        "scarlet",
+        "the-teal-mask-scarlet",
+        "the-indigo-disk-scarlet",
+    )
+    assert paldea.VERSIONS["violet"] == (
+        "violet",
+        "the-teal-mask-violet",
+        "the-indigo-disk-violet",
+    )
+
+    # Three each, which is the count Galar's halves have and no game before them had.
+    assert {len(one) for one in paldea.VERSIONS.values()} == {3}
+    assert {len(one) for one in galar.VERSIONS.values()} == {3}
+
+    # And the first name in each is the plain one the game file names.
+    assert paldea.VERSIONS[scarlet.GAME_ID][0] == scarlet.POKEAPI_VERSION
+    assert paldea.VERSIONS[violet.GAME_ID][0] == violet.POKEAPI_VERSION
+
+
+def test_paldea_holds_three_lists_and_a_leftover_beside_them() -> None:
+    scarlet_game = scarlet.entity()
+
+    # Galar's answer a fourth time: no National Pokedex, so the entity carries no number and the
+    # dex lists are the whole claim.
+    assert scarlet_game.national_dex_through is None
+    assert scarlet_game.dex_source is DexSource.GAME_DEX
+    assert paldea.NATIONAL_DEX_THROUGH is None
+
+    # Three lists, in the order a player meets them, each with the name its entries are filed
+    # under - because all three start at #001 and a number that does not name its list is not a
+    # fact about anything.
+    assert paldea.DEXES == (
+        ("paldea", "Paldea"),
+        ("kitakami", "Kitakami"),
+        ("blueberry", "Blueberry"),
+    )
+    assert paldea.DEX_TOTAL == 400 + 200 + 243 == 843
+
+    # Entries, not species. Galar's three overlap heavily and Legends: Z-A's two not at all, so
+    # which of those this pair is, is step 2's to count rather than step 1's to guess.
+    assert galar.DEX_TOTAL == 821
+    assert legends_z_a.DEX_TOTAL == 364
+
+    # And there is a leftover, which is Galar's shape rather than Hisui's or Lumiose's: the
+    # article says the three Pokedexes and "a select few" foreign Pokemon, and those words link
+    # to a section of the Paldea list called "Compatible Pokemon not in any Scarlet and Violet
+    # Pokedex". How many it holds is step 2's; that it exists is step 1's.
+    assert galar.FOREIGN_TO_EVERY_DEX == 80
+    assert legends_arceus.HELD_WITHOUT_BEING_LISTED
+    assert not hasattr(legends_z_a, "HELD_WITHOUT_BEING_LISTED")
+
+
+def test_this_pair_brings_galars_five_routes_a_third_time() -> None:
+    routes = [(one.from_, one.to) for one in scarlet.edges() + violet.edges()]
+
+    assert routes == [
+        ("scarlet", "violet"),
+        ("scarlet", home.NODE),
+        (home.NODE, "scarlet"),
+        ("violet", "scarlet"),
+        ("violet", home.NODE),
+        (home.NODE, "violet"),
+    ]
+
+    # Three each, which is what a Switch pair has brought since Sword and Shield: the cable to
+    # the other half, the deposit into HOME and the withdrawal back out.
+    assert len(scarlet.edges()) == len(galar.edges("sword")) == 3
+
+
+def test_the_way_out_of_paldea_is_real_and_stops_where_the_next_game_starts() -> None:
+    deposit = [one for one in scarlet.edges() if one.to == home.NODE]
+    withdrawal = [one for one in scarlet.edges() if one.from_ == home.NODE]
+
+    # Both halves declare the deposit, which is what Legends: Z-A does not - and the article for
+    # this pair says why in the same breath: a Pokemon may still be transferred to any
+    # Generation VIII game, and one that has been transferred to any later game starting with
+    # Legends: Z-A becomes incompatible.
+    assert [one.filter for one in deposit] == [AllSpeciesFilter()]
+    assert [type(one.filter) for one in withdrawal] == [PresentInTargetDexFilter]
+
+    # So the graph already said both halves of that sentence before this pair was written, and
+    # neither edge had to be added or removed to make it true: the way on to Legends: Z-A is
+    # there, and nothing comes back out of it.
+    assert any(one.to == "legends-z-a" for one in legends_z_a.edges())
+    assert not [one for one in legends_z_a.edges() if one.from_ == "legends-z-a"]
+
+
+def test_the_cable_reaches_the_other_half_and_nothing_else_on_the_console() -> None:
+    [cable] = paldea.trade_edges("scarlet")
+
+    assert (cable.from_, cable.to) == ("scarlet", "violet")
+    assert cable.mechanism is TransferMechanism.TRADE
+    assert cable.direction is TransferDirection.BOTH_WAYS
+
+    # No route to Legends: Z-A, none to the Generation 8 games that share the console, and none
+    # to Pokemon GO - which does connect to these two over Bluetooth, and sends postcards and
+    # Gimmighoul Coins rather than Pokemon.
+    reached = {one.to for one in scarlet.edges() if one.from_ == "scarlet"}
+    assert reached == {"violet", home.NODE}
+
+
+def test_nothing_older_was_waiting_for_this_pair_to_arrive() -> None:
+    registry = default_registry()
+    declared = {(one.from_, one.to) for one in registry.edges}
+
+    # The expected answer rather than a gap, for the seventh and eighth Switch games: HOME is
+    # the only door, and everything that can reach these two was already reaching HOME. So the
+    # routes they bring are the only routes anything in the dataset names them in.
+    assert {one for one in declared if "scarlet" in one} == {
+        ("scarlet", "violet"),
+        ("scarlet", home.NODE),
+        (home.NODE, "scarlet"),
+    }
+    assert {one for one in declared if "violet" in one} == {
+        ("scarlet", "violet"),
+        ("violet", home.NODE),
+        (home.NODE, "violet"),
+    }
+
+
+def test_these_games_have_no_sheet_of_their_own_and_draw_homes_renders() -> None:
+    # The Archives' category for their models holds two files where Sword and Shield's holds one
+    # per species: the Generation 9 numbering runs to four digits and almost nothing under it
+    # was ever uploaded. So the set is HOME's, the one Brilliant Diamond and Legends: Z-A use.
+    assert paldea.SPRITE_SET == HOME_SET
+    assert paldea.SPRITE_SET == bdsp.SPRITE_SET == legends_z_a.SPRITE_SET
+
+    # Which is not what the pair before them does: Galar has a sheet filed under its own games.
+    assert galar.SPRITE_SET != paldea.SPRITE_SET
+
+    # And it is on the entity rather than only in the module, for both halves.
+    assert scarlet.entity().sprite_set == HOME_SET
+    assert violet.entity().sprite_set == HOME_SET
+
+
+def test_every_step_these_two_have_had_hangs_off_the_same_three_lists() -> None:
+    # The dex is what every later step is filtered against - the wild, the statics, the trades,
+    # the evolutions and the eggs all ask context.living_dex for the same 664 - so a build with
+    # no source to read is entries and nothing else, and that is the shape rather than a gap.
+    for half in (scarlet, violet):
+        assert half.dex_entries(context(half.GAME_ID))
+
+
+def test_both_halves_show_the_same_three_lists_and_every_entry_says_which() -> None:
+    # Three lists that each start at #001, so an entry that does not name its list is not a fact
+    # about anything - the objection every-dex-number-means-one-thing has guarded since X and Y.
+    api = FakeApi([(1, "treecko"), (2, "grovyle")])
+    entries = scarlet.dex_entries(context(scarlet.GAME_ID, api))
+
+    assert api.asked_for == ["paldea", "kitakami", "blueberry"]
+    assert [one.dex for one in entries] == [
+        "Paldea",
+        "Paldea",
+        "Kitakami",
+        "Kitakami",
+        "Blueberry",
+        "Blueberry",
+    ]
+    assert all(one.game == "scarlet" for one in entries)
+
+    # And a version pair splits what can be caught rather than what is listed, which has been
+    # true since Red and Blue: the other half shows the same lists with the same numbers.
+    other = violet.dex_entries(context(violet.GAME_ID, FakeApi([(1, "treecko"), (2, "grovyle")])))
+    assert [(one.dex, one.number, one.target) for one in entries] == [
+        (one.dex, one.number, one.target) for one in other
+    ]
+
+
+def test_nothing_in_these_lists_carries_a_form() -> None:
+    # The rule every game's dex list follows: these lists number species, and which Vivillon and
+    # which Tatsugiri is the shared forms table's to say at step 8.
+    entries = violet.dex_entries(context(violet.GAME_ID))
+
+    assert not [one for one in entries if one.target.form]
+
+
+def test_an_unobtainable_reason_reaches_the_entry_it_is_written_for() -> None:
+    # The table each half brings once step 7 knows what to put in it. Empty today, and the wiring
+    # is what step 2 is responsible for.
+    entries = paldea.dex_entries(
+        context(scarlet.GAME_ID), game_id="scarlet", unobtainable={"grovyle": "nothing here"}
+    )
+
+    said = {one.target.species: one.unobtainable_reason for one in entries}
+    assert said["grovyle"] == "nothing here"
+    assert said["treecko"] is None
+
+
+def test_the_three_lists_are_843_entries_and_664_species() -> None:
+    # Galar's shape and almost Galar's arithmetic. 400 + 200 + 243 = 843 entries, and 179 of
+    # those are a species' second or third listing, so the species count is 664.
+    assert paldea.DEX_TOTAL == 400 + 200 + 243 == 843
+    assert paldea.DEX_SPECIES == 664
+    assert paldea.DEX_TOTAL - paldea.DEX_SPECIES == 179
+
+    # Entries against species, which is the distinction a three-list game forces. Galar has it
+    # too; Legends: Z-A is the one game here with several lists and nothing to subtract.
+    assert galar.DEX_TOTAL == 821
+    assert legends_z_a.DEX_TOTAL == 364
+
+
+def test_the_leftover_is_sixty_nine_species_and_the_page_checks_its_own_work() -> None:
+    # Ninety rows in "Compatible Pokemon not in any Scarlet and Violet Pokedex", kept as three
+    # tables by the version each became compatible in - 60, 6 and 24. Sixty-nine of the ninety
+    # are a species no list names; the other twenty-one are a form of a species a list does name,
+    # an Alolan Raichu beside a listed Raichu.
+    assert paldea.FOREIGN_TO_EVERY_DEX == 69
+
+    # So 664 listed and 69 unlisted is 733 these two can hold, against Galar's 664. The leftover
+    # is smaller than Galar's and the games are far larger, which is the two DLC packs.
+    assert paldea.DEX_SPECIES + paldea.FOREIGN_TO_EVERY_DEX == 733
+    assert galar.FOREIGN_TO_EVERY_DEX == 80
+
+    # And none of them gets an entry, which is Galar's decision taken for its reason rather than
+    # by following it: a dex entry is a number in a list, and these have no number in any list
+    # these games show.
+    listed = {one.target.species for one in violet.dex_entries(context(violet.GAME_ID))}
+    assert len(listed) <= paldea.DEX_SPECIES
+
+
+def test_twenty_rows_name_a_form_and_the_species_entry_loses_which_one() -> None:
+    # The one thing step 2 found that no arithmetic would have shown. Twenty of the 843 rows name
+    # a form that is not the species' default - fifteen of them Blueberry's, because the
+    # Terarium's biomes are stocked with Alolan Sandshrew, Galarian Slowpoke and Hisuian
+    # Qwilfish and the list numbers those rather than the originals.
+    assert paldea.LISTS_THAT_NAME_A_FORM == 20
+
+    # Ursaluna is the sharpest: Kitakami's #196 is the Bloodmoon one, the ordinary Ursaluna is in
+    # the leftover, and a species-level entry says the exact inverse of the game's own row.
+    #
+    # It is the known cost of a species-level dex, paid here more than anywhere before, and the
+    # entries stay species all the same - a form is not a dex entry, and step 8 is where which
+    # of these forms these games really have gets asked.
+    assert not [
+        one for one in scarlet.dex_entries(context(scarlet.GAME_ID)) if one.target.form
+    ]
+
+    # A further 29 rows name a form and it is the species' own default - an Icy Snow Vivillon, a
+    # Midday Lycanroc - which costs nothing. Legends: Z-A's step 2 found 26 of those and no
+    # others at all, so this pair is the first game where the harmless pattern has a harmful
+    # twin.
+    assert paldea.LISTS_THAT_NAME_A_FORM > 0
+
+
+def test_registering_this_pair_moved_the_form_table_before_it_had_one_dex_entry() -> None:
+    # The Galar case a fourth time, and the cost was measured rather than assumed: a build with
+    # these two registered and the rule left on gave them eighteen new rows and handed 396
+    # existing forms two games each - a Galarian Corsola in Paldea, a Hisuian Zoroark, every
+    # Vivillon pattern. Three lists and a leftover is not a National Dex number, so "old enough"
+    # is not the question here any more than it was for Sword and Shield.
+    assert {"scarlet", "violet"} <= FORMS_NAMED_BY_THE_GAME
+
+    # So both halves had no forms at all until step 8 wrote their table, which was the
+    # direction to be wrong in: a form the table leaves out is a tile that is not drawn. That
+    # step has run, and PALDEA_FORMS is what it came to.
+    assert len(PALDEA_FORMS) == 171
+    assert {"scarlet", "violet"} <= set(NAMED_BY_HAND["wooper-paldea"])
+
+    # And the rule is switched off for exactly the games that need it off - every Switch game in
+    # the dataset, which is what forms.py means by "from here on it stays broken".
+    assert "x" not in FORMS_NAMED_BY_THE_GAME
+    assert "black" not in FORMS_NAMED_BY_THE_GAME
+
+
+def test_the_wild_here_is_fifty_pages_and_no_api_at_all() -> None:
+    # The hole the reading before these six games predicted is total for this pair too. Asking
+    # the source for Sprigatito, Lechonk or Ursaluna returns no location areas whatever; asking
+    # for Pikachu, Magikarp or Wooper returns between 40 and 287 and not one row for scarlet,
+    # violet, or any of the four version names the two expansions add.
+    assert len(paldea.PAGES) == 50
+
+    # Found by reading rather than by listing: every one of the 125 pages in the wiki's own
+    # category was fetched and asked whether it holds a table with a Probability Weight header.
+    # A category is a good index and not a complete one, which Legends: Z-A's sprites taught.
+    assert paldea.PAGES["South_Province_(Area_One)"] == "South Province (Area One)"
+    assert paldea.PAGES["Kitakami_Wilds"] == "Kitakami Wilds"
+
+    # The four Biome pages are the Terarium's, inside Blueberry Academy, and they are the only
+    # places here a player does not walk to from a road.
+    assert {one for one in paldea.PAGES.values() if one.endswith("Biome")} == {
+        "Canyon Biome",
+        "Coastal Biome",
+        "Polar Biome",
+        "Savanna Biome",
+    }
+
+
+def test_five_terrain_columns_come_to_four_ways_of_meeting_something() -> None:
+    # Measured rather than argued, and the two halves of the measurement point opposite ways.
+    # 197 of 3,409 rows are ticked underwater and nothing else, so an Arrokuda would be lost by
+    # folding it into the water above it; the Sky column has four such rows, all of them a
+    # Braviary that walks on the ground elsewhere in the same game.
+    assert len(paldea.TERRAINS) == 5
+    assert len(set(paldea.TERRAINS.values())) == 4
+
+    assert paldea.TERRAINS["Underwater"] is EncounterMethod.OVERWORLD_UNDERWATER
+    assert paldea.TERRAINS["Sky"] is paldea.TERRAINS["Overland"]
+
+    # Not Dive, which is Mossdeep's HM and a table of its own beneath the water a player is
+    # surfing on. There is no move here: a player swims and presses a button.
+    assert EncounterMethod.OVERWORLD_UNDERWATER is not EncounterMethod.DIVE
+
+
+def test_each_half_reads_the_same_pages_and_keeps_its_own_rows() -> None:
+    # A version pair splits what can be caught, and on these pages that is a colour rather than
+    # a letter: 120 rows are Scarlet's alone and 151 are Violet's.
+    assert paldea.LETTERS == {"scarlet": "S", "violet": "V"}
+    assert scarlet.POKEAPI_VERSION not in paldea.LETTERS.values()
+
+
+def test_every_form_phrase_these_pages_write_is_spelled_out() -> None:
+    # Fifty-four over fifty pages, each belonging to one species or one family, so nothing
+    # here is ambiguous. Hisui needed 24 and Lumiose 48. Fifty-three are the wild tables' and
+    # the fifty-fourth is the fixed encounters': a Gimmighoul on a watchtower is the Chest
+    # Form, which no weighted row ever writes.
+    assert len(paldea.FORM_PHRASES) == 54
+
+    # A phrase mapped to nothing is the source naming a default - a Spring Deerling, a Red
+    # Flower Flabebe, a Midday Lycanroc, a Male Meowstic, a Baile Oricorio. Seventeen of them
+    # after step 8, which moved two: a Red Core Minior is the source's own default, and an
+    # Artisan Poltchageist is a pokemon-form rather than a Pokemon and so has no id to name.
+    defaults = {one for one, said in paldea.FORM_PHRASES.items() if not said}
+    assert len(defaults) == 16
+    assert paldea.FORM_PHRASES["Blue Core"] == "blue"
+    assert {"Spring Form", "Red Flower", "Midday Form", "Male", "Baile Style"} <= defaults
+
+    # And the ones that name a choice name it the way this dataset spells a form id.
+    assert paldea.FORM_PHRASES["Alolan Form"] == "alola"
+    assert paldea.FORM_PHRASES["Paldean Form"] == "paldea"
+    assert paldea.FORM_PHRASES["Combat Breed"] == "paldea-combat-breed"
+
+
+def test_the_form_phrases_were_written_at_step_3_and_answered_at_step_8() -> None:
+    # Both halves are in FORMS_NAMED_BY_THE_GAME, so the form table held nothing of theirs
+    # while steps 3 to 7 ran - and Normaliser.target drops an unknown form back to its species
+    # rather than inventing an id, which is why every one of those steps could be finished
+    # before this one. The table was written once, from the pages, and started answering in
+    # full the day step 8 filled the form table in.
+    assert {"scarlet", "violet"} <= FORMS_NAMED_BY_THE_GAME
+    assert [one for one in NAMED_BY_HAND.values() if "scarlet" in one]
+
+    # And the phrases the pages write now land on forms these two really hold.
+    assert "wooper-paldea" in PALDEA_FORMS
+    assert "tauros-paldea-combat-breed" in PALDEA_FORMS
+    assert "ursaluna-bloodmoon" in PALDEA_FORMS
+
+
+def test_the_twenty_statics_are_on_no_location_page_at_all() -> None:
+    # The finding step 4 turned on. The fifty pages step 3 read carry 302 fixed encounters
+    # between them and not one of these: Koraidon is not in Poco Path's tables, and a Titan is
+    # on its province's page while the story's own Pokemon are on nobody's. Every one was read
+    # off its own article's Game locations row instead.
+    assert len(paldea.SHARED_STATICS) == 15
+    assert len(paldea.statics("scarlet")) == len(paldea.statics("violet")) == 18
+
+    # Twenty-one between them: fifteen both halves have and three each of their own.
+    assert len({one.species for one in paldea.statics("scarlet")} | {
+        one.species for one in paldea.statics("violet")
+    }) == 21
+
+    # The last two are step 9's, they are the only ones that name a form, and both stand in the
+    # one place step 3 could not read. Neither article states a level, which is why they are
+    # statics rather than wild slots: a static may leave the level out and a wild slot may not,
+    # and writing 1-100 to satisfy a field would say something no page says.
+    named = [one for one in paldea.SHARED_STATICS if one.form]
+    assert [(one.species, one.form, one.location) for one in named] == [
+        ("basculin", "basculin-white-striped", "Timeless Woods"),
+        ("ursaluna", "ursaluna-bloodmoon", "Timeless Woods"),
+    ]
+    assert {one.level for one in named} == {None}
+
+    # Three of the three are the ones a player picks between, and the article words all three
+    # the same way.
+    starters = [one for one in paldea.SHARED_STATICS if one.kind is GiftKind.STARTER]
+    assert [one.species for one in starters] == ["sprigatito", "fuecoco", "quaxly"]
+    assert {one.location for one in starters} == {"Cabo Poco"}
+    assert {one.npc for one in starters} == {"Clavell"}
+
+
+def test_the_box_legendary_is_the_pairs_sharpest_exclusive() -> None:
+    # Scarlet's article says "Poco Path (only one) (Limited Build)" and Violet's says
+    # "Trade, Event" - so a Koraidon in Violet comes over the cable, which the pair's own trade
+    # edge already says and nothing here has to repeat.
+    scarlet_only = {one.species for one in paldea.STATICS["scarlet"]}
+    violet_only = {one.species for one in paldea.STATICS["violet"]}
+
+    assert "koraidon" in scarlet_only
+    assert "miraidon" in violet_only
+    assert not scarlet_only & violet_only
+
+    # And the other four the two halves split are the Indigo Disk's Paradox Pokemon, which the
+    # articles divide the same way.
+    assert scarlet_only == {"koraidon", "gouging-fire", "raging-bolt"}
+    assert violet_only == {"miraidon", "iron-crown", "iron-boulder"}
+
+
+def test_two_of_the_twenty_one_are_not_step_4s_at_all() -> None:
+    # Walking Wake and Iron Leaves say "Poke Portal News" where the other nineteen name a
+    # place: they were handed out in a seven-star raid and in nothing else, so neither is a
+    # static and neither gets a record here. Their reason is step 7's to write.
+    written = {one.species for one in paldea.statics("scarlet")} | {
+        one.species for one in paldea.statics("violet")
+    }
+
+    assert "walking-wake" not in written
+    assert "iron-leaves" not in written
+
+
+def test_the_fixed_encounters_are_read_and_the_statics_are_written() -> None:
+    # Two halves, split by what a location page knows. The pages know 302 rows in a table
+    # shaped the way every location page has been shaped since Hoenn; they know none of the
+    # nineteen above.
+    assert paldea.STATICS_PAGE == "Pok%C3%A9mon_Scarlet_and_Violet"
+    assert {one.source for one in paldea.SHARED_STATICS} == {paldea.READ_ON(paldea.STATICS_PAGE)}
+
+
+def test_the_evolutions_need_three_version_groups_the_way_galars_do() -> None:
+    # The source files each expansion as a group of its own and puts real rules in them.
+    # Asking only about scarlet-violet would lose five: Applin to Dipplin with a Syrupy Apple
+    # and Dipplin to Hydrapple knowing Dragon Cheer are the Teal Mask's and the Indigo Disk's,
+    # and Archaludon and both Sinistcha go with them.
+    assert paldea.EVOLUTION_GROUPS == ("scarlet-violet", "the-teal-mask", "the-indigo-disk")
+    assert len(paldea.EVOLUTION_GROUPS) == len(galar.EVOLUTION_GROUPS) == 3
+
+
+def test_generation_9_brought_four_triggers_nobody_had_written_words_for() -> None:
+    # And every one of them was already wrong in the dataset before this pair was written:
+    # Legends: Z-A lists Primeape and Gimmighoul, so two tiles have read "use move" and
+    # "gimmighoul coins" since that game was built. A shared table is what makes writing them
+    # down here fix them there.
+    for slug in (
+        "in-battle-level-up",
+        "use-move",
+        "three-defeated-bisharp",
+        "gimmighoul-coins",
+    ):
+        assert slug in OTHER_TRIGGERS
+        # Words a player can read rather than the slug prettied up, which is what a trigger
+        # nobody has written falls back to: "three defeated bisharp" is not a sentence.
+        assert OTHER_TRIGGERS[slug] != slug.replace("-", " ")
+        assert " " in OTHER_TRIGGERS[slug]
+
+    assert OTHER_TRIGGERS["three-defeated-bisharp"] == (
+        "after defeating three Bisharp that lead a pack"
+    )
+
+
+def test_these_two_have_three_trades_in_the_old_sense_and_eighteen_in_a_new_one() -> None:
+    made = paldea.traders()
+
+    assert len(made) == 21
+    assert len(paldea.NPC_TRADES) == 3
+    assert len(paldea.CLUB_ROOM_TRADES) == 18
+
+    # The old sense: an NPC who wants one thing. Two of the three are worth a sentence - the
+    # Cascarrafa trader takes a Paldean Wooper and gives back the ordinary one, and the Haunter
+    # from Levincia becomes a Gengar on the way across.
+    assert [one.gets for one in paldea.NPC_TRADES] == ["snom", "wooper", "gengar"]
+    assert [one.wants for one in paldea.NPC_TRADES] == ["flabebe", "wooper", "pincurchin"]
+
+    # The new one: invite somebody to the League Club Room three times and they will take any
+    # Pokemon the player raised themselves. So there is nothing in the `wants` field, which is
+    # exactly what that field's own docstring says an empty one means.
+    club = [one for one in made if one.location == paldea.CLUB_ROOM]
+    assert len(club) == 18
+    assert {one.wants for one in club} == {None}
+
+
+def test_no_trade_here_belongs_to_one_half_only() -> None:
+    # A pair usually splits its traders the way it splits its grass. This one does not, so
+    # both halves get the same twenty-one and there is no table keyed by game.
+    assert paldea.traders() == paldea.traders()
+    assert not hasattr(paldea, "TRADES_BY_HALF")
+
+
+def test_twenty_exclusives_each_way_and_the_two_neither_half_makes() -> None:
+    assert len(paldea.ONLY_ON["scarlet"]) == len(paldea.ONLY_ON["violet"]) == 20
+    assert not set(paldea.ONLY_ON["scarlet"]) & set(paldea.ONLY_ON["violet"])
+
+    said = paldea.unobtainable_in("scarlet")
+
+    # The other half's twenty, plus the two the raid handed out and nothing else ever will.
+    assert len(said) == 22
+    assert set(said) == set(paldea.ONLY_ON["violet"]) | {"walking-wake", "iron-leaves"}
+
+    # And spread_unobtainable does the rest: an evolution of something this half cannot get
+    # inherits the reason rather than needing a line of its own, which is how nine more get
+    # one without anybody writing Ambipom down.
+    assert "ambipom" not in said
+    assert "aipom" in said
+
+
+def test_this_pair_is_the_first_where_trade_one_in_is_not_the_whole_truth() -> None:
+    # The softest version pair in the series, and step 7 is where that becomes a sentence a
+    # player reads. Most exclusives can be caught by somebody of the opposite version who
+    # joins a Union Circle or a Tera Raid Battle, which no pair before this one allowed.
+    said = paldea.unobtainable_in("scarlet")
+
+    assert said["aipom"].startswith(
+        "Violet only in Generation 9; trade one in, or catch one in somebody else's "
+        "Union Circle or Tera Raid Battle"
+    )
+
+    # Three groups, and the article draws all three lines itself. A Paradox Pokemon can be met
+    # in a Union Circle and not in a raid...
+    assert "Union Circle" in said["iron-treads"]
+    assert "Tera Raid" not in said["iron-treads"]
+
+    # ...and the box legendary, it says in as many words, requires trading.
+    assert said["miraidon"].startswith("Violet only in Generation 9; trade one in.")
+    assert "Union Circle" not in said["miraidon"]
+
+
+def test_each_half_was_once_handed_the_others_box_legendary() -> None:
+    # Galar's sharpest step-7 finding, repeated exactly: Lancer's Shiny Zacian ran in Shield
+    # and Arthur's Shiny Zamazenta in Sword. Here Paldea's Shiny Koraidon went to Violet
+    # players and Paldea's Shiny Miraidon to Scarlet ones, both in the autumn of 2025.
+    assert "Shiny Miraidon" in paldea.unobtainable_in("scarlet")["miraidon"]
+    assert "Shiny Koraidon" in paldea.unobtainable_in("violet")["koraidon"]
+
+    assert "Shiny Zacian" in galar.unobtainable_in("shield")["zacian"]
+
+
+def test_ten_of_the_forty_exclusives_had_a_distribution() -> None:
+    found = {
+        species
+        for half in paldea.ONLY_ON.values()
+        for species, event in half.items()
+        if event
+    }
+
+    assert len(found) == 10
+    assert {"koraidon", "miraidon"} <= found
+
+    # The other eight are CoroCoro's, and they were SV distributions rather than one half's -
+    # so a Scarlet player really was handed an Iron Hands and a Violet player a Brute Bonnet.
+    assert found - {"koraidon", "miraidon"} == {
+        "brute-bonnet",
+        "flutter-mane",
+        "roaring-moon",
+        "scream-tail",
+        "iron-hands",
+        "iron-jugulis",
+        "iron-thorns",
+        "iron-valiant",
+    }
+
+
+def test_the_showcase_is_the_first_step_7_event_that_is_not_over() -> None:
+    # Every distribution named in any other game's reasons ran once or twice and stopped. This
+    # one has come back six times in three years, most recently to 4 January 2026 - so the
+    # sentence a player gets is "watch the news" rather than "you had to be there in 2006".
+    # The entry is still unobtainable, because nothing a player can do today produces one.
+    assert "Showcase" in paldea.SHOWCASE
+    assert "four times" not in paldea.SHOWCASE
+    assert paldea.SHOWCASE.startswith("Nothing in either half produces one")
+    assert "2026" in paldea.SHOWCASE
+
+
+def test_basculegion_and_overqwil_are_step_8s_rather_than_this_steps() -> None:
+    # The other two entries no method here fills, and neither is marked: both hang on a form
+    # the form table does not hold yet - a White-Striped Basculin and a Hisuian Qwilfish - and
+    # Overqwil's rule is in the source already, stamped scarlet-violet, waiting for the form.
+    # Marking either unobtainable would be writing down a gap the next step closes.
+    for half in ("scarlet", "violet"):
+        assert "basculegion" not in paldea.unobtainable_in(half)
+        assert "overqwil" not in paldea.unobtainable_in(half)
+
+
+def test_paldea_names_its_own_forms_because_nothing_else_can() -> None:
+    # The version-group rule is off for this pair, so a form whose only games would be these
+    # two comes out with an empty list and is dropped from the table altogether. Before step 8
+    # there was not one Paldean form in the dataset.
+    assert len(PALDEA_FORMS) == 171
+    assert PALDEA_FORMS["wooper-paldea"] == ("scarlet", "violet")
+
+    # Nothing here belongs to one half. A pair splits what it catches, not what it draws, and
+    # these two do not even split their traders.
+    assert {one for one in PALDEA_FORMS.values()} == {("scarlet", "violet")}
+
+
+def test_nine_of_the_thirty_missing_forms_were_refused_before_anybody_decided() -> None:
+    # The same sentence that keeps every Mega out: a Gulping Cramorant, a Noice Eiscue, a
+    # Busted Mimikyu, a Hangry Morpeko, an Ash-Greninja, a Hero Palafin and both Terapagos
+    # formes are battle-only, and a living dex is about what a box can hold.
+    for absent in (
+        "cramorant-gulping",
+        "eiscue-noice",
+        "mimikyu-busted",
+        "morpeko-hangry",
+        "greninja-ash",
+        "palafin-hero",
+        "terapagos-terastal",
+        "terapagos-stellar",
+    ):
+        assert absent not in PALDEA_FORMS
+
+
+def test_every_regional_form_is_in_because_the_article_says_so() -> None:
+    # "All regional forms of compatible Pokemon that existed at the time of release and their
+    # respective regional evolved forms are also compatible." So an Alolan Raichu belongs in a
+    # Paldean box whether or not the Terarium places one - and fifteen of the thirty-six it
+    # does place, which is the Indigo Disk doing what it was built for.
+    regional = {one for one in PALDEA_FORMS if one.endswith(("-alola", "-galar", "-hisui"))}
+
+    assert len(regional) == 36
+    assert {"raichu-alola", "slowking-galar", "qwilfish-hisui", "samurott-hisui"} <= regional
+
+    # And Paldea's own two, which are not spelled that way.
+    assert "wooper-paldea" in PALDEA_FORMS
+    assert "tauros-paldea-combat-breed" in PALDEA_FORMS
+
+
+def test_minior_is_here_as_its_cores_because_the_pictures_said_so() -> None:
+    # Step 8 chose the meteors: the source's default is minior-red-meteor, and a meteor is what
+    # stands in the overworld. Step 6 then asked Pokemon HOME for the pictures and found one
+    # plain Minior and seven cores and no coloured meteor at all - so the meteors would have
+    # been six tiles in another generation's style, beside a species drawn from HOME, showing a
+    # difference nobody can see until the shield breaks. The picture set answered a question
+    # the form table could not.
+    cores = {one for one in PALDEA_FORMS if one.startswith("minior-")}
+
+    assert len(cores) == 7
+    assert "minior-blue" in cores
+    assert not [one for one in cores if one.endswith("-meteor")]
+
+
+def test_alcremies_sixty_two_are_out_because_the_game_has_no_sweets() -> None:
+    # An Alcremie in Paldea comes out of a five- or six-star Tera Raid already made, so there
+    # is no Milcery to spin and no cream to choose. Galar, which does have Sweets, holds all
+    # sixty-two.
+    assert not [one for one in PALDEA_FORMS if one.startswith("alcremie-")]
+    assert len([one for one in GALAR_FORMS if one.startswith("alcremie-")]) == 62
+
+
+def test_only_one_vivillon_pattern_is_here_and_the_reason_is_a_second_app() -> None:
+    # Lumiose's call again. The other seventeen are reachable, and by a route no other game in
+    # this dataset has: a postcard sent from Pokemon GO changes the pattern of wild Vivillon
+    # for a day, according to where in the world it came from. That is a second app and a
+    # physical location, which is the Friend Safari's shape.
+    assert {one for one in PALDEA_FORMS if one.startswith("vivillon-")} == {"vivillon-fancy"}
+
+    # And Roaming Form Gimmighoul is out for a reason of the same kind: it flees when it is
+    # interacted with, and the only place it can be caught is Pokemon GO.
+    assert "gimmighoul-roaming" not in PALDEA_FORMS
+    assert "gimmighoul-roaming" in ZA_FORMS
+
+
+def test_bloodmoon_ursaluna_closes_the_sharpest_thing_step_2_found() -> None:
+    # Kitakami numbers the Bloodmoon one at #196 and the ordinary Ursaluna is a stranger to all
+    # three lists, so the species-level entry said the exact inverse of the game's own row. The
+    # entry is still the species - a form is not a dex entry - but the form exists now and the
+    # tile can be drawn.
+    assert "ursaluna-bloodmoon" in PALDEA_FORMS
+    assert paldea.LISTS_THAT_NAME_A_FORM == 20

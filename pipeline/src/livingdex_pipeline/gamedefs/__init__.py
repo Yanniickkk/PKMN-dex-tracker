@@ -34,6 +34,7 @@ from . import (
     red,
     ruby,
     sapphire,
+    scarlet,
     shield,
     shining_pearl,
     silver,
@@ -42,6 +43,7 @@ from . import (
     sword,
     ultra_moon,
     ultra_sun,
+    violet,
     white,
     white2,
     x,
@@ -64,9 +66,12 @@ from . import (
 # later - the first remakes here of a pair the dataset also holds as cartridges. Then the
 # game that closes that generation ten weeks after them, which is that same ground under an
 # older name and the first entry here that is not half of anything: one game, one region,
-# and a Pokedex of its own. Then, out of Generation 9's own order, the game that closes it:
-# Lumiose City on the Switch three generations after X and Y, the second game here that is not
-# half of anything, and the first with a way in and no way out.
+# and a Pokedex of its own. Then the pair that opens Generation 9 - Galar's shape three years
+# on, and the first games since HeartGold and SoulSilver played in more than one region - and
+# then the game that closes it: Lumiose City on the Switch three generations after X and Y, the
+# second game here that is not half of anything, and the first with a way in and no way out.
+# That last one was written before the pair above it, and this list is release order rather than
+# the order the work was done in, so it moved down a line rather than the pair going after it.
 #
 # Then the two nodes, out of that order and at the end, because neither is a game. Bank came out
 # between the two Generation 6 pairs and HOME six years after it. They are here for the same
@@ -108,6 +113,8 @@ MODULES = [
     brilliant_diamond,
     shining_pearl,
     legends_arceus,
+    scarlet,
+    violet,
     legends_z_a,
     bank,
     home,

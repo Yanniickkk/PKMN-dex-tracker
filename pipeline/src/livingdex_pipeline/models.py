@@ -174,6 +174,25 @@ class EncounterMethod(StrEnum):
     OVERWORLD = "overworld"
     OVERWORLD_WATER = "overworldWater"
     OVERWORLD_FLYING = "overworldFlying"
+    # And Paldea's one, which is the fourth place Scarlet and Violet put something and the only
+    # one of the five their pages tick that the three above cannot say.
+    #
+    # **Measured before it was named, which is the rule this enum has kept since Hisui.** Of
+    # the 3,409 rows in those games' tables, 393 are ticked underwater and **197 of those are
+    # ticked underwater and nothing else** - an Arrokuda is never on the surface, and a player
+    # who surfs past one will not find it. That is a different place to look rather than a
+    # rarer kind of swimming.
+    #
+    # The same measurement refused a fifth. The terrain block has a Sky column beside its
+    # Overland one - a Pikipek circling high against a Gastly hovering at head height - and of
+    # its 246 ticks exactly **four** are the only tick on their row, all four a Braviary in
+    # Area Zero, which is on the ground elsewhere in the same game. Two names for one event
+    # with different scenery, which is the call Kalos's five ambushes got, so both are
+    # :attr:`OVERWORLD_FLYING`.
+    #
+    # Not :attr:`DIVE`, which is Mossdeep's HM and a table of its own beneath the water a
+    # player is surfing on. There is no move here: a player swims and presses a button.
+    OVERWORLD_UNDERWATER = "overworldUnderwater"
     # And Galar's two, which are the first ways of getting a Pokemon in this dataset that are
     # not a place at all. A Max Raid is a beam of light over a den, four trainers against one
     # Dynamax Pokemon and a single throw at the end of it; a Dynamax Adventure is the Crown
@@ -488,6 +507,22 @@ class WildAcquisition(Model):
     method: EncounterMethod
     levels: LevelRange
     rate_percent: float | None = None
+    #: How likely this slot is, when the game counts in weights instead of percentages.
+    #:
+    #: **Scarlet and Violet are the first, and they are the reason this field exists.** Every
+    #: game before them either rolls a slot out of a hundred - which is what ``rate_percent``
+    #: is - or stands a Pokemon in the world and rolls nothing, which is Let's Go, Hisui and
+    #: Lumiose, and leaves both fields empty. These do a third thing: a spawn point picks from
+    #: the species that can be there, each with a weight of 1 or 5 or 60 or 400, and the page
+    #: says only that a higher weight generally means more likely.
+    #:
+    #: It is not a percentage and must not be recorded as one. The denominator depends on the
+    #: biome, the terrain and the hour all at once, and two weights are only comparable to each
+    #: other when all three match - so 60 against 1 in the same Prairie says a great deal, and
+    #: 60 in a lake against 60 in a cave says nothing. Dividing would hand a player a number no
+    #: game ever showed them, which is the objection every invented figure in this dataset has
+    #: been refused for.
+    probability_weight: int | None = None
     time_of_day: str | None = None
     season: str | None = None
     weather: str | None = None

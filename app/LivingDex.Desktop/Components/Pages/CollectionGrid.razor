@@ -1007,6 +1007,10 @@ else
                 fields.Add(("Chance", wild.RatePercent is { } rate
                     ? string.Create(CultureInfo.InvariantCulture, $"{rate:0.#}%")
                     : null));
+                // Scarlet and Violet count in weights rather than percentages, and the label
+                // says so: a weight is only comparable to the others at the same spawn point,
+                // so calling it a chance would invite reading it as one.
+                fields.Add(("Weight", wild.ProbabilityWeight?.ToString(CultureInfo.InvariantCulture)));
                 fields.Add(("Time", wild.TimeOfDay));
                 fields.Add(("Season", wild.Season));
                 fields.Add(("Weather", wild.Weather));

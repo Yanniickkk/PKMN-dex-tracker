@@ -198,6 +198,15 @@ public enum EncounterMethod
     /// </remarks>
     OverworldFlying,
 
+    /// <summary>The same, below the surface: a Pokémon a player has to swim down to.</summary>
+    /// <remarks>
+    /// Paldea's own. Of the 3,409 rows in Scarlet and Violet's tables, 393 are ticked
+    /// underwater and 197 of those are ticked underwater and nothing else — an Arrokuda is
+    /// never on the surface, and a player who swims past one will not find it. Not
+    /// <see cref="Dive"/>, which is Mossdeep's HM and a table of its own.
+    /// </remarks>
+    OverworldUnderwater,
+
     /// <summary>A Max Raid Battle: a beam of light over a den in Galar.</summary>
     /// <remarks>
     /// Four trainers against one Dynamax Pokémon, and a single throw at the end of it. Not a
@@ -266,6 +275,18 @@ public sealed record WildAcquisition : AcquisitionMethod
 
     /// <summary>Slot chance as a percentage, when the source gives one.</summary>
     public double? RatePercent { get; init; }
+
+    /// <summary>
+    /// How likely this slot is, when the game counts in weights rather than percentages.
+    /// </summary>
+    /// <remarks>
+    /// Scarlet and Violet only. A spawn point picks from the species that can be there, each
+    /// with a weight - 1, 5, 60, 400 - and the source says only that a higher weight generally
+    /// means more likely. It is not a percentage: two weights are comparable when the biome,
+    /// the terrain and the hour all match, and not otherwise, so this is shown as itself
+    /// rather than divided into a figure no game ever displayed.
+    /// </remarks>
+    public int? ProbabilityWeight { get; init; }
 
     /// <summary>Restricted to this part of the day, for example: morning.</summary>
     public string? TimeOfDay { get; init; }

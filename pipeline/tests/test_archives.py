@@ -498,3 +498,43 @@ def test_one_form_of_the_ninety_has_no_picture_and_it_is_not_the_one_the_categor
     # The finding worth keeping: reading the category said the Small Size Pumpkaboo was missing,
     # and asking for it got a picture. A category is a good index and not a complete one.
     assert HOME_HAS_NO_PICTURE == ("torchic-female",)
+
+
+def test_home_spells_paldeas_forms_and_the_codes_were_read_not_guessed() -> None:
+    # Paldean Tauros is where guessing would have cost most, and it is Rotom's oven a second
+    # time: the three breeds are PA, PB and PC, alphabetical by the breed's name rather than in
+    # the order the game lists them. Reading the game's order would have put the Combat bull on
+    # the Aqua tile and back again.
+    assert HOME_FORM_CODES["Paldea-Aqua-Breed"] == "PA"
+    assert HOME_FORM_CODES["Paldea-Combat-Breed"] == "PC"
+
+    assert form_names(128, form_id="tauros-paldea-combat-breed",
+                      form_name="Paldea-Combat-Breed", sheet=HOME) == ("HOME0128PC.png",)
+    assert form_names(194, form_id="wooper-paldea", form_name="Paldea", sheet=HOME) == (
+        "HOME0194P.png",
+    )
+
+
+def test_a_colour_is_a_colour_whoever_is_wearing_it() -> None:
+    # Which is why this table is keyed by a form's name and not by a species: Minior's Blue
+    # Core and the Flabebe line's Blue Flower are both B, and neither had to be written twice.
+    assert HOME_FORM_CODES["Blue"] == "B"
+
+    assert form_names(774, form_id="minior-blue", form_name="Blue", sheet=HOME) == (
+        "HOME0774B.png",
+    )
+    assert form_names(669, form_id="flabebe-blue", form_name="Blue", sheet=HOME) == (
+        "HOME0669B.png",
+    )
+
+
+def test_three_forms_get_no_code_and_each_one_has_its_own_reason() -> None:
+    # An Own Tempo Rockruff has no file because HOME draws it as an ordinary Rockruff, which is
+    # what it looks like.
+    assert form_names(744, form_id="rockruff-own-tempo", form_name="Own-Tempo", sheet=HOME) == ()
+
+    # And the two teacups have a file each - the *back* of them, and only in the mobile app,
+    # which its own description page says. A back view on a tile would be worse than a
+    # fallback, so neither gets a code.
+    assert form_names(854, form_id="sinistea-antique", form_name="Antique", sheet=HOME) == ()
+    assert form_names(855, form_id="polteageist-antique", form_name="Antique", sheet=HOME) == ()

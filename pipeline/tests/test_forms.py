@@ -376,11 +376,18 @@ def test_a_form_that_belongs_to_nothing_but_that_pair_is_left_out_altogether() -
 
     assert found == []
 
-    # Seven games now, for three different reasons, and only the first is about Dexit. Let's Go
+    # Ten games now, for three different reasons, and only the first is about Dexit. Let's Go
     # and Galar hold a list instead of a number; Brilliant Diamond and Shining Pearl hold
     # everything up to 493 and the rule was wrong about them anyway, because all it asks is when
     # a form arrived and those came out last; and Legends: Arceus is the fourth game running the
     # rule is wrong about, for the same reason and by the widest margin - 393 against 117.
+    #
+    # Scarlet and Violet are the ninth and tenth, and they are Galar's reason again: three lists
+    # and a leftover rather than a number. Registering them at step 1 - before either half had a
+    # single Pokedex entry - moved the form table by itself, eighteen new rows and 396 existing
+    # ones gaining two games each. The eighteen are Generation 9's own and mostly real, which is
+    # what makes the rest dangerous: the rule is right about a handful and wrong about four
+    # hundred. Step 8 writes the table, and until then both halves have no forms at all.
     assert set(FORMS_NAMED_BY_THE_GAME) == {
         "lets-go-pikachu",
         "lets-go-eevee",
@@ -390,6 +397,8 @@ def test_a_form_that_belongs_to_nothing_but_that_pair_is_left_out_altogether() -
         "shining-pearl",
         "legends-arceus",
         "legends-z-a",
+        "scarlet",
+        "violet",
     }
 
 

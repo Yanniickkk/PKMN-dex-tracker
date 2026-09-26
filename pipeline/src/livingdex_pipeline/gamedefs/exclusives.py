@@ -13,7 +13,13 @@ Each hardware module wraps this with its own generation filled in, so a game fil
 from __future__ import annotations
 
 
-def only_on(partner: str, *, generation: int, event: str | None = None) -> str:
+def only_on(
+    partner: str,
+    *,
+    generation: int,
+    event: str | None = None,
+    also: str | None = None,
+) -> str:
     """Why an entry in this dex is not in this cartridge, when the other half has it.
 
     A version exclusive is still an entry you have to fill, and the transfer graph is how -
@@ -21,8 +27,15 @@ def only_on(partner: str, *, generation: int, event: str | None = None) -> str:
 
     ``event`` is what step 7 found. It does not change that the cartridge cannot produce one; it
     answers the next question, which is where one could ever have come from.
+
+    ``also`` is a second way across that is not a trade, and it took until Generation 9 for one
+    to exist: Scarlet and Violet let a player catch most of the other half's exclusives in
+    somebody else's Union Circle or Tera Raid Battle, which no pair before them did. A pair
+    that leaves it out says what every pair from Red and Blue to Sword and Shield says.
     """
-    return with_event(f"{partner} only in Generation {generation}; trade one in", event)
+    across = "trade one in" if also is None else f"trade one in, or {also}"
+
+    return with_event(f"{partner} only in Generation {generation}; {across}", event)
 
 
 def fossil_only_on(partner: str, fossil: str, *, generation: int, event: str | None = None) -> str:
