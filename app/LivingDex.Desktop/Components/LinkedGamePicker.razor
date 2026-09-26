@@ -1,0 +1,102 @@
+@* The linked-games picker: the covers of every game that can feed the main one, foldable by
+   generation. Shared by the wizard that makes a collection and the screen that edits one, so the
+   two cannot come to offer different games. *@
+@using LivingDex.Core.Reference
+
+@if (Candidates.Count == 0)
+{
+    <p class="muted">Nothing in this dataset can send Pokémon to @MainGameTitle.</p>
+}
+else
+{
+    @foreach (var generation in Candidates.GroupBy(one => one.Game.Generation).OrderBy(group => group.Key))
+    {
+        var number = generation.Key;
+
+        <section class="generation">
+            <button type="button" class="generation-head" aria-expanded="@IsOpen(number)"
+                    @onclick="@(() => ToggleGeneration(number))">
+                <span class="generation-caret" aria-hidden="true">@(IsOpen(number) ? "▾" : "▸")</span>
+                <span class="generation-name">Generation @number</span>
+                <span class="muted">@Counted(generation.Count())</span>
+            </button>
+
+            @if (IsOpen(number))
+            {
+                <ul class="game-grid" role="none">
+                    @foreach (var candidate in generation)
+                    {
+                        var game = candidate.Game;
+                        var note = Note?.Invoke(game.Id);
+
+                        <li>
+                            @* The click is handled on the label and its default is prevented, so
+                               the browser never toggles the box: it shows what the model says and
+                               nothing else. Without that, a toggle the caller refuses leaves the
+                               two disagreeing - the box unticked because the browser unticked it,
+                               and Blazor seeing nothing to render because its own last render
+                               already said "ticked". *@
+                            <label class="game-card @(note is null ? "" : "is-holding")" title="@candidate.Route"
+                                   @onclick="@(() => OnToggle.InvokeAsync(new LinkedGameToggle(game.Id, !IsLinked(game.Id))))"
+                                   @onclick:preventDefault="true">
+                                <input type="checkbox" class="visually-hidden" checked="@IsLinked(game.Id)" />
+                                <GameCover Game="game" />
+                                <span class="reason">@(note ?? candidate.Route)</span>
+                            </label>
+                        </li>
+                    }
+                </ul>
+            }
+        </section>
+    }
+}
+
+@code {
+    /// <summary>The games that can feed the main game, and how.</summary>
+    [Parameter]
+    [EditorRequired]
+    public IReadOnlyList<LinkedGameCandidate> Candidates { get; set; } = [];
+
+    /// <summary>Whether a game is currently ticked.</summary>
+    [Parameter]
+    [EditorRequired]
+    public Func<GameId, bool> IsLinked { get; set; } = _ => false;
+
+    /// <summary>Raised when a cover is ticked or unticked. The caller decides what that means.</summary>
+    [Parameter]
+    public EventCallback<LinkedGameToggle> OnToggle { get; set; }
+
+    /// <summary>
+    /// Something to say about one game in place of its route, or null for the route. What the
+    /// edit screen uses to show that a game is still holding Pokémon before it is unticked.
+    /// </summary>
+    [Parameter]
+    public Func<GameId, string?>? Note { get; set; }
+
+    /// <summary>What to call the main game in the sentence shown when nothing can feed it.</summary>
+    [Parameter]
+    public string MainGameTitle { get; set; } = "the main game";
+
+    /// <summary>
+    /// Which generations the player has folded away, by number. Empty means every box is open,
+    /// which is what a first visit sees.
+    /// </summary>
+    /// <remarks>
+    /// Kept here rather than left to a details element, whose open state lives in the DOM and
+    /// not in the render tree: Blazor would not know a box had been folded, and the next render
+    /// could quietly unfold it again.
+    /// </remarks>
+    private readonly HashSet<int> _folded = [];
+
+    private bool IsOpen(int generation) => !_folded.Contains(generation);
+
+    private void ToggleGeneration(int generation)
+    {
+        if (!_folded.Remove(generation))
+        {
+            _folded.Add(generation);
+        }
+    }
+
+    private static string Counted(int games) => games == 1 ? "1 game" : $"{games} games";
+}

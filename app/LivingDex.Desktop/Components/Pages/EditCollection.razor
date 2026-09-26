@@ -1,0 +1,376 @@
+@page "/collections/{CollectionId}/edit"
+@using LivingDex.Core.Dataset
+@using LivingDex.Core.Reference
+@using LivingDex.Core.Transfers
+@using LivingDex.Core.UserData
+@inject LoadedDataset Dataset
+@inject TransferGraph Graph
+@inject UserDataStoreProvider StoreProvider
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
+<PageTitle>@(_edit is null ? "Collection" : "Editing " + _edit.Name)</PageTitle>
+
+<div class="page-header">
+    <h1>Collection settings</h1>
+    <a class="button" href="collections">All collections</a>
+</div>
+
+@if (_problem is not null)
+{
+    <DataFileNotice Problem="_problem" />
+}
+else if (_error is not null)
+{
+    @* Not about the file itself: the collection is gone, or archived. *@
+    <div class="notice notice-error" role="alert">
+        <p>@_error</p>
+    </div>
+}
+else if (_edit is null)
+{
+    <p class="muted">Reading your data file…</p>
+}
+else
+{
+    <section class="step-body">
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" value="@_edit.Name"
+                   @oninput="@(e => _edit.Name = e.Value?.ToString() ?? string.Empty)" />
+            <p class="field-hint">What you will see in the collections list.</p>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Main game</span>
+
+            @* Shown and not offered. Every record in the file is read against this game - a
+               holding game equal to it means the entry is done, and anything else means it is
+               still to transfer - so changing it would quietly reinterpret every record at once,
+               and the routes that made this game reachable might not exist from another. *@
+            <ul class="game-grid game-grid-single" role="none">
+                <li>
+                    <span class="game-card is-fixed">
+                        @if (MainGame is { } main)
+                        {
+                            <GameCover Game="main" />
+                        }
+                        else
+                        {
+                            <span class="cover-drawn">@_edit.MainGame.Value</span>
+                        }
+                    </span>
+                </li>
+            </ul>
+
+            <p class="field-hint">
+                The main game cannot be changed: everything you have recorded is read against it,
+                and a different game would silently mean something else for every entry. A second
+                collection costs nothing.
+            </p>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Linked games</span>
+            <p class="field-hint">
+                Other games you own that can send Pokémon to @MainGameTitle. A game that still
+                holds some of this collection's Pokémon cannot be unlinked until they have been
+                transferred.
+            </p>
+
+            <LinkedGamePicker Candidates="Candidates"
+                              IsLinked="@(game => _edit.IsLinked(game))"
+                              OnToggle="OnLinkToggled"
+                              Note="HoldingNote"
+                              MainGameTitle="@MainGameTitle" />
+        </div>
+
+        <div class="field">
+            <span class="field-label">Forms</span>
+            <p class="field-hint">
+                Which forms get an entry of their own. Switching a kind off hides its tiles; what
+                you have recorded about them is kept and comes back if you switch it on again.
+            </p>
+
+            <ul class="check-list">
+                <li>
+                    <label>
+                        <input type="checkbox" checked="@_edit.Forms.Regional"
+                               @onchange="@(e => SetForm(regional: (bool?)e.Value == true))" />
+                        <span>Regional forms <span class="muted">Alolan, Galarian, Hisuian, Paldean</span></span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" checked="@_edit.Forms.Functional"
+                               @onchange="@(e => SetForm(functional: (bool?)e.Value == true))" />
+                        <span>Functional forms <span class="muted">different stats, typing or ability</span></span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" checked="@_edit.Forms.Cosmetic"
+                               @onchange="@(e => SetForm(cosmetic: (bool?)e.Value == true))" />
+                        <span>Cosmetic forms <span class="muted">appearance only; adds hundreds of entries</span></span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" checked="@_edit.Forms.GenderDifferences"
+                               @onchange="@(e => SetForm(gender: (bool?)e.Value == true))" />
+                        <span>Gender differences <span class="muted">visible male and female variants</span></span>
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    @if (_edit.Problems.Count > 0)
+    {
+        <ul class="problems" role="alert">
+            @foreach (var problem in _edit.Problems)
+            {
+                <li>@problem</li>
+            }
+        </ul>
+    }
+
+    @if (_saveError is not null)
+    {
+        <div class="notice notice-error" role="alert">
+            <p>@_saveError</p>
+        </div>
+    }
+
+    <div class="actions">
+        <button class="button" @onclick="Cancel" disabled="@_saving">Cancel</button>
+        <span class="actions-spacer"></span>
+        <button class="button button-primary" @onclick="Save" disabled="@(_saving || !_edit.CanSave)">
+            @(_saving ? "Saving…" : "Save changes")
+        </button>
+    </div>
+}
+
+@* Why a game refused to be unticked. A list rather than a count: "Gible, Feebas and Munchlax
+   are in Emerald" is something a player can act on this evening. *@
+<dialog class="detail" @ref="_dialog" @onclose="@(() => _stillHeld = null)">
+    @if (_stillHeld is { } held)
+    {
+        <div class="detail-card detail-card-narrow">
+            <header class="detail-header">
+                <div class="detail-title">
+                    <h2>@GameName(held.Game) still holds @Counted(held.Targets.Count)</h2>
+                </div>
+
+                <button type="button" class="icon-button" @onclick="CloseDialog" aria-label="Close" title="Close">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <path d="M6 6l12 12M18 6L6 18" />
+                    </svg>
+                </button>
+            </header>
+
+            <section class="detail-section">
+                <p>
+                    Unlinking @GameName(held.Game) would leave these where this collection can no
+                    longer see them. Transfer them to @MainGameTitle first, or mark them as not
+                    caught, and then unlink it.
+                </p>
+
+                <ul class="held-list">
+                    @foreach (var target in held.Targets)
+                    {
+                        <li>
+                            <img class="held-sprite" src="@Dataset.SpritePath(target, SpriteSet)" alt="" loading="lazy" />
+                            <span>@Dataset.Reference.NameOf(target)</span>
+                        </li>
+                    }
+                </ul>
+            </section>
+
+            <div class="actions">
+                <span class="actions-spacer"></span>
+                <a class="button button-primary" href="collections/@CollectionId">Open the dex</a>
+            </div>
+        </div>
+    }
+</dialog>
+
+@code {
+    /// <summary>The collection to edit, from the address.</summary>
+    [Parameter]
+    public string CollectionId { get; set; } = string.Empty;
+
+    private CollectionEdit? _edit;
+    private UserDataProblem? _problem;
+    private string? _error;
+    private string? _saveError;
+    private bool _saving;
+
+    private ElementReference _dialog;
+
+    /// <summary>One game's refusal to be unlinked, while the popup explaining it is open.</summary>
+    private sealed record StillHeld(GameId Game, IReadOnlyList<DexTarget> Targets);
+
+    private StillHeld? _stillHeld;
+
+    /// <summary>
+    /// What each game is holding for this collection, read when the screen opens.
+    /// </summary>
+    /// <remarks>
+    /// Read once rather than per tick: the file does not change while this screen is open, and
+    /// the save re-checks against what is on disk anyway. The write is where the rule is
+    /// enforced; this is only how the player is asked first.
+    /// </remarks>
+    private IReadOnlyDictionary<GameId, IReadOnlyList<DexTarget>> _held =
+        new Dictionary<GameId, IReadOnlyList<DexTarget>>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var id = DexCollectionId.From(CollectionId);
+        var store = await StoreProvider.GetAsync();
+
+        UserDataDocument document;
+
+        try
+        {
+            document = (await store.LoadAsync()).Document;
+        }
+        catch (Exception exception) when (UserDataProblem.IsAboutTheFile(exception))
+        {
+            _problem = UserDataProblem.From(exception, store.BackupDirectory);
+            return;
+        }
+
+        if (document.CollectionWith(id) is not { } collection)
+        {
+            _error = "That collection is not in your data file.";
+            return;
+        }
+
+        if (collection.IsArchived)
+        {
+            _error = "That collection is archived. Restore it from the archive before changing it.";
+            return;
+        }
+
+        _edit = new CollectionEdit(
+            collection,
+            document.Collections.Where(one => one.Id != id).Select(one => one.Name));
+
+        _held = document.Records
+            .Where(record => record.Collection == id && record.Status != CaptureStatus.NotCaught)
+            .Where(record => record.HoldingGame is not null)
+            .GroupBy(record => record.HoldingGame!.Value)
+            .ToDictionary(
+                group => group.Key,
+                group => (IReadOnlyList<DexTarget>)[.. group.Select(record => record.Target)]);
+    }
+
+    private Game? MainGame => _edit is null ? null : Dataset.Reference.FindGame(_edit.MainGame);
+
+    private string MainGameTitle => MainGame?.Title ?? _edit?.MainGame.Value ?? "the main game";
+
+    private IReadOnlyList<LinkedGameCandidate> Candidates =>
+        _edit is null ? [] : LinkedGames.For(_edit.MainGame, Dataset.Reference.Games, Graph);
+
+    private string? SpriteSet => MainGame?.SpriteSet;
+
+    /// <summary>What a game is holding, for the picker to show under its cover.</summary>
+    private string? HoldingNote(GameId game) =>
+        _held.TryGetValue(game, out var targets) && targets.Count > 0
+            ? $"holds {Counted(targets.Count)}"
+            : null;
+
+    /// <summary>
+    /// A tick is taken at face value; an untick is refused while that game still holds
+    /// something, and says so rather than silently leaving the box ticked.
+    /// </summary>
+    private async Task OnLinkToggled(LinkedGameToggle toggle)
+    {
+        if (_edit is null)
+        {
+            return;
+        }
+
+        if (!toggle.Linked
+            && _held.TryGetValue(toggle.Game, out var targets)
+            && targets.Count > 0)
+        {
+            _stillHeld = new StillHeld(toggle.Game, targets);
+            StateHasChanged();
+            await JS.InvokeVoidAsync("livingdex.openDialog", _dialog);
+            return;
+        }
+
+        _edit.SetLinked(toggle.Game, toggle.Linked);
+    }
+
+    private async Task CloseDialog() => await JS.InvokeVoidAsync("livingdex.closeDialog", _dialog);
+
+    private void SetForm(bool? regional = null, bool? functional = null, bool? cosmetic = null, bool? gender = null)
+    {
+        if (_edit is null)
+        {
+            return;
+        }
+
+        _edit.Forms = new FormSelection(
+            regional ?? _edit.Forms.Regional,
+            functional ?? _edit.Forms.Functional,
+            cosmetic ?? _edit.Forms.Cosmetic,
+            gender ?? _edit.Forms.GenderDifferences);
+    }
+
+    private void Cancel() => Navigation.NavigateTo("collections");
+
+    private async Task Save()
+    {
+        if (_edit is null || !_edit.CanSave)
+        {
+            return;
+        }
+
+        _saving = true;
+        _saveError = null;
+
+        try
+        {
+            var collection = _edit.Build();
+            var store = await StoreProvider.GetAsync();
+
+            var outcome = await store.UpdateAsync(document => document.WithCollection(collection));
+
+            if (outcome == UpdateOutcome.Conflict)
+            {
+                _saveError =
+                    "Something else changed your data file while this was being saved. "
+                    + "Nothing was lost; try again.";
+                return;
+            }
+
+            Navigation.NavigateTo("collections");
+        }
+        catch (Exception exception) when (UserDataProblem.IsAboutTheFile(exception))
+        {
+            _saveError = UserDataProblem.From(exception).Sentence;
+        }
+        catch (InvalidOperationException exception)
+        {
+            // The rules in CollectionEditing, refusing against what is on disk right now. The
+            // screen asked first; this is the file having moved on since it asked.
+            _saveError = exception.Message;
+        }
+        catch (ArgumentException exception)
+        {
+            _saveError = exception.Message;
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private static string Counted(int count) => count == 1 ? "1 Pokémon" : $"{count} Pokémon";
+
+    private string GameName(GameId game) => Dataset.Reference.FindGame(game)?.Title ?? game.Value;
+}

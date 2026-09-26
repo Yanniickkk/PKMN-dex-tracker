@@ -186,6 +186,11 @@ section {
   max-width: 62ch;
 }
 
+/* The way in, under the sentence that says what this is. */
+.page-actions {
+  margin-top: 16px;
+}
+
 .muted {
   color: var(--muted);
 }
@@ -297,6 +302,75 @@ code {
   margin-top: 6px;
   font-size: 0.95em;
   opacity: 0.9;
+}
+
+/* ---- collections and the archive ---- */
+
+/*
+ * The buttons on a collection card. The card's heading is stretched over the whole card by a
+ * pseudo-element, so anything else meant to be clicked has to be lifted above it - otherwise
+ * Settings and Archive are covered by an invisible link to the dex.
+ */
+.card-actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.card-archived {
+  border-style: dashed;
+}
+
+.archive-note {
+  margin-top: 16px;
+}
+
+/* The browser's own link colours are an unreadable blue on dark, so every link outside a card
+   takes the accent. */
+.archive-note a,
+.empty a {
+  color: var(--accent);
+}
+
+.button-danger {
+  border-color: var(--danger-fg);
+  color: var(--danger-fg);
+}
+
+.button-danger:hover:not(:disabled) {
+  background: var(--danger-bg);
+}
+
+/* An archived collection saying so, above the dex it is read-only for. */
+.notice-archived {
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.notice-archived a {
+  color: var(--accent);
+}
+
+/* The main game on the edit screen: shown, not offered, so it neither hovers nor ticks. */
+.game-grid-single {
+  grid-template-columns: minmax(0, 220px);
+}
+
+.game-grid .game-card.is-fixed {
+  cursor: default;
+}
+
+.game-grid .game-card.is-fixed:hover {
+  border-color: var(--border);
+  background: var(--card-bg);
+}
+
+/* A linked game that is still holding Pokemon, so unticking it will be refused. */
+.game-grid .game-card.is-holding .reason {
+  color: var(--state-elsewhere);
 }
 
 /* ---- entry detail ---- */
@@ -1110,6 +1184,13 @@ code {
   color: var(--state-elsewhere);
 }
 
+/* The sentence the percentage cannot say, under the figures rather than beside them. */
+.progress-unreachable {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 0.95em;
+}
+
 .progress-track {
   display: flex;
   height: 6px;
@@ -1182,6 +1263,32 @@ code {
 .tile.is-done {
   border-color: var(--state-done);
   background: var(--state-done-bg);
+}
+
+/*
+ * The keyboard's place in the grid. Only drawn while the grid has the focus, because that is
+ * the only time it means anything - and it is an outline rather than a border so it does not
+ * move the tile beside it by a pixel.
+ */
+.dex-grid:focus .tile.is-cursor,
+.dex-grid:focus-within .tile.is-cursor {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* The grid is one tab stop, so its own ring is what says the keyboard has arrived. */
+.dex-grid:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/*
+ * Nothing in this collection can produce it. A dashed edge rather than a colour: the three
+ * capture states already own the colours, and this is a different kind of fact about a tile -
+ * one that says something about the games rather than about the player.
+ */
+.tile.is-unreachable {
+  border-style: dashed;
 }
 
 .tile:hover {
@@ -1340,4 +1447,32 @@ code {
 .icon-button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
+}
+
+/* ---- what a game is still holding ---- */
+
+.detail-card-narrow {
+  max-width: 52ch;
+}
+
+.held-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 6px 12px;
+}
+
+.held-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.held-sprite {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  image-rendering: pixelated;
 }

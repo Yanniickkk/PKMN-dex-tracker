@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using LivingDex.Core.Dataset;
 using LivingDex.Core.Reference;
@@ -248,5 +249,141 @@ public sealed class UserDataStoreTests : IDisposable
         await new UserDataStore(_dataFile).SaveAsync(DocumentWith("chimchar", "turtwig"), save.Revision);
 
         Assert.NotEqual(save.Revision, await store.ReadRevisionAsync());
+    }
+
+    [Fact]
+    public async Task A_file_written_before_the_archive_existed_reads_as_collections_in_use()
+    {
+        // The exact shape the app wrote until archiving was added: no archivedOn anywhere. A
+        // player's file is the one thing here that cannot be regenerated, so an older one has to
+        // keep opening.
+        await File.WriteAllTextAsync(
+            _dataFile,
+            """
+            {
+              "schemaVersion": 1,
+              "collections": [
+                {
+                  "id": "test-collection",
+                  "name": "Platinum living dex",
+                  "mainGame": "platinum",
+                  "linkedGames": [ "emerald" ],
+                  "forms": { "regional": true, "functional": true, "cosmetic": false, "genderDifferences": false }
+                }
+              ],
+              "records": []
+            }
+            """);
+
+        var collection = Assert.Single((await new UserDataStore(_dataFile).LoadAsync()).Document.Collections);
+
+        Assert.Null(collection.ArchivedOn);
+        Assert.False(collection.IsArchived);
+        Assert.Equal("Platinum living dex", collection.Name);
+    }
+
+    [Fact]
+    public async Task An_archived_collection_survives_the_round_trip_and_an_unarchived_one_writes_no_field()
+    {
+        var store = new UserDataStore(_dataFile);
+        var archived = new DateOnly(2026, 9, 26);
+        var document = DocumentWith("chimchar");
+        document = document with
+        {
+            Collections = [document.Collections[0] with { ArchivedOn = archived }],
+        };
+
+        await store.SaveAsync(document, FileRevision.None);
+        Assert.Equal(archived, (await store.LoadAsync()).Document.Collections[0].ArchivedOn);
+
+        var back = document with { Collections = [document.Collections[0] with { ArchivedOn = null }] };
+        var save = await store.SaveAsync(back, await store.ReadRevisionAsync());
+
+        Assert.Equal(SaveStatus.Saved, save.Status);
+        Assert.DoesNotContain("archivedOn", await File.ReadAllTextAsync(_dataFile), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_file_with_a_byte_order_mark_is_read_rather_than_refused()
+    {
+        // What Notepad writes. Three invisible bytes should not cost somebody their evening.
+        var document = DocumentWith("chimchar");
+        var json = JsonSerializer.Serialize(document, DatasetJson.Options);
+        await File.WriteAllTextAsync(_dataFile, json, new UTF8Encoding(encoderShouldEmitUTF8Identifier: true));
+
+        var snapshot = await new UserDataStore(_dataFile).LoadAsync();
+
+        Assert.Equal(["chimchar"], SpeciesIn(snapshot.Document));
+    }
+
+    [Fact]
+    public async Task Json_that_is_not_this_app_s_data_is_refused_rather_than_read_as_empty()
+    {
+        // Without this it would open as an empty document and the next save would write the
+        // player's real file - or somebody else's file - away.
+        await File.WriteAllTextAsync(_dataFile, """{ "something": "else" }""");
+
+        var refused = await Assert.ThrowsAsync<UserDataCorruptException>(
+            () => new UserDataStore(_dataFile).LoadAsync());
+
+        Assert.Contains("schema version", refused.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task A_file_from_a_newer_version_says_so_rather_than_calling_it_corrupt()
+    {
+        await File.WriteAllTextAsync(
+            _dataFile,
+            """{ "schemaVersion": 99, "collections": [], "records": [] }""");
+
+        var refused = await Assert.ThrowsAsync<UserDataCorruptException>(
+            () => new UserDataStore(_dataFile).LoadAsync());
+
+        Assert.Contains("newer version", refused.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("99", refused.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_hand_written_file_without_its_lists_still_opens()
+    {
+        await File.WriteAllTextAsync(_dataFile, """{ "schemaVersion": 1 }""");
+
+        var snapshot = await new UserDataStore(_dataFile).LoadAsync();
+
+        Assert.Empty(snapshot.Document.Collections);
+        Assert.Empty(snapshot.Document.Records);
+    }
+
+    [Fact]
+    public async Task A_file_something_else_is_holding_is_reported_as_busy_rather_than_broken()
+    {
+        var store = new UserDataStore(_dataFile);
+        await store.SaveAsync(DocumentWith("chimchar"), FileRevision.None);
+
+        // What a sync client does while it uploads, and what another program does while it has
+        // the file open.
+        using var held = new FileStream(_dataFile, FileMode.Open, FileAccess.Read, FileShare.None);
+
+        var busy = await Assert.ThrowsAsync<UserDataBusyException>(() => store.LoadAsync());
+
+        Assert.Equal(_dataFile, busy.Path);
+        Assert.Contains("holding", busy.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task A_save_that_cannot_reach_the_file_is_reported_as_busy_and_changes_nothing()
+    {
+        var store = new UserDataStore(_dataFile);
+        var save = await store.SaveAsync(DocumentWith("chimchar"), FileRevision.None);
+
+        using (var held = new FileStream(_dataFile, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+        {
+            await Assert.ThrowsAsync<UserDataBusyException>(
+                () => store.SaveAsync(DocumentWith("chimchar", "turtwig"), save.Revision));
+        }
+
+        // The old file is exactly what it was, and no temporary file is left lying beside it.
+        Assert.Equal(["chimchar"], SpeciesIn((await store.LoadAsync()).Document));
+        Assert.Empty(Directory.GetFiles(_directory, "*.tmp-*"));
     }
 }

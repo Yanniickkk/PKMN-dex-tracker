@@ -91,47 +91,10 @@ else
                     empty and add nothing but what you catch yourself.
                 </p>
 
-                @if (Candidates.Count == 0)
-                {
-                    <p class="muted">Nothing in this dataset can send Pokémon to @MainGameTitle.</p>
-                }
-                else
-                {
-                    @* The same boxes as the main game step. The wrapper is written twice rather
-                       than made a component: what is inside differs in type and in markup, and a
-                       generic one would be more machinery than the lines it saves. *@
-                    @foreach (var generation in Candidates.GroupBy(one => one.Game.Generation).OrderBy(group => group.Key))
-                    {
-                        var number = generation.Key;
-
-                        <section class="generation">
-                            <button type="button" class="generation-head" aria-expanded="@IsOpen(number)"
-                                    @onclick="@(() => ToggleGeneration(number))">
-                                <span class="generation-caret" aria-hidden="true">@(IsOpen(number) ? "▾" : "▸")</span>
-                                <span class="generation-name">Generation @number</span>
-                                <span class="muted">@Counted(generation.Count())</span>
-                            </button>
-
-                            @if (IsOpen(number))
-                            {
-                                <ul class="game-grid" role="none">
-                                    @foreach (var candidate in generation)
-                                    {
-                                        <li>
-                                            <label class="game-card" title="@candidate.Route">
-                                                <input type="checkbox" class="visually-hidden"
-                                                       checked="@_draft.IsLinked(candidate.Game.Id)"
-                                                       @onchange="@(e => _draft.SetLinked(candidate.Game.Id, (bool?)e.Value == true))" />
-                                                <GameCover Game="candidate.Game" />
-                                                <span class="reason">@candidate.Route</span>
-                                            </label>
-                                        </li>
-                                    }
-                                </ul>
-                            }
-                        </section>
-                    }
-                }
+                <LinkedGamePicker Candidates="Candidates"
+                                  IsLinked="@(game => _draft.IsLinked(game))"
+                                  OnToggle="@(toggle => _draft.SetLinked(toggle.Game, toggle.Linked))"
+                                  MainGameTitle="@MainGameTitle" />
                 break;
 
             case CollectionWizardStep.Forms:
@@ -243,66 +206,11 @@ else
 
     private static string Counted(int games) => games == 1 ? "1 game" : $"{games} games";
 
-    /// <summary>
-    /// Every game, in the order a player thinks of them: by generation, and inside a generation
-    /// by the day it came out.
-    /// </summary>
-    /// <remarks>
-    /// Release order, not alphabetical: Ruby and Sapphire came first, FireRed and LeafGreen a
-    /// year later, Emerald after that, and a player who grew up with them expects to read them
-    /// that way. Title breaks a tie, which is what keeps the two halves of a pair - released on
-    /// the same day - next to each other and always in the same order.
-    ///
-    /// Games, so the transfer nodes are left out of both pickers. Pokémon Bank is in the dataset
-    /// because the routes through it have to point at something, and it is not a main game -
-    /// there is nothing to fill in it - nor a linked one: a linked game is somewhere a player can
-    /// get something, and nothing was ever caught in Bank. It still does its work in the routes
-    /// the games below are offered by.
-    /// </remarks>
-    private IReadOnlyList<Game> Games =>
-        [.. Dataset.Reference.Games
-            .Where(game => game.Release != GameRelease.Service)
-            .OrderBy(game => game.Generation)
-            .ThenBy(game => game.Released ?? DateOnly.MaxValue)
-            .ThenBy(game => game.Title, StringComparer.Ordinal)];
+    private IReadOnlyList<Game> Games => LinkedGames.Playable(Dataset.Reference.Games);
 
-    /// <summary>One game that can feed the main game, and how what it sends gets there.</summary>
-    private sealed record Candidate(Game Game, string Route);
-
-    /// <summary>
-    /// Every game the transfer graph can route into the main game, main game excluded.
-    /// </summary>
-    /// <remarks>
-    /// Only those: a game with no route is not a choice the player can make, and a picker full of
-    /// covers that refuse to be ticked is a list of dead ends to read through. What is left is
-    /// short, and every card in it does something.
-    /// </remarks>
-    private IReadOnlyList<Candidate> Candidates
-    {
-        get
-        {
-            if (_draft.MainGame is not { } main)
-            {
-                return [];
-            }
-
-            return
-            [
-                .. Games
-                    .Where(game => game.Id != main)
-                    .Select(game => (Game: game, Route: RouteInto(game, main)))
-                    .Where(one => one.Route is not null)
-                    .Select(one => new Candidate(one.Game, one.Route!)),
-            ];
-        }
-    }
-
-    /// <summary>How a game reaches the main game, or null when it cannot.</summary>
-    private string? RouteInto(Game feeder, GameId main)
-    {
-        var result = Graph.RoutesBetween(feeder.Id, main);
-        return result.Shortest is { } route ? $"via {TransferNames.Of(route)}" : null;
-    }
+    /// <summary>The games that can feed whatever main game is chosen so far.</summary>
+    private IReadOnlyList<LinkedGameCandidate> Candidates =>
+        _draft.MainGame is { } main ? LinkedGames.For(main, Dataset.Reference.Games, Graph) : [];
 
     private string MainGameTitle =>
         _draft.MainGame is { } main
@@ -318,7 +226,7 @@ else
             var snapshot = await store.LoadAsync();
             _draft = new CollectionDraft(snapshot.Document.Collections.Select(one => one.Name));
         }
-        catch (UserDataCorruptException)
+        catch (Exception exception) when (UserDataProblem.IsAboutTheFile(exception))
         {
             // A name clash is the only thing the existing collections are needed for, so an
             // unreadable file should not stop someone making their first collection.
@@ -392,41 +300,31 @@ else
 
         try
         {
-            await SaveAsync(_draft.Build());
+            var collection = _draft.Build();
+            var store = await StoreProvider.GetAsync();
+
+            // Adding a collection only ever appends, so a save refused because the file moved on
+            // is retried against what is there now without losing anyone's work.
+            var outcome = await store.UpdateAsync(
+                document => document with { Collections = [.. document.Collections, collection] });
+
+            if (outcome == UpdateOutcome.Conflict)
+            {
+                _saveError =
+                    "Something else changed your data file while this was being saved. "
+                    + "Nothing was lost; try again.";
+                return;
+            }
+
             Navigation.NavigateTo("collections");
         }
-        catch (UserDataCorruptException exception)
+        catch (Exception exception) when (UserDataProblem.IsAboutTheFile(exception))
         {
-            _saveError = $"Your data file could not be read, so nothing was saved. {exception.Message}";
+            _saveError = UserDataProblem.From(exception).Sentence;
         }
         finally
         {
             _saving = false;
         }
-    }
-
-    private async Task SaveAsync(DexCollection collection)
-    {
-        var store = await StoreProvider.GetAsync();
-
-        // Adding a collection only ever appends, so a save refused because the file moved on can
-        // be retried against what is there now without losing anyone's work. Twice is enough:
-        // a third failure means something is writing continuously, and the player should know.
-        for (var attempt = 0; attempt < 2; attempt++)
-        {
-            var snapshot = await store.LoadAsync();
-            var document = snapshot.Document with
-            {
-                Collections = [.. snapshot.Document.Collections, collection],
-            };
-
-            var result = await store.SaveAsync(document, snapshot.Revision);
-            if (result.Status == SaveStatus.Saved)
-            {
-                return;
-            }
-        }
-
-        _saveError = "Something else changed your data file while this was being saved. Nothing was lost; try again.";
     }
 }

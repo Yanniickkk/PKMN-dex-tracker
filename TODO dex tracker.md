@@ -400,14 +400,7 @@ pictures opens no client at all, and the app needed no change, because the datas
 where a folder of pictures came from._
 
 
-- [ ] Multiple collections: list, switch, rename, delete
-- [ ] Editing a collection's settings after creation, records preserved
-- [ ] Dataset version and build date shown somewhere in the UI
-- [ ] Unobtainable entries handled per the decision in the spec's open questions
-- [ ] Keyboard navigation through the grid and popup
-- [ ] Empty and error states: no dataset, corrupt data file, cloud file locked
 - [ ] Export a collection to CSV
-- [ ] Collections list can be filtered on main game, name
 - [ ] Pokemon GO as a one-way source into HOME
   - Turned up while HOME was being written, and it is the Dream Radar's problem again with a
     bigger source: GO sends into HOME one way, some of what it sends has no other route, and it

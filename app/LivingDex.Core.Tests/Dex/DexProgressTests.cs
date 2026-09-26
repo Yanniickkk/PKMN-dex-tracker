@@ -123,4 +123,54 @@ public class DexProgressTests
         Assert.Equal(0, progress.PercentComplete);
         Assert.False(progress.IsComplete);
     }
+
+    [Fact]
+    public void Nothing_is_unreachable_until_something_is_asked()
+    {
+        var progress = DexProgress.Of(ThreeLines, CaptureIndex.Empty);
+
+        Assert.Equal(0, progress.Unreachable);
+    }
+
+    [Fact]
+    public void What_no_game_in_the_collection_can_produce_is_counted_apart_and_still_in_the_total()
+    {
+        var progress = DexProgress.Of(
+            ThreeLines,
+            CaptureIndex.Empty,
+            target => target.Species.Value != "piplup");
+
+        Assert.Equal(3, progress.Total);
+        Assert.Equal(1, progress.Unreachable);
+        Assert.Equal(3, progress.NotCaught);
+    }
+
+    [Fact]
+    public void An_unreachable_entry_that_is_home_anyway_is_not_a_hole()
+    {
+        // A Mew from a distribution nobody can attend any more is somebody's Mew.
+        var captures = CaptureIndex.For(
+            Mine,
+            [CaptureRecord.CaughtIn(Mine, ThreeLines[2].Target, Platinum, Platinum)]);
+
+        var progress = DexProgress.Of(ThreeLines, captures, target => target.Species.Value != "piplup");
+
+        Assert.Equal(1, progress.InMainGame);
+        Assert.Equal(0, progress.Unreachable);
+    }
+
+    [Fact]
+    public void One_still_in_a_linked_game_is_counted_as_unreachable_if_that_is_what_it_is()
+    {
+        // Caught in Emerald and not yet moved: still to do, and still nothing here can produce
+        // another. The figure is about what is left, and this is left.
+        var captures = CaptureIndex.For(
+            Mine,
+            [CaptureRecord.CaughtIn(Mine, ThreeLines[2].Target, Emerald, Platinum)]);
+
+        var progress = DexProgress.Of(ThreeLines, captures, target => target.Species.Value != "piplup");
+
+        Assert.Equal(1, progress.CaughtElsewhere);
+        Assert.Equal(1, progress.Unreachable);
+    }
 }

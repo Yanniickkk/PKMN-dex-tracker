@@ -39,11 +39,23 @@ public sealed record DexFilter
     /// </remarks>
     public IReadOnlyList<GameId> AvailableIn { get; init; } = [];
 
+    /// <summary>
+    /// Leave out the entries nothing in this collection can produce.
+    /// </summary>
+    /// <remarks>
+    /// Different from ticking every game under <see cref="AvailableIn"/>, which asks the same
+    /// question and answers it the other way up: this one narrows a list a player is working
+    /// through, rather than being the thing they are looking at. It is what turns "584 entries,
+    /// 36 of them impossible here" into the list they can actually act on.
+    /// </remarks>
+    public bool HideUnreachable { get; init; }
+
     /// <summary>True when nothing is ticked and nothing is typed.</summary>
     public bool IsEmpty =>
         string.IsNullOrWhiteSpace(Search)
         && !StillToCatch
         && !NotYetTransferred
+        && !HideUnreachable
         && AvailableIn.Count == 0;
 
     /// <summary>
@@ -55,14 +67,29 @@ public sealed record DexFilter
     /// Whether one game has a known way to obtain a target. Passed in rather than looked up
     /// here, so the rules can be tested without a dataset.
     /// </param>
+    /// <param name="isReachable">
+    /// Whether anything in this collection can produce a target. Required by
+    /// <see cref="HideUnreachable"/> and unused otherwise.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    /// <see cref="HideUnreachable"/> is set and nothing was passed to answer it. Refused rather
+    /// than treated as "everything is reachable", which would quietly show the entries the
+    /// player asked to be rid of.
+    /// </exception>
     public IReadOnlyList<DexLine> Apply(
         IReadOnlyList<DexLine> lines,
         CaptureIndex captures,
-        Func<GameId, DexTarget, bool> isAvailable)
+        Func<GameId, DexTarget, bool> isAvailable,
+        Func<DexTarget, bool>? isReachable = null)
     {
         ArgumentNullException.ThrowIfNull(lines);
         ArgumentNullException.ThrowIfNull(captures);
         ArgumentNullException.ThrowIfNull(isAvailable);
+
+        if (HideUnreachable)
+        {
+            ArgumentNullException.ThrowIfNull(isReachable);
+        }
 
         if (IsEmpty)
         {
@@ -74,7 +101,8 @@ public sealed record DexFilter
         return [.. lines.Where(line =>
             MatchesSearch(line, needle)
             && MatchesStatus(captures.StatusOf(line.Target))
-            && MatchesAvailability(line, isAvailable))];
+            && MatchesAvailability(line, isAvailable)
+            && (!HideUnreachable || isReachable!(line.Target)))];
     }
 
     /// <summary>

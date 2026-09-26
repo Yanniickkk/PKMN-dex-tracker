@@ -186,4 +186,42 @@ public class DexFilterTests
     {
         Assert.Empty(new DexFilter { Search = "mew" }.Apply(Dex, Captures, Everything));
     }
+
+    [Fact]
+    public void Hiding_what_cannot_be_got_leaves_the_rest()
+    {
+        var filter = new DexFilter { HideUnreachable = true };
+
+        var shown = filter.Apply(Dex, Captures, Everything, target => target != Piplup.Target);
+
+        Assert.Equal([Turtwig, Chimchar], shown);
+        Assert.False(filter.IsEmpty);
+    }
+
+    [Fact]
+    public void Hiding_without_anything_to_answer_it_is_refused_rather_than_ignored()
+    {
+        // Treating a missing answer as "everything is reachable" would quietly show the entries
+        // the player asked to be rid of.
+        var filter = new DexFilter { HideUnreachable = true };
+
+        Assert.Throws<ArgumentNullException>(() => filter.Apply(Dex, Captures, Everything));
+    }
+
+    [Fact]
+    public void Not_hiding_asks_nothing_and_needs_nothing()
+    {
+        var filter = new DexFilter { Search = "chim" };
+
+        Assert.Equal([Chimchar], filter.Apply(Dex, Captures, Everything));
+    }
+
+    [Fact]
+    public void Hiding_narrows_what_the_other_switches_widen()
+    {
+        // Still to catch would show Piplup; it is also the one nothing here can produce.
+        var filter = new DexFilter { StillToCatch = true, HideUnreachable = true };
+
+        Assert.Empty(filter.Apply(Dex, Captures, Everything, target => target != Piplup.Target));
+    }
 }

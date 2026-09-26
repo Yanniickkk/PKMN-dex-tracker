@@ -6259,3 +6259,200 @@ appliances among them, every one with its picture. 757 pipeline tests, 261 app t
   - **What the pair came to: 5,025 records for Scarlet and 5,049 for Violet** - 4,225 and 4,249
     wild, 318 gifts, 21 trades, 377 evolutions, 84 form changes - over 843 dex entries, 664
     species and 171 forms.
+
+- [x] Multiple collections: list, switch, rename, delete — 2026-09-26
+- [x] Editing a collection's settings after creation, records preserved — 2026-09-26
+- [x] Collections list can be filtered on main game, name — 2026-09-26
+  - **Three items and one piece of work**, because they are three views of the same gap: the app
+    could make a collection and then never touch it again. A wrongly named one was named that
+    for good, and a wrongly made one stayed on the list for ever.
+  - **Yannick decided the shape, and each decision is a rule in the data rather than a disabled
+    button.** `CollectionEditing` in Core holds all four, beside `CaptureEditing`, which does
+    the same for one entry.
+  - **The main game cannot be changed, and that is the one that is worth the most.** Every
+    record in the file is read *against* it - a holding game equal to it means the entry is
+    done, anything else means it is still to transfer - so a new main game would silently
+    reinterpret every record the collection has at once, and the routes that made the old one
+    reachable might not exist from the new one. `CollectionEdit` has no setter for it, and the
+    screen shows the cover with the reason under it. A second collection costs nothing; a
+    hundred misread records cannot be undone.
+  - **A linked game may only be unlinked when it holds nothing.** Unticking Emerald while it
+    still has three of this collection's Pokemon would leave three records pointing at a game
+    the collection no longer knows about - caught somewhere the grid cannot name, and the route
+    that was going to bring them home gone from the screen that explains it. So the picker says
+    **"holds 3 Pokemon"** under the cover before it is touched, and unticking opens a popup that
+    **names them** - Torchic, Mudkip and Treecko, with their pictures - and says to transfer
+    them first. Asked where the player is, enforced where the file is written: the save re-checks
+    against what is on disk, because another machine can have moved the file in between.
+  - **Deleting is two steps and the first one is reversible.** A collection is archived, which
+    takes it off the list and keeps everything; the **Archive** page is where it can be restored
+    or, only there, deleted for good. `CollectionEditing.Without` refuses a collection that is
+    not archived, so the rule is the data's rather than the button's. The delete takes the
+    records with it and says how many first - a record names its collection and nothing else, so
+    left behind they would be rows no screen can show.
+  - **An archived collection is read, not filled in.** Its dex still opens from the archive, with
+    a banner saying when it was put away, and every control that would write is off - down to
+    `Write` itself, so a keyboard or a stale render cannot get round the disabled buttons.
+  - `DexCollection` grew `ArchivedOn`, a date rather than a flag, because the archive is a page
+    a person reads: "archived on 26 September" answers what a tick never does. It is optional,
+    and a test pins that **a data file written before this existed still opens**, with every
+    collection in it in use - which is what they all were.
+  - **`UserDataStore.UpdateAsync` is the other thing that came out of it.** Four screens now
+    write, and every one needs load, change, save, and try again if the file moved on, because a
+    refused save is never merged. It was written out by hand in two places and about to be in
+    four; it is one method with its own tests now, and handing back the document it was given
+    means "nothing to do", so a screen that was only looked at rotates no backup.
+  - **The game picker is shared** between the wizard and the edit screen, so the two cannot come
+    to offer different games. `LinkedGames.For` is the one answer to "what can feed this".
+  - **One real bug, found in the running app rather than in a test.** Unticking a game that
+    refuses to be unlinked left the tick *off* on screen: the browser had already unticked the
+    box, and Blazor, diffing against its own last render which still said "ticked", saw nothing
+    to change. The model and the screen then disagreed. Fixed at the source rather than papered
+    over - the label handles the click and prevents its default, so the box is never toggled by
+    the browser at all and only ever shows what the model says.
+  - _And one thing seen once and not reproduced: after a restore, the archive page kept its
+    "working" state over a file that had already been written correctly. Two later attempts were
+    clean, the data was right every time, and navigating away fixed it. The three actions now
+    call `StateHasChanged` when they finish rather than relying on the render Blazor queues, which
+    is a screen stuck on "working" traded for a wasted render._
+  - Smoke test discipline kept and checked rather than asserted: the settings file was hashed
+    and backed up (D912EEA4..., 106 bytes), pointed at a scratch data file for the duration and
+    **restored byte for byte**. The user's own data file was hashed before and after - 07FC5225...,
+    4452 bytes, mtime 22:28:01 on 25 September - and is untouched. Zero instances were running
+    before; the test started and stopped its own, four times over, and stopped nothing else.
+  - 298 app tests, up from 262.
+
+- [x] Dataset version and build date shown somewhere in the UI — 2026-09-26
+  - On the home page, which was rewritten around it: **`0.1.0`, built 26 September 2026**, so a
+    bug report can name the exact data it came from. That is what `DatasetStamp` has been for
+    since Phase 0.6 - its own docstring says "the UI surfaces it (Phase 3)" - and until now
+    nothing read it.
+  - Beside it, what the build actually knows, because the stamp alone answers "which data" and
+    not "how much": **38 games, plus Pokémon Bank and Pokémon HOME to transfer through; 1,025
+    species and 417 forms; 11,663 sprites and renders.** The two services are named rather than
+    counted - "2 services" leaves a reader wondering which - and every figure is read off
+    tables already in memory.
+  - **And the page stopped lying.** It had said "Phase 0 is done… There is no dataset and no dex
+    grid yet" since before the first game was written; the README said "Current state: **Phase
+    0**", and the pipeline section said the game registry "is empty until Phase 2". Forty games
+    later all three were false. The home page now says what the app is in one sentence and
+    offers the way in, and the data-file block it always had is still underneath.
+  - The state line grew what the archive added: collections, records, and "n archived" when
+    there are any.
+
+- [x] Unobtainable entries handled per the decision in the spec's open questions — 2026-09-26
+  - **The spec is not in this repository, so the decision was taken again, by Yannick, against
+    measured numbers rather than from memory.** A tile is a target - a species or a form - and
+    the question is how many of them a collection can never fill: Sword alone 36 of 584, Gold
+    29, Scarlet 31, X 19, Platinum 9, and Legends: Arceus the only game with none. Link the
+    other half of a pair and Sword's 36 becomes **1** and Scarlet's 31 becomes **2**. So it is
+    at most about 6% of a list, and it is exactly the 6% that puts "done" out of reach for good.
+  - **Decided: they stay in the total, and a second line says how many.** "0 of 387 in Emerald"
+    with "**141 of these are out of reach in your games**" under it, and a switch beside the
+    filters - *Hide what I cannot get* - which adds ", and hidden below" to the sentence and
+    says "Showing 246 of 387". The total is the dex's; a total that quietly dropped the awkward
+    entries would be a different number wearing the dex's name.
+  - **The question is asked of the collection, not of the main game, and it is the same question
+    the filters ask.** `ReachableHere` is `Availability.In` over the main game and every linked
+    one, which is what the "Available in" switches are built on - so the figure above the grid
+    and the switches beside it can never disagree about one entry. It follows from that that the
+    number *falls when a transfer makes an evolution reachable*, because `Availability` counts
+    what the player already owns.
+  - **And that is why it is 141 rather than the 9 the dataset flags.** `unobtainableReason` is a
+    sentence the pipeline wrote where it had one to write; `Availability` answers whether a
+    player could actually follow a way, and an Emerald player cannot get a Bulbasaur, a Pikachu
+    they can. Both are right and they answer different questions. The one on screen is the one
+    the popup already gives for the same tile: "No recorded way to get this in your games."
+  - **Only what is left counts.** An entry sitting in the main game is done however it got there
+    - a Mew from a 2006 distribution is somebody's Mew, not a hole in their dex - so it is not
+    counted as out of reach. One still in a linked game is counted, because it is still to do.
+  - **The tile says it too, with a dashed edge**, so the figure can be seen and not only read.
+    Colour was not used: the three capture states own the colours, and this is a different kind
+    of fact - one about the games rather than about the player.
+  - `DexFilter.HideUnreachable` **refuses to run without something to answer it** rather than
+    treating a missing answer as "everything is reachable", which would quietly show the entries
+    the player asked to be rid of.
+  - Checked in the running app against three collections: Emerald with Ruby linked, 141 of 387
+    and 246 shown with the switch on; Scarlet with Violet linked, **11 of 444** in the Paldea
+    dex - which is step 8's ten orphans and one more, arriving at the same answer from the other
+    end of the project.
+  - 306 app tests, up from 302.
+
+- [x] Keyboard navigation through the grid and popup — 2026-09-26
+  - **The popup was already done, and saying why is the point:** it is a `<dialog>` opened with
+    `showModal()`, so Escape, the focus trap and giving the focus back to whatever opened it are
+    the browser's, and every control in it - the three states, the held-in list, the date, the
+    note, the breadcrumb and the links into an evolution's earlier stage - is a real button or
+    field and has always been reachable by Tab. Checked rather than assumed.
+  - **The grid was the work, and the shape it needed comes from `Virtualize`.** Only the rows
+    being scrolled past are rendered, so the tile a player is moving towards *does not exist*
+    and cannot be given focus. So the grid is **one tab stop holding a cursor**: the focus stays
+    on the grid, `aria-activedescendant` names the current cell, the tiles' own buttons are
+    taken out of the tab order, and `grid.js` scrolls **by row number rather than by element**.
+    That also fixes something nobody had complained about yet: a National Dex grid was 1,010
+    tab stops.
+  - Arrows move, Home and End go to the ends of the row and with Control to the ends of the dex,
+    Page Up and Page Down move by **a screenful asked of the browser rather than a guessed
+    number**, Enter opens the detail and Space ticks. Clamped rather than wrapped: wrapping off
+    the end of a row is what a list does, and a player counting columns would have the count
+    shift under them.
+  - **Blazor cannot decide `preventDefault` per key** - it is fixed when the element renders -
+    and stopping every key would swallow Tab, which is the one key a keyboard user must always
+    have. So a listener in `grid.js` does it for the grid's own keys and nothing else.
+  - **Two things the running app found that no test would have.**
+  - _The first: a tick redraws its tile, and if a click had left the focus on that tile's own
+    button, the button went with it and took the focus to nowhere - so the keyboard died at the
+    first Space. Every click now hands the focus back to the grid first, which is also what
+    makes the modal give it back to the grid rather than to a button that may not exist by then._
+  - _The second: the hook ran before the grid had been drawn and **crashed the app** with
+    "Cannot read properties of undefined". A render where the grid is not drawn - "Loading…"
+    while the data file is read, or a filter matching nothing - leaves the element reference
+    holding nothing, and a count of what *would* be shown is not the same question as whether it
+    has been drawn. It is checked on both sides now, and the hook is attempted until it reports
+    that it worked._
+  - Checked in the app end to end: Tab in, arrows to Weedle, End to the end of the row, Page Down
+    six rows to Slowbro, Enter to read it, Space to tick one and exactly one, Escape back to the
+    grid with the focus on it, and **Shift+Tab out again**.
+
+- [x] Empty and error states: no dataset, corrupt data file, cloud file locked — 2026-09-26
+  - **Three cases were named and all three turned out to be saying the wrong thing**, in one way
+    or another, and the sharpest of them was the one the line calls "cloud file locked".
+  - **A file a sync client is holding was being reported as corrupt.** `LoadAsync` caught
+    `IOException` and threw `UserDataCorruptException`, so OneDrive having the file for half a
+    second told the player their data was broken. That is the worst sentence this app could
+    say, and it was in the one place a player would believe it. There is a
+    `UserDataBusyException` now: a read is retried three times first, because a sync client
+    holds a file for a moment rather than for good, and what is left is reported as busy with
+    the only advice that helps - wait, and try again. **Nothing has been changed** is part of
+    the message, because that is the thing a player actually wants to know.
+  - The same distinction on the way out: a write that cannot reach the file, and a lock another
+    copy of the app holds for the whole five seconds, used to escape as a raw `IOException`
+    into the crash dialog. Both are busy now, both say so, and the swap being atomic means the
+    old file is exactly what it was - which a test pins, along with no temporary file left
+    beside it.
+  - **A file that is JSON and is not ours used to read as an empty document**, because every
+    field was optional. A settings file, half a download, anything: it would open as a
+    collection-less dex and **the next save would write it away**. The schema version is
+    checked now - present, and not from the future - and a file from a newer version gets its
+    own sentence rather than being called corrupt, because two machines sharing one file
+    through a sync folder with one of them updated is nobody's mistake.
+  - **A byte order mark is skipped.** Every file this app writes is plain UTF-8; Notepad puts
+    three invisible bytes in front, and a hand-edited file coming back as "not valid user data"
+    over them is a bad hour for whoever did the editing. _This one was found by the smoke test
+    of the collections work, which is the only reason it is here._
+  - **Every screen said it differently, so now one place says it.** `UserDataProblem` turns a
+    failure into a headline, a detail and **what to do about it** - the part that was missing
+    everywhere - and `DataFileNotice` draws it. Five screens use it, and the sentence for a busy
+    file is no longer "your data file could not be read" on three of them and something else on
+    the other two.
+  - **"No dataset" cannot mean what the line assumed.** The dataset is embedded in the exe, so
+    an empty one is a build that was made wrong rather than a state a screen can talk a player
+    out of. It is split in two: a dataset that is *absent* still starts, and the home page says
+    so plainly; a dataset that is *there and unreadable* stops the app before the window opens,
+    with a message saying it is the build rather than their data. The grid and the wizard
+    already had their own empty states, and they still do.
+  - Checked in the running app, which is where the wording gets decided: a file that is not ours
+    (the notice names the missing schema version and points at the backups folder), and a file
+    held open with `FileShare.None` while the app was asked to read it - the busy notice, then
+    the list again the moment it was let go.
+  - 312 app tests, up from 306.

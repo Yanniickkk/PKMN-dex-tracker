@@ -1,5 +1,8 @@
 @page "/"
+@using LivingDex.Core.Dataset
+@using LivingDex.Core.Reference
 @using LivingDex.Core.UserData
+@inject LoadedDataset Dataset
 @inject UserDataStoreProvider StoreProvider
 
 <PageTitle>Living Dex Tracker</PageTitle>
@@ -7,9 +10,53 @@
 <h1>Living Dex Tracker</h1>
 
 <p class="lead">
-    Phase 0 is done: the schema, the transfer graph, the dex builder, storage and the data
-    pipeline. There is no dataset and no dex grid yet.
+    One box of every Pokémon, across every mainline game. Pick the game you are filling, say
+    which others you own, and this answers where each one comes from and how it gets home.
 </p>
+
+<div class="page-actions">
+    <a class="button button-primary" href="collections">
+        @(_collections is null or 0 ? "Start a collection" : "Your collections")
+    </a>
+</div>
+
+@* A build with no dataset cannot do anything at all, so it is said here rather than left to be
+   discovered one empty screen at a time. It can only happen to a build that was made wrong -
+   the dataset is embedded in the app - which is exactly why the message points at the build. *@
+@if (Dataset.IsEmpty)
+{
+    <div class="notice notice-error" role="alert">
+        <p>This build has no dataset in it, so there are no games and nothing to fill.</p>
+        <p class="notice-detail">
+            Run the pipeline and build the app again; the dataset is compiled into the exe.
+        </p>
+    </div>
+}
+
+<DataFileNotice Problem="_problem" />
+
+<section>
+    @* Shown because a bug report has to be able to name the exact data it came from, which is
+       what the stamp is for. The counts are here because they are the honest answer to "what
+       does this build know", and they cost one pass over tables that are already in memory. *@
+    <h2>What this build knows</h2>
+    <dl>
+        <dt>Dataset</dt>
+        <dd>
+            <code>@Dataset.Stamp.Version</code>
+            <span class="muted">built @Dataset.Stamp.BuiltOn.ToString("d MMMM yyyy", CultureInfo.InvariantCulture)</span>
+        </dd>
+
+        <dt>Games</dt>
+        <dd>@Games, plus @Services to transfer through</dd>
+
+        <dt>Pokémon</dt>
+        <dd>@Species species and @Forms forms</dd>
+
+        <dt>Pictures</dt>
+        <dd>@Pictures</dd>
+    </dl>
+</section>
 
 <section>
     <h2>Where your data lives</h2>
@@ -29,6 +76,31 @@
     private string _dataFile = "waiting for the location…";
     private string _backupDirectory = string.Empty;
     private string _state = "waiting…";
+    private int? _collections;
+    private UserDataProblem? _problem;
+
+    /// <summary>The games a dex can be kept in: everything but the transfer services.</summary>
+    private int Games => Dataset.Reference.Games.Count(game => game.Release != GameRelease.Service);
+
+    /// <summary>
+    /// Pokémon Bank and Pokémon HOME, named rather than counted: they are in the dataset so the
+    /// routes have something to point at, and "2 services" would leave a reader wondering which.
+    /// </summary>
+    private string Services =>
+        string.Join(
+            " and ",
+            Dataset.Reference.Games
+                .Where(game => game.Release == GameRelease.Service)
+                .Select(game => game.Title));
+
+    private string Species => Dataset.Reference.Species.Count.ToString("N0", CultureInfo.InvariantCulture);
+
+    private string Forms => Dataset.Reference.Forms.Count.ToString("N0", CultureInfo.InvariantCulture);
+
+    private string Pictures =>
+        Dataset.Sprites.Count == 0
+            ? "none shipped"
+            : $"{Dataset.Sprites.Count.ToString("N0", CultureInfo.InvariantCulture)} sprites and renders";
 
     protected override async Task OnInitializedAsync()
     {
@@ -41,14 +113,30 @@
         try
         {
             var snapshot = await store.LoadAsync();
+            var document = snapshot.Document;
+            _collections = document.InUse().Count;
 
-            _state = snapshot.Revision.IsMissing
-                ? "no data file yet; it is written on the first save"
-                : $"{snapshot.Document.Collections.Count} collection(s), {snapshot.Document.Records.Count} record(s) at revision {snapshot.Revision}";
+            if (snapshot.Revision.IsMissing)
+            {
+                _state = "no data file yet; it is written on the first save";
+                return;
+            }
+
+            var archived = document.ArchivedCollections().Count;
+
+            _state =
+                $"{Counted(_collections.Value, "collection")}, "
+                + $"{Counted(document.Records.Count, "record")}"
+                + (archived > 0 ? $", {archived} archived" : string.Empty)
+                + $" at revision {snapshot.Revision}";
         }
-        catch (UserDataCorruptException exception)
+        catch (Exception exception) when (UserDataProblem.IsAboutTheFile(exception))
         {
-            _state = $"the data file could not be read: {exception.Message}";
+            _problem = UserDataProblem.From(exception, store.BackupDirectory);
+            _state = "not readable right now; see above";
         }
     }
+
+    private static string Counted(int count, string noun) =>
+        count == 1 ? $"1 {noun}" : $"{count} {noun}s";
 }

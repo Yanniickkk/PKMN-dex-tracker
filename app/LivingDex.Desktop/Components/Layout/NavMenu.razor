@@ -1,4 +1,4 @@
-@* The left-hand navigation. One entry for now; the grid, settings and the rest land in later phases. *@
+@* The left-hand navigation. The collections in use, and the ones put away. *@
 @using LivingDex.Core.UserData
 @inject AppSettingsStore Settings
 @inject IJSRuntime JS
@@ -47,6 +47,18 @@
                     </svg>
                 </span>
                 Collections
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link" href="archives">
+                <span class="nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="4" rx="1" />
+                        <path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8" />
+                        <path d="M10 12h4" />
+                    </svg>
+                </span>
+                Archive
             </NavLink>
         </li>
     </ul>

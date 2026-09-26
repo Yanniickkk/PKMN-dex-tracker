@@ -4,8 +4,11 @@ A Windows desktop app for tracking a living Pokédex across every mainline game,
 data pipeline that feeds it. Work is tracked in [`TODO dex tracker.md`](TODO%20dex%20tracker.md);
 finished items move to [`DONE dex tracker.md`](DONE%20dex%20tracker.md).
 
-Current state: **Phase 0**. The app shell runs, the reference schema is defined, and the
-player's data file reads and writes safely. There is no dataset and no dex UI yet.
+Current state: **Phase 3**, polish. Every mainline game is in the dataset - 38 of them, plus
+Pokemon Bank and Pokemon HOME for the routes to point at - and the app builds a living dex for
+any one of them: the grid, the detail popup with every way of getting an entry, the transfer
+routes, and collections that can be made, edited, archived and deleted. What is left is the
+list in `TODO dex tracker.md`.
 
 ## Stack
 
@@ -145,9 +148,9 @@ Rebuild one game, leaving every other game file alone:
 ./.venv/Scripts/livingdex-pipeline.exe build --game platinum
 ```
 
-Per-game builders are registered in `pipeline/src/livingdex_pipeline/games.py`; that registry
-is empty until Phase 2, so `--game` currently says which games it does know rather than writing
-an empty file.
+Per-game builders are registered in `pipeline/src/livingdex_pipeline/games.py`, one module per
+game under `gamedefs/`; a name that registry does not know is answered with the list of the ones
+it does.
 
 ## Fetching politely
 

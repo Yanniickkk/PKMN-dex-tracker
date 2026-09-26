@@ -1,0 +1,21 @@
+@* What every screen shows when the player's data file cannot be read or written. Shared, so
+   the same failure cannot read as two different problems on two screens. *@
+
+@if (Problem is { } problem)
+{
+    <div class="notice notice-error" role="alert">
+        <p>@problem.Headline</p>
+        <p class="notice-detail">@problem.Detail</p>
+
+        @if (problem.Advice is { } advice)
+        {
+            <p class="notice-detail">@advice</p>
+        }
+    </div>
+}
+
+@code {
+    /// <summary>What went wrong, or null when nothing has.</summary>
+    [Parameter]
+    public UserDataProblem? Problem { get; set; }
+}

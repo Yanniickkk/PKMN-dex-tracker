@@ -50,6 +50,43 @@ public enum SaveStatus
 /// </param>
 public sealed record SaveResult(SaveStatus Status, FileRevision Revision, UserDataDocument? OnDisk);
 
+/// <summary>
+/// Thrown when the data file is there but cannot be opened right now.
+/// </summary>
+/// <remarks>
+/// A file a sync client is holding, or one open in another program, is not a broken file, and
+/// telling a player their data is corrupt because OneDrive had it for a second is the worst
+/// thing this app could say. Trying again in a moment is the right advice, and it is the
+/// difference between this and <see cref="UserDataCorruptException"/>.
+/// </remarks>
+public sealed class UserDataBusyException : Exception
+{
+    public UserDataBusyException()
+    {
+    }
+
+    public UserDataBusyException(string message)
+        : base(message)
+    {
+    }
+
+    public UserDataBusyException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
+
+    /// <summary>The file that was busy.</summary>
+    public string? Path { get; private init; }
+
+    /// <summary>Names the file in both the message and <see cref="Path"/>.</summary>
+    /// <remarks>
+    /// The message says what and where, and nothing else: whoever shows it puts its own line
+    /// above it, and a message that repeated that line would be read twice and believed once.
+    /// </remarks>
+    public static UserDataBusyException ForFile(string path, Exception inner) =>
+        new($"Something else is holding {path}.", inner) { Path = path };
+}
+
 /// <summary>Thrown when the data file exists but cannot be read as user data.</summary>
 public sealed class UserDataCorruptException : Exception
 {
@@ -70,9 +107,19 @@ public sealed class UserDataCorruptException : Exception
     /// <summary>The file that could not be read, when the failure was about a specific one.</summary>
     public string? Path { get; private init; }
 
-    /// <summary>Names the offending file in both the message and <see cref="Path"/>.</summary>
-    public static UserDataCorruptException ForFile(string path, Exception inner) =>
-        new($"The data file at {path} could not be read.", inner) { Path = path };
+    /// <summary>
+    /// The file was written by a version of this app that knows a shape this one does not.
+    /// </summary>
+    /// <remarks>
+    /// The one case here that is nobody's mistake: two machines sharing one file through a sync
+    /// folder, one of them updated. Guessing at the parts it does understand would write the
+    /// rest away, so it refuses, and says what to do about it.
+    /// </remarks>
+    public static UserDataCorruptException FromNewerVersion(int found, int known) =>
+        new(
+            $"This data file was written by a newer version of Living Dex Tracker "
+            + $"(it is version {found}, and this build understands {known}). "
+            + "Update the app to open it; nothing has been changed.");
 }
 
 /// <summary>
@@ -106,6 +153,9 @@ public sealed class UserDataStore
 {
     private static readonly TimeSpan LockTimeout = TimeSpan.FromSeconds(5);
     private static readonly TimeSpan LockRetryDelay = TimeSpan.FromMilliseconds(50);
+
+    /// <summary>How many times a read is tried before the file counts as busy.</summary>
+    private const int ReadAttempts = 3;
 
     private readonly string _path;
     private readonly int _backupsToKeep;
@@ -144,15 +194,7 @@ public sealed class UserDataStore
             return new UserDataSnapshot(UserDataDocument.Empty, FileRevision.None);
         }
 
-        byte[] bytes;
-        try
-        {
-            bytes = await File.ReadAllBytesAsync(_path, cancellationToken).ConfigureAwait(false);
-        }
-        catch (IOException exception)
-        {
-            throw UserDataCorruptException.ForFile(_path, exception);
-        }
+        var bytes = await ReadAllAsync(cancellationToken).ConfigureAwait(false);
 
         return new UserDataSnapshot(Deserialize(bytes), Revision(bytes));
     }
@@ -222,28 +264,113 @@ public sealed class UserDataStore
             await WriteThroughAsync(temporaryPath, bytes, cancellationToken).ConfigureAwait(false);
             SwapIn(temporaryPath);
         }
-        catch
+        catch (Exception exception)
         {
             TryDelete(temporaryPath);
-            throw;
+
+            // The swap is atomic, so a failure here leaves the old file exactly as it was. What
+            // the player needs to know is which kind of failure it was.
+            throw exception is IOException or UnauthorizedAccessException
+                ? UserDataBusyException.ForFile(_path, exception)
+                : exception;
         }
 
         PruneBackups();
         return new SaveResult(SaveStatus.Saved, Revision(bytes), OnDisk: null);
     }
 
+    /// <summary>
+    /// The whole file, retried while something else is holding it.
+    /// </summary>
+    /// <remarks>
+    /// A sync client holds a file for a moment while it uploads it, and the app reads on every
+    /// screen. Three quick tries cover that; past it, the file really is busy and the player is
+    /// told so rather than told their data is broken.
+    /// </remarks>
+    private async Task<byte[]> ReadAllAsync(CancellationToken cancellationToken)
+    {
+        for (var attempt = 1; ; attempt++)
+        {
+            try
+            {
+                return await File.ReadAllBytesAsync(_path, cancellationToken).ConfigureAwait(false);
+            }
+            catch (IOException exception) when (attempt < ReadAttempts)
+            {
+                _ = exception;
+                await Task.Delay(LockRetryDelay, cancellationToken).ConfigureAwait(false);
+            }
+            catch (IOException exception)
+            {
+                throw UserDataBusyException.ForFile(_path, exception);
+            }
+            catch (UnauthorizedAccessException exception)
+            {
+                throw UserDataBusyException.ForFile(_path, exception);
+            }
+        }
+    }
+
+    /// <summary>
+    /// The document the bytes hold, or an explanation of why they are not one.
+    /// </summary>
+    /// <remarks>
+    /// Three things are checked before the content is trusted, and each is a file a player can
+    /// really end up with:
+    /// <list type="bullet">
+    /// <item>
+    /// A byte order mark is skipped. Every file this app writes is plain UTF-8, but Notepad puts
+    /// one in front, and a hand-edited file coming back as "not valid user data" over three
+    /// invisible bytes is a bad hour for whoever did the editing.
+    /// </item>
+    /// <item>
+    /// The schema version has to be one this build knows. Without that check any JSON file at
+    /// all - a settings file, half a download - would read as an empty document, and the next
+    /// save would write it away.
+    /// </item>
+    /// <item>
+    /// A list that is absent reads as empty rather than as null, so a file written by hand
+    /// without one is still openable.
+    /// </item>
+    /// </list>
+    /// </remarks>
     private static UserDataDocument Deserialize(byte[] bytes)
     {
+        UserDataDocument document;
+
         try
         {
-            return JsonSerializer.Deserialize<UserDataDocument>(bytes, DatasetJson.Options)
+            document = JsonSerializer.Deserialize<UserDataDocument>(WithoutByteOrderMark(bytes), DatasetJson.Options)
                 ?? throw new UserDataCorruptException("The data file contains a bare null.");
         }
         catch (JsonException exception)
         {
             throw new UserDataCorruptException("The data file is not valid user data.", exception);
         }
+
+        if (document.SchemaVersion > UserDataDocument.CurrentSchemaVersion)
+        {
+            throw UserDataCorruptException.FromNewerVersion(
+                document.SchemaVersion,
+                UserDataDocument.CurrentSchemaVersion);
+        }
+
+        if (document.SchemaVersion < 1)
+        {
+            throw new UserDataCorruptException(
+                "This file is JSON, but it is not a Living Dex Tracker data file: it does not "
+                + "say which schema version it is.");
+        }
+
+        return document with
+        {
+            Collections = document.Collections ?? [],
+            Records = document.Records ?? [],
+        };
     }
+
+    private static ReadOnlySpan<byte> WithoutByteOrderMark(byte[] bytes) =>
+        bytes.AsSpan(bytes.Length >= 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF ? 3 : 0);
 
     private static FileRevision Revision(byte[] bytes) =>
         new(Convert.ToHexStringLower(SHA256.HashData(bytes)));
@@ -346,6 +473,12 @@ public sealed class UserDataStore
             catch (IOException) when (DateTime.UtcNow < deadline)
             {
                 await Task.Delay(LockRetryDelay, cancellationToken).ConfigureAwait(false);
+            }
+            catch (IOException exception)
+            {
+                // Another copy of this app on this machine has held the lock for the whole
+                // timeout. Waiting longer is not an answer the player can act on.
+                throw UserDataBusyException.ForFile(_path, exception);
             }
         }
     }

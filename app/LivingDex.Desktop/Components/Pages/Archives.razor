@@ -1,0 +1,264 @@
+@page "/archives"
+@using LivingDex.Core.Dataset
+@using LivingDex.Core.Reference
+@using LivingDex.Core.UserData
+@inject LoadedDataset Dataset
+@inject UserDataStoreProvider StoreProvider
+@inject IJSRuntime JS
+
+<PageTitle>Archive</PageTitle>
+
+<div class="page-header">
+    <h1>Archive</h1>
+    <a class="button" href="collections">All collections</a>
+</div>
+
+@if (_problem is not null)
+{
+    <DataFileNotice Problem="_problem" />
+}
+else if (_collections is null)
+{
+    <p class="muted">Reading your data file…</p>
+}
+else if (_collections.Count == 0)
+{
+    <div class="empty">
+        <h2>The archive is empty</h2>
+        <p>
+            Collections you put away land here. They keep everything you recorded and can be
+            restored at any time.
+        </p>
+        <p class="muted">This is also the only place a collection can be deleted for good.</p>
+    </div>
+}
+else
+{
+    <p class="field-hint">
+        These are put away rather than gone: restoring one brings it back exactly as it was.
+        Deleting is the other way, and it is the only thing here that cannot be undone.
+    </p>
+
+    <ul class="card-list">
+        @foreach (var stored in _collections)
+        {
+            var one = stored;
+
+            <li class="card card-link card-archived">
+                <h2><a href="collections/@one.Id.Value">@one.Name</a></h2>
+                <dl>
+                    <dt>Archived</dt>
+                    <dd>@Archived(one)</dd>
+
+                    <dt>Main game</dt>
+                    <dd>@GameName(one.MainGame)</dd>
+
+                    <dt>Recorded</dt>
+                    <dd>@Recorded(one)</dd>
+                </dl>
+
+                <div class="card-actions">
+                    <button type="button" class="button" @onclick="() => Restore(one)" disabled="@_working">
+                        Restore
+                    </button>
+                    <button type="button" class="button button-danger" @onclick="() => AskToDelete(one)" disabled="@_working">
+                        Delete…
+                    </button>
+                </div>
+            </li>
+        }
+    </ul>
+
+    @if (_listError is not null)
+    {
+        <div class="notice notice-error" role="alert">
+            <p>@_listError</p>
+        </div>
+    }
+}
+
+<dialog class="detail" @ref="_dialog" @onclose="@(() => _deleting = null)">
+    @if (_deleting is { } collection)
+    {
+        <div class="detail-card detail-card-narrow">
+            <header class="detail-header">
+                <div class="detail-title">
+                    <h2>Delete @collection.Name?</h2>
+                </div>
+
+                <button type="button" class="icon-button" @onclick="CloseDialog" aria-label="Close" title="Close">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <path d="M6 6l12 12M18 6L6 18" />
+                    </svg>
+                </button>
+            </header>
+
+            <section class="detail-section">
+                <p>
+                    This removes the collection and <strong>@Recorded(collection)</strong> —
+                    every status, catch date and note you wrote in it. It cannot be undone.
+                </p>
+                <p class="muted">
+                    Your previous data file is kept as a backup beside it, which is the only way
+                    back.
+                </p>
+
+                @if (_actionError is not null)
+                {
+                    <p class="notice notice-error" role="alert">@_actionError</p>
+                }
+            </section>
+
+            <div class="actions">
+                <button class="button" @onclick="CloseDialog" disabled="@_working">Cancel</button>
+                <span class="actions-spacer"></span>
+                <button class="button button-danger" @onclick="Delete" disabled="@_working">
+                    @(_working ? "Deleting…" : "Delete for good")
+                </button>
+            </div>
+        </div>
+    }
+</dialog>
+
+@code {
+    private IReadOnlyList<DexCollection>? _collections;
+    private UserDataDocument _document = UserDataDocument.Empty;
+    private UserDataProblem? _problem;
+    private string? _listError;
+
+    private ElementReference _dialog;
+    private DexCollection? _deleting;
+    private string? _actionError;
+    private bool _working;
+
+    protected override async Task OnInitializedAsync() => await ReadAsync();
+
+    private async Task ReadAsync()
+    {
+        var store = await StoreProvider.GetAsync();
+
+        try
+        {
+            _document = (await store.LoadAsync()).Document;
+            _collections = _document.ArchivedCollections();
+            _problem = null;
+        }
+        catch (Exception exception) when (UserDataProblem.IsAboutTheFile(exception))
+        {
+            _problem = UserDataProblem.From(exception, store.BackupDirectory);
+        }
+    }
+
+    private async Task Restore(DexCollection collection)
+    {
+        _working = true;
+        _listError = null;
+
+        try
+        {
+            var store = await StoreProvider.GetAsync();
+
+            var outcome = await store.UpdateAsync(document => document.CollectionWith(collection.Id) is null
+                ? document
+                : document.Restored(collection.Id));
+
+            if (outcome == UpdateOutcome.Conflict)
+            {
+                _listError =
+                    "Something else changed your data file while this was being saved. "
+                    + "Nothing was lost; try again.";
+                return;
+            }
+
+            await ReadAsync();
+        }
+        catch (Exception exception) when (UserDataProblem.IsAboutTheFile(exception))
+        {
+            _listError = UserDataProblem.From(exception).Sentence;
+        }
+        finally
+        {
+            _working = false;
+            // Explicit rather than left to the render Blazor queues when an event handler
+            // completes: this screen was seen once holding its disabled state over a file that
+            // had already been written, and a screen stuck on "working" is worse than a wasted
+            // render.
+            StateHasChanged();
+        }
+    }
+
+    private async Task AskToDelete(DexCollection collection)
+    {
+        _deleting = collection;
+        _actionError = null;
+        StateHasChanged();
+        await JS.InvokeVoidAsync("livingdex.openDialog", _dialog);
+    }
+
+    private async Task CloseDialog() => await JS.InvokeVoidAsync("livingdex.closeDialog", _dialog);
+
+    private async Task Delete()
+    {
+        if (_deleting is not { } collection)
+        {
+            return;
+        }
+
+        _working = true;
+        _actionError = null;
+
+        try
+        {
+            var store = await StoreProvider.GetAsync();
+
+            // Gone already is not an error: two windows on one file, or a delete that was
+            // retried, should both end with it not being there.
+            var outcome = await store.UpdateAsync(document => document.CollectionWith(collection.Id) is null
+                ? document
+                : document.Without(collection.Id));
+
+            if (outcome == UpdateOutcome.Conflict)
+            {
+                _actionError =
+                    "Something else changed your data file while this was being saved. "
+                    + "Nothing was lost; try again.";
+                return;
+            }
+
+            await ReadAsync();
+            await CloseDialog();
+        }
+        catch (Exception exception) when (UserDataProblem.IsAboutTheFile(exception))
+        {
+            _actionError = UserDataProblem.From(exception).Sentence;
+        }
+        catch (InvalidOperationException exception)
+        {
+            // It was restored elsewhere between the asking and the deleting, and a collection in
+            // use is never deleted.
+            _actionError = exception.Message;
+        }
+        finally
+        {
+            _working = false;
+            // Explicit rather than left to the render Blazor queues when an event handler
+            // completes: this screen was seen once holding its disabled state over a file that
+            // had already been written, and a screen stuck on "working" is worse than a wasted
+            // render.
+            StateHasChanged();
+        }
+    }
+
+    private static string Archived(DexCollection collection) =>
+        collection.ArchivedOn is { } day
+            ? day.ToString("d MMMM yyyy", CultureInfo.InvariantCulture)
+            : "not archived";
+
+    private string Recorded(DexCollection collection)
+    {
+        var records = _document.RecordCountOf(collection.Id);
+        return records == 1 ? "1 entry" : $"{records} entries";
+    }
+
+    private string GameName(GameId game) => Dataset.Reference.FindGame(game)?.Title ?? game.Value;
+}

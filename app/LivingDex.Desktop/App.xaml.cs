@@ -42,7 +42,37 @@ public partial class App : Application
 
         // Read once at startup: it is embedded in this assembly and never changes while
         // the app is running.
-        var dataset = DatasetLoader.Load(typeof(App).Assembly);
+        LoadedDataset dataset;
+
+        try
+        {
+            dataset = DatasetLoader.Load(typeof(App).Assembly);
+        }
+        catch (DatasetLoadException exception)
+        {
+            // A dataset that is there and unreadable is a build that was made wrong, and there
+            // is nothing the player can do inside the app about it - so it says what it is
+            // rather than opening a window with nothing in it. A build with no dataset at all
+            // still starts: the home page explains that one, because everything else about the
+            // app still works.
+            WriteCrashLog(exception);
+            MessageBox.Show(
+                $"""
+                Living Dex Tracker cannot start: the dataset built into this copy could not be read.
+
+                {exception.Message}
+
+                This is a problem with the build rather than with your data.
+                Details written to:
+                {CrashLogPath}
+                """,
+                "Living Dex Tracker",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            Shutdown(1);
+            return;
+        }
+
         services.AddSingleton(dataset);
 
         // The graph is data, so it is built here rather than anywhere it is used.
